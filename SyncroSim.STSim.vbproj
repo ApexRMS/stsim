@@ -18,8 +18,12 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SyncroSim.STSim.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -27,8 +31,12 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SyncroSim.STSim.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -37,7 +45,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -47,46 +55,64 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>SyncroSim.STSim.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>SyncroSim.STSim.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>SyncroSim.STSim.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>SyncroSim.STSim.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +131,295 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly.vb" />
+    <Compile Include="Console\STSimConsole.CreateReport.vb" />
+    <Compile Include="Console\STSimConsole.ListReports.vb" />
+    <Compile Include="Console\STSimConsole.SpatialSplit.vb" />
+    <Compile Include="Console\STSimConsole.vb" />
+    <Compile Include="CoreTransformer\AttributeValueBase.vb" />
+    <Compile Include="CoreTransformer\AttributeValueRecord.vb" />
+    <Compile Include="CoreTransformer\Cell.vb" />
+    <Compile Include="CoreTransformer\CellCollection.vb" />
+    <Compile Include="CoreTransformer\DeterministicTransition.vb" />
+    <Compile Include="CoreTransformer\DeterministicTransitionCollection.vb" />
+    <Compile Include="CoreTransformer\DeterministicTransitionMap.vb" />
+    <Compile Include="CoreTransformer\GrowEventRecord.vb" />
+    <Compile Include="CoreTransformer\GrowEventRecordCollection.vb" />
+    <Compile Include="CoreTransformer\InitialConditionsDistribution.vb" />
+    <Compile Include="CoreTransformer\InitialConditionsDistributionCollection.vb" />
+    <Compile Include="CoreTransformer\InitialConditionsDistributionMap.vb" />
+    <Compile Include="CoreTransformer\InitialConditionsSpatial.vb" />
+    <Compile Include="CoreTransformer\InitialConditionsSpatialCollection.vb" />
+    <Compile Include="CoreTransformer\InitialConditionsSpatialMap.vb" />
+    <Compile Include="CoreTransformer\InputRasters.vb" />
+    <Compile Include="CoreTransformer\IntervalMeanTimestepMap.vb" />
+    <Compile Include="CoreTransformer\OutputStateAttribute.vb" />
+    <Compile Include="CoreTransformer\OutputStateAttributeCollection.vb" />
+    <Compile Include="CoreTransformer\OutputStratumState.vb" />
+    <Compile Include="CoreTransformer\OutputStratumStateCollection.vb" />
+    <Compile Include="CoreTransformer\OutputStratumTransition.vb" />
+    <Compile Include="CoreTransformer\OutputStratumTransitionCollection.vb" />
+    <Compile Include="CoreTransformer\OutputStratumTransitionState.vb" />
+    <Compile Include="CoreTransformer\OutputStratumTransitionStateCollection.vb" />
+    <Compile Include="CoreTransformer\OutputTransitionAttribute.vb" />
+    <Compile Include="CoreTransformer\OutputTransitionAttributeCollection.vb" />
+    <Compile Include="CoreTransformer\PatchPrioritization.vb" />
+    <Compile Include="CoreTransformer\PatchPrioritizationCollection.vb" />
+    <Compile Include="CoreTransformer\ProportionAccumulatorMap.vb" />
+    <Compile Include="CoreTransformer\StateAttributeValue.vb" />
+    <Compile Include="CoreTransformer\StateAttributeValueCollection.vb" />
+    <Compile Include="CoreTransformer\StateAttributeValueMap.vb" />
+    <Compile Include="CoreTransformer\StateClass.vb" />
+    <Compile Include="CoreTransformer\StateClassCollection.vb" />
+    <Compile Include="CoreTransformer\Stratum.vb" />
+    <Compile Include="CoreTransformer\StratumCollection.vb" />
+    <Compile Include="CoreTransformer\STSimMapBase.vb" />
+    <Compile Include="CoreTransformer\STSimMapBase1.vb" />
+    <Compile Include="CoreTransformer\STSimMapBase2.vb" />
+    <Compile Include="CoreTransformer\STSimMapBase3.vb" />
+    <Compile Include="CoreTransformer\STSimMapBase4.vb" />
+    <Compile Include="CoreTransformer\STSimMapBase5.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Ages.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Collections.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Distributions.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Initialize.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Maps.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Multipliers.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.NonSpatial.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Normalize.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Output.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Parallel.Merge.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Parallel.Split.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Patch.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Shuffle.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Spatial.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Spread.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.TST.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.Validate.vb" />
+    <Compile Include="CoreTransformer\STSimTransformer.vb" />
+    <Compile Include="CoreTransformer\Transition.vb" />
+    <Compile Include="CoreTransformer\TransitionAdjacencyMultiplier.vb" />
+    <Compile Include="CoreTransformer\TransitionAdjacencyMultiplierCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionAdjacencyMultiplierMap.vb" />
+    <Compile Include="CoreTransformer\TransitionAdjacencySetting.vb" />
+    <Compile Include="CoreTransformer\TransitionAdjacencySettingCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionAdjacencySettingMap.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeTarget.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeTargetCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeTargetMap.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeType.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeTypeCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeValue.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeValueCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionAttributeValueMap.vb" />
+    <Compile Include="CoreTransformer\TransitionCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionDirectionMultiplier.vb" />
+    <Compile Include="CoreTransformer\TransitionDirectionMultiplierCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionDirectionMultiplierMap.vb" />
+    <Compile Include="CoreTransformer\TransitionEvent.vb" />
+    <Compile Include="CoreTransformer\TransitionGroup.vb" />
+    <Compile Include="CoreTransformer\TransitionGroupCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionMap.vb" />
+    <Compile Include="CoreTransformer\TransitionMultiplierType.vb" />
+    <Compile Include="CoreTransformer\TransitionMultiplierTypeCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionMultiplierValue.vb" />
+    <Compile Include="CoreTransformer\TransitionMultiplierValueCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionMultiplierValueMap.vb" />
+    <Compile Include="CoreTransformer\TransitionOrder.vb" />
+    <Compile Include="CoreTransformer\TransitionOrderCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionOrderMap.vb" />
+    <Compile Include="CoreTransformer\TransitionPatch.vb" />
+    <Compile Include="CoreTransformer\TransitionPatchPrioritization.vb" />
+    <Compile Include="CoreTransformer\TransitionPatchPrioritizationCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionPatchPrioritizationMap.vb" />
+    <Compile Include="CoreTransformer\TransitionPathwayAutoCorrelation.vb" />
+    <Compile Include="CoreTransformer\TransitionPathwayAutoCorrelationCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionPathwayAutoCorrelationMap.vb" />
+    <Compile Include="CoreTransformer\TransitionSizeDistribution.vb" />
+    <Compile Include="CoreTransformer\TransitionSizeDistributionCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionSizeDistributionMap.vb" />
+    <Compile Include="CoreTransformer\TransitionSizePrioritization.vb" />
+    <Compile Include="CoreTransformer\TransitionSizePrioritizationCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionSizePrioritizationMap.vb" />
+    <Compile Include="CoreTransformer\TransitionSlopeMultiplier.vb" />
+    <Compile Include="CoreTransformer\TransitionSlopeMultiplierCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionSlopeMultiplierMap.vb" />
+    <Compile Include="CoreTransformer\TransitionSpatialInitiationMultiplier.vb" />
+    <Compile Include="CoreTransformer\TransitionSpatialInitiationMultiplierCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionSpatialInitiationMultiplierMap.vb" />
+    <Compile Include="CoreTransformer\TransitionSpatialMultiplier.vb" />
+    <Compile Include="CoreTransformer\TransitionSpatialMultiplierCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionSpatialMultiplierMap.vb" />
+    <Compile Include="CoreTransformer\TransitionSpreadDistribution.vb" />
+    <Compile Include="CoreTransformer\TransitionSpreadDistributionCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionSpreadDistributionMap.vb" />
+    <Compile Include="CoreTransformer\TransitionStratumStateClass.vb" />
+    <Compile Include="CoreTransformer\TransitionStratumStateClassCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionTarget.vb" />
+    <Compile Include="CoreTransformer\TransitionTargetCollection.vb" />
+    <Compile Include="CoreTransformer\TransitionTargetMap.vb" />
+    <Compile Include="CoreTransformer\TransitionType.vb" />
+    <Compile Include="CoreTransformer\TransitionTypeCollection.vb" />
+    <Compile Include="CoreTransformer\TST.vb" />
+    <Compile Include="CoreTransformer\TSTCollection.vb" />
+    <Compile Include="CoreTransformer\TSTRandomize.vb" />
+    <Compile Include="CoreTransformer\TSTRandomizeMap.vb" />
+    <Compile Include="CoreTransformer\TSTTransitionGroup.vb" />
+    <Compile Include="CoreTransformer\TSTTransitionGroupMap.vb" />
+    <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.Designer.vb">
+      <DependentUpon>AdjacencyMultiplierDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeGroupDataFeedView.Designer.vb">
+      <DependentUpon>AgeGroupDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeGroupDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeTypeDataFeedView.Designer.vb">
+      <DependentUpon>AgeTypeDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeTypeDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\DistributionValueDataFeedView.Designer.vb">
+      <DependentUpon>DistributionValueDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\DistributionValueDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.Designer.vb">
+      <DependentUpon>InitialConditionsNonSpatialDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.Designer.vb">
+      <DependentUpon>InitialConditionsSpatialDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsDataFeedView.Designer.vb">
+      <DependentUpon>OutputOptionsDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.Designer.vb">
+      <DependentUpon>PrimaryStratumDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\ProcessingDataFeedView.Designer.vb">
+      <DependentUpon>ProcessingDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\ProcessingDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\RunControlDataFeedView.Designer.vb">
+      <DependentUpon>RunControlDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\RunControlDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.Designer.vb">
+      <DependentUpon>SlopeMultiplierDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.Designer.vb">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.Designer.vb">
+      <DependentUpon>SpatialMultiplierDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassDataFeedView.Designer.vb">
+      <DependentUpon>StateClassDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassQuickView.Designer.vb">
+      <DependentUpon>StateClassQuickView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassQuickView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionDataFeedView.Designer.vb">
+      <DependentUpon>TransitionDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeDataFeedView.Designer.vb">
+      <DependentUpon>TransitionTypeDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.Designer.vb">
+      <DependentUpon>TransitionTypeGroupDataFeedView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataSheets\DeterministicTransitionDataSheet.vb" />
+    <Compile Include="DataSheets\InitialConditionsSpatialDataSheet.vb" />
+    <Compile Include="DataSheets\ProbabilisticTransitionDataSheet.vb" />
+    <Compile Include="DataSheets\StateClassDataSheet.vb" />
+    <Compile Include="DataSheets\TransitionGroupDataSheet.vb" />
+    <Compile Include="DataSheets\TransitionSizeDistributionDataSheet.vb" />
+    <Compile Include="DataSheets\TransitionTargetDataSheet.vb" />
+    <Compile Include="DataSheets\TransitionTypeDataSheet.vb" />
+    <Compile Include="Forms\ChooseStateClassForm.Designer.vb">
+      <DependentUpon>ChooseStateClassForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChooseStateClassForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FilterTransitionsForm.Designer.vb">
+      <DependentUpon>FilterTransitionsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FilterTransitionsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PasteStrataForm.Designer.vb">
+      <DependentUpon>PasteStrataForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PasteStrataForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectStratumForm.Designer.vb">
+      <DependentUpon>SelectStratumForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SelectStratumForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TransitionDiagramPasteSpecialForm.Designer.vb">
+      <DependentUpon>TransitionDiagramPasteSpecialForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TransitionDiagramPasteSpecialForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapTransformers\AATPRasterMap.vb" />
+    <Compile Include="MapTransformers\AgeRasterMap.vb" />
+    <Compile Include="MapTransformers\StateAttributeRasterMap.vb" />
+    <Compile Include="MapTransformers\StateClassRasterMap.vb" />
+    <Compile Include="MapTransformers\StratumRasterMap.vb" />
+    <Compile Include="MapTransformers\TransitionAttributeRasterMap.vb" />
+    <Compile Include="MapTransformers\TransitionRasterMap.vb" />
+    <Compile Include="MapTransformers\TSTRasterMap.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -120,8 +435,148 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ReportTransformers\StateAttributeReport.vb" />
+    <Compile Include="ReportTransformers\StateClassSummaryReport.vb" />
+    <Compile Include="ReportTransformers\TransitionAttributeReport.vb" />
+    <Compile Include="ReportTransformers\TransitionStateSummaryReport.vb" />
+    <Compile Include="ReportTransformers\TransitionSummaryReport.vb" />
+    <Compile Include="Shared\AgeHelper.vb" />
+    <Compile Include="Shared\AgeUtilities.vb" />
+    <Compile Include="Shared\BaseValueDisplayListItem.vb" />
+    <Compile Include="Shared\ChartingUtilities.vb" />
+    <Compile Include="Shared\ColorColumns.vb" />
+    <Compile Include="Shared\ColorUtilities.vb" />
+    <Compile Include="Shared\Constants.vb" />
+    <Compile Include="Shared\DataSheetUtilities.vb" />
+    <Compile Include="Shared\DataTableUtilities.vb" />
+    <Compile Include="Shared\DTAnalyzer.vb" />
+    <Compile Include="Shared\Enums.vb" />
+    <Compile Include="Shared\EventArguments.vb" />
+    <Compile Include="Shared\Exceptions.vb" />
+    <Compile Include="Shared\ExceptionUtils.vb" />
+    <Compile Include="Shared\FormsUtilities.vb" />
+    <Compile Include="Shared\LookupKeyUtilities.vb" />
+    <Compile Include="Shared\MathUtils.vb" />
+    <Compile Include="Shared\MessageStrings.vb" />
+    <Compile Include="Shared\NullableUtilities.vb" />
+    <Compile Include="Shared\RasterUtilities.vb" />
+    <Compile Include="Shared\SpatialUtilities.vb" />
+    <Compile Include="Shared\Strings.vb" />
+    <Compile Include="Shared\TerminologyUtilities.vb" />
+    <Compile Include="Shared\TgapMerge.vb" />
+    <Compile Include="Shared\TransitionFilterCriteria.vb" />
+    <Compile Include="Shared\ValidationTableUtilities.vb" />
+    <Compile Include="Statistics\STSimDistributionBase.vb" />
+    <Compile Include="Statistics\STSimDistributionBaseExpander.vb" />
+    <Compile Include="Statistics\STSimDistributionProvider.vb" />
+    <Compile Include="Statistics\STSimDistributionValue.vb" />
+    <Compile Include="Statistics\STSimDistributionValueMap.vb" />
+    <Compile Include="STimeProviders\STSimChartProvider.vb" />
+    <Compile Include="STimeProviders\STSimMapProvider.vb" />
+    <Compile Include="TransitionDiagram\DeterministicTransitionLine.vb" />
+    <Compile Include="TransitionDiagram\DeterministicTransitionsTabStripItem.vb" />
+    <Compile Include="TransitionDiagram\ProbabilisticTransitionLine.vb" />
+    <Compile Include="TransitionDiagram\ProbabilisticTransitionsTabStripItem.vb" />
+    <Compile Include="TransitionDiagram\StateClassShape.vb" />
+    <Compile Include="TransitionDiagram\StratumTabStripItem.vb" />
+    <Compile Include="TransitionDiagram\TransitionDiagram.Clipboard.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransitionDiagram\TransitionDiagram.Deterministic.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransitionDiagram\TransitionDiagram.Override.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransitionDiagram\TransitionDiagram.Probabilistic.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransitionDiagram\TransitionDiagram.Utilities.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransitionDiagram\TransitionDiagram.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransitionDiagram\TransitionDiagramClipData.vb" />
+    <Compile Include="TransitionDiagram\TransitionDiagramLine.vb" />
+    <Compile Include="TransitionDiagram\TransitionDiagramTabStripItem.vb" />
+    <Compile Include="Updates\STSimUpdates.DM.vb" />
+    <Compile Include="Updates\STSimUpdates.ED.vb" />
+    <Compile Include="Updates\STSimUpdates.SF.vb" />
+    <Compile Include="Updates\STSimUpdates.SSIM_V_1.vb" />
+    <Compile Include="Updates\STSimUpdates.TPE.vb" />
+    <Compile Include="Updates\STSimUpdates.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DataFeedViews\AdjacencyMultiplierDataFeedView.resx">
+      <DependentUpon>AdjacencyMultiplierDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\AgeGroupDataFeedView.resx">
+      <DependentUpon>AgeGroupDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\AgeTypeDataFeedView.resx">
+      <DependentUpon>AgeTypeDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\DistributionValueDataFeedView.resx">
+      <DependentUpon>DistributionValueDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.resx">
+      <DependentUpon>InitialConditionsNonSpatialDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedView.resx">
+      <DependentUpon>InitialConditionsSpatialDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\OutputOptionsDataFeedView.resx">
+      <DependentUpon>OutputOptionsDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\PrimaryStratumDataFeedView.resx">
+      <DependentUpon>PrimaryStratumDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\ProcessingDataFeedView.resx">
+      <DependentUpon>ProcessingDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\RunControlDataFeedView.resx">
+      <DependentUpon>RunControlDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedView.resx">
+      <DependentUpon>SlopeMultiplierDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.resx">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialMultiplierDataFeedView.resx">
+      <DependentUpon>SpatialMultiplierDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\StateClassDataFeedView.resx">
+      <DependentUpon>StateClassDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\StateClassQuickView.resx">
+      <DependentUpon>StateClassQuickView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionDataFeedView.resx">
+      <DependentUpon>TransitionDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionTypeDataFeedView.resx">
+      <DependentUpon>TransitionTypeDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionTypeGroupDataFeedView.resx">
+      <DependentUpon>TransitionTypeGroupDataFeedView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChooseStateClassForm.resx">
+      <DependentUpon>ChooseStateClassForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FilterTransitionsForm.resx">
+      <DependentUpon>FilterTransitionsForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PasteStrataForm.resx">
+      <DependentUpon>PasteStrataForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectStratumForm.resx">
+      <DependentUpon>SelectStratumForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TransitionDiagramPasteSpecialForm.resx">
+      <DependentUpon>TransitionDiagramPasteSpecialForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -130,6 +585,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="module.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -139,6 +595,48 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Copy16x16.png" />
+    <Content Include="Images\Cut16x16.png" />
+    <Content Include="Images\Delete16x16.png" />
+    <Content Include="Images\Filter16x16.png" />
+    <Content Include="Images\First16x16.png" />
+    <Content Include="Images\Last16x16.png" />
+    <Content Include="Images\Minus16x16.png" />
+    <Content Include="Images\Next16x16.png" />
+    <Content Include="Images\OK16x16.png" />
+    <Content Include="Images\OK16x16Disabled.png" />
+    <Content Include="Images\Paste16x16.png" />
+    <Content Include="Images\Plus16x16.png" />
+    <Content Include="Images\Previous16x16.png" />
+    <Content Include="Images\Search16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonForms\SyncroSim.Common.Forms.csproj">
+      <Project>{13919907-3117-49c5-bb13-2a5d4ccefa57}</Project>
+      <Name>SyncroSim.Common.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\SyncroSim.Common.csproj">
+      <Project>{1376529f-fc5a-43e8-8554-8341b4fe2496}</Project>
+      <Name>SyncroSim.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CoreForms\SyncroSim.Core.Forms.csproj">
+      <Project>{ea3a4b6e-d4db-466d-b510-6a38918f2dd8}</Project>
+      <Name>SyncroSim.Core.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SyncroSim.Core.csproj">
+      <Project>{af51a2a0-349a-4a3c-bec2-906e605db6d7}</Project>
+      <Name>SyncroSim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StochasticTimeForms\SyncroSim.StochasticTime.Forms.csproj">
+      <Project>{577b7bdd-e5fa-41af-887a-e4a12b691ff8}</Project>
+      <Name>SyncroSim.StochasticTime.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StochasticTime\SyncroSim.StochasticTime.csproj">
+      <Project>{ac26a679-5fb6-4cae-9b08-e0ea8027c628}</Project>
+      <Name>SyncroSim.StochasticTime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,16 +5,18 @@
 '
 '************************************************************************************
 
+Imports System.Reflection
 Imports SyncroSim.Core.Forms
 Imports SyncroSim.StochasticTime.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class StratumRasterMap
     Inherits StochasticTimeExportTransformer
 
     Protected Overrides Sub Export(location As String, exportType As ExportType)
 
         Dim fileFilterRegex As String = ".*" & SPATIAL_MAP_STRATUM_VARIABLE_NAME & "\.(tif|vrt)"
-        Me.CopyRasterFiles(Me.GetActiveResultScenarios(), fileFilterRegex, location, AddressOf CreateExportFilename)
+        StochasticTimeExportTransformer.CopyRasterFiles(Me.GetActiveResultScenarios(), fileFilterRegex, location, AddressOf CreateExportFilename)
 
     End Sub
 

@@ -7,7 +7,9 @@
 
 Imports SyncroSim.Core
 Imports System.Globalization
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class OutputOptionsDataFeedView
 
     Const DEFAULT_TIMESTEP_VALUE As String = "1"

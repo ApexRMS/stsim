@@ -315,7 +315,7 @@ Public NotInheritable Class STSimTransformer
 
         'Now we can call the base class to do the iteration and timestep loop.
 
-        MyBase.Transform()
+        MyBase.RunStochasticLoop()
 
         'We process AATP output after the rest of the model has completed because
         'these calculations must be done across the entire data set.

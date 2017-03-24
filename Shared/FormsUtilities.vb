@@ -11,14 +11,6 @@ Module FormsUtilities
         Return ErrorMessageBox([String].Format(CultureInfo.CurrentCulture, text, args))
     End Function
 
-    Function ErrorMessageBox(ex As Exception) As DialogResult
-        Return ErrorMessageBox("An exception has occurred.", ex)
-    End Function
-
-    Function ErrorMessageBox(text As [String], ex As Exception) As DialogResult
-        Return ErrorMessageBox(text + "  More information:" & vbCr & vbLf & vbCr & vbLf + ex.Message)
-    End Function
-
     Function ApplicationMessageBox(text As [String], buttons As MessageBoxButtons) As DialogResult
         Return MessageBox.Show(text, Application.ProductName, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, DirectCast(0, MessageBoxOptions))
     End Function

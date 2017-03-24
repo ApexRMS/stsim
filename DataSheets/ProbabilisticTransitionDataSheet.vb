@@ -5,8 +5,10 @@
 '
 '************************************************************************************
 
+Imports System.Reflection
 Imports SyncroSim.Core
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class ProbabilisticTransitionDataSheet
     Inherits DataSheet
 

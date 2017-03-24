@@ -63,17 +63,6 @@ Module DataTableUtilities
     End Function
 
     ''' <summary>
-    ''' Gets a int from the specified data row and column name
-    ''' </summary>
-    ''' <param name="dr"></param>
-    ''' <param name="columnName"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function GetDataInt(dr As DataRow, columnName As String) As Integer
-        Return GetDataInt(dr(columnName))
-    End Function
-
-    ''' <summary>
     ''' Gets a Single for the specified database object
     ''' </summary>
     ''' <param name="value"></param>
@@ -88,17 +77,6 @@ Module DataTableUtilities
     End Function
 
     ''' <summary>
-    ''' Gets a Single from the specified data row and column name
-    ''' </summary>
-    ''' <param name="dr"></param>
-    ''' <param name="columnName"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function GetDataSingle(dr As DataRow, columnName As String) As [Single]
-        Return GetDataSingle(dr(columnName))
-    End Function
-
-    ''' <summary>
     ''' Gets a Double for the specified database object
     ''' </summary>
     ''' <param name="value"></param>
@@ -110,17 +88,6 @@ Module DataTableUtilities
         Else
             Return Convert.ToDouble(value, CultureInfo.InvariantCulture)
         End If
-    End Function
-
-    ''' <summary>
-    ''' Gets a Double from the specified data row and column name
-    ''' </summary>
-    ''' <param name="dr"></param>
-    ''' <param name="columnName"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function GetDataDbl(dr As DataRow, columnName As String) As [Double]
-        Return GetDataDbl(dr(columnName))
     End Function
 
     ''' <summary>
@@ -200,20 +167,6 @@ Module DataTableUtilities
     End Function
 
     ''' <summary>
-    ''' Coerces a string for use in a data table
-    ''' </summary>
-    ''' <param name="value"></param>
-    Public Function CoerceDataStr(value As String) As Object
-
-        If String.IsNullOrEmpty(value) Then
-            Return DBNull.Value
-        Else
-            Return value
-        End If
-
-    End Function
-
-    ''' <summary>
     ''' Gets a nullable integer for the specified data row and colum name
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -269,31 +222,6 @@ Module DataTableUtilities
     End Sub
 
     ''' <summary>
-    ''' Deletes all rows in the specified table
-    ''' </summary>
-    ''' <param name="dt"></param>
-    ''' <remarks></remarks>
-
-    Public Sub DeleteAllTableRows(dt As DataTable)
-
-        Dim Index As Integer = dt.Rows.Count - 1
-
-        While Index >= 0
-
-            Dim dr As DataRow = dt.Rows(Index)
-
-            If (dr.RowState = DataRowState.Deleted) Then
-                Continue While
-            End If
-
-            DeleteTableRow(dt, dr)
-            Index += -1
-
-        End While
-
-    End Sub
-
-    ''' <summary>
     ''' Gets the table value for the specified id column and value column
     ''' </summary>
     ''' <param name="table"></param>
@@ -317,32 +245,6 @@ Module DataTableUtilities
         Next
 
         Return DBNull.Value
-
-    End Function
-
-    ''' <summary>
-    ''' Determines if a table has data for a specific column
-    ''' </summary>
-    ''' <param name="table"></param>
-    ''' <param name="columnName"></param>
-    ''' <returns></returns>
-    Public Function TableHasData(table As DataTable, columnName As String) As Boolean
-
-        For Each dr As DataRow In table.Rows
-
-            If (dr.RowState = DataRowState.Deleted) Then
-                Continue For
-            End If
-
-            Dim value As Object = dr(columnName)
-
-            If Not Object.ReferenceEquals(value, DBNull.Value) Then
-                Return True
-            End If
-
-        Next
-
-        Return False
 
     End Function
 

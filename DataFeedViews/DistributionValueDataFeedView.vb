@@ -6,11 +6,13 @@
 '************************************************************************************
 
 Imports System.Text
+Imports System.Reflection
 Imports System.Windows.Forms
 Imports System.Globalization
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class DistributionValueDataFeedView
 
     Private m_Grid As BaseDataGridView

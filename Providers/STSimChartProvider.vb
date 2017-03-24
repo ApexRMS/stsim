@@ -1,8 +1,17 @@
-﻿Imports SyncroSim.Core
-Imports System.Globalization
-Imports SyncroSim.StochasticTime.Forms
+﻿'************************************************************************************
+' ST-Sim: A .NET class library for developing state-and-transition simulation models.
+'
+' Copyright © 2009-2015 ApexRMS.
+'
+'************************************************************************************
 
-Public Class STSimChartProvider
+Imports SyncroSim.Core
+Imports SyncroSim.StochasticTime.Forms
+Imports System.Globalization
+Imports System.Reflection
+
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
+Class STSimChartProvider
     Inherits ChartProvider
 
     Const DENSITY_GROUP_NAME As String = "stsim_density_group"

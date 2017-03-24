@@ -13,7 +13,7 @@ Imports SyncroSim.StochasticTime
 
  Module SpatialUtilities
 
-    Public Sub SaveStateClassOutputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer)
+    Public Sub SaveStateClassOutputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer)
 
         Dim fileName As String
         '        Name template = Itx-Tsy-sc.tif
@@ -26,7 +26,7 @@ Imports SyncroSim.StochasticTime
 
     End Sub
 
-    Public Sub SaveAgeOutputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer)
+    Public Sub SaveAgeOutputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer)
 
         Dim fileName As String
         '        Name template = Itx-Tsy-Age.tif
@@ -39,7 +39,7 @@ Imports SyncroSim.StochasticTime
 
     End Sub
 
-    Public Sub SaveTransitionTypeOutputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer, transitionGroupId As Integer)
+    Public Sub SaveTransitionTypeOutputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer, transitionGroupId As Integer)
 
         Dim fileName As String
         '        Name template = Itx-Tsy-Tg-z.tif
@@ -53,7 +53,7 @@ Imports SyncroSim.StochasticTime
 
     End Sub
 
-    Public Sub SaveTSTOutputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer, transitionGroupId As String)
+    Public Sub SaveTSTOutputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer, transitionGroupId As String)
 
         Dim fileName As String
         '        Name template = Itx-Tsy-Tg-z-Tst.tif
@@ -68,7 +68,7 @@ Imports SyncroSim.StochasticTime
 
     End Sub
 
-    Public Sub SaveStratumOutputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer)
+    Public Sub SaveStratumOutputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer)
 
         Dim fileName As String
         '        Name template = Itx-Tsy-Stratum.tif
@@ -81,7 +81,7 @@ Imports SyncroSim.StochasticTime
 
     End Sub
 
-    Public Function SavePrimaryStratumInputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
+    Public Function SavePrimaryStratumInputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
 
         Dim fileName As String
         '        Name template = Itx-Tsy-Stratum.tif
@@ -94,7 +94,7 @@ Imports SyncroSim.StochasticTime
 
     End Function
 
-    Public Function SaveSecondaryStratumInputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
+    Public Function SaveSecondaryStratumInputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
 
         Dim fileName As String
         '        Name template = Itx-Tsy-secstr.tif
@@ -107,7 +107,7 @@ Imports SyncroSim.StochasticTime
 
     End Function
 
-    Public Function SaveStateClassInputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
+    Public Function SaveStateClassInputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
 
         Dim fileName As String
         '        Name template = Itx-Tsy-sc.tif
@@ -120,7 +120,7 @@ Imports SyncroSim.StochasticTime
 
     End Function
 
-    Public Function SaveAgeInputRaster(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
+    Public Function SaveAgeInputRaster(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer) As String
 
         Dim fileName As String
         '        Name template = Itx-Tsy-Age.tif
@@ -142,7 +142,7 @@ Imports SyncroSim.StochasticTime
     ''' <param name="timestep"></param>
     ''' <param name="attributeId"></param>
     ''' <remarks></remarks>
-    Public Sub SaveStateAttrOutputToRasterFile(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer, attributeId As String)
+    Public Sub SaveStateAttrOutputToRasterFile(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer, attributeId As String)
         RasterFiles.SaveDoubleOutputRaster(raster, scenario, CalcStateAttrOutputRasterFileName(iteration, timestep, attributeId))
     End Sub
 
@@ -167,7 +167,7 @@ Imports SyncroSim.StochasticTime
 
     End Function
 
-    Public Sub SaveTransitionAttrOutputToRasterFile(raster As ApexRaster, scenario As Scenario, iteration As Integer, timestep As Integer, attributeId As String)
+    Public Sub SaveTransitionAttrOutputToRasterFile(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer, attributeId As String)
 
         Dim fileName As String
         '        Name template = Itx-Tsy-ta-z.tif
@@ -181,7 +181,7 @@ Imports SyncroSim.StochasticTime
 
     End Sub
 
-    Public Sub SaveAnnualAvgTransitionProbToRasterFile(raster As ApexRaster, scenario As Scenario, transGrpId As Integer, timestep As Integer)
+    Public Sub SaveAnnualAvgTransitionProbToRasterFile(raster As StochasticTimeRaster, scenario As Scenario, transGrpId As Integer, timestep As Integer)
 
         Dim fileName As String
         '        Name template = It0000-Tsy-tgap-z.tif
@@ -592,80 +592,5 @@ Imports SyncroSim.StochasticTime
         Return True
 
     End Function
-
-    ''' <summary>
-    ''' Convert the Single Band STSIM Raster files in the Output directory into Multiband Raster files, grouping by the same type 
-    ''' structure as used for Mapping ( ie by TG ID, SA ID, TA ID,...resultsScenario)
-    ''' </summary>
-    ''' <param name="resultsScenario">The Results Scenario that we are converting</param>
-    ''' <remarks></remarks>
-    Public Sub ConvertSingleToMultibandRasters(resultsScenario As Scenario)
-
-        '        ' Calculate the filename for output raster file
-        '        Dim destinationPath As String = SpatialGetOutputFolder(resultsScenario, True, Nothing)
-        '
-        '        If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME) Then
-        '            '  Debug.Assert(False)
-        '        End If
-        '
-        '        If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, SPATIAL_MAP_STRATUM_VARIABLE_NAME) Then
-        '            '  Debug.Assert(False)
-        '        End If
-        '
-        '        If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, SPATIAL_MAP_AGE_VARIABLE_NAME) Then
-        '            '  Debug.Assert(False)
-        '        End If
-        '
-        '        For Each row As DataRow In resultsScenario.Project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME).GetData().Rows
-        '            '            For Each grp In Me.m_TransitionGroups
-        '
-        '            Dim tgId = row(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME)
-        '
-        '            Dim fileType As String = String.Format("{0}-{1}", SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, tgId)
-        '
-        '            If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, fileType) Then
-        '                'Debug.Assert(False)
-        '            End If
-        '
-        '            ' Ex: Itx-Tsy-Tg-z-Tst.tif
-        '            fileType = String.Format("Tg-{0}-{1}", tgId, SPATIAL_MAP_TST_VARIABLE_NAME)
-        '
-        '            If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, fileType) Then
-        '                '                Debug.Assert(False)
-        '            End If
-        '
-        '            fileType = String.Format("{0}-{1}", SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, tgId)
-        '
-        '            If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, fileType) Then
-        '                '                Debug.Assert(False)
-        '            End If
-        '
-        '
-        '        Next
-        '
-        '        For Each row As DataRow In resultsScenario.Project.GetDataSheet(DATASHEET_STATE_ATTRIBUTE_TYPE_NAME).GetData().Rows
-        '
-        '            Dim id = row(DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME)
-        '
-        '            Dim fileType As String = String.Format("{0}-{1}", SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, id)
-        '
-        '            If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, fileType) Then
-        '                '                Debug.Assert(False)
-        '            End If
-        '
-        '        Next
-        '
-        '        For Each row As DataRow In resultsScenario.Project.GetDataSheet(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME).GetData().Rows
-        '
-        '            Dim id = row(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME)
-        '            Dim fileType As String = String.Format("{0}-{1}", SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, id)
-        '
-        '            If Not StochasticTime.ConvertSinglesToMultiband(destinationPath, fileType) Then
-        '                '                Debug.Assert(False)
-        '            End If
-        '
-        '        Next
-
-    End Sub
 
 End Module

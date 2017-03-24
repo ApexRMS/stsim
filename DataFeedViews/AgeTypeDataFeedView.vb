@@ -5,8 +5,10 @@
 '
 '************************************************************************************
 
+Imports System.Reflection
 Imports SyncroSim.Common.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class AgeTypeDataFeedView
 
     Public Overrides Sub LoadDataFeed(dataFeed As Core.DataFeed)

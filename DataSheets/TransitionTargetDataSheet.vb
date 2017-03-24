@@ -7,7 +7,9 @@
 
 Imports SyncroSim.Core
 Imports System.Globalization
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionTargetDataSheet
     Inherits DataSheet
 

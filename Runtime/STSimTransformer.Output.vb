@@ -506,7 +506,7 @@ Partial Class STSimTransformer
             If (Me.IsRasterTransitionTimestep(timestep)) Then
 
                 'Set up a raster as input to the Raster output function
-                Dim rastOP As New ApexRaster
+                Dim rastOP As New StochasticTimeRaster
                 Me.m_InputRasters.GetMetadata(rastOP)
                 rastOP.IntCells = transitionedPixels
 
@@ -549,7 +549,7 @@ Partial Class STSimTransformer
             For Each AttributeId As Integer In RasterTransitionAttrValues.Keys
 
                 'Set up a raster as input to the Raster output function
-                Dim rastOP As New ApexRaster
+                Dim rastOP As New StochasticTimeRaster
                 Me.m_InputRasters.GetMetadata(rastOP)
                 rastOP.DblCells = RasterTransitionAttrValues(AttributeId)
 
@@ -797,7 +797,7 @@ Partial Class STSimTransformer
                     If (Me.IsSpatial And Me.IsRasterTransitionAttributeTimestep(timestep)) Then
 
                         Dim arr() As Double = rasterTransitionAttrValues(AttributeTypeId)
-                        If arr(simulationCell.CellId) = ApexRaster.DEFAULT_NO_DATA_VALUE Then
+                        If arr(simulationCell.CellId) = StochasticTimeRaster.DefaultNoDataValue Then
                             arr(simulationCell.CellId) = AttrValue.Value
                         Else
                             arr(simulationCell.CellId) += AttrValue.Value
@@ -1195,7 +1195,7 @@ Partial Class STSimTransformer
 
         If Me.IsRasterStateClassTimestep(timestep) Then
 
-            Dim rastOutput As New ApexRaster
+            Dim rastOutput As New StochasticTimeRaster
             ' Fetch the raster metadata from the InpRasters object
             Me.m_InputRasters.GetMetadata(rastOutput)
             rastOutput.InitIntCells()
@@ -1208,7 +1208,7 @@ Partial Class STSimTransformer
             ' We need to remap the State Class values back to the original Raster values ( PK - > ID)
             Dim dsRemap As DataSheet = Me.Project.GetDataSheet(DATASHEET_STATECLASS_NAME)
             'DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
-            rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, ApexRaster.DEFAULT_NO_DATA_VALUE)
+            rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
             SaveStateClassOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep)
 
         End If
@@ -1228,7 +1228,7 @@ Partial Class STSimTransformer
 
         If Me.IsRasterAgeTimestep(timestep) Then
 
-            Dim rastOutput As New ApexRaster
+            Dim rastOutput As New StochasticTimeRaster
             ' Fetch the raster metadata from the InpRasters object
             Me.m_InputRasters.GetMetadata(rastOutput)
             rastOutput.InitIntCells()
@@ -1260,7 +1260,7 @@ Partial Class STSimTransformer
             ' Loop thru Transition Groups       
             For Each tg As TransitionGroup In Me.m_TransitionGroups
 
-                Dim rastOutput As New ApexRaster
+                Dim rastOutput As New StochasticTimeRaster
                 ' Fetch the raster metadata from the InpRasters object
                 Me.m_InputRasters.GetMetadata(rastOutput)
                 rastOutput.InitIntCells()
@@ -1282,7 +1282,7 @@ Partial Class STSimTransformer
                 ' If no values other than NODATAValue in rastOutput, then supress output for this timestep
                 Dim distinctVals = rastOutput.IntCells().Distinct
 
-                If (distinctVals.Count() > 1 Or (distinctVals.Count() = 1 And distinctVals(0) <> ApexRaster.DEFAULT_NO_DATA_VALUE)) Then
+                If (distinctVals.Count() > 1 Or (distinctVals.Count() = 1 And distinctVals(0) <> StochasticTimeRaster.DefaultNoDataValue)) Then
                     SaveTSTOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep, tg.TransitionGroupId.ToString(CultureInfo.InvariantCulture))
                 End If
 
@@ -1305,7 +1305,7 @@ Partial Class STSimTransformer
 
         If Me.IsRasterStratumTimestep(timestep) Then
 
-            Dim rastOutput As New ApexRaster
+            Dim rastOutput As New StochasticTimeRaster
             ' Fetch the raster metadata from the InpRasters object
             Me.m_InputRasters.GetMetadata(rastOutput)
             rastOutput.InitIntCells()
@@ -1319,7 +1319,7 @@ Partial Class STSimTransformer
             Dim dsRemap As DataSheet = Me.Project.GetDataSheet(DATASHEET_STRATA_NAME)
 
             'DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
-            rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, ApexRaster.DEFAULT_NO_DATA_VALUE)
+            rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
             SaveStratumOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep)
 
         End If
@@ -1341,7 +1341,7 @@ Partial Class STSimTransformer
 
         If (Me.IsRasterStateAttributeTimestep(timestep)) Then
 
-            Dim rastOutput As New ApexRaster
+            Dim rastOutput As New StochasticTimeRaster
             ' Fetch the raster metadata from the InpRasters object
             Me.m_InputRasters.GetMetadata(rastOutput)
 
@@ -1463,7 +1463,7 @@ Partial Class STSimTransformer
 
                     ReDim stateAttrVals(Me.m_InputRasters.NumberCells - 1)
                     For i = 0 To Me.m_InputRasters.NumberCells - 1
-                        stateAttrVals(i) = ApexRaster.DEFAULT_NO_DATA_VALUE
+                        stateAttrVals(i) = StochasticTimeRaster.DefaultNoDataValue
                     Next
 
                     ' Loop thru raster and pull out the State Attribute Value for each cell
@@ -1510,7 +1510,7 @@ Partial Class STSimTransformer
                                 Dim attrValue As Double = stateAttrVals(neighborCellId)
 
                                 ' If NO_DATA, don't include in the averaging
-                                If Not attrValue.Equals(ApexRaster.DEFAULT_NO_DATA_VALUE) Then
+                                If Not attrValue.Equals(StochasticTimeRaster.DefaultNoDataValue) Then
                                     attrValueTotal += CDbl(attrValue)
                                     attrValueCnt += 1
                                 End If
@@ -1522,7 +1522,7 @@ Partial Class STSimTransformer
                             stateAttrAvgs(i) = attrValueTotal / listNeighbors.Count
 
                         Else
-                            stateAttrAvgs(i) = ApexRaster.DEFAULT_NO_DATA_VALUE
+                            stateAttrAvgs(i) = StochasticTimeRaster.DefaultNoDataValue
                         End If
 
                     Next
@@ -1564,7 +1564,7 @@ Partial Class STSimTransformer
 
                 Dim aatp As Double() = dictAatp(timestep)
 
-                Dim rastAatp As New ApexRaster
+                Dim rastAatp As New StochasticTimeRaster
                 ' Fetch the raster metadata from the InpRasters object
                 Me.m_InputRasters.GetMetadata(rastAatp)
 
@@ -1625,7 +1625,7 @@ Partial Class STSimTransformer
         If distArray.Count() = 1 Then
 
             Dim el0 = distArray.ElementAt(0)
-            If el0.Equals(0.0) Or el0.Equals(ApexRaster.DEFAULT_NO_DATA_VALUE) Then
+            If el0.Equals(0.0) Or el0.Equals(StochasticTimeRaster.DefaultNoDataValue) Then
                 '  Debug.Print("Found all 0's or NO_DATA_VALUES")
                 Exit Sub
             End If

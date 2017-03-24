@@ -53,4 +53,13 @@ Friend Enum CardinalDirection
     NW
 End Enum
 
+''' <summary>
+''' Compare Metadata Result
+''' </summary>
+Public Enum CompareMetadataResult
+    Same
+    UnimportantDifferences
+    ImportantDifferences
+End Enum
+
 

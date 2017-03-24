@@ -8,6 +8,7 @@
 Option Strict Off
 Option Explicit Off
 
+Imports System.Globalization
 Imports SyncroSim.StochasticTime
 
 Public Class InputRasters
@@ -165,7 +166,7 @@ Public Class InputRasters
     Public ReadOnly Property NoDataValueAsInteger() As Integer
         Get
             If m_NoDataValue < Integer.MinValue Or m_NoDataValue > Integer.MaxValue Then
-                Return ApexRaster.DEFAULT_NO_DATA_VALUE
+                Return StochasticTimeRaster.DefaultNoDataValue
             Else
                 Return CInt(m_NoDataValue)
             End If
@@ -248,18 +249,18 @@ Public Class InputRasters
     ''' <summary>
     ''' Set the Raster metadata properties within the current class instance
     ''' </summary>
-    ''' <param name="rast">The source of the metadata values</param>
+    ''' <param name="raster">The source of the metadata values</param>
     ''' <remarks></remarks>
-    Public Sub SetMetadata(rast As ApexRaster)
+    Public Sub SetMetadata(raster As StochasticTimeRaster)
 
-        Me.m_numCols = rast.NumberCols
-        Me.m_numRows = rast.NumberRows
-        Me.m_cellSize = rast.CellSize
-        Me.m_cellSizeUnits = rast.CellSizeUnits
-        Me.m_XllCorner = rast.XllCorner
-        Me.m_YllCorner = rast.YllCorner
-        Me.m_NoDataValue = rast.NoDataValue
-        Me.m_projectionString = rast.ProjectionString
+        Me.m_numCols = raster.NumberCols
+        Me.m_numRows = raster.NumberRows
+        Me.m_cellSize = raster.CellSize
+        Me.m_cellSizeUnits = raster.CellSizeUnits
+        Me.m_XllCorner = raster.XllCorner
+        Me.m_YllCorner = raster.YllCorner
+        Me.m_NoDataValue = raster.NoDataValue
+        Me.m_projectionString = raster.ProjectionString
 
     End Sub
 
@@ -267,78 +268,73 @@ Public Class InputRasters
     ''' Set the metadata properties in the specified Raster object based on the current Metadata values
     ''' in the current class instance
     ''' </summary>
-    ''' <param name="rast"></param>
+    ''' <param name="raster"></param>
     ''' <remarks></remarks>
-    Public Sub GetMetadata(rast As ApexRaster)
+    Public Sub GetMetadata(raster As StochasticTimeRaster)
 
-        rast.NumberCols = m_numCols
-        rast.NumberRows = m_numRows
-        rast.CellSize = m_cellSize
-        rast.CellSizeUnits = m_cellSizeUnits
-        rast.XllCorner = m_XllCorner
-        rast.YllCorner = m_YllCorner
-        rast.NoDataValue = m_NoDataValue
-        rast.ProjectionString = m_projectionString
+        raster.NumberCols = m_numCols
+        raster.NumberRows = m_numRows
+        raster.CellSize = m_cellSize
+        raster.CellSizeUnits = m_cellSizeUnits
+        raster.XllCorner = m_XllCorner
+        raster.YllCorner = m_YllCorner
+        raster.NoDataValue = m_NoDataValue
+        raster.ProjectionString = m_projectionString
 
     End Sub
 
-    Enum CompareMetadataResult
-        Same
-        UnimportantDifferences
-        ImportantDifferences
-    End Enum
     ''' <summary>
     ''' Compare the values of the metadata properties to those of the raster argument
     ''' </summary>
-    ''' <param name="rast">A instance of class Raster</param>
+    ''' <param name="raster">A instance of class Raster</param>
     ''' <returns>An Enum containing the comparison Result</returns>
     ''' <remarks></remarks>
-    Public Function CompareMetadata(rast As ApexRaster, ByRef compareMsg As String) As CompareMetadataResult
+    Public Function CompareMetadata(raster As StochasticTimeRaster, ByRef compareMsg As String) As CompareMetadataResult
 
         Dim retVal As CompareMetadataResult = CompareMetadataResult.Same
         compareMsg = ""
 
         ' Test number of cols. 
-        If Me.NumberColumns <> rast.NumberCols Then
-            compareMsg = String.Format("Mismatch in Number of Columns ({1} vs {0})", Me.NumberColumns, rast.NumberCols)
+        If Me.NumberColumns <> raster.NumberCols Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Number of Columns ({1} vs {0})", Me.NumberColumns, raster.NumberCols)
             Return CompareMetadataResult.ImportantDifferences
         End If
 
         ' Test number of rows. 
-        If Me.NumberRows <> rast.NumberRows Then
-            compareMsg = String.Format("Mismatch in Number of Rows ({1} vs {0})", Me.NumberRows, rast.NumberRows)
+        If Me.NumberRows <> raster.NumberRows Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Number of Rows ({1} vs {0})", Me.NumberRows, raster.NumberRows)
             Return CompareMetadataResult.ImportantDifferences
         End If
 
         ' Test XLL Corner. See if NOT negligable difference - arbitrarily 1/10 of cell size. 
         ' Can't use equality, because of float error 
-        If Math.Abs(Me.XllCorner - rast.XllCorner) > (Me.CellSize / 10.0) Then
-            compareMsg = String.Format("Mismatch in XllCorner ({1} vs {0})", Me.XllCorner, rast.XllCorner)
+        If Math.Abs(Me.XllCorner - raster.XllCorner) > (Me.CellSize / 10.0) Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in XllCorner ({1} vs {0})", Me.XllCorner, raster.XllCorner)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test YLL Corner.  See if NOT negligable difference - arbitrarily 1/10 of cell size. 
         ' Can't use equality, because of float error  
-        If Math.Abs(Me.YllCorner - rast.YllCorner) > (Me.CellSize / 10.0) Then
-            compareMsg = String.Format("Mismatch in YllCorner ({1} vs {0})", Me.YllCorner, rast.YllCorner)
+        If Math.Abs(Me.YllCorner - raster.YllCorner) > (Me.CellSize / 10.0) Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in YllCorner ({1} vs {0})", Me.YllCorner, raster.YllCorner)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test ProjectionString 
-        If Me.ProjectionString <> rast.ProjectionString Then
-            compareMsg = String.Format("Mismatch in Projection String")
+        If Me.ProjectionString <> raster.ProjectionString Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Projection String")
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test Cell Size. Cant use equality because of precision errors ( eg. 30D vs 30.000000000004D)
-        If Math.Abs(Me.CellSize - rast.CellSize) > 0.0001 Then
-            compareMsg = String.Format("Mismatch in Cell Size ({1} vs {0})", Me.CellSize, rast.CellSize)
+        If Math.Abs(Me.CellSize - raster.CellSize) > 0.0001 Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Cell Size ({1} vs {0})", Me.CellSize, raster.CellSize)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test Cell Units
-        If Me.CellSizeUnits <> rast.CellSizeUnits Then
-            compareMsg = String.Format("Mismatch in Cell Size Units ({1} vs {0})", Me.CellSizeUnits, rast.CellSizeUnits)
+        If Me.CellSizeUnits <> raster.CellSizeUnits Then
+            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Cell Size Units ({1} vs {0})", Me.CellSizeUnits, raster.CellSizeUnits)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 

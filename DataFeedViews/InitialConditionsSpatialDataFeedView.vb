@@ -396,7 +396,7 @@ Class InitialConditionsSpatialDataFeedView
     ''' <param name="rast">The incoming raster</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Shared Function VerifyRaster(ByVal dr As DataRow, ByVal rast As ApexRaster) As Boolean
+    Private Shared Function VerifyRaster(ByVal dr As DataRow, ByVal rast As StochasticTimeRaster) As Boolean
 
         ' Test number of cols. 
         If rast.NumberCols <> DataTableUtilities.GetDataInt(dr(DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME)) Then
@@ -419,7 +419,7 @@ Class InitialConditionsSpatialDataFeedView
 
 
 
-    Private Sub EditICSpatialRecord(ByVal rast As ApexRaster, ByVal fileColumnNumber As Integer, fileRowNumber As Integer, ByVal rasterFileName As String)
+    Private Sub EditICSpatialRecord(ByVal rast As StochasticTimeRaster, ByVal fileColumnNumber As Integer, fileRowNumber As Integer, ByVal rasterFileName As String)
 
         Dim dsICSProp As DataSheet = Me.GetPropDataSheet()
         Dim drProp As DataRow = dsICSProp.GetDataRow()
@@ -470,10 +470,10 @@ Class InitialConditionsSpatialDataFeedView
 
         Using h As New HourGlass
 
-            Dim rast As New ApexRaster
+            Dim rast As New StochasticTimeRaster
 
             Try
-                RasterFiles.LoadRasterFile(rasterFilename, rast, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(rasterFilename, rast, RasterDataType.DTInteger)
             Catch e As GdalException
                 FormsUtilities.ErrorMessageBox(e.Message)
                 Return
@@ -509,14 +509,14 @@ Class InitialConditionsSpatialDataFeedView
         srcSizeUnits = Replace(srcSizeUnits, " ", "_")    ' replace space with an underscore
         Select Case srcSizeUnits.ToUpper(CultureInfo.InvariantCulture)  ' Use Case insenstive comparison
             ' Convert from ft^2 to M2
-            Case RasterCellSizeUnits.Foot.ToString().ToUpper(CultureInfo.InvariantCulture), RasterCellSizeUnits.Foot_US.ToString().ToUpper(CultureInfo.InvariantCulture), RasterCellSizeUnits.US_survey_foot.ToString().ToUpper(CultureInfo.InvariantCulture)
+            Case RasterCellSizeUnit.Foot.ToString().ToUpper(CultureInfo.InvariantCulture), RasterCellSizeUnit.Foot_US.ToString().ToUpper(CultureInfo.InvariantCulture), RasterCellSizeUnit.US_survey_foot.ToString().ToUpper(CultureInfo.InvariantCulture)
                 convFactor = 0.092903
-            Case RasterCellSizeUnits.Metre.ToString().ToUpper(CultureInfo.InvariantCulture),
-                RasterCellSizeUnits.Meter.ToString().ToUpper(CultureInfo.InvariantCulture),
-                RasterCellSizeUnits.Meters.ToString().ToUpper(CultureInfo.InvariantCulture)
+            Case RasterCellSizeUnit.Metre.ToString().ToUpper(CultureInfo.InvariantCulture),
+                RasterCellSizeUnit.Meter.ToString().ToUpper(CultureInfo.InvariantCulture),
+                RasterCellSizeUnit.Meters.ToString().ToUpper(CultureInfo.InvariantCulture)
                 ' No conversion needed for Meters
                 convFactor = 1
-            Case RasterCellSizeUnits.Undefined.ToString().ToUpper(CultureInfo.InvariantCulture), RasterCellSizeUnits.Undetermined.ToString().ToUpper(CultureInfo.InvariantCulture)
+            Case RasterCellSizeUnit.Undefined.ToString().ToUpper(CultureInfo.InvariantCulture), RasterCellSizeUnit.Undetermined.ToString().ToUpper(CultureInfo.InvariantCulture)
                 Return 0
         End Select
 

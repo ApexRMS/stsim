@@ -11,7 +11,7 @@ Imports SyncroSim.StochasticTime
 ''' <remarks></remarks>
 Friend Class TgapMerge
 
-    Dim m_rasterMerge As ApexRaster
+    Dim m_rasterMerge As StochasticTimeRaster
 
     ''' <summary>
     ''' Arithmetically merge the specified TGAP (Average Annual Transition Probability)  raster with previous raster merges. Call this method once for every TGAP raster file you 
@@ -23,13 +23,13 @@ Friend Class TgapMerge
     ''' all merged files should be consistent in this regard.</remarks>
     Public Sub Merge(ByVal inpRasterFileName As String, numIterations As Integer)
 
-        Dim rastInput As New ApexRaster
-        Dim dataType As RasterDataType = RasterDataType.dtDouble
+        Dim rastInput As New StochasticTimeRaster
+        Dim dataType As RasterDataType = RasterDataType.DTDouble
 
         ' 1st time thru?
         If m_rasterMerge Is Nothing Then
 
-            m_rasterMerge = New ApexRaster()
+            m_rasterMerge = New StochasticTimeRaster()
             RasterFiles.LoadRasterFile(inpRasterFileName, m_rasterMerge, dataType)
 
             ' Apply the numIterations to each cell
@@ -75,7 +75,7 @@ Friend Class TgapMerge
         End If
 
         'DEVNOTE: Use Default NODATA_Value for all spatial output raster files
-        m_rasterMerge.NoDataValue = ApexRaster.DEFAULT_NO_DATA_VALUE
+        m_rasterMerge.NoDataValue = StochasticTimeRaster.DefaultNoDataValue
 
         If Not RasterFiles.ProcessDoubleRasterToFile(m_rasterMerge, mergedRasterOutputFilename, compressionType) Then
             Dim sMsg As String = String.Format(CultureInfo.CurrentCulture, "Unable to process merged raster file '{0}'", mergedRasterOutputFilename)

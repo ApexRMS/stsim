@@ -6,7 +6,9 @@
 '************************************************************************************
 
 Imports SyncroSim.Core
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class STSimConsole
     Inherits SyncroSimConsole
 

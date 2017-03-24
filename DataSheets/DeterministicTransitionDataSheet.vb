@@ -6,7 +6,9 @@
 '************************************************************************************
 
 Imports SyncroSim.Core
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class DeterministicTransitionDataSheet
     Inherits DataSheet
 
@@ -151,7 +153,7 @@ Class DeterministicTransitionDataSheet
 
         Dim Analyzer As New DTAnalyzer(Me.GetData(), Me.Project)
 
-        If (Me.ResolveDeterministicTransitions(analyzer)) Then
+        If (Me.ResolveDeterministicTransitions(Analyzer)) Then
             Me.Changes.Add(New ChangeRecord(Me, "DT OnRowsDeleted Modified DT Rows"))
         End If
 

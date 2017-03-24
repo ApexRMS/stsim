@@ -9,7 +9,9 @@ Imports System.IO
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
 Imports SyncroSim.Common.Forms
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class SlopeMultiplierDataFeedView
 
     Protected Overrides Sub InitializeView()

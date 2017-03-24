@@ -68,19 +68,19 @@ Friend Class InitialConditionsDistributionCollection
                 Continue For
             End If
 
-            If cell.StateClassId <> ApexRaster.DEFAULT_NO_DATA_VALUE Then
+            If cell.StateClassId <> StochasticTimeRaster.DefaultNoDataValue Then
                 If cell.StateClassId <> icd.StateClassId Then
                     Continue For
                 End If
             End If
 
-            If cell.SecondaryStratumId <> ApexRaster.DEFAULT_NO_DATA_VALUE Then
+            If cell.SecondaryStratumId <> StochasticTimeRaster.DefaultNoDataValue Then
                 If cell.SecondaryStratumId <> icd.SecondaryStratumId Then
                     Continue For
                 End If
             End If
 
-            If cell.Age <> ApexRaster.DEFAULT_NO_DATA_VALUE Then
+            If cell.Age <> StochasticTimeRaster.DefaultNoDataValue Then
                 If cell.Age < icd.AgeMin Or cell.Age > icd.AgeMax Then
                     Continue For
                 End If

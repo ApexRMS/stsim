@@ -14,23 +14,6 @@ Friend Class InitialConditionsSpatialCollection
     Inherits Collection(Of InitialConditionsSpatial)
 
     ''' <summary>
-    ''' Get a collection of InitialConditionSpatial objects for the specified Iteration
-    ''' </summary>
-    ''' <param name="iteration"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function GetForIteration(iteration As Nullable(Of Integer)) As InitialConditionsSpatialCollection
-        Dim icds As New InitialConditionsSpatialCollection
-        For Each icd In Me
-            If (Nullable.Equals(icd.Iteration, iteration)) Then
-                icds.Add(icd)
-            End If
-        Next
-
-        Return icds
-    End Function
-
-    ''' <summary>
     ''' Get a Sorted List of Iterations contained in this collection
     ''' </summary>
     ''' <returns>A list of iterations</returns>

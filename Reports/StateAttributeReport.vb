@@ -8,8 +8,10 @@
 Imports SyncroSim.Core
 Imports System.Globalization
 Imports SyncroSim.Core.Forms
+Imports System.Reflection
 
-Class TransitionAttributeReport
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
+Class StateAttributeReport
     Inherits ExportTransformer
 
     Protected Overrides Sub Export(location As String, exportType As ExportType)
@@ -21,7 +23,7 @@ Class TransitionAttributeReport
         Dim columns As ExportColumnCollection = Me.CreateColumnCollection()
 
         If (exportType = ExportType.ExcelFile) Then
-            Me.ExcelExport(location, columns, Me.CreateReportQuery(False), "Transition Based Attributes")
+            Me.ExcelExport(location, columns, Me.CreateReportQuery(False), "State Based Attributes")
         Else
 
             columns.Remove("ScenarioName")
@@ -43,6 +45,7 @@ Class TransitionAttributeReport
         Dim SecondaryStratumLabel As String = Nothing
         Dim dsterm As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
         Dim TimestepLabel As String = GetTimestepUnits(Me.Project)
+
         GetStratumLabelTerminology(dsterm, PrimaryStratumLabel, SecondaryStratumLabel)
 
         c.Add(New ExportColumn("ScenarioID", "Scenario ID"))
@@ -71,27 +74,27 @@ Class TransitionAttributeReport
 
             Return String.Format(CultureInfo.InvariantCulture,
                 "SELECT " &
-                "STSim_OutputTransitionAttribute.ScenarioID, " &
-                "STSim_OutputTransitionAttribute.Iteration,  " &
-                "STSim_OutputTransitionAttribute.Timestep,  " &
+                "STSim_OutputStateAttribute.ScenarioID, " &
+                "STSim_OutputStateAttribute.Iteration,  " &
+                "STSim_OutputStateAttribute.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
-                "STSim_TransitionAttributeType.Name as AttributeType, " &
-                "STSim_OutputTransitionAttribute.AgeMin, " &
-                "STSim_OutputTransitionAttribute.AgeMax, " &
-                "STSim_OutputTransitionAttribute.Amount " &
-                "FROM STSim_OutputTransitionAttribute " &
-                "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputTransitionAttribute.StratumID " &
-                "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputTransitionAttribute.SecondaryStratumID " &
-                "INNER JOIN STSim_TransitionAttributeType ON STSim_TransitionAttributeType.TransitionAttributeTypeID = STSim_OutputTransitionAttribute.TransitionAttributeTypeID " &
-                "WHERE STSim_OutputTransitionAttribute.ScenarioID IN ({0})  " &
+                "STSim_StateAttributeType.Name as AttributeType, " &
+                "STSim_OutputStateAttribute.AgeMin, " &
+                "STSim_OutputStateAttribute.AgeMax, " &
+                "STSim_OutputStateAttribute.Amount " &
+                "FROM STSim_OutputStateAttribute " &
+                "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStateAttribute.StratumID " &
+                "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStateAttribute.SecondaryStratumID " &
+                "INNER JOIN STSim_StateAttributeType ON STSim_StateAttributeType.StateAttributeTypeID = STSim_OutputStateAttribute.StateAttributeTypeID " &
+                "WHERE STSim_OutputStateAttribute.ScenarioID IN ({0})  " &
                 "ORDER BY " &
-                "STSim_OutputTransitionAttribute.ScenarioID, " &
-                "STSim_OutputTransitionAttribute.Iteration, " &
-                "STSim_OutputTransitionAttribute.Timestep, " &
+                "STSim_OutputStateAttribute.ScenarioID, " &
+                "STSim_OutputStateAttribute.Iteration, " &
+                "STSim_OutputStateAttribute.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
-                "STSim_TransitionAttributeType.Name, " &
+                "STSim_StateAttributeType.Name, " &
                 "AgeMin, " &
                 "AgeMax",
                 ScenFilter)
@@ -100,30 +103,30 @@ Class TransitionAttributeReport
 
             Return String.Format(CultureInfo.InvariantCulture,
                 "SELECT " &
-                "STSim_OutputTransitionAttribute.ScenarioID, " &
+                "STSim_OutputStateAttribute.ScenarioID, " &
                 "SSim_Scenario.Name AS ScenarioName,  " &
-                "STSim_OutputTransitionAttribute.Iteration,  " &
-                "STSim_OutputTransitionAttribute.Timestep,  " &
+                "STSim_OutputStateAttribute.Iteration,  " &
+                "STSim_OutputStateAttribute.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
-                "STSim_TransitionAttributeType.Name as AttributeType, " &
-                "STSim_OutputTransitionAttribute.AgeMin, " &
-                "STSim_OutputTransitionAttribute.AgeMax, " &
-                "STSim_OutputTransitionAttribute.Amount " &
-                "FROM STSim_OutputTransitionAttribute " &
-                "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputTransitionAttribute.ScenarioID " &
-                "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputTransitionAttribute.StratumID " &
-                "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputTransitionAttribute.SecondaryStratumID " &
-                "INNER JOIN STSim_TransitionAttributeType ON STSim_TransitionAttributeType.TransitionAttributeTypeID = STSim_OutputTransitionAttribute.TransitionAttributeTypeID " &
-                "WHERE STSim_OutputTransitionAttribute.ScenarioID IN ({0})  " &
+                "STSim_StateAttributeType.Name as AttributeType, " &
+                "STSim_OutputStateAttribute.AgeMin, " &
+                "STSim_OutputStateAttribute.AgeMax, " &
+                "STSim_OutputStateAttribute.Amount " &
+                "FROM STSim_OutputStateAttribute " &
+                "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputStateAttribute.ScenarioID " &
+                "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStateAttribute.StratumID " &
+                "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStateAttribute.SecondaryStratumID " &
+                "INNER JOIN STSim_StateAttributeType ON STSim_StateAttributeType.StateAttributeTypeID = STSim_OutputStateAttribute.StateAttributeTypeID " &
+                "WHERE STSim_OutputStateAttribute.ScenarioID IN ({0})  " &
                 "ORDER BY " &
-                "STSim_OutputTransitionAttribute.ScenarioID, " &
+                "STSim_OutputStateAttribute.ScenarioID, " &
                 "SSim_Scenario.Name, " &
-                "STSim_OutputTransitionAttribute.Iteration, " &
-                "STSim_OutputTransitionAttribute.Timestep, " &
+                "STSim_OutputStateAttribute.Iteration, " &
+                "STSim_OutputStateAttribute.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
-                "STSim_TransitionAttributeType.Name, " &
+                "STSim_StateAttributeType.Name, " &
                 "AgeMin, " &
                 "AgeMax",
                 ScenFilter)

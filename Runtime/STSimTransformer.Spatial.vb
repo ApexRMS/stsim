@@ -206,7 +206,7 @@ Partial Class STSimTransformer
 
             Dim attrVals As Double() = Me.m_TransitionAdjacencyStateAttributeValueMap(transitionGroupId)
 
-            If attrVals(cell.CellId) = ApexRaster.DEFAULT_NO_DATA_VALUE Then
+            If attrVals(cell.CellId) = StochasticTimeRaster.DefaultNoDataValue Then
                 Return Nothing
             Else
                 Return attrVals(cell.CellId)
@@ -273,7 +273,7 @@ Partial Class STSimTransformer
                 ReDim transitionPixel(Me.m_InputRasters.NumberCells - 1)
                 ' initialize to DEFAULT_NO_DATA_VLAUE
                 For i = 0 To Me.m_InputRasters.NumberCells - 1
-                    transitionPixel(i) = ApexRaster.DEFAULT_NO_DATA_VALUE
+                    transitionPixel(i) = StochasticTimeRaster.DefaultNoDataValue
                 Next
 
             End If
@@ -308,7 +308,7 @@ Partial Class STSimTransformer
                 'Initialize array to ApexRaster.DEFAULT_NO_DATA_VALUE
 
                 For i As Integer = 0 To Me.m_InputRasters.NumberCells - 1
-                    arr(i) = ApexRaster.DEFAULT_NO_DATA_VALUE
+                    arr(i) = StochasticTimeRaster.DefaultNoDataValue
                 Next
 
                 dict.Add(id, arr)
@@ -1532,9 +1532,9 @@ Partial Class STSimTransformer
             ' Load the Primary Stratum Raster
             Dim rasterFileName As String = ics.PrimaryStratumFileName
             Dim fullFileName As String = RasterFiles.GetInputFileName(dsIC, rasterFileName, False)
-            Dim raster As New ApexRaster
+            Dim raster As New StochasticTimeRaster
 
-            RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.dtInteger)
+            RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger)
 
             ' Now lets remap the ID's in the raster to the Stratum PK values
             dsRemap = Me.Project.GetDataSheet(DATASHEET_STRATA_NAME)
@@ -1544,14 +1544,14 @@ Partial Class STSimTransformer
             If StateClassDefined Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, ics.StateClassFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger)
 
                 ' Now lets remap the ID's in the raster to the State Class PK values
                 dsRemap = Me.Project.GetDataSheet(DATASHEET_STATECLASS_NAME)
                 stateclass_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME)
 
                 If stateclass_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New Exception(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
+                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
                 End If
 
             End If
@@ -1560,12 +1560,12 @@ Partial Class STSimTransformer
             If AgeDefined Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, ics.AgeFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger)
 
                 age_cells = raster.IntCells
 
                 If age_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New Exception(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
+                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
                 End If
 
             End If
@@ -1574,14 +1574,14 @@ Partial Class STSimTransformer
             If SecondaryStratumDefined Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, ics.SecondaryStratumFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger)
 
                 ' Now lets remap the ID's in the raster to the Secondary Stratum PK values
                 dsRemap = Me.Project.GetDataSheet(DATASHEET_SECONDARY_STRATA_NAME)
                 secondary_stratum_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME)
 
                 If secondary_stratum_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New Exception(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
+                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
                 End If
 
             End If
@@ -1595,19 +1595,19 @@ Partial Class STSimTransformer
                 If StateClassDefined Then
                     c.StateClassId = stateclass_cells(CellId)
                 Else
-                    c.StateClassId = ApexRaster.DEFAULT_NO_DATA_VALUE
+                    c.StateClassId = StochasticTimeRaster.DefaultNoDataValue
                 End If
 
                 If AgeDefined Then
                     c.Age = age_cells(CellId)
                 Else
-                    c.Age = ApexRaster.DEFAULT_NO_DATA_VALUE
+                    c.Age = StochasticTimeRaster.DefaultNoDataValue
                 End If
 
                 If SecondaryStratumDefined Then
                     c.SecondaryStratumId = secondary_stratum_cells(CellId)
                 Else
-                    c.SecondaryStratumId = ApexRaster.DEFAULT_NO_DATA_VALUE
+                    c.SecondaryStratumId = StochasticTimeRaster.DefaultNoDataValue
                 End If
 
                 cells.Add(c)
@@ -1715,7 +1715,7 @@ Partial Class STSimTransformer
         Dim units As TerminologyUnit
         GetAmountLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), amountlabel, units)
 
-        Dim cellSizeUnits As String = RasterCellSizeUnits.Meter.ToString()
+        Dim cellSizeUnits As String = RasterCellSizeUnit.Meter.ToString()
         Dim convFactor As Double = InitialConditionsSpatialDataFeedView.CalcCellArea(1.0, cellSizeUnits, units)
         Dim cellArea As Double = cellSizeTermUnits / convFactor
 
@@ -1757,7 +1757,7 @@ Partial Class STSimTransformer
 
         ' OK, we've got an Initialized cells collection. So now lets create the Initial Condition rasters as required.
         Dim numValidCells As Integer = cells.Count
-        Dim rst As New ApexRaster
+        Dim rst As New StochasticTimeRaster
 
 
         ' Get the IC Spatial properties
@@ -1805,7 +1805,7 @@ Partial Class STSimTransformer
 
             ' We need to remap the Primary Stratum PK to the Raster values ( PK - > ID)
             dsRemap = Me.Project.GetDataSheet(DATASHEET_STRATA_NAME)
-            rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, ApexRaster.DEFAULT_NO_DATA_VALUE)
+            rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
 
             filename = SavePrimaryStratumInputRaster(rst, Me.ResultScenario, iterVal, 0)
             File.SetAttributes(filename, FileAttributes.Normal)
@@ -1825,7 +1825,7 @@ Partial Class STSimTransformer
 
             ' We need to remap the State Class PK to the Raster values ( PK - > ID)
             dsRemap = Me.Project.GetDataSheet(DATASHEET_STATECLASS_NAME)
-            rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, ApexRaster.DEFAULT_NO_DATA_VALUE)
+            rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
 
             filename = SaveStateClassInputRaster(rst, Me.ResultScenario, iterVal, 0)
             File.SetAttributes(filename, FileAttributes.Normal)
@@ -1845,11 +1845,11 @@ Partial Class STSimTransformer
             Next
 
             ' Test the 2nd stratum has values worth exporting
-            If rst.IntCells.Distinct().Count() > 1 Or rst.IntCells(0) <> ApexRaster.DEFAULT_NO_DATA_VALUE Then
+            If rst.IntCells.Distinct().Count() > 1 Or rst.IntCells(0) <> StochasticTimeRaster.DefaultNoDataValue Then
 
                 ' We need to remap the Stratum PK to the Raster values ( PK - > ID)
                 dsRemap = Me.Project.GetDataSheet(DATASHEET_SECONDARY_STRATA_NAME)
-                rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, ApexRaster.DEFAULT_NO_DATA_VALUE)
+                rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
 
                 filename = SaveSecondaryStratumInputRaster(rst, Me.ResultScenario, iterVal, 0)
                 File.SetAttributes(filename, FileAttributes.Normal)
@@ -2063,11 +2063,11 @@ Partial Class STSimTransformer
 
         Debug.Assert(Me.IsSpatial)
 
-        Dim rastSclass As New ApexRaster
-        Dim rastPrimaryStratum As New ApexRaster
-        Dim rastSecondaryStratum As New ApexRaster    ' Secondary Stratum
-        Dim rastAge As New ApexRaster
-        Dim rastDem As New ApexRaster
+        Dim rastSclass As New StochasticTimeRaster
+        Dim rastPrimaryStratum As New StochasticTimeRaster
+        Dim rastSecondaryStratum As New StochasticTimeRaster    ' Secondary Stratum
+        Dim rastAge As New StochasticTimeRaster
+        Dim rastDem As New StochasticTimeRaster
         Dim inpRasts As InputRasters = Me.m_InputRasters
         Dim sMsg As String
 
@@ -2090,7 +2090,7 @@ Partial Class STSimTransformer
             If rasterFileName <> inpRasts.StateClassName Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, rastSclass, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, rastSclass, RasterDataType.DTInteger)
 
                 inpRasts.StateClassName = rasterFileName
                 ' Now lets remap the ID's in the raster to the SClass PK values
@@ -2112,7 +2112,7 @@ Partial Class STSimTransformer
             If rasterFileName <> inpRasts.PrimaryStratumName Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, rastPrimaryStratum, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, rastPrimaryStratum, RasterDataType.DTInteger)
 
                 ' Only set the metadata the 1st time thru
                 If inpRasts.PrimaryStratumName = "" Then
@@ -2146,7 +2146,7 @@ Partial Class STSimTransformer
             If rasterFileName <> inpRasts.SecondaryStratumName Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, rastSecondaryStratum, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, rastSecondaryStratum, RasterDataType.DTInteger)
                 inpRasts.SecondaryStratumName = rasterFileName
                 ' Now lets remap the ID's in the raster to the Secondary Stratum PK values
                 Dim dsRemap As DataSheet = Me.Project.GetDataSheet(DATASHEET_SECONDARY_STRATA_NAME)
@@ -2167,7 +2167,7 @@ Partial Class STSimTransformer
             If rasterFileName <> inpRasts.AgeName Then
 
                 fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, False)
-                RasterFiles.LoadRasterFile(fullFileName, rastAge, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(fullFileName, rastAge, RasterDataType.DTInteger)
                 inpRasts.AgeName = rasterFileName
                 inpRasts.AgeCells = rastAge.IntCells
 
@@ -2190,7 +2190,7 @@ Partial Class STSimTransformer
                 If rasterFileName <> inpRasts.DemName Then
 
                     fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, False)
-                    RasterFiles.LoadRasterFile(fullFileName, rastDem, RasterDataType.dtDouble)
+                    RasterFiles.LoadRasterFile(fullFileName, rastDem, RasterDataType.DTDouble)
 
                     inpRasts.DemName = rasterFileName
                     inpRasts.DemCells = rastDem.DblCells
@@ -2204,16 +2204,16 @@ Partial Class STSimTransformer
         End If
 
         ' Compare the rasters to make sure meta data matches. Note that we might not have loaded a raster because one of the same name already loaded for a previous iteration.
-        Dim cmpResult As InputRasters.CompareMetadataResult
+        Dim cmpResult As CompareMetadataResult
         Dim cmpMsg As String = ""
 
         ' Primary Stratum
         If rastPrimaryStratum.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastPrimaryStratum, cmpMsg)
-            If cmpResult = InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpResult = CompareMetadataResult.ImportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.PrimaryStratumName, cmpMsg)
                 Throw New STSimException(sMsg)
-            ElseIf cmpResult = InputRasters.CompareMetadataResult.UnimportantDifferences Then
+            ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.PrimaryStratumName, cmpMsg)
                 Me.AddStatusRecord(StatusRecordType.Information, sMsg)
             End If
@@ -2222,10 +2222,10 @@ Partial Class STSimTransformer
         ' SClass is mandatory
         If rastSclass.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastSclass, cmpMsg)
-            If cmpResult = InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpResult = CompareMetadataResult.ImportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.StateClassName, cmpMsg)
                 Throw New STSimException(sMsg)
-            ElseIf cmpResult = InputRasters.CompareMetadataResult.UnimportantDifferences Then
+            ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.StateClassName, cmpMsg)
                 Me.AddStatusRecord(StatusRecordType.Information, sMsg)
             End If
@@ -2234,10 +2234,10 @@ Partial Class STSimTransformer
         ' Age
         If rastAge.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastAge, cmpMsg)
-            If cmpResult = InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpResult = CompareMetadataResult.ImportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.AgeName, cmpMsg)
                 Throw New STSimException(sMsg)
-            ElseIf cmpResult = InputRasters.CompareMetadataResult.UnimportantDifferences Then
+            ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.AgeName, cmpMsg)
                 Me.AddStatusRecord(StatusRecordType.Information, sMsg)
             End If
@@ -2246,10 +2246,10 @@ Partial Class STSimTransformer
         'Secondary Stratum
         If rastSecondaryStratum.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastSecondaryStratum, cmpMsg)
-            If cmpResult = InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpResult = CompareMetadataResult.ImportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.SecondaryStratumName, cmpMsg)
                 Throw New STSimException(sMsg)
-            ElseIf cmpResult = InputRasters.CompareMetadataResult.UnimportantDifferences Then
+            ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.SecondaryStratumName, cmpMsg)
                 Me.AddStatusRecord(StatusRecordType.Information, sMsg)
             End If
@@ -2258,10 +2258,10 @@ Partial Class STSimTransformer
         'DEM 
         If rastDem.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastDem, cmpMsg)
-            If cmpResult = InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpResult = CompareMetadataResult.ImportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.DemName, cmpMsg)
                 Throw New STSimException(sMsg)
-            ElseIf cmpResult = InputRasters.CompareMetadataResult.UnimportantDifferences Then
+            ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.DemName, cmpMsg)
                 Me.AddStatusRecord(StatusRecordType.Information, sMsg)
             End If
@@ -2307,7 +2307,7 @@ Partial Class STSimTransformer
                     For i = 0 To Me.m_InputRasters.NumberCells - 1
 
                         If Not Me.Cells.Contains(i) Then
-                            aatp(i) = ApexRaster.DEFAULT_NO_DATA_VALUE
+                            aatp(i) = StochasticTimeRaster.DefaultNoDataValue
                         Else
                             aatp(i) = 0
                         End If

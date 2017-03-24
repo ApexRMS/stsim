@@ -5,9 +5,11 @@
 '
 '************************************************************************************
 
+Imports System.Reflection
 Imports System.Windows.Forms
 Imports SyncroSim.Core.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class AgeGroupDataFeedView
 
     Private m_Grid As DataGridView

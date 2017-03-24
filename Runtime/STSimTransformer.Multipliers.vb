@@ -178,7 +178,7 @@ Partial Class STSimTransformer
 
                         If (Me.m_TransitionSpatialMultiplierRasters.ContainsKey(tsmr.FileName)) Then
 
-                            Dim rastMult As ApexRaster = Me.m_TransitionSpatialMultiplierRasters(tsmr.FileName)
+                            Dim rastMult As StochasticTimeRaster = Me.m_TransitionSpatialMultiplierRasters(tsmr.FileName)
                             Dim spatialMult As Double = rastMult.DblCells(cellId)
 
                             'Test for NODATA_VALUE
@@ -232,7 +232,7 @@ Partial Class STSimTransformer
 
                     If (Me.m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(tsmr.FileName)) Then
 
-                        Dim rastMult As ApexRaster = Me.m_TransitionSpatialInitiationMultiplierRasters(tsmr.FileName)
+                        Dim rastMult As StochasticTimeRaster = Me.m_TransitionSpatialInitiationMultiplierRasters(tsmr.FileName)
                         Dim spatialMult As Double = rastMult.DblCells(cellId)
 
                         'Test for NODATA_VALUE

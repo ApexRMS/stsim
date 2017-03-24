@@ -19,30 +19,6 @@ Module ExceptionUtils
     End Sub
 
     ''' <summary>
-    ''' Throws an argument Null exception
-    ''' </summary>
-    ''' <param name="message"></param>
-    Public Sub ThrowArgumentNullException(message As [String])
-        ThrowArgumentNullException(message, New Object() {})
-    End Sub
-
-    ''' <summary>
-    ''' Throws an argument Null exception
-    ''' </summary>
-    ''' <param name="message"></param>
-    Public Sub ThrowArgumentNullException(message As [String], ParamArray args As Object())
-        Throw New ArgumentNullException(String.Format(CultureInfo.CurrentCulture, message, args))
-    End Sub
-
-    ''' <summary>
-    ''' Throws an invalid operation exception
-    ''' </summary>
-    ''' <param name="message"></param>
-    Public Sub ThrowInvalidOperationException(message As [String])
-        ThrowInvalidOperationException(message, New Object() {})
-    End Sub
-
-    ''' <summary>
     ''' Throws an invalid operation exception
     ''' </summary>
     ''' <param name="message"></param>

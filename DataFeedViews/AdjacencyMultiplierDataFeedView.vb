@@ -5,8 +5,10 @@
 '
 '************************************************************************************
 
+Imports System.Reflection
 Imports SyncroSim.Core.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class AdjacencyMultiplierDataFeedView
 
     Protected Overrides Sub InitializeView()

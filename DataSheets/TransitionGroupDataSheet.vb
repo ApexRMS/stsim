@@ -7,7 +7,9 @@
 
 Imports SyncroSim.Core
 Imports System.Globalization
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionGroupDataSheet
     Inherits DataSheet
 
@@ -44,7 +46,7 @@ Class TransitionGroupDataSheet
 
     Private Shared Sub ValidateName(ByVal name As String)
 
-        If (name.EndsWith(AUTO_COLUMN_SUFFIX)) Then
+        If (name.EndsWith(AUTO_COLUMN_SUFFIX, StringComparison.Ordinal)) Then
 
             Dim msg As String = String.Format(CultureInfo.CurrentCulture,
                 "The transition group name cannot have the suffix: '{0}'.", AUTO_COLUMN_SUFFIX)

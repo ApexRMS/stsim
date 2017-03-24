@@ -6,21 +6,22 @@
 '************************************************************************************
 
 Imports System.Globalization
+Imports System.Reflection
 Imports System.Text.RegularExpressions
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
 Imports SyncroSim.StochasticTime.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TSTRasterMap
     Inherits StochasticTimeExportTransformer
 
     Protected Overrides Sub Export(location As String, exportType As ExportType)
 
         Dim fileFilterRegex As String = ".*" & SPATIAL_MAP_TST_VARIABLE_NAME & "\.(tif|vrt)$"
-        Me.CopyRasterFiles(Me.GetActiveResultScenarios(), fileFilterRegex, location, AddressOf CreateExportFilename)
+        StochasticTimeExportTransformer.CopyRasterFiles(Me.GetActiveResultScenarios(), fileFilterRegex, location, AddressOf CreateExportFilename)
 
     End Sub
-
 
     ''' <summary>
     ''' Create a TST (Time Since Transition) filename using the export filename convention. This involves replacing the Id with the Transition 
@@ -30,7 +31,6 @@ Class TSTRasterMap
     ''' <returns>The filename as it appears in the external filenaming convention</returns>
     ''' <remarks>Internal file convention is Itx-Tsy-tg-z-tst.tif. External convention is ...Tg-TransitionGroup-Tst.tif</remarks>
     Private Function CreateExportFilename(ByVal filename As String) As String
-
 
         ' Pull the Id out of the filename, and convert a name
         Dim m As Match = Regex.Match(filename, "^(.*)" & SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-([\d]*)-" & SPATIAL_MAP_TST_VARIABLE_NAME & "\.(tif|vrt)")

@@ -7,7 +7,9 @@
 
 Imports SyncroSim.Core
 Imports System.Globalization
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class STSimUpdates
     Inherits UpdateProvider
 
@@ -1963,7 +1965,7 @@ Class STSimUpdates
                     "CREATE TABLE STSim_InitialConditionsSpatialProperties (InitialConditionsSpatialPropertiesID INTEGER PRIMARY KEY AUTOINCREMENT,ScenarioID INTEGER,NumRows INTEGER,NumColumns INTEGER,NumCells INTEGER,CellSize DOUBLE,CellSizeUnits TEXT,CellArea DOUBLE,CellAreaOverride INTEGER,XLLCorner DOUBLE,YLLCorner DOUBLE,SRS TEXT)"
             store.ExecuteNonQuery(sSQL)
 
-            sSQL = "insert into STSim_InitialConditionsSpatialProperties(ScenarioID,NumRows,NumColumns,NumCells,CellSize,CellSizeUnits,CellArea,CellAreaOverride,XLLCorner,YLLCorner,SRS) " & _
+            sSQL = "insert into STSim_InitialConditionsSpatialProperties(ScenarioID,NumRows,NumColumns,NumCells,CellSize,CellSizeUnits,CellArea,CellAreaOverride,XLLCorner,YLLCorner,SRS) " &
                 "select ScenarioID,NumRows,NumColumns,NumCells,CellSize,CellSizeUnits,CellArea,CellAreaOverride,XLLCorner,YLLCorner,SRS from TEMP_TABLE"
             store.ExecuteNonQuery(sSQL)
 
@@ -2031,7 +2033,7 @@ Class STSimUpdates
     ''' STSim_DeterministicTransition
     ''' </remarks>
     Private Shared Sub STSIM0000055(ByVal store As DataStore)
- 
+
         If (store.TableExists("STSim_Transition")) Then
 
             store.ExecuteNonQuery("ALTER TABLE STSim_Transition RENAME TO TEMP_TABLE")

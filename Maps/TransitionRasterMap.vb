@@ -10,14 +10,16 @@ Imports SyncroSim.Core.Forms
 Imports System.Globalization
 Imports System.Text.RegularExpressions
 Imports SyncroSim.StochasticTime.Forms
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionRasterMap
     Inherits StochasticTimeExportTransformer
 
     ReadOnly fileFilterRegex As String = String.Format(CultureInfo.CurrentCulture, FILE_FILTER_ID_REGEX, SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX)
 
     Protected Overrides Sub Export(location As String, exportType As ExportType)
-        Me.CopyRasterFiles(Me.GetActiveResultScenarios(), fileFilterRegex, location, AddressOf CreateExportFilename)
+        StochasticTimeExportTransformer.CopyRasterFiles(Me.GetActiveResultScenarios(), fileFilterRegex, location, AddressOf CreateExportFilename)
     End Sub
 
     ''' <summary>

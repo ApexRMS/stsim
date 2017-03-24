@@ -9,7 +9,9 @@ Imports SyncroSim.Core
 Imports System.Globalization
 Imports SyncroSim.Core.Forms
 Imports System.Windows.Forms
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class InitialConditionsNonSpatialDataFeedView
 
     Protected Overrides Sub InitializeView()

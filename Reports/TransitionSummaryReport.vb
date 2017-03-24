@@ -8,7 +8,9 @@
 Imports SyncroSim.Core
 Imports System.Globalization
 Imports SyncroSim.Core.Forms
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionSummaryReport
     Inherits ExportTransformer
 

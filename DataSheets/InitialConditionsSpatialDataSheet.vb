@@ -5,9 +5,11 @@
 '
 '************************************************************************************
 
+Imports System.Reflection
 Imports SyncroSim.Core
 Imports SyncroSim.StochasticTime
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class InitialConditionsSpatialDataSheet
     Inherits DataSheet
 
@@ -30,10 +32,10 @@ Class InitialConditionsSpatialDataSheet
             Dim psFilename As String = data.Rows(0).Item(DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME).ToString()
             psFilename = RasterFiles.GetInputFileName(dsICS, psFilename, True)
 
-            Dim rast As New ApexRaster
+            Dim rast As New StochasticTimeRaster
 
             Try
-                RasterFiles.LoadRasterFile(psFilename, rast, RasterDataType.dtInteger)
+                RasterFiles.LoadRasterFile(psFilename, rast, RasterDataType.DTInteger)
             Catch e As GdalException
                 FormsUtilities.ErrorMessageBox(e.Message)
                 Return

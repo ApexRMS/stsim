@@ -10,7 +10,9 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class SpatialMultiplierDataFeedView
 
     Private m_MultipliersView As DataFeedView

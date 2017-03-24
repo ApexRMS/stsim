@@ -28,9 +28,9 @@ Partial Class STSimTransformer
     Private m_DeterministicTransitions As New DeterministicTransitionCollection
     Private m_TransitionMultiplierValues As New TransitionMultiplierValueCollection
     Private m_TransitionSpatialMultipliers As New TransitionSpatialMultiplierCollection
-    Private m_TransitionSpatialMultiplierRasters As New Dictionary(Of String, ApexRaster)
+    Private m_TransitionSpatialMultiplierRasters As New Dictionary(Of String, StochasticTimeRaster)
     Private m_TransitionSpatialInitiationMultipliers As New TransitionSpatialInitiationMultiplierCollection
-    Private m_TransitionSpatialInitiationMultiplierRasters As New Dictionary(Of String, ApexRaster)
+    Private m_TransitionSpatialInitiationMultiplierRasters As New Dictionary(Of String, StochasticTimeRaster)
     Private m_TransitionTargets As New TransitionTargetCollection
     Private m_TransitionOrders As New TransitionOrderCollection
     Private m_TransitionSizeDistributions As New TransitionSizeDistributionCollection
@@ -1434,23 +1434,23 @@ Partial Class STSimTransformer
                 TransitionSpatialMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName)
 
             Dim tsmFilename As String = RasterFiles.GetInputFileName(ds, FileName, False)
-            Dim rastTSM As New ApexRaster
+            Dim rastTSM As New StochasticTimeRaster
             Dim compareMsg As String = ""
 
-            RasterFiles.LoadRasterFile(tsmFilename, rastTSM, RasterDataType.dtDouble)
+            RasterFiles.LoadRasterFile(tsmFilename, rastTSM, RasterDataType.DTDouble)
 
             'Compare the TSM raster metadata to that of the Initial Condition raster files
 
             Dim cmpRes = Me.m_InputRasters.CompareMetadata(rastTSM, compareMsg)
 
-            If cmpRes = STSim.InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpRes = STSim.CompareMetadataResult.ImportantDifferences Then
 
                 Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSM_METADATA_WARNING, tsmFilename)
                 AddStatusRecord(StatusRecordType.Warning, msg)
 
             Else
 
-                If cmpRes = STSim.InputRasters.CompareMetadataResult.UnimportantDifferences Then
+                If cmpRes = STSim.CompareMetadataResult.UnimportantDifferences Then
 
                     Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSM_METADATA_INFO, tsmFilename, compareMsg)
                     AddStatusRecord(StatusRecordType.Information, msg)
@@ -1509,22 +1509,22 @@ Partial Class STSimTransformer
                 TransitionSpatialInitiationMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName)
 
             Dim tsimFilename As String = RasterFiles.GetInputFileName(ds, FileName, False)
-            Dim rastTSIM As New ApexRaster
+            Dim rastTSIM As New StochasticTimeRaster
             Dim cmpMsg As String = ""
 
-            RasterFiles.LoadRasterFile(tsimFilename, rastTSIM, RasterDataType.dtDouble)
+            RasterFiles.LoadRasterFile(tsimFilename, rastTSIM, RasterDataType.DTDouble)
 
             'Compare the TSIM raster metadata to that of the Initial Condition raster files
             Dim cmpRes = Me.m_InputRasters.CompareMetadata(rastTSIM, cmpMsg)
 
-            If cmpRes = STSim.InputRasters.CompareMetadataResult.ImportantDifferences Then
+            If cmpRes = STSim.CompareMetadataResult.ImportantDifferences Then
 
                 Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_WARNING, tsimFilename)
                 AddStatusRecord(StatusRecordType.Warning, msg)
 
             Else
 
-                If cmpRes = STSim.InputRasters.CompareMetadataResult.UnimportantDifferences Then
+                If cmpRes = STSim.CompareMetadataResult.UnimportantDifferences Then
 
                     Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_INFO, tsimFilename, cmpMsg)
                     AddStatusRecord(StatusRecordType.Information, msg)

@@ -8,7 +8,9 @@
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
 Imports System.Windows.Forms
+Imports System.Reflection
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionTypeGroupDataFeedView
 
     Private m_Grid As BaseDataGridView

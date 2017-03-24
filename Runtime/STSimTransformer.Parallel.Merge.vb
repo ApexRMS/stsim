@@ -79,7 +79,7 @@ Partial Class STSimTransformer
 
             ' Save the final merged tgap raster, giving it the same name/path as the 1st file in the dictionary for this Strata
             Dim newFilename As String = dictFilenames(k).Item(0)
-            m.Save(newFilename, StochasticTime.Compression.GetGeoTiffCompressionType(Me.Library))
+            m.Save(newFilename, StochasticTime.RasterCompression.GetGeoTiffCompressionType(Me.Library))
 
 
         Next

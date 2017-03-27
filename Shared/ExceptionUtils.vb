@@ -26,21 +26,4 @@ Module ExceptionUtils
         Throw New InvalidOperationException(String.Format(CultureInfo.CurrentCulture, message, args))
     End Sub
 
-    ''' <summary>
-    ''' Throws a not implemented exception
-    ''' </summary>
-    ''' <param name="message"></param>
-    Public Sub ThrowNotImplementedException(message As [String])
-        ThrowNotImplementedException(message, New Object() {})
-    End Sub
-
-    ''' <summary>
-    ''' Throws a not implemented exception
-    ''' </summary>
-    ''' <param name="message"></param>
-    ''' <param name="arg"></param>
-    Public Sub ThrowNotImplementedException(message As [String], ParamArray args As Object())
-        Throw New NotImplementedException(String.Format(CultureInfo.CurrentCulture, message, args))
-    End Sub
-
 End Module

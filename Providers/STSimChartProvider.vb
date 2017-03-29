@@ -16,7 +16,7 @@ Class STSimChartProvider
 
     Const DENSITY_GROUP_NAME As String = "stsim_density_group"
 
-    Public Overrides Sub RefreshChartCriteria(layout As SyncroSimLayout, project As Project)
+    Public Overrides Sub RefreshCriteria(layout As SyncroSimLayout, project As Project)
 
         Using store As DataStore = project.Library.CreateDataStore
 
@@ -79,7 +79,7 @@ Class STSimChartProvider
 
     End Sub
 
-    Public Overrides Sub PrepareChartData(
+    Public Overrides Sub PrepareData(
         ByVal store As DataStore,
         ByVal descriptors As ChartDescriptorCollection,
         ByVal statusEntries As StochasticTimeStatusCollection,
@@ -125,7 +125,7 @@ Class STSimChartProvider
 
     End Sub
 
-    Public Overrides Function GetChartData(
+    Public Overrides Function GetData(
         ByVal store As DataStore,
         ByVal descriptor As ChartDescriptor,
         ByVal dataSheet As DataSheet) As DataTable

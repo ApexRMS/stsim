@@ -23,7 +23,7 @@ Class STSimMapProvider
 
     End Sub
 
-    Public Overrides Sub RefreshMapCriteria(layout As SyncroSimLayout, project As Project)
+    Public Overrides Sub RefreshCriteria(layout As SyncroSimLayout, project As Project)
 
         Using store As DataStore = project.Library.CreateDataStore
 

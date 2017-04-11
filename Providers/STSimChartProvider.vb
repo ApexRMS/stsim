@@ -106,7 +106,7 @@ Class STSimChartProvider
 
         Next
 
-        For Each s As Scenario In project.ResultScenarios
+        For Each s As Scenario In project.Results
 
             If (s.IsActive) Then
 
@@ -459,7 +459,7 @@ Class STSimChartProvider
 
     Private Shared Sub RefreshChartAgeClassValidationTable(ByVal dataSheetName As String, ByVal project As Project)
 
-        For Each s As Scenario In project.ResultScenarios
+        For Each s As Scenario In project.Results
 
             Dim ds As DataSheet = s.GetDataSheet(dataSheetName)
             Dim col As DataSheetColumn = ds.Columns(DATASHEET_AGE_CLASS_COLUMN_NAME)

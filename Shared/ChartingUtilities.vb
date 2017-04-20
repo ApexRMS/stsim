@@ -154,8 +154,7 @@ Module ChartingUtilities
         ByVal tableName As String,
         ByVal store As DataStore) As DataTable
 
-        Dim dict As Dictionary(Of String, Double) =
-            CreateAmountDictionary(scenario, descriptor, store)
+        Dim dict As Dictionary(Of String, Double) = CreateAmountDictionary(scenario, descriptor, store)
 
         If (dict.Count = 0) Then
             Return Nothing
@@ -166,11 +165,15 @@ Module ChartingUtilities
 
         For Each dr As DataRow In dt.Rows
 
-            Dim it As Integer = CInt(dr("Iteration"))
-            Dim ts As Integer = CInt(dr("Timestep"))
+            If (dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
 
-            Dim k As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts)
-            dr("SumOfAmount") = CDbl(dr("SumOfAmount")) / dict(k)
+                Dim it As Integer = CInt(dr(DATASHEET_ITERATION_COLUMN_NAME))
+                Dim ts As Integer = CInt(dr(DATASHEET_TIMESTEP_COLUMN_NAME))
+
+                Dim k As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts)
+                dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME) = CDbl(dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME)) / dict(k)
+
+            End If
 
         Next
 
@@ -187,25 +190,26 @@ Module ChartingUtilities
         ByVal isDensity As Boolean,
         ByVal store As DataStore) As DataTable
 
-        Dim query As String = CreateRawAttributeDataQuery(
-            scenario, descriptor, tableName, attributeTypeColumnName, attributeTypeId)
-
+        Dim query As String = CreateRawAttributeDataQuery(scenario, descriptor, tableName, attributeTypeColumnName, attributeTypeId)
         Dim dt As DataTable = store.CreateDataTableFromQuery(query, "RawData")
 
         If (isDensity) Then
 
-            Dim dict As Dictionary(Of String, Double) =
-                CreateAmountDictionary(scenario, descriptor, store)
+            Dim dict As Dictionary(Of String, Double) = CreateAmountDictionary(scenario, descriptor, store)
 
             If (dict.Count > 0) Then
 
                 For Each dr As DataRow In dt.Rows
 
-                    Dim it As Integer = CInt(dr("Iteration"))
-                    Dim ts As Integer = CInt(dr("Timestep"))
+                    If (dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
 
-                    Dim k As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts)
-                    dr("SumOfAmount") = CDbl(dr("SumOfAmount")) / dict(k)
+                        Dim it As Integer = CInt(dr(DATASHEET_ITERATION_COLUMN_NAME))
+                        Dim ts As Integer = CInt(dr(DATASHEET_TIMESTEP_COLUMN_NAME))
+
+                        Dim k As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts)
+                        dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME) = CDbl(dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME)) / dict(k)
+
+                    End If
 
                 Next
 
@@ -228,11 +232,15 @@ Module ChartingUtilities
 
         For Each dr As DataRow In dt.Rows
 
-            Dim it As Integer = CInt(dr("Iteration"))
-            Dim ts As Integer = CInt(dr("Timestep"))
+            If (dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
 
-            Dim k As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts)
-            dict.Add(k, CDbl(dr("SumOfAmount")))
+                Dim it As Integer = CInt(dr(DATASHEET_ITERATION_COLUMN_NAME))
+                Dim ts As Integer = CInt(dr(DATASHEET_TIMESTEP_COLUMN_NAME))
+
+                Dim k As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts)
+                dict.Add(k, CDbl(dr(DATASHEET_SUMOFAMOUNT_COLUMN_NAME)))
+
+            End If
 
         Next
 

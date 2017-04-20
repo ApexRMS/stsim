@@ -68,6 +68,7 @@ Module Strings
     Public Const DATASHEET_DISTRIBUTIONSD_COLUMN_NAME As String = "DistributionSD"
     Public Const DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME As String = "DistributionMin"
     Public Const DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME As String = "DistributionMax"
+    Public Const DATASHEET_SUMOFAMOUNT_COLUMN_NAME As String = "SumOfAmount"
     Public Const VALUE_MEMBER_COLUMN_NAME As String = "Value"
     Public Const DISPLAY_MEMBER_COLUMN_NAME As String = "Display"
     Public Const IS_AUTO_COLUMN_NAME As String = "IsAuto"

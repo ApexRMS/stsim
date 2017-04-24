@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("ApexRMS")>
 <Assembly: AssemblyProduct("SyncroSim.STSim")>
-<Assembly: AssemblyCopyright("Copyright ©  2009-2017")>
+<Assembly: AssemblyCopyright("Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

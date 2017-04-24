@@ -1,4 +1,10 @@
-﻿Module NullableUtilities
+﻿'************************************************************************************
+' ST-Sim: A .NET class library for developing state-and-transition simulation models.
+'
+' Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
+'
+'************************************************************************************
+Module NullableUtilities
 
     Public Function NullableIdsEqual(value1 As Nullable(Of Integer), value2 As Nullable(Of Integer)) As Boolean
 

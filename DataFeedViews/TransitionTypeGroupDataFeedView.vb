@@ -1,7 +1,7 @@
 ﻿'************************************************************************************
 ' StochasticTime: A .NET class library for developing stochastic time models.
 '
-' Copyright © 2009-2015 ApexRMS.
+' Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 '
 '************************************************************************************
 

@@ -1,4 +1,10 @@
-﻿Imports System.Globalization
+﻿'************************************************************************************
+' ST-Sim: A .NET class library for developing state-and-transition simulation models.
+'
+' Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
+'
+'************************************************************************************
+Imports System.Globalization
 Imports System.IO
 Imports SyncroSim.StochasticTime
 

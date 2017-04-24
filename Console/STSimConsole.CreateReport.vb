@@ -1,9 +1,9 @@
-﻿'************************************************************************************
-' ST-Sim: A .NET class library for developing state-and-transition simulation models.
+﻿'*********************************************************************************************
+' ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
 '
 ' Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 '
-'************************************************************************************
+'*********************************************************************************************
 
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms

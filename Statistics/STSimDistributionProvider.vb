@@ -195,7 +195,7 @@ Public NotInheritable Class STSimDistributionProvider
 
     End Function
 
-    Private Function GetDefinitionName(ByVal dataSheetName As String, ByVal id As Integer) As String
+    Private Function GetProjectItemName(ByVal dataSheetName As String, ByVal id As Integer) As String
 
         Dim ds As DataSheet = Me.Scenario.Project.GetDataSheet(dataSheetName)
         Return ds.ValidationTable.GetDisplayName(id)
@@ -214,16 +214,16 @@ Public NotInheritable Class STSimDistributionProvider
         Dim SecondaryStratumName As String = "NULL"
 
         If (stratumId.HasValue) Then
-            StratumName = Me.GetDefinitionName(DATASHEET_STRATA_NAME, stratumId.Value)
+            StratumName = Me.GetProjectItemName(DATASHEET_STRATA_NAME, stratumId.Value)
         End If
 
         If (secondaryStratumId.HasValue) Then
-            SecondaryStratumName = Me.GetDefinitionName(DATASHEET_SECONDARY_STRATA_NAME, secondaryStratumId.Value)
+            SecondaryStratumName = Me.GetProjectItemName(DATASHEET_SECONDARY_STRATA_NAME, secondaryStratumId.Value)
         End If
 
         ExceptionUtils.ThrowInvalidOperationException(
             message,
-            Me.GetDefinitionName(DISTRIBUTION_TYPE_DATASHEET_NAME, distributionTypeId),
+            Me.GetProjectItemName(DISTRIBUTION_TYPE_DATASHEET_NAME, distributionTypeId),
             iteration,
             timestep,
             StratumName,

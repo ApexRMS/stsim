@@ -594,7 +594,7 @@ Class STSimUpdates
     ''' </summary>
     ''' <param name="store"></param>
     ''' <remarks>
-    ''' A bug in the schema generation code was causing each definition to be created with an AUTOINCRMENT primary key.  Although this does not
+    ''' A bug in the schema generation code was causing each project record to be created with an AUTOINCRMENT primary key.  Although this does not
     ''' create problems with the application, the AUTOINCREMENT constraint is incorrect and we are going to correct all affected tables here.
     ''' </remarks>
     Private Shared Sub STSIM0000009(ByVal store As DataStore)

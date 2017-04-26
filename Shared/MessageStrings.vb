@@ -27,7 +27,7 @@ Module MessageStrings
     Public Const ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS As String = "No Initial Conditions Spatial values have been defined.  Cannot continue."
     Public Const ERROR_NO_APPLICABLE_INITIAL_CONDITIONS_SPATIAL_RECORDS As String = "No applicable Initial Conditions Spatial values have been defined for the starting iteraration. Cannot continue."
     Public Const ERROR_AGE_DATA_MISSING As String = "Age classes have been defined but the scenario '{0}' does not contain age data.  You may need to re-run this scenario."
-    Public Const ERROR_AGE_CLASS_DATA_MISMATCH As String = "Under project definitions your age types and age groups are inconsistent. You can either modify the groups and/or modify the types. If the types are modified you will need to rerun your model." & vbCrLf & vbCrLf & "Scenario is: {0}."
+    Public Const ERROR_AGE_CLASS_DATA_MISMATCH As String = "Your age types and age groups are inconsistent. You can either modify the groups and/or modify the types. If the types are modified you will need to rerun your model." & vbCrLf & vbCrLf & "Scenario is: {0}."
     Public Const ERROR_NO_RESULT_SCENARIOS_FOR_REPORT As String = "There must be at least one selected ressult scenario create this report."
 
     'Status Messages

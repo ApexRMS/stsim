@@ -107,7 +107,7 @@ Partial Class TransitionDiagram
         ByVal isTargeted As Boolean)
 
         'Get the clipboard data and verify that all items can be pasted.  Note that
-        'once it has been validated it will contain the correct Ids for the required definitions.
+        'once it has been validated it will contain the correct Ids for those items.
 
         Dim cd As TransitionDiagramClipData =
             CType(Clipboard.GetData(CLIPBOARD_FORMAT_TRANSITION_DIAGRAM), TransitionDiagramClipData)

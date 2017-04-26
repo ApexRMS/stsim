@@ -60,30 +60,30 @@ MustInherit Class STSimMapBase
     End Function
 
     Protected Function GetStratumName(ByVal id As Nullable(Of Integer)) As String
-        Return Me.GetDefinitionName(DATASHEET_STRATA_NAME, id)
+        Return Me.GetProjectItemName(DATASHEET_STRATA_NAME, id)
     End Function
 
     Protected Function GetSecondaryStratumName(ByVal id As Nullable(Of Integer)) As String
-        Return Me.GetDefinitionName(DATASHEET_SECONDARY_STRATA_NAME, id)
+        Return Me.GetProjectItemName(DATASHEET_SECONDARY_STRATA_NAME, id)
     End Function
 
     Protected Function GetStateClassName(ByVal id As Nullable(Of Integer)) As String
-        Return Me.GetDefinitionName(DATASHEET_STATECLASS_NAME, id)
+        Return Me.GetProjectItemName(DATASHEET_STATECLASS_NAME, id)
     End Function
 
     Protected Function GetTransitionGroupName(ByVal id As Nullable(Of Integer)) As String
-        Return Me.GetDefinitionName(DATASHEET_TRANSITION_GROUP_NAME, id)
+        Return Me.GetProjectItemName(DATASHEET_TRANSITION_GROUP_NAME, id)
     End Function
 
     Protected Function GetTransitionTypeName(ByVal id As Nullable(Of Integer)) As String
-        Return Me.GetDefinitionName(DATASHEET_TRANSITION_TYPE_NAME, id)
+        Return Me.GetProjectItemName(DATASHEET_TRANSITION_TYPE_NAME, id)
     End Function
 
     Protected Function GetTransitionAttributeTypeName(ByVal id As Nullable(Of Integer)) As String
-        Return Me.GetDefinitionName(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, id)
+        Return Me.GetProjectItemName(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, id)
     End Function
 
-    Protected Function GetDefinitionName(ByVal dataSheetName As String, ByVal id As Nullable(Of Integer)) As String
+    Protected Function GetProjectItemName(ByVal dataSheetName As String, ByVal id As Nullable(Of Integer)) As String
 
         If (Not id.HasValue) Then
             Return "NULL"

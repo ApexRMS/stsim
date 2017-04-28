@@ -615,8 +615,6 @@ Public NotInheritable Class STSimTransformer
 
                     Next
 
-
-
                 End If
 
                 CumulativeProbability += (tr.Probability * tr.Proportion * multiplier)

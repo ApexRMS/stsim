@@ -12,7 +12,7 @@ Imports System.Reflection
 Class STSimConsole
     Inherits SyncroSimConsole
 
-    Public Overrides Sub Execute()
+    Protected Overrides Sub Execute()
 
         If (Me.GetArguments.Count = 1) Then
             System.Console.WriteLine("Use the --help switch to see available options.")

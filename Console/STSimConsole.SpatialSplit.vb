@@ -23,7 +23,7 @@ Partial Class STSimConsole
 
     Private Sub SpatialSplit()
 
-        Dim ScenarioId As Integer = Me.GetDBIdArgument("sid")
+        Dim ScenarioId As Integer = Me.GetDatabaseIdArgument("sid")
         Dim OpenLibrary As Library = Me.OpenLibrary()
         Dim OpenScenario As Scenario = GetScenario(ScenarioId, OpenLibrary)
         Dim NumJobs As Nullable(Of Integer) = Me.ParseJobsArgument()
@@ -35,7 +35,7 @@ Partial Class STSimConsole
                 OpenLibrary, OpenScenario.Project, OpenScenario, OpenScenario), STSimTransformer)
 
         If (Not NumJobs.HasValue) Then
-            NumJobs = Session.MaxParallelJobsDefault()
+            NumJobs = MaxParallelJobsDefault()
         End If
 
         trx.Configure()
@@ -45,6 +45,16 @@ Partial Class STSimConsole
         Me.PrintQuiet("Partial scenario ID is: {0}", trx.PartialScenarioId)
 
     End Sub
+
+    Private Shared Function MaxParallelJobsDefault() As Integer
+
+        If (Environment.ProcessorCount <= 2) Then
+            Return 2
+        Else
+            Return Environment.ProcessorCount - 1
+        End If
+
+    End Function
 
     Private Function CreateOutputDirectory(ByVal s As Scenario) As String
 
@@ -120,7 +130,7 @@ Partial Class STSimConsole
         Dim l As New List(Of Integer)
         Dim ds As DataSheet = s.Project.GetDataSheet(DATASHEET_SECONDARY_STRATA_NAME)
         Dim dt As DataTable = ds.GetData()
-        Dim ssids As IEnumerable(Of Integer) = Me.GetMultiDBIdArgument("ssids")
+        Dim ssids As IEnumerable(Of Integer) = Me.GetMultiDatabaseIdArguments("ssids")
 
         For Each ssid As Integer In ssids
 

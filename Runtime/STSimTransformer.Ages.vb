@@ -162,7 +162,7 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME) Is DBNull.Value) Then
 
-                Me.AddStatusRecord(StatusRecordType.Warning,
+                Me.RecordStatus(StatusType.Warning,
                     "Age reporting freqency set without age reporting maximum.  Not reporting ages.")
 
                 Return
@@ -175,7 +175,7 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME) Is DBNull.Value) Then
 
-                Me.AddStatusRecord(StatusRecordType.Warning,
+                Me.RecordStatus(StatusType.Warning,
                     "Age reporting maximum set without age reporting frequency.  Not reporting ages.")
 
                 Return
@@ -189,7 +189,7 @@ Partial Class STSimTransformer
 
         If (m < f) Then
 
-            Me.AddStatusRecord(StatusRecordType.Warning,
+            Me.RecordStatus(StatusType.Warning,
                 "Age reporting maximum is less than age reporting frequency.  Not reporting ages.")
 
             Return

@@ -1551,7 +1551,7 @@ Partial Class STSimTransformer
                 stateclass_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME)
 
                 If stateclass_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
+                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
                 End If
 
             End If
@@ -1565,7 +1565,7 @@ Partial Class STSimTransformer
                 age_cells = raster.IntCells
 
                 If age_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
+                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
                 End If
 
             End If
@@ -1581,7 +1581,7 @@ Partial Class STSimTransformer
                 secondary_stratum_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME)
 
                 If secondary_stratum_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName))
+                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
                 End If
 
             End If

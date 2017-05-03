@@ -13,7 +13,7 @@ Imports System.Reflection
 Class STSimUpdates
     Inherits UpdateProvider
 
-    Public Overrides Sub Perform(store As DataStore, currentSchemaVersion As Integer)
+    Public Overrides Sub PerformUpdate(store As DataStore, currentSchemaVersion As Integer)
 
         If (currentSchemaVersion < 1) Then
             STSIM0000001(store)

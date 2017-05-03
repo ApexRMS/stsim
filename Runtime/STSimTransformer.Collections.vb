@@ -218,7 +218,7 @@ Partial Class STSimTransformer
         Next
 
         If (Me.m_IsSpatial And (Not AtLeastOne) And Me.m_CreateRasterTransitionOutput) Then
-            Me.AddStatusRecord(StatusRecordType.Warning, "Spatial transition type output requested but no IDs specified for Transition Types.")
+            Me.RecordStatus(StatusType.Warning, "Spatial transition type output requested but no IDs specified for Transition Types.")
         End If
 
 #If DEBUG Then
@@ -329,7 +329,7 @@ Partial Class STSimTransformer
                 Dim msg As String = String.Format(CultureInfo.CurrentCulture,
                     "The transition type '{0}' has more than one primary transition group.", tt.DisplayName)
 
-                Me.AddStatusRecord(StatusRecordType.Warning, msg)
+                Me.RecordStatus(StatusType.Warning, msg)
 
             End If
 
@@ -864,7 +864,7 @@ Partial Class STSimTransformer
 
                 If (Not StratumOrStateClassWarningIssued) Then
 
-                    Me.AddStatusRecord(StatusRecordType.Information,
+                    Me.RecordStatus(StatusType.Information,
                         "At least one State Attribute Value had neither a stratum nor a state class.")
 
                     StratumOrStateClassWarningIssued = True
@@ -1446,14 +1446,14 @@ Partial Class STSimTransformer
             If cmpRes = STSim.CompareMetadataResult.ImportantDifferences Then
 
                 Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSM_METADATA_WARNING, tsmFilename)
-                AddStatusRecord(StatusRecordType.Warning, msg)
+                RecordStatus(StatusType.Warning, msg)
 
             Else
 
                 If cmpRes = STSim.CompareMetadataResult.UnimportantDifferences Then
 
                     Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSM_METADATA_INFO, tsmFilename, compareMsg)
-                    AddStatusRecord(StatusRecordType.Information, msg)
+                    RecordStatus(StatusType.Information, msg)
 
                 End If
 
@@ -1520,14 +1520,14 @@ Partial Class STSimTransformer
             If cmpRes = STSim.CompareMetadataResult.ImportantDifferences Then
 
                 Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_WARNING, tsimFilename)
-                AddStatusRecord(StatusRecordType.Warning, msg)
+                RecordStatus(StatusType.Warning, msg)
 
             Else
 
                 If cmpRes = STSim.CompareMetadataResult.UnimportantDifferences Then
 
                     Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_INFO, tsimFilename, cmpMsg)
-                    AddStatusRecord(StatusRecordType.Information, msg)
+                    RecordStatus(StatusType.Information, msg)
 
                 End If
 
@@ -2124,7 +2124,7 @@ Partial Class STSimTransformer
 
         If (Me.AdjacencyMultiplierGroupsIdentical()) Then
 
-            Me.AddStatusRecord(StatusRecordType.Warning,
+            Me.RecordStatus(StatusType.Warning,
                 "Transition adjacency settings and multipliers do not have identical transition groups.  Some multipliers may not be applied.")
 
         End If
@@ -2273,19 +2273,19 @@ Partial Class STSimTransformer
         Next
 
         If (Not TransitionTargetsGroupFound) Then
-            Me.AddStatusRecord(StatusRecordType.Warning, "At least one Transition Target has been defined with a non-primary Transition Group.")
+            Me.RecordStatus(StatusType.Warning, "At least one Transition Target has been defined with a non-primary Transition Group.")
         End If
 
         If (Not TransitionPatchPrioritizationGroupFound) Then
-            Me.AddStatusRecord(StatusRecordType.Warning, "At least one Transition Patch Prioritization has been defined with a non-primary Transition Group.")
+            Me.RecordStatus(StatusType.Warning, "At least one Transition Patch Prioritization has been defined with a non-primary Transition Group.")
         End If
 
         If (Not TransitionDirectionMultipliersGroupFound) Then
-            Me.AddStatusRecord(StatusRecordType.Warning, "At least one Transition Direction Multiplier has been defined with a non-primary Transition Group.")
+            Me.RecordStatus(StatusType.Warning, "At least one Transition Direction Multiplier has been defined with a non-primary Transition Group.")
         End If
 
         If (Not TransitionSlopeMultipliersGroupFound) Then
-            Me.AddStatusRecord(StatusRecordType.Warning, "At least one Transition Slope Multiplier has been defined with a non-primary Transition Group.")
+            Me.RecordStatus(StatusType.Warning, "At least one Transition Slope Multiplier has been defined with a non-primary Transition Group.")
         End If
        
     End Sub

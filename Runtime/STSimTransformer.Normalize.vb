@@ -31,7 +31,7 @@ Partial Class STSimTransformer
 
         If (dr(RUN_CONTROL_MAX_ITERATION_COLUMN_NAME) Is DBNull.Value) Then
             dr(RUN_CONTROL_MAX_ITERATION_COLUMN_NAME) = 1
-            Me.AddStatusRecord(StatusRecordType.Warning, STATUS_USING_DEFAULT_MAX_ITERATIONS_WARNING)
+            Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_MAX_ITERATIONS_WARNING)
         End If
 
         If (dr(RUN_CONTROL_MIN_TIMESTEP_COLUMN_NAME) Is DBNull.Value) Then
@@ -40,7 +40,7 @@ Partial Class STSimTransformer
 
         If (dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) Is DBNull.Value) Then
             dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) = 5
-            Me.AddStatusRecord(StatusRecordType.Warning, STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING)
+            Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING)
         End If
 
     End Sub
@@ -90,7 +90,7 @@ Partial Class STSimTransformer
 
             End If
 
-            Me.AddStatusRecord(StatusRecordType.Information, STATUS_NO_OUTPUT_OPTIONS_WARNIING)
+            Me.RecordStatus(StatusType.Information, STATUS_NO_OUTPUT_OPTIONS_WARNIING)
 
         End If
 
@@ -132,7 +132,7 @@ Partial Class STSimTransformer
             If NoSpatialIC Then
 
                 ' If no Spatial IC records for this Scenario, we're using Non spatial initial conditions.
-                Me.AddStatusRecord(StatusRecordType.Information, STATUS_SPATIAL_RUN_USING_NONSPATIAL_IC)
+                Me.RecordStatus(StatusType.Information, STATUS_SPATIAL_RUN_USING_NONSPATIAL_IC)
                 Me.CreateSpatialICFromNonSpatialIC()
 
             Else
@@ -172,7 +172,7 @@ Partial Class STSimTransformer
             ICNS_Row(DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME) = DATASHEET_RUN_CONTROL_TOTAL_AMOUNT_DEFAULT
 
             If verboseStatus Then
-                Me.AddStatusRecord(StatusRecordType.Warning, STATUS_USING_DEFAULT_TOTAL_AMOUNT_WARNING)
+                Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_TOTAL_AMOUNT_WARNING)
             End If
 
         End If
@@ -188,7 +188,7 @@ Partial Class STSimTransformer
             End If
 
             If verboseStatus Then
-                Me.AddStatusRecord(StatusRecordType.Warning, STATUS_USING_DEFAULT_NUM_CELLS_WARNING)
+                Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_NUM_CELLS_WARNING)
             End If
 
         End If
@@ -201,7 +201,7 @@ Partial Class STSimTransformer
         End If
 
         If verboseStatus Then
-            Me.AddStatusRecord(StatusRecordType.Warning, STATUS_NO_INITIAL_CONDITIONS_WARNING)
+            Me.RecordStatus(StatusType.Warning, STATUS_NO_INITIAL_CONDITIONS_WARNING)
         End If
 
         If (DeterministicTransitions_Table.Rows.Count = 0) Then
@@ -337,7 +337,7 @@ Partial Class STSimTransformer
             Dim ds As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_STATE_ATTRIBUTE_VALUE_NAME)
 
             If (ds.GetData().Rows.Count > 0) Then
-                Me.AddStatusRecord(StatusRecordType.Information, STATUS_STATE_ATTRIBUTE_VALUES_EXIST_WARNING)
+                Me.RecordStatus(StatusType.Information, STATUS_STATE_ATTRIBUTE_VALUES_EXIST_WARNING)
             End If
 
         End If
@@ -359,7 +359,7 @@ Partial Class STSimTransformer
             Dim ds As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME)
 
             If (ds.GetData().Rows.Count > 0) Then
-                Me.AddStatusRecord(StatusRecordType.Information, STATUS_TRANSITION_ATTRIBUTE_VALUES_EXIST_WARNING)
+                Me.RecordStatus(StatusType.Information, STATUS_TRANSITION_ATTRIBUTE_VALUES_EXIST_WARNING)
             End If
 
         End If
@@ -395,7 +395,7 @@ Partial Class STSimTransformer
             Dim message As String = String.Format(CultureInfo.CurrentCulture,
                 "ST-Sim timestep value for '{0}' is invalid.  Using default.", timestepsColumnHeaderText)
 
-            Me.AddStatusRecord(StatusRecordType.Warning, message)
+            Me.RecordStatus(StatusType.Warning, message)
 
             dr(timestepsColumnName) = 5
             Return
@@ -409,7 +409,7 @@ Partial Class STSimTransformer
             Dim message As String = String.Format(CultureInfo.CurrentCulture,
                 "ST-Sim timestep value for '{0}' out of range.  Using default.", timestepsColumnHeaderText)
 
-            Me.AddStatusRecord(StatusRecordType.Warning, message)
+            Me.RecordStatus(StatusType.Warning, message)
 
             dr(timestepsColumnName) = maxTimestep
             Return
@@ -493,7 +493,7 @@ Partial Class STSimTransformer
         Dim msg As String = String.Format(CultureInfo.CurrentCulture,
             "Color values not specified for '{0}.'  Using defaults.", ds.DisplayName)
 
-        Me.AddStatusRecord(StatusRecordType.Information, msg)
+        Me.RecordStatus(StatusType.Information, msg)
 
     End Sub
 
@@ -548,7 +548,7 @@ Partial Class STSimTransformer
             Dim msg As String = String.Format(CultureInfo.CurrentCulture,
                 "ID values not specified for '{0}.'  Using defaults.", ds.DisplayName)
 
-            Me.AddStatusRecord(StatusRecordType.Information, msg)
+            Me.RecordStatus(StatusType.Information, msg)
         End If
 
     End Sub

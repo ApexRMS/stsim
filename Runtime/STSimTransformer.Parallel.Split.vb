@@ -652,7 +652,7 @@ Partial Class STSimTransformer
 
         If (NullValueExists(Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_TARGET_NAME).GetData, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME)) Then
 
-            Me.AddStatusRecord(StatusRecordType.Warning, String.Format(CultureInfo.CurrentCulture,
+            Me.RecordStatus(StatusType.Warning, String.Format(CultureInfo.CurrentCulture,
                 "Run is splitting by '{0}' but Transition Targets are not specified by '{1}'.  Allocating targets in proportion to '{2}'.",
                 ssl, ssl, aml))
 
@@ -662,7 +662,7 @@ Partial Class STSimTransformer
 
         If (NullValueExists(Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME).GetData, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME)) Then
 
-            Me.AddStatusRecord(StatusRecordType.Warning, String.Format(CultureInfo.CurrentCulture,
+            Me.RecordStatus(StatusType.Warning, String.Format(CultureInfo.CurrentCulture,
                 "Run is splitting by '{0}' but Transition Attribute Targets are not specified by '{1}'.  Allocating targets in proportion to '{2}'.",
                 ssl, ssl, aml))
 
@@ -676,7 +676,7 @@ Partial Class STSimTransformer
 
         If (NullValueExists(Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_TARGET_NAME).GetData, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME)) Then
 
-            Me.AddStatusRecord(StatusRecordType.Warning,
+            Me.RecordStatus(StatusType.Warning,
                 "Run is splitting by Secondary Stratum but Transition Targets are not specified by Secondary Stratum.")
 
         End If
@@ -685,7 +685,7 @@ Partial Class STSimTransformer
 
         If (NullValueExists(Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME).GetData, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME)) Then
 
-            Me.AddStatusRecord(StatusRecordType.Warning,
+            Me.RecordStatus(StatusType.Warning,
                 "Run is splitting by Secondary Stratum but Transition Attribute Targets are not specified by Secondary Stratum.")
 
         End If

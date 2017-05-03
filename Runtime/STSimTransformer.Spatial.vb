@@ -1616,7 +1616,7 @@ Partial Class STSimTransformer
             Dim icds As InitialConditionsDistributionCollection = Me.m_InitialConditionsDistributionMap.GetICDs(iteration)
             If icds Is Nothing Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_RUN_USING_COMBINED_IC_MISSING_ICD, iteration.GetValueOrDefault())
-                Me.AddStatusRecord(StatusRecordType.Warning, sMsg)
+                Me.RecordStatus(StatusType.Warning, sMsg)
             Else
 
                 For Each c As Cell In cells
@@ -1683,7 +1683,7 @@ Partial Class STSimTransformer
         Next
 
         If ICFilesCreated Then
-            Me.AddStatusRecord(StatusRecordType.Information, STATUS_SPATIAL_RUN_USING_COMBINED_IC)
+            Me.RecordStatus(StatusType.Information, STATUS_SPATIAL_RUN_USING_COMBINED_IC)
         End If
 
     End Sub
@@ -2128,7 +2128,7 @@ Partial Class STSimTransformer
                 ' See if the Primary Stratum has a Projection associated with it
                 If rastPrimaryStratum.ProjectionString = "" Then
                     sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISSING_PROJECTION_WARNING, fullFileName)
-                    Me.AddStatusRecord(StatusRecordType.Information, sMsg)
+                    Me.RecordStatus(StatusType.Information, sMsg)
                 End If
 
             End If
@@ -2215,7 +2215,7 @@ Partial Class STSimTransformer
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.PrimaryStratumName, cmpMsg)
-                Me.AddStatusRecord(StatusRecordType.Information, sMsg)
+                Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
 
@@ -2227,7 +2227,7 @@ Partial Class STSimTransformer
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.StateClassName, cmpMsg)
-                Me.AddStatusRecord(StatusRecordType.Information, sMsg)
+                Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
 
@@ -2239,7 +2239,7 @@ Partial Class STSimTransformer
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.AgeName, cmpMsg)
-                Me.AddStatusRecord(StatusRecordType.Information, sMsg)
+                Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
 
@@ -2251,7 +2251,7 @@ Partial Class STSimTransformer
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.SecondaryStratumName, cmpMsg)
-                Me.AddStatusRecord(StatusRecordType.Information, sMsg)
+                Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
 
@@ -2263,7 +2263,7 @@ Partial Class STSimTransformer
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
                 sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.DemName, cmpMsg)
-                Me.AddStatusRecord(StatusRecordType.Information, sMsg)
+                Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
 

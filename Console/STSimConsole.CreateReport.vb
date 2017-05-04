@@ -143,12 +143,12 @@ Partial Class STSimConsole
         System.Console.WriteLine("USAGE: --create-report [Arguments]")
         System.Console.WriteLine()
         System.Console.WriteLine("  --lib={name}     The library file name")
-        System.Console.WriteLine("  --sids={ids}     The scenario IDs separated by commas")
+        System.Console.WriteLine("  --sids={ids}     The scenario IDs separated by commas.  [Multiple IDs must be enclosed in quotes]")
         System.Console.WriteLine("  --name={name}    The name of the report to create")
         System.Console.WriteLine("  --file={name}    The file name for the report")
         System.Console.WriteLine()
         System.Console.WriteLine("Examples:")
-        System.Console.WriteLine("  --create-report --lib=test.ssim --sids=1,2,3 --name=stateclass-summary --file=sc.csv")
+        System.Console.WriteLine("  --create-report --lib=test.ssim --sids=""1,2,3"" --name=stateclass-summary --file=sc.csv")
         System.Console.WriteLine("  --create-report --lib=""my lib.ssim"" --sids=1 --name=stateclass-summary --file=""my data.csv""")
 
     End Sub

@@ -48,5 +48,7 @@ Module MessageStrings
     Public Const STATUS_SPATIAL_RUN_USING_NONSPATIAL_IC As String = "No Spatial Initial Conditions Primary Stratum file specified. Spatial Run performed using Non-Spatial Initial Conditions."
     Public Const STATUS_SPATIAL_RUN_USING_COMBINED_IC As String = "Spatial Initial Conditions partially specified. The missing Spatial Initial Conditions files will be generated based on Non-Spatial Initial Conditions."
     Public Const STATUS_SPATIAL_RUN_USING_COMBINED_IC_MISSING_ICD As String = "Spatial Initial Conditions partially specified, and insufficient detail in Non-Spatial Initial Conditions to properly complete iteration {0}."
+    Public Const STATUS_SPATIAL_RUN_NO_PROPERTIES_DEFINED As String = "The Raster file metadata has not been configured (possible cause is running from command-line), and will be derived from available Primary Stratum file."
+
 
 End Module

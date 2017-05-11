@@ -195,6 +195,31 @@ Imports SyncroSim.StochasticTime
     End Sub
 
     ''' <summary>
+    ''' Generic Save Raster routines
+    ''' </summary>
+    ''' <param name="raster"></param>
+    ''' <param name="scenario"></param>
+    ''' <param name="iteration"></param>
+    ''' <param name="timestep"></param>
+    ''' <param name="id"></param>
+    ''' <param name="dt"></param>
+    ''' <returns></returns>
+    Public Function SaveRaster(fileType As String, raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer, id As Integer, dt As RasterDataType) As String
+
+        Dim fileName As String
+        '        Name template = Itx-Tsy-Age.tif
+        fileName = String.Format(CultureInfo.InvariantCulture, "It{0}-Ts{1}-{2}",
+                                 iteration.ToString("0000", CultureInfo.InvariantCulture),
+                                 timestep.ToString("0000", CultureInfo.InvariantCulture),
+                                 fileType)
+
+
+        Return RasterFiles.SaveIntegerInputRaster(raster, fileName, scenario.GetDataSheet(DATASHEET_SPIC_NAME))
+
+    End Function
+
+
+    ''' <summary>
     ''' Create the State Class raster color maps for the specific project. The color maps are QGis compatible, and are use when
     ''' displaying the rasters in the Syncrosim Map display.
     ''' </summary>

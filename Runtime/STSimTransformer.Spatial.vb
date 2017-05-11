@@ -1789,7 +1789,6 @@ Partial Class STSimTransformer
         Dim amountlabel As String = Nothing
 
         GetAmountLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), amountlabel, destUnitsVal)
-        Dim destAreaLbl As String = TerminologyUnitToString(destUnitsVal)
 
         cellAreaTU = InitialConditionsSpatialDataFeedView.CalcCellArea(cellArea, rast.CellSizeUnits, destUnitsVal)
         drSpIcProp(DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME) = cellAreaTU

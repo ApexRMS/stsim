@@ -337,7 +337,7 @@ Partial Class STSimUpdates
 
         End If
 
-        Return CInt(dt.Rows(0)("Version"))
+        Return CInt(dt.Rows(0)("SchemaVersion"))
 
     End Function
 

@@ -194,6 +194,9 @@ Class STSimChartProvider
         Normal.Properties.Add(New MetaDataProperty("column", "Amount"))
         Proportion.Properties.Add(New MetaDataProperty("column", "Amount"))
 
+        Normal.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
+        Proportion.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
+
         items.Add(Normal)
         items.Add(Proportion)
 
@@ -221,6 +224,9 @@ Class STSimChartProvider
 
         Normal.Properties.Add(New MetaDataProperty("skipTimestepZero", "True"))
         Proportion.Properties.Add(New MetaDataProperty("skipTimestepZero", "True"))
+
+        Normal.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
+        Proportion.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
 
         items.Add(Normal)
         items.Add(Proportion)
@@ -330,6 +336,7 @@ Class STSimChartProvider
                 ItemNormal.Properties.Add(New MetaDataProperty("column", outputColumnName))
                 ItemNormal.Properties.Add(New MetaDataProperty("prefixFolderName", "False"))
                 ItemNormal.Properties.Add(New MetaDataProperty("customTitle", DisplayNameNormal))
+                ItemNormal.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
 
                 If (skipTimestepZero) Then
                     ItemNormal.Properties.Add(New MetaDataProperty("skipTimestepZero", "True"))
@@ -353,6 +360,7 @@ Class STSimChartProvider
                 ItemDensity.Properties.Add(New MetaDataProperty("column", outputColumnName))
                 ItemDensity.Properties.Add(New MetaDataProperty("prefixFolderName", "False"))
                 ItemDensity.Properties.Add(New MetaDataProperty("customTitle", "(Density): " & DisplayNameNormal))
+                ItemDensity.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
 
                 If (skipTimestepZero) Then
                     ItemDensity.Properties.Add(New MetaDataProperty("skipTimestepZero", "True"))
@@ -407,6 +415,7 @@ Class STSimChartProvider
                 ItemNormal.Properties.Add(New MetaDataProperty("column", outputColumnName))
                 ItemNormal.Properties.Add(New MetaDataProperty("prefixFolderName", "False"))
                 ItemNormal.Properties.Add(New MetaDataProperty("customTitle", GroupName & ": " & DisplayNameNormal))
+                ItemNormal.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
 
                 If (skipTimestepZero) Then
                     ItemNormal.Properties.Add(New MetaDataProperty("skipTimestepZero", "True"))
@@ -430,6 +439,7 @@ Class STSimChartProvider
                 ItemDensity.Properties.Add(New MetaDataProperty("column", outputColumnName))
                 ItemDensity.Properties.Add(New MetaDataProperty("prefixFolderName", "False"))
                 ItemDensity.Properties.Add(New MetaDataProperty("customTitle", GroupName & " (Density): " & DisplayNameNormal))
+                ItemDensity.Properties.Add(New MetaDataProperty("defaultValue", "0.0"))
 
                 If (skipTimestepZero) Then
                     ItemDensity.Properties.Add(New MetaDataProperty("skipTimestepZero", "True"))

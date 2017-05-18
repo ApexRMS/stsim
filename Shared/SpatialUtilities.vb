@@ -23,7 +23,6 @@ Imports SyncroSim.StochasticTime
                                  SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME)
 
         RasterFiles.SaveIntegerOutputRaster(raster, scenario, fileName)
-        RasterFiles.SaveRa
 
     End Sub
 
@@ -91,7 +90,7 @@ Imports SyncroSim.StochasticTime
                                  timestep.ToString("0000", CultureInfo.InvariantCulture),
                                  SPATIAL_MAP_STRATUM_VARIABLE_NAME)
 
-        Return RasterFiles.SaveIntegerInputRaster(raster, fileName, scenario.GetDataSheet(DATASHEET_SPIC_NAME))
+        Return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(DATASHEET_SPIC_NAME),fileName)
 
     End Function
 
@@ -104,7 +103,7 @@ Imports SyncroSim.StochasticTime
                                  timestep.ToString("0000", CultureInfo.InvariantCulture),
                                  SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME)
 
-        Return RasterFiles.SaveIntegerInputRaster(raster, fileName, scenario.GetDataSheet(DATASHEET_SPIC_NAME))
+        Return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(DATASHEET_SPIC_NAME),fileName)
 
     End Function
 
@@ -117,7 +116,7 @@ Imports SyncroSim.StochasticTime
                                  timestep.ToString("0000", CultureInfo.InvariantCulture),
                                  SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME)
 
-        Return RasterFiles.SaveIntegerInputRaster(raster, fileName, scenario.GetDataSheet(DATASHEET_SPIC_NAME))
+        Return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(DATASHEET_SPIC_NAME),fileName)
 
     End Function
 
@@ -130,7 +129,7 @@ Imports SyncroSim.StochasticTime
                                  timestep.ToString("0000", CultureInfo.InvariantCulture),
                                  SPATIAL_MAP_AGE_VARIABLE_NAME)
 
-        Return RasterFiles.SaveIntegerInputRaster(raster, fileName, scenario.GetDataSheet(DATASHEET_SPIC_NAME))
+        Return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(DATASHEET_SPIC_NAME),fileName)
 
     End Function
 
@@ -144,7 +143,7 @@ Imports SyncroSim.StochasticTime
     ''' <param name="attributeId"></param>
     ''' <remarks></remarks>
     Public Sub SaveStateAttrOutputToRasterFile(raster As StochasticTimeRaster, scenario As Scenario, iteration As Integer, timestep As Integer, attributeId As String)
-        RasterFiles.SaveDoubleOutputRaster(raster, scenario, CalcStateAttrOutputRasterFileName(iteration, timestep, attributeId))
+        RasterFiles.SaveDoubleOutputRasterOld(raster, scenario, CalcStateAttrOutputRasterFileName(iteration, timestep, attributeId))
     End Sub
 
     ''' <summary>
@@ -178,7 +177,7 @@ Imports SyncroSim.StochasticTime
                                  SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, attributeId)
 
         fileName = RasterFiles.SanitizeFileName(fileName)
-        RasterFiles.SaveDoubleOutputRaster(raster, scenario, fileName)
+        RasterFiles.SaveDoubleOutputRasterOld(raster, scenario, fileName)
 
     End Sub
 
@@ -191,7 +190,7 @@ Imports SyncroSim.StochasticTime
                                  SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, transGrpId)
 
         fileName = RasterFiles.SanitizeFileName(fileName)
-        RasterFiles.SaveDoubleOutputRaster(raster, scenario, fileName)
+        RasterFiles.SaveDoubleOutputRasterOld(raster, scenario, fileName)
 
     End Sub
 

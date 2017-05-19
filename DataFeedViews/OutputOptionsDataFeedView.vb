@@ -5,9 +5,9 @@
 '
 '*********************************************************************************************
 
-Imports SyncroSim.Core
-Imports System.Globalization
 Imports System.Reflection
+Imports System.Globalization
+Imports SyncroSim.Core
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class OutputOptionsDataFeedView
@@ -47,10 +47,8 @@ Class OutputOptionsDataFeedView
         Me.SetCheckBoxBinding(Me.CheckBoxRasterAATP, DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME)
         Me.SetTextBoxBinding(Me.TextBoxRasterAATPTimesteps, DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME)
 
-        Me.MonitorDataSheet(
-          DATASHEET_TERMINOLOGY_NAME,
-          AddressOf Me.OnTerminologyChanged,
-          True)
+        Me.MonitorDataSheet(DATASHEET_TERMINOLOGY_NAME, AddressOf Me.OnTerminologyChanged, True)
+        Me.AddStandardCommands()
 
     End Sub
 
@@ -64,11 +62,29 @@ Class OutputOptionsDataFeedView
 
     End Sub
 
+    Protected Overrides Sub OnRowsAdded(sender As Object, e As DataSheetRowEventArgs)
+
+        MyBase.OnRowsAdded(sender, e)
+
+        If (Me.ShouldEnableView()) Then
+            Me.EnableControls()
+        End If
+
+    End Sub
+
+    Protected Overrides Sub OnRowsDeleted(sender As Object, e As DataSheetRowEventArgs)
+
+        MyBase.OnRowsDeleted(sender, e)
+
+        If (Me.ShouldEnableView()) Then
+            Me.EnableControls()
+        End If
+
+    End Sub
+
     Private Sub OnTerminologyChanged(ByVal e As DataSheetMonitorEventArgs)
 
-        Dim t As String = CStr(e.GetValue(
-            "TimestepUnits",
-            "Timestep")).ToLower(CultureInfo.CurrentCulture)
+        Dim t As String = CStr(e.GetValue("TimestepUnits", "Timestep")).ToLower(CultureInfo.CurrentCulture)
 
         Me.LabelSummarySCTimesteps.Text = t
         Me.LabelSummaryTRTimesteps.Text = t
@@ -160,11 +176,4 @@ Class OutputOptionsDataFeedView
 
     End Sub
 
-    Private Sub ButtonClearAll_Click(sender As Object, e As EventArgs) Handles ButtonClearAll.Click
-
-        Me.ResetBoundControls()
-        Me.ClearDataSheets()
-        Me.EnableControls()
-
-    End Sub
 End Class

@@ -123,10 +123,7 @@ Class InitialConditionsSpatialDataFeedView
 
         End If
 
-        Me.MonitorDataSheet(
-            DATASHEET_TERMINOLOGY_NAME,
-            AddressOf Me.OnTerminologyChanged,
-            True)
+        Me.MonitorDataSheet(DATASHEET_TERMINOLOGY_NAME, AddressOf Me.OnTerminologyChanged, True)
 
     End Sub
 

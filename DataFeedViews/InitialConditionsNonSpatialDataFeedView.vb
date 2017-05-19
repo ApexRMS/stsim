@@ -18,9 +18,7 @@ Class InitialConditionsNonSpatialDataFeedView
 
         MyBase.InitializeView()
 
-        Dim v As DataFeedView = Me.Session.CreateMultiRowDataFeedView(
-            Me.Scenario, Me.ControllingScenario)
-
+        Dim v As DataFeedView = Me.Session.CreateMultiRowDataFeedView(Me.Scenario, Me.ControllingScenario)
         Me.PanelDistribution.Controls.Add(v)
 
     End Sub

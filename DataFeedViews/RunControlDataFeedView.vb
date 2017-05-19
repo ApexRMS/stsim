@@ -6,8 +6,8 @@
 '*********************************************************************************************
 
 Imports SyncroSim.Core
-Imports System.Globalization
 Imports System.Reflection
+Imports System.Globalization
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class RunControlDataFeedView
@@ -21,28 +21,17 @@ Class RunControlDataFeedView
         Me.SetTextBoxBinding(Me.TextBoxTotalIterations, "MaximumIteration")
         Me.SetCheckBoxBinding(Me.CheckBoxIsSpatial, "IsSpatial")
 
-        Me.MonitorDataSheet(
-          DATASHEET_TERMINOLOGY_NAME,
-          AddressOf Me.OnTerminologyChanged,
-          True)
+        Me.MonitorDataSheet(DATASHEET_TERMINOLOGY_NAME, AddressOf Me.OnTerminologyChanged, True)
+        Me.AddStandardCommands()
 
     End Sub
 
     Private Sub OnTerminologyChanged(ByVal e As DataSheetMonitorEventArgs)
 
-        Dim t As String = CStr(e.GetValue(
-            "TimestepUnits",
-            "Timestep")).ToLower(CultureInfo.CurrentCulture)
+        Dim t As String = CStr(e.GetValue("TimestepUnits", "Timestep")).ToLower(CultureInfo.CurrentCulture)
 
         Me.LabelStartTimestep.Text = String.Format(CultureInfo.CurrentCulture, "Start {0}:", t)
         Me.LabelEndTimestep.Text = String.Format(CultureInfo.CurrentCulture, "End {0}:", t)
-
-    End Sub
-
-    Private Sub ButtonClearAll_Click(sender As Object, e As EventArgs) Handles ButtonClearAll.Click
-
-        Me.ResetBoundControls()
-        Me.ClearDataSheets()
 
     End Sub
 

@@ -15,12 +15,9 @@ Class ProcessingDataFeedView
     Public Overrides Sub LoadDataFeed(dataFeed As DataFeed)
 
         MyBase.LoadDataFeed(dataFeed)
-        Me.SetCheckBoxBinding(Me.CheckBoxSplitSecStrat, DATASHEET_PROCESSING_SPLIT_BY_SS_COLUMN_NAME)
 
-        Me.MonitorDataSheet(
-          DATASHEET_TERMINOLOGY_NAME,
-          AddressOf Me.OnTerminologyChanged,
-          True)
+        Me.SetCheckBoxBinding(Me.CheckBoxSplitSecStrat, DATASHEET_PROCESSING_SPLIT_BY_SS_COLUMN_NAME)
+        Me.MonitorDataSheet(DATASHEET_TERMINOLOGY_NAME, AddressOf Me.OnTerminologyChanged, True)
 
     End Sub
 

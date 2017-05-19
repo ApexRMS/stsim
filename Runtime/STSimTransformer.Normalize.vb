@@ -39,7 +39,7 @@ Partial Class STSimTransformer
         End If
 
         If (dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) Is DBNull.Value) Then
-            dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) = 5
+            dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) = 10
             Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING)
         End If
 

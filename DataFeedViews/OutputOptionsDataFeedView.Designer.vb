@@ -47,7 +47,6 @@ Partial Class OutputOptionsDataFeedView
         Me.TextBoxRasterSTTimesteps = New System.Windows.Forms.TextBox()
         Me.LabelRasterTRTimesteps = New System.Windows.Forms.Label()
         Me.LabelRasterSCTimesteps = New System.Windows.Forms.Label()
-        Me.ButtonClearAll = New System.Windows.Forms.Button()
         Me.GroupBoxSummaryOutput = New System.Windows.Forms.GroupBox()
         Me.CheckBoxSummarySCZeroValues = New System.Windows.Forms.CheckBox()
         Me.LabelSummaryTATimesteps = New System.Windows.Forms.Label()
@@ -319,15 +318,6 @@ Partial Class OutputOptionsDataFeedView
         Me.LabelRasterSCTimesteps.TabIndex = 2
         Me.LabelRasterSCTimesteps.Text = "timesteps"
         '
-        'ButtonClearAll
-        '
-        Me.ButtonClearAll.Location = New System.Drawing.Point(3, 369)
-        Me.ButtonClearAll.Name = "ButtonClearAll"
-        Me.ButtonClearAll.Size = New System.Drawing.Size(75, 23)
-        Me.ButtonClearAll.TabIndex = 5
-        Me.ButtonClearAll.Text = "Clear All"
-        Me.ButtonClearAll.UseVisualStyleBackColor = True
-        '
         'GroupBoxSummaryOutput
         '
         Me.GroupBoxSummaryOutput.Controls.Add(Me.CheckBoxSummarySCZeroValues)
@@ -514,10 +504,9 @@ Partial Class OutputOptionsDataFeedView
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.GroupBoxSpatialOutput)
-        Me.Controls.Add(Me.ButtonClearAll)
         Me.Controls.Add(Me.GroupBoxSummaryOutput)
         Me.Name = "OutputOptionsDataFeedView"
-        Me.Size = New System.Drawing.Size(584, 395)
+        Me.Size = New System.Drawing.Size(584, 368)
         Me.GroupBoxSpatialOutput.ResumeLayout(False)
         Me.GroupBoxSpatialOutput.PerformLayout()
         Me.GroupBoxSummaryOutput.ResumeLayout(False)
@@ -550,7 +539,6 @@ Partial Class OutputOptionsDataFeedView
     Friend WithEvents TextBoxRasterSTTimesteps As System.Windows.Forms.TextBox
     Friend WithEvents LabelRasterTRTimesteps As System.Windows.Forms.Label
     Friend WithEvents LabelRasterSCTimesteps As System.Windows.Forms.Label
-    Friend WithEvents ButtonClearAll As System.Windows.Forms.Button
     Friend WithEvents GroupBoxSummaryOutput As System.Windows.Forms.GroupBox
     Friend WithEvents CheckBoxSummarySCZeroValues As System.Windows.Forms.CheckBox
     Friend WithEvents LabelSummaryTATimesteps As System.Windows.Forms.Label

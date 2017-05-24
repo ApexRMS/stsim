@@ -513,12 +513,7 @@ Partial Class STSimTransformer
                 'Dont bother if there haven't been any transitions
                 If transitionedPixels.Distinct().Count() > 1 Then
 
-                    SaveTransitionTypeOutputRaster(
-                        rastOP,
-                        Me.ResultScenario,
-                        iteration,
-                        timestep,
-                        transitionGroupId)
+                    RasterFiles.SaveOutputRaster(rastOP,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TRANSITION),RasterDataType.DTInteger,iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,transitionGroupId)
 
                 End If
 
@@ -553,12 +548,7 @@ Partial Class STSimTransformer
                 Me.m_InputRasters.GetMetadata(rastOP)
                 rastOP.DblCells = RasterTransitionAttrValues(AttributeId)
 
-                SaveTransitionAttrOutputToRasterFile(
-                    rastOP,
-                    Me.ResultScenario,
-                    iteration,
-                    timestep,
-                    AttributeId.ToString(CultureInfo.InvariantCulture))
+                RasterFiles.SaveOutputRaster(rastOP,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE),RasterDataType.DTDouble,iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,AttributeId)
 
             Next
 
@@ -1209,8 +1199,7 @@ Partial Class STSimTransformer
             Dim dsRemap As DataSheet = Me.Project.GetDataSheet(DATASHEET_STATECLASS_NAME)
             'DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
             rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
-            SaveStateClassOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep)
-
+            RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STATE_CLASS),RasterDataType.DTInteger,iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,Nothing)
         End If
 
     End Sub
@@ -1238,8 +1227,7 @@ Partial Class STSimTransformer
                 rastOutput.IntCells(c.CellId) = c.Age
             Next
 
-            SaveAgeOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep)
-
+            RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_AGE),RasterDataType.DTInteger, iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,Nothing)
         End If
 
     End Sub
@@ -1283,7 +1271,7 @@ Partial Class STSimTransformer
                 Dim distinctVals = rastOutput.IntCells().Distinct
 
                 If (distinctVals.Count() > 1 Or (distinctVals.Count() = 1 And distinctVals(0) <> StochasticTimeRaster.DefaultNoDataValue)) Then
-                    SaveTSTOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep, tg.TransitionGroupId.ToString(CultureInfo.InvariantCulture))
+                    RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TST),RasterDataType.DTInteger,iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN, tg.TransitionGroupId)
                 End If
 
             Next
@@ -1320,7 +1308,7 @@ Partial Class STSimTransformer
 
             'DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
             rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
-            SaveStratumOutputRaster(rastOutput, Me.ResultScenario, iteration, timestep)
+            RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STRATUM),RasterDataType.DTInteger, iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,Nothing)
 
         End If
 
@@ -1368,12 +1356,7 @@ Partial Class STSimTransformer
 
                 Next
 
-                SaveStateAttrOutputToRasterFile(
-                    rastOutput,
-                    Me.ResultScenario,
-                    iteration,
-                    timestep,
-                    AttributeTypeId.ToString(CultureInfo.InvariantCulture))
+                RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),RasterDataType.DTDouble, iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,AttributeTypeId)
 
             Next
 
@@ -1401,12 +1384,7 @@ Partial Class STSimTransformer
 
                 Next
 
-                SaveStateAttrOutputToRasterFile(
-                    rastOutput,
-                    Me.ResultScenario,
-                    iteration,
-                    timestep,
-                    AttributeTypeId.ToString(CultureInfo.InvariantCulture))
+                RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),RasterDataType.DTDouble, iteration,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,AttributeTypeId)
 
             Next
 
@@ -1585,11 +1563,8 @@ Partial Class STSimTransformer
 
                 rastAatp.DblCells = aatp
 
-                SaveAnnualAvgTransitionProbToRasterFile(
-                     rastAatp,
-                     Me.ResultScenario,
-                     tgId,
-                     timestep)
+
+                RasterFiles.SaveOutputRaster(rastAatp,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY),RasterDataType.DTDouble, 0,timestep,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,tgId)
 
             Next
 

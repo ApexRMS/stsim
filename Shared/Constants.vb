@@ -64,6 +64,20 @@ Module Constants
     Public Const SPATIAL_MAP_EXPORT_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX As String = "Tgap"
     Public Const SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX As String = "tgap"
 
+    'Spatial Output Datasheets
+    Public Const DATASHEET_OUTPUT_SPATIAL_STRATUM = "STSim_OutputSpatialStratum"
+    Public Const DATASHEET_OUTPUT_SPATIAL_STATE_CLASS = "STSim_OutputSpatialState"
+    Public Const DATASHEET_OUTPUT_SPATIAL_AGE ="STSim_OutputSpatialAge"
+    Public Const DATASHEET_OUTPUT_SPATIAL_TRANSITION ="STSim_OutputSpatialTransition"
+    Public Const DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE ="STSim_OutputSpatialStateAttribute"
+    Public Const DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE="STSim_OutputSpatialTransitionAttribute"
+    Public Const DATASHEET_OUTPUT_SPATIAL_TST="STSim_OutputSpatialTST"
+    Public Const DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY="STSim_OutputSpatialAverageTransitionProbability"
+    
+    'Spatial Output Datasheet Common Column Names
+    public const DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename"
+
+
     'Spatial Map file naming Regex filter, containing 1 ID value
     Public Const FILE_FILTER_ID_REGEX = "^(.*){0}-([\d]*)\.(tif|vrt)$"
 

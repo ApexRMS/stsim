@@ -342,7 +342,7 @@ Module Strings
     Public Const DATASHEET_PROCESSING_NAME As String = "STSim_Processing"
     Public Const DATASHEET_PROCESSING_SPLIT_BY_SS_COLUMN_NAME As String = "SplitBySecondaryStrata"
 
-    'Outpu Stratum Amount
+    'Output Stratum Amount
     Public Const DATASHEET_OUTPUT_STRATUM_NAME As String = "STSim_OutputStratum"
 
     'Output Stratum State

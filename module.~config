@@ -1212,6 +1212,16 @@
       <layout name="stime:charts" configurationSheet="STSim_RunControl" providerClassName="SyncroSim.STSim.STSimChartProvider" providerClassAssembly="SyncroSim.STSim" model="stsim">
       </layout>
       <layout name="stime:maps" configurationSheet="STSim_RunControl" model="stsim">
+        <group name="Basic">
+          <item name="State Class" dataSheet="STSim_OutputSpatialState" column="FileName"></item>
+          <item name="Age" dataSheet="STSim_OutputSpatialAge" column="FileName"></item>
+          <item name="Primary Stratum" dataSheet="STSim_OutputSpatialStratum" column="FileName"></item>
+        </group>
+        <item name="Transitions" dataSheet="STSim_OutputSpatialTransition" column="FileName" filter="TransitionGroupID" extendedIdentifier="(Transitions)"></item>
+        <item name="Average Annual Probability" dataSheet="STSim_OutputSpatialAverageTransitionProbability" column="FileName" filter="TransitionGroupID" extendedIdentifier="(Avg. Annual Prob. - All Iterations)" ></item>
+        <item name="State Attributes" dataSheet="STSim_OutputSpatialStateAttribute" column="FileName" filter="StateAttributeTypeID" ></item>
+        <item name="State Class" dataSheet="STSim_OutputSpatialStructuralState" column="FileName"></item>
+        <item name="Transition Attributes" dataSheet="STSim_OutputSpatialStructuralState" column="FileName"></item>
       </layout>
 
     </layouts>

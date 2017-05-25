@@ -5,10 +5,10 @@
 '
 '*********************************************************************************************
 
-Imports SyncroSim.Core
-Imports SyncroSim.StochasticTime.Forms
 Imports System.Reflection
 Imports System.Globalization
+Imports SyncroSim.Core
+Imports SyncroSim.StochasticTime.Forms
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class STSimMapProvider
@@ -35,23 +35,23 @@ Class STSimMapProvider
 
             Dim AttrGroupView As DataView = CreateMapAttributeGroupsView(project, store)
 
-            g0.Items.Add(New SyncroSimLayoutItem(SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", False))
-            g0.Items.Add(New SyncroSimLayoutItem(SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", False))
+            'Basic
+            AddBasicVariables(project, g0)
 
-            ' Add Primary Strata
-            Dim PrimaryLbl As String = Nothing
-            Dim SecondaryLbl As String = Nothing
-            Dim dsterm As DataSheet = project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
-            GetStratumLabelTerminology(dsterm, PrimaryLbl, SecondaryLbl)
-            g0.Items.Add(New SyncroSimLayoutItem(SPATIAL_MAP_STRATUM_VARIABLE_NAME, PrimaryLbl, False))
-
+            'Transitions
             AddMapTransitionGroupVariables(project, store, g1.Items,
-                SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, "(Transitions)")
+                "STSim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)",
+                SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX)
 
+            'Average Annual Probability
             AddMapTransitionGroupVariables(project, store, g2.Items,
-                SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, "(Avg. Annual Prob. - All Iterations)")
+                "STSim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)",
+                SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX)
 
+            'State Attributes
             AddMapStateAttributes(g3.Items, project, store, AttrGroupView)
+
+            'Transition Attributes
             AddMapTransitionAttributes(g4.Items, project, store, AttrGroupView)
 
             layout.Items.Add(g0)
@@ -90,12 +90,41 @@ Class STSimMapProvider
 
     End Function
 
+    Private Shared Sub AddBasicVariables(ByVal project As Project, ByVal g0 As SyncroSimLayoutItem)
+
+        Dim psl As String = Nothing
+        Dim ssl As String = Nothing
+        Dim dsterm As DataSheet = project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
+        GetStratumLabelTerminology(dsterm, psl, ssl)
+
+        Dim i1 As SyncroSimLayoutItem = New SyncroSimLayoutItem(SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", False)
+        Dim i2 As SyncroSimLayoutItem = New SyncroSimLayoutItem(SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", False)
+        Dim i3 As SyncroSimLayoutItem = New SyncroSimLayoutItem(SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, False)
+
+        i1.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
+        i1.Properties.Add(New MetaDataProperty("column", "Filename"))
+
+        i2.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
+        i2.Properties.Add(New MetaDataProperty("column", "Filename"))
+
+        i3.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
+        i3.Properties.Add(New MetaDataProperty("column", "Filename"))
+
+        g0.Items.Add(i1)
+        g0.Items.Add(i2)
+        g0.Items.Add(i3)
+
+    End Sub
+
     Private Shared Sub AddMapTransitionGroupVariables(
         ByVal project As Project,
         ByVal store As DataStore,
         ByVal items As SyncroSimLayoutItemCollection,
-        ByVal prefix As String,
-        ByVal extendedIdentifier As String)
+        ByVal dataSheetName As String,
+        ByVal fileColumnName As String,
+        ByVal filterColumnName As String,
+        ByVal extendedIdentifier As String,
+        ByVal prefix As String)
 
         Dim dstg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME)
         Dim dsttg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_GROUP_NAME)
@@ -111,10 +140,7 @@ Class STSimMapProvider
         For Each drv As DataRowView In dvtg
 
             Dim tgid As Integer = CInt(drv.Row(dstg.ValidationTable.ValueMember))
-
-            Dim query As String = String.Format(CultureInfo.InvariantCulture,
-                "{0}={1}", DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgid)
-
+            Dim query As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgid)
             Dim rows() As DataRow = dtttg.Select(query)
 
             For Each dr As DataRow In rows
@@ -125,7 +151,12 @@ Class STSimMapProvider
                     Dim VarName As String = String.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, tgid)
 
                     Dim Item As New SyncroSimLayoutItem(VarName, DisplayName, False)
+
+                    Item.Properties.Add(New MetaDataProperty("dataSheet", dataSheetName))
+                    Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
+                    Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                     Item.Properties.Add(New MetaDataProperty("extendedIdentifier", extendedIdentifier))
+                    Item.Properties.Add(New MetaDataProperty("itemId", tgid.ToString(CultureInfo.InvariantCulture)))
 
                     items.Add(Item)
 
@@ -152,6 +183,9 @@ Class STSimMapProvider
             store,
             items,
             StateAttrsDataSheet,
+            "STSim_OutputSpatialStateAttribute",
+            "Filename",
+            "StateAttributeTypeID",
             SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX)
 
         Dim GroupsDict As New Dictionary(Of String, SyncroSimLayoutItem)
@@ -171,6 +205,9 @@ Class STSimMapProvider
             store,
             GroupsDict,
             StateAttrsDataSheet,
+            "STSim_OutputSpatialStateAttribute",
+            "Filename",
+            "StateAttributeTypeID",
             SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX)
 
         For Each g As SyncroSimLayoutItem In GroupsList
@@ -196,6 +233,9 @@ Class STSimMapProvider
             store,
             items,
             TransitionAttrsDataSheet,
+            "STSim_OutputSpatialTransitionAttribute",
+            "Filename",
+            "TransitionAttributeTypeID",
             SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX)
 
         Dim GroupsDict As New Dictionary(Of String, SyncroSimLayoutItem)
@@ -215,6 +255,9 @@ Class STSimMapProvider
             store,
             GroupsDict,
             TransitionAttrsDataSheet,
+            "STSim_OutputSpatialTransitionAttribute",
+            "Filename",
+            "TransitionAttributeTypeID",
             SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX)
 
         For Each g As SyncroSimLayoutItem In GroupsList
@@ -231,6 +274,9 @@ Class STSimMapProvider
         ByVal store As DataStore,
         ByVal items As SyncroSimLayoutItemCollection,
         ByVal attrsDataSheet As DataSheet,
+        ByVal dataSheetName As String,
+        ByVal fileColumnName As String,
+        ByVal filterColumnName As String,
         ByVal prefix As String)
 
         Dim Table As DataTable = attrsDataSheet.GetData(store)
@@ -257,7 +303,14 @@ Class STSimMapProvider
                     DisplayName = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayName, CStr(drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME)))
                 End If
 
-                items.Add(New SyncroSimLayoutItem(AttrName, DisplayName, False))
+                Dim Item As New SyncroSimLayoutItem(AttrName, DisplayName, False)
+
+                Item.Properties.Add(New MetaDataProperty("dataSheet", dataSheetName))
+                Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
+                Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
+                Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
+
+                items.Add(Item)
 
             End If
 
@@ -269,6 +322,9 @@ Class STSimMapProvider
         ByVal store As DataStore,
         ByVal groupsDict As Dictionary(Of String, SyncroSimLayoutItem),
         ByVal attrsDataSheet As DataSheet,
+        ByVal dataSheetName As String,
+        ByVal fileColumnName As String,
+        ByVal filterColumnName As String,
         ByVal prefix As String)
 
         Dim Table As DataTable = attrsDataSheet.GetData(store)
@@ -300,7 +356,14 @@ Class STSimMapProvider
                     DisplayName = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayName, CStr(drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME)))
                 End If
 
-                groupsDict(GroupName).Items.Add(New SyncroSimLayoutItem(AttrName, DisplayName, False))
+                Dim Item As New SyncroSimLayoutItem(AttrName, DisplayName, False)
+
+                Item.Properties.Add(New MetaDataProperty("dataSheet", dataSheetName))
+                Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
+                Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
+                Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
+
+                groupsDict(GroupName).Items.Add(Item)
 
             End If
 

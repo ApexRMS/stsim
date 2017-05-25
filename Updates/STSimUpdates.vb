@@ -7,7 +7,9 @@
 
 Imports SyncroSim.Core
 Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
+Imports SyncroSim.StochasticTime
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class STSimUpdates
@@ -230,6 +232,10 @@ Class STSimUpdates
 
         If (currentSchemaVersion < 57) Then
             STSIM0000057(store)
+        End If
+
+        If (currentSchemaVersion < 58) Then
+            STSIM0000058(store)
         End If
 
     End Sub
@@ -2082,5 +2088,108 @@ Class STSimUpdates
     Private Shared Sub STSIM0000057(ByVal store As DataStore)
         store.ExecuteNonQuery("UPDATE STSim_Transition SET AgeReset=-1 WHERE AgeReset=1")
     End Sub
+
+
+    ''' <summary>
+    ''' STSIM0000058
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' Move the Spatial Output files to the new Datasheet based locations
+    ''' </remarks>
+    Private Shared Sub STSIM0000058(ByVal store As DataStore)
+
+        ' Loop thru all the results scenarios in the library
+        Dim dtScenarios As DataTable = store.CreateDataTable("SSim_Scenario")
+
+        Dim outputDatasheets() as String = {
+            "STSim_OutputSpatialStratum",
+            "STSim_OutputSpatialState",
+            "STSim_OutputSpatialAge",
+            "STSim_OutputSpatialTransition",
+            "STSim_OutputSpatialStateAttribute",
+            "STSim_OutputSpatialTransitionAttribute",
+            "STSim_OutputSpatialTST",
+            "STSim_OutputSpatialAverageTransitionProbability",
+            "SF_OutputSpatialStockType",
+            "SF_OutputSpatialStockGroup",
+            "SF_OutputSpatialFlowType",
+            "SF_OutputSpatialFlowGroup"
+        }
+
+        For Each row As DataRow In dtScenarios.Rows
+
+            Dim scenarioId As Integer = Cint(row("ScenarioID"))
+
+            For Each datasheetName As String In outputDatasheets
+                If (store.TableExists(datasheetName)) Then
+                    Dim sql as String
+                    sql = String.Format("select distinct filename from {0} where scenarioId = {1}",datasheetName,scenarioId)
+                    Dim dtOutputSpatial As DataTable = store.CreateDataTableFromQuery(sql,datasheetName)
+                        For each osRow as DataRow  In dtOutputSpatial.Rows
+                            Dim filename as String = CType(osRow("Filename"), String)
+
+                            Dim oldLocation as String = GetLegacyOutputFolder(store,scenarioId)
+                            Dim newLocation as String = GetDatasheetOutputFolder(store,scenarioId,datasheetName)
+                            Debug.Print (oldLocation & "," &  newLocation)
+
+                            if ( NOT Directory.Exists(newLocation)) Then
+                                Directory.CreateDirectory(newLocation)
+                            End If 
+
+                            if NOT File.Exists(Path.Combine(newLocation,filename)) Then
+                                File.Move(Path.Combine(oldLocation,filename),Path.Combine(newLocation,filename))
+                            End If
+                        Next
+
+                    End If
+
+            Next
+
+        Next
+
+
+    End Sub
+
+    Private Shared Function GetDatasheetOutputFolder(store As DataStore,scenarioId As Integer,datasheetName As String) As String
+
+        Dim baseFolder = GetCurrentOutputFolderBase(store)
+
+        return Path.Combine(baseFolder,String.format("Scenario-{0}",scenarioId),datasheetName) 
+
+    end Function
+
+    Private Shared Function GetLegacyOutputFolder(store As DataStore,scenarioId As Integer) As String
+
+        Dim baseFolder = GetCurrentOutputFolderBase(store)
+
+        return Path.Combine(baseFolder,String.format("Scenario-{0}",scenarioId),"Spatial") 
+
+    end Function
+
+
+    Private Shared Function GetCurrentOutputFolderBase(ByVal store As DataStore) As String
+
+        Const FOLDER_NAME As String = "OutputFolderName"
+
+        Dim dt As DataTable = Nothing
+
+        dt = store.CreateDataTable("SSim_Files")
+
+        Dim dr As DataRow = dt.Rows(0)
+
+        Debug.Assert(dt.Rows.Count = 1 Or dt.Rows.Count = 0)
+
+        Dim p As String = Nothing
+
+        If (dr IsNot Nothing) AndAlso (dr(FOLDER_NAME) IsNot DBNull.Value) Then
+            p = CStr(dr(FOLDER_NAME))
+        Else
+            p = store.DataStoreConnection.ConnectionString & ".output"
+        End If
+
+        Return p
+
+    End Function
 
 End Class

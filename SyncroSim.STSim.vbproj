@@ -136,6 +136,7 @@
     <Compile Include="Console\STSimConsole.ListReports.vb" />
     <Compile Include="Console\STSimConsole.SpatialSplit.vb" />
     <Compile Include="Console\STSimConsole.vb" />
+    <Compile Include="DataSheets\AttributeGroupDataSheet.vb" />
     <Compile Include="Maps\AATPRasterMap.vb" />
     <Compile Include="Maps\AgeRasterMap.vb" />
     <Compile Include="Maps\StateAttributeRasterMap.vb" />

@@ -154,9 +154,7 @@ Class STSimMapProvider
 
                     Item.Properties.Add(New MetaDataProperty("dataSheet", dataSheetName))
                     Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
-                    Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                     Item.Properties.Add(New MetaDataProperty("extendedIdentifier", extendedIdentifier))
-                    Item.Properties.Add(New MetaDataProperty("itemId", tgid.ToString(CultureInfo.InvariantCulture)))
 
                     items.Add(Item)
 
@@ -307,8 +305,6 @@ Class STSimMapProvider
 
                 Item.Properties.Add(New MetaDataProperty("dataSheet", dataSheetName))
                 Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
-                Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
-                Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
 
                 items.Add(Item)
 
@@ -360,8 +356,6 @@ Class STSimMapProvider
 
                 Item.Properties.Add(New MetaDataProperty("dataSheet", dataSheetName))
                 Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
-                Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
-                Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
 
                 groupsDict(GroupName).Items.Add(Item)
 

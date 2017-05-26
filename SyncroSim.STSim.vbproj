@@ -506,6 +506,7 @@
     <Compile Include="Updates\STSimUpdates.SF.vb" />
     <Compile Include="Updates\STSimUpdates.SSIM_V_1.vb" />
     <Compile Include="Updates\STSimUpdates.TPE.vb" />
+    <Compile Include="Updates\STSimUpdates.Utils.vb" />
     <Compile Include="Updates\STSimUpdates.vb" />
   </ItemGroup>
   <ItemGroup>

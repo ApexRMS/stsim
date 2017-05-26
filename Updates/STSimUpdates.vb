@@ -238,6 +238,10 @@ Class STSimUpdates
             STSIM0000058(store)
         End If
 
+        If (currentSchemaVersion < 59) Then
+            STSIM0000059(store)
+        End If
+
     End Sub
 
     ''' <summary>
@@ -2102,114 +2106,112 @@ Class STSimUpdates
         ' Loop thru all the results scenarios in the library
         Dim dtScenarios As DataTable = store.CreateDataTable("SSim_Scenario")
 
-        Dim outputDatasheets(,) as String = {
-            {"STSim_OutputSpatialTST","tg-*-tst"},  '' Make sure this at the top, otherwise files will be caught with tg-*
-            {"STSim_OutputSpatialStratum","str"},
-            {"STSim_OutputSpatialState","sc"},
-            {"STSim_OutputSpatialAge","age"},
-            {"STSim_OutputSpatialTransition","tg-*"},
-            {"STSim_OutputSpatialStateAttribute","sa-*"},
-            {"STSim_OutputSpatialTransitionAttribute","ta-*"},
-            {"STSim_OutputSpatialAverageTransitionProbability","tgap-*"},
-            {"SF_OutputSpatialStockType","stk-*"},
-            {"SF_OutputSpatialStockGroup","stkg-*"},
-            {"SF_OutputSpatialFlowType","flo"},
-            {"SF_OutputSpatialFlowGroup","flog"}
+        Dim outputDatasheets(,) As String = {
+            {"STSim_OutputSpatialTST", "tg-*-tst"},  '' Make sure this at the top, otherwise files will be caught with tg-*
+            {"STSim_OutputSpatialStratum", "str"},
+            {"STSim_OutputSpatialState", "sc"},
+            {"STSim_OutputSpatialAge", "age"},
+            {"STSim_OutputSpatialTransition", "tg-*"},
+            {"STSim_OutputSpatialStateAttribute", "sa-*"},
+            {"STSim_OutputSpatialTransitionAttribute", "ta-*"},
+            {"STSim_OutputSpatialAverageTransitionProbability", "tgap-*"},
+            {"SF_OutputSpatialStockType", "stk-*"},
+            {"SF_OutputSpatialStockGroup", "stkg-*"},
+            {"SF_OutputSpatialFlowType", "flo"},
+            {"SF_OutputSpatialFlowGroup", "flog"}
         }
 
         For Each row As DataRow In dtScenarios.Rows
 
-            Dim scenarioId As Integer = Cint(row("ScenarioID"))
+            Dim scenarioId As Integer = CInt(row("ScenarioID"))
 
-            For i As Integer = 0 to outputDatasheets.GetUpperBound(0)
+            For i As Integer = 0 To outputDatasheets.GetUpperBound(0)
 
-                Dim dsName As String = outputDatasheets(i,0)
-                Dim fileFilter as String = outputDatasheets(i,1)
+                Dim dsName As String = outputDatasheets(i, 0)
+                Dim fileFilter As String = outputDatasheets(i, 1)
 
-                Dim oldLocation as String = GetLegacyOutputFolder(store,scenarioId)
-                Dim newLocation as String = GetDatasheetOutputFolder(store,scenarioId,dsName)
+                Dim oldLocation As String = GetLegacyOutputFolder(store, scenarioId)
+                Dim newLocation As String = GetDatasheetOutputFolder(store, scenarioId, dsName)
 
                 If Directory.Exists(oldLocation) Then
                     Dim files = Directory.GetFiles(oldLocation, "*" + fileFilter + ".*")
-                    for each oldFilename in files
+                    For Each oldFilename In files
 
-                        if ( NOT Directory.Exists(newLocation)) Then
+                        If (Not Directory.Exists(newLocation)) Then
                             Directory.CreateDirectory(newLocation)
-                        End If 
-
-                        Dim newFilename as String
-                        if dsName = "STSim_OutputSpatialTST" Then
-                            ' This is a special case, becuase we want to rename to a generic form
-                            newFilename = Path.GetFileName(oldFilename)
-                            newFilename = newFilename.Replace("-tst","").Replace("tg-","tst-")
-                            newFilename = Path.Combine(newLocation,newFilename)
-                        Else
-                            newFilename = Path.Combine(newLocation,Path.GetFileName(oldFilename))  
                         End If
 
-                        if NOT File.Exists(newFilename) Then
-                            File.Move(oldFilename,newFilename)
-                            Debug.Print(String.Format("Moving spatial output file '{0}' to {1}",oldFilename,newLocation))
+                        Dim newFilename As String
+                        If dsName = "STSim_OutputSpatialTST" Then
+                            ' This is a special case, becuase we want to rename to a generic form
+                            newFilename = Path.GetFileName(oldFilename)
+                            newFilename = newFilename.Replace("-tst", "").Replace("tg-", "tst-")
+                            newFilename = Path.Combine(newLocation, newFilename)
+                        Else
+                            newFilename = Path.Combine(newLocation, Path.GetFileName(oldFilename))
+                        End If
+
+                        If Not File.Exists(newFilename) Then
+                            File.Move(oldFilename, newFilename)
+                            Debug.Print(String.Format("Moving spatial output file '{0}' to {1}", oldFilename, newLocation))
                         End If
 
                     Next
                 End If
- 
+
             Next
         Next
 
         ' Rename any TST files already records in the STSim_OutputSpatialTST datasheet, to "tst-123".
         store.ExecuteNonQuery("update STSim_OutputSpatialTST set filename = Replace(Replace(filename,'tg-','tst-'),'-tst.','.')")
 
-
     End Sub
 
+    ''' <summary>
+    ''' STSIM0000059
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' Map criteria used to be in the following form:
+    ''' 
+    '''     sc|      //variable with no item id
+    '''     tg-342   //variable with item id
+    ''' 
+    ''' Now it is in the form:
+    ''' 
+    '''     sc|
+    '''     tg-342-itemid-342-itemsrc-STSim_TransitionGroup
+    '''     
+    ''' This update must convert all map criteria to the new form.  This update is specific to ST-Sim and
+    ''' StockFlow since the data sheet names must be known in order for a conversion to take place.
+    ''' </remarks>
+    Private Shared Sub STSIM0000059(ByVal store As DataStore)
 
+        Dim dt As DataTable = store.CreateDataTable("STime_Map")
 
-    Private Shared Function GetDatasheetOutputFolder(store As DataStore,scenarioId As Integer,datasheetName As String) As String
+        For Each dr As DataRow In dt.Rows
 
-        Dim baseFolder = GetCurrentOutputFolderBase(store)
+            If (dr("Criteria") IsNot DBNull.Value) Then
 
-        return Path.Combine(baseFolder,String.format("Scenario-{0}",scenarioId),datasheetName) 
+                Dim id As Integer = CInt(dr("MapID"))
+                Dim cr As String = CStr(dr("Criteria"))
+                Dim sp() As String = cr.Split(CChar("|"))
+                Dim sb As New Text.StringBuilder()
 
-    end Function
+                For Each s As String In sp
+                    sb.Append(ExpandMapCriteriaFrom1x(s))
+                    sb.Append("|")
+                Next
 
-    Private Shared Function GetLegacyOutputFolder(store As DataStore,scenarioId As Integer) As String
+                Dim newcr As String = sb.ToString().TrimEnd(CChar("|"))
+                Dim query As String = String.Format(CultureInfo.InvariantCulture, "UPDATE STime_Map SET Criteria='{0}' WHERE MapID={1}", newcr, id)
 
-        Dim baseFolder = GetCurrentOutputFolderBase(store)
+                store.ExecuteNonQuery(query)
 
-        return Path.Combine(baseFolder,String.format("Scenario-{0}",scenarioId),"Spatial") 
+            End If
 
-    end Function
+        Next
 
-
-    Private Shared Function GetCurrentOutputFolderBase(ByVal store As DataStore) As String
-
-        Const FOLDER_NAME As String = "OutputFolderName"
-
-        Dim dt As DataTable = Nothing
-
-        dt = store.CreateDataTable("SSim_Files")
-
-
-        Dim dr As DataRow = Nothing
-        
-        if dt.Rows.Count =  1 Then
-            dr = dt.Rows(0)
-        End If
-
-        Debug.Assert(dt.Rows.Count = 1 Or dt.Rows.Count = 0)
-
-        Dim p As String = Nothing
-
-        If (dr IsNot Nothing) AndAlso (dr(FOLDER_NAME) IsNot DBNull.Value) Then
-            p = CStr(dr(FOLDER_NAME))
-        Else
-            p = store.DataStoreConnection.ConnectionString & ".output"
-        End If
-
-        Return p
-
-    End Function
+    End Sub
 
 End Class

@@ -2102,54 +2102,69 @@ Class STSimUpdates
         ' Loop thru all the results scenarios in the library
         Dim dtScenarios As DataTable = store.CreateDataTable("SSim_Scenario")
 
-        Dim outputDatasheets() as String = {
-            "STSim_OutputSpatialStratum",
-            "STSim_OutputSpatialState",
-            "STSim_OutputSpatialAge",
-            "STSim_OutputSpatialTransition",
-            "STSim_OutputSpatialStateAttribute",
-            "STSim_OutputSpatialTransitionAttribute",
-            "STSim_OutputSpatialTST",
-            "STSim_OutputSpatialAverageTransitionProbability",
-            "SF_OutputSpatialStockType",
-            "SF_OutputSpatialStockGroup",
-            "SF_OutputSpatialFlowType",
-            "SF_OutputSpatialFlowGroup"
+        Dim outputDatasheets(,) as String = {
+            {"STSim_OutputSpatialTST","tg-*-tst"},  '' Make sure this at the top, otherwise files will be caught with tg-*
+            {"STSim_OutputSpatialStratum","str"},
+            {"STSim_OutputSpatialState","sc"},
+            {"STSim_OutputSpatialAge","age"},
+            {"STSim_OutputSpatialTransition","tg-*"},
+            {"STSim_OutputSpatialStateAttribute","sa-*"},
+            {"STSim_OutputSpatialTransitionAttribute","ta-*"},
+            {"STSim_OutputSpatialAverageTransitionProbability","tgap-*"},
+            {"SF_OutputSpatialStockType","stk-*"},
+            {"SF_OutputSpatialStockGroup","stkg-*"},
+            {"SF_OutputSpatialFlowType","flo"},
+            {"SF_OutputSpatialFlowGroup","flog"}
         }
 
         For Each row As DataRow In dtScenarios.Rows
 
             Dim scenarioId As Integer = Cint(row("ScenarioID"))
 
-            For Each datasheetName As String In outputDatasheets
-                If (store.TableExists(datasheetName)) Then
-                    Dim sql as String
-                    sql = String.Format("select distinct filename from {0} where scenarioId = {1}",datasheetName,scenarioId)
-                    Dim dtOutputSpatial As DataTable = store.CreateDataTableFromQuery(sql,datasheetName)
-                        For each osRow as DataRow  In dtOutputSpatial.Rows
-                            Dim filename as String = CType(osRow("Filename"), String)
+            For i As Integer = 0 to outputDatasheets.GetUpperBound(0)
 
-                            Dim oldLocation as String = GetLegacyOutputFolder(store,scenarioId)
-                            Dim newLocation as String = GetDatasheetOutputFolder(store,scenarioId,datasheetName)
-                            Debug.Print (oldLocation & "," &  newLocation)
+                Dim dsName As String = outputDatasheets(i,0)
+                Dim fileFilter as String = outputDatasheets(i,1)
 
-                            if ( NOT Directory.Exists(newLocation)) Then
-                                Directory.CreateDirectory(newLocation)
-                            End If 
+                Dim oldLocation as String = GetLegacyOutputFolder(store,scenarioId)
+                Dim newLocation as String = GetDatasheetOutputFolder(store,scenarioId,dsName)
 
-                            if NOT File.Exists(Path.Combine(newLocation,filename)) Then
-                                File.Move(Path.Combine(oldLocation,filename),Path.Combine(newLocation,filename))
-                            End If
-                        Next
+                If Directory.Exists(oldLocation) Then
+                    Dim files = Directory.GetFiles(oldLocation, "*" + fileFilter + ".*")
+                    for each oldFilename in files
 
-                    End If
+                        if ( NOT Directory.Exists(newLocation)) Then
+                            Directory.CreateDirectory(newLocation)
+                        End If 
 
+                        Dim newFilename as String
+                        if dsName = "STSim_OutputSpatialTST" Then
+                            ' This is a special case, becuase we want to rename to a generic form
+                            newFilename = Path.GetFileName(oldFilename)
+                            newFilename = newFilename.Replace("-tst","").Replace("tg-","tst-")
+                            newFilename = Path.Combine(newLocation,newFilename)
+                        Else
+                            newFilename = Path.Combine(newLocation,Path.GetFileName(oldFilename))  
+                        End If
+
+                        if NOT File.Exists(newFilename) Then
+                            File.Move(oldFilename,newFilename)
+                            Debug.Print(String.Format("Moving spatial output file '{0}' to {1}",oldFilename,newLocation))
+                        End If
+
+                    Next
+                End If
+ 
             Next
-
         Next
+
+        ' Rename any TST files already records in the STSim_OutputSpatialTST datasheet, to "tst-123".
+        store.ExecuteNonQuery("update STSim_OutputSpatialTST set filename = Replace(Replace(filename,'tg-','tst-'),'-tst.','.')")
 
 
     End Sub
+
+
 
     Private Shared Function GetDatasheetOutputFolder(store As DataStore,scenarioId As Integer,datasheetName As String) As String
 
@@ -2176,7 +2191,12 @@ Class STSimUpdates
 
         dt = store.CreateDataTable("SSim_Files")
 
-        Dim dr As DataRow = dt.Rows(0)
+
+        Dim dr As DataRow = Nothing
+        
+        if dt.Rows.Count =  1 Then
+            dr = dt.Rows(0)
+        End If
 
         Debug.Assert(dt.Rows.Count = 1 Or dt.Rows.Count = 0)
 

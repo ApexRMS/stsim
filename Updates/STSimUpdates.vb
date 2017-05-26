@@ -2163,7 +2163,9 @@ Class STSimUpdates
         Next
 
         ' Rename any TST files already records in the STSim_OutputSpatialTST datasheet, to "tst-123".
-        store.ExecuteNonQuery("update STSim_OutputSpatialTST set filename = Replace(Replace(filename,'tg-','tst-'),'-tst.','.')")
+        If (store.TableExists("STSim_OutputSpatialTST")) Then
+            store.ExecuteNonQuery("update STSim_OutputSpatialTST set filename = Replace(Replace(filename,'tg-','tst-'),'-tst.','.')")
+        End If
 
     End Sub
 
@@ -2186,6 +2188,10 @@ Class STSimUpdates
     ''' StockFlow since the data sheet names must be known in order for a conversion to take place.
     ''' </remarks>
     Private Shared Sub STSIM0000059(ByVal store As DataStore)
+
+        If (Not store.TableExists("STime_Map")) Then
+            Return
+        End If
 
         Dim dt As DataTable = store.CreateDataTable("STime_Map")
 

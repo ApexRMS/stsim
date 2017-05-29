@@ -2117,8 +2117,8 @@ Class STSimUpdates
             {"STSim_OutputSpatialAverageTransitionProbability", "tgap-*"},
             {"SF_OutputSpatialStockType", "stk-*"},
             {"SF_OutputSpatialStockGroup", "stkg-*"},
-            {"SF_OutputSpatialFlowType", "flo"},
-            {"SF_OutputSpatialFlowGroup", "flog"}
+            {"SF_OutputSpatialFlowType", "flo-*"},
+            {"SF_OutputSpatialFlowGroup", "flog-*"}
         }
 
         For Each row As DataRow In dtScenarios.Rows

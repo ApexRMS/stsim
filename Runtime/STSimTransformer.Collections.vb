@@ -2095,10 +2095,10 @@ Partial Class STSimTransformer
 
                 Dim Item As New TransitionAdjacencyMultiplier(
                     TransitionGroupId,
-                    StratumId,
-                    SecondaryStratumId,
                     Iteration,
                     Timestep,
+                    StratumId,
+                    SecondaryStratumId,
                     AttributeValue,
                     MultiplierAmount,
                     DistributionTypeId,

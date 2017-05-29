@@ -137,14 +137,6 @@
     <Compile Include="Console\STSimConsole.SpatialSplit.vb" />
     <Compile Include="Console\STSimConsole.vb" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.vb" />
-    <Compile Include="Maps\AATPRasterMap.vb" />
-    <Compile Include="Maps\AgeRasterMap.vb" />
-    <Compile Include="Maps\StateAttributeRasterMap.vb" />
-    <Compile Include="Maps\StateClassRasterMap.vb" />
-    <Compile Include="Maps\StratumRasterMap.vb" />
-    <Compile Include="Maps\TransitionAttributeRasterMap.vb" />
-    <Compile Include="Maps\TransitionRasterMap.vb" />
-    <Compile Include="Maps\TSTRasterMap.vb" />
     <Compile Include="Runtime\AttributeValueBase.vb" />
     <Compile Include="Runtime\AttributeValueRecord.vb" />
     <Compile Include="Runtime\Cell.vb" />
@@ -587,7 +579,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="module.config" />
+    <None Include="module.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -640,7 +634,9 @@
       <Name>SyncroSim.StochasticTime</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Maps\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

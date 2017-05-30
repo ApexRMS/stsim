@@ -1411,7 +1411,6 @@ Partial Class STSimTransformer
             Exit Sub
         End If
 
-
         ' Loop thru all the Transition Adjacency Settings records. Each can have update frequencies.
         For Each setting As TransitionAdjacencySetting In Me.m_TransitionAdjacencySettings
 
@@ -1426,12 +1425,14 @@ Partial Class STSimTransformer
 
                 Dim stateAttributeTypeId As Integer = setting.StateAttributeTypeId
                 Dim stateAttributeValueMap As StateAttributeValueMap = Nothing
+                Dim IsNoAges = False
 
                 ' Extract State Attribute values from StateAttributeValueMaps ( just do it once, to enhance performance)
                 ' check whether StateAttributeTypeId is in m_StateAttributeTypeIdsNoAges or m_StateAttributeTypeIdsAges. 
 
                 If Me.m_StateAttributeTypeIdsNoAges.Keys.Contains(stateAttributeTypeId) Then
                     stateAttributeValueMap = Me.m_StateAttributeValueMapNoAges
+                    IsNoAges = True
                 End If
 
                 If Me.m_StateAttributeTypeIdsAges.Keys.Contains(stateAttributeTypeId) Then
@@ -1441,6 +1442,7 @@ Partial Class STSimTransformer
                 If Not stateAttributeValueMap Is Nothing Then
 
                     ReDim stateAttrVals(Me.m_InputRasters.NumberCells - 1)
+
                     For i = 0 To Me.m_InputRasters.NumberCells - 1
                         stateAttrVals(i) = StochasticTimeRaster.DefaultNoDataValue
                     Next
@@ -1449,14 +1451,30 @@ Partial Class STSimTransformer
                     For Each cell In Me.Cells
 
                         ' Pull out the values 1st, before doing the neighbor averaging, to get our repeated cost if GetValue.
-                        Dim attrValue As Nullable(Of Double) =
-                           stateAttributeValueMap.GetAttributeValueNoAge(
+                        Dim attrValue As Nullable(Of Double) = Nothing
+
+                        If (IsNoAges) Then
+
+                            attrValue = stateAttributeValueMap.GetAttributeValueNoAge(
                                 stateAttributeTypeId,
                                 cell.StratumId,
                                 cell.SecondaryStratumId,
                                 cell.StateClassId,
                                 iteration,
                                 timestep)
+
+                        Else
+
+                            attrValue = stateAttributeValueMap.GetAttributeValueByAge(
+                                stateAttributeTypeId,
+                                cell.StratumId,
+                                cell.SecondaryStratumId,
+                                cell.StateClassId,
+                                iteration,
+                                timestep,
+                                cell.Age)
+
+                        End If
 
                         If attrValue IsNot Nothing Then
                             stateAttrVals(cell.CellId) = CDbl(attrValue)

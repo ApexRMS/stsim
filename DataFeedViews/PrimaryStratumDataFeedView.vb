@@ -30,6 +30,13 @@ Class PrimaryStratumDataFeedView
 
     End Sub
 
+    Public Overrides Sub EnableView(enable As Boolean)
+
+        MyBase.EnableView(enable)
+        Me.m_View.EnableView(enable)
+
+    End Sub
+
     Public Overrides Sub LoadDataFeed(dataFeed As SyncroSim.Core.DataFeed)
 
         MyBase.LoadDataFeed(dataFeed)

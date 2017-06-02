@@ -37,6 +37,13 @@ Class TransitionTypeDataFeedView
 
     End Sub
 
+    Public Overrides Sub EnableView(enable As Boolean)
+
+        MyBase.EnableView(enable)
+        Me.m_View.EnableView(enable)
+
+    End Sub
+
     Private Sub OnGridCellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         If (e.RowIndex < 0 Or e.ColumnIndex < 0) Then

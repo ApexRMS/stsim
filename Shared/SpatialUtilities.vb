@@ -81,7 +81,7 @@ Imports SyncroSim.StochasticTime
         Dim colorMapType As String = SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME
 
         ' Where are the color maps stored
-        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, True, Nothing)
+        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, True)
 
         ' What's the absolute name of the color map file
         Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)
@@ -142,7 +142,7 @@ Imports SyncroSim.StochasticTime
         Dim colorMapType As String = SPATIAL_MAP_STRATUM_VARIABLE_NAME
 
         ' Where are the color maps stored
-        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, True, Nothing)
+        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, True)
 
         ' What's the absolute name of the color map file
         Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)
@@ -221,7 +221,7 @@ Imports SyncroSim.StochasticTime
                 Dim colorMapType = SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-" & tgId
 
                 ' Where are the color maps stored
-                Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False, Nothing)
+                Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False)
 
                 ' What's the absolute name of the color map file
                 Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)
@@ -312,7 +312,7 @@ Imports SyncroSim.StochasticTime
         Dim colorMapType As String = SPATIAL_MAP_AGE_VARIABLE_NAME
 
         ' Where are the color maps stored
-        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, True, Nothing)
+        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, True)
 
         ' What's the absolute name of the color map file
         Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)

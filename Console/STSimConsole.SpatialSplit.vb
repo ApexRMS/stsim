@@ -62,10 +62,7 @@ Partial Class STSimConsole
 
         If (String.IsNullOrEmpty(a)) Then
 
-            Using store As DataStore = s.Library.CreateDataStore()
-                a = s.Library.GetFolderName(LibraryFolderType.Temporary, s, False, store)
-            End Using
-
+            a = s.Library.GetFolderName(LibraryFolderType.Temporary, s, False)
             a = Path.Combine(a, "SSimJobs")
 
         Else

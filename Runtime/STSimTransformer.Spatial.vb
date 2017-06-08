@@ -1520,14 +1520,6 @@ Partial Class STSimTransformer
                 Throw New ArgumentException(ERROR_SPATIAL_PRIMARY_STRATUM_FILE_NOT_DEFINED)
             End If
 
-            ' See if the Spatial Properties are defined - may not be if runnning from command line
-            Dim dsICSpatialProp As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_SPPIC_NAME)
-            If Not dsICSpatialProp.HasData() Then
-                ' No IC Spatial properties, so create them from available primary stratum raster
-                Me.RecordStatus(StatusType.Information, STATUS_SPATIAL_RUN_NO_PROPERTIES_DEFINED)
-                CreateICSpatialProperties(RasterFiles.GetInputFileName(dsIC, ics.PrimaryStratumFileName, False))
-            End If
-
             StateClassDefined = (scName <> "")
             SecondaryStratumDefined = (ssName <> "")
             AgeDefined = (ageName <> "")
@@ -1724,7 +1716,7 @@ Partial Class STSimTransformer
         GetAmountLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), amountlabel, units)
 
         Dim cellSizeUnits As String = RasterCellSizeUnit.Meter.ToString()
-        Dim convFactor As Double = InitialConditionsSpatialDataFeedView.CalcCellArea(1.0, cellSizeUnits, units)
+        Dim convFactor As Double = InitialConditionsSpatialDataSheet.CalcCellArea(1.0, cellSizeUnits, units)
         Dim cellArea As Double = cellSizeTermUnits / convFactor
 
         drSpIcProp(DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME) = CInt(Math.Sqrt(numRasterCells))
@@ -1740,61 +1732,6 @@ Partial Class STSimTransformer
 
         ' DEVNOTE: Set Projection  - Corresponds to NAD83 / UTM zone 12N EPSG:26912. Totally arbitrary, but need something to support units of Meters.
         drSpIcProp(DATASHEET_SPPIC_SRS_COLUMN_NAME) = "+proj=utm +zone=10 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
-
-    End Sub
-
-    ''' <summary>
-    ''' Create a Initial Condition Spatial Properties record for the current Results Scenario, based on meta extracted from the specified raster file
-    ''' </summary>
-    ''' <param name="rasterFilename">The name of the raster file we will extract properties from</param>
-    ''' <remarks></remarks>
-    Private Sub CreateICSpatialProperties(rasterFilename As String)
-
-        Dim dsSpicProp As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_SPPIC_NAME)
-        Dim drSpIcProp As DataRow = dsSpicProp.GetDataRow()
-        If (drSpIcProp Is Nothing) Then
-            drSpIcProp = dsSpicProp.GetData().NewRow()
-            dsSpicProp.GetData().Rows.Add(drSpIcProp)
-        Else
-            Debug.Assert(False, "We should not be here if there's already a IC Spatial Properties record defined")
-        End If
-
-        ' Fetch the metadata from the specified raster file
-
-        Dim rast As New StochasticTimeRaster
-
-        Try
-            RasterFiles.LoadRasterFile(rasterFilename, rast, RasterDataType.DTInteger)
-        Catch e As GdalException
-            FormsUtilities.ErrorMessageBox(e.Message)
-            Return
-        End Try
-
-        drSpIcProp(DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME) = rast.NumberRows
-        drSpIcProp(DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME) = rast.NumberCols
-        drSpIcProp(DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME) = rast.NumberValidCells
-
-        drSpIcProp(DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME) = rast.XllCorner
-        drSpIcProp(DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME) = rast.YllCorner
-        drSpIcProp(DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME) = rast.CellSize
-        drSpIcProp(DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME) = rast.CellSizeUnits
-
-        ' Calculate Cell Area in raster's native units
-        Dim cellSize As Single = rast.CellSize
-        Dim cellArea As Double = cellSize ^ 2
-
-        ' Calc Cell Area in terminology units
-        Dim cellAreaTU As Double
-        Dim destUnitsVal As TerminologyUnit
-        Dim amountlabel As String = Nothing
-
-        GetAmountLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), amountlabel, destUnitsVal)
-
-        cellAreaTU = InitialConditionsSpatialDataFeedView.CalcCellArea(cellArea, rast.CellSizeUnits, destUnitsVal)
-        drSpIcProp(DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME) = cellAreaTU
-
-        drSpIcProp(DATASHEET_SPPIC_SRS_COLUMN_NAME) = rast.ProjectionString
-        drSpIcProp(DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME) = False
 
     End Sub
 

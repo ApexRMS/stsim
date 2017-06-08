@@ -118,7 +118,7 @@ Class SlopeMultiplierDataFeedView
 
     Private Sub ButtonBrowse_Click(sender As System.Object, e As System.EventArgs) Handles ButtonBrowse.Click
 
-        Dim RasterFile As String = ChooseRasterFileName("Digital Elevation Model File")
+        Dim RasterFile As String = ChooseRasterFileName("Digital Elevation Model File", Me)
 
         If (RasterFile Is Nothing) Then
             Return

@@ -134,7 +134,7 @@ Class SpatialInitiationMultiplierDataFeedView
         End If
 
         Dim ds As DataSheet = Me.Scenario.GetDataSheet(DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
-        Dim RasterFile As String = ChooseRasterFileName("Transition Spatial Initiation Mulitplier Raster File")
+        Dim RasterFile As String = ChooseRasterFileName("Transition Spatial Initiation Mulitplier Raster File", Me)
 
         If (RasterFile Is Nothing) Then
             Return

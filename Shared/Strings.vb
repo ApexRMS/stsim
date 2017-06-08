@@ -167,10 +167,10 @@ Module Strings
 
     'Spatial Initial Conditions Files
     Public Const DATASHEET_SPIC_NAME As String = "STSim_InitialConditionsSpatial"
-    Public Const DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME As String = "StratumFilename"
-    Public Const DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME As String = "SecondaryStratumFilename"
-    Public Const DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME As String = "StateClassFilename"
-    Public Const DATASHEET_SPIC_AGE_FILE_COLUMN_NAME As String = "AgeFilename"
+    Public Const DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME As String = "StratumFileName"
+    Public Const DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME As String = "SecondaryStratumFileName"
+    Public Const DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME As String = "StateClassFileName"
+    Public Const DATASHEET_SPIC_AGE_FILE_COLUMN_NAME As String = "AgeFileName"
 
     'Deterministic Transitions
     Public Const DATASHEET_DT_NAME As String = "STSim_DeterministicTransition"

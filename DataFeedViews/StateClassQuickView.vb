@@ -951,7 +951,7 @@ Class StateClassQuickView
     Private Shared Sub SetColumnReadOnly(ByVal columnName As String, ByVal grid As DataGridView)
 
         Dim col As DataGridViewColumn = grid.Columns(columnName)
-        col.DefaultCellStyle.BackColor = Color.LightGray
+        col.DefaultCellStyle.BackColor = Color.FromArgb(232, 232, 232)
         col.ReadOnly = True
 
     End Sub

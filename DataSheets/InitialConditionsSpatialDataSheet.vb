@@ -23,11 +23,19 @@ Class InitialConditionsSpatialDataSheet
 
         Dim ColNames As New List(Of String)
 
+        ColNames.Add(DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
         ColNames.Add(DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME)
         ColNames.Add(DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME)
         ColNames.Add(DATASHEET_SPIC_AGE_FILE_COLUMN_NAME)
 
-        Dim StratumRaster As StochasticTimeRaster = Me.LoadRaster(proposedRow, DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+        Dim ThisData As DataTable = Me.GetData()
+        Dim FirstRaster As StochasticTimeRaster = Nothing
+
+        If (ThisData.DefaultView.Count = 0) Then
+            FirstRaster = Me.LoadRaster(proposedRow, DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+        Else
+            FirstRaster = Me.LoadRaster(ThisData.DefaultView(0).Row, DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+        End If
 
         Try
 
@@ -38,7 +46,13 @@ Class InitialConditionsSpatialDataSheet
                 If (proposedRow(s) IsNot DBNull.Value) Then
 
                     Dim rast As StochasticTimeRaster = Me.LoadRaster(proposedRow, s)
-                    Me.ValidateRaster(rast, StratumRaster.NumberRows, StratumRaster.NumberCols, s)
+
+                    Try
+                        Me.ValidateRaster(rast, FirstRaster.NumberRows, FirstRaster.NumberCols, s)
+                    Catch ex As Exception
+                        proposedRow(s) = DBNull.Value
+                        Throw
+                    End Try
 
                 End If
 
@@ -56,12 +70,19 @@ Class InitialConditionsSpatialDataSheet
 
         Dim ColNames As New List(Of String)
 
+        ColNames.Add(DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
         ColNames.Add(DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME)
         ColNames.Add(DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME)
         ColNames.Add(DATASHEET_SPIC_AGE_FILE_COLUMN_NAME)
 
-        Dim FirstRow As DataRow = data.DefaultView(0).Row
-        Dim StratumRaster As StochasticTimeRaster = Me.LoadRaster(FirstRow, DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+        Dim ThisData As DataTable = Me.GetData()
+        Dim FirstRaster As StochasticTimeRaster = Nothing
+
+        If (ThisData.DefaultView.Count = 0) Then
+            FirstRaster = Me.LoadRaster(data.Rows(0), DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+        Else
+            FirstRaster = Me.LoadRaster(ThisData.DefaultView(0).Row, DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+        End If
 
         Try
 
@@ -76,7 +97,13 @@ Class InitialConditionsSpatialDataSheet
                         If (dr(s) IsNot DBNull.Value) Then
 
                             Dim rast As StochasticTimeRaster = Me.LoadRaster(dr, s)
-                            Me.ValidateRaster(rast, StratumRaster.NumberRows, StratumRaster.NumberCols, s)
+
+                            Try
+                                Me.ValidateRaster(rast, FirstRaster.NumberRows, FirstRaster.NumberCols, s)
+                            Catch ex As Exception
+                                dr(s) = DBNull.Value
+                                Throw
+                            End Try
 
                         End If
 
@@ -171,19 +198,41 @@ Class InitialConditionsSpatialDataSheet
 
         If rast.NumberRows <> rows Then
 
-            Dim msg As String = String.Format(CultureInfo.CurrentCulture,
-                "The number of rows for the '{0}' raster does not match that of the '{1}'.",
-                ColumnDisplayName, PrimaryStratumLabel)
+            Dim msg As String = Nothing
+
+            If (columnName = DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME) Then
+
+                msg = String.Format(CultureInfo.CurrentCulture,
+                    "The number of rows for the '{0}' raster does not match that of the other '{1}' rasters.",
+                    PrimaryStratumLabel, PrimaryStratumLabel)
+
+            Else
+
+                msg = String.Format(CultureInfo.CurrentCulture,
+                    "The number of rows for the '{0}' raster does not match that of the '{1}' raster.",
+                    ColumnDisplayName, PrimaryStratumLabel)
+
+            End If
 
             Throw New DataException(msg)
 
-        End If
+        ElseIf rast.NumberCols <> columns Then
 
-        If rast.NumberCols <> columns Then
+            Dim msg As String = Nothing
 
-            Dim msg As String = String.Format(CultureInfo.CurrentCulture,
-                "The number of columns for the '{0}' raster does not match that of the '{1}'.",
-                ColumnDisplayName, PrimaryStratumLabel)
+            If (columnName = DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME) Then
+
+                msg = String.Format(CultureInfo.CurrentCulture,
+                    "The number of columns for the '{0}' raster does not match that of the other '{1}' rasters.",
+                    PrimaryStratumLabel, PrimaryStratumLabel)
+
+            Else
+
+                msg = String.Format(CultureInfo.CurrentCulture,
+                    "The number of columns for the '{0}' raster does not match that of the '{1}' raster.",
+                    ColumnDisplayName, PrimaryStratumLabel)
+
+            End If
 
             Throw New DataException(msg)
 

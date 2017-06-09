@@ -24,6 +24,7 @@ Class InitialConditionsSpatialDataFeedView
     Private m_ICSpatialFilesDataSheet As InitialConditionsSpatialDataSheet
     Private m_ColumnsInitialized As Boolean
     Private m_HourGlass As HourGlass
+    Private m_ReadOnlyColor As Color = Color.FromArgb(232, 232, 232)
     Private Delegate Sub DelegateNoArgs()
 
     Const ITERATION_COLUMN_INDEX = 0
@@ -109,10 +110,10 @@ Class InitialConditionsSpatialDataFeedView
             Me.m_ICSpatialFilesDataGrid.Columns.Insert(AGE_BROWSE_COLUMN_INDEX, AgeFileBrowseColumn)
 
             'Configure columns
-            Me.m_ICSpatialFilesDataGrid.Columns(PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Color.LightGray
-            Me.m_ICSpatialFilesDataGrid.Columns(SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Color.LightGray
-            Me.m_ICSpatialFilesDataGrid.Columns(SCLASS_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Color.LightGray
-            Me.m_ICSpatialFilesDataGrid.Columns(AGE_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Color.LightGray
+            Me.m_ICSpatialFilesDataGrid.Columns(PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
+            Me.m_ICSpatialFilesDataGrid.Columns(SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
+            Me.m_ICSpatialFilesDataGrid.Columns(SCLASS_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
+            Me.m_ICSpatialFilesDataGrid.Columns(AGE_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
 
             Me.m_ColumnsInitialized = True
 
@@ -148,8 +149,10 @@ Class InitialConditionsSpatialDataFeedView
         Me.LabelValidate.Visible = True
         Application.DoEvents()
 
-        'Unfortunately, DoEvents cancels the normal hourglass
         Me.m_HourGlass = New HourGlass
+
+        'A slight delay so the user can see this message even if the validation is fast
+        Threading.Thread.Sleep(500)
 
     End Sub
 

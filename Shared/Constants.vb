@@ -41,7 +41,7 @@ Module Constants
     Public TRANSITION_DIAGRAM_SHAPE_BACKGROUND_COLOR As System.Drawing.Color = System.Drawing.Color.FromArgb(255, 240, 240, 240)
     Public TRANSITION_DIAGRAM_SHAPE_BORDER_COLOR As System.Drawing.Color = Drawing.Color.Gray
     Public TRANSITION_DIAGRAM_SHAPE_READONLY_BORDER_COLOR As System.Drawing.Color = Drawing.Color.LightGray
-    Public TRANSITION_SELECTED_LINE_COLOR As System.Drawing.Color = Drawing.Color.Red
+    Public TRANSITION_SELECTED_LINE_COLOR As System.Drawing.Color = Drawing.Color.DarkOrange
     Public DETERMINISTIC_TRANSITION_LINE_COLOR As System.Drawing.Color = Drawing.Color.Green
     Public PROBABILISTIC_TRANSITION_LINE_COLOR As System.Drawing.Color = Drawing.Color.CornflowerBlue
 

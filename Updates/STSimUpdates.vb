@@ -242,6 +242,11 @@ Class STSimUpdates
             STSIM0000059(store)
         End If
 
+        If (currentSchemaVersion < 60) Then
+            STSIM0000060(store)
+        End If
+
+
     End Sub
 
     ''' <summary>
@@ -2143,7 +2148,7 @@ Class STSimUpdates
 
                         Dim newFilename As String
                         If dsName = "STSim_OutputSpatialTST" Then
-                            ' This is a special case, becuase we want to rename to a generic form
+                            ' This is a special case, because we want to rename to a generic form
                             newFilename = Path.GetFileName(oldFilename)
                             newFilename = newFilename.Replace("-tst", "").Replace("tg-", "tst-")
                             newFilename = Path.Combine(newLocation, newFilename)
@@ -2219,5 +2224,29 @@ Class STSimUpdates
         Next
 
     End Sub
+    ''' <summary>
+    ''' STSIM0000060
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' Add Legend Column to Primary Stratum, State Class, and Transition Type, to aid in Map Criteria legend definition. A184-8
+    ''' </remarks>
+    Private Shared Sub STSIM0000060(ByVal store As DataStore)
+
+        If (store.TableExists("STSim_Stratum")) Then
+            store.ExecuteNonQuery("ALTER TABLE STSim_Stratum ADD COLUMN Legend TEXT")
+        End If
+
+        If (store.TableExists("STSim_StateClass")) Then
+            store.ExecuteNonQuery("ALTER TABLE STSim_StateClass ADD COLUMN Legend TEXT")
+        End If
+
+        If (store.TableExists("STSim_TransitionType")) Then
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionType ADD COLUMN Legend TEXT")
+        End If
+
+
+    End Sub
+
 
 End Class

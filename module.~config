@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  <module name="stsim" displayName="ST-Sim State and Transition Module" version="3.1.0000" configVersion="1.0000" contentType="any">
+  <module name="stsim" displayName="ST-Sim State and Transition" version="3.1.0000" configVersion="1.0000" contentType="any">
     <transformers>
-      <transformer name="stsim" displayName="ST-Sim State and Transition Model" isModel="True" isPrimary="True" previousNames="stsim-model-transformer|stsim:model-transformer">
+      <transformer name="stsim" displayName="ST-Sim State-and-Transition Simulation Model" isModel="True" isPrimary="True" previousNames="stsim-model-transformer|stsim:model-transformer">
         <runtime>
           <transformer name="stsim:runtime" displayName="ST-Sim"/>
         </runtime>
@@ -180,7 +180,7 @@
           </dataFeed>
           <dataFeed name="stsim:attribute-group-datafeed" displayName="Attribute Group" dataScope="Project">
             <dataSheets>
-              <dataSheet name="STSim_AttributeGroup" displayName="Attribute Group" valueMember="AttributeGroupID" displayMember="Name">
+              <dataSheet name="STSim_AttributeGroup" displayName="Attribute Group" valueMember="AttributeGroupID" displayMember="Name" className="SyncroSim.STSim.AttributeGroupDataSheet" classAssembly="SyncroSim.STSim">
                 <columns>
                   <column name="AttributeGroupID" dataType="Integer" isPrimary="True"/>
                   <column name="ProjectID" dataType="Integer"/>
@@ -950,7 +950,7 @@
                   <column name="ScenarioID" dataType="Integer" />
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                  <column name="Filename" displayName="Spatial Primary Stratum" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" hasProperties="True"/>
+                  <column name="Filename" displayName="Stratum" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" spatialType="str" hasProperties="True"/>
                   <column name="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -964,7 +964,7 @@
                   <column name="ScenarioID" dataType="Integer" />
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                  <column name="Filename" displayName="Spatial State" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" hasProperties="True"/>
+                  <column name="Filename" displayName="SClass" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" spatialType="sc" hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -978,7 +978,7 @@
                   <column name="ScenarioID" dataType="Integer" />
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                  <column name="Filename" displayName="Spatial Age" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" hasProperties="True"/>
+                  <column name="Filename" displayName="Age" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" spatialType="age" hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -993,7 +993,7 @@
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
                   <column name="TransitionGroupID" dataType="Integer" displayName="Transition Group" validationType="DataSheet" formula1="STSim_TransitionGroup" allowDbNull="False"/>
-                  <column name="Filename" displayName="Spatial Transition" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" hasProperties="True"/>
+                  <column name="Filename" displayName="Tg" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" spatialType="tg" hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -1008,7 +1008,7 @@
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
                   <column name="StateAttributeTypeID" dataType="Integer" displayName="State Attribute Type" validationType="DataSheet" formula1="STSim_StateAttributeType" allowDbNull="False"/>
-                  <column name="Filename" displayName="Spatial State Attribute" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeID" hasProperties="True"/>
+                  <column name="Filename" displayName="Sa" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeID" spatialType="sa" hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -1023,7 +1023,7 @@
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
                   <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="DataSheet" formula1="STSim_TransitionAttributeType" allowDbNull="False"/>
-                  <column name="Filename" displayName="Spatial Transition Attribute" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeID" hasProperties="True"/>
+                  <column name="Filename" displayName="Ta" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeID" spatialType="ta" hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -1038,7 +1038,7 @@
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
                   <column name="TransitionGroupID" dataType="Integer" displayName="Transition Group" validationType="DataSheet" formula1="STSim_TransitionGroup" allowDbNull="False"/>
-                  <column name="Filename" displayName="Spatial TST" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band"  bandFilterColumn="TransitionGroupID" hasProperties="True"/>
+                  <column name="Filename" displayName="Tst" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band"  bandFilterColumn="TransitionGroupID" spatialType="tst" hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -1053,7 +1053,7 @@
                   <column name="Iteration" dataType="Integer" format="d"/>
                   <column name="Timestep" dataType="Integer" displayNameSource="STSim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
                   <column name="TransitionGroupID" dataType="Integer" displayName="Transition Group" validationType="DataSheet" formula1="STSim_TransitionGroup" allowDbNull="False"/>
-                  <column name="Filename" displayName="Spatial Average Transition Probability" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band"  bandFilterColumn="TransitionGroupID"  hasProperties="True"/>
+                  <column name="Filename" displayName="Tgap" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band"  bandFilterColumn="TransitionGroupID" spatialType="tgap"   hasProperties="True"/>
                   <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
                 </columns>
               </dataSheet>
@@ -1071,21 +1071,21 @@
       </transformer>
       <transformer name="stsim:transition-attribute-report" displayName="Transition Attributes" className="SyncroSim.STSim.TransitionAttributeReport" classAssembly="SyncroSim.STSim">
       </transformer>
-      <transformer name="stsim:state-class-raster-map" displayName="State Classes" className="SyncroSim.STSim.StateClassRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:state-class-raster-map" displayName="State Classes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialState" column="Filename" isFolderExport="True">
       </transformer>
-      <transformer name="stsim:transition-raster-map" displayName="Transitions" className="SyncroSim.STSim.TransitionRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:transition-raster-map" displayName="Transitions" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialTransition" column="Filename" isFolderExport="True">
       </transformer>
-      <transformer name="stsim:age-raster-map" displayName="Ages" className="SyncroSim.STSim.AgeRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:age-raster-map" displayName="Ages" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialAge" column="Filename" isFolderExport="True">
       </transformer>
-      <transformer name="stsim:tst-raster-map" displayName="Time-Since-Transition" className="SyncroSim.STSim.TSTRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:tst-raster-map" displayName="Time-Since-Transition" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialTST" column="Filename" isFolderExport="True">
       </transformer>
-      <transformer name="stsim:stratum-raster-map" displayName="Stratum" className="SyncroSim.STSim.StratumRasterMap" classAssembly="SyncroSim.STSim" displayNameSource="STSim_Terminology" displayNameColumn="PrimaryStratumLabel" isFolderExport="True">
+      <transformer name="stsim:stratum-raster-map" displayName="Stratum" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialStratum" column="Filename" displayNameSource="STSim_Terminology" displayNameColumn="PrimaryStratumLabel" isFolderExport="True">
       </transformer>
-      <transformer name="stsim:state-attribute-raster-map" displayName="State Attributes" className="SyncroSim.STSim.StateAttributeRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:state-attribute-raster-map" displayName="State Attributes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialStateAttribute" column="Filename" isFolderExport="True">
       </transformer>
-      <transformer name="stsim:transition-attribute-raster-map" displayName="Transition Attributes" className="SyncroSim.STSim.TransitionAttributeRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:transition-attribute-raster-map" displayName="Transition Attributes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialTransitionAttribute" column="Filename"  isFolderExport="True">
       </transformer>
-      <transformer name="stsim:aatp-raster-map" displayName="Average Annual Transition Probability" className="SyncroSim.STSim.AATPRasterMap" classAssembly="SyncroSim.STSim" isFolderExport="True">
+      <transformer name="stsim:aatp-raster-map" displayName="Average Annual Transition Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"  dataSheet="STSim_OutputSpatialAverageTransitionProbability" column="Filename"  isFolderExport="True">
       </transformer>
     </transformers>
     <visualizers>
@@ -1133,7 +1133,7 @@
         </group>
       </layout>
       <layout name="system-forms:library-datafeeds" model="stsim">
-        <item name="system:processing-datafeed"/>
+        <item name="system:model-run-datafeed"/>
         <item name="system:files-datafeed"/>
         <item name="system:backup-datafeed"/>        
         <item name="stime:options-datafeed"/>
@@ -1211,21 +1211,10 @@
       </layout>
       <layout name="stime:charts" configurationSheet="STSim_RunControl" providerClassName="SyncroSim.STSim.STSimChartProvider" providerClassAssembly="SyncroSim.STSim" model="stsim">
       </layout>
-      <layout name="stime:maps" configurationSheet="STSim_RunControl" model="stsim">
-        <group name="Basic">
-          <item name="State Class" dataSheet="STSim_OutputSpatialState" column="FileName"></item>
-          <item name="Age" dataSheet="STSim_OutputSpatialAge" column="FileName"></item>
-          <item name="Primary Stratum" dataSheet="STSim_OutputSpatialStratum" column="FileName"></item>
-        </group>
-        <item name="Transitions" dataSheet="STSim_OutputSpatialTransition" column="FileName" filter="TransitionGroupID" extendedIdentifier="(Transitions)"></item>
-        <item name="Average Annual Probability" dataSheet="STSim_OutputSpatialAverageTransitionProbability" column="FileName" filter="TransitionGroupID" extendedIdentifier="(Avg. Annual Prob. - All Iterations)" ></item>
-        <item name="State Attributes" dataSheet="STSim_OutputSpatialStateAttribute" column="FileName" filter="StateAttributeTypeID" ></item>
-        <item name="State Class" dataSheet="STSim_OutputSpatialStructuralState" column="FileName"></item>
-        <item name="Transition Attributes" dataSheet="STSim_OutputSpatialStructuralState" column="FileName"></item>
+      <layout name="stime:maps" configurationSheet="STSim_RunControl" providerClassName="SyncroSim.STSim.STSimMapProvider" providerClassAssembly="SyncroSim.STSim" model="stsim">
       </layout>
-
     </layouts>
-    <updateProvider schemaVersion="57" schemaVersionTableName="STSim_Version" className="SyncroSim.STSim.STSimUpdates" classAssembly="SyncroSim.STSim"/>
+    <updateProvider schemaVersion="59" schemaVersionTableName="STSim_Version" className="SyncroSim.STSim.STSimUpdates" classAssembly="SyncroSim.STSim"/>
     <console name="stsim" displayName="ST-Sim Console" className="SyncroSim.STSim.STSimConsole" classAssembly="SyncroSim.STSim"/>
   </module>
 </configuration>

@@ -16,9 +16,19 @@ Class STSimMapProvider
 
     Public Overrides Sub CreateColorMaps(project As Project)
 
-        CreateStateClassColorMap(project)
-        CreatePrimaryStratumColorMap(project)
+        ' STATECLASS Color Map and Legend Map
+        CreateColorMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
+        CreateLegendMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
+
+        '  Primary Stratum Color Map and Legend Map
+        CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
+        CreateLegendMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
+
+        '  Transition Groups Color Map and Legend Map
         CreateTransitionGroupColorMaps(project)
+        CreateTransitionGroupLegendMaps(project)
+
+        ' Age  Color Map 
         CreateAgeColorMap(project)
 
     End Sub

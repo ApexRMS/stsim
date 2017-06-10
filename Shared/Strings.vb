@@ -61,6 +61,7 @@ Module Strings
     Public Const DATASHEET_AGE_MAX_COLUMN_NAME As String = "AgeMax"
     Public Const DATASHEET_AGE_CLASS_COLUMN_NAME As String = "AgeClass"
     Public Const DATASHEET_COLOR_COLUMN_NAME As String = "Color"
+    Public Const DATASHEET_LEGEND_COLUMN_NAME As String = "Legend"
     Public Const DATASHEET_AMOUNT_COLUMN_NAME As String = "Amount"
     Public Const DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME As String = "AttributeGroupID"
     Public Const DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME As String = "DistributionType"

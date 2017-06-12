@@ -546,7 +546,7 @@ Partial Class STSimTransformer
 
         If noIDFound Then
             Dim msg As String = String.Format(CultureInfo.CurrentCulture,
-                "ID values not specified for '{0}.'  Using defaults.", ds.DisplayName)
+                "ID values not specified for '{0}'.  Using defaults.", ds.DisplayName)
 
             Me.RecordStatus(StatusType.Information, msg)
         End If

@@ -165,6 +165,10 @@ Class InitialConditionsSpatialDataFeedView
 
     Private Sub OnNewCellEnterAsync()
 
+        If (Me.m_ICSpatialFilesDataGrid.CurrentCell Is Nothing) Then
+            Return
+        End If
+
         Dim Row As Integer = Me.m_ICSpatialFilesDataGrid.CurrentCell.RowIndex
         Dim Col As Integer = Me.m_ICSpatialFilesDataGrid.CurrentCell.ColumnIndex
 

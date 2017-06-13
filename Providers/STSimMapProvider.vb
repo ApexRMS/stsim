@@ -17,12 +17,12 @@ Class STSimMapProvider
     Public Overrides Sub CreateColorMaps(project As Project)
 
         ' STATECLASS Color Map and Legend Map
-        CreateColorMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
-        CreateLegendMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
+        Dim dicLegendColors = CreateLegendMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
+        CreateColorMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME, dicLegendColors)
 
         '  Primary Stratum Color Map and Legend Map
-        CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
-        CreateLegendMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
+        dicLegendColors = CreateLegendMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
+        CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME, dicLegendColors)
 
         '  Transition Groups Color Map and Legend Map
         CreateTransitionGroupColorMaps(project)

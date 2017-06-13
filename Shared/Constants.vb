@@ -77,6 +77,8 @@ Module Constants
     'Spatial Output Datasheet Common Column Names
     public const DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename"
 
+    ' Legend Map Common Strings
+    Public Const LEGEND_MAP_BLANK_LEGEND_ITEM = "[blank]"
 
     'Spatial Map file naming Regex filter, containing 1 ID value
     Public Const FILE_FILTER_ID_REGEX = "^(.*){0}-([\d]*)\.(tif|vrt)$"

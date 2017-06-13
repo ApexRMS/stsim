@@ -74,8 +74,9 @@ Imports SyncroSim.StochasticTime
     ''' <param name="project">The current Project.</param>
     ''' <param name="mapVariable">The map variable. Ex sc, tg-123,str</param>
     ''' <param name="datasheetName">The name of the datasheet containing the color map configuration</param>
+    ''' <param name="dicLegendLblColor">A dictionary with the Map Legend Label as the key, color as value</param>
     ''' <remarks></remarks>
-    Public Sub CreateColorMap(project As Project, mapVariable As String, datasheetName As String)
+    Public Sub CreateColorMap(project As Project, mapVariable As String, datasheetName As String, dicLegendLblColor As Dictionary(Of String, String))
 
         If (project.Library.Session.IsRunningOnMono) Then
             Return
@@ -108,18 +109,28 @@ Imports SyncroSim.StochasticTime
             Dim id As String = dr.Row(DATASHEET_MAPID_COLUMN_NAME).ToString()
             Dim transpenciesRGB = dr.Row(DATASHEET_COLOR_COLUMN_NAME).ToString()
             Dim lbl = dr.Row(DATASHEET_NAME_COLUMN_NAME).ToString()
+            Dim mapLegendLbl = dr.Row(DATASHEET_LEGEND_COLUMN_NAME).ToString()
 
-            ' Dont include a color entry for record without ID or defined/non-white colors assigned
+            ' Dont include a color entry for record without ID or defined colors assigned
             If id.Trim().Length > 0 And transpenciesRGB.Length > 0 Then
-                If ColorFromString(transpenciesRGB).ToArgb() <> Color.White.ToArgb() Then
 
-                    Dim aryColor = Split(transpenciesRGB, ",")   ' Split into individual Transparency, Red, Green,Blue
-                    If UBound(aryColor) = 3 Then
-                        ' Color Map line syntax, for discrete values, is:
-                        '  Value, Red, Green, Blue, Transparency, Label 
-                        '  21001,168,0,87,255,UNDET:<5% Inv
-                        fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", id, aryColor(1), aryColor(2), aryColor(3), aryColor(0), lbl)
+                ' Do we have a Legend Map for this map Variable. If so we need to get ""fancy""
+                If Not (dicLegendLblColor Is Nothing) Then
+                    If dicLegendLblColor.Count > 0 Then
+                        If mapLegendLbl.Length > 0 Then
+                            transpenciesRGB = dicLegendLblColor.Item(mapLegendLbl)
+                        Else
+                            transpenciesRGB = dicLegendLblColor.Item(LEGEND_MAP_BLANK_LEGEND_ITEM)
+                        End If
                     End If
+                End If
+
+                Dim aryColor = Split(transpenciesRGB, ",")   ' Split into individual Transparency, Red, Green,Blue
+                If UBound(aryColor) = 3 Then
+                    ' Color Map line syntax, for discrete values, is:
+                    '  Value, Red, Green, Blue, Transparency, Label 
+                    '  21001,168,0,87,255,UNDET:<5% Inv
+                    fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", id, aryColor(1), aryColor(2), aryColor(3), aryColor(0), lbl)
                 End If
             End If
         Next
@@ -134,11 +145,13 @@ Imports SyncroSim.StochasticTime
     ''' <param name="project">The current Project.</param>
     ''' <param name="mapVariable">The map variable. Ex sc, tg-123,str</param>
     ''' <param name="datasheetName">The name of the datasheet containing the color map configuration</param>
+    ''' <returns>A dictionary of Legend labels(key), and Color values</returns>
     ''' <remarks></remarks>
-    Public Sub CreateLegendMap(project As Project, mapVariable As String, datasheetName As String)
+    Public Function CreateLegendMap(project As Project, mapVariable As String, datasheetName As String) As Dictionary(Of String, String)
+
 
         If (project.Library.Session.IsRunningOnMono) Then
-            Return
+            Return Nothing
         End If
 
         ' Where are the legend maps stored
@@ -156,12 +169,20 @@ Imports SyncroSim.StochasticTime
 
         'Now create the legend color maps
         Dim ds As DataSheet = project.GetDataSheet(datasheetName)
-        Dim dt As DataTable = ds.GetData()
+        Dim dt As DataTable = ds.GetData().Copy()
+
+        ' Loop thru and change all Legend nulls to Blank Item string
+        For Each dr As DataRow In dt.Rows
+            If IsDBNull(dr(DATASHEET_LEGEND_COLUMN_NAME)) Or dr(DATASHEET_LEGEND_COLUMN_NAME).ToString().Trim().Length = 0 Then
+                dr(DATASHEET_LEGEND_COLUMN_NAME) = LEGEND_MAP_BLANK_LEGEND_ITEM
+            End If
+        Next
+
 
         Dim sort As String = DATASHEET_LEGEND_COLUMN_NAME & "," & DATASHEET_MAPID_COLUMN_NAME
         Dim filter As String = Nothing
         Dim dv As New DataView(dt, filter, sort, DataViewRowState.CurrentRows)
-        Dim legendDefined As New HashSet(Of String)
+        Dim legendDefined As New Dictionary(Of String, String)
 
         For Each dr As DataRowView In dv
             ' ID, Name, Transparency, Color value
@@ -170,20 +191,21 @@ Imports SyncroSim.StochasticTime
             Dim lbl = dr.Row(DATASHEET_LEGEND_COLUMN_NAME).ToString()
 
             ' Check to see if we've already define this legend lavel
-            If Not legendDefined.Contains(lbl) And lbl.Trim().Length > 0 Then
+            If Not legendDefined.ContainsKey(lbl) Then
 
-                ' Dont include a color entry for record without ID or defined/non-white colors assigned
+                ' Dont include a color entry for record without ID or defined colors assigned
                 If id.Trim().Length > 0 And transpenciesRGB.Length > 0 Then
-                    If ColorFromString(transpenciesRGB).ToArgb() <> Color.White.ToArgb() Then
 
-                        Dim aryColor = Split(transpenciesRGB, ",")   ' Split into individual Transparency, Red, Green,Blue
-                        If UBound(aryColor) = 3 Then
-                            ' Color Map line syntax, for discrete values, is:
-                            '  Value, Red, Green, Blue, Transparency, Label 
-                            '  21001,168,0,87,255,UNDET:<5% Inv
-                            fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", id, aryColor(1), aryColor(2), aryColor(3), aryColor(0), lbl)
-                            legendDefined.Add(lbl)
-                        End If
+                    Dim aryColor = Split(transpenciesRGB, ",")   ' Split into individual Transparency, Red, Green,Blue
+                    If UBound(aryColor) = 3 Then
+                        ' Color Map line syntax, for discrete values, is:
+                        '  Value, Red, Green, Blue, Transparency, Label 
+                        '  21001,168,0,87,255,UNDET:<5% Inv
+
+                        ' force [blank] to end of legend
+                        Dim val As Integer = CInt(IIf(lbl = LEGEND_MAP_BLANK_LEGEND_ITEM, 9999, legendDefined.Count + 1))
+                        fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", val, aryColor(1), aryColor(2), aryColor(3), aryColor(0), lbl)
+                        legendDefined.Add(lbl, transpenciesRGB)
                     End If
                 End If
             End If
@@ -191,12 +213,15 @@ Imports SyncroSim.StochasticTime
 
         fileWriter.Close()
 
-        'If not valid entries in legend map, then toast it 
-        If legendDefined.Count = 0 Then
+        'If not valid entries in legend map, then toast it, or only one - [Blank]
+        If (legendDefined.Count = 0) Or (legendDefined.Count = 1 And legendDefined.ContainsKey(LEGEND_MAP_BLANK_LEGEND_ITEM)) Then
             IO.File.Delete(mapFilename)
+            legendDefined = Nothing
         End If
 
-    End Sub
+        Return legendDefined
+
+    End Function
 
     ''' <summary>
     ''' Create/Replace the raster Transition Group color maps for the specific project. The color maps are QGis compatible, and are use when

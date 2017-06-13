@@ -6,8 +6,8 @@
 '*********************************************************************************************
 
 Imports SyncroSim.Core
-Imports System.Globalization
 Imports System.Reflection
+Imports System.Globalization
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class ProcessingDataFeedView

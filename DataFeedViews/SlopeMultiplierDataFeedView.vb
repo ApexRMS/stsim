@@ -6,10 +6,10 @@
 '*********************************************************************************************
 
 Imports System.IO
+Imports System.Reflection
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
 Imports SyncroSim.Common.Forms
-Imports System.Reflection
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class SlopeMultiplierDataFeedView

@@ -8,6 +8,7 @@
 Imports System.IO
 Imports System.Text
 Imports System.Drawing
+Imports System.Reflection
 Imports System.Windows.Forms
 Imports System.Globalization
 Imports SyncroSim.Core
@@ -15,6 +16,7 @@ Imports SyncroSim.Core.Forms
 Imports SyncroSim.StochasticTime
 Imports SyncroSim.Common.Forms
 
+<ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class InitialConditionsSpatialDataFeedView
 
     Private m_InRefresh As Boolean

@@ -165,7 +165,12 @@ Class InitialConditionsSpatialDataSheet
         MyBase.OnRowsDeleted(sender, e)
 
         If (Me.GetData().DefaultView.Count = 0) Then
-            Me.GetDataSheet(DATASHEET_SPPIC_NAME).ClearData()
+
+            Dim PropsDataSheet As DataSheet = Me.GetDataSheet(DATASHEET_SPPIC_NAME)
+
+            PropsDataSheet.GetData()
+            PropsDataSheet.ClearData()
+
         End If
 
     End Sub

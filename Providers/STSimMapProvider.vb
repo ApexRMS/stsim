@@ -25,8 +25,7 @@ Class STSimMapProvider
         CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME, dicLegendColors)
 
         '  Transition Groups Color Map and Legend Map
-        CreateTransitionGroupColorMaps(project)
-        CreateTransitionGroupLegendMaps(project)
+        CreateTransitionGroupMaps(project)
 
         ' Age  Color Map 
         CreateAgeColorMap(project)

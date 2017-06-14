@@ -223,112 +223,132 @@ Imports SyncroSim.StochasticTime
 
     End Function
 
+
     ''' <summary>
     ''' Create/Replace the raster Transition Group color maps for the specific project. The color maps are QGis compatible, and are use when
     ''' displaying the Transitions rasters in the Syncrosim Map display.
     ''' </summary>
     ''' <param name="project">The current Project</param>
     ''' <remarks></remarks>
-    Public Sub CreateTransitionGroupColorMaps(project As Project)
-
-        If (project.Library.Session.IsRunningOnMono) Then
-            Return
-        End If
+    Public Sub CreateTransitionGroupColorMap(project As Project, drTg As DataRow, dicLegendLblColor As Dictionary(Of String, String))
 
         Dim dsTg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME)
         Dim dsTTG As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_GROUP_NAME)
         Dim dsTT As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_NAME)
 
-        Dim dtTg As DataTable
-        Dim dtTTg As DataTable
-        Dim dtTT As DataTable
+        Dim dtTTg As DataTable = dsTTG.GetData()
+        Dim dtTT As DataTable = dsTT.GetData()
 
-        dtTg = dsTg.GetData()
-        dtTTg = dsTTG.GetData()
-        dtTT = dsTT.GetData()
+        Dim tgId As String = drTg(dsTg.PrimaryKeyColumn.Name).ToString()
+        Dim tgName As String = drTg(DATASHEET_NAME_COLUMN_NAME).ToString()
 
-        For Each drTg As DataRow In dtTg.Rows
+        Dim colorMapType = SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-" & tgId
 
-            If Not drTg.RowState = DataRowState.Deleted Then
+        ' Where are the color maps stored
+        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False)
 
-                Dim tgId As String = drTg(dsTg.PrimaryKeyColumn.Name).ToString()
-                Dim tgName As String = drTg(DATASHEET_NAME_COLUMN_NAME).ToString()
-                Dim colorMapType = SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-" & tgId
+        ' What's the absolute name of the color map file
+        Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)
 
-                ' Where are the color maps stored
-                Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False)
+        ' Lets toast the existing color map 
+        IO.File.Delete(colorMapFilename)
 
-                ' What's the absolute name of the color map file
-                Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)
+        ' Fetch all the transition types for this Transition Group
+        Dim sortedTT As New SortedList(Of String, String)
+        Dim filter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgId)
 
-                ' Lets toast the existing color map 
-                IO.File.Delete(colorMapFilename)
+        For Each drTTG As DataRow In dtTTg.Select(filter)
 
-                ' Fetch all the transition types for this Transition Group
-                Dim sortedTT As New SortedList(Of String, String)
-                Dim filter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgId)
+            If drTTG.RowState <> DataRowState.Deleted Then
 
-                For Each drTTG As DataRow In dtTTg.Select(filter)
+                Dim TtId As String = drTTG(DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME).ToString()
 
-                    If drTTG.RowState <> DataRowState.Deleted Then
+                ' Now fetch the Transition Type record to get ID, Name, Transparency/Color value
+                Dim ttFilter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", dsTT.PrimaryKeyColumn.Name, TtId)
 
-                        Dim TtId As String = drTTG(DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME).ToString()
+                If dtTT.Select(ttFilter).Count() > 0 Then
 
-                        ' Now fetch the Transition Type record to get ID, Name, Transparency/Color value
-                        Dim ttFilter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", dsTT.PrimaryKeyColumn.Name, TtId)
+                    Dim drTT As DataRow = dtTT.Select(ttFilter).First
 
-                        If dtTT.Select(ttFilter).Count() > 0 Then
+                    Dim id As String = drTT(DATASHEET_MAPID_COLUMN_NAME).ToString()
+                    Dim lbl = drTT(DATASHEET_NAME_COLUMN_NAME).ToString()
+                    Dim transparencyRGB = drTT(DATASHEET_COLOR_COLUMN_NAME).ToString()
+                    Dim mapLegendLbl = drTT(DATASHEET_LEGEND_COLUMN_NAME).ToString()
 
-                            Dim drTT As DataRow = dtTT.Select(ttFilter).First
+                    ' Dont include a color entry for Transition Type without ID or colors assigned
+                    If id.Trim().Length > 0 And transparencyRGB.Length > 0 Then
 
-                            Dim id As String = drTT(DATASHEET_MAPID_COLUMN_NAME).ToString()
-                            Dim lbl = drTT(DATASHEET_NAME_COLUMN_NAME).ToString()
-                            Dim transparencyRGB = drTT(DATASHEET_COLOR_COLUMN_NAME).ToString()
-
-                            ' Dont include a color entry for Transition Type without ID or non-white colors assigned
-                            If id.Trim().Length > 0 And transparencyRGB.Length > 0 Then
-
-                                If ColorUtilities.ColorFromString(transparencyRGB).ToArgb() <> Color.White.ToArgb() Then
-                                    ' Stuff into a list, so we can sort alphabetically
-                                    sortedTT.Add(lbl, id & "," & transparencyRGB)
+                        ' Do we have a Legend Map for this map Variable. If so we need to get ""fancy""
+                        If Not (dicLegendLblColor Is Nothing) Then
+                            If dicLegendLblColor.Count > 0 Then
+                                If mapLegendLbl.Length > 0 Then
+                                    transparencyRGB = dicLegendLblColor.Item(mapLegendLbl)
+                                Else
+                                    transparencyRGB = dicLegendLblColor.Item(LEGEND_MAP_BLANK_LEGEND_ITEM)
                                 End If
-
                             End If
-
                         End If
 
+                        ' Stuff into a list, so we can sort alphabetically
+                        sortedTT.Add(lbl, id & "," & transparencyRGB)
                     End If
 
-                Next
-
-                'Now create the new color map for the current Transition Group, sorted alphabetically by label
-                'DEVNOTE: Create the color map even if no color definitions, as the display logic looks for this empty definition. 
-                ' Otherwise, it'll apply its own, which we dont want
-                Dim fileWriter As StreamWriter = System.IO.File.CreateText(Path.Combine(colorMapPath, colorMapFilename))
-                fileWriter.WriteLine(String.Format(CultureInfo.InvariantCulture, "# Syncrosim Generated Transition Group ({0}) Color Map (QGIS-compatible) Export File,,,,,", tgName))
-                fileWriter.WriteLine("INTERPOLATION:EXACT")
-
-                For i = 0 To sortedTT.Count - 1
-                    ' Dont include a color entry for Transition Type without ID or colors assigned
-
-                    Dim lbl As String = sortedTT.Keys(i).Replace(",", " ")   ' Dont allow comma in label
-                    Dim idColor As String = sortedTT.Values(i)
-                    Dim aryColor = Split(idColor, ",")   ' Split into ID, Transparency, Red, Green,Blue
-
-                    If UBound(aryColor) = 4 Then
-                        ' Color Map line syntax, for discrete values, is:
-                        '  Value, Red, Green, Blue, Transparency, Label 
-                        '  21001,168,0,87,255,UNDET:<5% Inv
-                        fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", aryColor(0), aryColor(2), aryColor(3), aryColor(4), aryColor(1), lbl)
-                    End If
-
-                Next
-
-                fileWriter.Close()
+                End If
 
             End If
 
         Next
+
+        'Now create the new color map for the current Transition Group, sorted alphabetically by label
+        'DEVNOTE: Create the color map even if no color definitions, as the display logic looks for this empty definition. 
+        ' Otherwise, it'll apply its own, which we dont want
+        Dim fileWriter As StreamWriter = System.IO.File.CreateText(colorMapFilename)
+        fileWriter.WriteLine(String.Format(CultureInfo.InvariantCulture, "# Syncrosim Generated Transition Group ({0}) Color Map (QGIS-compatible) Export File,,,,,", tgName))
+        fileWriter.WriteLine("INTERPOLATION:EXACT")
+
+        For i = 0 To sortedTT.Count - 1
+            ' Dont include a color entry for Transition Type without ID or colors assigned
+
+            Dim lbl As String = sortedTT.Keys(i).Replace(",", " ")   ' Dont allow comma in label
+            Dim idColor As String = sortedTT.Values(i)
+            Dim aryIdColor = Split(idColor, ",")   ' Split into ID, Transparency, Red, Green,Blue
+
+            If UBound(aryIdColor) = 4 Then
+                ' Color Map line syntax, for discrete values, is:
+                '  Value, Red, Green, Blue, Transparency, Label 
+                '  21001,168,0,87,255,UNDET:<5% Inv
+
+                fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", aryIdColor(0), aryIdColor(2), aryIdColor(3), aryIdColor(4), aryIdColor(1), lbl)
+            End If
+
+        Next
+
+        fileWriter.Close()
+
+
+    End Sub
+
+    ''' <summary>
+    ''' Create/Replace the raster Transition Group Legend AND Color maps for the specific project. The legend & color maps are QGis compatible, and are use when
+    ''' displaying the Transitions rasters in the Syncrosim Map display.
+    ''' </summary>
+    ''' <param name="project">The current Project</param>
+    ''' <remarks></remarks>
+    Public Sub CreateTransitionGroupMaps(project As Project)
+
+        If (project.Library.Session.IsRunningOnMono) Then
+            Return
+        End If
+
+
+        ' Loop thru the Transition Groups
+        For Each drTg As DataRow In project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME).GetData().Select(Nothing, Nothing, DataViewRowState.CurrentRows)
+
+            Dim dicLegendColors = CreateTransitionGroupLegendMap(project, drTg)
+            CreateTransitionGroupColorMap(project, drTg, dicLegendColors)
+        Next
+
+
 
     End Sub
 
@@ -338,121 +358,120 @@ Imports SyncroSim.StochasticTime
     ''' </summary>
     ''' <param name="project">The current Project</param>
     ''' <remarks></remarks>
-    Public Sub CreateTransitionGroupLegendMaps(project As Project)
+    Public Function CreateTransitionGroupLegendMap(project As Project, drTg As DataRow) As Dictionary(Of String, String)
 
-        If (project.Library.Session.IsRunningOnMono) Then
-            Return
-        End If
 
-        Dim dsTg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME)
         Dim dsTTG As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_GROUP_NAME)
         Dim dsTT As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_NAME)
+        Dim dsTg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME)
 
-        Dim dtTg As DataTable
-        Dim dtTTg As DataTable
-        Dim dtTT As DataTable
-
-        dtTg = dsTg.GetData()
-        dtTTg = dsTTG.GetData()
-        dtTT = dsTT.GetData()
-
-        ' Loop thru the Transition Groups
-        For Each drTg As DataRow In dtTg.Rows
-
-            If Not drTg.RowState = DataRowState.Deleted Then
-
-                Dim tgId As String = drTg(dsTg.PrimaryKeyColumn.Name).ToString()
-                Dim tgName As String = drTg(DATASHEET_NAME_COLUMN_NAME).ToString()
-                Dim colorMapType = SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-" & tgId
-
-                ' Where are the color legend stored
-                Dim legendMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False)
-
-                ' What's the absolute name of the legend  map file
-                Dim legendMapFilename As String = RasterFiles.GetLegendMapFileName(project, colorMapType)
-
-                ' Lets toast the existing color map 
-                IO.File.Delete(legendMapFilename)
-
-                ' Fetch all the transition types for this Transition Group
-                Dim sortedTT As New SortedList(Of String, String)
-                Dim filter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgId)
-                Dim sort As String = DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME
-
-                For Each drTTG As DataRow In dtTTg.Select(filter, sort)
-
-                    If drTTG.RowState <> DataRowState.Deleted Then
-
-                        Dim TtId As String = drTTG(DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME).ToString()
-
-                        ' Now fetch the Transition Type record to get ID, Legend Name, Transparency/Color value
-                        Dim ttFilter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", dsTT.PrimaryKeyColumn.Name, TtId)
-
-                        If dtTT.Select(ttFilter).Count() > 0 Then
-
-                            Dim drTT As DataRow = dtTT.Select(ttFilter).First
-
-                            Dim id As String = drTT(DATASHEET_MAPID_COLUMN_NAME).ToString()
-                            Dim lbl = drTT(DATASHEET_LEGEND_COLUMN_NAME).ToString()
-                            Dim transparencyRGB = drTT(DATASHEET_COLOR_COLUMN_NAME).ToString()
-
-                            ' Dont include a legend entry for Transition Type without ID or non-white colors or Map label assigned
-                            If id.Trim().Length > 0 And transparencyRGB.Length > 0 And lbl.Length > 0 Then
-
-                                If ColorUtilities.ColorFromString(transparencyRGB).ToArgb() <> Color.White.ToArgb() Then
-                                    ' Stuff into a list, so we can sort alphabetically
-                                    If Not sortedTT.ContainsKey(lbl) Then
-                                        sortedTT.Add(lbl, id & "," & transparencyRGB)
-                                    Else
-                                        ' Use the TT with the lowest ID value, in case the user screwed up and entered duplicates.
-                                        Dim oldIdColor As String = sortedTT.Item(lbl)
-                                        If Integer.Parse(Split(oldIdColor, ",")(0)) > CInt(id) Then
-                                            sortedTT.Item(lbl) = id & "," & transparencyRGB
-                                        End If
+        Dim dtTTg As DataTable = dsTTG.GetData()
+        Dim dtTT As DataTable = dsTT.GetData()
 
 
-                                    End If
-                                End If
+        Dim tgId As String = drTg(dsTg.PrimaryKeyColumn.Name).ToString()
+        Dim tgName As String = drTg(DATASHEET_NAME_COLUMN_NAME).ToString()
+        Dim colorMapType = SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-" & tgId
 
-                            End If
+        ' Where are the color legend stored
+        Dim legendMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False)
 
+        ' What's the absolute name of the legend  map file
+        Dim legendMapFilename As String = RasterFiles.GetLegendMapFileName(project, colorMapType)
+
+        ' Lets toast the existing color map 
+        IO.File.Delete(legendMapFilename)
+
+        ' Fetch all the transition types for this Transition Group
+        Dim sortedTT As New SortedList(Of String, String)
+        Dim filter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgId)
+        Dim sort As String = DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME
+
+        For Each drTTG As DataRow In dtTTg.Select(filter, sort, DataViewRowState.CurrentRows)
+
+            Dim TtId As String = drTTG(DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME).ToString()
+
+            ' Now fetch the Transition Type record to get ID, Legend Name, Transparency/Color value
+            Dim ttFilter As String = String.Format(CultureInfo.InvariantCulture, "{0}={1}", dsTT.PrimaryKeyColumn.Name, TtId)
+
+            If dtTT.Select(ttFilter).Count() > 0 Then
+
+                Dim drTT As DataRow = dtTT.Select(ttFilter).First
+
+                Dim id As String = drTT(DATASHEET_MAPID_COLUMN_NAME).ToString()
+                Dim lbl = drTT(DATASHEET_LEGEND_COLUMN_NAME).ToString()
+                If lbl.Trim().Length = 0 Then
+                    lbl = LEGEND_MAP_BLANK_LEGEND_ITEM
+                End If
+
+                Dim transparencyRGB = drTT(DATASHEET_COLOR_COLUMN_NAME).ToString()
+
+                ' Dont include a legend entry for Transition Type without ID or colors or Map label assigned
+                If id.Trim().Length > 0 And transparencyRGB.Length > 0 And lbl.Length > 0 Then
+
+                    ' Stuff into a list, so we can sort alphabetically
+                    If Not sortedTT.ContainsKey(lbl) Then
+                        sortedTT.Add(lbl, id & "," & transparencyRGB)
+                    Else
+                        ' Use the TT with the lowest ID value
+                        Dim oldIdColor As String = sortedTT.Item(lbl)
+                        If Integer.Parse(Split(oldIdColor, ",")(0)) > CInt(id) Then
+                            sortedTT.Item(lbl) = id & "," & transparencyRGB
                         End If
-
                     End If
 
-                Next
-
-                'Now create the new legend map for the current Transition Group, sorted alphabetically by label
-                'DEVNOTE: Don't create the legend map if no color/legend definitions. 
-                If sortedTT.Count > 0 Then
-                    Dim fileWriter As StreamWriter = System.IO.File.CreateText(Path.Combine(legendMapPath, legendMapFilename))
-                    fileWriter.WriteLine(String.Format(CultureInfo.InvariantCulture, "# Syncrosim Generated Transition Group ({0}) Color Map (QGIS-compatible) Export File,,,,,", tgName))
-                    fileWriter.WriteLine("INTERPOLATION:EXACT")
-
-                    For i = 0 To sortedTT.Count - 1
-                        ' Dont include a color entry for Transition Type without ID or colors assigned
-
-                        Dim lbl As String = sortedTT.Keys(i).Replace(",", " ")   ' Dont allow comma in label
-                        Dim idColor As String = sortedTT.Values(i)
-                        Dim aryColor = Split(idColor, ",")   ' Split into ID, Transparency, Red, Green,Blue
-
-                        If UBound(aryColor) = 4 Then
-                            ' Color Map line syntax, for discrete values, is:
-                            '  Value, Red, Green, Blue, Transparency, Label 
-                            '  21001,168,0,87,255,UNDET:<5% Inv
-                            fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", aryColor(0), aryColor(2), aryColor(3), aryColor(4), aryColor(1), lbl)
-                        End If
-
-                    Next
-
-                    fileWriter.Close()
                 End If
 
             End If
 
         Next
 
-    End Sub
+        'Now create the new legend map for the current Transition Group, sorted alphabetically by label
+        'DEVNOTE: Don't create the legend map if no color/legend definitions. 
+
+        Dim legendColorsDefined As New Dictionary(Of String, String)
+
+        If sortedTT.Count > 0 Then
+            Dim fileWriter As StreamWriter = System.IO.File.CreateText(Path.Combine(legendMapPath, legendMapFilename))
+            fileWriter.WriteLine(String.Format(CultureInfo.InvariantCulture, "# Syncrosim Generated Transition Group ({0}) Color Map (QGIS-compatible) Export File,,,,,", tgName))
+            fileWriter.WriteLine("INTERPOLATION:EXACT")
+
+            For i = 0 To sortedTT.Count - 1
+                ' Dont include a color entry for Transition Type without ID or colors assigned
+
+                Dim lbl As String = sortedTT.Keys(i).Replace(",", " ")   ' Dont allow comma in label
+                Dim idColor As String = sortedTT.Values(i)
+                Dim aryColor = Split(idColor, ",")   ' Split into ID, Transparency, Red, Green,Blue
+
+                If UBound(aryColor) = 4 Then
+                    ' Color Map line syntax, for discrete values, is:
+                    '  Value, Red, Green, Blue, Transparency, Label 
+                    '  21001,168,0,87,255,UNDET:<5% Inv
+
+                    Dim val As Integer = CInt(IIf(lbl = LEGEND_MAP_BLANK_LEGEND_ITEM, 9999, i + 1))
+                    fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", val, aryColor(2), aryColor(3), aryColor(4), aryColor(1), lbl)
+
+                    legendColorsDefined.Add(lbl, String.Join(",", aryColor(1), aryColor(2), aryColor(3), aryColor(4)))
+                End If
+
+            Next
+
+            fileWriter.Close()
+        End If
+
+        'If not valid entries in legend map, then toast it, or only one - [Blank]
+        If (legendColorsDefined.Count = 0) Or (legendColorsDefined.Count = 1 And legendColorsDefined.ContainsKey(LEGEND_MAP_BLANK_LEGEND_ITEM)) Then
+            IO.File.Delete(legendMapFilename)
+            legendColorsDefined = Nothing
+        End If
+
+
+        Return legendColorsDefined
+
+
+    End Function
+
+
 
     ''' <summary>
     ''' Create the Age raster color maps for the specific project. The color maps are QGis compatible, and are use when

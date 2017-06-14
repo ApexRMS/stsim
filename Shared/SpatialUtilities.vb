@@ -244,9 +244,6 @@ Imports SyncroSim.StochasticTime
 
         Dim colorMapType = SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX & "-" & tgId
 
-        ' Where are the color maps stored
-        Dim colorMapPath As String = project.Library.GetFolderName(LibraryFolderType.Input, project, False)
-
         ' What's the absolute name of the color map file
         Dim colorMapFilename As String = RasterFiles.GetColorMapFileName(project, colorMapType)
 
@@ -415,7 +412,7 @@ Imports SyncroSim.StochasticTime
                     Else
                         ' Use the TT with the lowest ID value
                         Dim oldIdColor As String = sortedTT.Item(lbl)
-                        If Integer.Parse(Split(oldIdColor, ",")(0)) > CInt(id) Then
+                        If Integer.Parse(Split(oldIdColor, ",")(0), CultureInfo.InvariantCulture) > CInt(id) Then
                             sortedTT.Item(lbl) = id & "," & transparencyRGB
                         End If
                     End If

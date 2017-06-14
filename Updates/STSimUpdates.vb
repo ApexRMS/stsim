@@ -2158,7 +2158,7 @@ Class STSimUpdates
 
                         If Not File.Exists(newFilename) Then
                             File.Move(oldFilename, newFilename)
-                            Debug.Print(String.Format("Moving spatial output file '{0}' to {1}", oldFilename, newLocation))
+                            Debug.Print(String.Format(CultureInfo.InvariantCulture, "Moving spatial output file '{0}' to {1}", oldFilename, newLocation))
                         End If
 
                     Next

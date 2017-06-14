@@ -55,6 +55,10 @@ Class InitialConditionsSpatialDataFeedView
 
         If (disposing And Not Me.IsDisposed) Then
 
+            If (Me.m_HourGlass IsNot Nothing) Then
+                Me.m_HourGlass.Dispose()
+            End If
+
             If (Me.m_ICSpatialFilesDataSheet IsNot Nothing) Then
 
                 RemoveHandler Me.m_ICSpatialFilesDataSheet.ValidatingRasters, AddressOf Me.OnValidatingRasters
@@ -162,6 +166,7 @@ Class InitialConditionsSpatialDataFeedView
 
         Me.LabelValidate.Visible = False
         Me.m_HourGlass.Dispose()
+        Me.m_HourGlass = Nothing
 
     End Sub
 

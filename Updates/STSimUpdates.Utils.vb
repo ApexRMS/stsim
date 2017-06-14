@@ -14,14 +14,14 @@ Partial Class STSimUpdates
     Private Shared Function GetDatasheetOutputFolder(store As DataStore, scenarioId As Integer, datasheetName As String) As String
 
         Dim baseFolder = GetCurrentOutputFolderBase(store)
-        Return Path.Combine(baseFolder, String.Format("Scenario-{0}", scenarioId), datasheetName)
+        Return Path.Combine(baseFolder, String.Format(CultureInfo.InvariantCulture, "Scenario-{0}", scenarioId), datasheetName)
 
     End Function
 
     Private Shared Function GetLegacyOutputFolder(store As DataStore, scenarioId As Integer) As String
 
         Dim baseFolder = GetCurrentOutputFolderBase(store)
-        Return Path.Combine(baseFolder, String.Format("Scenario-{0}", scenarioId), "Spatial")
+        Return Path.Combine(baseFolder, String.Format(CultureInfo.InvariantCulture, "Scenario-{0}", scenarioId), "Spatial")
 
     End Function
 

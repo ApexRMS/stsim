@@ -7,10 +7,10 @@
 
 Imports System.IO
 Imports System.Drawing
+Imports System.Reflection
 Imports System.Windows.Forms
 Imports SyncroSim.Core
 Imports SyncroSim.Core.Forms
-Imports System.Reflection
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class SpatialInitiationMultiplierDataFeedView

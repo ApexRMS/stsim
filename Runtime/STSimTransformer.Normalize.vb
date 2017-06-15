@@ -30,8 +30,10 @@ Partial Class STSimTransformer
         End If
 
         If (dr(RUN_CONTROL_MAX_ITERATION_COLUMN_NAME) Is DBNull.Value) Then
+
             dr(RUN_CONTROL_MAX_ITERATION_COLUMN_NAME) = 1
             Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_MAX_ITERATIONS_WARNING)
+
         End If
 
         If (dr(RUN_CONTROL_MIN_TIMESTEP_COLUMN_NAME) Is DBNull.Value) Then
@@ -39,8 +41,11 @@ Partial Class STSimTransformer
         End If
 
         If (dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) Is DBNull.Value) Then
+
             dr(RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME) = 10
-            Me.RecordStatus(StatusType.Warning, STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING)
+            Dim msg As String = String.Format(CultureInfo.InvariantCulture, STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING, Me.m_TimestepUnitsLower)
+            Me.RecordStatus(StatusType.Warning, msg)
+
         End If
 
     End Sub
@@ -393,11 +398,11 @@ Partial Class STSimTransformer
         If (dr(timestepsColumnName) Is DBNull.Value) Then
 
             Dim message As String = String.Format(CultureInfo.CurrentCulture,
-                "ST-Sim timestep value for '{0}' is invalid.  Using default.", timestepsColumnHeaderText)
+                "ST-Sim: The {0} value for '{1}' is invalid.  Using default.", Me.m_TimestepUnitsLower, timestepsColumnHeaderText)
 
             Me.RecordStatus(StatusType.Warning, message)
-
             dr(timestepsColumnName) = 5
+
             Return
 
         End If
@@ -407,11 +412,11 @@ Partial Class STSimTransformer
         If (val > maxTimestep) Then
 
             Dim message As String = String.Format(CultureInfo.CurrentCulture,
-                "ST-Sim timestep value for '{0}' out of range.  Using default.", timestepsColumnHeaderText)
+                "ST-Sim: The {0} value for '{1}' is out of range.  Using default.", Me.m_TimestepUnitsLower, timestepsColumnHeaderText)
 
             Me.RecordStatus(StatusType.Warning, message)
-
             dr(timestepsColumnName) = maxTimestep
+
             Return
 
         End If

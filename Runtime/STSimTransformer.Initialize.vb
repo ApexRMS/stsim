@@ -5,6 +5,8 @@
 '
 '*********************************************************************************************
 
+Imports System.Globalization
+
 Partial Class STSimTransformer
 
     ''' <summary>
@@ -16,19 +18,13 @@ Partial Class STSimTransformer
     Private Sub InitializeModel()
 
         If (Me.m_Cells.Count = 0) Then
-
-            ExceptionUtils.ThrowArgumentException(
-                "You must have at least one cell to run the simulation.")
-
+            ExceptionUtils.ThrowArgumentException("You must have at least one cell to run the simulation.")
         End If
 
         If Not Me.IsSpatial Then
 
             If (Me.m_InitialConditionsDistributionMap.GetICDs(Me.MinimumIteration).Count = 0) Then
-
-                ExceptionUtils.ThrowArgumentException(
-                    "The initial conditions distribution collection cannot be empty.")
-
+                ExceptionUtils.ThrowArgumentException("The initial conditions distribution collection cannot be empty.")
             End If
 
         End If
@@ -49,6 +45,16 @@ Partial Class STSimTransformer
 
         Debug.Assert(Me.m_SummaryStratumStateResults.Count = 0)
         Debug.Assert(Me.m_SummaryStratumTransitionStateResults.Count = 0)
+
+    End Sub
+
+    ''' <summary>
+    ''' Configures the lower case version of the timestep units
+    ''' </summary>
+    Private Sub ConfigureTimestepUnits()
+
+        Me.TimestepUnits = GetTimestepUnits(Me.Project)
+        Me.m_TimestepUnitsLower = Me.TimestepUnits.ToLower(CultureInfo.InvariantCulture)
 
     End Sub
 
@@ -82,7 +88,7 @@ Partial Class STSimTransformer
         'rest of the model because some of the initialization routines depend on these values being set.
 
         If (Me.MinimumTimestep = Me.MaximumTimestep) Then
-            ExceptionUtils.ThrowArgumentException("The start timestep and end timestep cannot be the same.")
+            ExceptionUtils.ThrowArgumentException("ST-Sim: The start {0} and end {1} cannot be the same.", Me.m_TimestepUnitsLower, Me.m_TimestepUnitsLower)
         End If
 
         Me.m_TimestepZero = Me.MinimumTimestep

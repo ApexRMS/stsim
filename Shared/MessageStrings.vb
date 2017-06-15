@@ -31,7 +31,7 @@ Module MessageStrings
     Public Const ERROR_NO_RESULT_SCENARIOS_FOR_REPORT As String = "There must be at least one selected ressult scenario create this report."
 
     'Status Messages
-    Public Const STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING As String = "The number of timesteps was not specified.  Using default."
+    Public Const STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING As String = "The number of {0}s was not specified.  Using default."
     Public Const STATUS_USING_DEFAULT_MAX_ITERATIONS_WARNING As String = "The number of iterations was not specified.  Using default."
     Public Const STATUS_USING_DEFAULT_NUM_CELLS_WARNING As String = "The number of cells was not specified.  Using default."
     Public Const STATUS_USING_DEFAULT_TOTAL_AMOUNT_WARNING As String = "The total amount was not specified.  Using default."

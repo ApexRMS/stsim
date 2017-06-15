@@ -16,6 +16,7 @@ Public NotInheritable Class STSimTransformer
     Private m_CalcNumCellsFromDist As Boolean
     Private m_RandomGenerator As New RandomGenerator()
     Private m_DistributionProvider As STSimDistributionProvider
+    Private m_TimestepUnitsLower As String = "timestep"
     Private m_AgeReportingHelper As AgeHelper
     Private m_AmountPerCell As Double
     Private m_TimestepZero As Integer
@@ -272,6 +273,7 @@ Public NotInheritable Class STSimTransformer
 
         MyBase.Configure()
 
+        Me.ConfigureTimestepUnits()
         Me.NormalizeRunControl()
         Me.NormalizeOutputOptions()
 
@@ -292,6 +294,7 @@ Public NotInheritable Class STSimTransformer
 
         Me.SetStatusMessage("Initializing")
 
+        Me.ConfigureTimestepUnits()
         Me.ConfigureIsSpatialRunFlag()
         Me.ConfigureTimestepsAndIterations()
 

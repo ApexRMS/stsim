@@ -126,7 +126,7 @@ Partial Class TransitionDataFeedView
         '
         'PanelTabNavigator
         '
-        Me.PanelTabNavigator.BackColor = System.Drawing.Color.LightGray
+        Me.PanelTabNavigator.BackColor = System.Drawing.Color.Maroon
         Me.PanelTabNavigator.Controls.Add(Me.ButtonSelectStratum)
         Me.PanelTabNavigator.Controls.Add(Me.ButtonLast)
         Me.PanelTabNavigator.Controls.Add(Me.ButtonFirst)
@@ -134,7 +134,7 @@ Partial Class TransitionDataFeedView
         Me.PanelTabNavigator.Controls.Add(Me.ButtonPrevious)
         Me.PanelTabNavigator.Location = New System.Drawing.Point(0, 0)
         Me.PanelTabNavigator.Name = "PanelTabNavigator"
-        Me.PanelTabNavigator.Size = New System.Drawing.Size(99, 20)
+        Me.PanelTabNavigator.Size = New System.Drawing.Size(100, 20)
         Me.PanelTabNavigator.TabIndex = 2
         '
         'ButtonSelectStratum

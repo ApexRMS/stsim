@@ -1551,7 +1551,7 @@ Partial Class STSimTransformer
                 stateclass_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME)
 
                 If stateclass_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
+                    Throw New DataException(String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
                 End If
 
             End If
@@ -1565,7 +1565,7 @@ Partial Class STSimTransformer
                 age_cells = raster.IntCells
 
                 If age_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
+                    Throw New DataException(String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
                 End If
 
             End If
@@ -1581,7 +1581,7 @@ Partial Class STSimTransformer
                 secondary_stratum_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME)
 
                 If secondary_stratum_cells.Count() <> primary_stratum_cells.Count() Then
-                    Throw New DataException(String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
+                    Throw New DataException(String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, fullFileName, "Different Cell Count"))
                 End If
 
             End If
@@ -1615,7 +1615,7 @@ Partial Class STSimTransformer
 
             Dim icds As InitialConditionsDistributionCollection = Me.m_InitialConditionsDistributionMap.GetICDs(iteration)
             If icds Is Nothing Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_RUN_USING_COMBINED_IC_MISSING_ICD, iteration.GetValueOrDefault())
+                sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_RUN_USING_COMBINED_IC_MISSING_ICD, iteration.GetValueOrDefault())
                 Me.RecordStatus(StatusType.Warning, sMsg)
             Else
 
@@ -2127,7 +2127,7 @@ Partial Class STSimTransformer
 
                 ' See if the Primary Stratum has a Projection associated with it
                 If rastPrimaryStratum.ProjectionString = "" Then
-                    sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISSING_PROJECTION_WARNING, fullFileName)
+                    sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_MISSING_PROJECTION_WARNING, fullFileName)
                     Me.RecordStatus(StatusType.Information, sMsg)
                 End If
 
@@ -2211,10 +2211,10 @@ Partial Class STSimTransformer
         If rastPrimaryStratum.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastPrimaryStratum, cmpMsg)
             If cmpResult = CompareMetadataResult.ImportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.PrimaryStratumName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.PrimaryStratumName, cmpMsg)
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.PrimaryStratumName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.PrimaryStratumName, cmpMsg)
                 Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
@@ -2223,10 +2223,10 @@ Partial Class STSimTransformer
         If rastSclass.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastSclass, cmpMsg)
             If cmpResult = CompareMetadataResult.ImportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.StateClassName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.StateClassName, cmpMsg)
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.StateClassName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.StateClassName, cmpMsg)
                 Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
@@ -2235,10 +2235,10 @@ Partial Class STSimTransformer
         If rastAge.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastAge, cmpMsg)
             If cmpResult = CompareMetadataResult.ImportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.AgeName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.AgeName, cmpMsg)
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.AgeName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.AgeName, cmpMsg)
                 Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
@@ -2247,10 +2247,10 @@ Partial Class STSimTransformer
         If rastSecondaryStratum.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastSecondaryStratum, cmpMsg)
             If cmpResult = CompareMetadataResult.ImportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.SecondaryStratumName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.SecondaryStratumName, cmpMsg)
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.SecondaryStratumName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.SecondaryStratumName, cmpMsg)
                 Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If
@@ -2259,10 +2259,10 @@ Partial Class STSimTransformer
         If rastDem.NumberCells > 0 Then
             cmpResult = inpRasts.CompareMetadata(rastDem, cmpMsg)
             If cmpResult = CompareMetadataResult.ImportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.DemName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.DemName, cmpMsg)
                 Throw New STSimException(sMsg)
             ElseIf cmpResult = CompareMetadataResult.UnimportantDifferences Then
-                sMsg = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.DemName, cmpMsg)
+                sMsg = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.DemName, cmpMsg)
                 Me.RecordStatus(StatusType.Information, sMsg)
             End If
         End If

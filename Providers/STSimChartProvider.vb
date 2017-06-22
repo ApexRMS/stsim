@@ -184,7 +184,7 @@ Class STSimChartProvider
         GetAmountLabelTerminology(dsterm, AmountLabel, TermUnit)
         UnitsLabel = TerminologyUnitToString(TermUnit)
 
-        Dim disp As String = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", AmountLabel, UnitsLabel)
+        Dim disp As String = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel)
         Dim Normal As New SyncroSimLayoutItem(STATE_CLASS_AMOUNT_VARIABLE_NAME, disp, False)
         Dim Proportion As New SyncroSimLayoutItem(STATE_CLASS_PROPORTION_VARIABLE_NAME, "Proportion", False)
 
@@ -212,7 +212,7 @@ Class STSimChartProvider
         GetAmountLabelTerminology(dsterm, AmountLabel, TermUnit)
         UnitsLabel = TerminologyUnitToString(TermUnit)
 
-        Dim disp As String = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", AmountLabel, UnitsLabel)
+        Dim disp As String = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel)
         Dim Normal As New SyncroSimLayoutItem(TRANSITION_AMOUNT_VARIABLE_NAME, disp, False)
         Dim Proportion As New SyncroSimLayoutItem(TRANSITION_PROPORTION_VARIABLE_NAME, "Proportion", False)
 
@@ -327,7 +327,7 @@ Class STSimChartProvider
                 Dim DisplayNameNormal As String = CStr(drv.Row(attrsDataSheet.ValidationTable.DisplayMember))
 
                 If (Units IsNot Nothing) Then
-                    DisplayNameNormal = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayNameNormal, Units)
+                    DisplayNameNormal = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", DisplayNameNormal, Units)
                 End If
 
                 Dim ItemNormal As New SyncroSimLayoutItem(AttrNameNormal, DisplayNameNormal, False)
@@ -351,7 +351,7 @@ Class STSimChartProvider
                 Dim DisplayNameDensity As String = CStr(drv.Row(attrsDataSheet.ValidationTable.DisplayMember))
 
                 If (Units IsNot Nothing) Then
-                    DisplayNameDensity = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayNameDensity, Units)
+                    DisplayNameDensity = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", DisplayNameDensity, Units)
                 End If
 
                 Dim ItemDensity As New SyncroSimLayoutItem(AttrNameDensity, DisplayNameDensity, False)
@@ -406,7 +406,7 @@ Class STSimChartProvider
                 Dim DisplayNameNormal As String = CStr(drv.Row(attrsDataSheet.ValidationTable.DisplayMember))
 
                 If (Units IsNot Nothing) Then
-                    DisplayNameNormal = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayNameNormal, Units)
+                    DisplayNameNormal = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", DisplayNameNormal, Units)
                 End If
 
                 Dim ItemNormal As New SyncroSimLayoutItem(AttrNameNormal, DisplayNameNormal, False)
@@ -430,7 +430,7 @@ Class STSimChartProvider
                 Dim DisplayNameDensity As String = CStr(drv.Row(attrsDataSheet.ValidationTable.DisplayMember))
 
                 If (Units IsNot Nothing) Then
-                    DisplayNameDensity = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayNameDensity, Units)
+                    DisplayNameDensity = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", DisplayNameDensity, Units)
                 End If
 
                 Dim ItemDensity As New SyncroSimLayoutItem(AttrNameDensity, DisplayNameDensity, False)

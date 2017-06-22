@@ -326,7 +326,7 @@ Partial Class STSimTransformer
 
             If (tt.PrimaryTransitionGroups.Count > 1) Then
 
-                Dim msg As String = String.Format(CultureInfo.CurrentCulture,
+                Dim msg As String = String.Format(CultureInfo.InvariantCulture,
                     "The transition type '{0}' has more than one primary transition group.", tt.DisplayName)
 
                 Me.RecordStatus(StatusType.Warning, msg)
@@ -1445,14 +1445,14 @@ Partial Class STSimTransformer
 
             If cmpRes = STSim.CompareMetadataResult.ImportantDifferences Then
 
-                Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSM_METADATA_WARNING, tsmFilename)
+                Dim msg As String = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_TSM_METADATA_WARNING, tsmFilename)
                 RecordStatus(StatusType.Warning, msg)
 
             Else
 
                 If cmpRes = STSim.CompareMetadataResult.UnimportantDifferences Then
 
-                    Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSM_METADATA_INFO, tsmFilename, compareMsg)
+                    Dim msg As String = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_TSM_METADATA_INFO, tsmFilename, compareMsg)
                     RecordStatus(StatusType.Information, msg)
 
                 End If
@@ -1519,14 +1519,14 @@ Partial Class STSimTransformer
 
             If cmpRes = STSim.CompareMetadataResult.ImportantDifferences Then
 
-                Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_WARNING, tsimFilename)
+                Dim msg As String = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_WARNING, tsimFilename)
                 RecordStatus(StatusType.Warning, msg)
 
             Else
 
                 If cmpRes = STSim.CompareMetadataResult.UnimportantDifferences Then
 
-                    Dim msg As String = String.Format(CultureInfo.CurrentCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_INFO, tsimFilename, cmpMsg)
+                    Dim msg As String = String.Format(CultureInfo.InvariantCulture, STATUS_SPATIAL_FILE_TSIM_METADATA_INFO, tsimFilename, cmpMsg)
                     RecordStatus(StatusType.Information, msg)
 
                 End If

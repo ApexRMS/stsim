@@ -97,7 +97,7 @@ Class StateClassDataSheet
         If (proposedRow(DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME) Is DBNull.Value Or
             proposedRow(DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME) Is DBNull.Value) Then
 
-            Dim msg As String = String.Format(CultureInfo.CurrentCulture, "You must choose both a '{0}' and a '{1}'.",
+            Dim msg As String = String.Format(CultureInfo.InvariantCulture, "You must choose both a '{0}' and a '{1}'.",
                 Me.Columns(DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME).DisplayName,
                 Me.Columns(DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME).DisplayName)
 

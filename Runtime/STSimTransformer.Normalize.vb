@@ -397,7 +397,7 @@ Partial Class STSimTransformer
 
         If (dr(timestepsColumnName) Is DBNull.Value) Then
 
-            Dim message As String = String.Format(CultureInfo.CurrentCulture,
+            Dim message As String = String.Format(CultureInfo.InvariantCulture,
                 "ST-Sim: The {0} value for '{1}' is invalid.  Using default.", Me.m_TimestepUnitsLower, timestepsColumnHeaderText)
 
             Me.RecordStatus(StatusType.Warning, message)
@@ -411,7 +411,7 @@ Partial Class STSimTransformer
 
         If (val > maxTimestep) Then
 
-            Dim message As String = String.Format(CultureInfo.CurrentCulture,
+            Dim message As String = String.Format(CultureInfo.InvariantCulture,
                 "ST-Sim: The {0} value for '{1}' is out of range.  Using default.", Me.m_TimestepUnitsLower, timestepsColumnHeaderText)
 
             Me.RecordStatus(StatusType.Warning, message)
@@ -495,7 +495,7 @@ Partial Class STSimTransformer
 
         ds.Changes.Add(New ChangeRecord(Me, "Normalized Color Data"))
 
-        Dim msg As String = String.Format(CultureInfo.CurrentCulture,
+        Dim msg As String = String.Format(CultureInfo.InvariantCulture,
             "Color values not specified for '{0}.'  Using defaults.", ds.DisplayName)
 
         Me.RecordStatus(StatusType.Information, msg)
@@ -550,7 +550,7 @@ Partial Class STSimTransformer
         Next
 
         If noIDFound Then
-            Dim msg As String = String.Format(CultureInfo.CurrentCulture,
+            Dim msg As String = String.Format(CultureInfo.InvariantCulture,
                 "ID values not specified for '{0}'.  Using defaults.", ds.DisplayName)
 
             Me.RecordStatus(StatusType.Information, msg)

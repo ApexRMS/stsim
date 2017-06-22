@@ -48,7 +48,7 @@ Class TransitionGroupDataSheet
 
         If (name.EndsWith(AUTO_COLUMN_SUFFIX, StringComparison.Ordinal)) Then
 
-            Dim msg As String = String.Format(CultureInfo.CurrentCulture,
+            Dim msg As String = String.Format(CultureInfo.InvariantCulture,
                 "The transition group name cannot have the suffix: '{0}'.", AUTO_COLUMN_SUFFIX)
 
             Throw New DataException(msg)

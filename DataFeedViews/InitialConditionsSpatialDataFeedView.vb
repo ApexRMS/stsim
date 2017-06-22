@@ -290,7 +290,7 @@ Class InitialConditionsSpatialDataFeedView
 
         Me.m_ICSpatialFilesDataGrid.Columns(PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX).HeaderText = BuildLowerCaseLabel(Primary)
         Me.m_ICSpatialFilesDataGrid.Columns(SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX).HeaderText = BuildLowerCaseLabel(Secondary)
-        Me.LabelCalcTtlAmount.Text = String.Format(CultureInfo.CurrentCulture, "Total {0}:", AmountLabel.ToLower(CultureInfo.CurrentCulture))
+        Me.LabelCalcTtlAmount.Text = String.Format(CultureInfo.InvariantCulture, "Total {0}:", AmountLabel.ToLower(CultureInfo.InvariantCulture))
 
     End Sub
 
@@ -363,7 +363,7 @@ Class InitialConditionsSpatialDataFeedView
         'Num Cells
         Dim NumCells As Integer = DataTableUtilities.GetDataInt(drProp(DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME))
 
-        Me.TextBoxNumCells.Text = NumCells.ToString(CultureInfo.CurrentCulture)
+        Me.TextBoxNumCells.Text = NumCells.ToString(CultureInfo.InvariantCulture)
 
         'Get the units and refresh the units labels - the default Raster Cell Units is Metres^2
         Dim srcSizeUnits As String = DataTableUtilities.GetDataStr(drProp(DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME))
@@ -374,24 +374,24 @@ Class InitialConditionsSpatialDataFeedView
         GetAmountLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), amountlabel, destUnitsVal)
         Dim destAreaLbl As String = TerminologyUnitToString(destUnitsVal)
 
-        srcAreaUnits = srcAreaUnits.ToLower(CultureInfo.CurrentCulture)
-        amountlabel = amountlabel.ToLower(CultureInfo.CurrentCulture)
-        destAreaLbl = destAreaLbl.ToLower(CultureInfo.CurrentCulture)
+        srcAreaUnits = srcAreaUnits.ToLower(CultureInfo.InvariantCulture)
+        amountlabel = amountlabel.ToLower(CultureInfo.InvariantCulture)
+        destAreaLbl = destAreaLbl.ToLower(CultureInfo.InvariantCulture)
 
-        Me.LabelRasterCellArea.Text = String.Format(CultureInfo.CurrentCulture, "Cell size ({0}):", srcAreaUnits)
-        Me.LabelCalcCellArea.Text = String.Format(CultureInfo.CurrentCulture, "Cell size ({0}):", destAreaLbl)
-        Me.LabelCalcTtlAmount.Text = String.Format(CultureInfo.CurrentCulture, "Total {0} ({1}):", amountlabel, destAreaLbl)
+        Me.LabelRasterCellArea.Text = String.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", srcAreaUnits)
+        Me.LabelCalcCellArea.Text = String.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", destAreaLbl)
+        Me.LabelCalcTtlAmount.Text = String.Format(CultureInfo.InvariantCulture, "Total {0} ({1}):", amountlabel, destAreaLbl)
 
         ' Calculate Cell Area in raster's native units
         Dim cellSize As Single = DataTableUtilities.GetDataSingle(drProp(DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME))
         Dim cellArea As Double = cellSize ^ 2
-        Me.TextBoxCellArea.Text = cellArea.ToString("N4", CultureInfo.CurrentCulture)
+        Me.TextBoxCellArea.Text = cellArea.ToString("N4", CultureInfo.InvariantCulture)
 
         ' Calc Cell Area in terminology units
         Dim cellAreaTU As Double
         If Not CheckBoxCellSizeOverride.Checked Then
             cellAreaTU = InitialConditionsSpatialDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal)
-            Me.TextBoxCellAreaCalc.Text = cellAreaTU.ToString("N4", CultureInfo.CurrentCulture)
+            Me.TextBoxCellAreaCalc.Text = cellAreaTU.ToString("N4", CultureInfo.InvariantCulture)
             drProp(DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME) = cellAreaTU
             TextBoxCellAreaCalc.ReadOnly = True
         Else
@@ -401,7 +401,7 @@ Class InitialConditionsSpatialDataFeedView
 
         ' Now calculate total area in the specified terminology units
         Dim ttlArea = cellAreaTU * NumCells
-        Me.TextBoxTotalArea.Text = ttlArea.ToString("N4", CultureInfo.CurrentCulture)
+        Me.TextBoxTotalArea.Text = ttlArea.ToString("N4", CultureInfo.InvariantCulture)
 
     End Sub
 
@@ -457,9 +457,9 @@ Class InitialConditionsSpatialDataFeedView
             For i As Integer = 0 To sp.Count - 1
 
                 If (i = 0) Then
-                    sb.AppendFormat(CultureInfo.CurrentCulture, "{0} ", sp(i))
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0} ", sp(i))
                 Else
-                    sb.AppendFormat(CultureInfo.CurrentCulture, "{0} ", sp(i).ToLower(CultureInfo.CurrentCulture))
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0} ", sp(i).ToLower(CultureInfo.InvariantCulture))
                 End If
 
             Next

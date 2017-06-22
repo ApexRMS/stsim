@@ -21,7 +21,7 @@ Module ExceptionUtils
     ''' </summary>
     ''' <param name="message"></param>
     Public Sub ThrowArgumentException(message As [String], ParamArray args As Object())
-        Throw New ArgumentException(String.Format(CultureInfo.CurrentCulture, message, args))
+        Throw New ArgumentException(String.Format(CultureInfo.InvariantCulture, message, args))
     End Sub
 
     ''' <summary>
@@ -29,7 +29,7 @@ Module ExceptionUtils
     ''' </summary>
     ''' <param name="message"></param>
     Public Sub ThrowInvalidOperationException(message As [String], ParamArray args As Object())
-        Throw New InvalidOperationException(String.Format(CultureInfo.CurrentCulture, message, args))
+        Throw New InvalidOperationException(String.Format(CultureInfo.InvariantCulture, message, args))
     End Sub
 
 End Module

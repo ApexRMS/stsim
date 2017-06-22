@@ -80,9 +80,9 @@ Class StateClassSummaryReport
         GetStratumLabelTerminology(dsterm, PrimaryStratumLabel, SecondaryStratumLabel)
         UnitsLabel = TerminologyUnitToString(TermUnit)
 
-        Dim AmountTitle As String = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", AmountLabel, UnitsLabel)
-        Dim Propn2Title As String = String.Format(CultureInfo.CurrentCulture, "Proportion of {0}", PrimaryStratumLabel)
-        Dim Propn3Title As String = String.Format(CultureInfo.CurrentCulture, "Proportion of {0}/{1}", PrimaryStratumLabel, SecondaryStratumLabel)
+        Dim AmountTitle As String = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel)
+        Dim Propn2Title As String = String.Format(CultureInfo.InvariantCulture, "Proportion of {0}", PrimaryStratumLabel)
+        Dim Propn3Title As String = String.Format(CultureInfo.InvariantCulture, "Proportion of {0}/{1}", PrimaryStratumLabel, SecondaryStratumLabel)
 
         c.Add(New ExportColumn("ScenarioID", "Scenario ID"))
         c.Add(New ExportColumn("ScenarioName", "Scenario"))
@@ -131,7 +131,7 @@ Class StateClassSummaryReport
         Dim dsterm As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
 
         GetAmountLabelTerminology(dsterm, AmountLabel, AmountLabelUnits)
-        Dim WorksheetName As String = String.Format(CultureInfo.CurrentCulture, "{0} by State Class", AmountLabel)
+        Dim WorksheetName As String = String.Format(CultureInfo.InvariantCulture, "{0} by State Class", AmountLabel)
 
         ExportTransformer.ExcelExport(fileName, Me.CreateColumnCollection(), ReportData, WorksheetName)
 
@@ -737,10 +737,10 @@ Class StateClassSummaryReport
         If (ContainsQuote) Then
 
             Dim s As String = value.Replace("""", """""")
-            Return String.Format(CultureInfo.CurrentCulture, """{0}""", s)
+            Return String.Format(CultureInfo.InvariantCulture, """{0}""", s)
 
         Else
-            Return String.Format(CultureInfo.CurrentCulture, """{0}""", value)
+            Return String.Format(CultureInfo.InvariantCulture, """{0}""", value)
         End If
 
     End Function

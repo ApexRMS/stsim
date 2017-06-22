@@ -152,7 +152,7 @@ Partial Class STSimTransformer
 
                 For Each f As String In Directory.GetFiles(OutputFolderName, "*-tgap-*.tif")
 
-                    Dim key As String = Path.GetFileName(f).ToLower(CultureInfo.CurrentCulture)
+                    Dim key As String = Path.GetFileName(f).ToLower(CultureInfo.InvariantCulture)
 
                     If (Not dict.ContainsKey(key)) Then
                         dict.Add(key, New List(Of String))

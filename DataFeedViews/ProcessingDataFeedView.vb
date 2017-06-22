@@ -24,9 +24,9 @@ Class ProcessingDataFeedView
     Private Sub OnTerminologyChanged(ByVal e As DataSheetMonitorEventArgs)
 
         Me.CheckBoxSplitSecStrat.Text = String.Format(
-            CultureInfo.CurrentCulture,
+            CultureInfo.InvariantCulture,
             "Split non-spatial runs by {0}",
-            CStr(e.GetValue(DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME)).ToLower(CultureInfo.CurrentCulture))
+            CStr(e.GetValue(DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME)).ToLower(CultureInfo.InvariantCulture))
 
     End Sub
 

@@ -296,45 +296,45 @@ Public Class InputRasters
 
         ' Test number of cols. 
         If Me.NumberColumns <> raster.NumberCols Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Number of Columns ({1} vs {0})", Me.NumberColumns, raster.NumberCols)
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Columns ({1} vs {0})", Me.NumberColumns, raster.NumberCols)
             Return CompareMetadataResult.ImportantDifferences
         End If
 
         ' Test number of rows. 
         If Me.NumberRows <> raster.NumberRows Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Number of Rows ({1} vs {0})", Me.NumberRows, raster.NumberRows)
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Rows ({1} vs {0})", Me.NumberRows, raster.NumberRows)
             Return CompareMetadataResult.ImportantDifferences
         End If
 
         ' Test XLL Corner. See if NOT negligable difference - arbitrarily 1/10 of cell size. 
         ' Can't use equality, because of float error 
         If Math.Abs(Me.XllCorner - raster.XllCorner) > (Me.CellSize / 10.0) Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in XllCorner ({1} vs {0})", Me.XllCorner, raster.XllCorner)
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in XllCorner ({1} vs {0})", Me.XllCorner, raster.XllCorner)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test YLL Corner.  See if NOT negligable difference - arbitrarily 1/10 of cell size. 
         ' Can't use equality, because of float error  
         If Math.Abs(Me.YllCorner - raster.YllCorner) > (Me.CellSize / 10.0) Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in YllCorner ({1} vs {0})", Me.YllCorner, raster.YllCorner)
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in YllCorner ({1} vs {0})", Me.YllCorner, raster.YllCorner)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test ProjectionString 
         If Me.ProjectionString <> raster.ProjectionString Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Projection String")
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in Projection String")
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test Cell Size. Cant use equality because of precision errors ( eg. 30D vs 30.000000000004D)
         If Math.Abs(Me.CellSize - raster.CellSize) > 0.0001 Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Cell Size ({1} vs {0})", Me.CellSize, raster.CellSize)
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in Cell Size ({1} vs {0})", Me.CellSize, raster.CellSize)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 
         ' Test Cell Units
         If Me.CellSizeUnits <> raster.CellSizeUnits Then
-            compareMsg = String.Format(CultureInfo.CurrentCulture, "Mismatch in Cell Size Units ({1} vs {0})", Me.CellSizeUnits, raster.CellSizeUnits)
+            compareMsg = String.Format(CultureInfo.InvariantCulture, "Mismatch in Cell Size Units ({1} vs {0})", Me.CellSizeUnits, raster.CellSizeUnits)
             retVal = CompareMetadataResult.UnimportantDifferences
         End If
 

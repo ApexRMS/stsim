@@ -23,7 +23,7 @@ Class TransitionSizeDistributionDataSheet
         GetAmountLabelTerminology(e.DataSheet, AmountLabel, AmountUnits)
 
         Me.Columns(DATASHEET_TRANSITION_SIZE_DISTRIBUTION_MAXIMUM_AREA_COLUMN_NAME).DisplayName =
-            (String.Format(CultureInfo.CurrentCulture, "Maximum {0} ({1})",
+            (String.Format(CultureInfo.InvariantCulture, "Maximum {0} ({1})",
             AmountLabel, TerminologyUnitToString(AmountUnits)))
 
     End Sub

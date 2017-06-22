@@ -294,7 +294,7 @@ Partial Class STSimTransformer
 
         Me.BeginProgress(splitData.Rows.Count + 1)
 
-        Me.SetStatusMessage(String.Format(CultureInfo.CurrentCulture,
+        Me.SetStatusMessage(String.Format(CultureInfo.InvariantCulture,
             "Preparing Data For Parallel Processing (Split by '{0}')", ssl))
 
         'We have numJobs + 1 because we want the progress indicator to include
@@ -652,7 +652,7 @@ Partial Class STSimTransformer
 
         If (NullValueExists(Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_TARGET_NAME).GetData, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME)) Then
 
-            Me.RecordStatus(StatusType.Warning, String.Format(CultureInfo.CurrentCulture,
+            Me.RecordStatus(StatusType.Warning, String.Format(CultureInfo.InvariantCulture,
                 "Run is splitting by '{0}' but Transition Targets are not specified by '{1}'.  Allocating targets in proportion to '{2}'.",
                 ssl, ssl, aml))
 
@@ -662,7 +662,7 @@ Partial Class STSimTransformer
 
         If (NullValueExists(Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME).GetData, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME)) Then
 
-            Me.RecordStatus(StatusType.Warning, String.Format(CultureInfo.CurrentCulture,
+            Me.RecordStatus(StatusType.Warning, String.Format(CultureInfo.InvariantCulture,
                 "Run is splitting by '{0}' but Transition Attribute Targets are not specified by '{1}'.  Allocating targets in proportion to '{2}'.",
                 ssl, ssl, aml))
 

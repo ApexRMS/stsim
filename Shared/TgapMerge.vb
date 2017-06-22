@@ -48,7 +48,7 @@ Friend Class TgapMerge
 
         ' Crude metadata compare
         If rastInput.NumberCols <> m_rasterMerge.NumberCols Or rastInput.NumberRows <> m_rasterMerge.NumberRows Then
-            Dim sMsg As String = String.Format(CultureInfo.CurrentCulture, "The metadata of the merge raster file '{0}' does not match that used in previous raster files.", inpRasterFileName)
+            Dim sMsg As String = String.Format(CultureInfo.InvariantCulture, "The metadata of the merge raster file '{0}' does not match that used in previous raster files.", inpRasterFileName)
             Throw New ArgumentException(sMsg)
         End If
 
@@ -84,7 +84,7 @@ Friend Class TgapMerge
         m_rasterMerge.NoDataValue = StochasticTimeRaster.DefaultNoDataValue
 
         If Not RasterFiles.ProcessDoubleRasterToFile(m_rasterMerge, mergedRasterOutputFilename, compressionType) Then
-            Dim sMsg As String = String.Format(CultureInfo.CurrentCulture, "Unable to process merged raster file '{0}'", mergedRasterOutputFilename)
+            Dim sMsg As String = String.Format(CultureInfo.InvariantCulture, "Unable to process merged raster file '{0}'", mergedRasterOutputFilename)
             Throw New ArgumentException(sMsg)
         End If
 

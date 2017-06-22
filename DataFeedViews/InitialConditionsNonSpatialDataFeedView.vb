@@ -53,10 +53,10 @@ Class InitialConditionsNonSpatialDataFeedView
         Dim unitsLbl As String = Nothing
 
         GetAmountLabelTerminology(e.DataSheet, amountlabel, units)
-        unitsLbl = TerminologyUnitToString(units).ToLower(CultureInfo.CurrentCulture)
+        unitsLbl = TerminologyUnitToString(units).ToLower(CultureInfo.InvariantCulture)
 
-        Me.LabelTotalAmount.Text = String.Format(CultureInfo.CurrentCulture, "Total ({0}):", unitsLbl)
-        Me.LabelCellSize.Text = String.Format(CultureInfo.CurrentCulture, "Cell size ({0}):", unitsLbl)
+        Me.LabelTotalAmount.Text = String.Format(CultureInfo.InvariantCulture, "Total ({0}):", unitsLbl)
+        Me.LabelCellSize.Text = String.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", unitsLbl)
         Me.TextBoxNumCells.Enabled = (Me.ShouldEnableView And (Not Me.CheckBoxCalcFromDist.Checked))
 
     End Sub
@@ -149,7 +149,7 @@ Class InitialConditionsNonSpatialDataFeedView
         Dim NumCells As Integer = Me.CalculateNumCellsFromDistribution()
 
         If (NumCells > 0) Then
-            Me.SetTextBoxData(Me.TextBoxNumCells, NumCells.ToString("N4", CultureInfo.CurrentCulture))
+            Me.SetTextBoxData(Me.TextBoxNumCells, NumCells.ToString("N4", CultureInfo.InvariantCulture))
         Else
             Me.SetTextBoxData(Me.TextBoxNumCells, Nothing)
         End If
@@ -225,7 +225,7 @@ Class InitialConditionsNonSpatialDataFeedView
             CellSize = TotalAmount / NumCells
         End If
 
-        Me.TextBoxCellSize.Text = CellSize.ToString("N4", CultureInfo.CurrentCulture)
+        Me.TextBoxCellSize.Text = CellSize.ToString("N4", CultureInfo.InvariantCulture)
 
     End Sub
 

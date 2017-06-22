@@ -28,10 +28,10 @@ Class RunControlDataFeedView
 
     Private Sub OnTerminologyChanged(ByVal e As DataSheetMonitorEventArgs)
 
-        Dim t As String = CStr(e.GetValue("TimestepUnits", "Timestep")).ToLower(CultureInfo.CurrentCulture)
+        Dim t As String = CStr(e.GetValue("TimestepUnits", "Timestep")).ToLower(CultureInfo.InvariantCulture)
 
-        Me.LabelStartTimestep.Text = String.Format(CultureInfo.CurrentCulture, "Start {0}:", t)
-        Me.LabelEndTimestep.Text = String.Format(CultureInfo.CurrentCulture, "End {0}:", t)
+        Me.LabelStartTimestep.Text = String.Format(CultureInfo.InvariantCulture, "Start {0}:", t)
+        Me.LabelEndTimestep.Text = String.Format(CultureInfo.InvariantCulture, "End {0}:", t)
 
     End Sub
 

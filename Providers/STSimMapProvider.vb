@@ -309,7 +309,7 @@ Class STSimMapProvider
                 Dim DisplayName As String = CStr(drv.Row(attrsDataSheet.ValidationTable.DisplayMember))
 
                 If (drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME) IsNot DBNull.Value) Then
-                    DisplayName = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayName, CStr(drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME)))
+                    DisplayName = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", DisplayName, CStr(drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME)))
                 End If
 
                 Dim Item As New SyncroSimLayoutItem(AttrName, DisplayName, False)
@@ -362,7 +362,7 @@ Class STSimMapProvider
                 Dim DisplayName As String = CStr(drv.Row(attrsDataSheet.ValidationTable.DisplayMember))
 
                 If (drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME) IsNot DBNull.Value) Then
-                    DisplayName = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", DisplayName, CStr(drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME)))
+                    DisplayName = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", DisplayName, CStr(drv.Row(DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME)))
                 End If
 
                 Dim Item As New SyncroSimLayoutItem(AttrName, DisplayName, False)

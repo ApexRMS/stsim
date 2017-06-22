@@ -14,7 +14,7 @@ Module FormsUtilities
     End Function
 
     Function ErrorMessageBox(text As [String], ParamArray args As Object()) As DialogResult
-        Return ErrorMessageBox([String].Format(CultureInfo.CurrentCulture, text, args))
+        Return ErrorMessageBox([String].Format(CultureInfo.InvariantCulture, text, args))
     End Function
 
     Function ApplicationMessageBox(text As [String], buttons As MessageBoxButtons) As DialogResult
@@ -22,7 +22,7 @@ Module FormsUtilities
     End Function
 
     Function ApplicationMessageBox(text As [String], buttons As MessageBoxButtons, ParamArray args As Object()) As DialogResult
-        Return ApplicationMessageBox([String].Format(CultureInfo.CurrentCulture, text, args), buttons)
+        Return ApplicationMessageBox([String].Format(CultureInfo.InvariantCulture, text, args), buttons)
     End Function
 
     Function InformationMessageBox(text As [String]) As DialogResult

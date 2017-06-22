@@ -1627,11 +1627,11 @@ Class TransitionDataFeedView
         Dim ds As DataSheet = Me.DataFeed.Project.GetDataSheet(DATASHEET_STATECLASS_NAME)
         Dim d As TransitionDiagram = Me.GetCurrentDiagram()
 
-        sb.AppendFormat(CultureInfo.CurrentCulture, "{0} - ", Me.DataFeed.Scenario.DisplayName)
+        sb.AppendFormat(CultureInfo.InvariantCulture, "{0} - ", Me.DataFeed.Scenario.DisplayName)
 
         For Each s As StateClassShape In d.SelectedShapes
 
-            sb.AppendFormat(CultureInfo.CurrentCulture, "{0},",
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0},",
                 CStr(DataTableUtilities.GetTableValue(ds.GetData(), ds.ValueMember, s.StateClassIdSource, ds.DisplayMember)))
 
         Next
@@ -1654,7 +1654,7 @@ Class TransitionDataFeedView
 
         If (d.StratumId.HasValue) Then
 
-            sb.AppendFormat(CultureInfo.CurrentCulture, "{0}-{1}:", d.StratumId.Value,
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}-{1}:", d.StratumId.Value,
                 CStr(DataTableUtilities.GetTableValue(dsst.GetData(), dsst.ValueMember, d.StratumId.Value, dsst.DisplayMember)))
 
         Else
@@ -1678,7 +1678,7 @@ Class TransitionDataFeedView
                     Dim DisplayValue As String = CStr(DataTableUtilities.GetTableValue(
                         dssc.GetData(), dssc.ValueMember, s.StateClassIdSource, dssc.DisplayMember))
 
-                    sb.AppendFormat(CultureInfo.CurrentCulture, "{0}-{1}:", s.StateClassIdSource, DisplayValue)
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0}-{1}:", s.StateClassIdSource, DisplayValue)
 
                 End If
 

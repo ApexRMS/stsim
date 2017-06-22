@@ -183,7 +183,7 @@ Class DTAnalyzer
             stateClassId,
             DATASHEET_NAME_COLUMN_NAME))
 
-        Dim msg As String = String.Format(CultureInfo.CurrentCulture,
+        Dim msg As String = String.Format(CultureInfo.InvariantCulture,
             "The state class '{0}' could not be located in '{1} {2}'.", StateClassName, Location, psl)
 
         Throw New DataException(msg)
@@ -276,7 +276,7 @@ Class DTAnalyzer
             Return False
         End If
 
-        Dim LocUpper As String = Location.ToUpper(CultureInfo.CurrentCulture).Trim
+        Dim LocUpper As String = Location.ToUpper(CultureInfo.InvariantCulture).Trim
 
         If (String.IsNullOrEmpty(LocUpper)) Then
             Return False

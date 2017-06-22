@@ -68,6 +68,10 @@ Class InitialConditionsSpatialDataSheet
 
         MyBase.BeforeImportData(data)
 
+        If (data.Rows.Count = 0) Then
+            Return
+        End If
+
         Dim ColNames As New List(Of String)
 
         ColNames.Add(DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
@@ -207,13 +211,13 @@ Class InitialConditionsSpatialDataSheet
 
             If (columnName = DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME) Then
 
-                msg = String.Format(CultureInfo.CurrentCulture,
+                msg = String.Format(CultureInfo.InvariantCulture,
                     "The number of rows for the '{0}' raster does not match that of the other '{1}' rasters.",
                     PrimaryStratumLabel, PrimaryStratumLabel)
 
             Else
 
-                msg = String.Format(CultureInfo.CurrentCulture,
+                msg = String.Format(CultureInfo.InvariantCulture,
                     "The number of rows for the '{0}' raster does not match that of the '{1}' raster.",
                     ColumnDisplayName, PrimaryStratumLabel)
 
@@ -227,13 +231,13 @@ Class InitialConditionsSpatialDataSheet
 
             If (columnName = DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME) Then
 
-                msg = String.Format(CultureInfo.CurrentCulture,
+                msg = String.Format(CultureInfo.InvariantCulture,
                     "The number of columns for the '{0}' raster does not match that of the other '{1}' rasters.",
                     PrimaryStratumLabel, PrimaryStratumLabel)
 
             Else
 
-                msg = String.Format(CultureInfo.CurrentCulture,
+                msg = String.Format(CultureInfo.InvariantCulture,
                     "The number of columns for the '{0}' raster does not match that of the '{1}' raster.",
                     ColumnDisplayName, PrimaryStratumLabel)
 

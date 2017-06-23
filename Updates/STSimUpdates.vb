@@ -246,6 +246,9 @@ Class STSimUpdates
             STSIM0000060(store)
         End If
 
+        If (currentSchemaVersion < 61) Then
+            STSIM0000061(store)
+        End If
 
     End Sub
 
@@ -2245,8 +2248,24 @@ Class STSimUpdates
             store.ExecuteNonQuery("ALTER TABLE STSim_TransitionType ADD COLUMN Legend TEXT")
         End If
 
-
     End Sub
 
+    ''' <summary>
+    ''' SF0000016
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' Add missing index on STSim_DistributionValue if missing
+    ''' drop</remarks>
+    Private Shared Sub STSIM0000061(ByVal store As DataStore)
+
+        If (store.TableExists("STSim_DistributionValue")) Then
+
+            store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_DistributionValue_Index")
+            store.ExecuteNonQuery("CREATE INDEX STSim_DistributionValue_Index ON STSim_DistributionValue(ScenarioID)")
+
+        End If
+
+    End Sub
 
 End Class

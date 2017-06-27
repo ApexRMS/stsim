@@ -16,18 +16,18 @@ Class STSimMapProvider
 
     Public Overrides Sub CreateColorMaps(project As Project)
 
-        ' STATECLASS Color Map and Legend Map
+        'STATECLASS Color Map and Legend Map
         Dim dicLegendColors = CreateLegendMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
         CreateColorMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME, dicLegendColors)
 
-        '  Primary Stratum Color Map and Legend Map
+        'Primary Stratum Color Map and Legend Map
         dicLegendColors = CreateLegendMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
         CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME, dicLegendColors)
 
-        '  Transition Groups Color Map and Legend Map
+        'Transition Groups Color Map and Legend Map
         CreateTransitionGroupMaps(project)
 
-        ' Age  Color Map 
+        'Age  Color Map 
         CreateAgeColorMap(project)
 
     End Sub
@@ -50,12 +50,12 @@ Class STSimMapProvider
             'Transitions
             AddMapTransitionGroupVariables(project, store, g1.Items,
                 "STSim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)",
-                SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX)
+                SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, False)
 
-            'Average Annual Probability
+            'Average Annual Transition Probability
             AddMapTransitionGroupVariables(project, store, g2.Items,
                 "STSim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)",
-                SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX)
+                SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, True)
 
             'State Attributes
             AddMapStateAttributes(g3.Items, project, store, AttrGroupView)
@@ -133,7 +133,8 @@ Class STSimMapProvider
         ByVal fileColumnName As String,
         ByVal filterColumnName As String,
         ByVal extendedIdentifier As String,
-        ByVal prefix As String)
+        ByVal prefix As String,
+        ByVal userDefinedColorMap As Boolean)
 
         Dim dstg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME)
         Dim dsttg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_GROUP_NAME)
@@ -166,6 +167,7 @@ Class STSimMapProvider
                     Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                     Item.Properties.Add(New MetaDataProperty("extendedIdentifier", extendedIdentifier))
                     Item.Properties.Add(New MetaDataProperty("itemId", tgid.ToString(CultureInfo.InvariantCulture)))
+                    Item.Properties.Add(New MetaDataProperty("userDefinedColorMap", userDefinedColorMap.ToString(CultureInfo.InvariantCulture)))
 
                     items.Add(Item)
 
@@ -318,6 +320,7 @@ Class STSimMapProvider
                 Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
                 Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                 Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
+                Item.Properties.Add(New MetaDataProperty("userDefinedColorMap", "True"))
 
                 items.Add(Item)
 
@@ -371,6 +374,7 @@ Class STSimMapProvider
                 Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
                 Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                 Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
+                Item.Properties.Add(New MetaDataProperty("userDefinedColorMap", "True"))
 
                 groupsDict(GroupName).Items.Add(Item)
 

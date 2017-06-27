@@ -61,11 +61,9 @@ Imports SyncroSim.StochasticTime
                                  timestep.ToString("0000", CultureInfo.InvariantCulture),
                                  SPATIAL_MAP_AGE_VARIABLE_NAME)
 
-        Return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(DATASHEET_SPIC_NAME),fileName)
+        Return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(DATASHEET_SPIC_NAME), fileName)
 
     End Function
-
-
 
     ''' <summary>
     ''' Create the raster color maps for the specific project. The color maps are QGis compatible, and are use when
@@ -337,15 +335,12 @@ Imports SyncroSim.StochasticTime
             Return
         End If
 
-
         ' Loop thru the Transition Groups
         For Each drTg As DataRow In project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME).GetData().Select(Nothing, Nothing, DataViewRowState.CurrentRows)
 
             Dim dicLegendColors = CreateTransitionGroupLegendMap(project, drTg)
             CreateTransitionGroupColorMap(project, drTg, dicLegendColors)
         Next
-
-
 
     End Sub
 

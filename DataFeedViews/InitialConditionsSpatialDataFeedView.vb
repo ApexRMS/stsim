@@ -419,6 +419,8 @@ Class InitialConditionsSpatialDataFeedView
             Return
         End If
 
+        Application.DoEvents()
+
         Using h As New HourGlass
 
             Dim rast As New StochasticTimeRaster

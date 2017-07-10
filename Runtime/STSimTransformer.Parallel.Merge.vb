@@ -8,6 +8,7 @@
 Imports System.IO
 Imports System.Globalization
 Imports SyncroSim.Core
+Imports SyncroSim.StochasticTime
 
 Partial Class STSimTransformer
 
@@ -19,6 +20,10 @@ Partial Class STSimTransformer
 
         'Merges the external Spatial TGAP files
         ProcessAverageTransitionProbabilityFiles()
+
+        'TODO:TKR We need to clean up the DB, as it will have duplicate records in STSim_OutputSpatialAverageTransitionProbability.
+        ProcessAverageTransitionProbabilityDataSheet()
+        Debug.Assert(False, "Clean out duplicate records in STSim_OutputSpatialAverageTransitionProbability")
 
         'Do the normal merge
         MyBase.Merge()
@@ -69,7 +74,7 @@ Partial Class STSimTransformer
                     File.Delete(f)
 
                 Else
-                    Debug.Assert(False, "Either the Job ID or Number of iterations are invalid")
+                    Debug.Assert(False, "Either the Job ID Or Number of iterations are invalid")
                 End If
 
             Next
@@ -116,7 +121,7 @@ Partial Class STSimTransformer
                     dict.Add(j.JobId, numIterations)
                 Else
                     Debug.Assert(False, "Job #'s should be unique when parsed from folder names")
-                End If
+        End If
 
             End Using
 
@@ -144,13 +149,13 @@ Partial Class STSimTransformer
             Using store As DataStore = Session.CreateDataStore(New DataStoreConnection(SQLITE_DATASTORE_NAME, j.Library))
 
                 Dim MergeScenarioId As Integer = ParallelTransformer.GetMergeScenarioId(store)
-                Dim OutputFolderName As String = GetSpatialOutputFolder(j.Library, MergeScenarioId)
+                Dim OutputFolderName As String = GetAATPSpatialOutputFolder(j.Library, MergeScenarioId)
 
                 If (Not Directory.Exists(OutputFolderName)) Then
                     Continue For
                 End If
 
-                For Each f As String In Directory.GetFiles(OutputFolderName, "*-tgap-*.tif")
+                For Each f As String In Directory.GetFiles(OutputFolderName, "tgap_*.tif")
 
                     Dim key As String = Path.GetFileName(f).ToLower(CultureInfo.InvariantCulture)
 
@@ -172,18 +177,80 @@ Partial Class STSimTransformer
     End Function
 
     ''' <summary>
-    ''' Gets the Spatial output folder for the specified file and scenario Id
+    ''' Gets the Average Annuanl Transition Probability Spatial output folder for the specified file and scenario Id
     ''' </summary>
     ''' <param name="fileName"></param>
     ''' <param name="scenarioId"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Shared Function GetSpatialOutputFolder(
+    Private Shared Function GetAATPSpatialOutputFolder(
         ByVal fileName As String,
         ByVal scenarioId As Integer) As String
 
-        Return Path.Combine(GetExternalFileInputOutputFolderName(fileName, scenarioId, ".output", False), "Spatial")
+        Return Path.Combine(GetExternalFileInputOutputFolderName(fileName, scenarioId, ".output", False), DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY)
 
     End Function
+
+    'TODO:TKR WE need to clean up the DB, as it will have duplicate records in STSim_OutputSpatialAverageTransitionProbability.
+    Private Sub ProcessAverageTransitionProbabilityDatasheet()
+
+
+        Debug.Assert(False, "Clean out duplicate records in STSim_OutputSpatialAverageTransitionProbability")
+
+        '        Dim config As ParallelJobConfig = LoadConfigurationFile()
+        '
+        '        ' Find the number of iterations per job
+        '        Dim dictJobIterations As Dictionary(Of Integer, Integer) = CreateJobIterationsDictionary(config)
+        '
+        '        ' Create Same Names Files Dictionary for tgap only for current strata
+        '        Dim dictFilenames As Dictionary(Of String, List(Of String)) = CreateSameNameTgapFilesDictionary(config)
+        '
+        '        If (dictFilenames.Count = 0) Then
+        '            Return
+        '        End If
+        '
+        '        ' Calculate the total number of iterations across all jobs. DEVNOTE: Do it here instead of below based on files beaause we wont always
+        '        ' have a file if not transitions.
+        '        Dim ttlIterations As Integer = 0
+        '        For Each jobId In dictJobIterations.Keys
+        '            Dim numIterations As Integer = dictJobIterations(jobId)
+        '            ttlIterations += numIterations
+        '        Next
+        '
+        '        For Each k As String In dictFilenames.Keys
+        '
+        '            Dim m As New TgapMerge()
+        '            For Each f As String In dictFilenames(k)
+        '
+        '                Dim jobId As Integer = GetJobIdFromFolder(f)
+        '                Dim numIterations As Integer = dictJobIterations(jobId)
+        '
+        '                If jobId <> 0 Or numIterations > 0 Then
+        '
+        '                    m.Merge(f, numIterations)
+        '
+        '                    ' Delete the file after we've merged it.
+        '                    File.SetAttributes(f, FileAttributes.Normal)
+        '                    File.Delete(f)
+        '
+        '                Else
+        '                    Debug.Assert(False, "Either the Job ID Or Number of iterations are invalid")
+        '                End If
+        '
+        '            Next
+        '
+        '            ' Divide the merged raster by the total number of iterations
+        '            m.Multiply(1 / ttlIterations)
+        '
+        '            ' Save the final merged tgap raster, giving it the same name/path as the 1st file in the dictionary for this Strata
+        '            Dim newFilename As String = dictFilenames(k).Item(0)
+        '            m.Save(newFilename, StochasticTime.RasterCompression.GetGeoTiffCompressionType(Me.Library))
+        '
+        '
+        '        Next
+
+
+    End Sub
+
 
 End Class

@@ -131,7 +131,7 @@ Class InitialConditionsSpatialDataSheet
         Dim dsProp As DataSheet = Me.GetDataSheet(DATASHEET_SPPIC_NAME)
         Dim drProp As DataRow = dsProp.GetDataRow()
 
-        If (drProp Is Nothing) Then
+        If (drProp Is Nothing And ThisData.DefaultView.Count > 0) Then
 
             dsProp.BeginAddRows()
             drProp = dsProp.GetData.NewRow()

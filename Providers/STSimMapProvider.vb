@@ -113,10 +113,10 @@ Class STSimMapProvider
         i1.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
         i1.Properties.Add(New MetaDataProperty("column", "Filename"))
 
-        i2.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
+        i2.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialAge"))
         i2.Properties.Add(New MetaDataProperty("column", "Filename"))
 
-        i3.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
+        i3.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialStratum"))
         i3.Properties.Add(New MetaDataProperty("column", "Filename"))
 
         g0.Items.Add(i1)

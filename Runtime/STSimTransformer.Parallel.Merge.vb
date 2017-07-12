@@ -21,12 +21,11 @@ Partial Class STSimTransformer
         'Merges the external Spatial TGAP files
         ProcessAverageTransitionProbabilityFiles()
 
-        'TODO:TKR We need to clean up the DB, as it will have duplicate records in STSim_OutputSpatialAverageTransitionProbability.
-        ProcessAverageTransitionProbabilityDataSheet()
-        Debug.Assert(False, "Clean out duplicate records in STSim_OutputSpatialAverageTransitionProbability")
-
         'Do the normal merge
         MyBase.Merge()
+
+        'Merges the datasheet records for Spatial TGAP files
+        ProcessAverageTransitionProbabilityDatasheet()
 
     End Sub
 
@@ -121,7 +120,7 @@ Partial Class STSimTransformer
                     dict.Add(j.JobId, numIterations)
                 Else
                     Debug.Assert(False, "Job #'s should be unique when parsed from folder names")
-        End If
+                End If
 
             End Using
 
@@ -191,63 +190,43 @@ Partial Class STSimTransformer
 
     End Function
 
-    'TODO:TKR WE need to clean up the DB, as it will have duplicate records in STSim_OutputSpatialAverageTransitionProbability.
+    ''' <summary>
+    ''' Processes the Average Transition Probability datasheet records. This datasheet is a special case because there is only one file per Transition Type per run, so when mulitprocessing
+    ''' we remove the duplicate records created per job.
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub ProcessAverageTransitionProbabilityDatasheet()
 
 
-        Debug.Assert(False, "Clean out duplicate records in STSim_OutputSpatialAverageTransitionProbability")
+        Using store As DataStore = Me.Library.CreateDataStore()
 
-        '        Dim config As ParallelJobConfig = LoadConfigurationFile()
-        '
-        '        ' Find the number of iterations per job
-        '        Dim dictJobIterations As Dictionary(Of Integer, Integer) = CreateJobIterationsDictionary(config)
-        '
-        '        ' Create Same Names Files Dictionary for tgap only for current strata
-        '        Dim dictFilenames As Dictionary(Of String, List(Of String)) = CreateSameNameTgapFilesDictionary(config)
-        '
-        '        If (dictFilenames.Count = 0) Then
-        '            Return
-        '        End If
-        '
-        '        ' Calculate the total number of iterations across all jobs. DEVNOTE: Do it here instead of below based on files beaause we wont always
-        '        ' have a file if not transitions.
-        '        Dim ttlIterations As Integer = 0
-        '        For Each jobId In dictJobIterations.Keys
-        '            Dim numIterations As Integer = dictJobIterations(jobId)
-        '            ttlIterations += numIterations
-        '        Next
-        '
-        '        For Each k As String In dictFilenames.Keys
-        '
-        '            Dim m As New TgapMerge()
-        '            For Each f As String In dictFilenames(k)
-        '
-        '                Dim jobId As Integer = GetJobIdFromFolder(f)
-        '                Dim numIterations As Integer = dictJobIterations(jobId)
-        '
-        '                If jobId <> 0 Or numIterations > 0 Then
-        '
-        '                    m.Merge(f, numIterations)
-        '
-        '                    ' Delete the file after we've merged it.
-        '                    File.SetAttributes(f, FileAttributes.Normal)
-        '                    File.Delete(f)
-        '
-        '                Else
-        '                    Debug.Assert(False, "Either the Job ID Or Number of iterations are invalid")
-        '                End If
-        '
-        '            Next
-        '
-        '            ' Divide the merged raster by the total number of iterations
-        '            m.Multiply(1 / ttlIterations)
-        '
-        '            ' Save the final merged tgap raster, giving it the same name/path as the 1st file in the dictionary for this Strata
-        '            Dim newFilename As String = dictFilenames(k).Item(0)
-        '            m.Save(newFilename, StochasticTime.RasterCompression.GetGeoTiffCompressionType(Me.Library))
-        '
-        '
-        '        Next
+            Dim query As String = String.Format(
+                CultureInfo.InvariantCulture,
+                "SELECT *  FROM STSim_OutputSpatialAverageTransitionProbability WHERE ScenarioId={0}", Me.ResultScenario.Id)
+
+            Dim dt As DataTable = store.CreateDataTableFromQuery(query, "Merge")
+
+            Dim ttlCnt As Integer = dt.Rows.Count
+
+            query = String.Format(
+                CultureInfo.InvariantCulture,
+                "SELECT scenarioId,iteration,timestep, filename, band,transitionGroupId FROM STSim_OutputSpatialAverageTransitionProbability WHERE ScenarioId={0} group by iteration, timestep,band,transitionGroupId", Me.ResultScenario.Id)
+
+            dt = store.CreateDataTableFromQuery(query, "Merge")
+            If (dt.Rows.Count < ttlCnt) Then
+                ' We've go dupes do lets blow away the old records and create new single copies
+                query = String.Format(CultureInfo.InvariantCulture, "delete from STSim_OutputSpatialAverageTransitionProbability where ScenarioId={0}", Me.ResultScenario.Id)
+                store.ExecuteNonQuery(query)
+
+                For Each row As DataRow In dt.Rows
+                    Dim band = IIf(IsDBNull(row(4)), "null", row(4))
+                    query = String.Format(CultureInfo.InvariantCulture, "insert into STSim_OutputSpatialAverageTransitionProbability (ScenarioId,iteration,timestep,filename,band,transitionGroupId) values ({0},{1},{2},'{3}',{4},{5})", row(0), row(1), row(2), row(3), band, row(5))
+                    store.ExecuteNonQuery(query)
+                Next
+            End If
+
+
+        End Using
 
 
     End Sub

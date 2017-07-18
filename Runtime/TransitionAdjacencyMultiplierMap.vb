@@ -91,6 +91,10 @@ Class TransitionAdjacencyMultiplierMap
 
         Next
 
+        If (PrevVal = -1.0) Then
+            PrevVal = e.Items.First.Key
+        End If
+
         If (NextVal = -1.0) Then
             NextVal = PrevVal
         End If

@@ -17,12 +17,12 @@ Class STSimMapProvider
     Public Overrides Sub CreateColorMaps(project As Project)
 
         'STATECLASS Color Map and Legend Map
-        Dim dicLegendColors = CreateLegendMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
-        CreateColorMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME, dicLegendColors)
+        Dim LegendColors = CreateLegendMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME)
+        CreateColorMap(project, SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, DATASHEET_STATECLASS_NAME, LegendColors)
 
         'Primary Stratum Color Map and Legend Map
-        dicLegendColors = CreateLegendMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
-        CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME, dicLegendColors)
+        LegendColors = CreateLegendMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME)
+        CreateColorMap(project, SPATIAL_MAP_STRATUM_VARIABLE_NAME, DATASHEET_STRATA_NAME, LegendColors)
 
         'Transition Groups Color Map and Legend Map
         CreateTransitionGroupMaps(project)
@@ -44,18 +44,18 @@ Class STSimMapProvider
 
             Dim AttrGroupView As DataView = CreateMapAttributeGroupsView(project, store)
 
-            'Basic
-            AddBasicVariables(project, g0)
+            'Categorical
+            AddCategoricalVariables(project, g0)
 
             'Transitions
             AddMapTransitionGroupVariables(project, store, g1.Items,
                 "STSim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)",
-                SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, False)
+                SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, DATASHEET_TRANSITION_TYPE_NAME)
 
             'Average Annual Transition Probability
             AddMapTransitionGroupVariables(project, store, g2.Items,
                 "STSim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)",
-                SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, True)
+                SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, Nothing)
 
             'State Attributes
             AddMapStateAttributes(g3.Items, project, store, AttrGroupView)
@@ -99,7 +99,7 @@ Class STSimMapProvider
 
     End Function
 
-    Private Shared Sub AddBasicVariables(ByVal project As Project, ByVal g0 As SyncroSimLayoutItem)
+    Private Shared Sub AddCategoricalVariables(ByVal project As Project, ByVal g0 As SyncroSimLayoutItem)
 
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
@@ -112,12 +112,15 @@ Class STSimMapProvider
 
         i1.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialState"))
         i1.Properties.Add(New MetaDataProperty("column", "Filename"))
+        i1.Properties.Add(New MetaDataProperty("colorMapSource", DATASHEET_STATECLASS_NAME))
 
         i2.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialAge"))
         i2.Properties.Add(New MetaDataProperty("column", "Filename"))
+        i2.Properties.Add(New MetaDataProperty("colorMapSource", DATASHEET_AGE_GROUP_NAME))
 
         i3.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputSpatialStratum"))
         i3.Properties.Add(New MetaDataProperty("column", "Filename"))
+        i3.Properties.Add(New MetaDataProperty("colorMapSource", DATASHEET_STRATA_NAME))
 
         g0.Items.Add(i1)
         g0.Items.Add(i2)
@@ -134,7 +137,7 @@ Class STSimMapProvider
         ByVal filterColumnName As String,
         ByVal extendedIdentifier As String,
         ByVal prefix As String,
-        ByVal userDefinedColorMap As Boolean)
+        ByVal colorMapSource As String)
 
         Dim dstg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_GROUP_NAME)
         Dim dsttg As DataSheet = project.GetDataSheet(DATASHEET_TRANSITION_TYPE_GROUP_NAME)
@@ -167,7 +170,7 @@ Class STSimMapProvider
                     Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                     Item.Properties.Add(New MetaDataProperty("extendedIdentifier", extendedIdentifier))
                     Item.Properties.Add(New MetaDataProperty("itemId", tgid.ToString(CultureInfo.InvariantCulture)))
-                    Item.Properties.Add(New MetaDataProperty("userDefinedColorMap", userDefinedColorMap.ToString(CultureInfo.InvariantCulture)))
+                    Item.Properties.Add(New MetaDataProperty("colorMapSource", colorMapSource))
 
                     items.Add(Item)
 
@@ -197,7 +200,8 @@ Class STSimMapProvider
             "STSim_OutputSpatialStateAttribute",
             "Filename",
             "StateAttributeTypeID",
-            SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX)
+            SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,
+            Nothing)
 
         Dim GroupsDict As New Dictionary(Of String, SyncroSimLayoutItem)
         Dim GroupsList As New List(Of SyncroSimLayoutItem)
@@ -219,7 +223,8 @@ Class STSimMapProvider
             "STSim_OutputSpatialStateAttribute",
             "Filename",
             "StateAttributeTypeID",
-            SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX)
+            SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,
+            Nothing)
 
         For Each g As SyncroSimLayoutItem In GroupsList
 
@@ -247,7 +252,8 @@ Class STSimMapProvider
             "STSim_OutputSpatialTransitionAttribute",
             "Filename",
             "TransitionAttributeTypeID",
-            SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX)
+            SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX,
+            Nothing)
 
         Dim GroupsDict As New Dictionary(Of String, SyncroSimLayoutItem)
         Dim GroupsList As New List(Of SyncroSimLayoutItem)
@@ -269,7 +275,8 @@ Class STSimMapProvider
             "STSim_OutputSpatialTransitionAttribute",
             "Filename",
             "TransitionAttributeTypeID",
-            SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX)
+            SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX,
+            Nothing)
 
         For Each g As SyncroSimLayoutItem In GroupsList
 
@@ -288,7 +295,8 @@ Class STSimMapProvider
         ByVal dataSheetName As String,
         ByVal fileColumnName As String,
         ByVal filterColumnName As String,
-        ByVal prefix As String)
+        ByVal prefix As String,
+        ByVal colorMapSource As String)
 
         Dim Table As DataTable = attrsDataSheet.GetData(store)
 
@@ -320,7 +328,7 @@ Class STSimMapProvider
                 Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
                 Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                 Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
-                Item.Properties.Add(New MetaDataProperty("userDefinedColorMap", "True"))
+                Item.Properties.Add(New MetaDataProperty("colorMapSource", colorMapSource))
 
                 items.Add(Item)
 
@@ -337,7 +345,8 @@ Class STSimMapProvider
         ByVal dataSheetName As String,
         ByVal fileColumnName As String,
         ByVal filterColumnName As String,
-        ByVal prefix As String)
+        ByVal prefix As String,
+        ByVal colorMapSource As String)
 
         Dim Table As DataTable = attrsDataSheet.GetData(store)
 
@@ -374,7 +383,7 @@ Class STSimMapProvider
                 Item.Properties.Add(New MetaDataProperty("column", fileColumnName))
                 Item.Properties.Add(New MetaDataProperty("filter", filterColumnName))
                 Item.Properties.Add(New MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)))
-                Item.Properties.Add(New MetaDataProperty("userDefinedColorMap", "True"))
+                Item.Properties.Add(New MetaDataProperty("colorMapSource", colorMapSource))
 
                 groupsDict(GroupName).Items.Add(Item)
 

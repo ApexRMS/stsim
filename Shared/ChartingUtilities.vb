@@ -71,10 +71,60 @@ Module ChartingUtilities
 
         If (Not AgeClassesMatchData(store, dataSheet)) Then
 
-            Dim entry As String = String.Format(CultureInfo.InvariantCulture,
-                ERROR_AGE_CLASS_DATA_MISMATCH, dataSheet.Scenario.DisplayName)
+            Dim query As String = String.Format(CultureInfo.InvariantCulture,
+                "SELECT AgeMin, AgeMax FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1}",
+                dataSheet.Name, dataSheet.Scenario.Id)
 
-            statusEntries.Add(New StochasticTimeStatus(entry))
+            Dim dt As DataTable = store.CreateDataTableFromQuery(query, "ageclassdata")
+
+            Dim sb1 As New StringBuilder()
+            Dim sb2 As New StringBuilder()
+
+            sb1.AppendLine("***")
+            sb1.AppendLine("Inconsistent Age Types and Age Groups detected for scenario:")
+            sb1.AppendLine()
+            sb1.AppendLine(dataSheet.Scenario.DisplayName)
+            sb1.AppendLine()
+            sb1.AppendLine("The Age Types for this scenario include the following ranges:")
+            sb1.AppendLine()
+
+            Dim c As Integer = 0
+
+            sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", "Minimum Age", "Maximum Age")
+            sb1.AppendLine()
+
+            For Each dr As DataRow In dt.Rows
+
+                sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", CInt(dr("AgeMin")), CInt(dr("AgeMax")))
+                sb1.AppendLine()
+
+                sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", CInt(dr("AgeMax")))
+
+                c += 1
+
+                If (c = 3) Then
+                    Exit For
+                End If
+
+            Next
+
+            If (dt.Rows.Count > 3) Then
+                sb1.AppendLine("etc...")
+                sb2.Append("etc...")
+            End If
+
+            Dim FinalSB2 As String = sb2.ToString().TrimEnd()
+            FinalSB2 = FinalSB2.TrimEnd(CChar(","))
+
+            sb1.AppendLine()
+            sb1.AppendLine("To correct this problem you can do one of the following:")
+            sb1.AppendLine()
+            sb1.AppendLine("(1.) Modify the Age Types and rerun your model.")
+            sb1.AppendFormat(CultureInfo.InvariantCulture, "(2.) Ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges shown above (i.e. {0})", FinalSB2)
+            sb1.AppendLine()
+            sb1.AppendLine("***")
+
+            statusEntries.Add(New StochasticTimeStatus(sb1.ToString()))
 
         End If
 
@@ -119,7 +169,7 @@ Module ChartingUtilities
                     Debug.Assert(i < e.Count - 1)
 
                     sb.AppendFormat(CultureInfo.InvariantCulture,
-                        " WHEN AgeMin >= {0} AND AgeMax <= {1} THEN {2}",
+                        " WHEN AgeMin >= {0} And AgeMax <= {1} THEN {2}",
                         d.MinimumAge, d.MaximumAge.Value, d.MinimumAge)
 
                 Else
@@ -261,11 +311,11 @@ Module ChartingUtilities
         Dim IncData As String = RemoveUnwantedColumnReferences(descriptor.IncludeDataFilter)
 
         If (Not String.IsNullOrEmpty(Disagg)) Then
-            WhereClause = String.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, Disagg)
+            WhereClause = String.Format(CultureInfo.InvariantCulture, "{0} And ({1})", WhereClause, Disagg)
         End If
 
         If (Not String.IsNullOrEmpty(IncData)) Then
-            WhereClause = String.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, IncData)
+            WhereClause = String.Format(CultureInfo.InvariantCulture, "{0} And ({1})", WhereClause, IncData)
         End If
 
         Dim query As String = String.Format(CultureInfo.InvariantCulture,

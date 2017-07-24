@@ -72,7 +72,7 @@ Module ChartingUtilities
         If (Not AgeClassesMatchData(store, dataSheet)) Then
 
             Dim query As String = String.Format(CultureInfo.InvariantCulture,
-                "SELECT AgeMin, AgeMax FROM {0} WHERE (AgeMin IS NOT NULL AND AgeMax IS NOT NULL AND ScenarioID = {1}) GROUP BY AgeMin, AgeMax ORDER BY AgeMin",
+                "SELECT DISTINCT AgeMin, AgeMax FROM {0} WHERE (AgeMin IS NOT NULL AND AgeMax IS NOT NULL AND ScenarioID = {1}) ORDER BY AgeMin",
                 dataSheet.Name, dataSheet.Scenario.Id)
 
             Dim dt As DataTable = store.CreateDataTableFromQuery(query, "ageclassdata")

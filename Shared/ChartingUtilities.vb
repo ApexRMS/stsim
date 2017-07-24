@@ -72,7 +72,7 @@ Module ChartingUtilities
         If (Not AgeClassesMatchData(store, dataSheet)) Then
 
             Dim query As String = String.Format(CultureInfo.InvariantCulture,
-                "SELECT AgeMin, AgeMax FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1} GROUP BY AgeMin, AgeMax ORDER BY AgeMin",
+                "SELECT AgeMin, AgeMax FROM {0} WHERE (AgeMin IS NOT NULL AND AgeMax IS NOT NULL AND ScenarioID = {1}) GROUP BY AgeMin, AgeMax ORDER BY AgeMin",
                 dataSheet.Name, dataSheet.Scenario.Id)
 
             Dim dt As DataTable = store.CreateDataTableFromQuery(query, "ageclassdata")
@@ -94,20 +94,14 @@ Module ChartingUtilities
             sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", "Minimum Age", "Maximum Age")
             sb1.AppendLine()
 
-            Dim AgeTypeMaxDefault As String = GetAgeTypeMaxValueDefault(dataSheet.Project)
+            Dim AgeTypeMaxDefault As String = GetAgeTypeMaxValue(dataSheet.Project)
 
             For Each dr As DataRow In dt.Rows
 
-                Dim AgeMaxValue As String = AgeTypeMaxDefault
-
-                If (dr("AgeMax") IsNot DBNull.Value) Then
-                    AgeMaxValue = CStr(dr("AgeMax"))
-                End If
-
-                sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", CInt(dr("AgeMin")), AgeMaxValue)
+                sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", CInt(dr("AgeMin")), CInt(dr("AgeMax")))
                 sb1.AppendLine()
 
-                sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", AgeMaxValue)
+                sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", CInt(dr("AgeMax")))
 
                 c += 1
 
@@ -117,19 +111,17 @@ Module ChartingUtilities
 
             Next
 
-            If (dt.Rows.Count > MAX_AGE_ROWS) Then
-                sb1.AppendLine("etc...")
-                sb2.Append("etc...")
-            End If
+            sb1.AppendLine("...")
+            sb1.AppendLine(AgeTypeMaxDefault)
 
-            Dim FinalSB2 As String = sb2.ToString().TrimEnd()
-            FinalSB2 = FinalSB2.TrimEnd(CChar(","))
+            sb2.Append("..., ")
+            sb2.Append(AgeTypeMaxDefault)
 
             sb1.AppendLine()
             sb1.AppendLine("To correct this problem you can do one of the following:")
             sb1.AppendLine()
             sb1.AppendLine("(1.) Modify the Age Types and rerun your model.")
-            sb1.AppendFormat(CultureInfo.InvariantCulture, "(2.) Ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges shown above (i.e. {0})", FinalSB2)
+            sb1.AppendFormat(CultureInfo.InvariantCulture, "(2.) Ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges shown above (i.e. {0})", sb2.ToString())
             sb1.AppendLine()
             sb1.AppendLine("***")
 

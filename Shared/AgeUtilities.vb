@@ -18,7 +18,7 @@ Module AgeUtilities
     ''' </summary>
     ''' <param name="project"></param>
     ''' <returns></returns>
-    Public Function GetAgeTypeMaxValueDefault(ByVal project As Project) As String
+    Public Function GetAgeTypeMaxValue(ByVal project As Project) As String
 
         Dim ret = "Max Reporting Age"
         Dim dr As DataRow = project.GetDataSheet(DATASHEET_AGE_TYPE_NAME).GetDataRow()

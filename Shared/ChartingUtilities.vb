@@ -72,7 +72,7 @@ Module ChartingUtilities
         If (Not AgeClassesMatchData(store, dataSheet)) Then
 
             Dim query As String = String.Format(CultureInfo.InvariantCulture,
-                "SELECT AgeMin, AgeMax FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1}",
+                "SELECT AgeMin, AgeMax FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1} GROUP BY AgeMin, AgeMax ORDER BY AgeMin",
                 dataSheet.Name, dataSheet.Scenario.Id)
 
             Dim dt As DataTable = store.CreateDataTableFromQuery(query, "ageclassdata")
@@ -89,26 +89,35 @@ Module ChartingUtilities
             sb1.AppendLine()
 
             Dim c As Integer = 0
+            Const MAX_AGE_ROWS As Integer = 5
 
             sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", "Minimum Age", "Maximum Age")
             sb1.AppendLine()
 
+            Dim AgeTypeMaxDefault As String = GetAgeTypeMaxValueDefault(dataSheet.Project)
+
             For Each dr As DataRow In dt.Rows
 
-                sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", CInt(dr("AgeMin")), CInt(dr("AgeMax")))
+                Dim AgeMaxValue As String = AgeTypeMaxDefault
+
+                If (dr("AgeMax") IsNot DBNull.Value) Then
+                    AgeMaxValue = CStr(dr("AgeMax"))
+                End If
+
+                sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", CInt(dr("AgeMin")), AgeMaxValue)
                 sb1.AppendLine()
 
-                sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", CInt(dr("AgeMax")))
+                sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", AgeMaxValue)
 
                 c += 1
 
-                If (c = 3) Then
+                If (c = MAX_AGE_ROWS) Then
                     Exit For
                 End If
 
             Next
 
-            If (dt.Rows.Count > 3) Then
+            If (dt.Rows.Count > MAX_AGE_ROWS) Then
                 sb1.AppendLine("etc...")
                 sb2.Append("etc...")
             End If

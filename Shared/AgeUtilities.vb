@@ -14,6 +14,28 @@ Imports SyncroSim.Core
 Module AgeUtilities
 
     ''' <summary>
+    ''' Gets the maximum age type value as a string
+    ''' </summary>
+    ''' <param name="project"></param>
+    ''' <returns></returns>
+    Public Function GetAgeTypeMaxValueDefault(ByVal project As Project) As String
+
+        Dim ret = "Max Reporting Age"
+        Dim dr As DataRow = project.GetDataSheet(DATASHEET_AGE_TYPE_NAME).GetDataRow()
+
+        If (dr IsNot Nothing) Then
+
+            If (dr(DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME) IsNot DBNull.Value) Then
+                ret = CStr(dr(DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME))
+            End If
+
+        End If
+
+        Return ret + "+"
+
+    End Function
+
+    ''' <summary>
     ''' Gets a collection of current age descriptors
     ''' </summary>
     ''' <param name="project"></param>

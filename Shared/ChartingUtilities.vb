@@ -90,11 +90,10 @@ Module ChartingUtilities
 
             Dim c As Integer = 0
             Const MAX_AGE_ROWS As Integer = 5
+            Dim NextToLast As String = GetNextToLastAgeMax(dataSheet.Project)
 
             sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", "Minimum Age", "Maximum Age")
             sb1.AppendLine()
-
-            Dim AgeTypeMaxDefault As String = GetAgeTypeMaxValue(dataSheet.Project)
 
             For Each dr As DataRow In dt.Rows
 
@@ -112,17 +111,19 @@ Module ChartingUtilities
             Next
 
             sb1.AppendLine("...")
-            sb1.AppendLine(AgeTypeMaxDefault)
+            sb1.AppendLine(NextToLast)
 
             sb2.Append("..., ")
-            sb2.Append(AgeTypeMaxDefault)
+            sb2.Append(NextToLast)
 
             sb1.AppendLine()
-            sb1.AppendLine("To correct this problem you can do one of the following:")
+            sb1.AppendFormat("To correct this problem you must ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges shown above (i.e. {0})", sb2.ToString())
             sb1.AppendLine()
-            sb1.AppendLine("(1.) Modify the Age Types and rerun your model.")
-            sb1.AppendFormat(CultureInfo.InvariantCulture, "(2.) Ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges shown above (i.e. {0})", sb2.ToString())
             sb1.AppendLine()
+            sb1.AppendLine("To do this you can:")
+            sb1.AppendLine()
+            sb1.AppendLine("(1.) Modify the Age Groups and refresh the chart; or")
+            sb1.AppendLine("(2.) Modify the Age Types and rerun the model")
             sb1.AppendLine("***")
 
             statusEntries.Add(New StochasticTimeStatus(sb1.ToString()))

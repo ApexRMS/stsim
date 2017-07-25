@@ -14,28 +14,6 @@ Imports SyncroSim.Core
 Module AgeUtilities
 
     ''' <summary>
-    ''' Gets the maximum age type value as a string
-    ''' </summary>
-    ''' <param name="project"></param>
-    ''' <returns></returns>
-    Public Function GetAgeTypeMaxValue(ByVal project As Project) As String
-
-        Dim ret = "Max Reporting Age"
-        Dim dr As DataRow = project.GetDataSheet(DATASHEET_AGE_TYPE_NAME).GetDataRow()
-
-        If (dr IsNot Nothing) Then
-
-            If (dr(DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME) IsNot DBNull.Value) Then
-                ret = CStr(dr(DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME))
-            End If
-
-        End If
-
-        Return ret + "+"
-
-    End Function
-
-    ''' <summary>
     ''' Gets a collection of current age descriptors
     ''' </summary>
     ''' <param name="project"></param>
@@ -64,6 +42,49 @@ Module AgeUtilities
         End If
 
         Return e
+
+    End Function
+
+    ''' <summary>
+    ''' Gets a string for the AgeDescriptor in position [max-1]
+    ''' </summary>
+    ''' <param name="project"></param>
+    ''' <returns></returns>
+    Public Function GetNextToLastAgeMax(ByVal project As Project) As String
+
+        Dim e As IEnumerable(Of AgeDescriptor) = GetAgeTypeDescriptors(project)
+
+#If DEBUG Then
+        If (e IsNot Nothing) Then
+            Debug.Assert(e.Count > 0)
+        End If
+#End If
+
+        If (e Is Nothing) Then
+            Return Nothing
+        End If
+
+        If (e.Count = 0) Then
+            Return Nothing
+        End If
+
+        Dim d As AgeDescriptor = e.First()
+
+        If (e.Count > 1) Then
+
+            Dim l As List(Of AgeDescriptor) = e.ToList()
+            d = l(e.Count - 2)
+
+        End If
+
+        Dim ret As String = "MAX"
+        Debug.Assert(d.MaximumAge.HasValue)
+
+        If (d.MaximumAge.HasValue) Then
+            ret = CStr(d.MaximumAge.Value)
+        End If
+
+        Return ret
 
     End Function
 

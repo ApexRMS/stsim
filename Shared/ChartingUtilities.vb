@@ -90,7 +90,19 @@ Module ChartingUtilities
 
             Dim c As Integer = 0
             Const MAX_AGE_ROWS As Integer = 5
-            Dim NextToLast As String = GetNextToLastAgeMax(dataSheet.Project)
+            Dim NextToLastDesc As AgeDescriptor = GetNextToLastAgeDescriptor(dataSheet.Project)
+            Dim NextToLastMin = "Min"
+            Dim NextToLastMax = "Max"
+
+            If (NextToLastDesc IsNot Nothing) Then
+
+                NextToLastMin = CStr(NextToLastDesc.MinimumAge)
+
+                If (NextToLastDesc.MaximumAge.HasValue) Then
+                    NextToLastMax = CStr(NextToLastDesc.MaximumAge.Value)
+                End If
+
+            End If
 
             sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", "Minimum Age", "Maximum Age")
             sb1.AppendLine()
@@ -111,13 +123,14 @@ Module ChartingUtilities
             Next
 
             sb1.AppendLine("...")
-            sb1.AppendLine(NextToLast)
+            sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", NextToLastMin, NextToLastMax)
+            sb1.AppendLine()
 
             sb2.Append("..., ")
-            sb2.Append(NextToLast)
+            sb2.Append(NextToLastMax)
 
             sb1.AppendLine()
-            sb1.AppendFormat("To correct this problem you must ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges shown above (i.e. {0})", sb2.ToString())
+            sb1.AppendFormat("To correct this problem you must ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges (i.e. {0})", sb2.ToString())
             sb1.AppendLine()
             sb1.AppendLine()
             sb1.AppendLine("To do this you can:")

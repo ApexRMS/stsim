@@ -46,11 +46,11 @@ Module AgeUtilities
     End Function
 
     ''' <summary>
-    ''' Gets a string for the AgeDescriptor in position [max-1]
+    ''' Gets the AgeDescriptor in position [max-1]
     ''' </summary>
     ''' <param name="project"></param>
     ''' <returns></returns>
-    Public Function GetNextToLastAgeMax(ByVal project As Project) As String
+    Public Function GetNextToLastAgeDescriptor(ByVal project As Project) As AgeDescriptor
 
         Dim e As IEnumerable(Of AgeDescriptor) = GetAgeTypeDescriptors(project)
 
@@ -68,23 +68,12 @@ Module AgeUtilities
             Return Nothing
         End If
 
-        Dim d As AgeDescriptor = e.First()
-
-        If (e.Count > 1) Then
-
+        If (e.Count = 1) Then
+            Return e.First()
+        Else
             Dim l As List(Of AgeDescriptor) = e.ToList()
-            d = l(e.Count - 2)
-
+            Return l(e.Count - 2)
         End If
-
-        Dim ret As String = "MAX"
-        Debug.Assert(d.MaximumAge.HasValue)
-
-        If (d.MaximumAge.HasValue) Then
-            ret = CStr(d.MaximumAge.Value)
-        End If
-
-        Return ret
 
     End Function
 

@@ -130,7 +130,7 @@ Module ChartingUtilities
             sb2.Append(NextToLastMax)
 
             sb1.AppendLine()
-            sb1.AppendFormat("To correct this problem you must ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges (i.e. {0})", sb2.ToString())
+            sb1.AppendFormat(CultureInfo.InvariantCulture, "To correct this problem you must ensure that the Maximum Age for each Age Group is a subset of the upper bounds for the Age Type ranges (i.e. {0})", sb2.ToString())
             sb1.AppendLine()
             sb1.AppendLine()
             sb1.AppendLine("To do this you can:")

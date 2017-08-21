@@ -6,10 +6,9 @@
 '*********************************************************************************************
 
 Imports SyncroSim.Core
-Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
-Imports SyncroSim.StochasticTime
+Imports System.Globalization
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class STSimUpdates

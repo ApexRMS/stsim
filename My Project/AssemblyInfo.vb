@@ -10,7 +10,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("SyncroSim.STSim")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("ST-Sim Module")>
 <Assembly: AssemblyCompany("ApexRMS")>
 <Assembly: AssemblyProduct("SyncroSim.STSim")>
 <Assembly: AssemblyCopyright("Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.")>
@@ -32,6 +32,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("3.1.3.0")>
-<Assembly: AssemblyFileVersion("3.1.3.0")>
+<Assembly: AssemblyVersion("3.1.4.0")>
+<Assembly: AssemblyFileVersion("3.1.4.0")>
 <Assembly: NeutralResourcesLanguage("en-US")>

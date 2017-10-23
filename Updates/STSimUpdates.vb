@@ -2100,7 +2100,6 @@ Class STSimUpdates
         store.ExecuteNonQuery("UPDATE STSim_Transition SET AgeReset=-1 WHERE AgeReset=1")
     End Sub
 
-
     ''' <summary>
     ''' STSIM0000058
     ''' </summary>

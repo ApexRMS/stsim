@@ -34,10 +34,12 @@ Class InitialConditionsSpatialDataFeedView
     Const PRIMARY_STRATUM_BROWSE_COLUMN_INDEX As Integer = 2
     Const SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX As Integer = 3
     Const SECONDARY_STRATUM_BROWSE_COLUMN_INDEX As Integer = 4
-    Const SCLASS_FILE_NAME_COLUMN_INDEX As Integer = 5
-    Const SCLASS_BROWSE_COLUMN_INDEX As Integer = 6
-    Const AGE_FILE_NAME_COLUMN_INDEX As Integer = 7
-    Const AGE_BROWSE_COLUMN_INDEX As Integer = 8
+    Const TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX As Integer = 5
+    Const TERTIARY_STRATUM_BROWSE_COLUMN_INDEX As Integer = 6
+    Const SCLASS_FILE_NAME_COLUMN_INDEX As Integer = 7
+    Const SCLASS_BROWSE_COLUMN_INDEX As Integer = 8
+    Const AGE_FILE_NAME_COLUMN_INDEX As Integer = 9
+    Const AGE_BROWSE_COLUMN_INDEX As Integer = 10
     Const BROWSE_BUTTON_TEXT As String = "..."
 
     Protected Overrides Sub InitializeView()
@@ -103,6 +105,12 @@ Class InitialConditionsSpatialDataFeedView
             SecStratumFileBrowseColumn.MinimumWidth = 40
             Me.m_ICSpatialFilesDataGrid.Columns.Insert(SECONDARY_STRATUM_BROWSE_COLUMN_INDEX, SecStratumFileBrowseColumn)
 
+            Dim TertStratumFileBrowseColumn As New DataGridViewButtonColumn()
+            TertStratumFileBrowseColumn.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+            TertStratumFileBrowseColumn.Width = 40
+            TertStratumFileBrowseColumn.MinimumWidth = 40
+            Me.m_ICSpatialFilesDataGrid.Columns.Insert(TERTIARY_STRATUM_BROWSE_COLUMN_INDEX, TertStratumFileBrowseColumn)
+
             Dim SClassFileBrowseColumn As New DataGridViewButtonColumn()
             SClassFileBrowseColumn.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             SClassFileBrowseColumn.Width = 40
@@ -118,6 +126,7 @@ Class InitialConditionsSpatialDataFeedView
             'Configure columns
             Me.m_ICSpatialFilesDataGrid.Columns(PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
             Me.m_ICSpatialFilesDataGrid.Columns(SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
+            Me.m_ICSpatialFilesDataGrid.Columns(TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
             Me.m_ICSpatialFilesDataGrid.Columns(SCLASS_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
             Me.m_ICSpatialFilesDataGrid.Columns(AGE_FILE_NAME_COLUMN_INDEX).DefaultCellStyle.BackColor = Me.m_ReadOnlyColor
 
@@ -183,6 +192,7 @@ Class InitialConditionsSpatialDataFeedView
 
             Case PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX,
                  SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX,
+                 TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX,
                  SCLASS_FILE_NAME_COLUMN_INDEX,
                  AGE_FILE_NAME_COLUMN_INDEX
 
@@ -210,6 +220,7 @@ Class InitialConditionsSpatialDataFeedView
 
             Case PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX,
                  SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX,
+                 TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX,
                  SCLASS_FILE_NAME_COLUMN_INDEX,
                  AGE_FILE_NAME_COLUMN_INDEX
 
@@ -227,6 +238,7 @@ Class InitialConditionsSpatialDataFeedView
 
                 Case PRIMARY_STRATUM_BROWSE_COLUMN_INDEX,
                      SECONDARY_STRATUM_BROWSE_COLUMN_INDEX,
+                     TERTIARY_STRATUM_BROWSE_COLUMN_INDEX,
                      SCLASS_BROWSE_COLUMN_INDEX,
                      AGE_BROWSE_COLUMN_INDEX
 
@@ -246,6 +258,7 @@ Class InitialConditionsSpatialDataFeedView
 
                 Case PRIMARY_STRATUM_BROWSE_COLUMN_INDEX,
                      SECONDARY_STRATUM_BROWSE_COLUMN_INDEX,
+                     TERTIARY_STRATUM_BROWSE_COLUMN_INDEX,
                      SCLASS_BROWSE_COLUMN_INDEX,
                      AGE_BROWSE_COLUMN_INDEX
 
@@ -271,6 +284,7 @@ Class InitialConditionsSpatialDataFeedView
 
             dgr.Cells(PRIMARY_STRATUM_BROWSE_COLUMN_INDEX).Value = BROWSE_BUTTON_TEXT
             dgr.Cells(SECONDARY_STRATUM_BROWSE_COLUMN_INDEX).Value = BROWSE_BUTTON_TEXT
+            dgr.Cells(TERTIARY_STRATUM_BROWSE_COLUMN_INDEX).Value = BROWSE_BUTTON_TEXT
             dgr.Cells(SCLASS_BROWSE_COLUMN_INDEX).Value = BROWSE_BUTTON_TEXT
             dgr.Cells(AGE_BROWSE_COLUMN_INDEX).Value = BROWSE_BUTTON_TEXT
 
@@ -282,14 +296,16 @@ Class InitialConditionsSpatialDataFeedView
 
         Dim Primary As String = Nothing
         Dim Secondary As String = Nothing
+        Dim Tertiary As String = Nothing
         Dim AmountLabel As String = Nothing
         Dim AmountUnits As TerminologyUnit = TerminologyUnit.None
 
-        GetStratumLabelTerminology(e.DataSheet, Primary, Secondary)
+        GetStratumLabelTerminology(e.DataSheet, Primary, Secondary, Tertiary)
         GetAmountLabelTerminology(e.DataSheet, AmountLabel, AmountUnits)
 
         Me.m_ICSpatialFilesDataGrid.Columns(PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX).HeaderText = BuildLowerCaseLabel(Primary)
         Me.m_ICSpatialFilesDataGrid.Columns(SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX).HeaderText = BuildLowerCaseLabel(Secondary)
+        Me.m_ICSpatialFilesDataGrid.Columns(TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX).HeaderText = BuildLowerCaseLabel(Tertiary)
         Me.LabelCalcTtlAmount.Text = String.Format(CultureInfo.InvariantCulture, "Total {0}:", AmountLabel.ToLower(CultureInfo.InvariantCulture))
 
     End Sub

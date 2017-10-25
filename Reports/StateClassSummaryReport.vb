@@ -73,11 +73,12 @@ Class StateClassSummaryReport
         Dim TermUnit As TerminologyUnit
         Dim PrimaryStratumLabel As String = Nothing
         Dim SecondaryStratumLabel As String = Nothing
+        Dim TertiaryStratumLabel As String = Nothing
         Dim dsterm As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
         Dim TimestepLabel As String = GetTimestepUnits(Me.Project)
 
         GetAmountLabelTerminology(dsterm, AmountLabel, TermUnit)
-        GetStratumLabelTerminology(dsterm, PrimaryStratumLabel, SecondaryStratumLabel)
+        GetStratumLabelTerminology(dsterm, PrimaryStratumLabel, SecondaryStratumLabel, TertiaryStratumLabel)
         UnitsLabel = TerminologyUnitToString(TermUnit)
 
         Dim AmountTitle As String = String.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel)

@@ -283,8 +283,9 @@ Partial Class STSimTransformer
 
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
+        Dim tsl As String = Nothing
 
-        GetStratumLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), psl, ssl)
+        GetStratumLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), psl, ssl, tsl)
 
         'Save the library because we may have added status data to the scenario
 
@@ -531,8 +532,9 @@ Partial Class STSimTransformer
         Dim l As New List(Of Integer)
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
+        Dim tsl As String = Nothing
 
-        GetStratumLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), psl, ssl)
+        GetStratumLabelTerminology(Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), psl, ssl, tsl)
         Dim ds As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_NSIC_DISTRIBUTION_NAME)
 
         For Each dr As DataRow In ds.GetData().Rows
@@ -618,12 +620,13 @@ Partial Class STSimTransformer
 
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
+        Dim tsl As String = Nothing
         Dim aml As String = Nothing
         Dim amu As TerminologyUnit
 
         Dim tds As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
 
-        GetStratumLabelTerminology(tds, psl, ssl)
+        GetStratumLabelTerminology(tds, psl, ssl, tsl)
         GetAmountLabelTerminology(tds, aml, amu)
 
         'We don't support splits by secondary strata for spatial runs as this time

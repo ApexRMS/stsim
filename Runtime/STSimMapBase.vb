@@ -12,6 +12,7 @@ MustInherit Class STSimMapBase
     Private m_Scenario As Scenario
     Private m_PrimaryStratumLabel As String
     Private m_SecondaryStratumLabel As String
+    Private m_TertiaryStratumLabel As String
     Private m_HasItems As Boolean
 
     Protected Sub New(ByVal scenario As Scenario)
@@ -19,7 +20,7 @@ MustInherit Class STSimMapBase
         Me.m_Scenario = scenario
 
         Dim ds As DataSheet = scenario.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
-        GetStratumLabelTerminology(ds, Me.m_PrimaryStratumLabel, Me.m_SecondaryStratumLabel)
+        GetStratumLabelTerminology(ds, Me.m_PrimaryStratumLabel, Me.m_SecondaryStratumLabel, Me.m_TertiaryStratumLabel)
 
     End Sub
 
@@ -32,6 +33,12 @@ MustInherit Class STSimMapBase
     Protected ReadOnly Property SecondaryStratumLabel As String
         Get
             Return Me.m_SecondaryStratumLabel
+        End Get
+    End Property
+
+    Protected ReadOnly Property TertiaryStratumLabel As String
+        Get
+            Return Me.m_TertiaryStratumLabel
         End Get
     End Property
 
@@ -65,6 +72,10 @@ MustInherit Class STSimMapBase
 
     Protected Function GetSecondaryStratumName(ByVal id As Nullable(Of Integer)) As String
         Return Me.GetProjectItemName(DATASHEET_SECONDARY_STRATA_NAME, id)
+    End Function
+
+    Protected Function GetTertiaryStratumName(ByVal id As Nullable(Of Integer)) As String
+        Return Me.GetProjectItemName(DATASHEET_TERTIARY_STRATA_NAME, id)
     End Function
 
     Protected Function GetStateClassName(ByVal id As Nullable(Of Integer)) As String

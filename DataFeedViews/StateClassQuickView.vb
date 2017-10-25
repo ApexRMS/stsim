@@ -37,6 +37,8 @@ Class StateClassQuickView
     Private m_PTStratumVisible As Boolean
     Private m_PTToStratumVisible As Boolean
     Private m_PTToClassVisible As Boolean
+    Private m_PTSecondaryStratumVisible As Boolean
+    Private m_PTTertiaryStratumVisible As Boolean
     Private m_PTProportionVisible As Boolean
     Private m_PTAgeMinVisible As Boolean
     Private m_PTAgeMaxVisible As Boolean
@@ -195,9 +197,10 @@ Class StateClassQuickView
         'Terminology
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
+        Dim tsl As String = Nothing
         Dim dsterm As DataSheet = Me.m_DataFeed.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
 
-        GetStratumLabelTerminology(dsterm, psl, ssl)
+        GetStratumLabelTerminology(dsterm, psl, ssl, tsl)
 
         'Deterministic
         Me.m_DTGrid.ContextMenuStrip = Me.ContextMenuStripDeterministic
@@ -230,6 +233,8 @@ Class StateClassQuickView
         Me.m_PTView.Commands.Add(New Command(psl, AddressOf OnExecuteProbabilisticStratumCommand, AddressOf OnUpdateProbabilisticStratumCommand))
         Me.m_PTView.Commands.Add(New Command("To " & psl, AddressOf OnExecuteProbabilisticToStratumCommand, AddressOf OnUpdateProbabilisticToStratumCommand))
         Me.m_PTView.Commands.Add(New Command("To Class", AddressOf OnExecuteProbabilisticToClassCommand, AddressOf OnUpdateProbabilisticToClassCommand))
+        Me.m_PTView.Commands.Add(New Command("To " & ssl, AddressOf OnExecuteProbabilisticSSCommand, AddressOf OnUpdateProbabilisticSSCommand))
+        Me.m_PTView.Commands.Add(New Command("To " & tsl, AddressOf OnExecuteProbabilisticTSCommand, AddressOf OnUpdateProbabilisticTSCommand))
         Me.m_PTView.Commands.Add(New Command("Proportion", AddressOf OnExecuteProbabilisticProportionCommand, AddressOf OnUpdateProbabilisticProportionCommand))
         Me.m_PTView.Commands.Add(New Command("Age Min", AddressOf OnExecuteProbabilisticAgeMinCommand, AddressOf OnUpdateProbabilisticAgeMinCommand))
         Me.m_PTView.Commands.Add(New Command("Age Max", AddressOf OnExecuteProbabilisticAgeMaxCommand, AddressOf OnUpdateProbabilisticAgeMaxCommand))
@@ -823,6 +828,8 @@ Class StateClassQuickView
         Me.m_PTStratumVisible = False
         Me.m_PTToStratumVisible = ColumnContainsData(DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTToClassVisible = ColumnContainsData(DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME, Me.m_PTGrid)
+        Me.m_PTSecondaryStratumVisible = ColumnContainsData(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME, Me.m_PTGrid)
+        Me.m_PTTertiaryStratumVisible = ColumnContainsData(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTAgeMinVisible = ColumnContainsData(DATASHEET_AGE_MIN_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTAgeMaxVisible = ColumnContainsData(DATASHEET_AGE_MAX_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTAgeRelativeVisible = ColumnContainsData(DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME, Me.m_PTGrid)
@@ -906,6 +913,10 @@ Class StateClassQuickView
                 Me.m_PTGrid.CurrentCell = dgr.Cells(DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME)
             ElseIf (cn = DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME And Not Me.m_PTToClassVisible) Then
                 Me.m_PTGrid.CurrentCell = dgr.Cells(DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME)
+            ElseIf (cn = DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME And Not Me.m_PTSecondaryStratumVisible) Then
+                Me.m_PTGrid.CurrentCell = dgr.Cells(DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME)
+            ElseIf (cn = DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME And Not Me.m_PTTertiaryStratumVisible) Then
+                Me.m_PTGrid.CurrentCell = dgr.Cells(DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME)
             ElseIf (cn = DATASHEET_PT_PROPORTION_COLUMN_NAME And Not Me.m_PTProportionVisible) Then
                 Me.m_PTGrid.CurrentCell = dgr.Cells(DATASHEET_PT_PROBABILITY_COLUMN_NAME)
             ElseIf (cn = DATASHEET_AGE_MIN_COLUMN_NAME And Not Me.m_PTAgeMinVisible) Then
@@ -931,6 +942,8 @@ Class StateClassQuickView
         Me.m_PTGrid.Columns(DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME).Visible = Me.m_PTStratumVisible
         Me.m_PTGrid.Columns(DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME).Visible = Me.m_PTToStratumVisible
         Me.m_PTGrid.Columns(DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME).Visible = Me.m_PTToClassVisible
+        Me.m_PTGrid.Columns(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME).Visible = Me.m_PTSecondaryStratumVisible
+        Me.m_PTGrid.Columns(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME).Visible = Me.m_PTTertiaryStratumVisible
         Me.m_PTGrid.Columns(DATASHEET_PT_PROPORTION_COLUMN_NAME).Visible = Me.m_PTProportionVisible
         Me.m_PTGrid.Columns(DATASHEET_AGE_MIN_COLUMN_NAME).Visible = Me.m_PTAgeMinVisible
         Me.m_PTGrid.Columns(DATASHEET_AGE_MAX_COLUMN_NAME).Visible = Me.m_PTAgeMaxVisible
@@ -1118,6 +1131,28 @@ Class StateClassQuickView
     Private Sub ToggleProbabilisticToClassVisible()
 
         Me.m_PTToClassVisible = (Not Me.m_PTToClassVisible)
+        Me.UpdatePTColumnVisibility()
+
+    End Sub
+
+    ''' <summary>
+    ''' Toggles the visibility of the Probabilistic Secondary Stratum column
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub ToggleProbabilisticSSVisible()
+
+        Me.m_PTSecondaryStratumVisible = (Not Me.m_PTSecondaryStratumVisible)
+        Me.UpdatePTColumnVisibility()
+
+    End Sub
+
+    ''' <summary>
+    ''' Toggles the visibility of the Probabilistic Tertiary Stratum column
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub ToggleProbabilisticTSVisible()
+
+        Me.m_PTTertiaryStratumVisible = (Not Me.m_PTTertiaryStratumVisible)
         Me.UpdatePTColumnVisibility()
 
     End Sub
@@ -1390,6 +1425,60 @@ Class StateClassQuickView
 
         cmd.IsEnabled = True
         cmd.IsChecked = Me.m_PTToClassVisible
+
+    End Sub
+
+    ''' <summary>
+    ''' Executes the Probabilistic Transtions Secondary Stratum command
+    ''' </summary>
+    ''' <param name="cmd"></param>
+    ''' <remarks></remarks>
+    Private Sub OnExecuteProbabilisticSSCommand(ByVal cmd As Command)
+
+        If (Not Me.Validate()) Then
+            Return
+        End If
+
+        Me.ToggleProbabilisticSSVisible()
+
+    End Sub
+
+    ''' <summary>
+    ''' Updates the Probabilistic Transtions Secondary Stratum command
+    ''' </summary>
+    ''' <param name="cmd"></param>
+    ''' <remarks></remarks>
+    Private Sub OnUpdateProbabilisticSSCommand(ByVal cmd As Command)
+
+        cmd.IsEnabled = True
+        cmd.IsChecked = Me.m_PTSecondaryStratumVisible
+
+    End Sub
+
+    ''' <summary>
+    ''' Executes the Probabilistic Transtions Tertiary Stratum command
+    ''' </summary>
+    ''' <param name="cmd"></param>
+    ''' <remarks></remarks>
+    Private Sub OnExecuteProbabilisticTSCommand(ByVal cmd As Command)
+
+        If (Not Me.Validate()) Then
+            Return
+        End If
+
+        Me.ToggleProbabilisticTSVisible()
+
+    End Sub
+
+    ''' <summary>
+    ''' Updates the Probabilistic Transtions Tertiary Stratum command
+    ''' </summary>
+    ''' <param name="cmd"></param>
+    ''' <remarks></remarks>
+    Private Sub OnUpdateProbabilisticTSCommand(ByVal cmd As Command)
+
+        cmd.IsEnabled = True
+        cmd.IsChecked = Me.m_PTTertiaryStratumVisible
 
     End Sub
 

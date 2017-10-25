@@ -17,6 +17,13 @@ Partial Class STSimUpdates
     ''' <remarks>Updates the ST-Sim tables for SyncroSim version 1</remarks>
     Private Shared Sub UpdateSTSimTables_SSIM_V_1(ByVal store As DataStore)
 
+        'Very old libraries did not create the schema until the tables were actually needed so if, for example, 
+        'ST_Stratum does not exist we don't want to try to update any project scoped data sheet schema.
+
+        If (Not store.TableExists("ST_Stratum")) Then
+            Return
+        End If
+
         'Stratum
         store.ExecuteNonQuery("CREATE TABLE STSim_Stratum(StratumID INTEGER PRIMARY KEY, ProjectID INTEGER, Name TEXT, ID INTEGER, Description TEXT)")
         store.ExecuteNonQuery("INSERT INTO STSim_Stratum(StratumID, ProjectID, Name, ID, Description) SELECT ST_StratumID, ProjectID, Name, ID, Description FROM ST_Stratum")
@@ -104,6 +111,13 @@ Partial Class STSimUpdates
         store.ExecuteNonQuery("CREATE TABLE STSim_PatchPrioritization(PatchPrioritizationID INTEGER PRIMARY KEY, ProjectID INTEGER, Name TEXT)")
         store.ExecuteNonQuery("INSERT INTO STSim_PatchPrioritization(PatchPrioritizationID, ProjectID, Name) SELECT ST_PatchPrioritizationID, ProjectID, Name FROM ST_PatchPrioritization")
         store.ExecuteNonQuery("DROP TABLE ST_PatchPrioritization")
+
+        'Very old libraries did not create the schema until the tables were actually needed so if, for example, 
+        'STSim_RunControl does not exist we don't want to try to update any project scoped data sheet schema.
+
+        If (Not store.TableExists("ST_RunControl")) Then
+            Return
+        End If
 
         'Run Control
         store.ExecuteNonQuery("CREATE TABLE STSim_RunControl(RunControlID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, MinimumIteration INTEGER, MaximumIteration INTEGER, MinimumTimestep INTEGER, MaximumTimestep INTEGER, IsSpatial INTEGER)")
@@ -334,6 +348,18 @@ Partial Class STSimUpdates
 
             ExceptionUtils.ThrowArgumentException(
                 "The version table '{0}' is corrupt.  Cannot continue.", tableName)
+
+        End If
+
+        'As of version 3.0.11, Ecological departure does not have a database updater so
+        'its version table never gets the 2.x schema.  However, we still need the current
+        'version so we are going to look for it using the old column name as a special case.
+        'This only affects Ecological Departure.
+
+        If (dt.Columns.Contains("Version")) Then
+
+            Debug.Assert(tableName = "ED_Version")
+            Return CInt(dt.Rows(0)("Version"))
 
         End If
 

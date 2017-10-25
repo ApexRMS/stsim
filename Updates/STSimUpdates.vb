@@ -249,6 +249,10 @@ Class STSimUpdates
             STSIM0000061(store)
         End If
 
+        If (currentSchemaVersion < 62) Then
+            STSIM0000062(store)
+        End If
+
     End Sub
 
     ''' <summary>
@@ -1526,6 +1530,13 @@ Class STSimUpdates
     ''' <remarks>Cretaes new indexes for output tables</remarks>
     Private Shared Sub STSIM0000033(ByVal store As DataStore)
 
+        'Very old libraries did not create the schema until the tables were actually needed so if, for example, 
+        'STSim_OutputStratumState does not exist we don't want to try to do anything.
+
+        If (Not store.TableExists("STSim_OutputStratumState")) Then
+            Return
+        End If
+
         If (store.TableExists("ST_OutputStratumAmount")) Then
 
             store.ExecuteNonQuery("DROP INDEX ST_OutputStratumAmount_Index")
@@ -1586,8 +1597,12 @@ Class STSimUpdates
     ''' </remarks>
     Private Shared Sub STSIM0000041(ByVal store As DataStore)
 
-        store.ExecuteNonQuery("DELETE FROM STSim_TransitionTypeGroup WHERE TransitionTypeID IS NULL")
-        store.ExecuteNonQuery("DELETE FROM STSim_TransitionTypeGroup WHERE TransitionGroupID IS NULL")
+        If (store.TableExists("STSim_TransitionTypeGroup")) Then
+
+            store.ExecuteNonQuery("DELETE FROM STSim_TransitionTypeGroup WHERE TransitionTypeID IS NULL")
+            store.ExecuteNonQuery("DELETE FROM STSim_TransitionTypeGroup WHERE TransitionGroupID IS NULL")
+
+        End If
 
     End Sub
 
@@ -2097,7 +2112,11 @@ Class STSimUpdates
     ''' column which caused diagram editing to fail.
     ''' </remarks>
     Private Shared Sub STSIM0000057(ByVal store As DataStore)
-        store.ExecuteNonQuery("UPDATE STSim_Transition SET AgeReset=-1 WHERE AgeReset=1")
+
+        If (store.TableExists("STSim_Transition")) Then
+            store.ExecuteNonQuery("UPDATE STSim_Transition SET AgeReset=-1 WHERE AgeReset=1")
+        End If
+
     End Sub
 
     ''' <summary>
@@ -2140,7 +2159,9 @@ Class STSimUpdates
                 Dim newLocation As String = GetDatasheetOutputFolder(store, scenarioId, dsName)
 
                 If Directory.Exists(oldLocation) Then
+
                     Dim files = Directory.GetFiles(oldLocation, "*" + fileFilter + ".*")
+
                     For Each oldFilename In files
 
                         If (Not Directory.Exists(newLocation)) Then
@@ -2163,9 +2184,11 @@ Class STSimUpdates
                         End If
 
                     Next
+
                 End If
 
             Next
+
         Next
 
         ' Rename any TST files already records in the STSim_OutputSpatialTST datasheet, to "tst-123".
@@ -2249,18 +2272,226 @@ Class STSimUpdates
     End Sub
 
     ''' <summary>
-    ''' SF0000016
+    ''' SF0000061
     ''' </summary>
     ''' <param name="store"></param>
     ''' <remarks>
-    ''' Add missing index on STSim_DistributionValue if missing
-    ''' drop</remarks>
+    ''' Add missing index on STSim_DistributionValue if missing drop</remarks>
     Private Shared Sub STSIM0000061(ByVal store As DataStore)
 
         If (store.TableExists("STSim_DistributionValue")) Then
 
             store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_DistributionValue_Index")
             store.ExecuteNonQuery("CREATE INDEX STSim_DistributionValue_Index ON STSim_DistributionValue(ScenarioID)")
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' SF0000062
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' This update adds a tertiary stratum to all applicable tables
+    ''' </remarks>
+    Private Shared Sub STSIM0000062(ByVal store As DataStore)
+
+        If (store.TableExists("STSim_Terminology")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_Terminology RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_Terminology(TerminologyID Integer PRIMARY KEY AUTOINCREMENT, ProjectID Integer, AmountLabel TEXT, AmountUnits Integer, StateLabelX TEXT, StateLabelY TEXT, PrimaryStratumLabel TEXT, SecondaryStratumLabel TEXT, TertiaryStratumLabel TEXT, TimestepUnits TEXT)")
+            store.ExecuteNonQuery("INSERT INTO STSim_Terminology(ProjectID, AmountLabel, AmountUnits, StateLabelX, StateLabelY, PrimaryStratumLabel, SecondaryStratumLabel, TertiaryStratumLabel, TimestepUnits) SELECT ProjectID, AmountLabel, AmountUnits, StateLabelX, StateLabelY, PrimaryStratumLabel, SecondaryStratumLabel, 'Parcel', TimestepUnits FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_Transition")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_Transition RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_Transition(TransitionID Integer PRIMARY KEY AUTOINCREMENT, ScenarioID Integer, Iteration Integer, Timestep Integer, StratumIDSource Integer, StateClassIDSource Integer, StratumIDDest Integer, StateClassIDDest Integer, SecondaryStratumID Integer, TertiaryStratumID Integer, TransitionTypeID Integer, Probability Double, Proportion Double, AgeMin Integer, AgeMax Integer, AgeRelative Integer, AgeReset Integer, TSTMin Integer, TSTMax Integer, TSTRelative Integer)")
+            store.ExecuteNonQuery("INSERT INTO STSim_Transition(ScenarioID, Iteration, Timestep, StratumIDSource, StateClassIDSource, StratumIDDest, StateClassIDDest, TransitionTypeID, Probability, Proportion, AgeMin, AgeMax, AgeRelative, AgeReset, TSTMin, TSTMax, TSTRelative) SELECT ScenarioID, Iteration, Timestep, StratumIDSource, StateClassIDSource, StratumIDDest, StateClassIDDest, TransitionTypeID, Probability, Proportion, AgeMin, AgeMax, AgeRelative, AgeReset, TSTMin, TSTMax, TSTRelative FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_InitialConditionsNonSpatialDistribution")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_InitialConditionsNonSpatialDistribution RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_InitialConditionsNonSpatialDistribution(InitialConditionsNonSpatialDistributionID Integer PRIMARY KEY AUTOINCREMENT, ScenarioID Integer, Iteration Integer, StratumID Integer, SecondaryStratumID Integer, TertiaryStratumID Integer, StateClassID Integer, AgeMin Integer, AgeMax Integer, RelativeAmount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_InitialConditionsNonSpatialDistribution(ScenarioID, Iteration, StratumID, SecondaryStratumID, StateClassID, AgeMin, AgeMax, RelativeAmount) SELECT ScenarioID, Iteration, StratumID, SecondaryStratumID, StateClassID, AgeMin, AgeMax, RelativeAmount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_InitialConditionsSpatial")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_InitialConditionsSpatial RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_InitialConditionsSpatial(InitialConditionsSpatialID Integer PRIMARY KEY AUTOINCREMENT, ScenarioID Integer, Iteration Integer, StratumFileName TEXT, SecondaryStratumFileName TEXT, TertiaryStratumFileName TEXT, StateClassFileName TEXT, AgeFileName TEXT)")
+            store.ExecuteNonQuery("INSERT INTO STSim_InitialConditionsSpatial(ScenarioID, Iteration, StratumFileName, SecondaryStratumFileName, StateClassFileName, AgeFileName) SELECT ScenarioID, Iteration, StratumFileName, SecondaryStratumFileName, StateClassFileName, AgeFileName FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionTarget")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionTarget RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionTarget(TransitionTargetID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, Amount DOUBLE, DistributionType INTEGER, DistributionSD DOUBLE, DistributionMin DOUBLE, DistributionMax DOUBLE, DistributionFrequencyID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionTarget(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionMultiplierValue")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionMultiplierValue RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionMultiplierValue(TransitionMultiplierValueID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, StateClassID INTEGER, TransitionGroupID INTEGER, TransitionMultiplierTypeID  INTEGER, Amount DOUBLE, DistributionType INTEGER, DistributionSD DOUBLE, DistributionMin DOUBLE, DistributionMax DOUBLE, DistributionFrequencyID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionMultiplierValue(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateClassID, TransitionGroupID, TransitionMultiplierTypeID, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateClassID, TransitionGroupID, TransitionMultiplierTypeID, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TimeSinceTransitionGroup")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TimeSinceTransitionGroup RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TimeSinceTransitionGroup(TimeSinceTransitionGroupID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionTypeID INTEGER, TransitionGroupID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TimeSinceTransitionGroup(ScenarioID, StratumID, SecondaryStratumID, TransitionTypeID, TransitionGroupID) SELECT ScenarioID, StratumID, SecondaryStratumID, TransitionTypeID, TransitionGroupID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TimeSinceTransitionRandomize")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TimeSinceTransitionRandomize RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TimeSinceTransitionRandomize(TimeSinceTransitionRandomizeID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, StateClassID INTEGER, MinInitialTST INTEGER, MaxInitialTST INTEGER, Iteration INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TimeSinceTransitionRandomize(ScenarioID, StratumID, SecondaryStratumID, TransitionGroupID, StateClassID, MinInitialTST, MaxInitialTST, Iteration) SELECT ScenarioID, StratumID, SecondaryStratumID, TransitionGroupID, StateClassID, MinInitialTST, MaxInitialTST, Iteration FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_StateAttributeValue")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_StateAttributeValue RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_StateAttributeValue(StateAttributeValueID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, StateClassID INTEGER, StateAttributeTypeID  INTEGER, AgeMin INTEGER, AgeMax INTEGER, Value DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_StateAttributeValue(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateClassID, StateAttributeTypeID, AgeMin, AgeMax, Value) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateClassID, StateAttributeTypeID, AgeMin, AgeMax, Value FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionAttributeValue")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionAttributeValue RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionAttributeValue(TransitionAttributeValueID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, StateClassID INTEGER, TransitionAttributeTypeID  INTEGER, AgeMin INTEGER, AgeMax INTEGER, Value DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionAttributeValue(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, StateClassID, TransitionAttributeTypeID, AgeMin, AgeMax, Value) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, StateClassID, TransitionAttributeTypeID, AgeMin, AgeMax, Value FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionAttributeTarget")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionAttributeTarget RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionAttributeTarget(TransitionAttributeTargetID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, TransitionAttributeTypeID INTEGER, Amount DOUBLE, DistributionType INTEGER, DistributionSD DOUBLE, DistributionMin DOUBLE, DistributionMax DOUBLE, DistributionFrequencyID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionAttributeTarget(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionAttributeTypeID, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionAttributeTypeID, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_DistributionValue")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_DistributionValue RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_DistributionValue(DistributionValueID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, DistributionTypeID INTEGER, ExternalVariableTypeID INTEGER, ExternalVariableMin DOUBLE, ExternalVariableMax DOUBLE, Value DOUBLE, ValueDistributionTypeID INTEGER, ValueDistributionFrequency INTEGER, ValueDistributionSD DOUBLE, ValueDistributionMin DOUBLE, ValueDistributionMax DOUBLE, ValueDistributionRelativeFrequency DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_DistributionValue(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, DistributionTypeID, ExternalVariableTypeID, ExternalVariableMin, ExternalVariableMax, Value, ValueDistributionTypeID, ValueDistributionFrequency, ValueDistributionSD, ValueDistributionMin, ValueDistributionMax, ValueDistributionRelativeFrequency) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, DistributionTypeID, ExternalVariableTypeID, ExternalVariableMin, ExternalVariableMax, Value, ValueDistributionTypeID, ValueDistributionFrequency, ValueDistributionSD, ValueDistributionMin, ValueDistributionMax, ValueDistributionRelativeFrequency FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionDirectionMultiplier")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionDirectionMultiplier RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionDirectionMultiplier(TransitionDirectionMultiplierID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, CardinalDirection INTEGER, Amount DOUBLE, DistributionType INTEGER, DistributionSD DOUBLE, DistributionMin DOUBLE, DistributionMax DOUBLE, DistributionFrequencyID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionDirectionMultiplier(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, CardinalDirection, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, CardinalDirection, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionSlopeMultiplier")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionSlopeMultiplier RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionSlopeMultiplier(TransitionSlopeMultiplierID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, Slope INTEGER, Amount DOUBLE, DistributionType INTEGER, DistributionSD DOUBLE, DistributionMin DOUBLE, DistributionMax DOUBLE, DistributionFrequencyID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionSlopeMultiplier(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, Slope, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, Slope, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionAdjacencyMultiplier")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionAdjacencyMultiplier RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionAdjacencyMultiplier(TransitionAdjacencyMultiplierID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, AttributeValue DOUBLE, Amount DOUBLE, DistributionType INTEGER, DistributionSD DOUBLE, DistributionMin DOUBLE, DistributionMax DOUBLE, DistributionFrequencyID INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionAdjacencyMultiplier(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, AttributeValue, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, AttributeValue, Amount, DistributionType, DistributionSD, DistributionMin, DistributionMax, DistributionFrequencyID FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_TransitionPathwayAutoCorrelation")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionPathwayAutoCorrelation RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionPathwayAutoCorrelation(TransitionPathwayAutoCorrelationID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, AutoCorrelationFactor DOUBLE, SpreadOnlyToLike INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionPathwayAutoCorrelation(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, AutoCorrelationFactor, SpreadOnlyToLike) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, AutoCorrelationFactor, SpreadOnlyToLike FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_OutputStratum")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratum RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputStratum(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, Amount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputStratum(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_OutputStratumState")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratumState RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputStratumState(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, StateClassID INTEGER, StateLabelXID INTEGER, StateLabelYID INTEGER, AgeMin INTEGER, AgeMax INTEGER, AgeClass INTEGER, Amount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputStratumState(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateClassID, StateLabelXID, StateLabelYID, AgeMin, AgeMax, AgeClass, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateClassID, StateLabelXID, StateLabelYID, AgeMin, AgeMax, AgeClass, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_OutputStratumTransition")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratumTransition RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputStratumTransition(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, AgeMin INTEGER, AgeMax INTEGER, AgeClass INTEGER, Amount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputStratumTransition(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, AgeMin, AgeMax, AgeClass, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionGroupID, AgeMin, AgeMax, AgeClass, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_OutputStratumTransitionState")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratumTransitionState RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputStratumTransitionState(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionTypeID INTEGER, StateClassID INTEGER, EndStateClassID INTEGER, Amount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputStratumTransitionState(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionTypeID, StateClassID, EndStateClassID, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionTypeID, StateClassID, EndStateClassID, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_OutputStateAttribute")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputStateAttribute RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputStateAttribute(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, StateAttributeTypeID INTEGER, AgeMin INTEGER, AgeMax INTEGER, AgeClass INTEGER, Amount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputStateAttribute(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateAttributeTypeID, AgeMin, AgeMax, AgeClass, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, StateAttributeTypeID, AgeMin, AgeMax, AgeClass, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+        If (store.TableExists("STSim_OutputTransitionAttribute")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputTransitionAttribute RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputTransitionAttribute(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionAttributeTypeID INTEGER, AgeMin INTEGER, AgeMax INTEGER, AgeClass INTEGER, Amount DOUBLE)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputTransitionAttribute(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionAttributeTypeID, AgeMin, AgeMax, AgeClass, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionAttributeTypeID, AgeMin, AgeMax, AgeClass, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
 
         End If
 

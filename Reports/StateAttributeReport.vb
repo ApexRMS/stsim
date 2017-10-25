@@ -43,10 +43,11 @@ Class StateAttributeReport
 
         Dim PrimaryStratumLabel As String = Nothing
         Dim SecondaryStratumLabel As String = Nothing
+        Dim TertiaryStratumLabel As String = Nothing
         Dim dsterm As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
         Dim TimestepLabel As String = GetTimestepUnits(Me.Project)
 
-        GetStratumLabelTerminology(dsterm, PrimaryStratumLabel, SecondaryStratumLabel)
+        GetStratumLabelTerminology(dsterm, PrimaryStratumLabel, SecondaryStratumLabel, TertiaryStratumLabel)
 
         c.Add(New ExportColumn("ScenarioID", "Scenario ID"))
         c.Add(New ExportColumn("ScenarioName", "Scenario"))

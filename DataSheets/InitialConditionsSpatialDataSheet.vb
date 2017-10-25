@@ -194,10 +194,11 @@ Class InitialConditionsSpatialDataSheet
 
         Dim PrimaryStratumLabel As String = Nothing
         Dim SecondaryStratumLabel As String = Nothing
+        Dim TertiaryStratumLabel As String = Nothing
         Dim ColumnDisplayName As String = Me.Columns(columnName).DisplayName
 
         Dim TerminologySheet As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
-        GetStratumLabelTerminology(TerminologySheet, PrimaryStratumLabel, SecondaryStratumLabel)
+        GetStratumLabelTerminology(TerminologySheet, PrimaryStratumLabel, SecondaryStratumLabel, TertiaryStratumLabel)
 
         If (columnName = DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME) Then
             ColumnDisplayName = PrimaryStratumLabel

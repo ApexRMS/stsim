@@ -167,6 +167,7 @@ Class DTAnalyzer
 
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
+        Dim tsl As String = Nothing
         Dim StateClassName As String = "NULL"
         Dim StateClassDataSheet As DataSheet = Me.m_Project.GetDataSheet(DATASHEET_STATECLASS_NAME)
         Dim Location As String = "From"
@@ -175,7 +176,7 @@ Class DTAnalyzer
             Location = "To"
         End If
 
-        GetStratumLabelTerminology(Me.m_Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), psl, ssl)
+        GetStratumLabelTerminology(Me.m_Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME), psl, ssl, tsl)
 
         StateClassName = CStr(DataTableUtilities.GetTableValue(
             StateClassDataSheet.GetData(),

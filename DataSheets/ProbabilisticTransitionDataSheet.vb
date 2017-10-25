@@ -18,8 +18,9 @@ Class ProbabilisticTransitionDataSheet
 
         Dim Primary As String = Nothing
         Dim Secondary As String = Nothing
+        Dim Tertiary As String = Nothing
 
-        GetStratumLabelTerminology(e.DataSheet, Primary, Secondary)
+        GetStratumLabelTerminology(e.DataSheet, Primary, Secondary, Tertiary)
 
         Me.Columns(DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME).DisplayName = Primary
         Me.Columns(DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME).DisplayName = "To " & Primary

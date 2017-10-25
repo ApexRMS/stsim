@@ -216,9 +216,10 @@ Class TransitionDataFeedView
 
         Dim primary As String = Nothing
         Dim secondary As String = Nothing
+        Dim tertiary As String = Nothing
         Dim ds As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
 
-        GetStratumLabelTerminology(ds, primary, secondary)
+        GetStratumLabelTerminology(ds, primary, secondary, tertiary)
         Me.m_TooltipSelect.SetToolTip(Me.ButtonSelectStratum, "Select " & primary)
 
     End Sub

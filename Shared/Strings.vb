@@ -48,6 +48,7 @@ Module Strings
     Public Const DATASHEET_SCENARIOID_COLUMN_NAME As String = "ScenarioID"
     Public Const DATASHEET_STRATUM_ID_COLUMN_NAME As String = "StratumID"
     Public Const DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME As String = "SecondaryStratumID"
+    Public Const DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME As String = "TertiaryStratumID"
     Public Const DATASHEET_ITERATION_COLUMN_NAME As String = "Iteration"
     Public Const DATASHEET_TIMESTEP_COLUMN_NAME As String = "Timestep"
     Public Const DATASHEET_STATECLASS_ID_COLUMN_NAME As String = "StateClassID"
@@ -86,6 +87,9 @@ Module Strings
 
     'Secondary Stratum
     Public Const DATASHEET_SECONDARY_STRATA_NAME As String = "STSim_SecondaryStratum"
+
+    'Tertiary Stratum
+    Public Const DATASHEET_TERTIARY_STRATA_NAME As String = "STSim_TertiaryStratum"
 
     'State class
     Public Const DATASHEET_STATECLASS_NAME As String = "STSim_StateClass"
@@ -288,6 +292,7 @@ Module Strings
     Public Const DATASHEET_TERMINOLOGY_STATELABELY_COLUMN_NAME As String = "StateLabelY"
     Public Const DATASHEET_TERMINOLOGY_PRIMARY_STRATUM_LABEL_COLUMN_NAME As String = "PrimaryStratumLabel"
     Public Const DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME As String = "SecondaryStratumLabel"
+    Public Const DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME As String = "TertiaryStratumLabel"
 
     'Output Options
     Public Const DATASHEET_OO_NAME As String = "STSim_OutputOptions"

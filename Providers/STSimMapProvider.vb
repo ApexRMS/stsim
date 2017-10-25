@@ -103,8 +103,9 @@ Class STSimMapProvider
 
         Dim psl As String = Nothing
         Dim ssl As String = Nothing
+        Dim tsl As String = Nothing
         Dim dsterm As DataSheet = project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
-        GetStratumLabelTerminology(dsterm, psl, ssl)
+        GetStratumLabelTerminology(dsterm, psl, ssl, tsl)
 
         Dim i1 As SyncroSimLayoutItem = New SyncroSimLayoutItem(SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", False)
         Dim i2 As SyncroSimLayoutItem = New SyncroSimLayoutItem(SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", False)

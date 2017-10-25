@@ -124,16 +124,19 @@ Module TerminologyUtilities
     ''' <param name="terminologyDataSheet"></param>
     ''' <param name="primaryStratumLabel"></param>
     ''' <param name="secondaryStratumLabel"></param>
+    ''' <param name="tertiaryStratumLabel"></param>
     ''' <remarks></remarks>
     Public Sub GetStratumLabelTerminology(
         ByVal terminologyDataSheet As DataSheet,
         ByRef primaryStratumLabel As String,
-        ByRef secondaryStratumLabel As String)
+        ByRef secondaryStratumLabel As String,
+        ByRef tertiaryStratumLabel As String)
 
         Dim dr As DataRow = terminologyDataSheet.GetDataRow
 
         primaryStratumLabel = "Stratum"
         secondaryStratumLabel = "Secondary Stratum"
+        tertiaryStratumLabel = "Tertiary Stratum"
 
         If (dr IsNot Nothing) Then
 
@@ -143,6 +146,10 @@ Module TerminologyUtilities
 
             If (dr(DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME) IsNot DBNull.Value) Then
                 secondaryStratumLabel = CStr(dr(DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME) IsNot DBNull.Value) Then
+                tertiaryStratumLabel = CStr(dr(DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME))
             End If
 
         End If

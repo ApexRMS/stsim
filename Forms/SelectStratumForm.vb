@@ -78,9 +78,10 @@ Class SelectStratumForm
 
         Dim primary As String = Nothing
         Dim secondary As String = Nothing
+        Dim tertiary As String = Nothing
         Dim ds As DataSheet = project.GetDataSheet(DATASHEET_TERMINOLOGY_NAME)
 
-        GetStratumLabelTerminology(ds, primary, secondary)
+        GetStratumLabelTerminology(ds, primary, secondary, tertiary)
         Me.Text = "Select " & primary
 
     End Sub

@@ -13,6 +13,7 @@ Friend Class OutputStateAttribute
 
     Private m_StratumId As Integer
     Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_Iteration As Integer
     Private m_Timestep As Integer
     Private m_StateAttributeTypeId As Integer
@@ -24,6 +25,7 @@ Friend Class OutputStateAttribute
     Public Sub New(
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Integer,
         ByVal timestep As Integer,
         ByVal stateAttributeTypeId As Integer,
@@ -34,6 +36,7 @@ Friend Class OutputStateAttribute
 
         Me.m_StratumId = stratumId
         Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_Iteration = iteration
         Me.m_Timestep = timestep
         Me.m_StateAttributeTypeId = stateAttributeTypeId
@@ -62,6 +65,18 @@ Friend Class OutputStateAttribute
     Public ReadOnly Property SecondaryStratumId As Nullable(Of Integer)
         Get
             Return Me.m_SecondaryStratumId
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets the tertiary stratum Id
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
         End Get
     End Property
 

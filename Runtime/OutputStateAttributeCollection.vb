@@ -9,14 +9,14 @@ Imports SyncroSim.Common
 Imports System.Collections.ObjectModel
 
 Friend Class OutputStateAttributeCollection
-    Inherits KeyedCollection(Of SixIntegerLookupKey, OutputStateAttribute)
+    Inherits KeyedCollection(Of SevenIntegerLookupKey, OutputStateAttribute)
 
     Public Sub New()
-        MyBase.New(New SixIntegerLookupKeyEqualityComparer)
+        MyBase.New(New SevenIntegerLookupKeyEqualityComparer)
     End Sub
 
-    Protected Overrides Function GetKeyForItem(ByVal item As OutputStateAttribute) As SixIntegerLookupKey
-        Return New SixIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), item.Iteration, item.Timestep, item.StateAttributeTypeId, item.AgeKey)
+    Protected Overrides Function GetKeyForItem(ByVal item As OutputStateAttribute) As SevenIntegerLookupKey
+        Return New SevenIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.StateAttributeTypeId, item.AgeKey)
     End Function
 
 End Class

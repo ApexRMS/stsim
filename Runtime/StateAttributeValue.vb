@@ -16,6 +16,7 @@ Friend Class StateAttributeValue
         ByVal stateAttributeTypeId As Integer,
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Nullable(Of Integer),
         ByVal timestep As Nullable(Of Integer),
         ByVal stateClassId As Nullable(Of Integer),
@@ -27,12 +28,13 @@ Friend Class StateAttributeValue
             stateAttributeTypeId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             iteration,
             timestep,
-            StateClassId,
-            MinimumAge,
-            MaximumAge,
-            Value)
+            stateClassId,
+            minimumAge,
+            maximumAge,
+            value)
 
     End Sub
 

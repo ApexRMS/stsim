@@ -9,7 +9,7 @@ Imports SyncroSim.Core
 Imports SyncroSim.StochasticTime
 
 Class TransitionMultiplierValueMap
-    Inherits STSimMapBase4(Of TransitionMultiplierValue)
+    Inherits STSimMapBase5(Of TransitionMultiplierValue)
 
     Private m_DistributionProvider As STSimDistributionProvider
 
@@ -32,6 +32,7 @@ Class TransitionMultiplierValueMap
         ByVal transitionGroupId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer) As TransitionMultiplierValue
@@ -40,6 +41,7 @@ Class TransitionMultiplierValueMap
             transitionGroupId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             stateClassId,
             iteration,
             timestep)
@@ -66,6 +68,7 @@ Class TransitionMultiplierValueMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.StateClassId,
                 item.Iteration,
                 item.Timestep,
@@ -75,7 +78,7 @@ Class TransitionMultiplierValueMap
 
             Dim template As String =
                 "A duplicate transition multiplier value was detected: More information:" & vbCrLf &
-                "Transition Group={0}, {1}={2}, {3}={4}, State Class={5}, Iteration={6}, Timestep={7}." & vbCrLf &
+                "Transition Group={0}, {1}={2}, {3}={4}, {5}={6}, State Class={7}, Iteration={8}, Timestep={9}." & vbCrLf &
                 "NOTE: A user defined distribution can result in additional transition multiplier values when the model is run."
 
             ExceptionUtils.ThrowArgumentException(
@@ -85,6 +88,8 @@ Class TransitionMultiplierValueMap
                 Me.GetStratumName(item.StratumId),
                 Me.SecondaryStratumLabel,
                 Me.GetSecondaryStratumName(item.SecondaryStratumId),
+                Me.TertiaryStratumLabel,
+                Me.GetTertiaryStratumName(item.TertiaryStratumId),
                 Me.GetStateClassName(item.StateClassId),
                 STSimMapBase.FormatValue(item.Iteration),
                 STSimMapBase.FormatValue(item.Timestep))

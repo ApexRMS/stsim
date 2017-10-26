@@ -5,10 +5,10 @@
 '
 '*********************************************************************************************
 
-Imports SyncroSim.Core
-Imports System.Globalization
-Imports SyncroSim.Core.Forms
 Imports System.Reflection
+Imports System.Globalization
+Imports SyncroSim.Core
+Imports SyncroSim.Core.Forms
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class StateAttributeReport
@@ -55,6 +55,7 @@ Class StateAttributeReport
         c.Add(New ExportColumn("Timestep", TimestepLabel))
         c.Add(New ExportColumn("Stratum", PrimaryStratumLabel))
         c.Add(New ExportColumn("SecondaryStratum", SecondaryStratumLabel))
+        c.Add(New ExportColumn("TertiaryStratum", TertiaryStratumLabel))
         c.Add(New ExportColumn("AttributeType", "Attribute"))
         c.Add(New ExportColumn("AgeMin", "Age Min"))
         c.Add(New ExportColumn("AgeMax", "Age Max"))
@@ -80,6 +81,7 @@ Class StateAttributeReport
                 "STSim_OutputStateAttribute.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_StateAttributeType.Name as AttributeType, " &
                 "STSim_OutputStateAttribute.AgeMin, " &
                 "STSim_OutputStateAttribute.AgeMax, " &
@@ -87,6 +89,7 @@ Class StateAttributeReport
                 "FROM STSim_OutputStateAttribute " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStateAttribute.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStateAttribute.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputStateAttribute.TertiaryStratumID " &
                 "INNER JOIN STSim_StateAttributeType ON STSim_StateAttributeType.StateAttributeTypeID = STSim_OutputStateAttribute.StateAttributeTypeID " &
                 "WHERE STSim_OutputStateAttribute.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -95,6 +98,7 @@ Class StateAttributeReport
                 "STSim_OutputStateAttribute.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_StateAttributeType.Name, " &
                 "AgeMin, " &
                 "AgeMax",
@@ -110,6 +114,7 @@ Class StateAttributeReport
                 "STSim_OutputStateAttribute.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_StateAttributeType.Name as AttributeType, " &
                 "STSim_OutputStateAttribute.AgeMin, " &
                 "STSim_OutputStateAttribute.AgeMax, " &
@@ -118,6 +123,7 @@ Class StateAttributeReport
                 "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputStateAttribute.ScenarioID " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStateAttribute.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStateAttribute.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputStateAttribute.TertiaryStratumID " &
                 "INNER JOIN STSim_StateAttributeType ON STSim_StateAttributeType.StateAttributeTypeID = STSim_OutputStateAttribute.StateAttributeTypeID " &
                 "WHERE STSim_OutputStateAttribute.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -127,6 +133,7 @@ Class StateAttributeReport
                 "STSim_OutputStateAttribute.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_StateAttributeType.Name, " &
                 "AgeMin, " &
                 "AgeMax",

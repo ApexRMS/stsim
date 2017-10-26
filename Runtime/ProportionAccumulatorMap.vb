@@ -13,19 +13,22 @@ Imports SyncroSim.Common
 ''' <remarks></remarks>
 Class ProportionAccumulatorMap
 
-    Private m_Map As New MultiLevelKeyMap2(Of AccumulatedProportion)
+    Private m_Map As New MultiLevelKeyMap3(Of AccumulatedProportion)
     Private m_Amount As Double
 
     Public Sub New(ByVal amount As Double)
         Me.m_Amount = amount
     End Sub
 
-    Public Sub AddOrIncrement(ByVal stratumId As Integer, ByVal secondaryStratumId As Nullable(Of Integer))
+    Public Sub AddOrIncrement(
+        ByVal stratumId As Integer,
+        ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer))
 
-        Dim ap As AccumulatedProportion = Me.m_Map.GetItemExact(stratumId, secondaryStratumId)
+        Dim ap As AccumulatedProportion = Me.m_Map.GetItemExact(stratumId, secondaryStratumId, tertiaryStratumId)
 
         If (ap Is Nothing) Then
-            Me.m_Map.AddItem(stratumId, secondaryStratumId, New AccumulatedProportion(Me.m_Amount))
+            Me.m_Map.AddItem(stratumId, secondaryStratumId, tertiaryStratumId, New AccumulatedProportion(Me.m_Amount))
         Else
             Debug.Assert(ap.Amount >= Me.m_Amount)
             ap.Amount += Me.m_Amount
@@ -33,9 +36,12 @@ Class ProportionAccumulatorMap
 
     End Sub
 
-    Public Sub Decrement(ByVal stratumId As Integer, ByVal secondaryStratumId As Nullable(Of Integer))
+    Public Sub Decrement(
+        ByVal stratumId As Integer,
+        ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer))
 
-        Dim ap As AccumulatedProportion = Me.m_Map.GetItemExact(stratumId, secondaryStratumId)
+        Dim ap As AccumulatedProportion = Me.m_Map.GetItemExact(stratumId, secondaryStratumId, tertiaryStratumId)
 
         ap.Amount -= Me.m_Amount
 
@@ -45,9 +51,12 @@ Class ProportionAccumulatorMap
 
     End Sub
 
-    Public Function GetValue(ByVal stratumId As Integer, ByVal secondaryStratumId As Nullable(Of Integer)) As Object
+    Public Function GetValue(
+        ByVal stratumId As Integer,
+        ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer)) As Object
 
-        Dim ap As AccumulatedProportion = Me.m_Map.GetItemExact(stratumId, secondaryStratumId)
+        Dim ap As AccumulatedProportion = Me.m_Map.GetItemExact(stratumId, secondaryStratumId, tertiaryStratumId)
 
         If (ap Is Nothing) Then
             Return Nothing

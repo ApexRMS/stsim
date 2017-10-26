@@ -9,14 +9,14 @@ Imports SyncroSim.Common
 Imports System.Collections.ObjectModel
 
 Friend Class OutputStratumTransitionStateCollection
-    Inherits KeyedCollection(Of SevenIntegerLookupKey, OutputStratumTransitionState)
+    Inherits KeyedCollection(Of EightIntegerLookupKey, OutputStratumTransitionState)
 
     Public Sub New()
-        MyBase.New(New SevenIntegerLookupKeyEqualityComparer)
+        MyBase.New(New EightIntegerLookupKeyEqualityComparer)
     End Sub
 
-    Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumTransitionState) As SevenIntegerLookupKey
-        Return New SevenIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), item.Iteration, item.Timestep, item.TransitionTypeId, item.StateClassId, item.EndStateClassId)
+    Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumTransitionState) As EightIntegerLookupKey
+        Return New EightIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.TransitionTypeId, item.StateClassId, item.EndStateClassId)
     End Function
 
 End Class

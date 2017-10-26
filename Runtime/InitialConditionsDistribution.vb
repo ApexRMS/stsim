@@ -12,26 +12,19 @@
 Friend Class InitialConditionsDistribution
 
     Private m_StratumId As Integer
-    Private m_Iteration As Nullable(Of Integer) = Nothing
-    Private m_SecondaryStratumId As Nullable(Of Integer) = Nothing
+    Private m_Iteration As Nullable(Of Integer)
+    Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_StateClassId As Integer
     Private m_AgeMin As Integer
     Private m_AgeMax As Integer
     Private m_RelativeAmount As Double
 
-    ''' <summary>
-    ''' Constructor
-    ''' </summary>
-    ''' <param name="stratumId"></param>
-    ''' <param name="stateClassId"></param>
-    ''' <param name="ageMin"></param>
-    ''' <param name="ageMax"></param>
-    ''' <param name="relativeAmount"></param>
-    ''' <remarks></remarks>
     Public Sub New(
         ByVal stratumId As Integer,
         ByVal iteration As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal ageMin As Integer,
         ByVal ageMax As Integer,
@@ -40,6 +33,7 @@ Friend Class InitialConditionsDistribution
         Me.m_StratumId = stratumId
         Me.m_Iteration = iteration
         Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_StateClassId = stateClassId
         Me.m_AgeMin = ageMin
         Me.m_AgeMax = ageMax
@@ -48,7 +42,7 @@ Friend Class InitialConditionsDistribution
     End Sub
 
     ''' <summary>
-    ''' Stratum Id for the cell
+    ''' Gets the stratum Id
     ''' </summary>
     Public ReadOnly Property StratumId As Integer
         Get
@@ -65,13 +59,21 @@ Friend Class InitialConditionsDistribution
         End Get
     End Property
 
-
     ''' <summary>
     ''' Gets the Secondary Stratum Id
     ''' </summary>
     Public ReadOnly Property SecondaryStratumId As Nullable(Of Integer)
         Get
             Return Me.m_SecondaryStratumId
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets the Tertiary Stratum Id
+    ''' </summary>
+    Public ReadOnly Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
         End Get
     End Property
 

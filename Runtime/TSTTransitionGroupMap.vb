@@ -11,7 +11,7 @@ Imports SyncroSim.Common
 Friend Class TstTransitionGroupMap
     Inherits STSimMapBase
 
-    Private m_Map As New MultiLevelKeyMap3(Of TstTransitionGroup)
+    Private m_Map As New MultiLevelKeyMap4(Of TstTransitionGroup)
 
     Public Sub New(ByVal scenario As Scenario)
         MyBase.New(scenario)
@@ -20,12 +20,14 @@ Friend Class TstTransitionGroupMap
     Public Function GetGroup(
         ByVal transitionTypeId As Integer,
         ByVal stratumId As Integer,
-        ByVal secondaryStratumId As Nullable(Of Integer)) As TstTransitionGroup
+        ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer)) As TstTransitionGroup
 
         Return Me.m_Map.GetItem(
             transitionTypeId,
             stratumId,
-            secondaryStratumId)
+            secondaryStratumId,
+            tertiaryStratumId)
 
     End Function
 
@@ -33,15 +35,16 @@ Friend Class TstTransitionGroupMap
         ByVal transitionTypeId As Integer,
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal item As TstTransitionGroup)
 
-        Dim v As TstTransitionGroup = Me.m_Map.GetItemExact(transitionTypeId, stratumId, secondaryStratumId)
+        Dim v As TstTransitionGroup = Me.m_Map.GetItemExact(transitionTypeId, stratumId, secondaryStratumId, tertiaryStratumId)
 
         If (v IsNot Nothing) Then
 
             Dim template As String =
                 "A duplicate Time-Since-Transition Group was detected: More information:" & vbCrLf &
-                "Transition Type={0}, {1}={2}, {3}={4}."
+                "Transition Type={0}, {1}={2}, {3}={4}, {5}={6}."
 
             ExceptionUtils.ThrowArgumentException(
                 template,
@@ -49,11 +52,13 @@ Friend Class TstTransitionGroupMap
                 Me.PrimaryStratumLabel,
                 Me.GetStratumName(stratumId),
                 Me.SecondaryStratumLabel,
-                Me.GetSecondaryStratumName(secondaryStratumId))
+                Me.GetSecondaryStratumName(secondaryStratumId),
+                Me.TertiaryStratumLabel,
+                Me.GetTertiaryStratumName(tertiaryStratumId))
 
         End If
 
-        Me.m_Map.AddItem(transitionTypeId, stratumId, secondaryStratumId, item)
+        Me.m_Map.AddItem(transitionTypeId, stratumId, secondaryStratumId, tertiaryStratumId, item)
         Me.SetHasItems()
 
     End Sub

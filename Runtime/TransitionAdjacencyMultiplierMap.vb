@@ -14,7 +14,7 @@ Class TransitionAdjacencyMultiplierMapEntry
 End Class
 
 Class TransitionAdjacencyMultiplierMap
-    Inherits STSimMapBase3(Of TransitionAdjacencyMultiplierMapEntry)
+    Inherits STSimMapBase4(Of TransitionAdjacencyMultiplierMapEntry)
 
     Private m_DistributionProvider As STSimDistributionProvider
 
@@ -37,6 +37,7 @@ Class TransitionAdjacencyMultiplierMap
         ByVal transitionGroupId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Integer,
         ByVal timestep As Integer,
         ByVal attributeValue As Double) As Double
@@ -46,6 +47,7 @@ Class TransitionAdjacencyMultiplierMap
                 transitionGroupId,
                 stratumId,
                 secondaryStratumId,
+                tertiaryStratumId,
                 iteration,
                 timestep)
 
@@ -139,6 +141,7 @@ Class TransitionAdjacencyMultiplierMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.Iteration,
                 item.Timestep)
 
@@ -150,6 +153,7 @@ Class TransitionAdjacencyMultiplierMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.Iteration,
                 item.Timestep,
                 e)

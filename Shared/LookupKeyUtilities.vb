@@ -37,4 +37,14 @@ Module LookupKeyUtilities
         Return GetNullableKey(simulationCell.SecondaryStratumId)
     End Function
 
+    ''' <summary>
+    ''' Gets a tertiary stratum Id key for the specified cell
+    ''' </summary>
+    ''' <param name="simulationCell"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetTertiaryStratumIdKey(ByVal simulationCell As Cell) As Integer
+        Return GetNullableKey(simulationCell.TertiaryStratumId)
+    End Function
+
 End Module

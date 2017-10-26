@@ -8,7 +8,7 @@
 Imports SyncroSim.Core
 
 Class TransitionAttributeValueMap
-    Inherits STSimMapBase5(Of List(Of AttributeValueRecord))
+    Inherits STSimMapBase6(Of List(Of AttributeValueRecord))
 
     Private m_TypeGroupMap As New Dictionary(Of Integer, Dictionary(Of Integer, Boolean))
 
@@ -35,6 +35,7 @@ Class TransitionAttributeValueMap
         ByVal transitionGroupId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer,
@@ -45,6 +46,7 @@ Class TransitionAttributeValueMap
             transitionGroupId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             stateClassId,
             iteration,
             timestep)
@@ -65,6 +67,7 @@ Class TransitionAttributeValueMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.StateClassId,
                 item.Iteration,
                 item.Timestep)
@@ -78,6 +81,7 @@ Class TransitionAttributeValueMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.StateClassId,
                 item.Iteration,
                 item.Timestep,

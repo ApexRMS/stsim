@@ -309,6 +309,8 @@ Partial Class TransitionDiagram
         Dim StateClassIdSource As Integer = CInt(dr(DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME))
         Dim StratumIdDest As Nullable(Of Integer) = Nothing
         Dim StateClassIdDest As Nullable(Of Integer) = Nothing
+        Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+        Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
         Dim Propn As Double = 1.0
         Dim AgeMin As Integer = 0
         Dim AgeMax As Integer = Integer.MaxValue
@@ -338,6 +340,14 @@ Partial Class TransitionDiagram
             StateClassIdDest = CInt(dr(DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME))
         End If
 
+        If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+            SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+        End If
+
+        If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+            TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
+        End If
+
         Dim pt As New Transition(
             Iteration,
             Timestep,
@@ -345,6 +355,8 @@ Partial Class TransitionDiagram
             StateClassIdSource,
             StratumIdDest,
             StateClassIdDest,
+            SecondaryStratumId,
+            TertiaryStratumId,
             CInt(dr(DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME)),
             CDbl(dr(DATASHEET_PT_PROBABILITY_COLUMN_NAME)),
             Propn,

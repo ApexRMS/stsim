@@ -14,6 +14,7 @@ Partial Class STSimTransformer
     Private m_Cells As New CellCollection
     Private m_Strata As New StratumCollection
     Private m_SecondaryStrata As New StratumCollection
+    Private m_TertiaryStrata As New StratumCollection
     Private m_StateClasses As New StateClassCollection
     Private m_TransitionGroups As New TransitionGroupCollection
     Private m_ShufflableTransitionGroups As New List(Of TransitionGroup)
@@ -156,6 +157,24 @@ Partial Class STSimTransformer
 
             Dim SecondaryStratumId As Integer = CInt(dr(ds.PrimaryKeyColumn.Name))
             Me.m_SecondaryStrata.Add(New Stratum(SecondaryStratumId))
+
+        Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Fills the model's tertiary stratum collection
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub FillTertiaryStratumCollection()
+
+        Debug.Assert(Me.m_TertiaryStrata.Count = 0)
+        Dim ds As DataSheet = Me.Project.GetDataSheet(DATASHEET_TERTIARY_STRATA_NAME)
+
+        For Each dr As DataRow In ds.GetData.Rows
+
+            Dim TertiaryStratumId As Integer = CInt(dr(ds.PrimaryKeyColumn.Name))
+            Me.m_TertiaryStrata.Add(New Stratum(TertiaryStratumId))
 
         Next
 
@@ -514,10 +533,10 @@ Partial Class STSimTransformer
     End Sub
 
     ''' <summary>
-    ''' Fills the initial conditions distribution collection
+    ''' Fills the initial conditions distribution collection and creates the map
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub FillInitialConditionsDistributionMap()
+    Private Sub FillInitialConditionsDistributionCollectionAndMap()
 
         Me.m_InitialConditionsDistributions.Clear()
 
@@ -533,6 +552,7 @@ Partial Class STSimTransformer
             Dim StratumId As Integer = CInt(dr(DATASHEET_STRATUM_ID_COLUMN_NAME))
             Dim Iteration As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim AgeMin As Integer = 0
             Dim AgeMax As Integer = Integer.MaxValue
             Dim RelativeAmount As Double = CDbl(dr(DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME))
@@ -545,6 +565,10 @@ Partial Class STSimTransformer
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
             End If
 
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
             If (dr(DATASHEET_AGE_MIN_COLUMN_NAME) IsNot DBNull.Value) Then
                 AgeMin = CInt(dr(DATASHEET_AGE_MIN_COLUMN_NAME))
             End If
@@ -554,9 +578,12 @@ Partial Class STSimTransformer
             End If
 
             Dim InitialStateRecord As New InitialConditionsDistribution(
-                StratumId, Iteration, SecondaryStratumId, StateClassId, AgeMin, AgeMax, RelativeAmount)
+                StratumId, Iteration,
+                SecondaryStratumId, TertiaryStratumId,
+                StateClassId, AgeMin, AgeMax, RelativeAmount)
 
             Me.m_InitialConditionsDistributions.Add(InitialStateRecord)
+
         Next
 
         Me.m_InitialConditionsDistributionMap = New InitialConditionsDistributionMap(Me.m_InitialConditionsDistributions)
@@ -564,10 +591,10 @@ Partial Class STSimTransformer
     End Sub
 
     ''' <summary>
-    ''' Fills the initial conditions spatial collection
+    ''' Fills the initial conditions spatial collection and creates the map
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub FillInitialConditionsSpatialMap()
+    Private Sub FillInitialConditionsSpatialCollectionAndMap()
 
         Me.m_InitialConditionsSpatials.Clear()
 
@@ -581,9 +608,10 @@ Partial Class STSimTransformer
 
             Dim Iteration As Nullable(Of Integer) = Nothing
             Dim PrimaryStratumName As String
-            Dim SecondaryStratumName As String = ""
+            Dim SecondaryStratumName As String
+            Dim TertiaryStratumName As String
             Dim StateClassName As String
-            Dim AgeName As String = ""
+            Dim AgeName As String
 
             If (dr(DATASHEET_ITERATION_COLUMN_NAME) IsNot DBNull.Value) Then
                 Iteration = CInt(dr(DATASHEET_ITERATION_COLUMN_NAME))
@@ -591,11 +619,12 @@ Partial Class STSimTransformer
 
             PrimaryStratumName = dr(DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME).ToString()
             SecondaryStratumName = dr(DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME).ToString()
+            TertiaryStratumName = dr(DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME).ToString()
             StateClassName = dr(DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME).ToString()
             AgeName = dr(DATASHEET_SPIC_AGE_FILE_COLUMN_NAME).ToString()
 
             Dim InitialStateRecord As New InitialConditionsSpatial(
-                Iteration, PrimaryStratumName, SecondaryStratumName, StateClassName, AgeName)
+                Iteration, PrimaryStratumName, SecondaryStratumName, TertiaryStratumName, StateClassName, AgeName)
 
             Me.m_InitialConditionsSpatials.Add(InitialStateRecord)
         Next
@@ -685,6 +714,8 @@ Partial Class STSimTransformer
             Dim StateClassIdSource As Integer = CInt(dr(DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME))
             Dim StratumIdDest As Nullable(Of Integer) = Nothing
             Dim StateClassIdDest As Nullable(Of Integer) = StateClassIdSource
+            Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionTypeId As Integer = CInt(dr(DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME))
             Dim Probability As Double = CDbl(dr(DATASHEET_PT_PROBABILITY_COLUMN_NAME))
             Dim Proportion As Double = 1.0
@@ -714,6 +745,14 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME) IsNot DBNull.Value) Then
                 StateClassIdDest = CInt(dr(DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_PT_PROPORTION_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -755,6 +794,8 @@ Partial Class STSimTransformer
                 StateClassIdSource,
                 StratumIdDest,
                 StateClassIdDest,
+                SecondaryStratumId,
+                TertiaryStratumId,
                 TransitionTypeId,
                 Probability,
                 Proportion,
@@ -825,6 +866,7 @@ Partial Class STSimTransformer
             Dim StateAttributeTypeId As Integer = CInt(dr(DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME))
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim Iteration As Nullable(Of Integer) = Nothing
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StateClassId As Nullable(Of Integer) = Nothing
@@ -838,6 +880,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_ITERATION_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -874,7 +920,9 @@ Partial Class STSimTransformer
             End If
 
             Dim attr As New StateAttributeValue(
-                StateAttributeTypeId, StratumId, SecondaryStratumId, Iteration, Timestep,
+                StateAttributeTypeId,
+                StratumId, SecondaryStratumId, TertiaryStratumId,
+                Iteration, Timestep,
                 StateClassId, AgeMin, AgeMax, Value)
 
             Me.m_StateAttributeValues.Add(attr)
@@ -897,6 +945,7 @@ Partial Class STSimTransformer
             Dim TransitionAttributeTypeId As Integer = CInt(dr(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME))
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim Iteration As Nullable(Of Integer) = Nothing
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim TransitionGroupId As Integer = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
@@ -911,6 +960,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_ITERATION_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -934,8 +987,10 @@ Partial Class STSimTransformer
             End If
 
             Dim attr As New TransitionAttributeValue(
-                TransitionAttributeTypeId, StratumId, SecondaryStratumId, Iteration,
-                Timestep, TransitionGroupId, StateClassId, AgeMin, AgeMax, Value)
+                TransitionAttributeTypeId,
+                StratumId, SecondaryStratumId, TertiaryStratumId,
+                Iteration, Timestep,
+                TransitionGroupId, StateClassId, AgeMin, AgeMax, Value)
 
             Me.m_TransitionAttributeValues.Add(attr)
 
@@ -958,6 +1013,7 @@ Partial Class STSimTransformer
 
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionTypeId As Integer = CInt(dr(DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME))
             Dim TransitionGroupId As Integer = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
 
@@ -969,10 +1025,15 @@ Partial Class STSimTransformer
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
             End If
 
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
             Me.m_TstTransitionGroupMap.AddGroup(
                 TransitionTypeId,
                 StratumId,
                 SecondaryStratumId,
+                TertiaryStratumId,
                 New TstTransitionGroup(TransitionGroupId))
 
         Next
@@ -994,6 +1055,7 @@ Partial Class STSimTransformer
 
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionGroupId As Nullable(Of Integer) = Nothing
             Dim StateClassId As Nullable(Of Integer) = Nothing
             Dim Iteration As Nullable(Of Integer) = Nothing
@@ -1010,6 +1072,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -1036,6 +1102,7 @@ Partial Class STSimTransformer
                 TransitionGroupId,
                 StratumId,
                 SecondaryStratumId,
+                TertiaryStratumId,
                 StateClassId,
                 Iteration,
                 New TstRandomize(MinInitialTST, MaxInitialTST))
@@ -1072,8 +1139,7 @@ Partial Class STSimTransformer
                 Order = CDbl(dr(DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME))
             End If
 
-            Me.m_TransitionOrders.Add(
-                New TransitionOrder(TransitionGroupId, Iteration, Timestep, Order))
+            Me.m_TransitionOrders.Add(New TransitionOrder(TransitionGroupId, Iteration, Timestep, Order))
 
         Next
 
@@ -1094,6 +1160,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionGroupId As Integer = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
             Dim TargetAmount As Nullable(Of Double) = Nothing
             Dim DistributionTypeId As Nullable(Of Integer) = Nothing
@@ -1116,6 +1183,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_AMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -1149,6 +1220,7 @@ Partial Class STSimTransformer
                     Timestep,
                     StratumId,
                     SecondaryStratumId,
+                    TertiaryStratumId,
                     TransitionGroupId,
                     TargetAmount,
                     DistributionTypeId,
@@ -1190,6 +1262,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionAttributeTypeId As Integer = CInt(dr(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME))
             Dim TargetAmount As Nullable(Of Double) = Nothing
             Dim DistributionTypeId As Nullable(Of Integer) = Nothing
@@ -1212,6 +1285,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_AMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -1246,6 +1323,7 @@ Partial Class STSimTransformer
                     Timestep,
                     StratumId,
                     SecondaryStratumId,
+                    TertiaryStratumId,
                     TransitionAttributeTypeId,
                     TargetAmount,
                     DistributionTypeId,
@@ -1295,6 +1373,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim StateClassId As Nullable(Of Integer) = Nothing
             Dim TransitionMultiplierTypeId As Nullable(Of Integer) = Nothing
             Dim MultiplierAmount As Nullable(Of Double) = Nothing
@@ -1318,6 +1397,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_STATECLASS_ID_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -1360,6 +1443,7 @@ Partial Class STSimTransformer
                     Timestep,
                     StratumId,
                     SecondaryStratumId,
+                    TertiaryStratumId,
                     StateClassId,
                     TransitionMultiplierTypeId,
                     MultiplierAmount,
@@ -1544,7 +1628,6 @@ Partial Class STSimTransformer
         Next
 
     End Sub
-
 
     ''' <summary>
     ''' Fills the transition size distribution collection
@@ -1762,6 +1845,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionGroupId As Nullable(Of Integer) = Nothing
             Dim Factor As Double = CDbl(dr(DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_FACTOR_COLUMN_NAME))
             Dim SpreadOnlyToLike As Boolean = False
@@ -1782,6 +1866,10 @@ Partial Class STSimTransformer
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
             End If
 
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
             If (dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 TransitionGroupId = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
             End If
@@ -1791,7 +1879,9 @@ Partial Class STSimTransformer
             End If
 
             Dim Item As New TransitionPathwayAutoCorrelation(
-                 Iteration, Timestep, StratumId, SecondaryStratumId, TransitionGroupId, Factor, SpreadOnlyToLike)
+                 Iteration, Timestep,
+                 StratumId, SecondaryStratumId, TertiaryStratumId,
+                 TransitionGroupId, Factor, SpreadOnlyToLike)
 
             Me.m_TransitionPathwayAutoCorrelations.Add(Item)
 
@@ -1815,6 +1905,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim CardinalDirection As CardinalDirection = CType(CInt(dr(DATASHEET_TRANSITION_DIRECTION_MULTIPLER_CARDINAL_DIRECTION_COLUMN_NAME)), CardinalDirection)
             Dim MultiplierAmount As Nullable(Of Double) = Nothing
             Dim DistributionTypeId As Nullable(Of Integer) = Nothing
@@ -1837,6 +1928,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_AMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -1871,6 +1966,7 @@ Partial Class STSimTransformer
                     Timestep,
                     StratumId,
                     SecondaryStratumId,
+                    TertiaryStratumId,
                     CardinalDirection,
                     MultiplierAmount,
                     DistributionTypeId,
@@ -1912,6 +2008,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim Slope As Integer = CInt(dr(DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME))
             Dim MultiplierAmount As Nullable(Of Double) = Nothing
             Dim DistributionTypeId As Nullable(Of Integer) = Nothing
@@ -1934,6 +2031,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_AMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -1968,6 +2069,7 @@ Partial Class STSimTransformer
                     Timestep,
                     StratumId,
                     SecondaryStratumId,
+                    TertiaryStratumId,
                     Slope,
                     MultiplierAmount,
                     DistributionTypeId,
@@ -2043,6 +2145,7 @@ Partial Class STSimTransformer
             Dim Timestep As Nullable(Of Integer) = Nothing
             Dim StratumId As Nullable(Of Integer) = Nothing
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+            Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim AttributeValue As Double = CDbl(dr(DATASHEET_TRANSITION_ADJACENCY_ATTRIBUTE_VALUE_COLUMN_NAME))
             Dim MultiplierAmount As Nullable(Of Double) = Nothing
             Dim DistributionTypeId As Nullable(Of Integer) = Nothing
@@ -2065,6 +2168,10 @@ Partial Class STSimTransformer
 
             If (dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
                 SecondaryStratumId = CInt(dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME))
+            End If
+
+            If (dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) IsNot DBNull.Value) Then
+                TertiaryStratumId = CInt(dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
             End If
 
             If (dr(DATASHEET_AMOUNT_COLUMN_NAME) IsNot DBNull.Value) Then
@@ -2099,6 +2206,7 @@ Partial Class STSimTransformer
                     Timestep,
                     StratumId,
                     SecondaryStratumId,
+                    TertiaryStratumId,
                     AttributeValue,
                     MultiplierAmount,
                     DistributionTypeId,

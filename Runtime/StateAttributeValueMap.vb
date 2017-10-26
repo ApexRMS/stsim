@@ -8,7 +8,7 @@
 Imports SyncroSim.Core
 
 Class StateAttributeValueMap
-    Inherits STSimMapBase4(Of List(Of AttributeValueRecord))
+    Inherits STSimMapBase5(Of List(Of AttributeValueRecord))
 
     Friend Sub New(
         ByVal scenario As Scenario,
@@ -26,6 +26,7 @@ Class StateAttributeValueMap
         ByVal stateAttributeTypeId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer) As Nullable(Of Double)
@@ -34,6 +35,7 @@ Class StateAttributeValueMap
             stateAttributeTypeId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             stateClassId,
             iteration,
             timestep)
@@ -50,6 +52,7 @@ Class StateAttributeValueMap
         ByVal stateAttributeTypeId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer,
@@ -59,6 +62,7 @@ Class StateAttributeValueMap
             stateAttributeTypeId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             stateClassId,
             iteration,
             timestep)
@@ -78,6 +82,7 @@ Class StateAttributeValueMap
                 item.AttributeTypeId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.StateClassId,
                 item.Iteration,
                 item.Timestep)
@@ -90,6 +95,7 @@ Class StateAttributeValueMap
                 item.AttributeTypeId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.StateClassId,
                 item.Iteration,
                 item.Timestep,

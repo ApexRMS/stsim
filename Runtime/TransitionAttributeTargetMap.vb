@@ -8,7 +8,7 @@
 Imports SyncroSim.Core
 
 Class TransitionAttributeTargetMap
-    Inherits STSimMapBase3(Of TransitionAttributeTarget)
+    Inherits STSimMapBase4(Of TransitionAttributeTarget)
 
     Public Sub New(
         ByVal scenario As Scenario,
@@ -26,6 +26,7 @@ Class TransitionAttributeTargetMap
         ByVal transitionAttributeTypeId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Integer,
         ByVal timestep As Integer) As TransitionAttributeTarget
 
@@ -33,6 +34,7 @@ Class TransitionAttributeTargetMap
             transitionAttributeTypeId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             iteration,
             timestep)
 
@@ -46,6 +48,7 @@ Class TransitionAttributeTargetMap
                 item.TransitionAttributeTypeId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.Iteration,
                 item.Timestep,
                 item)
@@ -54,7 +57,7 @@ Class TransitionAttributeTargetMap
 
             Dim template As String =
                 "A duplicate transition attribute target was detected: More information:" & vbCrLf &
-                "Transition Attribute Type={0}, {1}={2}, {3}={4}, Iteration={5}, Timestep={6}." & vbCrLf &
+                "Transition Attribute Type={0}, {1}={2}, {3}={4}, {5}={6}, Iteration={7}, Timestep={8}." & vbCrLf &
                 "NOTE: A user defined distribution can result in additional transition attribute targets when the model is run."
 
             ExceptionUtils.ThrowArgumentException(
@@ -64,6 +67,8 @@ Class TransitionAttributeTargetMap
                 Me.GetStratumName(item.StratumId),
                 Me.SecondaryStratumLabel,
                 Me.GetSecondaryStratumName(item.SecondaryStratumId),
+                Me.TertiaryStratumLabel,
+                Me.GetTertiaryStratumName(item.TertiaryStratumId),
                 STSimMapBase.FormatValue(item.Iteration),
                 STSimMapBase.FormatValue(item.Timestep))
 

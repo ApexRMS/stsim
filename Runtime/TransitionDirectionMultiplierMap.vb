@@ -9,7 +9,7 @@ Imports SyncroSim.Core
 Imports SyncroSim.StochasticTime
 
 Class TransitionDirectionMultiplierMap
-    Inherits STSimMapBase4(Of TransitionDirectionMultiplier)
+    Inherits STSimMapBase5(Of TransitionDirectionMultiplier)
 
     Private m_DistributionProvider As STSimDistributionProvider
 
@@ -32,6 +32,7 @@ Class TransitionDirectionMultiplierMap
         ByVal transitionGroupId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal cardinalDirection As CardinalDirection,
         ByVal iteration As Integer,
         ByVal timestep As Integer) As Double
@@ -40,6 +41,7 @@ Class TransitionDirectionMultiplierMap
             transitionGroupId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             cardinalDirection,
             iteration,
             timestep)
@@ -61,6 +63,7 @@ Class TransitionDirectionMultiplierMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.CardinalDirection,
                 item.Iteration,
                 item.Timestep,
@@ -70,7 +73,7 @@ Class TransitionDirectionMultiplierMap
 
             Dim template As String =
                 "A duplicate transition direction multiplier was detected: More information:" & vbCrLf &
-                "Transition Group={0}, {1}={2}, {3}={4}, Iteration={5}, Timestep={6}, Cardinal Direction={7}." & vbCrLf &
+                "Transition Group={0}, {1}={2}, {3}={4}, {5}={6}, Iteration={7}, Timestep={8}, Cardinal Direction={9}." & vbCrLf &
                 "NOTE: A user defined distribution can result in additional transition direction multipliers when the model is run."
 
             ExceptionUtils.ThrowArgumentException(
@@ -80,6 +83,8 @@ Class TransitionDirectionMultiplierMap
                 Me.GetStratumName(item.StratumId),
                 Me.SecondaryStratumLabel,
                 Me.GetSecondaryStratumName(item.SecondaryStratumId),
+                Me.TertiaryStratumLabel,
+                Me.GetTertiaryStratumName(item.TertiaryStratumId),
                 STSimMapBase.FormatValue(item.Iteration),
                 STSimMapBase.FormatValue(item.Timestep),
                 GetCardinalDirection(item.CardinalDirection))

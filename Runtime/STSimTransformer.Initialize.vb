@@ -218,6 +218,7 @@ Partial Class STSimTransformer
         Me.FillCellCollection()
         Me.FillStratumCollection()
         Me.FillSecondaryStratumCollection()
+        Me.FillTertiaryStratumCollection()
         Me.FillStateClassCollection()
         Me.FillTransitionGroupCollection()
         Me.FillTransitionTypeCollection()

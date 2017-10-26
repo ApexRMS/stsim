@@ -13,14 +13,14 @@ Imports System.Collections.ObjectModel
 ''' </summary>
 ''' <remarks></remarks>
 Friend Class OutputStratumStateCollection
-    Inherits KeyedCollection(Of SixIntegerLookupKey, OutputStratumState)
+    Inherits KeyedCollection(Of SevenIntegerLookupKey, OutputStratumState)
 
     Public Sub New()
-        MyBase.New(New SixIntegerLookupKeyEqualityComparer)
+        MyBase.New(New SevenIntegerLookupKeyEqualityComparer)
     End Sub
 
-    Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumState) As SixIntegerLookupKey
-        Return New SixIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), item.Iteration, item.Timestep, item.StateClassId, item.AgeKey)
+    Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumState) As SevenIntegerLookupKey
+        Return New SevenIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.StateClassId, item.AgeKey)
     End Function
 
 End Class
@@ -30,14 +30,14 @@ End Class
 ''' </summary>
 ''' <remarks></remarks>
 Friend Class OutputStratumStateCollectionZeroValues
-    Inherits KeyedCollection(Of FiveIntegerLookupKey, OutputStratumState)
+    Inherits KeyedCollection(Of SixIntegerLookupKey, OutputStratumState)
 
     Public Sub New()
-        MyBase.New(New FiveIntegerLookupKeyEqualityComparer)
+        MyBase.New(New SixIntegerLookupKeyEqualityComparer)
     End Sub
 
-    Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumState) As FiveIntegerLookupKey
-        Return New FiveIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), item.Iteration, item.Timestep, item.StateClassId)
+    Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumState) As SixIntegerLookupKey
+        Return New SixIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.StateClassId)
     End Function
 
 End Class

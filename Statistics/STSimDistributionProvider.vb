@@ -121,6 +121,7 @@ Public NotInheritable Class STSimDistributionProvider
                     DataTableUtilities.GetNullableInt(dr, DATASHEET_TIMESTEP_COLUMN_NAME),
                     DataTableUtilities.GetNullableInt(dr, DATASHEET_STRATUM_ID_COLUMN_NAME),
                     DataTableUtilities.GetNullableInt(dr, DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME),
+                    DataTableUtilities.GetNullableInt(dr, DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME),
                     CInt(dr(DISTRIBUTION_VALUE_DIST_TYPE_ID_COLUMN_NAME)),
                     DataTableUtilities.GetNullableInt(dr, DISTRIBUTION_VALUE_EXTVAR_TYPE_ID_COLUMN_NAME),
                     DataTableUtilities.GetNullableDouble(dr, DISTRIBUTION_VALUE_EXTVAR_MIN_COLUMN_NAME),

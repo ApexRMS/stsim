@@ -5,8 +5,8 @@
 '
 '*********************************************************************************************
 
-Imports SyncroSim.StochasticTime
 Imports System.ComponentModel
+Imports SyncroSim.StochasticTime
 
 Public MustInherit Class STSimDistributionBase
 
@@ -14,6 +14,7 @@ Public MustInherit Class STSimDistributionBase
     Private m_Timestep As Nullable(Of Integer)
     Private m_StratumId As Nullable(Of Integer)
     Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_DistributionValue As Nullable(Of Double)
     Private m_DistributionTypeId As Nullable(Of Integer)
     Private m_DistributionFrequency As DistributionFrequency = DistributionFrequency.Always
@@ -27,6 +28,7 @@ Public MustInherit Class STSimDistributionBase
         ByVal timestep As Nullable(Of Integer),
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal distributionValue As Nullable(Of Double),
         ByVal distributionTypeId As Nullable(Of Integer),
         ByVal distributionFrequency As Nullable(Of DistributionFrequency),
@@ -38,6 +40,7 @@ Public MustInherit Class STSimDistributionBase
         Me.m_Timestep = timestep
         Me.m_StratumId = stratumId
         Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_DistributionValue = distributionValue
         Me.m_DistributionTypeId = distributionTypeId
         Me.m_DistributionSD = distributionSD
@@ -77,6 +80,15 @@ Public MustInherit Class STSimDistributionBase
         End Get
         Set(value As Nullable(Of Integer))
             Me.m_SecondaryStratumId = value
+        End Set
+    End Property
+
+    Public Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
+        End Get
+        Set(ByVal value As Nullable(Of Integer))
+            Me.m_TertiaryStratumId = value
         End Set
     End Property
 

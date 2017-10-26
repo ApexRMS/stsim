@@ -11,7 +11,7 @@ Imports SyncroSim.Common
 Friend Class TstRandomizeMap
     Inherits STSimMapBase
 
-    Private m_map As New MultiLevelKeyMap4(Of SortedKeyMap1(Of TstRandomize))
+    Private m_map As New MultiLevelKeyMap5(Of SortedKeyMap1(Of TstRandomize))
 
     Public Sub New(ByVal scenario As Scenario)
         MyBase.New(scenario)
@@ -21,6 +21,7 @@ Friend Class TstRandomizeMap
         ByVal transitionGroupId As Nullable(Of Integer),
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Nullable(Of Integer),
         ByVal iteration As Nullable(Of Integer)) As TstRandomize
 
@@ -29,7 +30,7 @@ Friend Class TstRandomizeMap
         End If
 
         Dim m As SortedKeyMap1(Of TstRandomize) =
-            Me.m_map.GetItem(transitionGroupId, stratumId, secondaryStratumId, stateClassId)
+            Me.m_map.GetItem(transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId)
 
         If (m Is Nothing) Then
             Return Nothing
@@ -43,17 +44,18 @@ Friend Class TstRandomizeMap
         ByVal transitionGroupId As Nullable(Of Integer),
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Nullable(Of Integer),
         ByVal iteration As Nullable(Of Integer),
         ByVal tstRandomize As TstRandomize)
 
         Dim m As SortedKeyMap1(Of TstRandomize) =
-            Me.m_map.GetItemExact(transitionGroupId, stratumId, secondaryStratumId, stateClassId)
+            Me.m_map.GetItemExact(transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId)
 
         If (m Is Nothing) Then
 
             m = New SortedKeyMap1(Of TstRandomize)(SearchMode.ExactPrev)
-            Me.m_map.AddItem(transitionGroupId, stratumId, secondaryStratumId, stateClassId, m)
+            Me.m_map.AddItem(transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, m)
 
         End If
 
@@ -63,7 +65,7 @@ Friend Class TstRandomizeMap
 
             Dim template As String =
                 "A duplicate Time-Since-Transition Randomize value was detected: More information:" & vbCrLf &
-                "Transition Group={0}, {1}={2}, {3}={4}, State Class={5}, Iteration={6}."
+                "Transition Group={0}, {1}={2}, {3}={4}, {5}={6}, State Class={7}, Iteration={8}."
 
             ExceptionUtils.ThrowArgumentException(
                 template,
@@ -72,6 +74,8 @@ Friend Class TstRandomizeMap
                 Me.GetStratumName(stratumId),
                 Me.SecondaryStratumLabel,
                 Me.GetSecondaryStratumName(secondaryStratumId),
+                Me.TertiaryStratumLabel,
+                Me.GetTertiaryStratumName(tertiaryStratumId),
                 Me.GetStateClassName(stateClassId),
                 STSimMapBase.FormatValue(iteration))
 

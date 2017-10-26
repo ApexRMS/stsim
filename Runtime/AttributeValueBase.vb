@@ -14,6 +14,7 @@ Friend Class AttributeValueBase
     Private m_AttributeTypeId As Integer
     Private m_StratumId As Nullable(Of Integer)
     Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_Iteration As Nullable(Of Integer)
     Private m_Timestep As Nullable(Of Integer)
     Private m_StateClassId As Nullable(Of Integer)
@@ -25,6 +26,7 @@ Friend Class AttributeValueBase
         ByVal attributeTypeId As Integer,
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Nullable(Of Integer),
         ByVal timestep As Nullable(Of Integer),
         ByVal stateClassId As Nullable(Of Integer),
@@ -35,12 +37,13 @@ Friend Class AttributeValueBase
         Me.m_AttributeTypeId = attributeTypeId
         Me.m_StratumId = stratumId
         Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_Iteration = iteration
         Me.m_Timestep = timestep
-        Me.m_StateClassId = StateClassId
-        Me.m_MinimumAge = MinimumAge
-        Me.m_MaximumAge = MaximumAge
-        Me.m_Value = Value
+        Me.m_StateClassId = stateClassId
+        Me.m_MinimumAge = minimumAge
+        Me.m_MaximumAge = maximumAge
+        Me.m_Value = value
 
     End Sub
 
@@ -59,6 +62,12 @@ Friend Class AttributeValueBase
     Public ReadOnly Property SecondaryStratumId As Nullable(Of Integer)
         Get
             Return Me.m_SecondaryStratumId
+        End Get
+    End Property
+
+    Public ReadOnly Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
         End Get
     End Property
 

@@ -131,7 +131,7 @@ Partial Class STSimTransformer
             Dim NoSpatialIC As Boolean = Not (Me.ResultScenario.GetDataSheet(DATASHEET_SPIC_NAME).HasData())
 
             Me.NormalizeNonSpatialInitialConditions(False)
-            Me.FillInitialConditionsDistributionMap()
+            Me.FillInitialConditionsDistributionCollectionAndMap()
 
             ' See if we're going to run Spatially based on Non spatial initial conditions
             If NoSpatialIC Then
@@ -141,7 +141,7 @@ Partial Class STSimTransformer
                 Me.CreateSpatialICFromNonSpatialIC()
 
             Else
-                Me.FillInitialConditionsSpatialMap()
+                Me.FillInitialConditionsSpatialCollectionAndMap()
                 Me.CreateSpatialICFromCombinedIC()
             End If
 

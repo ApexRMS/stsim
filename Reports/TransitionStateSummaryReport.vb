@@ -6,9 +6,9 @@
 '*********************************************************************************************
 
 Imports SyncroSim.Core
-Imports System.Globalization
 Imports SyncroSim.Core.Forms
 Imports System.Reflection
+Imports System.Globalization
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionStateSummaryReport
@@ -69,6 +69,7 @@ Class TransitionStateSummaryReport
         c.Add(New ExportColumn("Timestep", TimestepLabel))
         c.Add(New ExportColumn("Stratum", PrimaryStratumLabel))
         c.Add(New ExportColumn("SecondaryStratum", SecondaryStratumLabel))
+        c.Add(New ExportColumn("TertiaryStratum", TertiaryStratumLabel))
         c.Add(New ExportColumn("TransitionType", "Transition Type"))
         c.Add(New ExportColumn("StateClass", "State Class"))
         c.Add(New ExportColumn("EndStateClass", "End State Class"))
@@ -94,6 +95,7 @@ Class TransitionStateSummaryReport
                 "STSim_OutputStratumTransitionState.Timestep,  " &
                 "ST1.Name AS Stratum,  " &
                 "ST2.Name AS SecondaryStratum,  " &
+                "ST3.Name AS TertiaryStratum,  " &
                 "STSim_TransitionType.Name as TransitionType, " &
                 "SC1.Name AS StateClass, " &
                 "SC2.Name AS EndStateClass, " &
@@ -101,6 +103,7 @@ Class TransitionStateSummaryReport
                 "FROM STSim_OutputStratumTransitionState " &
                 "INNER JOIN STSim_Stratum AS ST1 ON ST1.StratumID = STSim_OutputStratumTransitionState.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumID = STSim_OutputStratumTransitionState.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumID = STSim_OutputStratumTransitionState.TertiaryStratumID " &
                 "INNER JOIN STSim_StateClass as SC1 ON SC1.StateClassID = STSim_OutputStratumTransitionState.StateClassID " &
                 "INNER JOIN STSim_StateClass as SC2 ON SC2.StateClassID = STSim_OutputStratumTransitionState.EndStateClassID " &
                 "INNER JOIN STSim_TransitionType ON STSim_TransitionType.TransitionTypeID = STSim_OutputStratumTransitionState.TransitionTypeID " &
@@ -111,6 +114,7 @@ Class TransitionStateSummaryReport
                 "STSim_OutputStratumTransitionState.Timestep, " &
                 "ST1.Name, " &
                 "ST2.Name, " &
+                "ST3.Name, " &
                 "SC1.Name, " &
                 "SC2.Name, " &
                 "STSim_TransitionType.Name",
@@ -126,6 +130,7 @@ Class TransitionStateSummaryReport
                 "STSim_OutputStratumTransitionState.Timestep,  " &
                 "ST1.Name AS Stratum,  " &
                 "ST2.Name AS SecondaryStratum,  " &
+                "ST3.Name AS TertiaryStratum,  " &
                 "STSim_TransitionType.Name as TransitionType, " &
                 "SC1.Name AS StateClass, " &
                 "SC2.Name AS EndStateClass, " &
@@ -134,6 +139,7 @@ Class TransitionStateSummaryReport
                 "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputStratumTransitionState.ScenarioID " &
                 "INNER JOIN STSim_Stratum AS ST1 ON ST1.StratumID = STSim_OutputStratumTransitionState.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumID = STSim_OutputStratumTransitionState.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumID = STSim_OutputStratumTransitionState.TertiaryStratumID " &
                 "INNER JOIN STSim_StateClass as SC1 ON SC1.StateClassID = STSim_OutputStratumTransitionState.StateClassID " &
                 "INNER JOIN STSim_StateClass as SC2 ON SC2.StateClassID = STSim_OutputStratumTransitionState.EndStateClassID " &
                 "INNER JOIN STSim_TransitionType ON STSim_TransitionType.TransitionTypeID = STSim_OutputStratumTransitionState.TransitionTypeID " &
@@ -145,6 +151,7 @@ Class TransitionStateSummaryReport
                 "STSim_OutputStratumTransitionState.Timestep, " &
                 "ST1.Name, " &
                 "ST2.Name, " &
+                "ST3.Name, " &
                 "SC1.Name, " &
                 "SC2.Name, " &
                 "STSim_TransitionType.Name",

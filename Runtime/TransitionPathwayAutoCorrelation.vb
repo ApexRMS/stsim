@@ -11,6 +11,7 @@ Class TransitionPathwayAutoCorrelation
     Private m_Timestep As Nullable(Of Integer)
     Private m_StratumId As Nullable(Of Integer)
     Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_TransitionGroupId As Nullable(Of Integer)
     Private m_Factor As Double
     Private m_SpreadOnlyToLike As Boolean
@@ -20,6 +21,7 @@ Class TransitionPathwayAutoCorrelation
         ByVal timestep As Nullable(Of Integer),
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal transitionGroupId As Nullable(Of Integer),
         ByVal factor As Double,
         ByVal spreadOnlyToLike As Boolean)
@@ -28,6 +30,7 @@ Class TransitionPathwayAutoCorrelation
         Me.m_Timestep = timestep
         Me.m_StratumId = stratumId
         Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_TransitionGroupId = transitionGroupId
         Me.m_Factor = factor
         Me.m_SpreadOnlyToLike = spreadOnlyToLike
@@ -55,6 +58,12 @@ Class TransitionPathwayAutoCorrelation
     Public ReadOnly Property SecondaryStratumId As Nullable(Of Integer)
         Get
             Return Me.m_SecondaryStratumId
+        End Get
+    End Property
+
+    Public ReadOnly Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
         End Get
     End Property
 

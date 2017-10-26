@@ -6,9 +6,9 @@
 '*********************************************************************************************
 
 Imports SyncroSim.Core
-Imports System.Globalization
 Imports SyncroSim.Core.Forms
 Imports System.Reflection
+Imports System.Globalization
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionSummaryReport
@@ -70,6 +70,7 @@ Class TransitionSummaryReport
         c.Add(New ExportColumn("Timestep", TimestepLabel))
         c.Add(New ExportColumn("Stratum", PrimaryStratumLabel))
         c.Add(New ExportColumn("SecondaryStratum", SecondaryStratumLabel))
+        c.Add(New ExportColumn("TertiaryStratum", TertiaryStratumLabel))
         c.Add(New ExportColumn("TransitionGroup", "Transition Group"))
         c.Add(New ExportColumn("AgeMin", "Age Min"))
         c.Add(New ExportColumn("AgeMax", "Age Max"))
@@ -95,6 +96,7 @@ Class TransitionSummaryReport
                 "STSim_OutputStratumTransition.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_TransitionGroup.Name as TransitionGroup, " &
                 "STSim_OutputStratumTransition.AgeMin, " &
                 "STSim_OutputStratumTransition.AgeMax, " &
@@ -102,6 +104,7 @@ Class TransitionSummaryReport
                 "FROM STSim_OutputStratumTransition " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStratumTransition.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStratumTransition.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputStratumTransition.TertiaryStratumID " &
                 "INNER JOIN STSim_TransitionGroup ON STSim_TransitionGroup.TransitionGroupID = STSim_OutputStratumTransition.TransitionGroupID " &
                 "WHERE STSim_OutputStratumTransition.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -110,6 +113,7 @@ Class TransitionSummaryReport
                 "STSim_OutputStratumTransition.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_TransitionGroup.Name, " &
                 "AgeMin, " &
                 "AgeMax",
@@ -125,6 +129,7 @@ Class TransitionSummaryReport
                 "STSim_OutputStratumTransition.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_TransitionGroup.Name as TransitionGroup, " &
                 "STSim_OutputStratumTransition.AgeMin, " &
                 "STSim_OutputStratumTransition.AgeMax, " &
@@ -133,6 +138,7 @@ Class TransitionSummaryReport
                 "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputStratumTransition.ScenarioID " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStratumTransition.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStratumTransition.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputStratumTransition.TertiaryStratumID " &
                 "INNER JOIN STSim_TransitionGroup ON STSim_TransitionGroup.TransitionGroupID = STSim_OutputStratumTransition.TransitionGroupID " &
                 "WHERE STSim_OutputStratumTransition.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -142,6 +148,7 @@ Class TransitionSummaryReport
                 "STSim_OutputStratumTransition.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_TransitionGroup.Name, " &
                 "AgeMin, " &
                 "AgeMax",

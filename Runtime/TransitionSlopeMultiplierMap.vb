@@ -9,7 +9,7 @@ Imports SyncroSim.Core
 Imports SyncroSim.StochasticTime
 
 Class TransitionSlopeMultiplierMap
-    Inherits STSimMapBase3(Of SortedList(Of Integer, TransitionSlopeMultiplier))
+    Inherits STSimMapBase4(Of SortedList(Of Integer, TransitionSlopeMultiplier))
 
     Private m_DistributionProvider As STSimDistributionProvider
 
@@ -32,6 +32,7 @@ Class TransitionSlopeMultiplierMap
         ByVal transitionGroupId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Integer,
         ByVal timestep As Integer,
         ByVal slope As Double) As Double
@@ -41,6 +42,7 @@ Class TransitionSlopeMultiplierMap
                 transitionGroupId,
                 stratumId,
                 secondaryStratumId,
+                tertiaryStratumId,
                 iteration,
                 timestep)
 
@@ -126,6 +128,7 @@ Class TransitionSlopeMultiplierMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.Iteration,
                 item.Timestep)
 
@@ -137,6 +140,7 @@ Class TransitionSlopeMultiplierMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.Iteration,
                 item.Timestep,
                 l)

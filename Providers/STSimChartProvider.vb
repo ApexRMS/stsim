@@ -34,19 +34,19 @@ Class STSimChartProvider
 
             g0.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputStratumState"))
             g0.Properties.Add(New MetaDataProperty("column", "Amount"))
-            g0.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"))
+            g0.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"))
 
             g1.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputStratumTransition"))
             g1.Properties.Add(New MetaDataProperty("column", "Amount"))
-            g1.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TransitionGroupID|AgeClass"))
+            g1.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass"))
 
             g2.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputStateAttribute"))
             g2.Properties.Add(New MetaDataProperty("column", "Amount"))
-            g2.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|AgeClass"))
+            g2.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"))
 
             g3.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputTransitionAttribute"))
             g3.Properties.Add(New MetaDataProperty("column", "Amount"))
-            g3.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|AgeClass"))
+            g3.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"))
 
             RefreshChartAgeClassValidationTable(DATASHEET_OUTPUT_STRATUM_STATE_NAME, project)
             RefreshChartAgeClassValidationTable(DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, project)

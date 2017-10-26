@@ -91,6 +91,7 @@ Class StateClassSummaryReport
         c.Add(New ExportColumn("Timestep", TimestepLabel))
         c.Add(New ExportColumn("Stratum", PrimaryStratumLabel))
         c.Add(New ExportColumn("SecondaryStratum", SecondaryStratumLabel))
+        c.Add(New ExportColumn("TertiaryStratum", TertiaryStratumLabel))
         c.Add(New ExportColumn("StateClass", "State Class"))
         c.Add(New ExportColumn("AgeMin", "Age Min"))
         c.Add(New ExportColumn("AgeMax", "Age Max"))
@@ -158,6 +159,7 @@ Class StateClassSummaryReport
             sw.Write("Timestep,")
             sw.Write("StratumID,")
             sw.Write("SecondaryStratumID,")
+            sw.Write("TertiaryStratumID,")
             sw.Write("StateClassID,")
             sw.Write("AgeMin,")
             sw.Write("AgeMax,")
@@ -191,32 +193,42 @@ Class StateClassSummaryReport
                         Dim Timestep As Integer = reader.GetInt32(2)
                         Dim StratumId As Integer = reader.GetInt32(3)
                         Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
+                        Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
+                        Dim SecondaryStratumName As String = Nothing
+                        Dim TertiaryStratumName As String = Nothing
 
                         If (Not reader.IsDBNull(4)) Then
                             SecondaryStratumId = reader.GetInt32(4)
                         End If
 
-                        Dim StratumName As String = reader.GetString(5)
-                        Dim SecondaryStratumName As String = Nothing
-
-                        If (Not reader.IsDBNull(6)) Then
-                            SecondaryStratumName = reader.GetString(6)
+                        If (Not reader.IsDBNull(5)) Then
+                            TertiaryStratumId = reader.GetInt32(5)
                         End If
 
-                        Dim StateClass As String = reader.GetString(7)
-                        Dim AgeMin As Nullable(Of Integer) = Nothing
+                        Dim StratumName As String = reader.GetString(6)
+
+                        If (Not reader.IsDBNull(7)) Then
+                            SecondaryStratumName = reader.GetString(7)
+                        End If
 
                         If (Not reader.IsDBNull(8)) Then
-                            AgeMin = reader.GetInt32(8)
+                            TertiaryStratumName = reader.GetString(8)
+                        End If
+
+                        Dim StateClass As String = reader.GetString(9)
+                        Dim AgeMin As Nullable(Of Integer) = Nothing
+
+                        If (Not reader.IsDBNull(10)) Then
+                            AgeMin = reader.GetInt32(10)
                         End If
 
                         Dim AgeMax As Nullable(Of Integer) = Nothing
 
-                        If (Not reader.IsDBNull(9)) Then
-                            AgeMax = reader.GetInt32(9)
+                        If (Not reader.IsDBNull(11)) Then
+                            AgeMax = reader.GetInt32(11)
                         End If
 
-                        Dim Amount As Double = reader.GetDouble(10)
+                        Dim Amount As Double = reader.GetDouble(12)
 
                         sw.Write(CSVFormatInteger(ScenarioId))
                         sw.Write(",")
@@ -232,6 +244,12 @@ Class StateClassSummaryReport
 
                         If (SecondaryStratumName IsNot Nothing) Then
                             sw.Write(CSVFormatString(SecondaryStratumName))
+                        End If
+
+                        sw.Write(",")
+
+                        If (TertiaryStratumName IsNot Nothing) Then
+                            sw.Write(CSVFormatString(TertiaryStratumName))
                         End If
 
                         sw.Write(",")
@@ -318,8 +336,10 @@ Class StateClassSummaryReport
                 "STSim_OutputStratumState.Timestep,  " &
                 "STSim_OutputStratumState.StratumID, " &
                 "STSim_OutputStratumState.SecondaryStratumID, " &
+                "STSim_OutputStratumState.TertiaryStratumID, " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_StateClass.Name as StateClass, " &
                 "STSim_OutputStratumState.AgeMin, " &
                 "STSim_OutputStratumState.AgeMax, " &
@@ -327,6 +347,7 @@ Class StateClassSummaryReport
                 "FROM STSim_OutputStratumState " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStratumState.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStratumState.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputStratumState.TertiaryStratumID " &
                 "INNER JOIN STSim_StateClass ON STSim_StateClass.StateClassID = STSim_OutputStratumState.StateClassID " &
                 "WHERE STSim_OutputStratumState.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -335,8 +356,10 @@ Class StateClassSummaryReport
                 "STSim_OutputStratumState.Timestep, " &
                 "STSim_OutputStratumState.StratumID, " &
                 "STSim_OutputStratumState.SecondaryStratumID, " &
+                "STSim_OutputStratumState.TertiaryStratumID, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_StateClass.Name, " &
                 "AgeMin, " &
                 "AgeMax",
@@ -352,8 +375,10 @@ Class StateClassSummaryReport
                 "STSim_OutputStratumState.Timestep,  " &
                 "STSim_OutputStratumState.StratumID, " &
                 "STSim_OutputStratumState.SecondaryStratumID, " &
+                "STSim_OutputStratumState.TertiaryStratumID, " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_StateClass.Name as StateClass, " &
                 "STSim_OutputStratumState.AgeMin, " &
                 "STSim_OutputStratumState.AgeMax, " &
@@ -362,6 +387,7 @@ Class StateClassSummaryReport
                 "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputStratumState.ScenarioID " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputStratumState.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputStratumState.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputStratumState.TertiaryStratumID " &
                 "INNER JOIN STSim_StateClass ON STSim_StateClass.StateClassID = STSim_OutputStratumState.StateClassID " &
                 "WHERE STSim_OutputStratumState.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -371,8 +397,10 @@ Class StateClassSummaryReport
                 "STSim_OutputStratumState.Timestep, " &
                 "STSim_OutputStratumState.StratumID, " &
                 "STSim_OutputStratumState.SecondaryStratumID, " &
+                "STSim_OutputStratumState.TertiaryStratumID, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_StateClass.Name, " &
                 "AgeMin, " &
                 "AgeMax",

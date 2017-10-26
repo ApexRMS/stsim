@@ -20,7 +20,8 @@ Public Class InputRasters
     Private m_YllCorner As Decimal 'Y coordinate of the origin (by lower left corner of the cell).
     Private m_sclass_cells() As Integer  ' Single dimension array of State Class raster cells. 
     Private m_stratum_cells() As Integer  ' Single dimension array of Primary Stratum raster cells. 
-    Private m_seconday_stratum_cells() As Integer  ' Single dimension array of Secondary Stratum raster cells. 
+    Private m_secondary_stratum_cells() As Integer  ' Single dimension array of Secondary Stratum raster cells. 
+    Private m_tertiary_stratum_cells() As Integer  ' Single dimension array of Tertiary Stratum raster cells. 
     Private m_age_cells() As Integer  ' Single dimension array of Age raster cells. 
     Private m_dem_cells() As Double  ' Single dimension array of Digital Elevation Model (DEM) raster cells. 
     Private m_NoDataValue As Double = -9999  ' The NODATA value of the raster
@@ -29,7 +30,8 @@ Public Class InputRasters
     Private m_cellAreaOverride As Boolean   ' Is the cell area overriden by the user
     Private m_cellSizeUnits As String       ' The raster native cell units
     Private m_primary_stratum_name As String     'The name of the Primary Stratum raster file
-    Private m_secondary_stratum_name As String     'The name of the Primary Stratum raster file
+    Private m_secondary_stratum_name As String     'The name of the Secondary Stratum raster file
+    Private m_tertiary_stratum_name As String     'The name of the Tertiary Stratum raster file
     Private m_stateClass_name As String      'The name of the State Class raster file
     Private m_age_name As String     'The name of the Age raster file
     Private m_dem_name As String     'The name of the DEM raster file
@@ -84,10 +86,22 @@ Public Class InputRasters
     ''' </summary>
     Public Property SecondaryStratumCells() As Integer()
         Get
-            Return m_seconday_stratum_cells
+            Return m_secondary_stratum_cells
         End Get
         Set(ByVal value As Integer())
-            m_seconday_stratum_cells = value
+            m_secondary_stratum_cells = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Tertiary Stratum Cells
+    ''' </summary>
+    Public Property TertiaryStratumCells() As Integer()
+        Get
+            Return m_tertiary_stratum_cells
+        End Get
+        Set(ByVal value As Integer())
+            m_tertiary_stratum_cells = value
         End Set
     End Property
 
@@ -216,6 +230,15 @@ Public Class InputRasters
         End Get
         Set(value As String)
             m_secondary_stratum_name = value
+        End Set
+    End Property
+
+    Public Property TertiaryStratumName As String
+        Get
+            Return m_tertiary_stratum_name
+        End Get
+        Set(value As String)
+            m_tertiary_stratum_name = value
         End Set
     End Property
 

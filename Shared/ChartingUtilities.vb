@@ -407,11 +407,8 @@ Module ChartingUtilities
 
         For Each s As String In AndSplit
 
-            If (s.Contains("StratumID") Or
-                s.Contains("SecondaryStratumID")) Then
-
+            If (s.Contains("StratumID") Or s.Contains("SecondaryStratumID") Or s.Contains("TertiaryStratumID")) Then
                 sb.AppendFormat(CultureInfo.InvariantCulture, "{0} AND ", s)
-
             End If
 
         Next

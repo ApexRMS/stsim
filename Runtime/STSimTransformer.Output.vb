@@ -5,7 +5,6 @@
 '
 '*********************************************************************************************
 
-Imports System.Globalization
 Imports SyncroSim.Core
 Imports SyncroSim.Common
 Imports SyncroSim.StochasticTime
@@ -289,9 +288,10 @@ Partial Class STSimTransformer
 
             Dim AgeKey As Integer = Me.m_AgeReportingHelper.GetKey(simulationCell.Age)
 
-            Dim key As New SixIntegerLookupKey(
+            Dim key As New SevenIntegerLookupKey(
                 simulationCell.StratumId,
                 GetSecondaryStratumIdKey(simulationCell),
+                GetTertiaryStratumIdKey(simulationCell),
                 iteration,
                 timestep,
                 simulationCell.StateClassId,
@@ -307,6 +307,7 @@ Partial Class STSimTransformer
                 Dim oss As New OutputStratumState(
                     simulationCell.StratumId,
                     simulationCell.SecondaryStratumId,
+                    simulationCell.TertiaryStratumId,
                     iteration,
                     timestep,
                     simulationCell.StateClassId,
@@ -375,9 +376,10 @@ Partial Class STSimTransformer
                 DestStateClass = currentTransition.StateClassIdDestination.Value
             End If
 
-            Dim key As New SevenIntegerLookupKey(
+            Dim key As New EightIntegerLookupKey(
                 simulationCell.StratumId,
                 GetSecondaryStratumIdKey(simulationCell),
+                GetTertiaryStratumIdKey(simulationCell),
                 iteration,
                 timestep,
                 currentTransition.TransitionTypeId,
@@ -394,6 +396,7 @@ Partial Class STSimTransformer
                 Dim osts As New OutputStratumTransitionState(
                     simulationCell.StratumId,
                     simulationCell.SecondaryStratumId,
+                    simulationCell.TertiaryStratumId,
                     iteration,
                     timestep,
                     currentTransition.TransitionTypeId,
@@ -440,6 +443,7 @@ Partial Class STSimTransformer
                 AttributeTypeId,
                 simulationCell.StratumId,
                 simulationCell.SecondaryStratumId,
+                simulationCell.TertiaryStratumId,
                 simulationCell.StateClassId,
                 iteration,
                 timestep,
@@ -449,9 +453,10 @@ Partial Class STSimTransformer
 
                 Dim AgeKey As Integer = Me.m_AgeReportingHelper.GetKey(simulationCell.Age)
 
-                Dim key As New SixIntegerLookupKey(
+                Dim key As New SevenIntegerLookupKey(
                     simulationCell.StratumId,
                     GetSecondaryStratumIdKey(simulationCell),
+                    GetTertiaryStratumIdKey(simulationCell),
                     iteration,
                     timestep,
                     AttributeTypeId,
@@ -467,6 +472,7 @@ Partial Class STSimTransformer
                     Dim ossa As New OutputStateAttribute(
                         simulationCell.StratumId,
                         simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId,
                         iteration,
                         timestep,
                         AttributeTypeId,
@@ -513,16 +519,26 @@ Partial Class STSimTransformer
                 'Dont bother if there haven't been any transitions
                 If transitionedPixels.Distinct().Count() > 1 Then
 
-                    RasterFiles.SaveOutputRaster(rastOP,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TRANSITION),RasterDataType.DTInteger,iteration,timestep,
-                                                 SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX,transitionGroupId,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+                    RasterFiles.SaveOutputRaster(
+                        rastOP,
+                        Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TRANSITION),
+                        RasterDataType.DTInteger,
+                        iteration,
+                        timestep,
+                        SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX,
+                        transitionGroupId,
+                        DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
 
                 End If
 
             End If
 
-            ' Transition Summary Rasters
+            'Transition Summary Rasters
             RecordAnnualAvgTransitionProbabilityOutput(
-                Me.MaximumIteration - Me.MinimumIteration + 1, timestep, transitionGroupId, transitionedPixels)
+                Me.MaximumIteration - Me.MinimumIteration + 1,
+                timestep,
+                transitionGroupId,
+                transitionedPixels)
 
         Next
 
@@ -549,7 +565,15 @@ Partial Class STSimTransformer
                 Me.m_InputRasters.GetMetadata(rastOP)
                 rastOP.DblCells = RasterTransitionAttrValues(AttributeId)
 
-                RasterFiles.SaveOutputRaster(rastOP,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE),RasterDataType.DTDouble,iteration,timestep,SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX,AttributeId,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+                RasterFiles.SaveOutputRaster(
+                    rastOP,
+                    Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE),
+                    RasterDataType.DTDouble,
+                    iteration,
+                    timestep,
+                    SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX,
+                    AttributeId,
+                    DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
 
             Next
 
@@ -579,9 +603,10 @@ Partial Class STSimTransformer
 
             Dim AgeKey As Integer = Me.m_AgeReportingHelper.GetKey(simulationCell.Age)
 
-            Dim key As New SixIntegerLookupKey(
+            Dim key As New SevenIntegerLookupKey(
                 simulationCell.StratumId,
                 GetSecondaryStratumIdKey(simulationCell),
+                GetTertiaryStratumIdKey(simulationCell),
                 iteration,
                 AggregatorTimestep,
                 tg.TransitionGroupId,
@@ -597,6 +622,7 @@ Partial Class STSimTransformer
                 Dim ost As New OutputStratumTransition(
                     simulationCell.StratumId,
                     simulationCell.SecondaryStratumId,
+                    simulationCell.TertiaryStratumId,
                     iteration,
                     AggregatorTimestep,
                     tg.TransitionGroupId,
@@ -635,9 +661,10 @@ Partial Class STSimTransformer
 
                 Dim AgeKey As Integer = Me.m_AgeReportingHelper.GetKey(simulationCell.Age)
 
-                Dim key As New SixIntegerLookupKey(
+                Dim key As New SevenIntegerLookupKey(
                     simulationCell.StratumId,
                     GetSecondaryStratumIdKey(simulationCell),
+                    GetTertiaryStratumIdKey(simulationCell),
                     iteration,
                     timestep,
                     tg.TransitionGroupId,
@@ -653,6 +680,7 @@ Partial Class STSimTransformer
                     Dim ost As New OutputStratumTransition(
                         simulationCell.StratumId,
                         simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId,
                         iteration,
                         timestep,
                         tg.TransitionGroupId,
@@ -699,15 +727,17 @@ Partial Class STSimTransformer
                         AttributeTypeId,
                         oss.StratumId,
                         oss.SecondaryStratumId,
+                        oss.TertiaryStratumId,
                         oss.StateClassId,
                         oss.Iteration,
                         oss.Timestep)
 
                 If (AttrValue.HasValue) Then
 
-                    Dim key As New SixIntegerLookupKey(
+                    Dim key As New SevenIntegerLookupKey(
                         oss.StratumId,
                         GetNullableKey(oss.SecondaryStratumId),
+                        GetNullableKey(oss.TertiaryStratumId),
                         oss.Iteration,
                         oss.Timestep,
                         AttributeTypeId,
@@ -723,6 +753,7 @@ Partial Class STSimTransformer
                         Dim osa As New OutputStateAttribute(
                             oss.StratumId,
                             oss.SecondaryStratumId,
+                            oss.TertiaryStratumId,
                             oss.Iteration,
                             oss.Timestep,
                             AttributeTypeId,
@@ -778,6 +809,7 @@ Partial Class STSimTransformer
                         tg.TransitionGroupId,
                         simulationCell.StratumId,
                         simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId,
                         simulationCell.StateClassId,
                         iteration,
                         timestep,
@@ -797,7 +829,7 @@ Partial Class STSimTransformer
                     End If
 
                     Dim Target As TransitionAttributeTarget = Me.m_TransitionAttributeTargetMap.GetAttributeTarget(
-                        AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, iteration, timestep)
+                        AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
 
                     If (Target IsNot Nothing) Then
 
@@ -831,6 +863,7 @@ Partial Class STSimTransformer
                             Dim ota As New OutputTransitionAttribute(
                                 simulationCell.StratumId,
                                 simulationCell.SecondaryStratumId,
+                                simulationCell.TertiaryStratumId,
                                 iteration,
                                 timestep,
                                 AttributeTypeId,
@@ -868,43 +901,49 @@ Partial Class STSimTransformer
 
         End If
 
-        For Each s As Stratum In Me.m_Strata
+        Dim SecondaryStratumIds As New List(Of Nullable(Of Integer))
+        Dim TertiaryStratumIds As New List(Of Nullable(Of Integer))
 
-            For Each ss As Stratum In Me.m_SecondaryStrata
+        Dim ssnull As Nullable(Of Integer) = Nothing
+        Dim tsnull As Nullable(Of Integer) = Nothing
 
-                Dim o As Object = Me.m_ProportionAccumulatorMap.GetValue(s.StratumId, ss.StratumId)
+        SecondaryStratumIds.Add(ssnull)
+        TertiaryStratumIds.Add(tsnull)
 
-                If (o IsNot Nothing) Then
+        For Each s As Stratum In Me.m_SecondaryStrata
+            SecondaryStratumIds.Add(s.StratumId)
+        Next
 
-                    Dim dr As DataRow = Me.m_OutputStratumAmountTable.NewRow
+        For Each s As Stratum In Me.m_TertiaryStrata
+            TertiaryStratumIds.Add(s.StratumId)
+        Next
 
-                    dr(DATASHEET_ITERATION_COLUMN_NAME) = iteration
-                    dr(DATASHEET_TIMESTEP_COLUMN_NAME) = timestep
-                    dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = s.StratumId
-                    dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = ss.StratumId
-                    dr(DATASHEET_AMOUNT_COLUMN_NAME) = CDbl(o)
+        For Each PrimaryStratum As Stratum In Me.m_Strata
 
-                    Me.m_OutputStratumAmountTable.Rows.Add(dr)
+            For Each SecondaryStratumId As Nullable(Of Integer) In SecondaryStratumIds
 
-                End If
+                For Each TertiaryStratumId As Nullable(Of Integer) In TertiaryStratumIds
+
+                    Dim o As Object = Me.m_ProportionAccumulatorMap.GetValue(PrimaryStratum.StratumId, SecondaryStratumId, TertiaryStratumId)
+
+                    If (o IsNot Nothing) Then
+
+                        Dim dr As DataRow = Me.m_OutputStratumAmountTable.NewRow
+
+                        dr(DATASHEET_ITERATION_COLUMN_NAME) = iteration
+                        dr(DATASHEET_TIMESTEP_COLUMN_NAME) = timestep
+                        dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = PrimaryStratum.StratumId
+                        dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(SecondaryStratumId)
+                        dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(TertiaryStratumId)
+                        dr(DATASHEET_AMOUNT_COLUMN_NAME) = CDbl(o)
+
+                        Me.m_OutputStratumAmountTable.Rows.Add(dr)
+
+                    End If
+
+                Next
 
             Next
-
-            Dim oss As Object = Me.m_ProportionAccumulatorMap.GetValue(s.StratumId, Nothing)
-
-            If (oss IsNot Nothing) Then
-
-                Dim dr As DataRow = Me.m_OutputStratumAmountTable.NewRow
-
-                dr(DATASHEET_ITERATION_COLUMN_NAME) = iteration
-                dr(DATASHEET_TIMESTEP_COLUMN_NAME) = timestep
-                dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = s.StratumId
-                dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DBNull.Value
-                dr(DATASHEET_AMOUNT_COLUMN_NAME) = CDbl(oss)
-
-                Me.m_OutputStratumAmountTable.Rows.Add(dr)
-
-            End If
 
         Next
 
@@ -926,31 +965,40 @@ Partial Class STSimTransformer
 
             If (Me.m_SummaryStateClassZeroValues) Then
 
-                Dim SecStrats As Dictionary(Of Integer, Boolean) = Me.CreateSecondaryStratumDictionary()
-                Debug.Assert(Not SecStrats.Count = 0 And Me.m_SummaryStratumStateResults.Count > 0)
+                Dim SSKeys As Dictionary(Of Integer, Boolean) = Me.CreateSecondaryStratumDictionary()
+                Dim TSKeys As Dictionary(Of Integer, Boolean) = Me.CreateTertiaryStratumDictionary()
 
-                For Each ss As Integer In SecStrats.Keys
+                Debug.Assert(Not SSKeys.Count = 0 And Me.m_SummaryStratumStateResults.Count > 0)
+                Debug.Assert(Not TSKeys.Count = 0 And Me.m_SummaryStratumStateResults.Count > 0)
 
-                    For Each dt As DeterministicTransition In Me.m_DeterministicTransitions
+                For Each ss As Integer In SSKeys.Keys
 
-                        Dim key As New FiveIntegerLookupKey(
-                            GetNullableKey(dt.StratumIdSource), ss, iteration, timestep, dt.StateClassIdSource)
+                    For Each ts As Integer In TSKeys.Keys
 
-                        If (Not Me.m_SummaryStratumStateResultsZeroValues.Contains(key)) Then
+                        For Each dt As DeterministicTransition In Me.m_DeterministicTransitions
 
-                            Dim oss As New OutputStratumState(
-                                 GetNullableKey(dt.StratumIdSource), ss, iteration, timestep, dt.StateClassIdSource, dt.AgeMinimum, dt.AgeMaximum, 0, 0.0)
+                            Dim key As New SixIntegerLookupKey(
+                                GetNullableKey(dt.StratumIdSource), ss, ts, iteration, timestep, dt.StateClassIdSource)
 
-                            Dim k2 As New SixIntegerLookupKey(
-                                GetNullableKey(dt.StratumIdSource), ss, iteration, timestep, dt.StateClassIdSource, 0)
+                            If (Not Me.m_SummaryStratumStateResultsZeroValues.Contains(key)) Then
 
-                            If (Not Me.m_SummaryStratumStateResults.Contains(k2)) Then
-                                Me.m_SummaryStratumStateResults.Add(oss)
+                                Dim oss As New OutputStratumState(
+                                     GetNullableKey(dt.StratumIdSource),
+                                     ss, ts, iteration, timestep, dt.StateClassIdSource, dt.AgeMinimum, dt.AgeMaximum, 0, 0.0)
+
+                                Dim k2 As New SevenIntegerLookupKey(
+                                    GetNullableKey(dt.StratumIdSource),
+                                    ss, ts, iteration, timestep, dt.StateClassIdSource, 0)
+
+                                If (Not Me.m_SummaryStratumStateResults.Contains(k2)) Then
+                                    Me.m_SummaryStratumStateResults.Add(oss)
+                                End If
+
+                                Me.m_SummaryStratumStateResultsZeroValues.Add(oss)
+
                             End If
 
-                            Me.m_SummaryStratumStateResultsZeroValues.Add(oss)
-
-                        End If
+                        Next
 
                     Next
 
@@ -971,6 +1019,7 @@ Partial Class STSimTransformer
                     dr(DATASHEET_TIMESTEP_COLUMN_NAME) = r.Timestep
                     dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = r.StratumId
                     dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId)
+                    dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId)
                     dr(DATASHEET_STATECLASS_ID_COLUMN_NAME) = r.StateClassId
                     dr(DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME) = slxid
                     dr(DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME) = slyid
@@ -1035,6 +1084,7 @@ Partial Class STSimTransformer
                     dr(DATASHEET_TIMESTEP_COLUMN_NAME) = r.Timestep
                     dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = r.StratumId
                     dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId)
+                    dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId)
                     dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME) = r.TransitionGroupId
                     dr(DATASHEET_AGE_MIN_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin)
                     dr(DATASHEET_AGE_MAX_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax)
@@ -1069,6 +1119,7 @@ Partial Class STSimTransformer
                 dr(DATASHEET_TIMESTEP_COLUMN_NAME) = r.Timestep
                 dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = r.StratumId
                 dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId)
+                dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId)
                 dr(DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME) = r.TransitionTypeId
                 dr(DATASHEET_STATECLASS_ID_COLUMN_NAME) = r.StateClassId
                 dr(DATASHEET_END_STATECLASS_ID_COLUMN_NAME) = r.EndStateClassId
@@ -1101,6 +1152,7 @@ Partial Class STSimTransformer
                 dr(DATASHEET_TIMESTEP_COLUMN_NAME) = r.Timestep
                 dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = r.StratumId
                 dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId)
+                dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId)
                 dr(DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME) = r.StateAttributeTypeId
                 dr(DATASHEET_AGE_MIN_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin)
                 dr(DATASHEET_AGE_MAX_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax)
@@ -1134,6 +1186,7 @@ Partial Class STSimTransformer
                 dr(DATASHEET_TIMESTEP_COLUMN_NAME) = r.Timestep
                 dr(DATASHEET_STRATUM_ID_COLUMN_NAME) = r.StratumId
                 dr(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId)
+                dr(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId)
                 dr(DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME) = r.TransitionAttributeTypeId
                 dr(DATASHEET_AGE_MIN_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin)
                 dr(DATASHEET_AGE_MAX_COLUMN_NAME) = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax)
@@ -1174,6 +1227,29 @@ Partial Class STSimTransformer
     End Function
 
     ''' <summary>
+    ''' Creates a dictionary of all tertiary stratum ids in the current state class summary output
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function CreateTertiaryStratumDictionary() As Dictionary(Of Integer, Boolean)
+
+        Dim d As New Dictionary(Of Integer, Boolean)
+
+        For Each r As OutputStratumState In Me.m_SummaryStratumStateResults
+
+            Dim k As Integer = GetNullableKey(r.TertiaryStratumId)
+
+            If (Not d.ContainsKey(k)) Then
+                d.Add(k, True)
+            End If
+
+        Next
+
+        Return d
+
+    End Function
+
+    ''' <summary>
     ''' Process the Raster State Class output. Create a raster file as a snapshot of the current Cell state class values.
     ''' </summary>
     ''' <remarks></remarks>
@@ -1201,6 +1277,7 @@ Partial Class STSimTransformer
             'DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
             rastOutput.IntCells = RasterCells.RemapRasterCells(rastOutput.IntCells, dsRemap, DATASHEET_MAPID_COLUMN_NAME, False, StochasticTimeRaster.DefaultNoDataValue)
             RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STATE_CLASS),RasterDataType.DTInteger,iteration,timestep,SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME,Nothing,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+
         End If
 
     End Sub
@@ -1228,7 +1305,16 @@ Partial Class STSimTransformer
                 rastOutput.IntCells(c.CellId) = c.Age
             Next
 
-            RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_AGE),RasterDataType.DTInteger, iteration,timestep,SPATIAL_MAP_AGE_VARIABLE_NAME,Nothing,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+            RasterFiles.SaveOutputRaster(
+                rastOutput,
+                Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_AGE),
+                RasterDataType.DTInteger,
+                iteration,
+                timestep,
+                SPATIAL_MAP_AGE_VARIABLE_NAME,
+                Nothing,
+                DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+
         End If
 
     End Sub
@@ -1345,6 +1431,7 @@ Partial Class STSimTransformer
                             AttributeTypeId,
                             c.StratumId,
                             c.SecondaryStratumId,
+                            c.TertiaryStratumId,
                             c.StateClassId,
                             iteration,
                             timestep)
@@ -1372,6 +1459,7 @@ Partial Class STSimTransformer
                             AttributeTypeId,
                             c.StratumId,
                             c.SecondaryStratumId,
+                            c.TertiaryStratumId,
                             c.StateClassId,
                             iteration,
                             timestep,
@@ -1385,7 +1473,15 @@ Partial Class STSimTransformer
 
                 Next
 
-                RasterFiles.SaveOutputRaster(rastOutput,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),RasterDataType.DTDouble, iteration,timestep,SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,AttributeTypeId,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+                RasterFiles.SaveOutputRaster(
+                    rastOutput,
+                    Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),
+                    RasterDataType.DTDouble,
+                    iteration,
+                    timestep,
+                    SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,
+                    AttributeTypeId,
+                    DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
 
             Next
 
@@ -1459,6 +1555,7 @@ Partial Class STSimTransformer
                                 stateAttributeTypeId,
                                 cell.StratumId,
                                 cell.SecondaryStratumId,
+                                cell.TertiaryStratumId,
                                 cell.StateClassId,
                                 iteration,
                                 timestep)
@@ -1469,6 +1566,7 @@ Partial Class STSimTransformer
                                 stateAttributeTypeId,
                                 cell.StratumId,
                                 cell.SecondaryStratumId,
+                                cell.TertiaryStratumId,
                                 cell.StateClassId,
                                 iteration,
                                 timestep,
@@ -1582,8 +1680,15 @@ Partial Class STSimTransformer
 
                 rastAatp.DblCells = aatp
 
-
-                RasterFiles.SaveOutputRaster(rastAatp,Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY),RasterDataType.DTDouble, 0,timestep,SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX,tgId,DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
+                RasterFiles.SaveOutputRaster(
+                    rastAatp,
+                    Me.ResultScenario.GetDataSheet(DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY),
+                    RasterDataType.DTDouble,
+                    0,
+                    timestep,
+                    SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX,
+                    tgId,
+                    DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN)
 
             Next
 
@@ -1708,6 +1813,7 @@ Partial Class STSimTransformer
                         tg.TransitionGroupId,
                         simulationCell.StratumId,
                         simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId,
                         simulationCell.StateClassId,
                         iteration,
                         timestep,
@@ -1716,7 +1822,7 @@ Partial Class STSimTransformer
                 If (AttrValue.HasValue) Then
 
                     Dim Target As TransitionAttributeTarget = Me.m_TransitionAttributeTargetMap.GetAttributeTarget(
-                        AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, iteration, timestep)
+                        AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
 
                     If (Target IsNot Nothing) Then
 

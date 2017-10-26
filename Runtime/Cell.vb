@@ -18,6 +18,7 @@ Public Class Cell
     Private m_CellId As Integer
     Private m_StratumId As Integer
     Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_StateClassId As Integer
     Private m_Age As Integer
     Private m_TstValues As New TstCollection
@@ -66,6 +67,19 @@ Public Class Cell
         End Get
         Set(value As Nullable(Of Integer))
             Me.m_SecondaryStratumId = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets the tertiary stratum Id for the cell
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
+        End Get
+        Set(ByVal value As Nullable(Of Integer))
+            Me.m_TertiaryStratumId = value
         End Set
     End Property
 

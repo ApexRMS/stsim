@@ -180,6 +180,7 @@
     <Compile Include="Runtime\STSimMapBase2.vb" />
     <Compile Include="Runtime\STSimMapBase3.vb" />
     <Compile Include="Runtime\STSimMapBase4.vb" />
+    <Compile Include="Runtime\STSimMapBase6.vb" />
     <Compile Include="Runtime\STSimMapBase5.vb" />
     <Compile Include="Runtime\STSimTransformer.Ages.vb" />
     <Compile Include="Runtime\STSimTransformer.Collections.vb" />

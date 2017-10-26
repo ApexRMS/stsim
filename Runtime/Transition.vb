@@ -13,6 +13,8 @@ Public Class Transition
     Private m_StateClassIdSource As Integer
     Private m_StratumIdDestination As Nullable(Of Integer)
     Private m_StateClassIdDestination As Nullable(Of Integer)
+    Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_TransitionTypeId As Integer
     Private m_Probability As Double
     Private m_Proportion As Double
@@ -41,6 +43,8 @@ Public Class Transition
         ByVal stateClassIdSource As Integer,
         ByVal stratumIdDestination As Nullable(Of Integer),
         ByVal stateClassIdDestination As Nullable(Of Integer),
+        ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal transitionTypeId As Integer,
         ByVal probability As Double,
         ByVal proportion As Double,
@@ -58,6 +62,8 @@ Public Class Transition
         Me.m_StateClassIdSource = stateClassIdSource
         Me.m_StratumIdDestination = stratumIdDestination
         Me.m_StateClassIdDestination = stateClassIdDestination
+        Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_TransitionTypeId = transitionTypeId
         Me.m_Probability = probability
         Me.m_Proportion = proportion
@@ -116,6 +122,24 @@ Public Class Transition
         End Get
         Set(ByVal value As Nullable(Of Integer))
             Me.m_StateClassIdDestination = value
+        End Set
+    End Property
+
+    Public Property SecondaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_SecondaryStratumId
+        End Get
+        Set(ByVal value As Nullable(Of Integer))
+            Me.m_SecondaryStratumId = value
+        End Set
+    End Property
+
+    Public Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
+        End Get
+        Set(ByVal value As Nullable(Of Integer))
+            Me.m_TertiaryStratumId = value
         End Set
     End Property
 

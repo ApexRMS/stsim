@@ -12,12 +12,14 @@ Public Class STSimDistributionValue
 
     Private m_StratumId As Nullable(Of Integer)
     Private m_SecondaryStratumId As Nullable(Of Integer)
+    Private m_TertiaryStratumId As Nullable(Of Integer)
 
     Public Sub New(
         ByVal iteration As Nullable(Of Integer),
         ByVal timestep As Nullable(Of Integer),
         ByVal stratumId As Nullable(Of Integer),
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal distributionTypeId As Integer,
         ByVal externalVariableTypeId As Nullable(Of Integer),
         ByVal externalVariableMin As Nullable(Of Double),
@@ -47,6 +49,7 @@ Public Class STSimDistributionValue
 
         Me.m_StratumId = stratumId
         Me.m_SecondaryStratumId = secondaryStratumId
+        Me.m_TertiaryStratumId = tertiaryStratumId
 
     End Sub
 
@@ -59,6 +62,12 @@ Public Class STSimDistributionValue
     Public ReadOnly Property SecondaryStratumId As Nullable(Of Integer)
         Get
             Return Me.m_SecondaryStratumId
+        End Get
+    End Property
+
+    Public ReadOnly Property TertiaryStratumId As Nullable(Of Integer)
+        Get
+            Return Me.m_TertiaryStratumId
         End Get
     End Property
 

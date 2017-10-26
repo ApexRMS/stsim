@@ -80,6 +80,12 @@ Friend Class InitialConditionsDistributionCollection
                 End If
             End If
 
+            If cell.TertiaryStratumId <> StochasticTimeRaster.DefaultNoDataValue Then
+                If cell.TertiaryStratumId <> icd.TertiaryStratumId Then
+                    Continue For
+                End If
+            End If
+
             If cell.Age <> StochasticTimeRaster.DefaultNoDataValue Then
                 If cell.Age < icd.AgeMin Or cell.Age > icd.AgeMax Then
                     Continue For

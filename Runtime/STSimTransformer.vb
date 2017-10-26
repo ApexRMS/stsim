@@ -118,21 +118,11 @@ Public NotInheritable Class STSimTransformer
         End Get
     End Property
 
-    ''' <summary>
-    ''' Gets a no-age attribute value
-    ''' </summary>
-    ''' <param name="stateAttributeTypeId"></param>
-    ''' <param name="stratumId"></param>
-    ''' <param name="secondaryStratumId"></param>
-    ''' <param name="stateClassId"></param>
-    ''' <param name="iteration"></param>
-    ''' <param name="timestep"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Function GetAttributeValueNoAge(
         ByVal stateAttributeTypeId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer) As Nullable(Of Double)
@@ -141,28 +131,18 @@ Public NotInheritable Class STSimTransformer
             stateAttributeTypeId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             stateClassId,
             iteration,
             timestep)
 
     End Function
 
-    ''' <summary>
-    ''' Gets an age attribute value
-    ''' </summary>
-    ''' <param name="stateAttributeTypeId"></param>
-    ''' <param name="stratumId"></param>
-    ''' <param name="secondaryStratumId"></param>
-    ''' <param name="stateClassId"></param>
-    ''' <param name="iteration"></param>
-    ''' <param name="timestep"></param>
-    ''' <param name="age"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Function GetAttributeValueByAge(
         ByVal stateAttributeTypeId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal stateClassId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer,
@@ -172,6 +152,7 @@ Public NotInheritable Class STSimTransformer
             stateAttributeTypeId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             stateClassId,
             iteration,
             timestep,
@@ -300,11 +281,11 @@ Public NotInheritable Class STSimTransformer
 
         If (Me.IsSpatial) Then
 
-            Me.FillInitialConditionsSpatialMap()
+            Me.FillInitialConditionsSpatialCollectionAndMap()
             Me.InitializeRasterData(Me.MinimumIteration)
 
         Else
-            Me.FillInitialConditionsDistributionMap()
+            Me.FillInitialConditionsDistributionCollectionAndMap()
         End If
 
         Me.InitializeOutputOptions()
@@ -591,14 +572,16 @@ Public NotInheritable Class STSimTransformer
             If (TransitionGroup.PrimaryTransitionTypes.Contains(tr.TransitionTypeId)) Then
 
                 Dim multiplier As Double = Me.GetTransitionMultiplier(
-                    tr.TransitionTypeId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.StateClassId)
+                    tr.TransitionTypeId, iteration, timestep,
+                    simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+                    simulationCell.StateClassId)
 
                 Dim tt As TransitionType = Me.m_TransitionTypes(tr.TransitionTypeId)
 
                 For Each tg As TransitionGroup In tt.TransitionGroups
 
                     multiplier *= Me.GetTransitionTargetMultiplier(
-                        tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, iteration, timestep)
+                        tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
 
                 Next
 
@@ -613,7 +596,7 @@ Public NotInheritable Class STSimTransformer
                     For Each tg As TransitionGroup In tt.TransitionGroups
 
                         multiplier *= Me.GetTransitionAdjacencyMultiplier(
-                            tg.TransitionGroupId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell)
+                            tg.TransitionGroupId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell)
                         multiplier *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
 
                     Next
@@ -811,8 +794,8 @@ Public NotInheritable Class STSimTransformer
                     Me.UpdateTransitionsSpreadGroupMembership(simulationCell, iteration, timestep)
                 End If
 
-                Me.m_ProportionAccumulatorMap.Decrement(stold.StratumId, simulationCell.SecondaryStratumId)
-                Me.m_ProportionAccumulatorMap.AddOrIncrement(stnew.StratumId, simulationCell.SecondaryStratumId)
+                Me.m_ProportionAccumulatorMap.Decrement(stold.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId)
+                Me.m_ProportionAccumulatorMap.AddOrIncrement(stnew.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId)
 
             End If
 

@@ -174,6 +174,7 @@ Module Strings
     Public Const DATASHEET_SPIC_NAME As String = "STSim_InitialConditionsSpatial"
     Public Const DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME As String = "StratumFileName"
     Public Const DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME As String = "SecondaryStratumFileName"
+    Public Const DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME As String = "TertiaryStratumFileName"
     Public Const DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME As String = "StateClassFileName"
     Public Const DATASHEET_SPIC_AGE_FILE_COLUMN_NAME As String = "AgeFileName"
 

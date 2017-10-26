@@ -8,7 +8,7 @@
 Imports SyncroSim.Core
 
 Class TransitionPathwayAutoCorrelationMap
-    Inherits STSimMapBase3(Of TransitionPathwayAutoCorrelation)
+    Inherits STSimMapBase4(Of TransitionPathwayAutoCorrelation)
 
     Public Sub New(
         ByVal scenario As Scenario,
@@ -26,6 +26,7 @@ Class TransitionPathwayAutoCorrelationMap
         ByVal transitionGroupId As Integer,
         ByVal stratumId As Integer,
         ByVal secondaryStratumId As Nullable(Of Integer),
+        ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal iteration As Integer,
         ByVal timestep As Integer) As TransitionPathwayAutoCorrelation
 
@@ -33,6 +34,7 @@ Class TransitionPathwayAutoCorrelationMap
             transitionGroupId,
             stratumId,
             secondaryStratumId,
+            tertiaryStratumId,
             iteration,
             timestep)
 
@@ -46,6 +48,7 @@ Class TransitionPathwayAutoCorrelationMap
                 item.TransitionGroupId,
                 item.StratumId,
                 item.SecondaryStratumId,
+                item.TertiaryStratumId,
                 item.Iteration,
                 item.Timestep,
                 item)
@@ -54,7 +57,7 @@ Class TransitionPathwayAutoCorrelationMap
 
             Dim template As String =
                 "A duplicate transition pathway auto-correlation was detected: More information:" & vbCrLf &
-                "Transition Group={0}, {1}={2}, {3}={4}, Iteration={5}, Timestep={6}."
+                "Transition Group={0}, {1}={2}, {3}={4}, {5}={6}, Iteration={7}, Timestep={8}."
 
             ExceptionUtils.ThrowArgumentException(
                 template,
@@ -63,6 +66,8 @@ Class TransitionPathwayAutoCorrelationMap
                 Me.GetStratumName(item.StratumId),
                 Me.SecondaryStratumLabel,
                 Me.GetSecondaryStratumName(item.SecondaryStratumId),
+                Me.TertiaryStratumLabel,
+                Me.GetTertiaryStratumName(item.TertiaryStratumId),
                 STSimMapBase.FormatValue(item.Iteration),
                 STSimMapBase.FormatValue(item.Timestep))
 

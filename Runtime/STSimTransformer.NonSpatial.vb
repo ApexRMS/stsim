@@ -50,6 +50,7 @@ Partial Class STSimTransformer
         simulationCell.StratumId = icd.StratumId
         simulationCell.StateClassId = icd.StateClassId
         simulationCell.SecondaryStratumId = icd.SecondaryStratumId
+        simulationCell.TertiaryStratumId = icd.TertiaryStratumId
 
         Me.InitializeCellTstValues(simulationCell, iteration)
 
@@ -67,7 +68,7 @@ Partial Class STSimTransformer
     ''' <remarks></remarks>
     Private Sub PostInitializeCellNonRaster(ByVal c As Cell, ByVal iteration As Integer)
 
-        Me.m_ProportionAccumulatorMap.AddOrIncrement(c.StratumId, c.SecondaryStratumId)
+        Me.m_ProportionAccumulatorMap.AddOrIncrement(c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId)
 
         Me.OnSummaryStateClassOutput(c, iteration, Me.m_TimestepZero)
         Me.OnSummaryStateAttributeOutput(c, iteration, Me.m_TimestepZero)

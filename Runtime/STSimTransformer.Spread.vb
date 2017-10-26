@@ -139,7 +139,8 @@ Partial Class STSimTransformer
             Me.m_TstTransitionGroupMap.GetGroup(
                 tr.TransitionTypeId,
                 contagionCell.StratumId,
-                contagionCell.SecondaryStratumId)
+                contagionCell.SecondaryStratumId,
+                contagionCell.TertiaryStratumId)
 
         If (tstgroup IsNot Nothing) Then
 
@@ -158,10 +159,14 @@ Partial Class STSimTransformer
             Dim Slope As Double = GetSlope(contagionCell, neighboringCell, NeighborDistance)
 
             SpreadDistance *= Me.m_TransitionDirectionMultiplierMap.GetDirectionMultiplier(
-                spreadGroup.TransitionGroupId, contagionCell.StratumId, contagionCell.SecondaryStratumId, direction, iteration, timestep)
+                spreadGroup.TransitionGroupId,
+                contagionCell.StratumId, contagionCell.SecondaryStratumId, contagionCell.TertiaryStratumId,
+                direction, iteration, timestep)
 
             SpreadDistance *= Me.m_TransitionSlopeMultiplierMap.GetSlopeMultiplier(
-                spreadGroup.TransitionGroupId, contagionCell.StratumId, contagionCell.SecondaryStratumId, iteration, timestep, Slope)
+                spreadGroup.TransitionGroupId,
+                contagionCell.StratumId, contagionCell.SecondaryStratumId, contagionCell.TertiaryStratumId,
+                iteration, timestep, Slope)
 
             If (isDiagonal) Then
                 MinThreshold = Me.m_InputRasters.GetCellSizeDiagonalMeters / 2
@@ -187,7 +192,8 @@ Partial Class STSimTransformer
 
                 If (DistantCell IsNot Nothing) Then
 
-                    Dim DistantTransition As Transition = Me.SelectSpatialTransitionPathway(DistantCell, spreadGroup.TransitionGroupId, iteration, timestep)
+                    Dim DistantTransition As Transition = Me.SelectSpatialTransitionPathway(
+                        DistantCell, spreadGroup.TransitionGroupId, iteration, timestep)
 
                     If (DistantTransition IsNot Nothing) Then
 

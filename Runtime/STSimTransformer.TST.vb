@@ -30,6 +30,7 @@ Partial Class STSimTransformer
                         tg.TransitionGroupId,
                         simulationCell.StratumId,
                         simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId,
                         simulationCell.StateClassId,
                         iteration)
 
@@ -75,7 +76,8 @@ Partial Class STSimTransformer
         Dim tstgroup As TstTransitionGroup = Me.m_TstTransitionGroupMap.GetGroup(
             tr.TransitionTypeId,
             simulationCell.StratumId,
-            simulationCell.SecondaryStratumId)
+            simulationCell.SecondaryStratumId,
+            simulationCell.TertiaryStratumId)
 
         If (tstgroup Is Nothing) Then
             Return True

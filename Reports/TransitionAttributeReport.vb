@@ -6,9 +6,9 @@
 '*********************************************************************************************
 
 Imports SyncroSim.Core
-Imports System.Globalization
 Imports SyncroSim.Core.Forms
 Imports System.Reflection
+Imports System.Globalization
 
 <ObfuscationAttribute(Exclude:=True, ApplyToMembers:=False)>
 Class TransitionAttributeReport
@@ -54,6 +54,7 @@ Class TransitionAttributeReport
         c.Add(New ExportColumn("Timestep", TimestepLabel))
         c.Add(New ExportColumn("Stratum", PrimaryStratumLabel))
         c.Add(New ExportColumn("SecondaryStratum", SecondaryStratumLabel))
+        c.Add(New ExportColumn("TertiaryStratum", TertiaryStratumLabel))
         c.Add(New ExportColumn("AttributeType", "Attribute"))
         c.Add(New ExportColumn("AgeMin", "Age Min"))
         c.Add(New ExportColumn("AgeMax", "Age Max"))
@@ -79,6 +80,7 @@ Class TransitionAttributeReport
                 "STSim_OutputTransitionAttribute.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_TransitionAttributeType.Name as AttributeType, " &
                 "STSim_OutputTransitionAttribute.AgeMin, " &
                 "STSim_OutputTransitionAttribute.AgeMax, " &
@@ -86,6 +88,7 @@ Class TransitionAttributeReport
                 "FROM STSim_OutputTransitionAttribute " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputTransitionAttribute.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputTransitionAttribute.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputTransitionAttribute.TertiaryStratumID " &
                 "INNER JOIN STSim_TransitionAttributeType ON STSim_TransitionAttributeType.TransitionAttributeTypeID = STSim_OutputTransitionAttribute.TransitionAttributeTypeID " &
                 "WHERE STSim_OutputTransitionAttribute.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -94,6 +97,7 @@ Class TransitionAttributeReport
                 "STSim_OutputTransitionAttribute.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_TransitionAttributeType.Name, " &
                 "AgeMin, " &
                 "AgeMax",
@@ -109,6 +113,7 @@ Class TransitionAttributeReport
                 "STSim_OutputTransitionAttribute.Timestep,  " &
                 "STSim_Stratum.Name AS Stratum,  " &
                 "STSim_SecondaryStratum.Name AS SecondaryStratum,  " &
+                "STSim_TertiaryStratum.Name AS TertiaryStratum,  " &
                 "STSim_TransitionAttributeType.Name as AttributeType, " &
                 "STSim_OutputTransitionAttribute.AgeMin, " &
                 "STSim_OutputTransitionAttribute.AgeMax, " &
@@ -117,6 +122,7 @@ Class TransitionAttributeReport
                 "INNER JOIN SSim_Scenario ON SSim_Scenario.ScenarioID = STSim_OutputTransitionAttribute.ScenarioID " &
                 "INNER JOIN STSim_Stratum ON STSim_Stratum.StratumID = STSim_OutputTransitionAttribute.StratumID " &
                 "LEFT JOIN STSim_SecondaryStratum ON STSim_SecondaryStratum.SecondaryStratumID = STSim_OutputTransitionAttribute.SecondaryStratumID " &
+                "LEFT JOIN STSim_TertiaryStratum ON STSim_TertiaryStratum.TertiaryStratumID = STSim_OutputTransitionAttribute.TertiaryStratumID " &
                 "INNER JOIN STSim_TransitionAttributeType ON STSim_TransitionAttributeType.TransitionAttributeTypeID = STSim_OutputTransitionAttribute.TransitionAttributeTypeID " &
                 "WHERE STSim_OutputTransitionAttribute.ScenarioID IN ({0})  " &
                 "ORDER BY " &
@@ -126,6 +132,7 @@ Class TransitionAttributeReport
                 "STSim_OutputTransitionAttribute.Timestep, " &
                 "STSim_Stratum.Name, " &
                 "STSim_SecondaryStratum.Name, " &
+                "STSim_TertiaryStratum.Name, " &
                 "STSim_TransitionAttributeType.Name, " &
                 "AgeMin, " &
                 "AgeMax",

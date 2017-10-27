@@ -8,10 +8,6 @@
 Imports SyncroSim.Common
 Imports System.Collections.ObjectModel
 
-''' <summary>
-''' OutputStratumStateCollection
-''' </summary>
-''' <remarks></remarks>
 Friend Class OutputStratumStateCollection
     Inherits KeyedCollection(Of SevenIntegerLookupKey, OutputStratumState)
 
@@ -20,15 +16,20 @@ Friend Class OutputStratumStateCollection
     End Sub
 
     Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumState) As SevenIntegerLookupKey
-        Return New SevenIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.StateClassId, item.AgeKey)
+
+        Return New SevenIntegerLookupKey(
+            item.StratumId,
+            LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId),
+            LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId),
+            item.Iteration,
+            item.Timestep,
+            item.StateClassId,
+            item.AgeKey)
+
     End Function
 
 End Class
 
-''' <summary>
-''' OutputStratumStateCollectionZeroValues
-''' </summary>
-''' <remarks></remarks>
 Friend Class OutputStratumStateCollectionZeroValues
     Inherits KeyedCollection(Of SixIntegerLookupKey, OutputStratumState)
 
@@ -37,7 +38,15 @@ Friend Class OutputStratumStateCollectionZeroValues
     End Sub
 
     Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumState) As SixIntegerLookupKey
-        Return New SixIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.StateClassId)
+
+        Return New SixIntegerLookupKey(
+            item.StratumId,
+            LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId),
+            LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId),
+            item.Iteration,
+            item.Timestep,
+            item.StateClassId)
+
     End Function
 
 End Class

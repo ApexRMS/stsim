@@ -16,7 +16,17 @@ Friend Class OutputStratumTransitionStateCollection
     End Sub
 
     Protected Overrides Function GetKeyForItem(ByVal item As OutputStratumTransitionState) As EightIntegerLookupKey
-        Return New EightIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.TransitionTypeId, item.StateClassId, item.EndStateClassId)
+
+        Return New EightIntegerLookupKey(
+            item.StratumId,
+            LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId),
+            LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId),
+            item.Iteration,
+            item.Timestep,
+            item.TransitionTypeId,
+            item.StateClassId,
+            item.EndStateClassId)
+
     End Function
 
 End Class

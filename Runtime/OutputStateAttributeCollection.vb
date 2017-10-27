@@ -16,7 +16,16 @@ Friend Class OutputStateAttributeCollection
     End Sub
 
     Protected Overrides Function GetKeyForItem(ByVal item As OutputStateAttribute) As SevenIntegerLookupKey
-        Return New SevenIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), GetNullableKey(item.TertiaryStratumId), item.Iteration, item.Timestep, item.StateAttributeTypeId, item.AgeKey)
+
+        Return New SevenIntegerLookupKey(
+            item.StratumId,
+            LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId),
+            LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId),
+            item.Iteration,
+            item.Timestep,
+            item.StateAttributeTypeId,
+            item.AgeKey)
+
     End Function
 
 End Class

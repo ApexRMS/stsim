@@ -206,6 +206,8 @@ Partial Class STSimTransformer
         Me.m_SummaryStateAttributeOutputTimesteps = SafeInt(droo(DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME))
         Me.m_CreateSummaryTransitionAttributeOutput = DataTableUtilities.GetDataBool(droo(DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME))
         Me.m_SummaryTransitionAttributeOutputTimesteps = SafeInt(droo(DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME))
+        Me.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo(DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME))
+        Me.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo(DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME))
 
     End Sub
 

@@ -9,14 +9,23 @@ Imports SyncroSim.Common
 Imports System.Collections.ObjectModel
 
 Friend Class OutputTransitionAttributeCollection
-    Inherits KeyedCollection(Of SixIntegerLookupKey, OutputTransitionAttribute)
+    Inherits KeyedCollection(Of SevenIntegerLookupKey, OutputTransitionAttribute)
 
     Public Sub New()
-        MyBase.New(New SixIntegerLookupKeyEqualityComparer)
+        MyBase.New(New SevenIntegerLookupKeyEqualityComparer)
     End Sub
 
-    Protected Overrides Function GetKeyForItem(ByVal item As OutputTransitionAttribute) As SixIntegerLookupKey
-        Return New SixIntegerLookupKey(item.StratumId, GetNullableKey(item.SecondaryStratumId), item.Iteration, item.Timestep, item.TransitionAttributeTypeId, item.AgeKey)
+    Protected Overrides Function GetKeyForItem(ByVal item As OutputTransitionAttribute) As SevenIntegerLookupKey
+
+        Return New SevenIntegerLookupKey(
+            item.StratumId,
+            LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId),
+            LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId),
+            item.Iteration,
+            item.Timestep,
+            item.TransitionAttributeTypeId,
+            item.AgeKey)
+
     End Function
 
 End Class

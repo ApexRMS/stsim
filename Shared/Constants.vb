@@ -9,7 +9,7 @@ Module Constants
 
     'General
     Public Const AGE_KEY_NO_AGES As Integer = -1
-    Public Const SECONDARY_STRATUM_ID_WILDCARD_VALUE As Integer = 0
+    Public Const OUTPUT_COLLECTION_WILDCARD_KEY As Integer = 0
     Public Const DEFAULT_TRANSITION_ORDER As Double = Double.MinValue
 
     'Run Control
@@ -82,7 +82,5 @@ Module Constants
 
     'Spatial Map file naming Regex filter, containing 1 ID value
     Public Const FILE_FILTER_ID_REGEX = "^(.*){0}-([\d]*)\.(tif|vrt)$"
-
-
 
 End Module

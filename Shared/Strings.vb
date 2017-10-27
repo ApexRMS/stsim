@@ -309,6 +309,8 @@ Module Strings
     Public Const DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME As String = "SummaryOutputSATimesteps"
     Public Const DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME As String = "SummaryOutputTA"
     Public Const DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME As String = "SummaryOutputTATimesteps"
+    Public Const DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME As String = "SummaryOutputOmitSS"
+    Public Const DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME As String = "SummaryOutputOmitTS"
     Public Const DATASHEET_OO_RASTER_OUTPUT_SC_COLUMN_NAME As String = "RasterOutputSC"
     Public Const DATASHEET_OO_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME As String = "RasterOutputSCTimesteps"
     Public Const DATASHEET_OO_RASTER_OUTPUT_TR_COLUMN_NAME As String = "RasterOutputTR"

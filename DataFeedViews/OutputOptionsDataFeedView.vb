@@ -30,6 +30,9 @@ Class OutputOptionsDataFeedView
         Me.SetTextBoxBinding(Me.TextBoxSummarySATimesteps, DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME)
         Me.SetCheckBoxBinding(Me.CheckBoxSummaryTA, DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME)
         Me.SetTextBoxBinding(Me.TextBoxSummaryTATimesteps, DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME)
+        Me.SetCheckBoxBinding(Me.CheckBoxSummaryOmitSS, DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME)
+        Me.SetCheckBoxBinding(Me.CheckBoxSummaryOmitTS, DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME)
+
         Me.SetCheckBoxBinding(Me.CheckBoxRasterSC, DATASHEET_OO_RASTER_OUTPUT_SC_COLUMN_NAME)
         Me.SetTextBoxBinding(Me.TextBoxRasterSCTimesteps, DATASHEET_OO_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME)
         Me.SetCheckBoxBinding(Me.CheckBoxRasterTR, DATASHEET_OO_RASTER_OUTPUT_TR_COLUMN_NAME)

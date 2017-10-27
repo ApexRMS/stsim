@@ -450,7 +450,7 @@
     <Compile Include="Shared\Exceptions.vb" />
     <Compile Include="Shared\ExceptionUtils.vb" />
     <Compile Include="Shared\FormsUtilities.vb" />
-    <Compile Include="Shared\LookupKeyUtilities.vb" />
+    <Compile Include="Shared\LookupKeyUtils.vb" />
     <Compile Include="Shared\MathUtils.vb" />
     <Compile Include="Shared\MessageStrings.vb" />
     <Compile Include="Shared\NullableUtilities.vb" />

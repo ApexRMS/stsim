@@ -253,6 +253,10 @@ Class STSimUpdates
             STSIM0000062(store)
         End If
 
+        If (currentSchemaVersion < 63) Then
+            STSIM0000063(store)
+        End If
+
     End Sub
 
     ''' <summary>
@@ -2248,12 +2252,14 @@ Class STSimUpdates
         Next
 
     End Sub
+
     ''' <summary>
     ''' STSIM0000060
     ''' </summary>
     ''' <param name="store"></param>
     ''' <remarks>
-    ''' Add Legend Column to Primary Stratum, State Class, and Transition Type, to aid in Map Criteria legend definition. A184-8
+    ''' Add Legend Column to Primary Stratum, State Class, and Transition Type, to aid in Map 
+    ''' Criteria legend definition.
     ''' </remarks>
     Private Shared Sub STSIM0000060(ByVal store As DataStore)
 
@@ -2275,8 +2281,7 @@ Class STSimUpdates
     ''' SF0000061
     ''' </summary>
     ''' <param name="store"></param>
-    ''' <remarks>
-    ''' Add missing index on STSim_DistributionValue if missing drop</remarks>
+    ''' <remarks>Add missing index on STSim_DistributionValue and if missing drop</remarks>
     Private Shared Sub STSIM0000061(ByVal store As DataStore)
 
         If (store.TableExists("STSim_DistributionValue")) Then
@@ -2292,9 +2297,7 @@ Class STSimUpdates
     ''' SF0000062
     ''' </summary>
     ''' <param name="store"></param>
-    ''' <remarks>
-    ''' This update adds a tertiary stratum to all applicable tables
-    ''' </remarks>
+    ''' <remarks>This update adds a tertiary stratum to all applicable tables</remarks>
     Private Shared Sub STSIM0000062(ByVal store As DataStore)
 
         If (store.TableExists("STSim_Terminology")) Then
@@ -2491,6 +2494,24 @@ Class STSimUpdates
             store.ExecuteNonQuery("ALTER TABLE STSim_OutputTransitionAttribute RENAME TO TEMP_TABLE")
             store.ExecuteNonQuery("CREATE TABLE STSim_OutputTransitionAttribute(ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionAttributeTypeID INTEGER, AgeMin INTEGER, AgeMax INTEGER, AgeClass INTEGER, Amount DOUBLE)")
             store.ExecuteNonQuery("INSERT INTO STSim_OutputTransitionAttribute(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionAttributeTypeID, AgeMin, AgeMax, AgeClass, Amount) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TransitionAttributeTypeID, AgeMin, AgeMax, AgeClass, Amount FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' SF0000063
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>Adds Omit fields for Secondary and Tertiary Strata to OutputOptions</remarks>
+    Private Shared Sub STSIM0000063(ByVal store As DataStore)
+
+        If (store.TableExists("STSim_OutputOptions")) Then
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_OutputOptions(OutputOptionsID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, SummaryOutputSC INTEGER, SummaryOutputSCTimesteps INTEGER, SummaryOutputSCZeroValues INTEGER, SummaryOutputTR INTEGER, SummaryOutputTRTimesteps INTEGER, SummaryOutputTRIntervalMean INTEGER, SummaryOutputTRSC INTEGER, SummaryOutputTRSCTimesteps INTEGER, SummaryOutputSA INTEGER, SummaryOutputSATimesteps INTEGER, SummaryOutputTA INTEGER, SummaryOutputTATimesteps INTEGER, SummaryOutputOmitSS INTEGER, SummaryOutputOmitTS INTEGER, RasterOutputSC INTEGER, RasterOutputSCTimesteps INTEGER, RasterOutputTR INTEGER, RasterOutputTRTimesteps INTEGER, RasterOutputAge INTEGER, RasterOutputAgeTimesteps INTEGER, RasterOutputTST INTEGER, RasterOutputTSTTimesteps INTEGER, RasterOutputST INTEGER, RasterOutputSTTimesteps INTEGER, RasterOutputSA INTEGER, RasterOutputSATimesteps INTEGER, RasterOutputTA INTEGER, RasterOutputTATimesteps INTEGER, RasterOutputAATP INTEGER, RasterOutputAATPTimesteps INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputOptions(ScenarioID, SummaryOutputSC, SummaryOutputSCTimesteps, SummaryOutputSCZeroValues, SummaryOutputTR, SummaryOutputTRTimesteps, SummaryOutputTRIntervalMean, SummaryOutputTRSC, SummaryOutputTRSCTimesteps, SummaryOutputSA, SummaryOutputSATimesteps, SummaryOutputTA, SummaryOutputTATimesteps, RasterOutputSC, RasterOutputSCTimesteps, RasterOutputTR, RasterOutputTRTimesteps, RasterOutputAge, RasterOutputAgeTimesteps, RasterOutputTST, RasterOutputTSTTimesteps, RasterOutputST, RasterOutputSTTimesteps, RasterOutputSA, RasterOutputSATimesteps, RasterOutputTA, RasterOutputTATimesteps, RasterOutputAATP, RasterOutputAATPTimesteps) SELECT ScenarioID , SummaryOutputSC, SummaryOutputSCTimesteps, SummaryOutputSCZeroValues, SummaryOutputTR, SummaryOutputTRTimesteps, SummaryOutputTRIntervalMean, SummaryOutputTRSC, SummaryOutputTRSCTimesteps, SummaryOutputSA, SummaryOutputSATimesteps, SummaryOutputTA, SummaryOutputTATimesteps, RasterOutputSC, RasterOutputSCTimesteps, RasterOutputTR, RasterOutputTRTimesteps, RasterOutputAge, RasterOutputAgeTimesteps, RasterOutputTST, RasterOutputTSTTimesteps, RasterOutputST, RasterOutputSTTimesteps, RasterOutputSA, RasterOutputSATimesteps, RasterOutputTA, RasterOutputTATimesteps, RasterOutputAATP, RasterOutputAATPTimesteps FROM TEMP_TABLE")
             store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
 
         End If

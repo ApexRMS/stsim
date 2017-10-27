@@ -65,6 +65,8 @@ Partial Class OutputOptionsDataFeedView
         Me.LabelSummaryTRTimesteps = New System.Windows.Forms.Label()
         Me.CheckBoxSummaryTRSC = New System.Windows.Forms.CheckBox()
         Me.TextBoxSummaryTRTimesteps = New System.Windows.Forms.TextBox()
+        Me.CheckBoxSummaryOmitSS = New System.Windows.Forms.CheckBox()
+        Me.CheckBoxSummaryOmitTS = New System.Windows.Forms.CheckBox()
         Me.GroupBoxSpatialOutput.SuspendLayout()
         Me.GroupBoxSummaryOutput.SuspendLayout()
         Me.SuspendLayout()
@@ -95,7 +97,7 @@ Partial Class OutputOptionsDataFeedView
         Me.GroupBoxSpatialOutput.Controls.Add(Me.TextBoxRasterSTTimesteps)
         Me.GroupBoxSpatialOutput.Controls.Add(Me.LabelRasterTRTimesteps)
         Me.GroupBoxSpatialOutput.Controls.Add(Me.LabelRasterSCTimesteps)
-        Me.GroupBoxSpatialOutput.Location = New System.Drawing.Point(3, 149)
+        Me.GroupBoxSpatialOutput.Location = New System.Drawing.Point(3, 190)
         Me.GroupBoxSpatialOutput.Name = "GroupBoxSpatialOutput"
         Me.GroupBoxSpatialOutput.Size = New System.Drawing.Size(576, 214)
         Me.GroupBoxSpatialOutput.TabIndex = 4
@@ -320,6 +322,8 @@ Partial Class OutputOptionsDataFeedView
         '
         'GroupBoxSummaryOutput
         '
+        Me.GroupBoxSummaryOutput.Controls.Add(Me.CheckBoxSummaryOmitTS)
+        Me.GroupBoxSummaryOutput.Controls.Add(Me.CheckBoxSummaryOmitSS)
         Me.GroupBoxSummaryOutput.Controls.Add(Me.CheckBoxSummarySCZeroValues)
         Me.GroupBoxSummaryOutput.Controls.Add(Me.LabelSummaryTATimesteps)
         Me.GroupBoxSummaryOutput.Controls.Add(Me.TextBoxSummaryTATimesteps)
@@ -339,7 +343,7 @@ Partial Class OutputOptionsDataFeedView
         Me.GroupBoxSummaryOutput.Controls.Add(Me.TextBoxSummaryTRTimesteps)
         Me.GroupBoxSummaryOutput.Location = New System.Drawing.Point(3, 3)
         Me.GroupBoxSummaryOutput.Name = "GroupBoxSummaryOutput"
-        Me.GroupBoxSummaryOutput.Size = New System.Drawing.Size(576, 140)
+        Me.GroupBoxSummaryOutput.Size = New System.Drawing.Size(576, 181)
         Me.GroupBoxSummaryOutput.TabIndex = 3
         Me.GroupBoxSummaryOutput.TabStop = False
         Me.GroupBoxSummaryOutput.Text = "Summary output"
@@ -499,6 +503,26 @@ Partial Class OutputOptionsDataFeedView
         Me.TextBoxSummaryTRTimesteps.TabIndex = 5
         Me.TextBoxSummaryTRTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
+        'CheckBoxSummaryOmitSS
+        '
+        Me.CheckBoxSummaryOmitSS.AutoSize = True
+        Me.CheckBoxSummaryOmitSS.Location = New System.Drawing.Point(11, 132)
+        Me.CheckBoxSummaryOmitSS.Name = "CheckBoxSummaryOmitSS"
+        Me.CheckBoxSummaryOmitSS.Size = New System.Drawing.Size(128, 17)
+        Me.CheckBoxSummaryOmitSS.TabIndex = 17
+        Me.CheckBoxSummaryOmitSS.Text = "Omit secondary strata"
+        Me.CheckBoxSummaryOmitSS.UseVisualStyleBackColor = True
+        '
+        'CheckBoxSummaryOmitTS
+        '
+        Me.CheckBoxSummaryOmitTS.AutoSize = True
+        Me.CheckBoxSummaryOmitTS.Location = New System.Drawing.Point(11, 154)
+        Me.CheckBoxSummaryOmitTS.Name = "CheckBoxSummaryOmitTS"
+        Me.CheckBoxSummaryOmitTS.Size = New System.Drawing.Size(110, 17)
+        Me.CheckBoxSummaryOmitTS.TabIndex = 18
+        Me.CheckBoxSummaryOmitTS.Text = "Omit tertiary strata"
+        Me.CheckBoxSummaryOmitTS.UseVisualStyleBackColor = True
+        '
         'OutputOptionsDataFeedView
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -506,7 +530,7 @@ Partial Class OutputOptionsDataFeedView
         Me.Controls.Add(Me.GroupBoxSpatialOutput)
         Me.Controls.Add(Me.GroupBoxSummaryOutput)
         Me.Name = "OutputOptionsDataFeedView"
-        Me.Size = New System.Drawing.Size(584, 368)
+        Me.Size = New System.Drawing.Size(584, 411)
         Me.GroupBoxSpatialOutput.ResumeLayout(False)
         Me.GroupBoxSpatialOutput.PerformLayout()
         Me.GroupBoxSummaryOutput.ResumeLayout(False)
@@ -557,5 +581,6 @@ Partial Class OutputOptionsDataFeedView
     Friend WithEvents LabelSummaryTRTimesteps As System.Windows.Forms.Label
     Friend WithEvents CheckBoxSummaryTRSC As System.Windows.Forms.CheckBox
     Friend WithEvents TextBoxSummaryTRTimesteps As System.Windows.Forms.TextBox
-
+    Friend WithEvents CheckBoxSummaryOmitTS As Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxSummaryOmitSS As Windows.Forms.CheckBox
 End Class

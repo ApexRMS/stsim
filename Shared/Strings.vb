@@ -271,8 +271,8 @@ Module Strings
 
     'Transition Pathway Auto-Correlation
     Public Const DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_NAME As String = "STSim_TransitionPathwayAutoCorrelation"
-    Public Const DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_FACTOR_COLUMN_NAME As String = "AutoCorrelationFactor"
-    Public Const DATASHEET_TRANSITION_PATHWAY_SPREAD_ONLY_TO_LIKE_COLUMN_NAME As String = "SpreadOnlyToLike"
+    Public Const DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_COLUMN_NAME As String = "AutoCorrelation"
+    Public Const DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME As String = "SpreadTo"
 
     'State Attribute Value
     Public Const DATASHEET_STATE_ATTRIBUTE_VALUE_NAME As String = "STSim_StateAttributeValue"

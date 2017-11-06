@@ -5,6 +5,14 @@
 '
 '*********************************************************************************************
 
+Enum AutoCorrelationSpread
+    ToAnyCell = 0
+    ToSamePathway = 1
+    ToSamePrimaryStratum = 2
+    ToSameSecondaryStratum = 3
+    ToSameTertiaryStratum = 4
+End Enum
+
 Class TransitionPathwayAutoCorrelation
 
     Private m_Iteration As Nullable(Of Integer)
@@ -13,8 +21,8 @@ Class TransitionPathwayAutoCorrelation
     Private m_SecondaryStratumId As Nullable(Of Integer)
     Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_TransitionGroupId As Nullable(Of Integer)
-    Private m_Factor As Double
-    Private m_SpreadOnlyToLike As Boolean
+    Private m_AutoCorrelation As Boolean
+    Private m_SpreadTo As AutoCorrelationSpread = AutoCorrelationSpread.ToAnyCell
 
     Public Sub New(
         ByVal iteration As Nullable(Of Integer),
@@ -23,8 +31,8 @@ Class TransitionPathwayAutoCorrelation
         ByVal secondaryStratumId As Nullable(Of Integer),
         ByVal tertiaryStratumId As Nullable(Of Integer),
         ByVal transitionGroupId As Nullable(Of Integer),
-        ByVal factor As Double,
-        ByVal spreadOnlyToLike As Boolean)
+        ByVal autoCorrelation As Boolean,
+        ByVal spreadTo As AutoCorrelationSpread)
 
         Me.m_Iteration = iteration
         Me.m_Timestep = timestep
@@ -32,8 +40,8 @@ Class TransitionPathwayAutoCorrelation
         Me.m_SecondaryStratumId = secondaryStratumId
         Me.m_TertiaryStratumId = tertiaryStratumId
         Me.m_TransitionGroupId = transitionGroupId
-        Me.m_Factor = factor
-        Me.m_SpreadOnlyToLike = spreadOnlyToLike
+        Me.m_AutoCorrelation = autoCorrelation
+        Me.m_SpreadTo = spreadTo
 
     End Sub
 
@@ -73,15 +81,15 @@ Class TransitionPathwayAutoCorrelation
         End Get
     End Property
 
-    Public ReadOnly Property Factor As Double
+    Public ReadOnly Property AutoCorrelation As Boolean
         Get
-            Return Me.m_Factor
+            Return Me.m_AutoCorrelation
         End Get
     End Property
 
-    Public ReadOnly Property SpreadOnlyToLike As Boolean
+    Public ReadOnly Property SpreadTo As AutoCorrelationSpread
         Get
-            Return Me.m_SpreadOnlyToLike
+            Return Me.m_SpreadTo
         End Get
     End Property
 

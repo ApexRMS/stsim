@@ -1847,8 +1847,8 @@ Partial Class STSimTransformer
             Dim SecondaryStratumId As Nullable(Of Integer) = Nothing
             Dim TertiaryStratumId As Nullable(Of Integer) = Nothing
             Dim TransitionGroupId As Nullable(Of Integer) = Nothing
-            Dim Factor As Double = CDbl(dr(DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_FACTOR_COLUMN_NAME))
-            Dim SpreadOnlyToLike As Boolean = False
+            Dim AutoCorrelation As Boolean = DataTableUtilities.GetDataBool(dr, DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_COLUMN_NAME)
+            Dim SpreadTo As AutoCorrelationSpread = AutoCorrelationSpread.ToAnyCell
 
             If (dr(DATASHEET_ITERATION_COLUMN_NAME) IsNot DBNull.Value) Then
                 Iteration = CInt(dr(DATASHEET_ITERATION_COLUMN_NAME))
@@ -1874,14 +1874,14 @@ Partial Class STSimTransformer
                 TransitionGroupId = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
             End If
 
-            If (dr(DATASHEET_TRANSITION_PATHWAY_SPREAD_ONLY_TO_LIKE_COLUMN_NAME) IsNot DBNull.Value) Then
-                SpreadOnlyToLike = DataTableUtilities.GetDataBool(dr, DATASHEET_TRANSITION_PATHWAY_SPREAD_ONLY_TO_LIKE_COLUMN_NAME)
+            If (dr(DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME) IsNot DBNull.Value) Then
+                SpreadTo = CType(CInt(dr(DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME)), AutoCorrelationSpread)
             End If
 
             Dim Item As New TransitionPathwayAutoCorrelation(
                  Iteration, Timestep,
                  StratumId, SecondaryStratumId, TertiaryStratumId,
-                 TransitionGroupId, Factor, SpreadOnlyToLike)
+                 TransitionGroupId, AutoCorrelation, SpreadTo)
 
             Me.m_TransitionPathwayAutoCorrelations.Add(Item)
 
@@ -2395,7 +2395,7 @@ Partial Class STSimTransformer
         If (Not TransitionSlopeMultipliersGroupFound) Then
             Me.RecordStatus(StatusType.Warning, "At least one Transition Slope Multiplier has been defined with a non-primary Transition Group.")
         End If
-       
+
     End Sub
 
 End Class

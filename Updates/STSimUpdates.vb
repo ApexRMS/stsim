@@ -257,6 +257,10 @@ Class STSimUpdates
             STSIM0000063(store)
         End If
 
+        If (currentSchemaVersion < 64) Then
+            STSIM0000064(store)
+        End If
+
     End Sub
 
     ''' <summary>
@@ -2512,6 +2516,31 @@ Class STSimUpdates
             store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions RENAME TO TEMP_TABLE")
             store.ExecuteNonQuery("CREATE TABLE STSim_OutputOptions(OutputOptionsID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, SummaryOutputSC INTEGER, SummaryOutputSCTimesteps INTEGER, SummaryOutputSCZeroValues INTEGER, SummaryOutputTR INTEGER, SummaryOutputTRTimesteps INTEGER, SummaryOutputTRIntervalMean INTEGER, SummaryOutputTRSC INTEGER, SummaryOutputTRSCTimesteps INTEGER, SummaryOutputSA INTEGER, SummaryOutputSATimesteps INTEGER, SummaryOutputTA INTEGER, SummaryOutputTATimesteps INTEGER, SummaryOutputOmitSS INTEGER, SummaryOutputOmitTS INTEGER, RasterOutputSC INTEGER, RasterOutputSCTimesteps INTEGER, RasterOutputTR INTEGER, RasterOutputTRTimesteps INTEGER, RasterOutputAge INTEGER, RasterOutputAgeTimesteps INTEGER, RasterOutputTST INTEGER, RasterOutputTSTTimesteps INTEGER, RasterOutputST INTEGER, RasterOutputSTTimesteps INTEGER, RasterOutputSA INTEGER, RasterOutputSATimesteps INTEGER, RasterOutputTA INTEGER, RasterOutputTATimesteps INTEGER, RasterOutputAATP INTEGER, RasterOutputAATPTimesteps INTEGER)")
             store.ExecuteNonQuery("INSERT INTO STSim_OutputOptions(ScenarioID, SummaryOutputSC, SummaryOutputSCTimesteps, SummaryOutputSCZeroValues, SummaryOutputTR, SummaryOutputTRTimesteps, SummaryOutputTRIntervalMean, SummaryOutputTRSC, SummaryOutputTRSCTimesteps, SummaryOutputSA, SummaryOutputSATimesteps, SummaryOutputTA, SummaryOutputTATimesteps, RasterOutputSC, RasterOutputSCTimesteps, RasterOutputTR, RasterOutputTRTimesteps, RasterOutputAge, RasterOutputAgeTimesteps, RasterOutputTST, RasterOutputTSTTimesteps, RasterOutputST, RasterOutputSTTimesteps, RasterOutputSA, RasterOutputSATimesteps, RasterOutputTA, RasterOutputTATimesteps, RasterOutputAATP, RasterOutputAATPTimesteps) SELECT ScenarioID , SummaryOutputSC, SummaryOutputSCTimesteps, SummaryOutputSCZeroValues, SummaryOutputTR, SummaryOutputTRTimesteps, SummaryOutputTRIntervalMean, SummaryOutputTRSC, SummaryOutputTRSCTimesteps, SummaryOutputSA, SummaryOutputSATimesteps, SummaryOutputTA, SummaryOutputTATimesteps, RasterOutputSC, RasterOutputSCTimesteps, RasterOutputTR, RasterOutputTRTimesteps, RasterOutputAge, RasterOutputAgeTimesteps, RasterOutputTST, RasterOutputTSTTimesteps, RasterOutputST, RasterOutputSTTimesteps, RasterOutputSA, RasterOutputSATimesteps, RasterOutputTA, RasterOutputTATimesteps, RasterOutputAATP, RasterOutputAATPTimesteps FROM TEMP_TABLE")
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' SF0000064
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' This update changes the STSim_TransitionPathwayAutoCorrelation table as follows:
+    ''' 1. Renames the AutoCorrelationFactor and SpreadOnlyToLike fields
+    ''' 2. Chagne the AutoCorrelationFactor field to be an INTEGER (Boolean)
+    ''' </remarks>
+    Private Shared Sub STSIM0000064(ByVal store As DataStore)
+
+        If (store.TableExists("STSim_TransitionPathwayAutoCorrelation")) Then
+
+            store.ExecuteNonQuery("UPDATE STSim_TransitionPathwayAutoCorrelation SET AutoCorrelationFactor = -1 WHERE AutoCorrelationFactor <> 0")
+            store.ExecuteNonQuery("UPDATE STSim_TransitionPathwayAutoCorrelation SET SpreadOnlyToLike = 1 WHERE SpreadOnlyToLike <> 0")
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionPathwayAutoCorrelation RENAME TO TEMP_TABLE")
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionPathwayAutoCorrelation(TransitionPathwayAutoCorrelationID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, SecondaryStratumID INTEGER, TertiaryStratumID INTEGER, TransitionGroupID INTEGER, AutoCorrelation INTEGER, SpreadTo INTEGER)")
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionPathwayAutoCorrelation(ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TertiaryStratumID, TransitionGroupID, AutoCorrelation, SpreadTo) SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, TertiaryStratumID, TransitionGroupID, AutoCorrelationFactor, SpreadOnlyToLike FROM TEMP_TABLE")
             store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
 
         End If

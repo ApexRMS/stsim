@@ -1068,7 +1068,7 @@ Partial Class STSimTransformer
             If (Transition Is Nothing) Then
 
                 If (AutoCorrelation IsNot Nothing) Then
-                    If ((AutoCorrelation.SpreadOnlyToLike) And (transitionDictionary.Count > 0)) Then
+                    If ((AutoCorrelation.SpreadTo = AutoCorrelationSpread.ToSamePathway) And (transitionDictionary.Count > 0)) Then
                         Continue While
                     End If
                 End If
@@ -1079,7 +1079,7 @@ Partial Class STSimTransformer
 
                 Dim rnd As Double = Me.m_RandomGenerator.GetNextDouble()
 
-                If (AutoCorrelation Is Nothing OrElse rnd > AutoCorrelation.Factor) Then
+                If (AutoCorrelation.SpreadTo = AutoCorrelationSpread.ToSamePathway) Then
                     Transition = Me.SelectSpatialTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep)
                 End If
 

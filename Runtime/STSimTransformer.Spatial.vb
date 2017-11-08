@@ -1053,6 +1053,15 @@ Partial Class STSimTransformer
                         timestep)
 
             If (AutoCorrelation IsNot Nothing) Then
+
+                If (AutoCorrelation.SpreadTo = AutoCorrelationSpread.ToSamePrimaryStratum And CurrentRecord.Cell.StratumId <> initiationCell.StratumId) Then
+                    Continue While
+                ElseIf (AutoCorrelation.SpreadTo = AutoCorrelationSpread.ToSameSecondaryStratum And CurrentRecord.Cell.SecondaryStratumId <> initiationCell.SecondaryStratumId) Then
+                    Continue While
+                ElseIf (AutoCorrelation.SpreadTo = AutoCorrelationSpread.ToSameTertiaryStratum And CurrentRecord.Cell.TertiaryStratumId <> initiationCell.TertiaryStratumId) Then
+                    Continue While
+                End If
+
                 For Each c As Cell In neighbors
                     If transitionDictionary.ContainsKey(c.CellId) Then
                         Dim neighborTransition As Transition = transitionDictionary(c.CellId)
@@ -1060,9 +1069,9 @@ Partial Class STSimTransformer
                             Transition = neighborTransition
                             Exit For
                         End If
-
                     End If
                 Next
+
             End If
 
             If (Transition Is Nothing) Then
@@ -1077,9 +1086,7 @@ Partial Class STSimTransformer
 
             Else
 
-                Dim rnd As Double = Me.m_RandomGenerator.GetNextDouble()
-
-                If (AutoCorrelation.SpreadTo = AutoCorrelationSpread.ToSamePathway) Then
+                If (AutoCorrelation Is Nothing OrElse (Not AutoCorrelation.AutoCorrelation)) Then
                     Transition = Me.SelectSpatialTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep)
                 End If
 

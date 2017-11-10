@@ -889,7 +889,15 @@ Public NotInheritable Class STSimTransformer
             Me.FillTransitionMultiplierValueCollection()
 
             For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
-                tmt.CreateMultiplierValueMap()
+                tmt.ClearMultiplierValueMap()
+            Next
+
+            For Each sm As TransitionMultiplierValue In Me.m_TransitionMultiplierValues
+                Dim mt As TransitionMultiplierType = Me.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId)
+                mt.AddTransitionMultiplierValue(sm)
+            Next
+
+            For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
                 tmt.CreateMultiplierValueMap()
             Next
 

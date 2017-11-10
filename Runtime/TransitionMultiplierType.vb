@@ -84,30 +84,39 @@ Friend Class TransitionMultiplierType
 
     End Sub
 
-    Friend Sub ClearSpatial()
+    Friend Sub ClearMultiplierValueMap()
+
+        Me.m_TransitionMultiplierValues.Clear()
+        Me.m_TransitionMultiplierValueMap = Nothing
+
+    End Sub
+
+    Friend Sub ClearSpatialMultiplierMap()
 
         Me.m_TransitionSpatialMultipliers.Clear()
         Me.m_TransitionSpatialMultiplierMap = Nothing
+
+    End Sub
+
+    Friend Sub ClearSpatialInitiationMultiplierMap()
 
         Me.m_TransitionSpatialInitiationMultipliers.Clear()
         Me.m_TransitionSpatialInitiationMultiplierMap = Nothing
 
     End Sub
 
-    Friend Sub CreateTransitionMultiplierValueMap()
+    Friend Sub CreateMultiplierValueMap()
 
         If (Me.m_TransitionMultiplierValues.Count > 0) Then
 
             Debug.Assert(Me.m_TransitionMultiplierValueMap Is Nothing)
-
-            Me.m_TransitionMultiplierValueMap = New TransitionMultiplierValueMap(
-                Me.m_Scenario, Me.m_TransitionMultiplierValues, Me.m_Provider)
+            Me.m_TransitionMultiplierValueMap = New TransitionMultiplierValueMap(Me.m_Scenario, Me.m_TransitionMultiplierValues, Me.m_Provider)
 
         End If
 
     End Sub
 
-    Friend Sub CreateTransitionSpatialMultiplierMap()
+    Friend Sub CreateSpatialMultiplierMap()
 
         If (Me.m_TransitionSpatialMultipliers.Count > 0) Then
 
@@ -118,7 +127,7 @@ Friend Class TransitionMultiplierType
 
     End Sub
 
-    Friend Sub CreateTransitionSpatialInitiationMultiplierMap()
+    Friend Sub CreateSpatialInitiationMultiplierMap()
 
         If (Me.m_TransitionSpatialInitiationMultipliers.Count > 0) Then
 

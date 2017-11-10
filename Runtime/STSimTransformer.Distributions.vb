@@ -29,7 +29,16 @@ Partial Class STSimTransformer
         Me.m_DistributionProvider.InitializeExternalVariableValues()
         Me.m_DistributionProvider.STSimInitializeDistributionValues()
 
-        'Targets
+        Me.InitializeTransitionTargetDistributionValues()
+        Me.InitializeTransitionAttributeTargetDistributionValues()
+        Me.InitializeTransitionMultiplierDistributionValues()
+        Me.InitializeTransitionDirectionMultiplierDistributionValues()
+        Me.InitializeTransitionSlopeMultiplierDistributionValues()
+        Me.InitializeTransitionAdjacencyMultiplierDistributionValues()
+
+    End Sub
+
+    Private Sub InitializeTransitionTargetDistributionValues()
 
         Try
 
@@ -41,7 +50,9 @@ Partial Class STSimTransformer
             Throw New ArgumentException("Transition Targets" & " -> " & ex.Message)
         End Try
 
-        'Attribute Targets
+    End Sub
+
+    Private Sub InitializeTransitionAttributeTargetDistributionValues()
 
         Try
 
@@ -53,7 +64,9 @@ Partial Class STSimTransformer
             Throw New ArgumentException("Transition Attribute Targets" & " -> " & ex.Message)
         End Try
 
-        'Multiplier Values
+    End Sub
+
+    Private Sub InitializeTransitionMultiplierDistributionValues()
 
         Try
 
@@ -65,7 +78,9 @@ Partial Class STSimTransformer
             Throw New ArgumentException("Transition Multiplier Values" & " -> " & ex.Message)
         End Try
 
-        'Direction Multipliers
+    End Sub
+
+    Private Sub InitializeTransitionDirectionMultiplierDistributionValues()
 
         Try
 
@@ -77,7 +92,9 @@ Partial Class STSimTransformer
             Throw New ArgumentException("Direction Multipliers" & " -> " & ex.Message)
         End Try
 
-        'Slope Multipliers
+    End Sub
+
+    Private Sub InitializeTransitionSlopeMultiplierDistributionValues()
 
         Try
 
@@ -89,7 +106,9 @@ Partial Class STSimTransformer
             Throw New ArgumentException("Transition Slope Multipliers" & " -> " & ex.Message)
         End Try
 
-        'Adjacency Multipliers
+    End Sub
+
+    Private Sub InitializeTransitionAdjacencyMultiplierDistributionValues()
 
         Try
 

@@ -8,6 +8,7 @@
 Imports SyncroSim.Core
 Imports SyncroSim.Common
 Imports SyncroSim.StochasticTime
+Imports System.Globalization
 
 Public NotInheritable Class STSimTransformer
     Inherits StochasticTimeTransformer
@@ -189,6 +190,13 @@ Public NotInheritable Class STSimTransformer
     End Sub
 
     ''' <summary>
+    ''' Overrides Initialize
+    ''' </summary>
+    Public Overrides Sub Initialize()
+        Me.InternalInitialize()
+    End Sub
+
+    ''' <summary>
     ''' Overrides Transform
     ''' </summary>
     ''' <remarks></remarks>
@@ -203,8 +211,8 @@ Public NotInheritable Class STSimTransformer
     ''' <remarks></remarks>
     Protected Overrides Sub OnBeforeIteration(iteration As Integer)
 
-        Me.InternalOnBeforeIteration(iteration)
         MyBase.OnBeforeIteration(iteration)
+        Me.InternalOnBeforeIteration(iteration)
 
     End Sub
 
@@ -225,8 +233,8 @@ Public NotInheritable Class STSimTransformer
     ''' <remarks></remarks>
     Protected Overrides Sub OnBeforeTimestep(iteration As Integer, timestep As Integer)
 
-        Me.InternalOnBeforeTimestep(iteration, timestep)
         MyBase.OnBeforeTimestep(iteration, timestep)
+        Me.InternalOnBeforeTimestep(iteration, timestep)
 
     End Sub
 
@@ -271,7 +279,7 @@ Public NotInheritable Class STSimTransformer
 
     End Sub
 
-    Private Sub InternalTransform()
+    Private Sub InternalInitialize()
 
         Me.SetStatusMessage("Initializing")
 
@@ -297,7 +305,9 @@ Public NotInheritable Class STSimTransformer
         Me.InitializeOutputDataTables()
         Me.InitializeModel()
 
-        'Now we can call the base class to do the iteration and timestep loop.
+    End Sub
+
+    Private Sub InternalTransform()
 
         MyBase.RunStochasticLoop()
 
@@ -860,30 +870,110 @@ Public NotInheritable Class STSimTransformer
 
     Private Sub STSimExternalDataReady(ByVal dataSheet As DataSheet, ByVal previousData As DataTable)
 
-        If dataSheet.Name = "STSim_TransitionSpatialMultiplier" Then
+        If (dataSheet.Name = DATASHEET_PT_NAME) Then
 
-            ' Generate a list of PK ID values based on the contents of previousData
-            Dim listPrevDataPK As New List(Of Integer)
-            For Each row As DataRow In previousData.Rows
-                listPrevDataPK.Add(CInt(row.Item("TransitionSpatialMultiplierID")))
-            Next
+            Me.m_Transitions.Clear()
+            Me.FillProbabilisticTransitionsCollection()
+            Me.m_TransitionMap = New TransitionMap(Me.ResultScenario, Me.m_Transitions)
 
-            ' Append new rows to TSM Collection
-            FillTransitionSpatialMultiplierCollection(listPrevDataPK)
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_TARGET_NAME) Then
 
-            ' Reload the TMT Collection and Map
-            For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
-                tmt.ClearSpatial()
-            Next
-            ' Snippets from InitializeCollectionMaps()
-            For Each sm As TransitionSpatialMultiplier In Me.m_TransitionSpatialMultipliers
-                Dim mt As TransitionMultiplierType = Me.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId)
-                mt.AddTransitionSpatialMultiplier(sm)
-            Next
+            Me.m_TransitionTargets.Clear()
+            Me.FillTransitionTargetCollection()
+            Me.InitializeTransitionTargetDistributionValues()
+            Me.m_TransitionTargetMap = New TransitionTargetMap(Me.ResultScenario, Me.m_TransitionTargets)
+
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME) Then
+
+            Me.m_TransitionMultiplierValues.Clear()
+            Me.FillTransitionMultiplierValueCollection()
 
             For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
-                tmt.CreateTransitionSpatialMultiplierMap()
+                tmt.CreateMultiplierValueMap()
+                tmt.CreateMultiplierValueMap()
             Next
+
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME) Then
+
+            If (Me.m_IsSpatial) Then
+
+                Me.m_TransitionSpatialMultipliers.Clear()
+                Me.m_TransitionSpatialMultiplierRasters.Clear()
+                Me.FillTransitionSpatialMultiplierCollection()
+
+                For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
+                    tmt.ClearSpatialMultiplierMap()
+                Next
+
+                For Each sm As TransitionSpatialMultiplier In Me.m_TransitionSpatialMultipliers
+                    Dim mt As TransitionMultiplierType = Me.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId)
+                    mt.AddTransitionSpatialMultiplier(sm)
+                Next
+
+                For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
+                    tmt.CreateSpatialMultiplierMap()
+                Next
+
+            End If
+
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME) Then
+
+            If (Me.m_IsSpatial) Then
+
+                Me.m_TransitionSpatialInitiationMultipliers.Clear()
+                Me.m_TransitionSpatialInitiationMultiplierRasters.Clear()
+                Me.FillTransitionSpatialInitiationMultiplierCollection()
+
+                For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
+                    tmt.ClearSpatialInitiationMultiplierMap()
+                Next
+
+                For Each sm As TransitionSpatialInitiationMultiplier In Me.m_TransitionSpatialInitiationMultipliers
+                    Dim mt As TransitionMultiplierType = Me.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId)
+                    mt.AddTransitionSpatialInitiationMultiplier(sm)
+                Next
+
+                For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
+                    tmt.CreateSpatialInitiationMultiplierMap()
+                Next
+
+            End If
+
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_ORDER_NAME) Then
+
+            Me.m_TransitionOrders.Clear()
+            Me.FillTransitionOrderCollection()
+            Me.m_TransitionOrderMap = New TransitionOrderMap(Me.m_TransitionOrders)
+
+        ElseIf (dataSheet.Name = DATASHEET_STATE_ATTRIBUTE_VALUE_NAME) Then
+
+            Me.m_StateAttributeValues.Clear()
+            Me.FillStateAttributeValueCollection()
+            Me.m_StateAttributeTypeIdsAges = Nothing
+            Me.m_StateAttributeTypeIdsNoAges = Nothing
+            Me.m_StateAttributeValueMapAges = Nothing
+            Me.m_StateAttributeValueMapNoAges = Nothing
+            Me.InitializeStateAttributes()
+
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME) Then
+
+            Me.m_TransitionAttributeValues.Clear()
+            Me.FillTransitionAttributeValueCollection()
+            Me.m_TransitionAttributeValueMap = Nothing
+            Me.m_TransitionAttributeTypeIds = Nothing
+            Me.InitializeTransitionAttributes()
+
+        ElseIf (dataSheet.Name = DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME) Then
+
+            Me.m_TransitionAttributeTargets.Clear()
+            Me.FillTransitionAttributeTargetCollection()
+            Me.InitializeTransitionAttributeTargetDistributionValues()
+            Me.m_TransitionAttributeTargetMap = New TransitionAttributeTargetMap(Me.ResultScenario, Me.m_TransitionAttributeTargets)
+
+        Else
+
+            Dim msg As String = String.Format(CultureInfo.InvariantCulture, "External data is not supported for: {0}", dataSheet.Name)
+            Throw New TransformerFailedException(msg)
 
         End If
 

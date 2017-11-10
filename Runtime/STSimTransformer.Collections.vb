@@ -1364,10 +1364,6 @@ Partial Class STSimTransformer
 
         For Each dr As DataRow In ds.GetData.Rows
 
-            If (dr.RowState = DataRowState.Deleted) Then
-                Continue For
-            End If
-
             Dim TransitionGroupId As Integer = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
             Dim Iteration As Nullable(Of Integer) = Nothing
             Dim Timestep As Nullable(Of Integer) = Nothing
@@ -1471,29 +1467,18 @@ Partial Class STSimTransformer
     End Sub
 
     ''' <summary>
-    ''' Fills ( or append)  the Transition Spatial Multiplier Collection for the model
+    ''' Fills the Transition Spatial Multiplier Collection for the model
     ''' </summary>
-    ''' <param name="listPrevDataPK">A list of the primary keys value of existing Transition Spatial Multiplier row. Used to determine new rows to be appended.</param>
     ''' <remarks></remarks>
-    Private Sub FillTransitionSpatialMultiplierCollection(Optional listPrevDataPK As List(Of Integer) = Nothing)
+    Private Sub FillTransitionSpatialMultiplierCollection()
 
         Debug.Assert(Me.IsSpatial)
-
-        If listPrevDataPK Is Nothing Then
-            Debug.Assert(Me.m_TransitionSpatialMultipliers.Count = 0)
-        End If
+        Debug.Assert(Me.m_TransitionSpatialMultipliers.Count = 0)
+        Debug.Assert(Me.m_TransitionSpatialMultiplierRasters.Count = 0)
 
         Dim ds As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME)
 
         For Each dr As DataRow In ds.GetData.Rows
-
-            ' If we're in append mode, we're only interested in the newly added rows
-            If Not listPrevDataPK Is Nothing Then
-                ' Append mode. See if this row was processed in previous timesteps
-                If listPrevDataPK.Contains(CInt(dr(ds.PrimaryKeyColumn.Name))) Then
-                    Continue For
-                End If
-            End If
 
             Dim TransitionSpatialMultiplierId As Integer = CInt(dr(ds.PrimaryKeyColumn.Name))
             Dim TransitionGroupId As Integer = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
@@ -1546,7 +1531,7 @@ Partial Class STSimTransformer
                 'We only want to store a single copy of each unique TSM raster file to conserve memory
 
                 If Not m_TransitionSpatialMultiplierRasters.ContainsKey(FileName) Then
-                    m_TransitionSpatialMultiplierRasters.Add(FileName, rastTSM)
+                    Me.m_TransitionSpatialMultiplierRasters.Add(FileName, rastTSM)
                 End If
 
             End If
@@ -1556,19 +1541,18 @@ Partial Class STSimTransformer
     End Sub
 
     ''' <summary>
-    ''' Fills ( or append)  the Transition Spatial Initiation Multiplier Collection for the model
+    ''' Fills the Transition Spatial Initiation Multiplier Collection for the model
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub FillTransitionSpatialInitiationMultiplierCollection()
 
         Debug.Assert(Me.IsSpatial)
+        Debug.Assert(Me.m_TransitionSpatialInitiationMultipliers.Count = 0)
+        Debug.Assert(Me.m_TransitionSpatialInitiationMultiplierRasters.Count = 0)
 
         Dim ds As DataSheet = Me.ResultScenario.GetDataSheet(DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
 
         For Each dr As DataRow In ds.GetData.Rows
-
-            'DEVNOTE: This code is based on FillTransitionSpatialMultiplierCollection, but the ability to "add" new TSM records thru mid-run ImportExternal has been removed. If this feature
-            ' is required, refer to the FillTransitionSpatialMultiplierCollection sub for example code
 
             Dim TransitionSpatialInitiationMultiplierId As Integer = CInt(dr(ds.PrimaryKeyColumn.Name))
             Dim TransitionGroupId As Integer = CInt(dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME))
@@ -1620,7 +1604,7 @@ Partial Class STSimTransformer
                 'We only want to store a single copy of each unique TSIM raster file to conserve memory
 
                 If Not m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(FileName) Then
-                    m_TransitionSpatialInitiationMultiplierRasters.Add(FileName, rastTSIM)
+                    Me.m_TransitionSpatialInitiationMultiplierRasters.Add(FileName, rastTSIM)
                 End If
 
             End If
@@ -2312,10 +2296,6 @@ Partial Class STSimTransformer
         Dim ds As DataSheet = Me.Project.GetDataSheet(DATASHEET_TRANSITION_TYPE_GROUP_NAME)
 
         For Each dr As DataRow In ds.GetData().Rows
-
-            If (dr.RowState = DataRowState.Deleted) Then
-                Continue For
-            End If
 
             If (IsPrimaryTypeByGroup(dr)) Then
 

@@ -119,9 +119,9 @@ Partial Class STSimTransformer
 
         For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
 
-            tmt.CreateTransitionMultiplierValueMap()
-            tmt.CreateTransitionSpatialMultiplierMap()
-            tmt.CreateTransitionSpatialInitiationMultiplierMap()
+            tmt.CreateMultiplierValueMap()
+            tmt.CreateSpatialMultiplierMap()
+            tmt.CreateSpatialInitiationMultiplierMap()
 
         Next
 

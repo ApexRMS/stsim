@@ -294,9 +294,6 @@ Partial Class STSimTransformer
         Dim AgesColl As New StateAttributeValueCollection()
         Dim NoAgesColl As New StateAttributeValueCollection()
 
-        Me.m_StateAttributeTypeIdsAges.Clear()
-        Me.m_StateAttributeTypeIdsNoAges.Clear()
-
         For Each attr As StateAttributeValue In Me.m_StateAttributeValues
 
             If (attr.MinimumAge.HasValue Or attr.MaximumAge.HasValue) Then

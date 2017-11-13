@@ -818,7 +818,7 @@ Class StateClassQuickView
         Me.m_DTTimestepVisible = ColumnContainsData(DATASHEET_TIMESTEP_COLUMN_NAME, Me.m_DTGrid)
         Me.m_DTStratumVisible = False
         Me.m_DTToStratumVisible = ColumnContainsData(DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME, Me.m_DTGrid)
-        Me.m_DTToClassVisible = ColumnContainsData(DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME, Me.m_DTGrid)
+        Me.m_DTToClassVisible = True
         Me.m_DTAgeMinVisible = ColumnContainsData(DATASHEET_AGE_MIN_COLUMN_NAME, Me.m_DTGrid)
         Me.m_DTAgeMaxVisible = ColumnContainsData(DATASHEET_AGE_MAX_COLUMN_NAME, Me.m_DTGrid)
 
@@ -827,7 +827,7 @@ Class StateClassQuickView
         Me.m_PTTimestepVisible = ColumnContainsData(DATASHEET_TIMESTEP_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTStratumVisible = False
         Me.m_PTToStratumVisible = ColumnContainsData(DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME, Me.m_PTGrid)
-        Me.m_PTToClassVisible = ColumnContainsData(DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME, Me.m_PTGrid)
+        Me.m_PTToClassVisible = True
         Me.m_PTSecondaryStratumVisible = ColumnContainsData(DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTTertiaryStratumVisible = ColumnContainsData(DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME, Me.m_PTGrid)
         Me.m_PTAgeMinVisible = ColumnContainsData(DATASHEET_AGE_MIN_COLUMN_NAME, Me.m_PTGrid)

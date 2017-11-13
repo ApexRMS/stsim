@@ -2308,7 +2308,7 @@ Class STSimUpdates
 
             store.ExecuteNonQuery("ALTER TABLE STSim_Terminology RENAME TO TEMP_TABLE")
             store.ExecuteNonQuery("CREATE TABLE STSim_Terminology(TerminologyID Integer PRIMARY KEY AUTOINCREMENT, ProjectID Integer, AmountLabel TEXT, AmountUnits Integer, StateLabelX TEXT, StateLabelY TEXT, PrimaryStratumLabel TEXT, SecondaryStratumLabel TEXT, TertiaryStratumLabel TEXT, TimestepUnits TEXT)")
-            store.ExecuteNonQuery("INSERT INTO STSim_Terminology(ProjectID, AmountLabel, AmountUnits, StateLabelX, StateLabelY, PrimaryStratumLabel, SecondaryStratumLabel, TertiaryStratumLabel, TimestepUnits) SELECT ProjectID, AmountLabel, AmountUnits, StateLabelX, StateLabelY, PrimaryStratumLabel, SecondaryStratumLabel, 'Parcel', TimestepUnits FROM TEMP_TABLE")
+            store.ExecuteNonQuery("INSERT INTO STSim_Terminology(ProjectID, AmountLabel, AmountUnits, StateLabelX, StateLabelY, PrimaryStratumLabel, SecondaryStratumLabel, TertiaryStratumLabel, TimestepUnits) SELECT ProjectID, AmountLabel, AmountUnits, StateLabelX, StateLabelY, PrimaryStratumLabel, SecondaryStratumLabel, 'Tertiary Stratum', TimestepUnits FROM TEMP_TABLE")
             store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
 
         End If

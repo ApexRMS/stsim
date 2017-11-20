@@ -52,9 +52,7 @@ Partial Class STSimTransformer
         ByVal timestep As Integer,
         ByVal transition As Transition) As Integer
 
-        Dim dt As DeterministicTransition = Nothing
-
-        dt = Me.GetDeterministicTransition(destinationStratumId, destinationStateClassId, iteration, timestep)
+        Dim dt As DeterministicTransition = Me.GetDeterministicTransition(destinationStratumId, destinationStateClassId, iteration, timestep)
 
         Dim AgeMin As Integer
         Dim AgeMax As Integer

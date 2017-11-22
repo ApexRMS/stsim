@@ -5,36 +5,18 @@
 '
 '*********************************************************************************************
 
-''' <summary>
-''' Cell event arguments
-''' </summary>
-''' <remarks></remarks>
-Public Class CellEventArgs
+Public Class STSimEventArgsBase
     Inherits EventArgs
 
-    Private m_Cell As Cell
     Private m_Iteration As Integer
     Private m_Timestep As Integer
-    Private m_AmountPerCell As Double
 
-    Friend Sub New(
-        ByVal cell As Cell,
-        ByVal iteration As Integer,
-        ByVal timestep As Integer,
-        ByVal amountPerCell As Double)
+    Friend Sub New(ByVal iteration As Integer, ByVal timestep As Integer)
 
-        Me.m_Cell = cell
         Me.m_Iteration = iteration
         Me.m_Timestep = timestep
-        Me.m_AmountPerCell = amountPerCell
 
     End Sub
-
-    Public ReadOnly Property Cell As Cell
-        Get
-            Return Me.m_Cell
-        End Get
-    End Property
 
     Public ReadOnly Property Iteration As Integer
         Get
@@ -48,18 +30,31 @@ Public Class CellEventArgs
         End Get
     End Property
 
-    Public ReadOnly Property AmountPerCell As Double
+End Class
+
+Public Class CellEventArgs
+    Inherits STSimEventArgsBase
+
+    Private m_SimulationCell As Cell
+
+    Friend Sub New(
+        ByVal simulationCell As Cell,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer)
+
+        MyBase.New(iteration, timestep)
+        Me.m_SimulationCell = simulationCell
+
+    End Sub
+
+    Public ReadOnly Property SimulationCell As Cell
         Get
-            Return Me.m_AmountPerCell
+            Return Me.m_SimulationCell
         End Get
     End Property
 
 End Class
 
-''' <summary>
-''' Cell change probabilistic event arguments
-''' </summary>
-''' <remarks></remarks>
 Public Class CellChangeEventArgs
     Inherits CellEventArgs
 
@@ -67,14 +62,13 @@ Public Class CellChangeEventArgs
     Private m_ProbabilisticPathway As Transition
 
     Friend Sub New(
-        ByVal cell As Cell,
+        ByVal simulationCell As Cell,
         ByVal iteration As Integer,
         ByVal timestep As Integer,
         ByVal deterministicPathway As DeterministicTransition,
-        ByVal probabilisticPathway As Transition,
-        ByVal amountPerCell As Double)
+        ByVal probabilisticPathway As Transition)
 
-        MyBase.New(cell, iteration, timestep, amountPerCell)
+        MyBase.New(simulationCell, iteration, timestep)
 
         Me.m_DeterministicPathway = deterministicPathway
         Me.m_ProbabilisticPathway = probabilisticPathway
@@ -95,69 +89,31 @@ Public Class CellChangeEventArgs
 
 End Class
 
-''' <summary>
-''' Apply probabilistic transitions raster event arguments
-''' </summary>
-''' <remarks></remarks>
-Public Class ApplyProbabilisticTransitionsRasterEventArgs
-    Inherits EventArgs
-
-    Private m_Timestep As Integer
-    Private m_Iteration As Integer
+Public Class SpatialTransitionEventArgs
+    Inherits STSimEventArgsBase
 
     Friend Sub New(ByVal iteration As Integer, ByVal timestep As Integer)
-        Me.m_Iteration = iteration
-        Me.m_Timestep = timestep
+        MyBase.New(iteration, timestep)
     End Sub
-
-    Public ReadOnly Property Iteration() As Integer
-        Get
-            Return m_Iteration
-        End Get
-    End Property
-
-    Public ReadOnly Property Timestep As Integer
-        Get
-            Return Me.m_Timestep
-        End Get
-    End Property
 
 End Class
 
-''' <summary>
-''' Get external multipliers event arguments
-''' </summary>
-''' <remarks></remarks>
-Public Class ExternalMultipliersEventArgs
-    Inherits EventArgs
+Public Class MultiplierEventArgs
+    Inherits CellEventArgs
 
-    Private m_CellId As Integer
-    Private m_Timestep As Integer
     Private m_TransitionGroupId As Integer
     Private m_Multiplier As Double = 1.0
 
     Friend Sub New(
-        ByVal cellId As Integer,
+        ByVal simulationCell As Cell,
+        ByVal iteration As Integer,
         ByVal timestep As Integer,
         ByVal transitionGroupId As Integer)
 
-        Me.m_CellId = cellId
-        Me.m_Timestep = timestep
+        MyBase.New(simulationCell, iteration, timestep)
         Me.m_TransitionGroupId = transitionGroupId
 
     End Sub
-
-    Public ReadOnly Property CellId As Integer
-        Get
-            Return Me.m_CellId
-        End Get
-    End Property
-
-    Public ReadOnly Property Timestep As Integer
-        Get
-            Return Me.m_Timestep
-        End Get
-    End Property
 
     Public ReadOnly Property TransitionGroupId As Integer
         Get
@@ -176,7 +132,3 @@ Public Class ExternalMultipliersEventArgs
     End Sub
 
 End Class
-
-
-
-

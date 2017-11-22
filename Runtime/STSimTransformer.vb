@@ -28,8 +28,9 @@ Public NotInheritable Class STSimTransformer
     Public Event ChangingCellProbabilistic As EventHandler(Of CellChangeEventArgs)
     Public Event ChangingCellDeterministic As EventHandler(Of CellChangeEventArgs)
     Public Event CellBeforeTransitions As EventHandler(Of CellChangeEventArgs)
-    Public Event ApplyingProbabilisticTransitionsRaster As EventHandler(Of ApplyProbabilisticTransitionsRasterEventArgs)
-    Public Event ExternalMultipliersRequested As EventHandler(Of ExternalMultipliersEventArgs)
+    Public Event ApplyingSpatialTransitions As EventHandler(Of SpatialTransitionEventArgs)
+    Public Event ApplyingTransitionMultipliers As EventHandler(Of MultiplierEventArgs)
+    Public Event ApplyingSpatialMultipliers As EventHandler(Of MultiplierEventArgs)
 
     ''' <summary>
     ''' Gets whether this should be a spatial run
@@ -425,14 +426,10 @@ Public NotInheritable Class STSimTransformer
 
         For Each simulationCell As Cell In Me.m_Cells
 
-            Dim dt As DeterministicTransition =
-                Me.GetDeterministicTransition(simulationCell.StratumId, simulationCell.StateClassId, iteration, timestep)
+            Dim dt As DeterministicTransition = Me.GetDeterministicTransition(simulationCell.StratumId, simulationCell.StateClassId, iteration, timestep)
 
             If (dt IsNot Nothing) Then
-
-                RaiseEvent CellBeforeTransitions(
-                    Me, New CellChangeEventArgs(simulationCell, iteration, timestep, dt, Nothing, Me.m_AmountPerCell))
-
+                RaiseEvent CellBeforeTransitions(Me, New CellChangeEventArgs(simulationCell, iteration, timestep, dt, Nothing))
             End If
 
         Next
@@ -442,7 +439,7 @@ Public NotInheritable Class STSimTransformer
             Dim RasterTransitionAttrValues As Dictionary(Of Integer, Double()) = CreateRasterTransitionAttributeArrays(timestep)
             Dim dictTransitionedPixels As Dictionary(Of Integer, Integer()) = CreateTransitionGroupTransitionedPixels()
 
-            RaiseEvent ApplyingProbabilisticTransitionsRaster(Me, New ApplyProbabilisticTransitionsRasterEventArgs(iteration, timestep))
+            RaiseEvent ApplyingSpatialTransitions(Me, New SpatialTransitionEventArgs(iteration, timestep))
 
             Me.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels)
             Me.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels)
@@ -508,7 +505,7 @@ Public NotInheritable Class STSimTransformer
         If (dt IsNot Nothing) Then
 
             RaiseEvent ChangingCellDeterministic(
-                Me, New CellChangeEventArgs(simulationCell, iteration, timestep, dt, Nothing, Me.m_AmountPerCell))
+                Me, New CellChangeEventArgs(simulationCell, iteration, timestep, dt, Nothing))
 
         End If
 
@@ -581,18 +578,13 @@ Public NotInheritable Class STSimTransformer
 
             If (TransitionGroup.PrimaryTransitionTypes.Contains(tr.TransitionTypeId)) Then
 
-                Dim multiplier As Double = Me.GetTransitionMultiplier(
-                    tr.TransitionTypeId, iteration, timestep,
-                    simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                    simulationCell.StateClassId)
+                Dim multiplier As Double = Me.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell)
+                multiplier *= Me.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell)
 
                 Dim tt As TransitionType = Me.m_TransitionTypes(tr.TransitionTypeId)
 
                 For Each tg As TransitionGroup In tt.TransitionGroups
-
-                    multiplier *= Me.GetTransitionTargetMultiplier(
-                        tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
-
+                    multiplier *= Me.GetTransitionTargetMultiplier(tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
                 Next
 
                 If (Me.m_TransitionAttributeTargets.Count > 0) Then
@@ -605,9 +597,8 @@ Public NotInheritable Class STSimTransformer
 
                     For Each tg As TransitionGroup In tt.TransitionGroups
 
-                        multiplier *= Me.GetTransitionAdjacencyMultiplier(
-                            tg.TransitionGroupId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell)
-                        multiplier *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
+                        multiplier *= Me.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell)
+                        multiplier *= Me.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId)
 
                     Next
 
@@ -750,8 +741,7 @@ Public NotInheritable Class STSimTransformer
         ByVal timestep As Integer,
         ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()))
 
-        RaiseEvent ChangingCellProbabilistic(
-            Me, New CellChangeEventArgs(simulationCell, iteration, timestep, Nothing, tr, Me.m_AmountPerCell))
+        RaiseEvent ChangingCellProbabilistic(Me, New CellChangeEventArgs(simulationCell, iteration, timestep, Nothing, tr))
 
         Me.GenerateTransitionAttributes(simulationCell, tr, iteration, timestep, rasterTransitionAttrValues)
 

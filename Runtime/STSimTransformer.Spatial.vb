@@ -225,9 +225,9 @@ Partial Class STSimTransformer
     ''' <param name="transitionedPixels"></param>
     ''' <remarks></remarks>
     Private Sub UpdateTransitionedPixels(
-                                         ByVal cell As Cell,
-                                         ByVal transitionTypeId As Integer,
-                                         ByVal transitionedPixels() As Integer)
+        ByVal cell As Cell,
+        ByVal transitionTypeId As Integer,
+        ByVal transitionedPixels() As Integer)
 
         Debug.Assert(Me.IsSpatial)
 
@@ -328,10 +328,10 @@ Partial Class STSimTransformer
     ''' <param name="timestep"></param>
     ''' <remarks></remarks>
     Private Sub ApplyProbabilisticTransitionsRaster(
-                                                    ByVal iteration As Integer,
-                                                    ByVal timestep As Integer,
-                                                    ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()),
-                                                    ByVal dictTransitionedPixels As Dictionary(Of Integer, Integer()))
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()),
+        ByVal dictTransitionedPixels As Dictionary(Of Integer, Integer()))
 
         Debug.Assert(Me.IsSpatial)
 
@@ -471,11 +471,11 @@ Partial Class STSimTransformer
     End Sub
 
     Private Function CreateTransitionEventList(
-                                               ByVal stratumId As Integer,
-                                               ByVal transitionGroupId As Integer,
-                                               ByVal iteration As Integer,
-                                               ByVal timestep As Integer,
-                                               ByVal expectedArea As Double) As List(Of TransitionEvent)
+        ByVal stratumId As Integer,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal expectedArea As Double) As List(Of TransitionEvent)
 
         Debug.Assert(Me.IsSpatial)
         Debug.Assert(expectedArea > 0.0)
@@ -528,14 +528,14 @@ Partial Class STSimTransformer
     End Function
 
     Private Sub GetTargetSizeClass(
-                                   ByVal stratumId As Integer,
-                                   ByVal transitionGroupId As Integer,
-                                   ByVal iteration As Integer,
-                                   ByVal timestep As Integer,
-                                   ByVal areaDifference As Double,
-                                   ByRef minimumSizeOut As Double,
-                                   ByRef maximumSizeOut As Double,
-                                   ByRef targetSizeOut As Double)
+        ByVal stratumId As Integer,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal areaDifference As Double,
+        ByRef minimumSizeOut As Double,
+        ByRef maximumSizeOut As Double,
+        ByRef targetSizeOut As Double)
 
         Debug.Assert(Me.IsSpatial)
 
@@ -600,10 +600,10 @@ Partial Class STSimTransformer
     ''' <returns></returns>
     ''' <remarks></remarks>
     Private Function MaximizeFidelityToTotalArea(
-                                                 ByVal transitionGroupId As Integer,
-                                                 ByVal stratumId As Integer,
-                                                 ByVal iteration As Integer,
-                                                 ByVal timestep As Integer) As Boolean
+        ByVal transitionGroupId As Integer,
+        ByVal stratumId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer) As Boolean
 
         Dim tsp As TransitionSizePrioritization =
                 Me.m_TransitionSizePrioritizationMap.GetSizePrioritization(
@@ -699,11 +699,11 @@ Partial Class STSimTransformer
     End Function
 
     Private Sub SortTransitionEventList(
-                                        ByVal stratumId As Integer,
-                                        ByVal transitionGroupId As Integer,
-                                        ByVal iteration As Integer,
-                                        ByVal timestep As Integer,
-                                        ByVal transitionEventList As List(Of TransitionEvent))
+        ByVal stratumId As Integer,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal transitionEventList As List(Of TransitionEvent))
 
         Dim tsp As TransitionSizePrioritization =
                 Me.m_TransitionSizePrioritizationMap.GetSizePrioritization(transitionGroupId, stratumId, iteration, timestep)
@@ -733,13 +733,13 @@ Partial Class STSimTransformer
     End Sub
 
     Private Function CreateInitiationCellCollection(
-                                                    ByVal transitionedCells As Dictionary(Of Integer, Cell),
-                                                    ByVal stratumId As Integer,
-                                                    ByVal transitionGroupId As Integer,
-                                                    ByVal iteration As Integer,
-                                                    ByVal timestep As Integer,
-                                                    ByRef expectedAreaOut As Double,
-                                                    ByRef maxCellProbabilityOut As Double) As Dictionary(Of Integer, Cell)
+        ByVal transitionedCells As Dictionary(Of Integer, Cell),
+        ByVal stratumId As Integer,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByRef expectedAreaOut As Double,
+        ByRef maxCellProbabilityOut As Double) As Dictionary(Of Integer, Cell)
 
         Debug.Assert(Me.IsSpatial)
 
@@ -791,11 +791,11 @@ Partial Class STSimTransformer
     End Function
 
     Private Function SelectInitiationCell(
-                                          ByVal initiationCells As Dictionary(Of Integer, Cell),
-                                          ByVal transitionGroupId As Integer,
-                                          ByVal iteration As Integer,
-                                          ByVal timestep As Integer,
-                                          ByVal maxCellProbability As Double) As Cell
+        ByVal initiationCells As Dictionary(Of Integer, Cell),
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal maxCellProbability As Double) As Cell
 
         Debug.Assert(Me.IsSpatial)
 
@@ -844,10 +844,10 @@ Partial Class STSimTransformer
     End Function
 
     Private Function SelectSpatialTransitionPathway(
-                                                    ByVal simulationCell As Cell,
-                                                    ByVal transitionGroupId As Integer,
-                                                    ByVal iteration As Integer,
-                                                    ByVal timestep As Integer) As Transition
+        ByVal simulationCell As Cell,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer) As Transition
 
         Debug.Assert(Me.IsSpatial)
 
@@ -860,23 +860,17 @@ Partial Class STSimTransformer
 
             If (tt.PrimaryTransitionGroups.Contains(transitionGroupId)) Then
 
-                Dim multiplier As Double = Me.GetTransitionMultiplier(
-                    tr.TransitionTypeId, iteration, timestep,
-                    simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                    simulationCell.StateClassId)
-
+                Dim multiplier As Double = Me.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell)
+                multiplier *= Me.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell)
                 multiplier *= Me.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
                 multiplier *= Me.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep)
 
                 For Each tg As TransitionGroup In tt.TransitionGroups
 
-                    multiplier *= Me.GetTransitionAdjacencyMultiplier(
-                        tg.TransitionGroupId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell)
-                    multiplier *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
+                    multiplier *= Me.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell)
+                    multiplier *= Me.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId)
 
                 Next
-
-
 
                 If (Me.m_TransitionAttributeTargets.Count > 0) Then
                     multiplier = Me.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep)
@@ -896,25 +890,17 @@ Partial Class STSimTransformer
 
             Dim tt As TransitionType = Me.m_TransitionTypes(tr.TransitionTypeId)
 
-            Dim multiplier As Double = Me.GetTransitionMultiplier(
-                tr.TransitionTypeId, iteration, timestep,
-                simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                simulationCell.StateClassId)
-
-            multiplier *= Me.GetTransitionTargetMultiplier(
-                transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
-
-            multiplier *= Me.GetTransitionSpatialMultiplier(
-                simulationCell.CellId, tr.TransitionTypeId, iteration, timestep)
+            Dim multiplier As Double = Me.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell)
+            multiplier *= Me.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell)
+            multiplier *= Me.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
+            multiplier *= Me.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep)
 
             For Each tg As TransitionGroup In tt.TransitionGroups
 
-                multiplier *= Me.GetTransitionAdjacencyMultiplier(
-                    tg.TransitionGroupId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell)
-                multiplier *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
+                multiplier *= Me.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell)
+                multiplier *= Me.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId)
 
             Next
-
 
             If (Me.m_TransitionAttributeTargets.Count > 0) Then
                 multiplier = Me.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep)
@@ -933,17 +919,17 @@ Partial Class STSimTransformer
     End Function
 
     Private Sub GenerateTransitionEvents(
-                                         ByVal transitionEventList As List(Of TransitionEvent),
-                                         ByVal transitionedCells As Dictionary(Of Integer, Cell),
-                                         ByVal initiationCells As Dictionary(Of Integer, Cell),
-                                         ByVal stratumId As Integer,
-                                         ByVal transitionGroupId As Integer,
-                                         ByVal iteration As Integer,
-                                         ByVal timestep As Integer,
-                                         ByVal maxCellProbability As Double,
-                                         ByVal transitionedPixels() As Integer,
-                                         ByRef expectedArea As Double,
-                                         ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()))
+        ByVal transitionEventList As List(Of TransitionEvent),
+        ByVal transitionedCells As Dictionary(Of Integer, Cell),
+        ByVal initiationCells As Dictionary(Of Integer, Cell),
+        ByVal stratumId As Integer,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal maxCellProbability As Double,
+        ByVal transitionedPixels() As Integer,
+        ByRef expectedArea As Double,
+        ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()))
 
 #If DEBUG Then
 
@@ -986,9 +972,7 @@ Partial Class STSimTransformer
                 If (CellProbability > 0.0) Then
 
                     Dim TransitionEvent As TransitionEvent = transitionEventList(0)
-
-                    Dim tsp As TransitionSizePrioritization =
-                            Me.m_TransitionSizePrioritizationMap.GetSizePrioritization(transitionGroupId, stratumId, iteration, timestep)
+                    Dim tsp As TransitionSizePrioritization = Me.m_TransitionSizePrioritizationMap.GetSizePrioritization(transitionGroupId, stratumId, iteration, timestep)
 
                     Me.GrowTransitionEvent(
                         transitionEventList,
@@ -1013,18 +997,18 @@ Partial Class STSimTransformer
     End Sub
 
     Private Sub GrowTransitionEvent(
-                                    ByVal transitionEventList As List(Of TransitionEvent),
-                                    ByVal transitionEvent As TransitionEvent,
-                                    ByVal transitionedCells As Dictionary(Of Integer, Cell),
-                                    ByVal initiationCells As Dictionary(Of Integer, Cell),
-                                    ByVal initiationCell As Cell,
-                                    ByVal transitionGroupId As Integer,
-                                    ByVal iteration As Integer,
-                                    ByVal timestep As Integer,
-                                    ByVal transitionedPixels() As Integer,
-                                    ByRef expectedArea As Double,
-                                    ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()),
-                                    ByVal tsp As TransitionSizePrioritization)
+        ByVal transitionEventList As List(Of TransitionEvent),
+        ByVal transitionEvent As TransitionEvent,
+        ByVal transitionedCells As Dictionary(Of Integer, Cell),
+        ByVal initiationCells As Dictionary(Of Integer, Cell),
+        ByVal initiationCell As Cell,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal transitionedPixels() As Integer,
+        ByRef expectedArea As Double,
+        ByVal rasterTransitionAttrValues As Dictionary(Of Integer, Double()),
+        ByVal tsp As TransitionSizePrioritization)
 
         Debug.Assert(Me.IsSpatial)
 
@@ -1161,14 +1145,14 @@ Partial Class STSimTransformer
     End Sub
 
     Private Sub AddGrowEventRecords(
-                                    ByVal eventCandidates As GrowEventRecordCollection,
-                                    ByVal transitionedCells As Dictionary(Of Integer, Cell),
-                                    ByVal seenBefore As Dictionary(Of Integer, Cell),
-                                    ByVal initiationCell As Cell,
-                                    ByVal transitionGroupId As Integer,
-                                    ByVal iteration As Integer,
-                                    ByVal timestep As Integer,
-                                    ByRef travelTime As Double)
+        ByVal eventCandidates As GrowEventRecordCollection,
+        ByVal transitionedCells As Dictionary(Of Integer, Cell),
+        ByVal seenBefore As Dictionary(Of Integer, Cell),
+        ByVal initiationCell As Cell,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByRef travelTime As Double)
 
         Debug.Assert(Me.IsSpatial)
 
@@ -1184,16 +1168,16 @@ Partial Class STSimTransformer
     End Sub
 
     Private Sub AddGrowEventRecord(
-                                   ByVal eventCandidates As GrowEventRecordCollection,
-                                   ByVal transitionedCells As Dictionary(Of Integer, Cell),
-                                   ByVal seenBefore As Dictionary(Of Integer, Cell),
-                                   ByVal initiationCell As Cell,
-                                   ByVal simulationCell As Cell,
-                                   ByVal transitionGroupId As Integer,
-                                   ByVal iteration As Integer,
-                                   ByVal timestep As Integer,
-                                   ByVal travelTime As Double,
-                                   ByVal direction As CardinalDirection)
+        ByVal eventCandidates As GrowEventRecordCollection,
+        ByVal transitionedCells As Dictionary(Of Integer, Cell),
+        ByVal seenBefore As Dictionary(Of Integer, Cell),
+        ByVal initiationCell As Cell,
+        ByVal simulationCell As Cell,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal travelTime As Double,
+        ByVal direction As CardinalDirection)
 
         Debug.Assert(Me.IsSpatial)
 
@@ -1925,10 +1909,10 @@ Partial Class STSimTransformer
     ''' <returns>If the probability excedes 1.0 then it returns 1.0</returns>
     ''' <remarks></remarks>
     Private Function SpatialCalculateCellProbability(
-                                                     ByVal simulationCell As Cell,
-                                                     ByVal transitionGroupId As Integer,
-                                                     ByVal iteration As Integer,
-                                                     ByVal timestep As Integer) As Double
+        ByVal simulationCell As Cell,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer) As Double
 
         Debug.Assert(Me.IsSpatial)
 
@@ -1955,10 +1939,10 @@ Partial Class STSimTransformer
     ''' If the probability excedes 1 it will not be adjusted in any way.
     ''' </remarks>
     Private Function SpatialCalculateCellProbabilityNonTruncated(
-                                                                 ByVal simulationCell As Cell,
-                                                                 ByVal transitionGroupId As Integer,
-                                                                 ByVal iteration As Integer,
-                                                                 ByVal timestep As Integer) As Double
+        ByVal simulationCell As Cell,
+        ByVal transitionGroupId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer) As Double
 
         Debug.Assert(Me.IsSpatial)
 
@@ -1969,15 +1953,9 @@ Partial Class STSimTransformer
 
             If (TransitionGroup.PrimaryTransitionTypes.Contains(tr.TransitionTypeId)) Then
 
-                Dim multiplier As Double = GetTransitionMultiplier(
-                    tr.TransitionTypeId, iteration, timestep,
-                    simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                    simulationCell.StateClassId)
-
-                multiplier *= Me.GetTransitionTargetMultiplier(
-                    transitionGroupId,
-                    simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                    iteration, timestep)
+                Dim multiplier As Double = GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell)
+                multiplier *= Me.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell)
+                multiplier *= Me.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep)
 
                 If (Me.IsSpatial) Then
 
@@ -1987,9 +1965,8 @@ Partial Class STSimTransformer
 
                     For Each tg As TransitionGroup In tt.TransitionGroups
 
-                        multiplier *= Me.GetTransitionAdjacencyMultiplier(
-                            tg.TransitionGroupId, iteration, timestep, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell)
-                        multiplier *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
+                        multiplier *= Me.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell)
+                        multiplier *= Me.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId)
 
                     Next
 
@@ -2086,11 +2063,11 @@ Partial Class STSimTransformer
             Me.OnSummaryStateClassOutput(c, iteration, Me.m_TimestepZero)
             Me.OnSummaryStateAttributeOutput(c, iteration, Me.m_TimestepZero)
 
-            RaiseEvent CellInitialized(Me, New CellEventArgs(c, iteration, Me.m_TimestepZero, Me.m_AmountPerCell))
+            RaiseEvent CellInitialized(Me, New CellEventArgs(c, iteration, Me.m_TimestepZero))
 
         Next
 
-        RaiseEvent CellsInitialized(Me, New CellEventArgs(Nothing, iteration, Me.m_TimestepZero, Me.m_AmountPerCell))
+        RaiseEvent CellsInitialized(Me, New CellEventArgs(Nothing, iteration, Me.m_TimestepZero))
 
     End Sub
 

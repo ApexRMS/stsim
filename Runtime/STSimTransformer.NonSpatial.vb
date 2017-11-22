@@ -73,7 +73,7 @@ Partial Class STSimTransformer
         Me.OnSummaryStateClassOutput(c, iteration, Me.m_TimestepZero)
         Me.OnSummaryStateAttributeOutput(c, iteration, Me.m_TimestepZero)
 
-        RaiseEvent CellInitialized(Me, New CellEventArgs(c, iteration, Me.m_TimestepZero, Me.m_AmountPerCell))
+        RaiseEvent CellInitialized(Me, New CellEventArgs(c, iteration, Me.m_TimestepZero))
 
     End Sub
 
@@ -128,7 +128,7 @@ Partial Class STSimTransformer
         Debug.Assert(CellIndex = Me.Cells.Count)
 #End If
 
-        RaiseEvent CellsInitialized(Me, New CellEventArgs(Nothing, iteration, Me.m_TimestepZero, Me.m_AmountPerCell))
+        RaiseEvent CellsInitialized(Me, New CellEventArgs(Nothing, iteration, Me.m_TimestepZero))
 
     End Sub
 
@@ -179,7 +179,7 @@ Partial Class STSimTransformer
         Debug.Assert(dict.Count = Me.m_Cells.Count)
 #End If
 
-        RaiseEvent CellsInitialized(Me, New CellEventArgs(Nothing, iteration, Me.m_TimestepZero, Me.m_AmountPerCell))
+        RaiseEvent CellsInitialized(Me, New CellEventArgs(Nothing, iteration, Me.m_TimestepZero))
 
     End Sub
 

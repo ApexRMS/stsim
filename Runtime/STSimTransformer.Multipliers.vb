@@ -77,19 +77,18 @@ Partial Class STSimTransformer
         ByVal transitionGroupId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer,
-        ByVal stratumId As Integer,
-        ByVal secondaryStratumId As Nullable(Of Integer),
-        ByVal tertiaryStratumId As Nullable(Of Integer),
-        ByVal cell As Cell) As Double
+        ByVal simulationCell As Cell) As Double
 
-        Dim attrvalue As Nullable(Of Double) = Me.GetNeighborhoodAttributeValue(cell, transitionGroupId)
+        Dim attrvalue As Nullable(Of Double) = Me.GetNeighborhoodAttributeValue(simulationCell, transitionGroupId)
 
         If attrvalue Is Nothing Then
             attrvalue = 0.0
         End If
 
         Dim multiplier As Double = Me.m_TransitionAdjacencyMultiplierMap.GetAdjacencyMultiplier(
-            transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, iteration, timestep, CDbl(attrvalue))
+            transitionGroupId,
+            simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+            iteration, timestep, CDbl(attrvalue))
 
         Return multiplier
 
@@ -99,10 +98,7 @@ Partial Class STSimTransformer
         ByVal transitionTypeId As Integer,
         ByVal iteration As Integer,
         ByVal timestep As Integer,
-        ByVal stratumId As Integer,
-        ByVal secondaryStratumId As Nullable(Of Integer),
-        ByVal tertiaryStratumId As Nullable(Of Integer),
-        ByVal stateClassId As Integer) As Double
+        ByVal simulationCell As Cell) As Double
 
         If (Me.m_TransitionMultiplierValues.Count = 0) Then
 
@@ -128,7 +124,9 @@ Partial Class STSimTransformer
                 For Each tg As TransitionGroup In tt.TransitionGroups
 
                     Dim v As TransitionMultiplierValue = tmt.TransitionMultiplierValueMap.GetTransitionMultiplier(
-                        tg.TransitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep)
+                        tg.TransitionGroupId,
+                        simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+                        simulationCell.StateClassId, iteration, timestep)
 
                     If (v IsNot Nothing) Then
                         Product *= v.CurrentValue.Value
@@ -261,13 +259,51 @@ Partial Class STSimTransformer
 
     End Function
 
-    Private Function GetExternalSpatialMultiplier(
-        ByVal cell As Cell,
+    ''' <summary>
+    ''' Gets all external transition multipliers
+    ''' </summary>
+    ''' <param name="transitionTypeId"></param>
+    ''' <param name="iteration"></param>
+    ''' <param name="timestep"></param>
+    ''' <param name="simulationCell"></param>
+    ''' <returns></returns>
+    Private Function GetExternalTransitionMultipliers(
+        ByVal transitionTypeId As Integer,
+        ByVal iteration As Integer,
+        ByVal timestep As Integer,
+        ByVal simulationCell As Cell) As Double
+
+        Dim Product As Double = 1.0
+        Dim tt As TransitionType = Me.m_TransitionTypes(transitionTypeId)
+
+        For Each tg As TransitionGroup In tt.TransitionGroups
+
+            Dim args As New MultiplierEventArgs(simulationCell, iteration, timestep, tg.TransitionGroupId)
+            RaiseEvent ApplyingTransitionMultipliers(Me, args)
+            Product *= args.Multiplier
+
+        Next
+
+        Return Product
+
+    End Function
+
+    ''' <summary>
+    ''' Gets all external spatial multipliers
+    ''' </summary>
+    ''' <param name="cell"></param>
+    ''' <param name="iteration"></param>
+    ''' <param name="timestep"></param>
+    ''' <param name="transitionGroupId"></param>
+    ''' <returns></returns>
+    Private Function GetExternalSpatialMultipliers(
+        ByVal simulationCell As Cell,
+        ByVal iteration As Integer,
         ByVal timestep As Integer,
         ByVal transitionGroupId As Integer) As Double
 
-        Dim args As New ExternalMultipliersEventArgs(cell.CellId, timestep, transitionGroupId)
-        RaiseEvent ExternalMultipliersRequested(Me, args)
+        Dim args As New MultiplierEventArgs(simulationCell, iteration, timestep, transitionGroupId)
+        RaiseEvent ApplyingSpatialMultipliers(Me, args)
 
         Return args.Multiplier
 
@@ -333,7 +369,7 @@ Partial Class STSimTransformer
         ByVal timestep As Integer,
         ByVal remainingTransitionGroups As Dictionary(Of Integer, TransitionGroup),
         ByVal tatMap As MultiLevelKeyMap1(Of Dictionary(Of Integer, TransitionAttributeTarget)),
-        ByVal currentTg As TransitionGroup)
+        ByVal currentTransitionGroup As TransitionGroup)
 
         If (Me.m_TransitionAttributeTargets.Count = 0) Then
             Return
@@ -384,9 +420,9 @@ Partial Class STSimTransformer
                         Continue For
                     End If
 
-                    If ((tatMap IsNot Nothing) And (currentTg IsNot Nothing)) Then
+                    If ((tatMap IsNot Nothing) And (currentTransitionGroup IsNot Nothing)) Then
 
-                        If tt.TransitionGroups.Contains(currentTg.TransitionGroupId) Then
+                        If tt.TransitionGroups.Contains(currentTransitionGroup.TransitionGroupId) Then
 
                             Dim d As Dictionary(Of Integer, TransitionAttributeTarget) = tatMap.GetItemExact(Target.StratumId)
 
@@ -405,14 +441,8 @@ Partial Class STSimTransformer
 
                     End If
 
-                    Dim TransMult As Double = Me.GetTransitionMultiplier(
-                        tr.TransitionTypeId,
-                        iteration,
-                        timestep,
-                        simulationCell.StratumId,
-                        simulationCell.SecondaryStratumId,
-                        simulationCell.TertiaryStratumId,
-                        simulationCell.StateClassId)
+                    Dim TransMult As Double = Me.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell)
+                    TransMult *= Me.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell)
 
                     If (Me.IsSpatial) Then
 
@@ -420,12 +450,8 @@ Partial Class STSimTransformer
 
                         For Each tg As TransitionGroup In tt.TransitionGroups
 
-                            TransMult *= Me.GetTransitionAdjacencyMultiplier(
-                                tg.TransitionGroupId, iteration, timestep,
-                                simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                                simulationCell)
-
-                            TransMult *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
+                            TransMult *= Me.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell)
+                            TransMult *= Me.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId)
 
                         Next
 
@@ -533,14 +559,8 @@ Partial Class STSimTransformer
                     Continue For
                 End If
 
-                Dim TransMult As Double = Me.GetTransitionMultiplier(
-                    tr.TransitionTypeId,
-                    iteration,
-                    timestep,
-                    simulationCell.StratumId,
-                    simulationCell.SecondaryStratumId,
-                    simulationCell.TertiaryStratumId,
-                    simulationCell.StateClassId)
+                Dim TransMult As Double = Me.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell)
+                TransMult *= Me.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell)
 
                 If (Me.IsSpatial) Then
 
@@ -548,12 +568,8 @@ Partial Class STSimTransformer
 
                     For Each tg As TransitionGroup In ttype.TransitionGroups
 
-                        TransMult *= Me.GetTransitionAdjacencyMultiplier(
-                            tg.TransitionGroupId, iteration, timestep,
-                            simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
-                            simulationCell)
-
-                        TransMult *= Me.GetExternalSpatialMultiplier(simulationCell, timestep, tg.TransitionGroupId)
+                        TransMult *= Me.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell)
+                        TransMult *= Me.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId)
 
                     Next
 

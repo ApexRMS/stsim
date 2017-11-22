@@ -5,7 +5,7 @@
 '
 '*********************************************************************************************
 
-Public Class STSimEventArgsBase
+Public Class STSimEventArgs
     Inherits EventArgs
 
     Private m_Iteration As Integer
@@ -33,7 +33,7 @@ Public Class STSimEventArgsBase
 End Class
 
 Public Class CellEventArgs
-    Inherits STSimEventArgsBase
+    Inherits STSimEventArgs
 
     Private m_SimulationCell As Cell
 
@@ -90,7 +90,7 @@ Public Class CellChangeEventArgs
 End Class
 
 Public Class SpatialTransitionEventArgs
-    Inherits STSimEventArgsBase
+    Inherits STSimEventArgs
 
     Friend Sub New(ByVal iteration As Integer, ByVal timestep As Integer)
         MyBase.New(iteration, timestep)

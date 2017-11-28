@@ -877,6 +877,7 @@ Public NotInheritable Class STSimTransformer
 
             Me.m_TransitionMultiplierValues.Clear()
             Me.FillTransitionMultiplierValueCollection()
+            Me.InitializeTransitionMultiplierDistributionValues()
 
             For Each tmt As TransitionMultiplierType In Me.m_TransitionMultiplierTypes
                 tmt.ClearMultiplierValueMap()

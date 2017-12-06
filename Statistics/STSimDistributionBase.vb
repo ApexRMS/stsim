@@ -17,7 +17,7 @@ Public MustInherit Class STSimDistributionBase
     Private m_TertiaryStratumId As Nullable(Of Integer)
     Private m_DistributionValue As Nullable(Of Double)
     Private m_DistributionTypeId As Nullable(Of Integer)
-    Private m_DistributionFrequency As DistributionFrequency = DistributionFrequency.Always
+    Private m_DistributionFrequency As DistributionFrequency = DistributionFrequency.Timestep
     Private m_DistributionSD As Nullable(Of Double)
     Private m_DistributionMin As Nullable(Of Double)
     Private m_DistributionMax As Nullable(Of Double)

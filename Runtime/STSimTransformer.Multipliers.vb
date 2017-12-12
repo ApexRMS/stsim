@@ -273,6 +273,10 @@ Partial Class STSimTransformer
         ByVal timestep As Integer,
         ByVal simulationCell As Cell) As Double
 
+        If ApplyingTransitionMultipliersEvent Is Nothing Then
+            Return 1.0
+        End If
+
         Dim Product As Double = 1.0
         Dim tt As TransitionType = Me.m_TransitionTypes(transitionTypeId)
 

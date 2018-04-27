@@ -261,6 +261,10 @@ Class STSimUpdates
             STSIM0000064(store)
         End If
 
+        If (currentSchemaVersion < 65) Then
+            STSIM0000065(store)
+        End If
+
     End Sub
 
     ''' <summary>
@@ -2544,6 +2548,31 @@ Class STSimUpdates
             store.ExecuteNonQuery("DROP TABLE TEMP_TABLE")
 
         End If
+
+    End Sub
+
+    ''' <summary>
+    ''' STSIM0000065
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' This update restores indexes that were dropped as a result of a previous alteration to a table
+    ''' </remarks>
+    Private Shared Sub STSIM0000065(ByVal store As DataStore)
+
+        UpdateProvider.CreateIndex(store, "STSim_InitialConditionsNonSpatialDistribution", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_StateAttributeValue", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_Transition", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_TransitionAttributeTarget", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_TransitionAttributeValue", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_TransitionMultiplierValue", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_TransitionTarget", {"ScenarioID"})
+        UpdateProvider.CreateIndex(store, "STSim_OutputStateAttribute", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateAttributeTypeID", "AgeClass"})
+        UpdateProvider.CreateIndex(store, "STSim_OutputStratum", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID"})
+        UpdateProvider.CreateIndex(store, "STSim_OutputStratumState", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateClassID", "StateLabelXID", "StateLabelYID", "AgeClass"})
+        UpdateProvider.CreateIndex(store, "STSim_OutputStratumTransition", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionGroupID", "AgeClass"})
+        UpdateProvider.CreateIndex(store, "STSim_OutputStratumTransitionState", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionTypeID", "StateClassID", "EndStateClassID"})
+        UpdateProvider.CreateIndex(store, "STSim_OutputTransitionAttribute", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass"})
 
     End Sub
 

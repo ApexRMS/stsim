@@ -32,7 +32,6 @@ Class SpatialMultiplierDataFeedView
         Me.m_MultipliersView = (Me.Session.CreateMultiRowDataFeedView(Me.Scenario, Me.ControllingScenario))
         Me.m_MultipliersDataGrid = CType(Me.m_MultipliersView, MultiRowDataFeedView).GridControl
         Me.PanelMultipliersGrid.Controls.Add(Me.m_MultipliersView)
-        Me.ConfigureContextMenu()
 
     End Sub
 
@@ -180,33 +179,6 @@ Class SpatialMultiplierDataFeedView
             Me.m_MultipliersDataGrid.CurrentCell = Me.m_MultipliersDataGrid.Rows(Row).Cells(Col)
 
         End If
-
-    End Sub
-
-    Private Sub ConfigureContextMenu()
-
-        For i As Integer = Me.m_MultipliersView.Commands.Count - 1 To 0 Step -1
-
-            Dim c As Command = Me.m_MultipliersView.Commands(i)
-
-            If (c.Name <> "ssim_delete" And
-                c.Name <> "ssim_delete_all" And
-                c.Name <> "ssim_import" And
-                c.Name <> "ssim_export_all") Then
-
-                If (Not c.IsSeparator) Then
-                    Me.m_MultipliersView.Commands.RemoveAt(i)
-                End If
-
-            End If
-
-            If (c.Name = "ssim_export_all") Then
-                c.DisplayName = "Export..."
-            End If
-
-        Next
-
-        Me.m_MultipliersView.RefreshContextMenuStrip()
 
     End Sub
 

@@ -33,19 +33,15 @@ Class STSimChartProvider
             Dim TransitionAttrDataView As New DataView(TransitionAttrDataSheet.GetData(store), Nothing, TransitionAttrDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows)
 
             g0.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputStratumState"))
-            g0.Properties.Add(New MetaDataProperty("column", "Amount"))
             g0.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"))
 
             g1.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputStratumTransition"))
-            g1.Properties.Add(New MetaDataProperty("column", "Amount"))
             g1.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass"))
 
             g2.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputStateAttribute"))
-            g2.Properties.Add(New MetaDataProperty("column", "Amount"))
             g2.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"))
 
             g3.Properties.Add(New MetaDataProperty("dataSheet", "STSim_OutputTransitionAttribute"))
-            g3.Properties.Add(New MetaDataProperty("column", "Amount"))
             g3.Properties.Add(New MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"))
 
             RefreshChartAgeClassValidationTable(DATASHEET_OUTPUT_STRATUM_STATE_NAME, project)

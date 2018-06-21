@@ -16,6 +16,34 @@ Class STSimUpdates
 
     Public Overrides Sub PerformUpdate(store As DataStore, currentSchemaVersion As Integer)
 
+        Me.PerformUpdateInternal(store, currentSchemaVersion)
+
+#If DEBUG Then
+
+        'Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
+        'adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
+
+        ASSERT_INDEX_EXISTS(store, "STSim_Transition")
+        ASSERT_INDEX_EXISTS(store, "STSim_InitialConditionsNonSpatialDistribution")
+        ASSERT_INDEX_EXISTS(store, "STSim_TransitionTarget")
+        ASSERT_INDEX_EXISTS(store, "STSim_TransitionMultiplierValue")
+        ASSERT_INDEX_EXISTS(store, "STSim_StateAttributeValue")
+        ASSERT_INDEX_EXISTS(store, "STSim_TransitionAttributeValue")
+        ASSERT_INDEX_EXISTS(store, "STSim_TransitionAttributeTarget")
+        ASSERT_INDEX_EXISTS(store, "STSim_DistributionValue")
+        ASSERT_INDEX_EXISTS(store, "STSim_OutputStratum")
+        ASSERT_INDEX_EXISTS(store, "STSim_OutputStratumState")
+        ASSERT_INDEX_EXISTS(store, "STSim_OutputStratumTransition")
+        ASSERT_INDEX_EXISTS(store, "STSim_OutputStratumTransitionState")
+        ASSERT_INDEX_EXISTS(store, "STSim_OutputStateAttribute")
+        ASSERT_INDEX_EXISTS(store, "STSim_OutputTransitionAttribute")
+
+#End If
+
+    End Sub
+
+    Private Sub PerformUpdateInternal(store As DataStore, currentSchemaVersion As Integer)
+
         If (currentSchemaVersion < 1) Then
             STSIM0000001(store)
             STSIM0000002(store)
@@ -263,6 +291,10 @@ Class STSimUpdates
 
         If (currentSchemaVersion < 65) Then
             STSIM0000065(store)
+        End If
+
+        If (currentSchemaVersion < 66) Then
+            STSIM0000066(store)
         End If
 
     End Sub
@@ -2574,6 +2606,17 @@ Class STSimUpdates
         UpdateProvider.CreateIndex(store, "STSim_OutputStratumTransitionState", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionTypeID", "StateClassID", "EndStateClassID"})
         UpdateProvider.CreateIndex(store, "STSim_OutputTransitionAttribute", {"ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass"})
 
+    End Sub
+
+    ''' <summary>
+    ''' STSIM0000066
+    ''' </summary>
+    ''' <param name="store"></param>
+    ''' <remarks>
+    ''' This update restores indexes that were dropped as a result of a previous alteration to a table
+    ''' </remarks>
+    Private Shared Sub STSIM0000066(ByVal store As DataStore)
+        UpdateProvider.CreateIndex(store, "STSim_DistributionValue", {"ScenarioID"})
     End Sub
 
 End Class

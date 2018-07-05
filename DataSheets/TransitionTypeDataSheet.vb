@@ -349,9 +349,7 @@ Class TransitionTypeDataSheet
     Private Sub CreateTransitionTypeGroup(ByVal typeId As Integer, ByVal groupId As Integer, ByVal store As DataStore)
 
         Dim dr As DataRow = Me.m_TTGData.NewRow
-        Dim id As Integer = Library.GetNextSequenceId(store)
 
-        dr(Me.m_TTGDataSheet.PrimaryKeyColumn.Name) = id
         dr(DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME) = typeId
         dr(DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME) = groupId
         dr(IS_AUTO_COLUMN_NAME) = CInt(True)

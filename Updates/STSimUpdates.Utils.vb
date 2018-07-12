@@ -31,7 +31,13 @@ Partial Class STSimUpdates
 
         Dim dt As DataTable = Nothing
 
-        dt = store.CreateDataTable("SSim_Files")
+        If (store.TableExists("SSim_Files")) Then
+            dt = store.CreateDataTable("SSim_Files")
+        ElseIf (store.TableExists("SSim_File")) Then
+            dt = store.CreateDataTable("SSim_File")
+        Else
+            dt = store.CreateDataTable("SSim_SysFolder")
+        End If
 
         Dim dr As DataRow = Nothing
 

@@ -313,15 +313,19 @@ Partial Class STSimUpdates
         Dim dt As DataTable = Nothing
 
         'Unfortunately, at some point, the core moves the columns from the Folders table
-        'to the Files table.  At this time in the developement of SyncroSim, though, we do
-        'not have a perfectly stable 1.0 API (and this function is only called to update
+        'to the Files table (and other names.)  At this time in the developement of SyncroSim, though, 
+        'we do not have a perfectly stable 1.0 API (and this function is only called to update
         'very old 'legacy' databases) so we are just going to check for the existence of
         'the table we need...
 
         If (store.TableExists("SSim_Folders")) Then
             dt = store.CreateDataTable("SSim_Folders")
-        Else
+        ElseIf (store.TableExists("SSim_Files")) Then
             dt = store.CreateDataTable("SSim_Files")
+        ElseIf (store.TableExists("SSim_File")) Then
+            dt = store.CreateDataTable("SSim_File")
+        Else
+            dt = store.CreateDataTable("SSim_SysFolder")
         End If
 
         Dim dr As DataRow = dt.Rows(0)

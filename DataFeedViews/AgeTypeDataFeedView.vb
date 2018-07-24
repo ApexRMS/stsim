@@ -19,6 +19,7 @@ Class AgeTypeDataFeedView
         Me.SetTextBoxBinding(Me.TextBoxMaximum, DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME)
 
         Me.RefreshBoundControls()
+        Me.AddStandardCommands()
 
     End Sub
 

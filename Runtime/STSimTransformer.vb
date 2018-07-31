@@ -256,7 +256,7 @@ Public NotInheritable Class STSimTransformer
     ''' <param name="previousData"></param>
     ''' <remarks></remarks>
     Protected Overrides Sub OnExternalDataReady(ByVal dataSheet As DataSheet, ByVal previousData As DataTable)
-        Me.STSimExternalDataReady(dataSheet, previousData)
+        Me.STSimExternalDataReady(dataSheet)
     End Sub
 
     Private Sub InternalConfigure()
@@ -858,7 +858,7 @@ Public NotInheritable Class STSimTransformer
 
     End Sub
 
-    Private Sub STSimExternalDataReady(ByVal dataSheet As DataSheet, ByVal previousData As DataTable)
+    Private Sub STSimExternalDataReady(ByVal dataSheet As DataSheet)
 
         If (dataSheet.Name = DATASHEET_PT_NAME) Then
 

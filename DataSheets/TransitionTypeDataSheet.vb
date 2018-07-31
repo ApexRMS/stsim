@@ -100,7 +100,7 @@ Class TransitionTypeDataSheet
                 For Each Key As String In MissingTypeGroups.Keys
 
                     Dim s() As String = Key.Split(CChar("-"))
-                    Me.CreateTransitionTypeGroup(CInt(s(0)), CInt(s(1)), store)
+                    Me.CreateTransitionTypeGroup(CInt(s(0)), CInt(s(1)))
 
                 Next
 
@@ -158,7 +158,7 @@ Class TransitionTypeDataSheet
             Using store As DataStore = Me.Library.CreateDataStore
 
                 For Each tid As Integer In AutoTypeGroups.Keys
-                    Me.CreateTransitionTypeGroup(tid, AutoTypeGroups(tid), store)
+                    Me.CreateTransitionTypeGroup(tid, AutoTypeGroups(tid))
                 Next
 
             End Using
@@ -346,7 +346,7 @@ Class TransitionTypeDataSheet
 
     End Sub
 
-    Private Sub CreateTransitionTypeGroup(ByVal typeId As Integer, ByVal groupId As Integer, ByVal store As DataStore)
+    Private Sub CreateTransitionTypeGroup(ByVal typeId As Integer, ByVal groupId As Integer)
 
         Dim dr As DataRow = Me.m_TTGData.NewRow
 

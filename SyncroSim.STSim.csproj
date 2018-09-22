@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33774E89-6247-4162-8C3F-09B7470202CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SyncroSim.STSim</RootNamespace>
+    <AssemblyName>SyncroSim.STSim</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assembly.cs" />
+    <Compile Include="Console\STSimConsole.CreateReport.cs" />
+    <Compile Include="Console\STSimConsole.ListReports.cs" />
+    <Compile Include="Console\STSimConsole.SpatialSplit.cs" />
+    <Compile Include="Console\STSimConsole.cs" />
+    <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
+    <Compile Include="Runtime\AttributeValueBase.cs" />
+    <Compile Include="Runtime\AttributeValueRecord.cs" />
+    <Compile Include="Runtime\Cell.cs" />
+    <Compile Include="Runtime\CellCollection.cs" />
+    <Compile Include="Runtime\DeterministicTransition.cs" />
+    <Compile Include="Runtime\DeterministicTransitionCollection.cs" />
+    <Compile Include="Runtime\DeterministicTransitionMap.cs" />
+    <Compile Include="Runtime\GrowEventRecord.cs" />
+    <Compile Include="Runtime\GrowEventRecordCollection.cs" />
+    <Compile Include="Runtime\InitialConditionsDistribution.cs" />
+    <Compile Include="Runtime\InitialConditionsDistributionCollection.cs" />
+    <Compile Include="Runtime\InitialConditionsDistributionMap.cs" />
+    <Compile Include="Runtime\InitialConditionsSpatial.cs" />
+    <Compile Include="Runtime\InitialConditionsSpatialCollection.cs" />
+    <Compile Include="Runtime\InitialConditionsSpatialMap.cs" />
+    <Compile Include="Runtime\InputRasters.cs" />
+    <Compile Include="Runtime\IntervalMeanTimestepMap.cs" />
+    <Compile Include="Runtime\OutputStateAttribute.cs" />
+    <Compile Include="Runtime\OutputStateAttributeCollection.cs" />
+    <Compile Include="Runtime\OutputStratumState.cs" />
+    <Compile Include="Runtime\OutputStratumStateCollection.cs" />
+    <Compile Include="Runtime\OutputStratumTransition.cs" />
+    <Compile Include="Runtime\OutputStratumTransitionCollection.cs" />
+    <Compile Include="Runtime\OutputStratumTransitionState.cs" />
+    <Compile Include="Runtime\OutputStratumTransitionStateCollection.cs" />
+    <Compile Include="Runtime\OutputTransitionAttribute.cs" />
+    <Compile Include="Runtime\OutputTransitionAttributeCollection.cs" />
+    <Compile Include="Runtime\PatchPrioritization.cs" />
+    <Compile Include="Runtime\PatchPrioritizationCollection.cs" />
+    <Compile Include="Runtime\ProportionAccumulatorMap.cs" />
+    <Compile Include="Runtime\StateAttributeValue.cs" />
+    <Compile Include="Runtime\StateAttributeValueCollection.cs" />
+    <Compile Include="Runtime\StateAttributeValueMap.cs" />
+    <Compile Include="Runtime\StateClass.cs" />
+    <Compile Include="Runtime\StateClassCollection.cs" />
+    <Compile Include="Runtime\Stratum.cs" />
+    <Compile Include="Runtime\StratumCollection.cs" />
+    <Compile Include="Runtime\STSimMapBase.cs" />
+    <Compile Include="Runtime\STSimMapBase1.cs" />
+    <Compile Include="Runtime\STSimMapBase2.cs" />
+    <Compile Include="Runtime\STSimMapBase3.cs" />
+    <Compile Include="Runtime\STSimMapBase4.cs" />
+    <Compile Include="Runtime\STSimMapBase6.cs" />
+    <Compile Include="Runtime\STSimMapBase5.cs" />
+    <Compile Include="Runtime\STSimTransformer.Ages.cs" />
+    <Compile Include="Runtime\STSimTransformer.Collections.cs" />
+    <Compile Include="Runtime\STSimTransformer.Distributions.cs" />
+    <Compile Include="Runtime\STSimTransformer.Initialize.cs" />
+    <Compile Include="Runtime\STSimTransformer.Maps.cs" />
+    <Compile Include="Runtime\STSimTransformer.Multipliers.cs" />
+    <Compile Include="Runtime\STSimTransformer.NonSpatial.cs" />
+    <Compile Include="Runtime\STSimTransformer.Normalize.cs" />
+    <Compile Include="Runtime\STSimTransformer.Output.cs" />
+    <Compile Include="Runtime\STSimTransformer.Parallel.Merge.cs" />
+    <Compile Include="Runtime\STSimTransformer.Parallel.Split.cs" />
+    <Compile Include="Runtime\STSimTransformer.Patch.cs" />
+    <Compile Include="Runtime\STSimTransformer.Shuffle.cs" />
+    <Compile Include="Runtime\STSimTransformer.Spatial.cs" />
+    <Compile Include="Runtime\STSimTransformer.Spread.cs" />
+    <Compile Include="Runtime\STSimTransformer.TST.cs" />
+    <Compile Include="Runtime\STSimTransformer.Validate.cs" />
+    <Compile Include="Runtime\STSimTransformer.cs" />
+    <Compile Include="Runtime\Transition.cs" />
+    <Compile Include="Runtime\TransitionAdjacencyMultiplier.cs" />
+    <Compile Include="Runtime\TransitionAdjacencyMultiplierCollection.cs" />
+    <Compile Include="Runtime\TransitionAdjacencyMultiplierMap.cs" />
+    <Compile Include="Runtime\TransitionAdjacencySetting.cs" />
+    <Compile Include="Runtime\TransitionAdjacencySettingCollection.cs" />
+    <Compile Include="Runtime\TransitionAdjacencySettingMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTarget.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetCollection.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeType.cs" />
+    <Compile Include="Runtime\TransitionAttributeTypeCollection.cs" />
+    <Compile Include="Runtime\TransitionAttributeValue.cs" />
+    <Compile Include="Runtime\TransitionAttributeValueCollection.cs" />
+    <Compile Include="Runtime\TransitionAttributeValueMap.cs" />
+    <Compile Include="Runtime\TransitionCollection.cs" />
+    <Compile Include="Runtime\TransitionDirectionMultiplier.cs" />
+    <Compile Include="Runtime\TransitionDirectionMultiplierCollection.cs" />
+    <Compile Include="Runtime\TransitionDirectionMultiplierMap.cs" />
+    <Compile Include="Runtime\TransitionEvent.cs" />
+    <Compile Include="Runtime\TransitionGroup.cs" />
+    <Compile Include="Runtime\TransitionGroupCollection.cs" />
+    <Compile Include="Runtime\TransitionMap.cs" />
+    <Compile Include="Runtime\TransitionMultiplierType.cs" />
+    <Compile Include="Runtime\TransitionMultiplierTypeCollection.cs" />
+    <Compile Include="Runtime\TransitionMultiplierValue.cs" />
+    <Compile Include="Runtime\TransitionMultiplierValueCollection.cs" />
+    <Compile Include="Runtime\TransitionMultiplierValueMap.cs" />
+    <Compile Include="Runtime\TransitionOrder.cs" />
+    <Compile Include="Runtime\TransitionOrderCollection.cs" />
+    <Compile Include="Runtime\TransitionOrderMap.cs" />
+    <Compile Include="Runtime\TransitionPatch.cs" />
+    <Compile Include="Runtime\TransitionPatchPrioritization.cs" />
+    <Compile Include="Runtime\TransitionPatchPrioritizationCollection.cs" />
+    <Compile Include="Runtime\TransitionPatchPrioritizationMap.cs" />
+    <Compile Include="Runtime\TransitionPathwayAutoCorrelation.cs" />
+    <Compile Include="Runtime\TransitionPathwayAutoCorrelationCollection.cs" />
+    <Compile Include="Runtime\TransitionPathwayAutoCorrelationMap.cs" />
+    <Compile Include="Runtime\TransitionSizeDistribution.cs" />
+    <Compile Include="Runtime\TransitionSizeDistributionCollection.cs" />
+    <Compile Include="Runtime\TransitionSizeDistributionMap.cs" />
+    <Compile Include="Runtime\TransitionSizePrioritization.cs" />
+    <Compile Include="Runtime\TransitionSizePrioritizationCollection.cs" />
+    <Compile Include="Runtime\TransitionSizePrioritizationMap.cs" />
+    <Compile Include="Runtime\TransitionSlopeMultiplier.cs" />
+    <Compile Include="Runtime\TransitionSlopeMultiplierCollection.cs" />
+    <Compile Include="Runtime\TransitionSlopeMultiplierMap.cs" />
+    <Compile Include="Runtime\TransitionSpatialInitiationMultiplier.cs" />
+    <Compile Include="Runtime\TransitionSpatialInitiationMultiplierCollection.cs" />
+    <Compile Include="Runtime\TransitionSpatialInitiationMultiplierMap.cs" />
+    <Compile Include="Runtime\TransitionSpatialMultiplier.cs" />
+    <Compile Include="Runtime\TransitionSpatialMultiplierCollection.cs" />
+    <Compile Include="Runtime\TransitionSpatialMultiplierMap.cs" />
+    <Compile Include="Runtime\TransitionSpreadDistribution.cs" />
+    <Compile Include="Runtime\TransitionSpreadDistributionCollection.cs" />
+    <Compile Include="Runtime\TransitionSpreadDistributionMap.cs" />
+    <Compile Include="Runtime\TransitionStratumStateClass.cs" />
+    <Compile Include="Runtime\TransitionStratumStateClassCollection.cs" />
+    <Compile Include="Runtime\TransitionTarget.cs" />
+    <Compile Include="Runtime\TransitionTargetCollection.cs" />
+    <Compile Include="Runtime\TransitionTargetMap.cs" />
+    <Compile Include="Runtime\TransitionType.cs" />
+    <Compile Include="Runtime\TransitionTypeCollection.cs" />
+    <Compile Include="Runtime\TST.cs" />
+    <Compile Include="Runtime\TSTCollection.cs" />
+    <Compile Include="Runtime\TSTRandomize.cs" />
+    <Compile Include="Runtime\TSTRandomizeMap.cs" />
+    <Compile Include="Runtime\TSTTransitionGroup.cs" />
+    <Compile Include="Runtime\TSTTransitionGroupMap.cs" />
+    <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.Designer.cs">
+      <DependentUpon>AdjacencyMultiplierDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeGroupDataFeedView.Designer.cs">
+      <DependentUpon>AgeGroupDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeGroupDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeTypeDataFeedView.Designer.cs">
+      <DependentUpon>AgeTypeDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\AgeTypeDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\DistributionValueDataFeedView.Designer.cs">
+      <DependentUpon>DistributionValueDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\DistributionValueDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.Designer.cs">
+      <DependentUpon>InitialConditionsNonSpatialDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.Designer.cs">
+      <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsDataFeedView.Designer.cs">
+      <DependentUpon>OutputOptionsDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.Designer.cs">
+      <DependentUpon>PrimaryStratumDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\ProcessingDataFeedView.Designer.cs">
+      <DependentUpon>ProcessingDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\ProcessingDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\RunControlDataFeedView.Designer.cs">
+      <DependentUpon>RunControlDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\RunControlDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.Designer.cs">
+      <DependentUpon>SlopeMultiplierDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.Designer.cs">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.Designer.cs">
+      <DependentUpon>SpatialMultiplierDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassDataFeedView.Designer.cs">
+      <DependentUpon>StateClassDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassQuickView.Designer.cs">
+      <DependentUpon>StateClassQuickView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\StateClassQuickView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionDataFeedView.Designer.cs">
+      <DependentUpon>TransitionDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeDataFeedView.Designer.cs">
+      <DependentUpon>TransitionTypeDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.Designer.cs">
+      <DependentUpon>TransitionTypeGroupDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataSheets\DeterministicTransitionDataSheet.cs" />
+    <Compile Include="DataSheets\InitialConditionsSpatialDataSheet.cs" />
+    <Compile Include="DataSheets\ProbabilisticTransitionDataSheet.cs" />
+    <Compile Include="DataSheets\StateClassDataSheet.cs" />
+    <Compile Include="DataSheets\TransitionGroupDataSheet.cs" />
+    <Compile Include="DataSheets\TransitionSizeDistributionDataSheet.cs" />
+    <Compile Include="DataSheets\TransitionTargetDataSheet.cs" />
+    <Compile Include="DataSheets\TransitionTypeDataSheet.cs" />
+    <Compile Include="Forms\ChooseStateClassForm.Designer.cs">
+      <DependentUpon>ChooseStateClassForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChooseStateClassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FilterTransitionsForm.Designer.cs">
+      <DependentUpon>FilterTransitionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FilterTransitionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PasteStrataForm.Designer.cs">
+      <DependentUpon>PasteStrataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PasteStrataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectStratumForm.Designer.cs">
+      <DependentUpon>SelectStratumForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SelectStratumForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TransitionDiagramPasteSpecialForm.Designer.cs">
+      <DependentUpon>TransitionDiagramPasteSpecialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TransitionDiagramPasteSpecialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Application.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Reports\StateAttributeReport.cs" />
+    <Compile Include="Reports\StateClassSummaryReport.cs" />
+    <Compile Include="Reports\TransitionAttributeReport.cs" />
+    <Compile Include="Reports\TransitionStateSummaryReport.cs" />
+    <Compile Include="Reports\TransitionSummaryReport.cs" />
+    <Compile Include="Shared\AgeHelper.cs" />
+    <Compile Include="Shared\AgeUtilities.cs" />
+    <Compile Include="Shared\BaseValueDisplayListItem.cs" />
+    <Compile Include="Shared\ChartingUtilities.cs" />
+    <Compile Include="Shared\ColorColumns.cs" />
+    <Compile Include="Shared\ColorUtilities.cs" />
+    <Compile Include="Shared\Constants.cs" />
+    <Compile Include="Shared\DataSheetUtilities.cs" />
+    <Compile Include="Shared\DataTableUtilities.cs" />
+    <Compile Include="Shared\DTAnalyzer.cs" />
+    <Compile Include="Shared\Enums.cs" />
+    <Compile Include="Shared\EventArguments.cs" />
+    <Compile Include="Shared\Exceptions.cs" />
+    <Compile Include="Shared\ExceptionUtils.cs" />
+    <Compile Include="Shared\FileSystemUtilities.cs" />
+    <Compile Include="Shared\FormsUtilities.cs" />
+    <Compile Include="Shared\LookupKeyUtils.cs" />
+    <Compile Include="Shared\MathUtils.cs" />
+    <Compile Include="Shared\MessageStrings.cs" />
+    <Compile Include="Shared\NullableUtilities.cs" />
+    <Compile Include="Shared\RasterUtilities.cs" />
+    <Compile Include="Shared\SpatialUtilities.cs" />
+    <Compile Include="Shared\Strings.cs" />
+    <Compile Include="Shared\TerminologyUtilities.cs" />
+    <Compile Include="Shared\TgapMerge.cs" />
+    <Compile Include="Shared\TransitionFilterCriteria.cs" />
+    <Compile Include="Shared\ValidationTableUtilities.cs" />
+    <Compile Include="Statistics\STSimDistributionBase.cs" />
+    <Compile Include="Statistics\STSimDistributionBaseExpander.cs" />
+    <Compile Include="Statistics\STSimDistributionProvider.cs" />
+    <Compile Include="Statistics\STSimDistributionValue.cs" />
+    <Compile Include="Statistics\STSimDistributionValueMap.cs" />
+    <Compile Include="Providers\STSimChartProvider.cs" />
+    <Compile Include="Providers\STSimMapProvider.cs" />
+    <Compile Include="Diagram\DeterministicTransitionLine.cs" />
+    <Compile Include="Diagram\DeterministicTransitionsTabStripItem.cs" />
+    <Compile Include="Diagram\ProbabilisticTransitionLine.cs" />
+    <Compile Include="Diagram\ProbabilisticTransitionsTabStripItem.cs" />
+    <Compile Include="Diagram\StateClassShape.cs" />
+    <Compile Include="Diagram\StratumTabStripItem.cs" />
+    <Compile Include="Diagram\TransitionDiagram.Clipboard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diagram\TransitionDiagram.Deterministic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diagram\TransitionDiagram.Override.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diagram\TransitionDiagram.Probabilistic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diagram\TransitionDiagram.Utilities.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diagram\TransitionDiagram.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diagram\TransitionDiagramClipData.cs" />
+    <Compile Include="Diagram\TransitionDiagramLine.cs" />
+    <Compile Include="Diagram\TransitionDiagramTabStripItem.cs" />
+    <Compile Include="Updates\STSimUpdates.DM.cs" />
+    <Compile Include="Updates\STSimUpdates.ED.cs" />
+    <Compile Include="Updates\STSimUpdates.SF.cs" />
+    <Compile Include="Updates\STSimUpdates.SSIM_V_1.cs" />
+    <Compile Include="Updates\STSimUpdates.TPE.cs" />
+    <Compile Include="Updates\STSimUpdates.Utils.cs" />
+    <Compile Include="Updates\STSimUpdates.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataFeedViews\AdjacencyMultiplierDataFeedView.resx">
+      <DependentUpon>AdjacencyMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\AgeGroupDataFeedView.resx">
+      <DependentUpon>AgeGroupDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\AgeTypeDataFeedView.resx">
+      <DependentUpon>AgeTypeDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\DistributionValueDataFeedView.resx">
+      <DependentUpon>DistributionValueDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.resx">
+      <DependentUpon>InitialConditionsNonSpatialDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedView.resx">
+      <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\OutputOptionsDataFeedView.resx">
+      <DependentUpon>OutputOptionsDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\PrimaryStratumDataFeedView.resx">
+      <DependentUpon>PrimaryStratumDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\ProcessingDataFeedView.resx">
+      <DependentUpon>ProcessingDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\RunControlDataFeedView.resx">
+      <DependentUpon>RunControlDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedView.resx">
+      <DependentUpon>SlopeMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.resx">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialMultiplierDataFeedView.resx">
+      <DependentUpon>SpatialMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\StateClassDataFeedView.resx">
+      <DependentUpon>StateClassDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\StateClassQuickView.resx">
+      <DependentUpon>StateClassQuickView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionDataFeedView.resx">
+      <DependentUpon>TransitionDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionTypeDataFeedView.resx">
+      <DependentUpon>TransitionTypeDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionTypeGroupDataFeedView.resx">
+      <DependentUpon>TransitionTypeGroupDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChooseStateClassForm.resx">
+      <DependentUpon>ChooseStateClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FilterTransitionsForm.resx">
+      <DependentUpon>FilterTransitionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PasteStrataForm.resx">
+      <DependentUpon>PasteStrataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectStratumForm.resx">
+      <DependentUpon>SelectStratumForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TransitionDiagramPasteSpecialForm.resx">
+      <DependentUpon>TransitionDiagramPasteSpecialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="module.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Copy16x16.png" />
+    <Content Include="Images\Cut16x16.png" />
+    <Content Include="Images\Delete16x16.png" />
+    <Content Include="Images\Filter16x16.png" />
+    <Content Include="Images\First16x16.png" />
+    <Content Include="Images\Last16x16.png" />
+    <Content Include="Images\Minus16x16.png" />
+    <Content Include="Images\Next16x16.png" />
+    <Content Include="Images\OK16x16.png" />
+    <Content Include="Images\OK16x16Disabled.png" />
+    <Content Include="Images\Paste16x16.png" />
+    <Content Include="Images\Plus16x16.png" />
+    <Content Include="Images\Previous16x16.png" />
+    <Content Include="Images\Search16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonForms\SyncroSim.Common.Forms.csproj">
+      <Project>{13919907-3117-49c5-bb13-2a5d4ccefa57}</Project>
+      <Name>SyncroSim.Common.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\SyncroSim.Common.csproj">
+      <Project>{1376529f-fc5a-43e8-8554-8341b4fe2496}</Project>
+      <Name>SyncroSim.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CoreForms\SyncroSim.Core.Forms.csproj">
+      <Project>{ea3a4b6e-d4db-466d-b510-6a38918f2dd8}</Project>
+      <Name>SyncroSim.Core.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SyncroSim.Core.csproj">
+      <Project>{af51a2a0-349a-4a3c-bec2-906e605db6d7}</Project>
+      <Name>SyncroSim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StochasticTimeForms\SyncroSim.StochasticTime.Forms.csproj">
+      <Project>{577b7bdd-e5fa-41af-887a-e4a12b691ff8}</Project>
+      <Name>SyncroSim.StochasticTime.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StochasticTime\SyncroSim.StochasticTime.csproj">
+      <Project>{ac26a679-5fb6-4cae-9b08-e0ea8027c628}</Project>
+      <Name>SyncroSim.StochasticTime</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

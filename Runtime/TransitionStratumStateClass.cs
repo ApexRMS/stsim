@@ -1,0 +1,42 @@
+﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+// Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
+
+namespace SyncroSim.STSim
+{
+    internal class TransitionStratumStateClass
+    {
+        private int m_StratumId;
+        private int m_StateClassId;
+        private TransitionCollection m_Transitions = new TransitionCollection();
+
+        public TransitionStratumStateClass(int stratumId, int stateClassId)
+        {
+            this.m_StratumId = stratumId;
+            this.m_StateClassId = stateClassId;
+        }
+
+        public int StratumId
+        {
+            get
+            {
+                return this.m_StratumId;
+            }
+        }
+
+        public int StateClassId
+        {
+            get
+            {
+                return this.m_StateClassId;
+            }
+        }
+
+        public TransitionCollection Transitions
+        {
+            get
+            {
+                return this.m_Transitions;
+            }
+        }
+    }
+}

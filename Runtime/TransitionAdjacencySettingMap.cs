@@ -1,0 +1,40 @@
+﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+// Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
+
+using System.Collections.Generic;
+
+namespace SyncroSim.STSim
+{
+    internal class TransitionAdjacencySettingMap
+    {
+        private Dictionary<int, TransitionAdjacencySetting> m_Map = new Dictionary<int, TransitionAdjacencySetting>();
+
+        public TransitionAdjacencySettingMap(TransitionAdjacencySettingCollection settings)
+        {
+            foreach (TransitionAdjacencySetting s in settings)
+            {
+                this.AddItem(s);
+            }
+        }
+
+        public void AddItem(TransitionAdjacencySetting setting)
+        {
+            if (!this.m_Map.ContainsKey(setting.TransitionGroupId))
+            {
+                this.m_Map.Add(setting.TransitionGroupId, setting);
+            }
+        }
+
+        public TransitionAdjacencySetting GetItem(int transitionGroupId)
+        {
+            if (this.m_Map.ContainsKey(transitionGroupId))
+            {
+                return this.m_Map[transitionGroupId];
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+}

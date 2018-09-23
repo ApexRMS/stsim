@@ -220,7 +220,9 @@ namespace SyncroSim.STSim
             }
             else
             {
-                return string.Format(CultureInfo.InvariantCulture, "DistributionTypeID NOT IN ({0})", CreateIntegerFilterSpec(ids));
+                return string.Format(CultureInfo.InvariantCulture, 
+                    "DistributionTypeID NOT IN ({0})", 
+                    CreateIntegerFilterSpec(ids));
             }
         }
 
@@ -233,12 +235,9 @@ namespace SyncroSim.STSim
             {
                 if (dr.RowState != DataRowState.Deleted)
                 {
-                    if (dr[Strings.DISTRIBUTION_TYPE_IS_INTERNAL_COLUMN_NAME] != DBNull.Value)
+                    if (Booleans.BoolFromValue(dr[Strings.DISTRIBUTION_TYPE_IS_INTERNAL_COLUMN_NAME]))
                     {
-                        if (Convert.ToInt32(dr[Strings.DISTRIBUTION_TYPE_IS_INTERNAL_COLUMN_NAME]) == Booleans.BoolToInt(true))
-                        {
-                            ids.Add(Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]));
-                        }
+                        ids.Add(Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]));
                     }
                 }
             }

@@ -4,6 +4,7 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 
@@ -50,7 +51,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRowView v in dv)
             {
-                string n = Convert.ToString(v[ds.DisplayMember]);
+                string n = Convert.ToString(v[ds.DisplayMember], CultureInfo.InvariantCulture);
                 string d = DataTableUtilities.GetDataStr(v[Strings.DATASHEET_DESCRIPTION_COLUMN_NAME]);
 
                 if (!string.IsNullOrEmpty(d))
@@ -76,10 +77,10 @@ namespace SyncroSim.STSim
 
             foreach (DataGridViewRow dgr in this.DataGridViewStrata.SelectedRows)
             {
-                SelectedStrata.Add(Convert.ToString(dgr.Cells[ColumnName.Name].Value), true);
+                SelectedStrata.Add(Convert.ToString(dgr.Cells[ColumnName.Name].Value, CultureInfo.InvariantCulture), true);
             }
 
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
         }
 
         private void SelectAllStrataAndFocusGrid()

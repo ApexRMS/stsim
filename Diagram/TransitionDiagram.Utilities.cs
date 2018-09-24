@@ -21,7 +21,7 @@ namespace SyncroSim.STSim
             char c = chars[0];
             int CharVal = ((int)c - (int)'A');
             column = CharVal;
-            row = int.Parse(NumPart) - 1;
+            row = int.Parse(NumPart, CultureInfo.InvariantCulture) - 1;
 
             Debug.Assert(column >= 0 && row >= 0);
         }
@@ -30,7 +30,7 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(column < 26);
 
-            string s = Convert.ToString((char)((int)'A' + column));
+            string s = Convert.ToString((char)((int)'A' + column), CultureInfo.InvariantCulture);
             s = s + (row + 1).ToString(CultureInfo.InvariantCulture);
 
             return s;
@@ -59,8 +59,8 @@ namespace SyncroSim.STSim
         {
             if (this.GetShapeAt(this.CurrentMouseRow, this.CurrentMouseColumn) == null)
             {
-                string ColLetter = Convert.ToString((char)((int)'A' + this.CurrentMouseColumn));
-                string RowLetter = Convert.ToString(this.CurrentMouseRow + 1);
+                string ColLetter = Convert.ToString((char)((int)'A' + this.CurrentMouseColumn), CultureInfo.InvariantCulture);
+                string RowLetter = Convert.ToString(this.CurrentMouseRow + 1, CultureInfo.InvariantCulture);
 
                 return ColLetter + RowLetter;
             }
@@ -71,8 +71,8 @@ namespace SyncroSim.STSim
                 {
                     if (this.GetShapeAt(row, col) == null)
                     {
-                        string ColLetter = Convert.ToString((char)((int)'A' + col));
-                        string RowLetter = (row + 1).ToString();
+                        string ColLetter = Convert.ToString((char)((int)'A' + col), CultureInfo.InvariantCulture);
+                        string RowLetter = (row + 1).ToString(CultureInfo.InvariantCulture);
 
                         return (ColLetter + RowLetter);
                     }
@@ -91,12 +91,12 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                int xid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME]);
-                int yid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME]);
+                int xid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int yid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (xid == slxid && yid == slyid)
                 {
-                    return Convert.ToInt32(dr[this.m_SCDataSheet.ValueMember]);
+                    return Convert.ToInt32(dr[this.m_SCDataSheet.ValueMember], CultureInfo.InvariantCulture);
                 }
             }
 

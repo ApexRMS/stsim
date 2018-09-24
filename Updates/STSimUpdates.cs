@@ -893,7 +893,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                string dsname = Convert.ToString(dr["DataSheetName"]);
+                string dsname = Convert.ToString(dr["DataSheetName"], CultureInfo.InvariantCulture);
                 string q = string.Format(CultureInfo.InvariantCulture, "UPDATE STime_ChartVariable SET VariableName='{0}' WHERE DataSheetName='{1}'", dsname, dsname);
 
                 store.ExecuteNonQuery(q);
@@ -903,7 +903,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                string dsname = Convert.ToString(dr["DataSheetName"]);
+                string dsname = Convert.ToString(dr["DataSheetName"], CultureInfo.InvariantCulture);
                 string q = string.Format(CultureInfo.InvariantCulture, "UPDATE STime_ChartVariable SET VariableName='{0}' WHERE DataSheetName='{1}'", dsname, dsname);
 
                 store.ExecuteNonQuery(q);
@@ -1455,10 +1455,8 @@ namespace SyncroSim.STSim
 
             foreach (DataRow ProjectRow in Projects.Rows)
             {
-                int ProjectId = Convert.ToInt32(ProjectRow["ProjectID"]);
-
+                int ProjectId = Convert.ToInt32(ProjectRow["ProjectID"], CultureInfo.InvariantCulture);
                 DataTable DistributionTypes = store.CreateDataTableFromQuery(string.Format(CultureInfo.InvariantCulture, "SELECT * FROM STime_DistributionType WHERE ProjectID={0}", ProjectId), "DistributionTypes");
-
                 Debug.Assert(DistributionTypes.Rows.Count == 4);
                 DistTables.Add(ProjectId, DistributionTypes);
             }
@@ -1484,14 +1482,14 @@ namespace SyncroSim.STSim
 
             foreach (DataRow ScenarioRow in scenarios.Rows)
             {
-                int ScenarioId = Convert.ToInt32(ScenarioRow["ScenarioID"]);
-                int ProjectId = Convert.ToInt32(ScenarioRow["ProjectID"]);
+                int ScenarioId = Convert.ToInt32(ScenarioRow["ScenarioID"], CultureInfo.InvariantCulture);
+                int ProjectId = Convert.ToInt32(ScenarioRow["ProjectID"], CultureInfo.InvariantCulture);
                 DataTable DistributionTypes = distTables[ProjectId];
 
                 foreach (DataRow DistTypeRow in DistributionTypes.Rows)
                 {
-                    int DistTypeId = Convert.ToInt32(DistTypeRow["DistributionTypeID"]);
-                    string DistTypeName = Convert.ToString(DistTypeRow["Name"]);
+                    int DistTypeId = Convert.ToInt32(DistTypeRow["DistributionTypeID"], CultureInfo.InvariantCulture);
+                    string DistTypeName = Convert.ToString(DistTypeRow["Name"], CultureInfo.InvariantCulture);
                     int TempDistId = 0;
                     bool DoUpdate = true;
 
@@ -1571,13 +1569,15 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                int ScenarioId = Convert.ToInt32(dr["ScenarioID"]);
+                int ScenarioId = Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture);
                 string SizeDistQuery = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(ScenarioID) FROM STSim_TransitionSizeDistribution WHERE ScenarioID={0}", ScenarioId);
-                bool HasSizeDist = (Convert.ToInt32(store.ExecuteScalar(SizeDistQuery)) > 0);
+                bool HasSizeDist = (Convert.ToInt32(store.ExecuteScalar(SizeDistQuery), CultureInfo.InvariantCulture) > 0);
 
                 if (HasSizeDist)
                 {
-                    store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "INSERT INTO STSim_TransitionSizePrioritization(ScenarioID, Priority) VALUES({0},{1})", ScenarioId, Convert.ToInt32(SizePrioritization.Largest)));
+                    store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, 
+                        "INSERT INTO STSim_TransitionSizePrioritization(ScenarioID, Priority) VALUES({0},{1})", 
+                        ScenarioId, Convert.ToInt32(SizePrioritization.Largest, CultureInfo.InvariantCulture)));
                 }
             }
         }
@@ -1630,19 +1630,19 @@ namespace SyncroSim.STSim
             if (store.TableExists("STSim_TransitionTarget"))
             {
                 store.ExecuteNonQuery("ALTER TABLE STSim_TransitionTarget ADD COLUMN DistributionFrequencyID INTEGER");
-                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET DistributionFrequencyID={0} WHERE DistributionType IS NOT NULL", Convert.ToInt32(StochasticTime.DistributionFrequency.Iteration)));
+                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET DistributionFrequencyID={0} WHERE DistributionType IS NOT NULL", Convert.ToInt32(StochasticTime.DistributionFrequency.Iteration, CultureInfo.InvariantCulture)));
             }
 
             if (store.TableExists("STSim_TransitionMultiplierValue"))
             {
                 store.ExecuteNonQuery("ALTER TABLE STSim_TransitionMultiplierValue ADD COLUMN DistributionFrequencyID INTEGER");
-                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionMultiplierValue SET DistributionFrequencyID={0} WHERE DistributionType IS NOT NULL", Convert.ToInt32(StochasticTime.DistributionFrequency.Iteration)));
+                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionMultiplierValue SET DistributionFrequencyID={0} WHERE DistributionType IS NOT NULL", Convert.ToInt32(StochasticTime.DistributionFrequency.Iteration, CultureInfo.InvariantCulture)));
             }
 
             if (store.TableExists("STSim_TransitionAttributeTarget"))
             {
                 store.ExecuteNonQuery("ALTER TABLE STSim_TransitionAttributeTarget ADD COLUMN DistributionFrequencyID INTEGER");
-                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET DistributionFrequencyID={0} WHERE DistributionType IS NOT NULL", Convert.ToInt32(StochasticTime.DistributionFrequency.Iteration)));
+                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET DistributionFrequencyID={0} WHERE DistributionType IS NOT NULL", Convert.ToInt32(StochasticTime.DistributionFrequency.Iteration, CultureInfo.InvariantCulture)));
             }
 
             if (store.TableExists("STSim_TransitionDirectionMultiplier"))
@@ -1701,23 +1701,22 @@ namespace SyncroSim.STSim
 
             foreach (DataRow ProjectRow in Projects.Rows)
             {
-                int ProjectId = Convert.ToInt32(ProjectRow["ProjectID"]);
-
+                int ProjectId = Convert.ToInt32(ProjectRow["ProjectID"], CultureInfo.InvariantCulture);
                 DataTable DistributionTypes = store.CreateDataTableFromQuery(string.Format(CultureInfo.InvariantCulture, "SELECT * FROM STime_DistributionType WHERE ProjectID={0} AND Name='Uniform'", ProjectId), "DistributionTypes");
-
                 Debug.Assert(DistributionTypes.Rows.Count == 1);
 
                 if (DistributionTypes.Rows.Count == 1)
                 {
-                    IDLookup.Add(ProjectId, Convert.ToInt32(DistributionTypes.Rows[0]["DistributionTypeID"]));
+                    IDLookup.Add(
+                        ProjectId, Convert.
+                        ToInt32(DistributionTypes.Rows[0]["DistributionTypeID"], CultureInfo.InvariantCulture));
                 }
             }
 
             foreach (DataRow ScenarioRow in Scenarios.Rows)
             {
-                int ScenarioId = Convert.ToInt32(ScenarioRow["ScenarioID"]);
-                int ProjectId = Convert.ToInt32(ScenarioRow["ProjectID"]);
-
+                int ScenarioId = Convert.ToInt32(ScenarioRow["ScenarioID"], CultureInfo.InvariantCulture);
+                int ProjectId = Convert.ToInt32(ScenarioRow["ProjectID"], CultureInfo.InvariantCulture);
                 Debug.Assert(IDLookup.ContainsKey(ProjectId));
 
                 if (IDLookup.ContainsKey(ProjectId))
@@ -1950,7 +1949,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow row in dtScenarios.Rows)
             {
-                int scenarioId = Convert.ToInt32(row["ScenarioID"]);
+                int scenarioId = Convert.ToInt32(row["ScenarioID"], CultureInfo.InvariantCulture);
 
                 for (int i = 0; i <= outputDatasheets.GetUpperBound(0); i++)
                 {
@@ -2032,8 +2031,8 @@ namespace SyncroSim.STSim
             {
                 if (dr["Criteria"] != DBNull.Value)
                 {
-                    int id = Convert.ToInt32(dr["MapID"]);
-                    string cr = Convert.ToString(dr["Criteria"]);
+                    int id = Convert.ToInt32(dr["MapID"], CultureInfo.InvariantCulture);
+                    string cr = Convert.ToString(dr["Criteria"], CultureInfo.InvariantCulture);
                     string[] sp = cr.Split('|');
                     StringBuilder sb = new StringBuilder();
 

@@ -28,7 +28,9 @@ namespace SyncroSim.STSim
         {
             this.CheckBoxSplitSecStrat.Text = string.Format(CultureInfo.InvariantCulture, 
                 "Split non-spatial runs by {0}", 
-                Convert.ToString(e.GetValue(Strings.DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME)).ToLower(CultureInfo.InvariantCulture));
+                Convert.ToString(
+                    e.GetValue(Strings.DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME), 
+                    CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture));
         }
     }
 }

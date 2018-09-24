@@ -3,6 +3,7 @@
 
 using System;
 using System.Data;
+using System.Globalization;
 
 namespace SyncroSim.STSim
 {
@@ -15,7 +16,9 @@ namespace SyncroSim.STSim
                 return true;
             }
 
-            return Convert.ToBoolean(dr[Strings.DATASHEET_TRANSITION_TYPE_GROUP_PRIMARY_COLUMN_NAME]);
+            return Convert.ToBoolean(
+                dr[Strings.DATASHEET_TRANSITION_TYPE_GROUP_PRIMARY_COLUMN_NAME], 
+                CultureInfo.InvariantCulture);
         }
     }
 }

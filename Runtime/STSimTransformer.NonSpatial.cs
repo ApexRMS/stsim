@@ -4,6 +4,7 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
@@ -79,7 +80,7 @@ namespace SyncroSim.STSim
         {
             // Fetch the number of cells from the NS IC setting
             DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
-            int numCells = Convert.ToInt32(drrc[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME]);
+            int numCells = Convert.ToInt32(drrc[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME], CultureInfo.InvariantCulture);
 
             Debug.Assert(!this.IsSpatial);
             Debug.Assert(this.m_Cells.Count > 0);

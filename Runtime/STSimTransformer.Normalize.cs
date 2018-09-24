@@ -64,9 +64,7 @@ namespace SyncroSim.STSim
         {
             DataSheet dsrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME);
             DataRow drrc = dsrc.GetDataRow();
-
-            int MaxTimestep = Convert.ToInt32(drrc[Strings.RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME]);
-
+            int MaxTimestep = Convert.ToInt32(drrc[Strings.RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
             DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_NAME);
             DataRow droo = dsoo.GetDataRow();
 
@@ -236,8 +234,8 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
                 {
-                    int StratumId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME]);
-                    int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME]);
+                    int StratumId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                     string Key = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", StratumId, StateClassId);
 
                     ExplicitStrata.Add(Key, true);
@@ -262,8 +260,8 @@ namespace SyncroSim.STSim
                     {
                         if (drst.RowState != DataRowState.Deleted)
                         {
-                            int StratumId = Convert.ToInt32(drst[Strata_Sheet.PrimaryKeyColumn.Name]);
-                            int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME]);
+                            int StratumId = Convert.ToInt32(drst[Strata_Sheet.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                            int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                             string Key = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", StratumId, StateClassId);
 
                             if (!ExplicitStrata.ContainsKey(Key))
@@ -385,7 +383,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (!Convert.ToBoolean(dr[optionColumnName]))
+            if (!Convert.ToBoolean(dr[optionColumnName], CultureInfo.InvariantCulture))
             {
                 return;
             }
@@ -402,7 +400,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            int val = Convert.ToInt32(dr[timestepsColumnName]);
+            int val = Convert.ToInt32(dr[timestepsColumnName], CultureInfo.InvariantCulture);
 
             if (val > maxTimestep)
             {
@@ -521,7 +519,7 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_MAPID_COLUMN_NAME] != DBNull.Value)
                 {
-                    index = Math.Max(index, Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME]));
+                    index = Math.Max(index, Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME], CultureInfo.InvariantCulture));
                 }
             }
 

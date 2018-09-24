@@ -56,7 +56,7 @@ namespace SyncroSim.STSim
 
             if ((dr != null) && (dr[FOLDER_NAME] != DBNull.Value))
             {
-                p = Convert.ToString(dr[FOLDER_NAME]);
+                p = Convert.ToString(dr[FOLDER_NAME], CultureInfo.InvariantCulture);
             }
             else
             {

@@ -112,7 +112,8 @@ namespace SyncroSim.STSim
                     }
 
                     int numIterations = Convert.ToInt32(store.ExecuteScalar(
-                        "SELECT maximumIteration - minimumIteration + 1 FROM STSim_RunControl where scenarioId=" + MergeScenarioId));
+                        "SELECT maximumIteration - minimumIteration + 1 FROM STSim_RunControl where scenarioId=" + MergeScenarioId), 
+                        CultureInfo.InvariantCulture);
 
                     Debug.Assert(j.JobId > 0);
 

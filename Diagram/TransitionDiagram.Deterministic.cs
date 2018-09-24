@@ -261,7 +261,7 @@ namespace SyncroSim.STSim
             int? Iteration = null;
             int? Timestep = null;
             int? StratumIdSource = null;
-            int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME]);
+            int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
             int? StratumIdDest = null;
             int? StateClassIdDest = null;
             int AgeMinimum = 0;
@@ -269,37 +269,37 @@ namespace SyncroSim.STSim
 
             if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
             {
-                Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
             {
-                Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
             {
-                StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME]);
+                StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME] != DBNull.Value)
             {
-                StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME]);
+                StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME] != DBNull.Value)
             {
-                StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME]);
+                StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
             {
-                AgeMinimum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                AgeMinimum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
             {
-                AgeMaximum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                AgeMaximum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             DeterministicTransition dt = new DeterministicTransition(

@@ -408,7 +408,8 @@ namespace SyncroSim.STSim
                         {
                             // Use the TT with the lowest ID value
                             string oldIdColor = sortedTT[lbl];
-                            if (int.Parse(oldIdColor.Split(',')[0], CultureInfo.InvariantCulture) > int.Parse(id))
+
+                            if (int.Parse(oldIdColor.Split(',')[0], CultureInfo.InvariantCulture) > int.Parse(id, CultureInfo.InvariantCulture))
                             {
                                 sortedTT[lbl] = id + "," + transparencyRGB;
                             }
@@ -424,7 +425,7 @@ namespace SyncroSim.STSim
 
             if (sortedTT.Count > 0)
             {
-                StreamWriter fileWriter = System.IO.File.CreateText(Path.Combine(legendMapPath, legendMapFilename));
+                StreamWriter fileWriter = File.CreateText(Path.Combine(legendMapPath, legendMapFilename));
                 fileWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "# Syncrosim Generated Transition Group ({0}) Color Map (QGIS-compatible) Export File,,,,,", tgName));
                 fileWriter.WriteLine("INTERPOLATION:EXACT");
 
@@ -444,7 +445,6 @@ namespace SyncroSim.STSim
 
                         int val = Convert.ToInt32((lbl == Constants.LEGEND_MAP_BLANK_LEGEND_ITEM) ? 9999 : i + 1);
                         fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", val, aryColor[2], aryColor[3], aryColor[4], aryColor[1], lbl);
-
                         legendColorsDefined.Add(lbl, string.Join(",", aryColor[1], aryColor[2], aryColor[3], aryColor[4]));
                     }
                 }
@@ -569,7 +569,7 @@ namespace SyncroSim.STSim
                             //  21001,168,0,87,255,UNDET:<5% Inv
 
                             string lbl = null;
-                            if (prevMaxAge == int.Parse(maxAge))
+                            if (prevMaxAge == int.Parse(maxAge, CultureInfo.InvariantCulture))
                             {
                                 lbl = string.Format(CultureInfo.InvariantCulture, "{0}", maxAge);
                             }
@@ -579,7 +579,7 @@ namespace SyncroSim.STSim
                             }
 
                             fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", maxAge, aryColor[1], aryColor[2], aryColor[3], aryColor[0], lbl);
-                            prevMaxAge = int.Parse(maxAge) + 1;
+                            prevMaxAge = int.Parse(maxAge, CultureInfo.InvariantCulture) + 1;
                         }
                     }
                 }

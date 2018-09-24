@@ -168,7 +168,9 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        minIteration = Math.Min(minIteration, Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]));
+                        minIteration = Math.Min(
+                            minIteration, 
+                            Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture));
                     }
                 }
             }
@@ -179,12 +181,15 @@ namespace SyncroSim.STSim
                 {
                     var iteration = Convert.ToInt32(
                         Convert.IsDBNull(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]) ? 0 : 
-                        dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                        dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     if (iteration == minIteration)
                     {
-                        double val = Convert.ToDouble(dr[Strings.DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME]);
-                        NumCells += Convert.ToInt32(Math.Round(val));
+                        double val = Convert.ToDouble(
+                            dr[Strings.DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME], 
+                            CultureInfo.InvariantCulture);
+
+                        NumCells += Convert.ToInt32(Math.Round(val), CultureInfo.InvariantCulture);
                     }
                 }
             }

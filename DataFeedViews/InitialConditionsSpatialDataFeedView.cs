@@ -522,7 +522,7 @@ namespace SyncroSim.STSim
             }
             else if (e.KeyChar == '.')
             {
-                if (((TextBox)sender).Text.IndexOf(".") + 1 > 0)
+                if (((TextBox)sender).Text.IndexOf(".", StringComparison.OrdinalIgnoreCase) + 1 > 0)
                 {
                     e.Handled = true;
                 }

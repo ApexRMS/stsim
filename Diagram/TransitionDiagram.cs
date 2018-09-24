@@ -533,45 +533,45 @@ namespace SyncroSim.STSim
             {
                 int ShapeRow = -1;
                 int ShapeColumn = -1;
-                string Location = Convert.ToString(dr[Strings.DATASHEET_DT_LOCATION_COLUMN_NAME]);
+                string Location = Convert.ToString(dr[Strings.DATASHEET_DT_LOCATION_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 LocationToRowCol(Location, ref ShapeRow, ref ShapeColumn);
 
                 int? StratumIdSource = null;
-                int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME]);
+                int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StratumIdDestination = null;
                 int? StateClassIdDestination = null;
                 int? MinimumAge = null;
                 int? MaximumAge = null;
 
-                int StateLabelXId = Convert.ToInt32(DataTableUtilities.GetTableValue(this.m_SCDataSheet.GetData(), this.m_SCDataSheet.ValueMember, StateClassIdSource, Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME));
-                string StateLabelXName = Convert.ToString(DataTableUtilities.GetTableValue(this.m_SLXDataSheet.GetData(), this.m_SLXDataSheet.ValueMember, StateLabelXId, Strings.DATASHEET_NAME_COLUMN_NAME));
-                int StateLabelYId = Convert.ToInt32(DataTableUtilities.GetTableValue(this.m_SCDataSheet.GetData(), this.m_SCDataSheet.ValueMember, StateClassIdSource, Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME));
-                string StateLabelYName = Convert.ToString(DataTableUtilities.GetTableValue(this.m_SLYDataSheet.GetData(), this.m_SLYDataSheet.ValueMember, StateLabelYId, Strings.DATASHEET_NAME_COLUMN_NAME));
+                int StateLabelXId = Convert.ToInt32(DataTableUtilities.GetTableValue(this.m_SCDataSheet.GetData(), this.m_SCDataSheet.ValueMember, StateClassIdSource, Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME), CultureInfo.InvariantCulture);
+                string StateLabelXName = Convert.ToString(DataTableUtilities.GetTableValue(this.m_SLXDataSheet.GetData(), this.m_SLXDataSheet.ValueMember, StateLabelXId, Strings.DATASHEET_NAME_COLUMN_NAME), CultureInfo.InvariantCulture);
+                int StateLabelYId = Convert.ToInt32(DataTableUtilities.GetTableValue(this.m_SCDataSheet.GetData(), this.m_SCDataSheet.ValueMember, StateClassIdSource, Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME), CultureInfo.InvariantCulture);
+                string StateLabelYName = Convert.ToString(DataTableUtilities.GetTableValue(this.m_SLYDataSheet.GetData(), this.m_SLYDataSheet.ValueMember, StateLabelYId, Strings.DATASHEET_NAME_COLUMN_NAME), CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME]);
+                    StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumIdDestination = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME]);
+                    StratumIdDestination = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassIdDestination = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME]);
+                    StateClassIdDestination = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    MinimumAge = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                    MinimumAge = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    MaximumAge = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                    MaximumAge = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 string slxdesc = StateLabelXName;
@@ -582,12 +582,12 @@ namespace SyncroSim.STSim
 
                 if (o1 != DBNull.Value)
                 {
-                    slxdesc = Convert.ToString(o1);
+                    slxdesc = Convert.ToString(o1, CultureInfo.InvariantCulture);
                 }
 
                 if (o2 != DBNull.Value)
                 {
-                    slydesc = Convert.ToString(o2);
+                    slydesc = Convert.ToString(o2, CultureInfo.InvariantCulture);
                 }
 
                 StateClassShape Shape = new StateClassShape(this.m_DataFeed.Project, StratumIdSource, StateClassIdSource, StratumIdDestination, StateClassIdDestination, MinimumAge, MaximumAge, StateLabelXId, StateLabelXName, slxdesc, StateLabelYId, slydesc);
@@ -695,23 +695,23 @@ namespace SyncroSim.STSim
                 }
 
                 int? StratumIdSource = null;
-                int StateClassIdSource = Convert.ToInt32(dr[fromStateClassColName]);
+                int StateClassIdSource = Convert.ToInt32(dr[fromStateClassColName], CultureInfo.InvariantCulture);
                 int? StratumIdDest = null;
                 int? StateClassIdDest = null;
 
                 if (dr[fromStratumColName] != DBNull.Value)
                 {
-                    StratumIdSource = Convert.ToInt32(dr[fromStratumColName]);
+                    StratumIdSource = Convert.ToInt32(dr[fromStratumColName], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[toStratumColName] != DBNull.Value)
                 {
-                    StratumIdDest = Convert.ToInt32(dr[toStratumColName]);
+                    StratumIdDest = Convert.ToInt32(dr[toStratumColName], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[toStateClassColname] != DBNull.Value)
                 {
-                    StateClassIdDest = Convert.ToInt32(dr[toStateClassColname]);
+                    StateClassIdDest = Convert.ToInt32(dr[toStateClassColname], CultureInfo.InvariantCulture);
                 }
 
                 //If the FROM state class is the old ID then change it, but ONLY

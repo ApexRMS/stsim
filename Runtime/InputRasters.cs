@@ -553,7 +553,7 @@ namespace SyncroSim.STSim
         {
             // DEVNOTE: TKR - For now assume the native units of the raster is units. At some point in time,
             // will have to take into account Cell Size Overide
-            return Convert.ToDouble(this.m_cellSize);
+            return Convert.ToDouble(this.m_cellSize, CultureInfo.InvariantCulture);
         }
 
         /// <summary>

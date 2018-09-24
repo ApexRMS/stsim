@@ -176,7 +176,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            int ValTypeId = Convert.ToInt32(TypeCell.Value);
+            int ValTypeId = Convert.ToInt32(TypeCell.Value, CultureInfo.InvariantCulture);
 
             if (ValTypeId != this.m_TypeId.Value)
             {
@@ -237,7 +237,7 @@ namespace SyncroSim.STSim
                 {
                     if (Booleans.BoolFromValue(dr[Strings.DISTRIBUTION_TYPE_IS_INTERNAL_COLUMN_NAME]))
                     {
-                        ids.Add(Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]));
+                        ids.Add(Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture));
                     }
                 }
             }

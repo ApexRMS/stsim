@@ -332,7 +332,7 @@ namespace SyncroSim.STSim
             {
                 if (dr.RowState != DataRowState.Deleted)
                 {
-                    cr.TransitionGroups.Add(Convert.ToInt32(dr[ds.ValueMember]), true);
+                    cr.TransitionGroups.Add(Convert.ToInt32(dr[ds.ValueMember], CultureInfo.InvariantCulture), true);
                 }
             }
 
@@ -360,16 +360,24 @@ namespace SyncroSim.STSim
                 this.SynchronizeFilterCriteria();
                 this.RefreshTabStripControls();
             }
-            else if (IsDataSheetEvent(sender, Strings.DATASHEET_TRANSITION_GROUP_NAME) || IsDataSheetEvent(sender, Strings.DATASHEET_TRANSITION_TYPE_NAME) | IsDataSheetEvent(sender, Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME))
+            else if (
+                IsDataSheetEvent(sender, Strings.DATASHEET_TRANSITION_GROUP_NAME) || 
+                IsDataSheetEvent(sender, Strings.DATASHEET_TRANSITION_TYPE_NAME) || 
+                IsDataSheetEvent(sender, Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME))
             {
                 this.SynchronizeFilterCriteria();
                 this.RefreshTransitionDiagrams();
             }
-            else if (IsDataSheetEvent(sender, Strings.DATASHEET_STATECLASS_NAME) || IsDataSheetEvent(sender, Strings.DATASHEET_STATE_LABEL_X_NAME) | IsDataSheetEvent(sender, Strings.DATASHEET_STATE_LABEL_Y_NAME))
+            else if (
+                IsDataSheetEvent(sender, Strings.DATASHEET_STATECLASS_NAME) || 
+                IsDataSheetEvent(sender, Strings.DATASHEET_STATE_LABEL_X_NAME) || 
+                IsDataSheetEvent(sender, Strings.DATASHEET_STATE_LABEL_Y_NAME))
             {
                 this.RefreshTransitionDiagrams();
             }
-            else if (IsDataSheetEvent(sender, Strings.DATASHEET_DT_NAME) | IsDataSheetEvent(sender, Strings.DATASHEET_PT_NAME))
+            else if (
+                IsDataSheetEvent(sender, Strings.DATASHEET_DT_NAME) || 
+                IsDataSheetEvent(sender, Strings.DATASHEET_PT_NAME))
             {
                 this.RefreshTransitionDiagrams();
             }
@@ -825,8 +833,8 @@ namespace SyncroSim.STSim
             {
                 if (dr.RowState != DataRowState.Deleted)
                 {
-                    int Id = Convert.ToInt32(dr[ds.ValueMember]);
-                    string Name = Convert.ToString(dr[ds.DisplayMember]);
+                    int Id = Convert.ToInt32(dr[ds.ValueMember], CultureInfo.InvariantCulture);
+                    string Name = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
                     bool IsSelected = this.m_FilterCriteria.TransitionGroups[Id];
 
                     dlg.CheckBoxPanelMain.AddItem(IsSelected, Id, Name);
@@ -849,7 +857,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dlg.CheckBoxPanelMain.DataSource.Rows)
             {
-                this.m_FilterCriteria.TransitionGroups[Convert.ToInt32(dr["ItemID"])] = Convert.ToBoolean(dr["IsSelected"]);
+                this.m_FilterCriteria.TransitionGroups[
+                    Convert.ToInt32(dr["ItemID"], CultureInfo.InvariantCulture)] = 
+                    Convert.ToBoolean(dr["IsSelected"], CultureInfo.InvariantCulture);
             }
 
             foreach (TransitionDiagramTabStripItem Item in this.TabStripMain.Items)
@@ -1334,7 +1344,10 @@ namespace SyncroSim.STSim
             {
                 DataRow dr = v.Row;
 
-                this.TabStripMain.Items.Add(new StratumTabStripItem(Convert.ToString(dr[ds.DisplayMember]), Convert.ToInt32(dr[ds.ValueMember])));
+                this.TabStripMain.Items.Add(
+                    new StratumTabStripItem(
+                        Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture), 
+                        Convert.ToInt32(dr[ds.ValueMember], CultureInfo.InvariantCulture)));
             }
 
             this.TabStripMain.Items.Add(new DeterministicTransitionsTabStripItem());
@@ -1594,7 +1607,8 @@ namespace SyncroSim.STSim
 
             foreach (StateClassShape s in d.SelectedShapes)
             {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "{0},", Convert.ToString(DataTableUtilities.GetTableValue(ds.GetData(), ds.ValueMember, s.StateClassIdSource, ds.DisplayMember)));
+                object v = DataTableUtilities.GetTableValue(ds.GetData(), ds.ValueMember, s.StateClassIdSource, ds.DisplayMember);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0},", Convert.ToString(v, CultureInfo.InvariantCulture));
             }
 
             return sb.ToString().Trim(',');
@@ -1614,7 +1628,11 @@ namespace SyncroSim.STSim
 
             if (d.StratumId.HasValue)
             {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "{0}-{1}:", d.StratumId.Value, Convert.ToString(DataTableUtilities.GetTableValue(dsst.GetData(), dsst.ValueMember, d.StratumId.Value, dsst.DisplayMember)));
+                object v = DataTableUtilities.GetTableValue(dsst.GetData(), dsst.ValueMember, d.StratumId.Value, dsst.DisplayMember);
+
+                sb.AppendFormat(CultureInfo.InvariantCulture, 
+                    "{0}-{1}:", d.StratumId.Value, 
+                    Convert.ToString(v, CultureInfo.InvariantCulture));
             }
             else
             {
@@ -1636,8 +1654,8 @@ namespace SyncroSim.STSim
                 {
                     if (s.StateClassIdSource == i)
                     {
-                        string DisplayValue = Convert.ToString(DataTableUtilities.GetTableValue(dssc.GetData(), dssc.ValueMember, s.StateClassIdSource, dssc.DisplayMember));
-
+                        object v = DataTableUtilities.GetTableValue(dssc.GetData(), dssc.ValueMember, s.StateClassIdSource, dssc.DisplayMember);
+                        string DisplayValue = Convert.ToString(v, CultureInfo.InvariantCulture);
                         sb.AppendFormat(CultureInfo.InvariantCulture, "{0}-{1}:", s.StateClassIdSource, DisplayValue);
                     }
                 }

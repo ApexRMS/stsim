@@ -3,11 +3,12 @@
 
 using System;
 using System.IO;
+using System.Data;
 using System.Reflection;
+using System.Globalization;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
 using SyncroSim.Common.Forms;
-using System.Data;
 
 namespace SyncroSim.STSim
 {
@@ -73,7 +74,9 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            this.TextBoxDEMFilename.Text = Convert.ToString(dr[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME]);
+            this.TextBoxDEMFilename.Text = Convert.ToString(
+                dr[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME], 
+                CultureInfo.InvariantCulture);
         }
 
         private void EnableButtons()

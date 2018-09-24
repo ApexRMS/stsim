@@ -31,7 +31,9 @@ namespace SyncroSim.STSim
 
         private void OnTerminologyChanged(DataSheetMonitorEventArgs e)
         {
-            string t = Convert.ToString(e.GetValue("TimestepUnits", "Timestep")).ToLower(CultureInfo.InvariantCulture);
+            string t = Convert.ToString(
+                e.GetValue("TimestepUnits", "Timestep"), CultureInfo.InvariantCulture).
+                ToLower(CultureInfo.InvariantCulture);
 
             this.LabelStartTimestep.Text = string.Format(CultureInfo.InvariantCulture, "Start {0}:", t);
             this.LabelEndTimestep.Text = string.Format(CultureInfo.InvariantCulture, "End {0}:", t);

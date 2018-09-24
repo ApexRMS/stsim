@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Common;
 
@@ -76,12 +77,12 @@ namespace SyncroSim.STSim
 
             if (stratumId.HasValue)
             {
-                s1 = stratumId.Value.ToString();
+                s1 = stratumId.Value.ToString(CultureInfo.InvariantCulture);
             }
 
             if (secondaryStratumId.HasValue)
             {
-                s2 = secondaryStratumId.Value.ToString();
+                s2 = secondaryStratumId.Value.ToString(CultureInfo.InvariantCulture);
             }
 
             return s1 + "-" + s2;

@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using SyncroSim.Core;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace SyncroSim.STSim
 {
@@ -165,8 +166,8 @@ namespace SyncroSim.STSim
                 }
             }
 
-            int f = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME]);
-            int m = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME]);
+            int f = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME], CultureInfo.InvariantCulture);
+            int m = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME], CultureInfo.InvariantCulture);
 
             if (m < f)
             {

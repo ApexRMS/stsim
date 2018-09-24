@@ -78,10 +78,10 @@ namespace SyncroSim.STSim
         {
             DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
 
-            this.MinimumIteration = Convert.ToInt32(dr["MinimumIteration"]);
-            this.MaximumIteration = Convert.ToInt32(dr["MaximumIteration"]);
-            this.MinimumTimestep = Convert.ToInt32(dr["MinimumTimestep"]);
-            this.MaximumTimestep = Convert.ToInt32(dr["MaximumTimestep"]);
+            this.MinimumIteration = Convert.ToInt32(dr["MinimumIteration"], CultureInfo.InvariantCulture);
+            this.MaximumIteration = Convert.ToInt32(dr["MaximumIteration"], CultureInfo.InvariantCulture);
+            this.MinimumTimestep = Convert.ToInt32(dr["MinimumTimestep"], CultureInfo.InvariantCulture);
+            this.MaximumTimestep = Convert.ToInt32(dr["MaximumTimestep"], CultureInfo.InvariantCulture);
 
             //We want run control to have the minimum timestep that it is configured with, but we don't want
             //to run this timestep.  Instead, we want to set TimestepZero to the minimum timestep and run the
@@ -132,7 +132,7 @@ namespace SyncroSim.STSim
             {
                 DataRow drta = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
 
-                this.m_TotalAmount = Convert.ToDouble(drta[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME]);
+                this.m_TotalAmount = Convert.ToDouble(drta[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 this.m_CalcNumCellsFromDist = DataTableUtilities.GetDataBool(drta, Strings.DATASHEET_NSIC_CALC_FROM_DIST_COLUMN_NAME);
             }
             else
@@ -150,13 +150,13 @@ namespace SyncroSim.STSim
 
                 //Save the Number of Cells count, now that we have a potentially more accurate value than at config time.
 
-                if (Convert.ToInt32(drISC[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]) != this.m_Cells.Count)
+                if (Convert.ToInt32(drISC[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME], CultureInfo.InvariantCulture) != this.m_Cells.Count)
                 {
                     drISC[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME] = this.m_Cells.Count;
                 }
             }
 
-            this.m_AmountPerCell = (this.m_TotalAmount / Convert.ToDouble(this.m_Cells.Count));
+            this.m_AmountPerCell = (this.m_TotalAmount / Convert.ToDouble(this.m_Cells.Count, CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace SyncroSim.STSim
                 }
                 else
                 {
-                    return Convert.ToInt32(o);
+                    return Convert.ToInt32(o, CultureInfo.InvariantCulture);
                 }
             };
 

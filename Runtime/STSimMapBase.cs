@@ -3,6 +3,7 @@
 
 using System;
 using SyncroSim.Core;
+using System.Globalization;
 
 namespace SyncroSim.STSim
 {
@@ -74,7 +75,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                return Convert.ToString(value);
+                return Convert.ToString(value, CultureInfo.InvariantCulture);
             }
         }
 

@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 
@@ -108,7 +109,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRowView drv in dv)
             {
-                int value = Convert.ToInt32(drv[Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME]);
+                int value = Convert.ToInt32(drv[Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (!dict.ContainsKey(value))
                 {
@@ -166,8 +167,8 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME] != DBNull.Value && 
                     dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME] != DBNull.Value)
                 {
-                    int f = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME]);
-                    int m = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME]);
+                    int f = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int m = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     if (f <= m)
                     {

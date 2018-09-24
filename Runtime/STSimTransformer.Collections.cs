@@ -66,7 +66,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dstst.GetData().Rows)
             {
-                int id = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int id = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (!dict.ContainsKey(id))
                 {
@@ -120,7 +120,7 @@ namespace SyncroSim.STSim
             else
             {
                 DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
-                NumCells = Convert.ToInt32(dr[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME]);
+                NumCells = Convert.ToInt32(dr[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             this.FillCellCollection(NumCells);
@@ -137,7 +137,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int StratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int StratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 this.m_Strata.Add(new Stratum(StratumId));
             }
         }
@@ -153,7 +153,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int SecondaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int SecondaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 this.m_SecondaryStrata.Add(new Stratum(SecondaryStratumId));
             }
         }
@@ -169,7 +169,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TertiaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TertiaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 this.m_TertiaryStrata.Add(new Stratum(TertiaryStratumId));
             }
         }
@@ -185,9 +185,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
-                int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME]);
-                int slyid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME]);
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int slyid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 this.m_StateClasses.Add(new StateClass(id, slxid, slyid));
             }
@@ -211,13 +211,13 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
-                string DisplayName = Convert.ToString(dr[ds.DisplayMember]);
+                int TransitionTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
                 int? MapId = null;
 
                 if (dr[Strings.DATASHEET_MAPID_COLUMN_NAME] != DBNull.Value)
                 {
-                    MapId = Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME]);
+                    MapId = Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (MapId.HasValue)
@@ -251,8 +251,8 @@ namespace SyncroSim.STSim
             {
                 this.m_TransitionGroups.Add(
                     new TransitionGroup(
-                        Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]), 
-                        Convert.ToString(dr["NAME"]), 
+                        Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture), 
+                        Convert.ToString(dr["NAME"], CultureInfo.InvariantCulture), 
                         DataTableUtilities.GetDataBool(dr, Strings.IS_AUTO_COLUMN_NAME)));
             }
 
@@ -294,7 +294,7 @@ namespace SyncroSim.STSim
 
                 foreach (DataRow dr in rows)
                 {
-                    int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                    int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                     TransitionGroup tg = this.m_TransitionGroups[tgid];
 
                     if (!tg.IsAuto)
@@ -314,7 +314,7 @@ namespace SyncroSim.STSim
 
                 foreach (DataRow dr in rows)
                 {
-                    int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                    int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                     TransitionGroup tg = this.m_TransitionGroups[tgid];
 
                     if (tg.IsAuto)
@@ -372,7 +372,7 @@ namespace SyncroSim.STSim
 
                     foreach (DataRow dr in rows)
                     {
-                        int ttid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME]);
+                        int ttid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                         TransitionType tt = this.m_TransitionTypes[ttid];
 
                         Debug.Assert(!tg.TransitionTypes.Contains(ttid));
@@ -405,7 +405,7 @@ namespace SyncroSim.STSim
 
                     foreach (DataRow dr in rows)
                     {
-                        int ttid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME]);
+                        int ttid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                         TransitionType tt = this.m_TransitionTypes[ttid];
 
                         Debug.Assert(!tg.TransitionTypes.Contains(ttid));
@@ -436,7 +436,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionMultiplierTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionMultiplierTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
 
                 this.m_TransitionMultiplierTypes.Add(new TransitionMultiplierType
                     (TransitionMultiplierTypeId, this.ResultScenario, this.m_DistributionProvider));
@@ -454,7 +454,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionAttributeTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionAttributeTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 this.m_TransitionAttributeTypes.Add(new TransitionAttributeType(TransitionAttributeTypeId));
             }
         }
@@ -472,8 +472,8 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int Id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
-                string Name = Convert.ToString(dr[ds.DisplayMember]);
+                int Id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string Name = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
 
                 PatchPrioritizationType t = 0;
 
@@ -520,38 +520,38 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME]);
-                int StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
                 int AgeMin = 0;
                 int AgeMax = int.MaxValue;
-                double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME]);
+                double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 InitialConditionsDistribution InitialStateRecord = new InitialConditionsDistribution(
@@ -589,7 +589,7 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 PrimaryStratumName = dr[Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME].ToString();
@@ -621,7 +621,7 @@ namespace SyncroSim.STSim
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumIdSource = null;
-                int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME]);
+                int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StratumIdDest = null;
                 int? StateClassIdDest = StateClassIdSource;
                 int AgeMin = 0;
@@ -629,37 +629,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME]);
+                    StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME]);
+                    StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME]);
+                    StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 DeterministicTransition dt = new DeterministicTransition(
@@ -684,13 +684,13 @@ namespace SyncroSim.STSim
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumIdSource = null;
-                int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME]);
+                int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StratumIdDest = null;
                 int? StateClassIdDest = StateClassIdSource;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                int TransitionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME]);
-                double Probability = Convert.ToDouble(dr[Strings.DATASHEET_PT_PROBABILITY_COLUMN_NAME]);
+                int TransitionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double Probability = Convert.ToDouble(dr[Strings.DATASHEET_PT_PROBABILITY_COLUMN_NAME], CultureInfo.InvariantCulture);
                 double Proportion = 1.0;
                 int AgeMinimum = 0;
                 int AgeMaximum = int.MaxValue;
@@ -702,77 +702,77 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME]);
+                    StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME]);
+                    StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME]);
+                    StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_PROPORTION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Proportion = Convert.ToDouble(dr[Strings.DATASHEET_PT_PROPORTION_COLUMN_NAME]);
+                    Proportion = Convert.ToDouble(dr[Strings.DATASHEET_PT_PROPORTION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMinimum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                    AgeMinimum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMaximum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                    AgeMaximum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME]);
+                    AgeRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeReset = Convert.ToBoolean(dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME]);
+                    AgeReset = Convert.ToBoolean(dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_TST_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    TstMinimum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MIN_COLUMN_NAME]);
+                    TstMinimum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_TST_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    TstMaximum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MAX_COLUMN_NAME]);
+                    TstMaximum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_PT_TST_RELATIVE_COLUMN_NAME] != DBNull.Value)
                 {
-                    TstRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_RELATIVE_COLUMN_NAME]);
+                    TstRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_RELATIVE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 Transition pt = new Transition(
@@ -799,9 +799,10 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value || dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
+                if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value ||
+                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME]);
+                    int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     if (!HasAges.ContainsKey(StateAttributeTypeId))
                     {
@@ -812,7 +813,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME]);
+                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (HasAges.ContainsKey(StateAttributeTypeId))
                 {
@@ -832,7 +833,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME]);
+                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
@@ -841,46 +842,46 @@ namespace SyncroSim.STSim
                 int? StateClassId = null;
                 int? AgeMin = null;
                 int? AgeMax = null;
-                double Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME]);
+                double Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME]);
+                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (!StratumId.HasValue && !StateClassId.HasValue)
@@ -888,7 +889,6 @@ namespace SyncroSim.STSim
                     if (!StratumOrStateClassWarningIssued)
                     {
                         this.RecordStatus(StatusType.Information, "At least one State Attribute Value had neither a stratum nor a state class.");
-
                         StratumOrStateClassWarningIssued = true;
                     }
                 }
@@ -912,56 +912,56 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME]);
+                int TransitionAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
                 int? Iteration = null;
                 int? Timestep = null;
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StateClassId = null;
                 int? AgeMin = null;
                 int? AgeMax = null;
-                double Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME]);
+                double Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME]);
+                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionAttributeValue attr = new TransitionAttributeValue(
@@ -988,22 +988,22 @@ namespace SyncroSim.STSim
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                int TransitionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME]);
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 this.m_TstTransitionGroupMap.AddGroup(
@@ -1036,37 +1036,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME]);
+                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TST_RANDOMIZE_MIN_INITIAL_TST_COLUMN_NAME] != DBNull.Value)
                 {
-                    MinInitialTST = Convert.ToInt32(dr[Strings.DATASHEET_TST_RANDOMIZE_MIN_INITIAL_TST_COLUMN_NAME]);
+                    MinInitialTST = Convert.ToInt32(dr[Strings.DATASHEET_TST_RANDOMIZE_MIN_INITIAL_TST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -1075,7 +1075,7 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_TST_RANDOMIZE_MAX_INITIAL_TST_COLUMN_NAME] != DBNull.Value)
                 {
-                    MaxInitialTST = Convert.ToInt32(dr[Strings.DATASHEET_TST_RANDOMIZE_MAX_INITIAL_TST_COLUMN_NAME]);
+                    MaxInitialTST = Convert.ToInt32(dr[Strings.DATASHEET_TST_RANDOMIZE_MAX_INITIAL_TST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -1099,24 +1099,24 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 double? Order = null;
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME] != DBNull.Value)
                 {
-                    Order = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME]);
+                    Order = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 this.m_TransitionOrders.Add(new TransitionOrder(TransitionGroupId, Iteration, Timestep, Order));
@@ -1139,7 +1139,7 @@ namespace SyncroSim.STSim
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 double? TargetAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1149,37 +1149,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    TargetAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME]);
+                    TargetAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME]);
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
@@ -1189,17 +1189,17 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME]);
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME]);
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME]);
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 try
@@ -1231,13 +1231,13 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionAttributeTargetId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionAttributeTargetId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                int TransitionAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME]);
+                int TransitionAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 double? TargetAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1247,37 +1247,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    TargetAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME]);
+                    TargetAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME]);
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
@@ -1287,17 +1287,17 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME]);
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME]);
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME]);
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 try
@@ -1334,7 +1334,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumId = null;
@@ -1351,47 +1351,47 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME]);
+                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TransitionMultiplierTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME]);
+                    TransitionMultiplierTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME]);
+                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME]);
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
@@ -1401,17 +1401,17 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME]);
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME]);
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME]);
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 try
@@ -1447,26 +1447,26 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionSpatialMultiplierId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionSpatialMultiplierId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? TransitionMultiplierTypeId = null;
                 int? Iteration = null;
                 int? Timestep = null;
-                string FileName = Convert.ToString(dr[Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FILE_COLUMN_NAME]);
+                string FileName = Convert.ToString(dr[Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FILE_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TransitionMultiplierTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME]);
+                    TransitionMultiplierTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionSpatialMultiplier Multiplier = new TransitionSpatialMultiplier(
@@ -1521,26 +1521,26 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionSpatialInitiationMultiplierId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionSpatialInitiationMultiplierId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? TransitionMultiplierTypeId = null;
                 int? Iteration = null;
                 int? Timestep = null;
-                string FileName = Convert.ToString(dr[Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FILE_COLUMN_NAME]);
+                string FileName = Convert.ToString(dr[Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FILE_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TransitionMultiplierTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME]);
+                    TransitionMultiplierTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionSpatialInitiationMultiplier Multiplier = new TransitionSpatialInitiationMultiplier(
@@ -1600,27 +1600,27 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionSizeDistributionId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionSizeDistributionId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int? StratumId = null;
                 int? Iteration = null;
                 int? Timestep = null;
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
-                double MaximumSize = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SIZE_DISTRIBUTION_MAXIMUM_AREA_COLUMN_NAME]);
-                double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SIZE_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double MaximumSize = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SIZE_DISTRIBUTION_MAXIMUM_AREA_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SIZE_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionSizeDistribution tsd = new TransitionSizeDistribution(
@@ -1644,28 +1644,28 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionSpreadDistributionId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionSpreadDistributionId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int? StratumId = null;
                 int? Iteration = null;
                 int? Timestep = null;
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
-                int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME]);
-                double MaximumDistance = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_MAXIMUM_DISTANCE_COLUMN_NAME]);
-                double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double MaximumDistance = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_MAXIMUM_DISTANCE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionSpreadDistribution tsd = new TransitionSpreadDistribution(
@@ -1689,20 +1689,20 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionPatchPrioritizationId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionPatchPrioritizationId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
-                int PatchPrioritizationId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_PATCH_PRIORITIZATION_PP_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int PatchPrioritizationId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_PATCH_PRIORITIZATION_PP_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 Debug.Assert(this.m_PatchPrioritizations.Contains(PatchPrioritizationId));
@@ -1727,7 +1727,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionSizePrioritizationId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int TransitionSizePrioritizationId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumId = null;
@@ -1738,22 +1738,22 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_PRIORITY_TYPE_COLUMN_NAME] != DBNull.Value)
@@ -1763,12 +1763,12 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFDIST_COLUMN_NAME] != DBNull.Value)
                 {
-                    MaximizeFidelityToDistribution = Convert.ToBoolean(dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFDIST_COLUMN_NAME]);
+                    MaximizeFidelityToDistribution = Convert.ToBoolean(dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFDIST_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFAREA_COLUMN_NAME] != DBNull.Value)
                 {
-                    MaximizeFidelityToTotalArea = Convert.ToBoolean(dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFAREA_COLUMN_NAME]);
+                    MaximizeFidelityToTotalArea = Convert.ToBoolean(dr[Strings.DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFAREA_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionSizePrioritization Item = new TransitionSizePrioritization(
@@ -1803,37 +1803,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME] != DBNull.Value)
                 {
-                    SpreadTo = (AutoCorrelationSpread)Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME]);
+                    SpreadTo = (AutoCorrelationSpread)Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 TransitionPathwayAutoCorrelation Item = new TransitionPathwayAutoCorrelation(
@@ -1854,13 +1854,16 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                CardinalDirection CardinalDirection = (CardinalDirection)Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_DIRECTION_MULTIPLER_CARDINAL_DIRECTION_COLUMN_NAME]);
+
+                CardinalDirection CardinalDirection = (CardinalDirection)Convert.ToInt32(dr[
+                    Strings.DATASHEET_TRANSITION_DIRECTION_MULTIPLER_CARDINAL_DIRECTION_COLUMN_NAME], CultureInfo.InvariantCulture);
+
                 double? MultiplierAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1870,37 +1873,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME]);
+                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME]);
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
@@ -1910,17 +1913,17 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME]);
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME]);
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME]);
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 try
@@ -1952,13 +1955,13 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                int Slope = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME]);
+                int Slope = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 double? MultiplierAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1968,37 +1971,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME]);
+                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME]);
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
@@ -2008,17 +2011,17 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME]);
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME]);
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME]);
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 try
@@ -2052,10 +2055,10 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
-                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME]);
-                double NeighborhoodRadius = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_NR_COLUMN_NAME]);
-                int UpdateFrequency = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double NeighborhoodRadius = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_NR_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int UpdateFrequency = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 this.m_TransitionAdjacencySettings.Add(
                     new TransitionAdjacencySetting(TransitionGroupId, StateAttributeTypeId, NeighborhoodRadius, UpdateFrequency));
@@ -2078,13 +2081,13 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                double AttributeValue = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_ATTRIBUTE_VALUE_COLUMN_NAME]);
+                double AttributeValue = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_ATTRIBUTE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 double? MultiplierAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -2094,37 +2097,37 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
-                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
                 {
-                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
-                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME]);
+                    MultiplierAmount = Convert.ToDouble(dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME]);
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
@@ -2134,17 +2137,17 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME]);
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME]);
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
                 {
-                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME]);
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 try
@@ -2166,7 +2169,9 @@ namespace SyncroSim.STSim
 
             if (this.AdjacencyMultiplierGroupsIdentical())
             {
-                this.RecordStatus(StatusType.Warning, "Transition adjacency settings and multipliers do not have identical transition groups.  Some multipliers may not be applied.");
+                this.RecordStatus(
+                    StatusType.Warning, 
+                    "Transition adjacency settings and multipliers do not have identical transition groups.  Some multipliers may not be applied.");
             }
         }
 
@@ -2246,7 +2251,7 @@ namespace SyncroSim.STSim
             {
                 if (DataSheetUtilities.IsPrimaryTypeByGroup(dr))
                 {
-                    int id = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME]);
+                    int id = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     if (!d.ContainsKey(id))
                     {

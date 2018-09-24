@@ -1192,8 +1192,8 @@ namespace SyncroSim.STSim
         {
             // Fetch the number of cells from the NS IC setting
             DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
-            int numCells = Convert.ToInt32(drrc[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME]);
-            double ttlArea = Convert.ToDouble(drrc[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME]);
+            int numCells = Convert.ToInt32(drrc[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            double ttlArea = Convert.ToDouble(drrc[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
             CreateICSpatialProperties(numCells, ttlArea);
 
@@ -1266,8 +1266,8 @@ namespace SyncroSim.STSim
         {
             // Fetch the number of cells from the NS IC setting
             DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
-            int numCells = Convert.ToInt32(drrc[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME]);
-            double ttlArea = Convert.ToDouble(drrc[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME]);
+            int numCells = Convert.ToInt32(drrc[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            double ttlArea = Convert.ToDouble(drrc[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
             CreateICSpatialProperties(numCells, ttlArea);
 
@@ -1543,7 +1543,10 @@ namespace SyncroSim.STSim
                                             Iter = iteration.Value;
                                         }
 
-                                        this.InitializeCellAge(c, icd.StratumId, icd.StateClassId, sisagemin, sisagemax, Iter, this.m_TimestepZero);
+                                        this.InitializeCellAge(
+                                            c, icd.StratumId, icd.StateClassId, 
+                                            sisagemin, sisagemax, 
+                                            Iter, this.m_TimestepZero);
                                     }
 
                                     c.StratumId = icd.StratumId;
@@ -1589,6 +1592,7 @@ namespace SyncroSim.STSim
 
             DataSheet dsSpicProp = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
             DataRow drSpIcProp = dsSpicProp.GetDataRow();
+
             if (drSpIcProp == null)
             {
                 drSpIcProp = dsSpicProp.GetData().NewRow();
@@ -1604,17 +1608,19 @@ namespace SyncroSim.STSim
 
             string amountlabel = null;
             TerminologyUnit units = 0;
-            TerminologyUtilities.GetAmountLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref units);
+
+            TerminologyUtilities.GetAmountLabelTerminology(
+                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref units);
 
             string cellSizeUnits = RasterCellSizeUnit.Meter.ToString();
             double convFactor = InitialConditionsSpatialDataSheet.CalcCellArea(1.0, cellSizeUnits, units);
             double cellArea = cellSizeTermUnits / convFactor;
 
-            drSpIcProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME] = Convert.ToInt32(Math.Sqrt(numRasterCells));
-            drSpIcProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME] = Convert.ToInt32(Math.Sqrt(numRasterCells));
+            drSpIcProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME] = Convert.ToInt32(Math.Sqrt(numRasterCells), CultureInfo.InvariantCulture);
+            drSpIcProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME] = Convert.ToInt32(Math.Sqrt(numRasterCells), CultureInfo.InvariantCulture);
             drSpIcProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME] = numberOfCells;
             drSpIcProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = cellSizeTermUnits;
-            drSpIcProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] = Convert.ToDecimal(Math.Sqrt(cellArea));
+            drSpIcProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] = Convert.ToDecimal(Math.Sqrt(cellArea), CultureInfo.InvariantCulture);
 
             // Arbitrary values
             drSpIcProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME] = cellSizeUnits;
@@ -1658,17 +1664,18 @@ namespace SyncroSim.STSim
             DataRow drProp = dsSpIcProp.GetDataRow();
 
             rst.ProjectionString = drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME].ToString();
-            rst.NumberCols = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME]);
-            rst.NumberRows = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME]);
-            rst.CellSize = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
+            rst.NumberCols = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            rst.NumberRows = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            rst.CellSize = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME], CultureInfo.InvariantCulture);
             rst.CellSizeUnits = drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME].ToString();
-            rst.XllCorner = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME]);
-            rst.YllCorner = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME]);
+            rst.XllCorner = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
+            rst.YllCorner = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
 
             // We also need to get the datarow for this InitialConditionSpatial
             string filter = null;
             DataSheet dsSpatialIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             DataRow drICS = null;
+
             if ((iteration == null))
             {
                 filter = string.Format(CultureInfo.InvariantCulture, "iteration is null");
@@ -1677,7 +1684,9 @@ namespace SyncroSim.STSim
             {
                 filter = string.Format(CultureInfo.InvariantCulture, "iteration={0}", iteration.Value);
             }
+
             DataRow[] drICSpatials = dsSpatialIC.GetData().Select(filter);
+
             if (drICSpatials.Count() == 0)
             {
                 drICS = dsSpatialIC.GetData().NewRow();
@@ -1795,7 +1804,6 @@ namespace SyncroSim.STSim
         private double SpatialCalculateCellProbability(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
         {
             Debug.Assert(this.IsSpatial);
-
             double CellProbability = this.SpatialCalculateCellProbabilityNonTruncated(simulationCell, transitionGroupId, iteration, timestep);
 
             if (CellProbability > 1.0)
@@ -1820,7 +1828,6 @@ namespace SyncroSim.STSim
         private double SpatialCalculateCellProbabilityNonTruncated(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
         {
             Debug.Assert(this.IsSpatial);
-
             double CellProbability = 0.0;
             TransitionGroup TransitionGroup = this.m_TransitionGroups[transitionGroupId];
 

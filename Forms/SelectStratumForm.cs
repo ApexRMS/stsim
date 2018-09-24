@@ -6,6 +6,7 @@ using System.Data;
 using SyncroSim.Core;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace SyncroSim.STSim
 {
@@ -41,7 +42,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRowView v in dv)
             {
-                string n = Convert.ToString(v[ds.DisplayMember]);
+                string n = Convert.ToString(v[ds.DisplayMember], CultureInfo.InvariantCulture);
                 string d = DataTableUtilities.GetDataStr(v[Strings.DATASHEET_DESCRIPTION_COLUMN_NAME]);
 
                 if (!string.IsNullOrEmpty(d))
@@ -79,8 +80,11 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.DataGridViewStrata.SelectedRows.Count == 1);
 
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.m_SelectedStratum = Convert.ToString(this.DataGridViewStrata.SelectedRows[0].Cells[ColumnName.Name].Value);
+            this.DialogResult = DialogResult.OK;
+
+            this.m_SelectedStratum = Convert.ToString(
+                this.DataGridViewStrata.SelectedRows[0].Cells[ColumnName.Name].Value, 
+                CultureInfo.InvariantCulture);
         }
 
         private void ButtonOK_Click(object sender, System.EventArgs e)
@@ -114,7 +118,7 @@ namespace SyncroSim.STSim
 
             foreach (DataGridViewRow dgr in this.DataGridViewStrata.Rows)
             {
-                if (Convert.ToString(dgr.Cells[this.ColumnName.Name].Value) == this.m_SelectedStratum)
+                if (Convert.ToString(dgr.Cells[this.ColumnName.Name].Value, CultureInfo.InvariantCulture) == this.m_SelectedStratum)
                 {
                     dgr.Selected = true;
                     this.DataGridViewStrata.CurrentCell = dgr.Cells[0];

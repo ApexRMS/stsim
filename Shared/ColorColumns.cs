@@ -3,6 +3,7 @@
 
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace SyncroSim.STSim
@@ -16,7 +17,7 @@ namespace SyncroSim.STSim
 
             if (cell.Value != null && cell.Value != DBNull.Value)
             {
-                clr = ColorUtilities.ColorFromString(Convert.ToString(cell.Value));
+                clr = ColorUtilities.ColorFromString(Convert.ToString(cell.Value, CultureInfo.InvariantCulture));
             }
 
             if (gridView.Rows[e.RowIndex].Selected)
@@ -57,7 +58,7 @@ namespace SyncroSim.STSim
 
             if (cell.Value != null && cell.Value != DBNull.Value)
             {
-                clr = ColorUtilities.ColorFromString(Convert.ToString(cell.Value));
+                clr = ColorUtilities.ColorFromString(Convert.ToString(cell.Value, CultureInfo.InvariantCulture));
             }
 
             ColorDialog cd = new ColorDialog();

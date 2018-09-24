@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using SyncroSim.Core;
 
 namespace SyncroSim.STSim
@@ -343,7 +344,7 @@ namespace SyncroSim.STSim
 
             if ((dr != null) && (dr[FOLDER_NAME] != DBNull.Value))
             {
-                p = Convert.ToString(dr[FOLDER_NAME]);
+                p = Convert.ToString(dr[FOLDER_NAME], CultureInfo.InvariantCulture);
             }
             else
             {
@@ -370,10 +371,10 @@ namespace SyncroSim.STSim
             if (dt.Columns.Contains("Version"))
             {
                 Debug.Assert(tableName == "ED_Version");
-                return Convert.ToInt32(dt.Rows[0]["Version"]);
+                return Convert.ToInt32(dt.Rows[0]["Version"], CultureInfo.InvariantCulture);
             }
 
-            return Convert.ToInt32(dt.Rows[0]["SchemaVersion"]);
+            return Convert.ToInt32(dt.Rows[0]["SchemaVersion"], CultureInfo.InvariantCulture);
         }
     }
 }

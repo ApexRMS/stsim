@@ -94,11 +94,11 @@ namespace SyncroSim.STSim
 
                 if (NextToLastDesc != null)
                 {
-                    NextToLastMin = NextToLastDesc.MinimumAge.ToString();
+                    NextToLastMin = NextToLastDesc.MinimumAge.ToString(CultureInfo.InvariantCulture);
 
                     if (NextToLastDesc.MaximumAge.HasValue)
                     {
-                        NextToLastMax = NextToLastDesc.MaximumAge.Value.ToString();
+                        NextToLastMax = NextToLastDesc.MaximumAge.Value.ToString(CultureInfo.InvariantCulture);
                     }
                 }
 
@@ -107,10 +107,13 @@ namespace SyncroSim.STSim
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    sb1.AppendFormat(CultureInfo.InvariantCulture, "{0,-15}{1,-15}", Convert.ToInt32(dr["AgeMin"]), Convert.ToInt32(dr["AgeMax"]));
-                    sb1.AppendLine();
+                    sb1.AppendFormat(CultureInfo.InvariantCulture, 
+                        "{0,-15}{1,-15}", 
+                        Convert.ToInt32(dr["AgeMin"], CultureInfo.InvariantCulture), 
+                        Convert.ToInt32(dr["AgeMax"], CultureInfo.InvariantCulture));
 
-                    sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", Convert.ToInt32(dr["AgeMax"]));
+                    sb1.AppendLine();
+                    sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", Convert.ToInt32(dr["AgeMax"], CultureInfo.InvariantCulture));
 
                     c += 1;
 
@@ -218,11 +221,13 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
-                    int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
-                    dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] = Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME]) / dict[k];
+
+                    dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] = 
+                        Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture) / dict[k];
                 }
             }
 
@@ -244,11 +249,13 @@ namespace SyncroSim.STSim
                     {
                         if (dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] != DBNull.Value)
                         {
-                            int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
-                            int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                            int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                            int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                             string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
-                            dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] = Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME]) / dict[k];
+
+                            dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] = 
+                                Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture) / dict[k];
                         }
                     }
                 }
@@ -267,11 +274,11 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] != DBNull.Value)
                 {
-                    int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
-                    int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                    int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
-                    dict.Add(k, Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME]));
+                    dict.Add(k, Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture));
                 }
             }
 
@@ -378,9 +385,11 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private static bool AnyDataExists(DataStore store, DataSheet dataSheet)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(ScenarioID) FROM {0} WHERE ScenarioID = {1}", dataSheet.Name, dataSheet.Scenario.Id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "SELECT COUNT(ScenarioID) FROM {0} WHERE ScenarioID = {1}", 
+                dataSheet.Name, dataSheet.Scenario.Id);
 
-            if (Convert.ToInt32(store.ExecuteScalar(query)) == 0)
+            if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) == 0)
             {
                 return false;
             }
@@ -399,9 +408,11 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private static bool AgeDataExists(DataStore store, DataSheet dataSheet)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(AgeMin) FROM {0} WHERE ScenarioID = {1}", dataSheet.Name, dataSheet.Scenario.Id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "SELECT COUNT(AgeMin) FROM {0} WHERE ScenarioID = {1}", 
+                dataSheet.Name, dataSheet.Scenario.Id);
 
-            if (Convert.ToInt32(store.ExecuteScalar(query)) == 0)
+            if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) == 0)
             {
                 return false;
             }
@@ -427,9 +438,11 @@ namespace SyncroSim.STSim
             //This could happen if the data contains values such as 10 - 19, but the frequency is 13.  In this
             //case the bins would be 0-12, 13-25, etc., and 10-19 does not go into any of these bins.
 
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(AgeMin) FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1}", dataSheet.Name, dataSheet.Scenario.Id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "SELECT COUNT(AgeMin) FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1}", 
+                dataSheet.Name, dataSheet.Scenario.Id);
 
-            if (Convert.ToInt32(store.ExecuteScalar(query)) != 0)
+            if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) != 0)
             {
                 return false;
             }

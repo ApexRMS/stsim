@@ -30,11 +30,11 @@ namespace SyncroSim.STSim
                 }
 
                 int? StratumId = null;
-                int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME]);
+                int StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
                 {
-                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME]);
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 int StratumKey = CreateStratumLookupKey(StratumId);
@@ -105,7 +105,7 @@ namespace SyncroSim.STSim
 
             if (dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
             {
-                outStratumId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME]);
+                outStratumId = Convert.ToInt32(dr[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             return true;
@@ -151,9 +151,7 @@ namespace SyncroSim.STSim
             }
 
             TerminologyUtilities.GetStratumLabelTerminology(this.m_Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref psl, ref ssl, ref tsl);
-
-            StateClassName = Convert.ToString(DataTableUtilities.GetTableValue(StateClassDataSheet.GetData(), StateClassDataSheet.ValueMember, stateClassId, Strings.DATASHEET_NAME_COLUMN_NAME));
-
+            StateClassName = Convert.ToString(DataTableUtilities.GetTableValue(StateClassDataSheet.GetData(), StateClassDataSheet.ValueMember, stateClassId, Strings.DATASHEET_NAME_COLUMN_NAME), CultureInfo.InvariantCulture);
             string msg = string.Format(CultureInfo.InvariantCulture, "The state class '{0}' could not be located in '{1} {2}'.", StateClassName, Location, psl);
 
             throw new DataException(msg);
@@ -174,18 +172,20 @@ namespace SyncroSim.STSim
         public static string CreateStateClassLookupKey(int? stratumId, int stateClassId)
         {
             string k1 = "NULL";
-            string k2 = stateClassId.ToString();
+            string k2 = stateClassId.ToString(CultureInfo.InvariantCulture);
 
             if (stratumId.HasValue)
             {
-                Debug.Assert(Convert.ToInt32(stratumId.Value) > 0);
-                k1 = stratumId.Value.ToString();
+                Debug.Assert(Convert.ToInt32(stratumId.Value, CultureInfo.InvariantCulture) > 0);
+                k1 = stratumId.Value.ToString(CultureInfo.InvariantCulture);
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}-{1}", k1, k2);
         }
 
-        private static void GetCoreFieldValues(DataRow dr, ref int? stratumIdSource, ref int stateClassIdSource, ref int? stratumIdDest, ref int? stateClassIdDest, bool deterministic)
+        private static void GetCoreFieldValues(
+            DataRow dr, ref int? stratumIdSource, ref int stateClassIdSource, ref int? stratumIdDest, 
+            ref int? stateClassIdDest, bool deterministic)
         {
             string stsrc = Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME;
             string scsrc = Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME;
@@ -201,7 +201,7 @@ namespace SyncroSim.STSim
             }
 
             stratumIdSource = null;
-            stateClassIdSource = Convert.ToInt32(dr[scsrc]);
+            stateClassIdSource = Convert.ToInt32(dr[scsrc], CultureInfo.InvariantCulture);
             stratumIdDest = null;
             stateClassIdDest = null;
 
@@ -209,19 +209,19 @@ namespace SyncroSim.STSim
 
             if (dr[stsrc] != DBNull.Value)
             {
-                stratumIdSource = Convert.ToInt32(dr[stsrc]);
+                stratumIdSource = Convert.ToInt32(dr[stsrc], CultureInfo.InvariantCulture);
                 Debug.Assert(stratumIdSource.Value > 0);
             }
 
             if (dr[stdst] != DBNull.Value)
             {
-                stratumIdDest = Convert.ToInt32(dr[stdst]);
+                stratumIdDest = Convert.ToInt32(dr[stdst], CultureInfo.InvariantCulture);
                 Debug.Assert(stratumIdDest.Value > 0);
             }
 
             if (dr[scdst] != DBNull.Value)
             {
-                stateClassIdDest = Convert.ToInt32(dr[scdst]);
+                stateClassIdDest = Convert.ToInt32(dr[scdst], CultureInfo.InvariantCulture);
                 Debug.Assert(stateClassIdDest.Value > 0);
             }
         }
@@ -233,7 +233,7 @@ namespace SyncroSim.STSim
                 return false;
             }
 
-            string Location = Convert.ToString(proposedLocation);
+            string Location = Convert.ToString(proposedLocation, CultureInfo.InvariantCulture);
 
             if (string.IsNullOrEmpty(Location))
             {

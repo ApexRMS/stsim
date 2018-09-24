@@ -50,7 +50,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in rows)
             {
-                Debug.Assert(Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME]) == shape.StateClassIdSource);
+                Debug.Assert(Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture) == shape.StateClassIdSource);
 
                 Transition pt = CreatePT(dr);
                 shape.IncomingPT.Add(pt);
@@ -78,7 +78,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in rows)
             {
-                Debug.Assert(Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME]) == shape.StateClassIdSource);
+                Debug.Assert(Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture) == shape.StateClassIdSource);
 
                 Transition pt = CreatePT(dr);
                 shape.OutgoingPT.Add(pt);
@@ -94,7 +94,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in trrows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr["TransitionGroupID"]);
+                int TransitionGroupId = Convert.ToInt32(dr["TransitionGroupID"], CultureInfo.InvariantCulture);
                 line.TransitionGroups.Add(TransitionGroupId);
             }
         }
@@ -132,7 +132,11 @@ namespace SyncroSim.STSim
                 {
                     int? StratumIdActual = null;
 
-                    analyzer.ResolveStateClassStratum(t.StratumIdSource, t.StratumIdDestination, t.StateClassIdDestination.Value, ref StratumIdActual);
+                    analyzer.ResolveStateClassStratum(
+                        t.StratumIdSource, 
+                        t.StratumIdDestination,
+                        t.StateClassIdDestination.Value, 
+                        ref StratumIdActual);
 
                     if (NullableUtilities.NullableIdsEqual(StratumIdActual, this.m_StratumId))
                     {
@@ -211,7 +215,11 @@ namespace SyncroSim.STSim
 
                 int? StratumIdActual = null;
 
-                analyzer.ResolveStateClassStratum(t.StratumIdSource, t.StratumIdDestination, t.StateClassIdDestination.Value, ref StratumIdActual);
+                analyzer.ResolveStateClassStratum(
+                    t.StratumIdSource, 
+                    t.StratumIdDestination, 
+                    t.StateClassIdDestination.Value, 
+                    ref StratumIdActual);
 
                 //If the class was found in the current stratum then it is not an off-stratum transition
 
@@ -237,7 +245,9 @@ namespace SyncroSim.STSim
             int Y1 = shape.Bounds.Y;
             int X2 = X1 + Constants.TRANSITION_DIAGRAM_OFF_STRATUM_CUE_SIZE;
             int Y2 = shape.Bounds.Y - Constants.TRANSITION_DIAGRAM_OFF_STRATUM_CUE_SIZE;
-            ProbabilisticTransitionLine Line = new ProbabilisticTransitionLine(t.TransitionTypeId, Constants.PROBABILISTIC_TRANSITION_LINE_COLOR);
+
+            ProbabilisticTransitionLine Line = new ProbabilisticTransitionLine(
+                t.TransitionTypeId, Constants.PROBABILISTIC_TRANSITION_LINE_COLOR);
 
             this.FillPTLineTransitionGroups(Line);
 
@@ -253,7 +263,9 @@ namespace SyncroSim.STSim
             int Y1 = shape.Bounds.Y - Constants.TRANSITION_DIAGRAM_OFF_STRATUM_CUE_SIZE;
             int X2 = shape.Bounds.X;
             int Y2 = shape.Bounds.Y;
-            ProbabilisticTransitionLine Line = new ProbabilisticTransitionLine(t.TransitionTypeId, Constants.PROBABILISTIC_TRANSITION_LINE_COLOR);
+
+            ProbabilisticTransitionLine Line = new ProbabilisticTransitionLine(
+                t.TransitionTypeId, Constants.PROBABILISTIC_TRANSITION_LINE_COLOR);
 
             this.FillPTLineTransitionGroups(Line);
 
@@ -265,7 +277,8 @@ namespace SyncroSim.STSim
 
         private static ProbabilisticTransitionLine CreatePTLineToSelf(StateClassShape shape, int transitionTypeId)
         {
-            ProbabilisticTransitionLine Line = new ProbabilisticTransitionLine(transitionTypeId, Constants.PROBABILISTIC_TRANSITION_LINE_COLOR);
+            ProbabilisticTransitionLine Line = new ProbabilisticTransitionLine(
+                transitionTypeId, Constants.PROBABILISTIC_TRANSITION_LINE_COLOR);
 
             const int PT_CIRCLE_RADIUS = 10;
 
@@ -283,7 +296,7 @@ namespace SyncroSim.STSim
             int? Iteration = null;
             int? Timestep = null;
             int? StratumIdSource = null;
-            int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME]);
+            int StateClassIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
             int? StratumIdDest = null;
             int? StateClassIdDest = null;
             int? SecondaryStratumId = null;
@@ -299,44 +312,44 @@ namespace SyncroSim.STSim
 
             if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
             {
-                Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME]);
+                Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
             {
-                Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME]);
+                Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME] != DBNull.Value)
             {
-                StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME]);
+                StratumIdSource = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME] != DBNull.Value)
             {
-                StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME]);
+                StratumIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME] != DBNull.Value)
             {
-                StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME]);
+                StateClassIdDest = Convert.ToInt32(dr[Strings.DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
             {
-                SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
             {
-                TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME]);
+                TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
             Transition pt = new Transition(
                 Iteration, Timestep, StratumIdSource, StateClassIdSource, StratumIdDest, StateClassIdDest, 
                 SecondaryStratumId, TertiaryStratumId, 
-                Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME]), 
-                Convert.ToDouble(dr[Strings.DATASHEET_PT_PROBABILITY_COLUMN_NAME]), 
+                Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture), 
+                Convert.ToDouble(dr[Strings.DATASHEET_PT_PROBABILITY_COLUMN_NAME], CultureInfo.InvariantCulture), 
                 Propn, AgeMin, AgeMax, AgeRel, AgeReset, TstMin, TstMax, TstRel);
 
             pt.PropnWasNull = true;
@@ -350,25 +363,25 @@ namespace SyncroSim.STSim
 
             if (dr[Strings.DATASHEET_PT_PROPORTION_COLUMN_NAME] != DBNull.Value)
             {
-                pt.Proportion = Convert.ToDouble(dr[Strings.DATASHEET_PT_PROPORTION_COLUMN_NAME]);
+                pt.Proportion = Convert.ToDouble(dr[Strings.DATASHEET_PT_PROPORTION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.PropnWasNull = false;
             }
 
             if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
             {
-                pt.AgeMinimum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME]);
+                pt.AgeMinimum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.AgeMinWasNull = false;
             }
 
             if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
             {
-                pt.AgeMaximum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME]);
+                pt.AgeMaximum = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.AgeMaxWasNull = false;
             }
 
             if (dr[Strings.DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME] != DBNull.Value)
             {
-                pt.AgeRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME]);
+                pt.AgeRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.AgeRelativeWasNull = false;
             }
 
@@ -380,19 +393,19 @@ namespace SyncroSim.STSim
 
             if (dr[Strings.DATASHEET_PT_TST_MIN_COLUMN_NAME] != DBNull.Value)
             {
-                pt.TstMinimum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MIN_COLUMN_NAME]);
+                pt.TstMinimum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.TstMinimumWasNull = false;
             }
 
             if (dr[Strings.DATASHEET_PT_TST_MAX_COLUMN_NAME] != DBNull.Value)
             {
-                pt.TstMaximum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MAX_COLUMN_NAME]);
+                pt.TstMaximum = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.TstMaximumWasNull = false;
             }
 
             if (dr[Strings.DATASHEET_PT_TST_RELATIVE_COLUMN_NAME] != DBNull.Value)
             {
-                pt.TstRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_RELATIVE_COLUMN_NAME]);
+                pt.TstRelative = Convert.ToInt32(dr[Strings.DATASHEET_PT_TST_RELATIVE_COLUMN_NAME], CultureInfo.InvariantCulture);
                 pt.TstRelativeWasNull = false;
             }
 
@@ -425,8 +438,8 @@ namespace SyncroSim.STSim
             if (dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME] != DBNull.Value)
             {
                 Debug.Assert(
-                    Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME]) == 0 || 
-                    Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME]) == -1);
+                    Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME], CultureInfo.InvariantCulture) == 0 || 
+                    Convert.ToInt32(dr[Strings.DATASHEET_PT_AGE_RESET_COLUMN_NAME], CultureInfo.InvariantCulture) == -1);
             }
 #endif
 

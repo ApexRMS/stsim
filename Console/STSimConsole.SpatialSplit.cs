@@ -162,7 +162,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                int pkid = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]);
+                int pkid = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
 
                 Debug.Assert(!l.Contains(pkid));
 
@@ -181,11 +181,11 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_MAPID_COLUMN_NAME] != DBNull.Value)
                 {
-                    int id = Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME]);
+                    int id = Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     if (id == ssid)
                     {
-                        return Convert.ToInt32(dr[pkidColumnName]);
+                        return Convert.ToInt32(dr[pkidColumnName], CultureInfo.InvariantCulture);
                     }
                 }
             }

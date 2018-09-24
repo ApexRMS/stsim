@@ -111,12 +111,14 @@ namespace SyncroSim.STSim
 
                 if (dr["SecondaryStratumIds"] == DBNull.Value)
                 {
-                    NewIds = ssid.ToString();
+                    NewIds = ssid.ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
                     NewIds = string.Format(CultureInfo.InvariantCulture, 
-                        "{0},{1}", Convert.ToInt32(dr["SecondaryStratumIds"]), ssid);
+                        "{0},{1}", 
+                        Convert.ToInt32(dr["SecondaryStratumIds"], CultureInfo.InvariantCulture), 
+                        ssid);
                 }
 
                 dr["SecondaryStratumIds"] = NewIds;
@@ -201,7 +203,7 @@ namespace SyncroSim.STSim
                     while (IterationsRemaining > 0)
                     {
                         DataRow dr = rows[RowIndex];
-                        dr["NumIterations"] = Convert.ToInt32(dr["NumIterations"]) + 1;
+                        dr["NumIterations"] = Convert.ToInt32(dr["NumIterations"], CultureInfo.InvariantCulture) + 1;
 
                         RowIndex += 1;
 
@@ -232,7 +234,7 @@ namespace SyncroSim.STSim
                 for (int RowIndex = 0; RowIndex < rows.Count(); RowIndex++)
                 {
                     DataRow dr = rows[RowIndex];
-                    int NumIters = Convert.ToInt32(dr["NumIterations"]);
+                    int NumIters = Convert.ToInt32(dr["NumIterations"], CultureInfo.InvariantCulture);
                     int MaxIter = MinIter + NumIters - 1;
 
                     dr["MinIteration"] = MinIter;
@@ -247,15 +249,15 @@ namespace SyncroSim.STSim
         {
             DataRow icdata = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
             DataTable distdata = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_DISTRIBUTION_NAME).GetData();
-            double TotalAmount = Convert.ToDouble(icdata[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME]);
-            int NumCells = Convert.ToInt32(icdata[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME]);
-            var RelativeAmountTotal = Convert.ToDouble(distdata.Compute("SUM(RelativeAmount)", null));
+            double TotalAmount = Convert.ToDouble(icdata[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
+            int NumCells = Convert.ToInt32(icdata[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            var RelativeAmountTotal = Convert.ToDouble(distdata.Compute("SUM(RelativeAmount)", null), CultureInfo.InvariantCulture);
 
             foreach (DataRow dr in splitData.Rows)
             {
-                string ids = Convert.ToString(dr["SecondaryStratumIds"]);
+                string ids = Convert.ToString(dr["SecondaryStratumIds"], CultureInfo.InvariantCulture);
                 string q = string.Format(CultureInfo.InvariantCulture, "SecondaryStratumID IN({0})", ids);
-                double JobRelativeAmountTotal = Convert.ToDouble(distdata.Compute("SUM(RelativeAmount)", q));
+                double JobRelativeAmountTotal = Convert.ToDouble(distdata.Compute("SUM(RelativeAmount)", q), CultureInfo.InvariantCulture);
                 double ratio = JobRelativeAmountTotal / RelativeAmountTotal;
 
                 dr["TotalAmount"] = TotalAmount;
@@ -265,7 +267,7 @@ namespace SyncroSim.STSim
                 dr["RATIO"] = ratio;
 
                 dr["JobTotalAmount"] = TotalAmount * ratio;
-                dr["JobNumCells"] = Convert.ToInt32(NumCells * ratio);
+                dr["JobNumCells"] = Convert.ToInt32(NumCells * ratio, CultureInfo.InvariantCulture);
                 dr["JobRelativeAmountTotal"] = JobRelativeAmountTotal;
             }
         }
@@ -276,7 +278,8 @@ namespace SyncroSim.STSim
             string ssl = null;
             string tsl = null;
 
-            TerminologyUtilities.GetStratumLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref psl, ref ssl, ref tsl);
+            TerminologyUtilities.GetStratumLabelTerminology(
+                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref psl, ref ssl, ref tsl);
 
             //Save the library because we may have added status data to the scenario
 
@@ -287,7 +290,9 @@ namespace SyncroSim.STSim
 
             this.BeginProgress(splitData.Rows.Count + 1);
 
-            this.SetStatusMessage(string.Format(CultureInfo.InvariantCulture, "Preparing Data For Parallel Processing (Split by '{0}')", ssl));
+            this.SetStatusMessage(string.Format(CultureInfo.InvariantCulture, 
+                "Preparing Data For Parallel Processing (Split by '{0}')", 
+                ssl));
 
             //We have numJobs + 1 because we want the progress indicator to include
             //the time it takes to create the partial library.
@@ -361,7 +366,7 @@ namespace SyncroSim.STSim
             for (int i = 0; i < splitData.Rows.Count; i++)
             {
                 DataRow dr = splitData.Rows[i];
-                string f = Convert.ToString(dr["FileName"]);
+                string f = Convert.ToString(dr["FileName"], CultureInfo.InvariantCulture);
                 string BaseFolderName = Path.GetFileName(f) + ".input";
                 string JobInputFolderName = Path.Combine(this.JobFolderName, BaseFolderName);
 
@@ -380,7 +385,7 @@ namespace SyncroSim.STSim
         {
             using (SyncroSimTransactionScope scope = Session.CreateTransactionScope())
             {
-                string FileName = Convert.ToString(splitDataRow["FileName"]);
+                string FileName = Convert.ToString(splitDataRow["FileName"], CultureInfo.InvariantCulture);
 
                 using (DataStore store = Session.CreateDataStore(new DataStoreConnection(Strings.SQLITE_DATASTORE_NAME, FileName)))
                 {
@@ -401,8 +406,8 @@ namespace SyncroSim.STSim
 
         private static void UpdateRunControl(DataRow splitDataRow, DataStore store)
         {
-            int MinIter = Convert.ToInt32(splitDataRow["MinIteration"]);
-            int MaxIter = Convert.ToInt32(splitDataRow["MaxIteration"]);
+            int MinIter = Convert.ToInt32(splitDataRow["MinIteration"], CultureInfo.InvariantCulture);
+            int MaxIter = Convert.ToInt32(splitDataRow["MaxIteration"], CultureInfo.InvariantCulture);
 
             Debug.Assert(MinIter <= MaxIter);
 
@@ -418,8 +423,7 @@ namespace SyncroSim.STSim
         private static void RemoveSecondaryStrata(DataRow splitDataRow, DataStore store, Scenario scenario)
         {
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
-
-            string ids = Convert.ToString(splitDataRow["SecondaryStratumIds"]);
+            string ids = Convert.ToString(splitDataRow["SecondaryStratumIds"], CultureInfo.InvariantCulture);
 
             store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, 
                 "DELETE FROM STSim_SecondaryStratum WHERE SecondaryStratumID NOT IN({0})", ids));
@@ -455,15 +459,15 @@ namespace SyncroSim.STSim
         private static void UpdateInitialConditions(DataRow splitDataRow, DataStore store)
         {
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatial SET TotalAmount={0}", Convert.ToDouble(splitDataRow["JobTotalAmount"])));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatial SET NumCells={0}", Convert.ToDouble(splitDataRow["JobNumCells"])));       
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatialDistribution SET RelativeAmount=(RelativeAmount * {0})", Convert.ToDouble(splitDataRow["RATIO"])));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatial SET TotalAmount={0}", Convert.ToDouble(splitDataRow["JobTotalAmount"], CultureInfo.InvariantCulture)));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatial SET NumCells={0}", Convert.ToDouble(splitDataRow["JobNumCells"], CultureInfo.InvariantCulture)));       
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatialDistribution SET RelativeAmount=(RelativeAmount * {0})", Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture)));
         }
 
         private static void UpdateTransitionTargets(DataRow splitDataRow, DataStore store)
         {
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
-            double ratio = Convert.ToDouble(splitDataRow["RATIO"]);
+            double ratio = Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture);
 
             store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET Amount=(Amount * {0}) WHERE SecondaryStratumID IS NULL", ratio));        
             store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET DistributionSD=(DistributionSD * {0}) WHERE SecondaryStratumID IS NULL", ratio));
@@ -474,7 +478,7 @@ namespace SyncroSim.STSim
         private static void UpdateTransitionAttributeTargets(DataRow splitDataRow, DataStore store)
         {
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
-            double ratio = Convert.ToDouble(splitDataRow["RATIO"]);
+            double ratio = Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture);
 
             store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET Amount=(Amount * {0}) WHERE SecondaryStratumID IS NULL", ratio));
             store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET DistributionSD=(DistributionSD * {0}) WHERE SecondaryStratumID IS NULL", ratio));
@@ -500,7 +504,7 @@ namespace SyncroSim.STSim
                         "Cannot split by '{0}' because '{1}' is not specified for all records in Initial Conditions Distribution.", ssl, ssl);
                 }
 
-                int id = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME]);
+                int id = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (!l.Contains(id))
                 {
@@ -530,7 +534,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                int id = Convert.ToInt32(dr[columnName]);
+                int id = Convert.ToInt32(dr[columnName], CultureInfo.InvariantCulture);
 
                 if (!Ids.Contains(id))
                 {

@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using SyncroSim.Core;
 using System.Reflection;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
@@ -22,7 +23,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow ParentRow in rows)
             {
-                int GroupId = Convert.ToInt32(ParentRow[this.PrimaryKeyColumn.Name]);
+                int GroupId = Convert.ToInt32(ParentRow[this.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
 
                 FixupChildReferences(dssa, GroupId);
                 FixupChildReferences(dsta, GroupId);
@@ -48,7 +49,7 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                int id = Convert.ToInt32(dr[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME]);
+                int id = Convert.ToInt32(dr[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (id == groupId)
                 {

@@ -72,7 +72,7 @@ namespace SyncroSim.STSim
 
                 if (dr[Strings.DATASHEET_NAME_COLUMN_NAME] != DBNull.Value)
                 {
-                    d.Add(Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME]), true);
+                    d.Add(Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture), true);
                 }
             }
 
@@ -89,10 +89,10 @@ namespace SyncroSim.STSim
                 {
                     DataTable slxdata = this.m_SlxSheet.GetData();
                     DataTable slydata = this.m_SlySheet.GetData();
-                    int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME]);
-                    int slyid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME]);
-                    string slxname = Convert.ToString(DataTableUtilities.GetTableValue(slxdata, this.m_SlxSheet.ValueMember, slxid, Strings.DATASHEET_NAME_COLUMN_NAME));
-                    string slyname = Convert.ToString(DataTableUtilities.GetTableValue(slydata, this.m_SlySheet.ValueMember, slyid, Strings.DATASHEET_NAME_COLUMN_NAME));
+                    int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int slyid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    string slxname = Convert.ToString(DataTableUtilities.GetTableValue(slxdata, this.m_SlxSheet.ValueMember, slxid, Strings.DATASHEET_NAME_COLUMN_NAME), CultureInfo.InvariantCulture);
+                    string slyname = Convert.ToString(DataTableUtilities.GetTableValue(slydata, this.m_SlySheet.ValueMember, slyid, Strings.DATASHEET_NAME_COLUMN_NAME), CultureInfo.InvariantCulture);
 
                     string n = GetNextName(slxname + ":" + slyname, d);
                     dr[Strings.DATASHEET_NAME_COLUMN_NAME] = n;
@@ -134,7 +134,7 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_NAME_COLUMN_NAME] != DBNull.Value)
                 {
-                    d.Add(Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME]), true);
+                    d.Add(Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture), true);
                 }
             }
 
@@ -145,9 +145,9 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_NAME_COLUMN_NAME] == DBNull.Value)
                 {
                     string InitialName = Convert.ToString(
-                        dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME]) + 
+                        dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture) + 
                         ":" + 
-                        Convert.ToString(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME]);
+                        Convert.ToString(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     string FinalName = GetNextName(InitialName, d);
                     dr[Strings.DATASHEET_NAME_COLUMN_NAME] = FinalName;

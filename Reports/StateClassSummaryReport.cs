@@ -396,7 +396,7 @@ namespace SyncroSim.STSim
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    int sid = Convert.ToInt32(dr["ScenarioID"]);
+                    int sid = Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture);
 
                     dr["Proportion1"] = DBNull.Value;
                     dr["Proportion2"] = DBNull.Value;
@@ -408,14 +408,15 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        dr["Proportion1"] = Convert.ToDouble(dr["Amount"]) / this.m_ScenarioData[sid].TotalAmount;
+                        dr["Proportion1"] = Convert.ToDouble(
+                            dr["Amount"], CultureInfo.InvariantCulture) / this.m_ScenarioData[sid].TotalAmount;
                     }
 
                     StratumAmount sa = this.m_PrimaryStratumAmountMap.GetItemExact(
-                        Convert.ToInt32(dr["ScenarioID"]), 
-                        Convert.ToInt32(dr["StratumID"]),
-                        Convert.ToInt32(dr["Iteration"]), 
-                        Convert.ToInt32(dr["Timestep"]));
+                        Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
+                        Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture),
+                        Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
+                        Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture));
 
                     if (sa != null)
                     {
@@ -426,18 +427,18 @@ namespace SyncroSim.STSim
                         }
                         else
                         {
-                            dr["Proportion2"] = Convert.ToDouble(dr["Amount"]) / sa.Amount;
+                            dr["Proportion2"] = Convert.ToDouble(dr["Amount"], CultureInfo.InvariantCulture) / sa.Amount;
                         }
                     }
 
                     if (dr["SecondaryStratumID"] != DBNull.Value)
                     {
                         sa = this.m_SecondaryStratumAmountMap.GetItemExact(
-                            Convert.ToInt32(dr["ScenarioID"]), 
-                            Convert.ToInt32(dr["StratumID"]), 
-                            Convert.ToInt32(dr["SecondaryStratumID"]), 
-                            Convert.ToInt32(dr["Iteration"]), 
-                            Convert.ToInt32(dr["Timestep"]));
+                            Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["SecondaryStratumID"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture));
 
                         if (sa != null)
                         {
@@ -448,7 +449,8 @@ namespace SyncroSim.STSim
                             }
                             else
                             {
-                                dr["Proportion3"] = Convert.ToDouble(dr["Amount"]) / sa.Amount;
+                                dr["Proportion3"] = Convert.ToDouble(
+                                    dr["Amount"], CultureInfo.InvariantCulture) / sa.Amount;
                             }
                         }
                     }
@@ -484,8 +486,8 @@ namespace SyncroSim.STSim
         {
             string q1 = string.Format(CultureInfo.InvariantCulture, "SELECT MIN(Iteration) FROM STSim_OutputStratumState WHERE ScenarioID={0}", scenarioId);
             string q2 = string.Format(CultureInfo.InvariantCulture, "SELECT MIN(Timestep) FROM STSim_OutputStratumState WHERE ScenarioID={0}", scenarioId);
-            int Iteration = Convert.ToInt32(store.ExecuteScalar(q1));
-            int Timestep = Convert.ToInt32(store.ExecuteScalar(q2));
+            int Iteration = Convert.ToInt32(store.ExecuteScalar(q1), CultureInfo.InvariantCulture);
+            int Timestep = Convert.ToInt32(store.ExecuteScalar(q2), CultureInfo.InvariantCulture);
             string q3 = string.Format(CultureInfo.InvariantCulture, "SELECT SUM(Amount) FROM STSim_OutputStratumState WHERE ScenarioID={0} AND Iteration={1} AND Timestep={2}", scenarioId, Iteration, Timestep);
             object o = store.ExecuteScalar(q3);
 
@@ -496,7 +498,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                return Convert.ToDouble(o);
+                return Convert.ToDouble(o, CultureInfo.InvariantCulture);
             }
         }
 
@@ -519,8 +521,8 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                Debug.Assert(!sd.PrimaryStrata.Contains(Convert.ToInt32(dr["StratumID"])));
-                sd.PrimaryStrata.Add(Convert.ToInt32(dr["StratumID"]));
+                Debug.Assert(!sd.PrimaryStrata.Contains(Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture)));
+                sd.PrimaryStrata.Add(Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture));
             }
         }
 
@@ -623,8 +625,13 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                StratumAmount sa = new StratumAmount(Convert.ToDouble(dr["SumOfAmount"]));
-                this.m_PrimaryStratumAmountMap.AddItem(Convert.ToInt32(dr["ScenarioID"]), Convert.ToInt32(dr["StratumID"]), Convert.ToInt32(dr["Iteration"]), Convert.ToInt32(dr["Timestep"]), sa);
+                StratumAmount sa = new StratumAmount(Convert.ToDouble(dr["SumOfAmount"], CultureInfo.InvariantCulture));
+
+                this.m_PrimaryStratumAmountMap.AddItem(
+                    Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture), sa);
             }
         }
 
@@ -641,8 +648,14 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dt.Rows)
             {
-                StratumAmount sa = new StratumAmount(Convert.ToDouble(dr["Amount"]));
-                this.m_SecondaryStratumAmountMap.AddItem(Convert.ToInt32(dr["ScenarioID"]), Convert.ToInt32(dr["StratumID"]), Convert.ToInt32(dr["SecondaryStratumID"]), Convert.ToInt32(dr["Iteration"]), Convert.ToInt32(dr["Timestep"]), sa);
+                StratumAmount sa = new StratumAmount(Convert.ToDouble(dr["Amount"], CultureInfo.InvariantCulture));
+
+                this.m_SecondaryStratumAmountMap.AddItem(
+                    Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["SecondaryStratumID"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture), sa);
             }
         }
 

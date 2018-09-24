@@ -4,6 +4,7 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using SyncroSim.StochasticTime;
 using SyncroSim.Core;
 
@@ -75,7 +76,7 @@ namespace SyncroSim.STSim
                         DataTableUtilities.GetNullableInt(dr, Strings.DATASHEET_STRATUM_ID_COLUMN_NAME), 
                         DataTableUtilities.GetNullableInt(dr, Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME), 
                         DataTableUtilities.GetNullableInt(dr, Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME),
-                        Convert.ToInt32(dr[Strings.DISTRIBUTION_VALUE_DIST_TYPE_ID_COLUMN_NAME]), 
+                        Convert.ToInt32(dr[Strings.DISTRIBUTION_VALUE_DIST_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture), 
                         DataTableUtilities.GetNullableInt(dr, 
                         Strings.DISTRIBUTION_VALUE_EXTVAR_TYPE_ID_COLUMN_NAME), 
                         DataTableUtilities.GetNullableDouble(dr, Strings.DISTRIBUTION_VALUE_EXTVAR_MIN_COLUMN_NAME), 

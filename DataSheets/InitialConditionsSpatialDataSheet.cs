@@ -184,7 +184,7 @@ namespace SyncroSim.STSim
 
         private StochasticTimeRaster LoadRaster(DataRow dr, string fileNameColumn)
         {
-            string FileName = Convert.ToString(dr[fileNameColumn]);
+            string FileName = Convert.ToString(dr[fileNameColumn], CultureInfo.InvariantCulture);
             string psFilename = RasterFiles.GetInputFileName(this, FileName, true);
             StochasticTimeRaster rast = new StochasticTimeRaster();
 

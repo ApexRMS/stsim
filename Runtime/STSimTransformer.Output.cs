@@ -4,11 +4,12 @@
 using System;
 using System.Data;
 using System.Linq;
+using System.Diagnostics;
+using System.Globalization;
+using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Common;
 using SyncroSim.StochasticTime;
-using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -799,7 +800,7 @@ namespace SyncroSim.STSim
                             dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = PrimaryStratum.StratumId;
                             dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(SecondaryStratumId);
                             dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(TertiaryStratumId);
-                            dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = Convert.ToDouble(o);
+                            dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = Convert.ToDouble(o, CultureInfo.InvariantCulture);
 
                             this.m_OutputStratumAmountTable.Rows.Add(dr);
                         }
@@ -1259,7 +1260,7 @@ namespace SyncroSim.STSim
 
                         if (AttrValue != null)
                         {
-                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue);
+                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
                         }
                     }
 
@@ -1278,7 +1279,7 @@ namespace SyncroSim.STSim
 
                         if (AttrValue != null)
                         {
-                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue);
+                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
                         }
                     }
 
@@ -1357,16 +1358,28 @@ namespace SyncroSim.STSim
 
                             if (IsNoAges)
                             {
-                                attrValue = stateAttributeValueMap.GetAttributeValueNoAge(stateAttributeTypeId, cell.StratumId, cell.SecondaryStratumId, cell.TertiaryStratumId, cell.StateClassId, iteration, timestep);
+                                attrValue = stateAttributeValueMap.GetAttributeValueNoAge(
+                                    stateAttributeTypeId, 
+                                    cell.StratumId, 
+                                    cell.SecondaryStratumId, 
+                                    cell.TertiaryStratumId, 
+                                    cell.StateClassId, 
+                                    iteration, timestep);
                             }
                             else
                             {
-                                attrValue = stateAttributeValueMap.GetAttributeValueByAge(stateAttributeTypeId, cell.StratumId, cell.SecondaryStratumId, cell.TertiaryStratumId, cell.StateClassId, iteration, timestep, cell.Age);
+                                attrValue = stateAttributeValueMap.GetAttributeValueByAge(
+                                    stateAttributeTypeId, 
+                                    cell.StratumId, 
+                                    cell.SecondaryStratumId, 
+                                    cell.TertiaryStratumId, 
+                                    cell.StateClassId, 
+                                    iteration, timestep, cell.Age);
                             }
 
                             if (attrValue != null)
                             {
-                                stateAttrVals[cell.CellId] = Convert.ToDouble(attrValue);
+                                stateAttrVals[cell.CellId] = Convert.ToDouble(attrValue, CultureInfo.InvariantCulture);
                             }
                         }
 

@@ -3,9 +3,10 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Collections.Generic;
 using SyncroSim.Common;
 using SyncroSim.StochasticTime;
-using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -67,8 +68,12 @@ namespace SyncroSim.STSim
             }
 
             double multiplier = this.m_TransitionAdjacencyMultiplierMap.GetAdjacencyMultiplier(
-                transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                simulationCell.TertiaryStratumId, iteration, timestep, Convert.ToDouble(attrvalue));
+                transitionGroupId, 
+                simulationCell.StratumId, 
+                simulationCell.SecondaryStratumId, 
+                simulationCell.TertiaryStratumId, 
+                iteration, timestep, 
+                Convert.ToDouble(attrvalue, CultureInfo.InvariantCulture));
 
             return multiplier;
         }
@@ -99,8 +104,12 @@ namespace SyncroSim.STSim
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {
                         TransitionMultiplierValue v = tmt.TransitionMultiplierValueMap.GetTransitionMultiplier(
-                            tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                            simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep);
+                            tg.TransitionGroupId, 
+                            simulationCell.StratumId, 
+                            simulationCell.SecondaryStratumId, 
+                            simulationCell.TertiaryStratumId,
+                            simulationCell.StateClassId, 
+                            iteration, timestep);
 
                         if (v != null)
                         {
@@ -235,8 +244,7 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
                 MultiplierEventArgs args = new MultiplierEventArgs(simulationCell, iteration, timestep, tg.TransitionGroupId);
-				if (ApplyingTransitionMultipliers != null)
-                    ApplyingTransitionMultipliers(this, args);
+                ApplyingTransitionMultipliers?.Invoke(this, args);
                 Product *= args.Multiplier;
             }
 
@@ -254,9 +262,7 @@ namespace SyncroSim.STSim
         private double GetExternalSpatialMultipliers(Cell simulationCell, int iteration, int timestep, int transitionGroupId)
         {
             MultiplierEventArgs args = new MultiplierEventArgs(simulationCell, iteration, timestep, transitionGroupId);
-			if (ApplyingSpatialMultipliers != null)
-                ApplyingSpatialMultipliers(this, args);
-
+            ApplyingSpatialMultipliers?.Invoke(this, args);
             return args.Multiplier;
         }
 

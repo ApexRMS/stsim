@@ -90,7 +90,9 @@ namespace SyncroSim.STSim
 
         private void OnTerminologyChanged(DataSheetMonitorEventArgs e)
         {
-            string t = Convert.ToString(e.GetValue("TimestepUnits", "Timestep")).ToLower(CultureInfo.InvariantCulture);
+            string t = Convert.ToString(
+                e.GetValue("TimestepUnits", "Timestep"), 
+                CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture);
 
             this.LabelSummarySCTimesteps.Text = t;
             this.LabelSummaryTRTimesteps.Text = t;

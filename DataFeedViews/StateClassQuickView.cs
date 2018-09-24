@@ -171,7 +171,7 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                if (Convert.ToInt32(dr[this.m_StratumDataSheet.ValueMember]) == this.m_StratumId)
+                if (Convert.ToInt32(dr[this.m_StratumDataSheet.ValueMember], CultureInfo.InvariantCulture) == this.m_StratumId)
                 {
                     found = true;
                     break;
@@ -525,13 +525,13 @@ namespace SyncroSim.STSim
 
             if (DestStratumCell.Value != DBNull.Value)
             {
-                return Convert.ToInt32(DestStratumCell.Value);
+                return Convert.ToInt32(DestStratumCell.Value, CultureInfo.InvariantCulture);
             }
 
             if (SourceStratumCell.Value != DBNull.Value)
             {
                 Debug.Assert(this.m_StratumId.HasValue);
-                Debug.Assert(Convert.ToInt32(SourceStratumCell.Value) == this.m_StratumId.Value);
+                Debug.Assert(Convert.ToInt32(SourceStratumCell.Value, CultureInfo.InvariantCulture) == this.m_StratumId.Value);
 
                 return this.m_StratumId;
             }
@@ -586,7 +586,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in rows)
             {
-                int id = Convert.ToInt32(dr["StateClassIDSource"]);
+                int id = Convert.ToInt32(dr["StateClassIDSource"], CultureInfo.InvariantCulture);
 
                 if (!lst.Contains(id))
                 {
@@ -616,7 +616,7 @@ namespace SyncroSim.STSim
         {
             foreach (DataRowView drv in dv)
             {
-                if (Convert.ToInt32(drv.Row["StateClassID"]) == stateClassId)
+                if (Convert.ToInt32(drv.Row["StateClassID"], CultureInfo.InvariantCulture) == stateClassId)
                 {
                     return true;
                 }
@@ -655,16 +655,16 @@ namespace SyncroSim.STSim
             DataGridViewComboBoxCell DestStateClassCell = GetComboCell(destStateClassColumnName, grid, rowIndex);
             int? DestStratumId = this.GetDestStratumIdFromGridValues(sourceStratumColumnName, destStratumColumnName, grid, rowIndex);
             int? DestStateClassId = null;
-            int CurrentDestStateClassId = Convert.ToInt32(SourceStateClassCell.Value);
+            int CurrentDestStateClassId = Convert.ToInt32(SourceStateClassCell.Value, CultureInfo.InvariantCulture);
             DataView dv = this.CreateNewFilteredStateClassView(DestStratumId);
 
             if (DestStateClassCell.Value == DBNull.Value)
             {
-                DestStateClassId = Convert.ToInt32(SourceStateClassCell.Value);
+                DestStateClassId = Convert.ToInt32(SourceStateClassCell.Value, CultureInfo.InvariantCulture);
             }
             else
             {
-                DestStateClassId = Convert.ToInt32(DestStateClassCell.Value);
+                DestStateClassId = Convert.ToInt32(DestStateClassCell.Value, CultureInfo.InvariantCulture);
             }
 
             Debug.Assert(CurrentDestStateClassId > 0);
@@ -681,7 +681,7 @@ namespace SyncroSim.STSim
                 if (dv.Count > 0)
                 {
                     DataRowView drvzero = dv[0];
-                    DestStateClassCell.Value = Convert.ToInt32(drvzero.Row["StateClassID"]);
+                    DestStateClassCell.Value = Convert.ToInt32(drvzero.Row["StateClassID"], CultureInfo.InvariantCulture);
                 }
             }
         }

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using SyncroSim.Core;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace SyncroSim.STSim
 {
@@ -89,8 +90,8 @@ namespace SyncroSim.STSim
 
             foreach (DataRowView drv in dvct)
             {
-                int Id = Convert.ToInt32(drv.Row[this.m_StateLabelXDataSheet.ValueMember]);
-                string Name = Convert.ToString(drv.Row[this.m_StateLabelXDataSheet.DisplayMember]);
+                int Id = Convert.ToInt32(drv.Row[this.m_StateLabelXDataSheet.ValueMember], CultureInfo.InvariantCulture);
+                string Name = Convert.ToString(drv.Row[this.m_StateLabelXDataSheet.DisplayMember], CultureInfo.InvariantCulture);
 
                 this.ComboBoxStateLabelX.Items.Add(new BaseValueDisplayListItem(Id, Name));
             }
@@ -103,8 +104,8 @@ namespace SyncroSim.STSim
 
             foreach (DataRowView drv in dvss)
             {
-                int Id = Convert.ToInt32(drv.Row[this.m_StateLabelYDataSheet.ValueMember]);
-                string Name = Convert.ToString(drv.Row[this.m_StateLabelYDataSheet.DisplayMember]);
+                int Id = Convert.ToInt32(drv.Row[this.m_StateLabelYDataSheet.ValueMember], CultureInfo.InvariantCulture);
+                string Name = Convert.ToString(drv.Row[this.m_StateLabelYDataSheet.DisplayMember], CultureInfo.InvariantCulture);
 
                 this.ComboBoxStateLabelY.Items.Add(new BaseValueDisplayListItem(Id, Name));
             }

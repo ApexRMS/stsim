@@ -32,7 +32,12 @@ namespace SyncroSim.STSim
                 DataSheet StateAttrDataSheet = project.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME);
                 DataView StateAttrDataView = new DataView(StateAttrDataSheet.GetData(store), null, StateAttrDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
                 DataSheet TransitionAttrDataSheet = project.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME);
-                DataView TransitionAttrDataView = new DataView(TransitionAttrDataSheet.GetData(store), null, TransitionAttrDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
+
+                DataView TransitionAttrDataView = new DataView(
+                    TransitionAttrDataSheet.GetData(store), 
+                    null, 
+                    TransitionAttrDataSheet.ValidationTable.DisplayMember, 
+                    DataViewRowState.CurrentRows);
 
                 g0.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumState"));
                 g0.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
@@ -54,8 +59,12 @@ namespace SyncroSim.STSim
                 AddChartStateClassVariables(g0.Items, project);
                 AddChartTransitionVariables(g1.Items, project);
 
-                AddChartAttributeVariables(g2.Items, AttrGroupView, AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, false);
-                AddChartAttributeVariables(g3.Items, AttrGroupView, AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, true);
+                AddChartAttributeVariables(
+                    g2.Items, AttrGroupView, AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, 
+                    Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, false);
+
+                AddChartAttributeVariables(g3.Items, AttrGroupView, AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, 
+                    Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, true);
 
                 layout.Items.Add(g0);
                 layout.Items.Add(g1);
@@ -72,7 +81,21 @@ namespace SyncroSim.STSim
             }
         }
 
-        public override void PrepareData(DataStore store, ChartDescriptorCollection descriptors, StochasticTimeStatusCollection statusEntries, Project project)
+        /// <summary>
+        /// Prepares the charting data before the data is actually queried
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="descriptors"></param>
+        /// <param name="statusEntries"></param>
+        /// <param name="project"></param>
+        /// <remarks>
+        /// If a request is being made for age data we have to update the age class 
+        /// </remarks>
+        public override void PrepareData(
+            DataStore store, 
+            ChartDescriptorCollection descriptors, 
+            StochasticTimeStatusCollection statusEntries, 
+            Project project)
         {
             if (!ChartingUtilities.HasAgeReference(descriptors))
             {
@@ -83,7 +106,10 @@ namespace SyncroSim.STSim
 
             foreach (ChartDescriptor d in descriptors)
             {
-                if (d.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || d.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME || d.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || d.DataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
+                if (d.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
+                    d.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME ||
+                    d.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
+                    d.DataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
                 {
                     if (!Sheets.Contains(d.DataSheetName))
                     {
@@ -109,22 +135,28 @@ namespace SyncroSim.STSim
 
         public override DataTable GetData(DataStore store, ChartDescriptor descriptor, DataSheet dataSheet)
         {
-            if (descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME)
+            if (
+                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
+                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME)
             {
                 if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME)
                 {
-                    return ChartingUtilities.CreateProportionChartData(dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, store);
+                    return ChartingUtilities.CreateProportionChartData(
+                        dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, store);
                 }
                 else if (descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME)
                 {
-                    return ChartingUtilities.CreateProportionChartData(dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);
+                    return ChartingUtilities.CreateProportionChartData(
+                        dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);
                 }
                 else
                 {
                     return null;
                 }
             }
-            else if (descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
+            else if (
+                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
+                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
             {
                 string[] s = descriptor.VariableName.Split('-');
 
@@ -144,7 +176,8 @@ namespace SyncroSim.STSim
                     ColumnName = Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
                 }
 
-                return ChartingUtilities.CreateRawAttributeChartData(dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
+                return ChartingUtilities.CreateRawAttributeChartData(
+                    dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
             }
 
             return null;
@@ -210,10 +243,11 @@ namespace SyncroSim.STSim
         private static void AddChartAttributeVariables(SyncroSimLayoutItemCollection items, DataView attrGroupView, DataSheet attrGroupDataSheet, DataView attrView, DataSheet attrDataSheet, string outputTableName, string attributeTypeColumnName, bool skipTimestepZero)
         {
             Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
-
             SyncroSimLayoutItem NonGroupedDensityGroup = new SyncroSimLayoutItem(DENSITY_GROUP_NAME + "STSIM_NON_GROUPED", "Density", true);
 
-            AddChartNonGroupedAttributes(items, attrView, attrDataSheet, outputTableName, attributeTypeColumnName, skipTimestepZero, NonGroupedDensityGroup);
+            AddChartNonGroupedAttributes(
+                items, attrView, attrDataSheet, outputTableName, attributeTypeColumnName, 
+                skipTimestepZero, NonGroupedDensityGroup);
 
             if (NonGroupedDensityGroup.Items.Count > 0)
             {
@@ -236,7 +270,9 @@ namespace SyncroSim.STSim
                 GroupsDict.Add(DensityGroupName, DensityGroup);
             }
 
-            AddChartGroupedAttributes(GroupsDict, attrGroupDataSheet, attrView, attrDataSheet, outputTableName, attributeTypeColumnName, skipTimestepZero);
+            AddChartGroupedAttributes(
+                GroupsDict, attrGroupDataSheet, attrView, attrDataSheet, 
+                outputTableName, attributeTypeColumnName, skipTimestepZero);
 
             foreach (SyncroSimLayoutItem g in GroupsList)
             {
@@ -250,7 +286,14 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddChartNonGroupedAttributes(SyncroSimLayoutItemCollection items, DataView attrsView, DataSheet attrsDataSheet, string outputDataSheetName, string outputColumnName, bool skipTimestepZero, SyncroSimLayoutItem densityGroup)
+        private static void AddChartNonGroupedAttributes(
+            SyncroSimLayoutItemCollection items,
+            DataView attrsView, 
+            DataSheet attrsDataSheet, 
+            string outputDataSheetName, 
+            string outputColumnName, 
+            bool skipTimestepZero, 
+            SyncroSimLayoutItem densityGroup)
         {
             foreach (DataRowView drv in attrsView)
             {
@@ -314,7 +357,13 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddChartGroupedAttributes(Dictionary<string, SyncroSimLayoutItem> groupsDict, DataSheet groupsDataSheet, DataView attrsView, DataSheet attrsDataSheet, string outputDataSheetName, string outputColumnName, bool skipTimestepZero)
+        private static void AddChartGroupedAttributes(
+            Dictionary<string, SyncroSimLayoutItem> groupsDict, 
+            DataSheet groupsDataSheet, 
+            DataView attrsView, 
+            DataSheet attrsDataSheet, 
+            string outputDataSheetName, 
+            string outputColumnName, bool skipTimestepZero)
         {
             //The density groups have already been created and added to the groups.  Howver, we want the
             //attributes themselves to appear before this group so we must insert them in reverse order.

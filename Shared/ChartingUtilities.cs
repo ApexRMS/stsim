@@ -16,7 +16,27 @@ namespace SyncroSim.STSim
     internal static class ChartingUtilities
     {
         /// <summary>
-        /// Determinies if a descriptor has an age reference
+        /// Determines if the specified descriptor has an age reference
+        /// </summary>
+        /// <param name="descriptor"></param>
+        /// <returns></returns>
+        public static bool HasAgeReference(ChartDescriptor descriptor)
+        {
+            if (descriptor.IncludeDataFilter != null && descriptor.IncludeDataFilter.Contains("AgeClass"))
+            {
+                return true;
+            }
+
+            if (descriptor.DisaggregateFilter != null && descriptor.DisaggregateFilter.Contains("AgeClass"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determinies if a descriptor in the specified collection has an age reference
         /// </summary>
         /// <param name="descriptors"></param>
         /// <returns></returns>
@@ -25,12 +45,7 @@ namespace SyncroSim.STSim
         {
             foreach (ChartDescriptor d in descriptors)
             {
-                if (d.IncludeDataFilter != null && d.IncludeDataFilter.Contains("AgeClass"))
-                {
-                    return true;
-                }
-
-                if (d.DisaggregateFilter != null && d.DisaggregateFilter.Contains("AgeClass"))
+                if (HasAgeReference(d))
                 {
                     return true;
                 }
@@ -64,14 +79,16 @@ namespace SyncroSim.STSim
             if (!AgeDataExists(store, dataSheet))
             {
                 string entry = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_AGE_DATA_MISSING, dataSheet.Scenario.DisplayName);
-
                 statusEntries.Add(new StochasticTimeStatus(entry));
+
                 return;
             }
 
             if (!AgeClassesMatchData(store, dataSheet))
             {
-                string query = string.Format(CultureInfo.InvariantCulture, "SELECT DISTINCT AgeMin, AgeMax FROM {0} WHERE (AgeMin IS NOT NULL AND AgeMax IS NOT NULL AND ScenarioID = {1}) ORDER BY AgeMin", dataSheet.Name, dataSheet.Scenario.Id);
+                string query = string.Format(CultureInfo.InvariantCulture, 
+                    "SELECT DISTINCT AgeMin, AgeMax FROM {0} WHERE (AgeMin IS NOT NULL AND AgeMax IS NOT NULL AND ScenarioID = {1}) ORDER BY AgeMin", 
+                    dataSheet.Name, dataSheet.Scenario.Id);
 
                 DataTable dt = store.CreateDataTableFromQuery(query, "ageclassdata");
 
@@ -113,7 +130,9 @@ namespace SyncroSim.STSim
                         Convert.ToInt32(dr["AgeMax"], CultureInfo.InvariantCulture));
 
                     sb1.AppendLine();
-                    sb2.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", Convert.ToInt32(dr["AgeMax"], CultureInfo.InvariantCulture));
+                    sb2.AppendFormat(CultureInfo.InvariantCulture, 
+                        "{0}, ", 
+                        Convert.ToInt32(dr["AgeMax"], CultureInfo.InvariantCulture));
 
                     c += 1;
 
@@ -174,7 +193,9 @@ namespace SyncroSim.STSim
 
             if (e.Count() > 1)
             {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "UPDATE [{0}] SET AgeClass = CASE", dataSheet.Name);
+                sb.AppendFormat(CultureInfo.InvariantCulture, 
+                    "UPDATE [{0}] SET AgeClass = CASE", 
+                    dataSheet.Name);
 
                 for (int i = 0; i < e.Count(); i++)
                 {
@@ -184,13 +205,17 @@ namespace SyncroSim.STSim
                     {
                         Debug.Assert(i < e.Count() - 1);
 
-                        sb.AppendFormat(CultureInfo.InvariantCulture, " WHEN AgeMin >= {0} And AgeMax <= {1} THEN {2}", d.MinimumAge, d.MaximumAge.Value, d.MinimumAge);
+                        sb.AppendFormat(CultureInfo.InvariantCulture, 
+                            " WHEN AgeMin >= {0} And AgeMax <= {1} THEN {2}", 
+                            d.MinimumAge, d.MaximumAge.Value, d.MinimumAge);
                     }
                     else
                     {
                         Debug.Assert(i == e.Count() - 1);
 
-                        sb.AppendFormat(CultureInfo.InvariantCulture, " WHEN AgeMin >= {0} THEN {1}", d.MinimumAge, d.MinimumAge);
+                        sb.AppendFormat(CultureInfo.InvariantCulture, 
+                            " WHEN AgeMin >= {0} THEN {1}", 
+                            d.MinimumAge, d.MinimumAge);
                     }
                 }
 
@@ -198,7 +223,9 @@ namespace SyncroSim.STSim
             }
             else
             {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "UPDATE [{0}] SET AgeClass = {1}", dataSheet.Name, e.ElementAtOrDefault(0).MinimumAge);
+                sb.AppendFormat(CultureInfo.InvariantCulture,
+                    "UPDATE [{0}] SET AgeClass = {1}", 
+                    dataSheet.Name, e.ElementAtOrDefault(0).MinimumAge);
             }
 
             sb.AppendFormat(CultureInfo.InvariantCulture, " WHERE ScenarioID = {0}", dataSheet.Scenario.Id);
@@ -215,7 +242,13 @@ namespace SyncroSim.STSim
             }
 
             string query = CreateRawDataQuery(scenario, descriptor, tableName);
-            DataTable dt = store.CreateDataTableFromQuery(query, "RawData");
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query);
+
+            if (dt == null)
+            {
+                dt = store.CreateDataTableFromQuery(query, "RawData");
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt);
+            }
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -234,11 +267,24 @@ namespace SyncroSim.STSim
             return dt;
         }
 
-        public static DataTable CreateRawAttributeChartData(Scenario scenario, ChartDescriptor descriptor, string tableName, string attributeTypeColumnName, int attributeTypeId, bool isDensity, DataStore store)
+        public static DataTable CreateRawAttributeChartData(
+            Scenario scenario, 
+            ChartDescriptor descriptor, 
+            string tableName, 
+            string attributeTypeColumnName, 
+            int attributeTypeId, 
+            bool isDensity, 
+            DataStore store)
         {
             string query = CreateRawAttributeDataQuery(scenario, descriptor, tableName, attributeTypeColumnName, attributeTypeId);
-            DataTable dt = store.CreateDataTableFromQuery(query, "RawData");
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query);
 
+            if (dt == null)
+            {
+                dt = store.CreateDataTableFromQuery(query, "RawData");
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt);
+            }
+                          
             if (isDensity)
             {
                 Dictionary<string, double> dict = CreateAmountDictionary(scenario, descriptor, store);
@@ -268,7 +314,13 @@ namespace SyncroSim.STSim
         {
             Dictionary<string, double> dict = new Dictionary<string, double>();
             string query = CreateAmountQuery(scenario, descriptor);
-            DataTable dt = store.CreateDataTableFromQuery(query, "AmountData");
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query);
+
+            if (dt == null)
+            {
+                dt = store.CreateDataTableFromQuery(query, "AmountData");
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt);
+            }
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -287,61 +339,92 @@ namespace SyncroSim.STSim
 
         private static string CreateAmountQuery(Scenario scenario, ChartDescriptor descriptor)
         {
-            string ScenarioClause = string.Format(CultureInfo.InvariantCulture, "([{0}]={1})", Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+            string ScenarioClause = string.Format(CultureInfo.InvariantCulture, 
+                "([{0}]={1})", 
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+
             string WhereClause = ScenarioClause;
             string Disagg = RemoveUnwantedColumnReferences(descriptor.DisaggregateFilter);
             string IncData = RemoveUnwantedColumnReferences(descriptor.IncludeDataFilter);
 
             if (!string.IsNullOrEmpty(Disagg))
             {
-                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} And ({1})", WhereClause, Disagg);
+                WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                    "{0} And ({1})", 
+                    WhereClause, Disagg);
             }
 
             if (!string.IsNullOrEmpty(IncData))
             {
-                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} And ({1})", WhereClause, IncData);
+                WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                    "{0} And ({1})", 
+                    WhereClause, IncData);
             }
 
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM STSim_OutputStratum WHERE ({0}) GROUP BY Iteration, Timestep", WhereClause);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM STSim_OutputStratum WHERE ({0}) GROUP BY Iteration, Timestep", 
+                WhereClause);
 
             return query;
         }
 
         private static string CreateRawDataQuery(Scenario scenario, ChartDescriptor descriptor, string tableName)
         {
-            string ScenarioClause = string.Format(CultureInfo.InvariantCulture, "([{0}]={1})", Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+            string ScenarioClause = string.Format(CultureInfo.InvariantCulture, 
+                "([{0}]={1})",
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+
             string WhereClause = ScenarioClause;
 
             if (!string.IsNullOrEmpty(descriptor.DisaggregateFilter))
             {
-                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, descriptor.DisaggregateFilter);
+                WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                    "{0} AND ({1})", 
+                    WhereClause, descriptor.DisaggregateFilter);
             }
 
             if (!string.IsNullOrEmpty(descriptor.IncludeDataFilter))
             {
-                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, descriptor.IncludeDataFilter);
+                WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                    "{0} AND ({1})", 
+                    WhereClause, descriptor.IncludeDataFilter);
             }
 
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM {0} WHERE ({1}) GROUP BY Iteration, Timestep", tableName, WhereClause);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM {0} WHERE ({1}) GROUP BY Iteration, Timestep", 
+                tableName, WhereClause);
+
             return query;
         }
 
         private static string CreateRawAttributeDataQuery(Core.Scenario scenario, ChartDescriptor descriptor, string tableName, string attributeTypeColumnName, int attributeTypeId)
         {
-            string ScenarioClause = string.Format(CultureInfo.InvariantCulture, "([{0}]={1})", Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
-            string WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ([{1}]={2})", ScenarioClause, attributeTypeColumnName, attributeTypeId);
+            string ScenarioClause = string.Format(CultureInfo.InvariantCulture,
+                "([{0}]={1})", 
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+
+            string WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                "{0} AND ([{1}]={2})", 
+                ScenarioClause, attributeTypeColumnName, attributeTypeId);
 
             if (!string.IsNullOrEmpty(descriptor.DisaggregateFilter))
             {
-                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, descriptor.DisaggregateFilter);
+                WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                    "{0} AND ({1})", 
+                    WhereClause, descriptor.DisaggregateFilter);
             }
 
             if (!string.IsNullOrEmpty(descriptor.IncludeDataFilter))
             {
-                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, descriptor.IncludeDataFilter);
+                WhereClause = string.Format(CultureInfo.InvariantCulture, 
+                    "{0} AND ({1})",
+                    WhereClause, descriptor.IncludeDataFilter);
             }
 
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM {0} WHERE ({1}) GROUP BY Iteration, Timestep", tableName, WhereClause);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM {0} WHERE ({1}) GROUP BY Iteration, Timestep", 
+                tableName, WhereClause);
+
             return query;
         }
 

@@ -243,9 +243,8 @@ namespace SyncroSim.STSim
         /// Called when external data has been appended to the specified data sheet
         /// </summary>
         /// <param name="dataSheet"></param>
-        /// <param name="previousData"></param>
         /// <remarks></remarks>
-        protected override void OnExternalDataReady(DataSheet dataSheet, DataTable previousData)
+        protected override void OnExternalDataReady(DataSheet dataSheet)
         {
             this.STSimExternalDataReady(dataSheet);
         }

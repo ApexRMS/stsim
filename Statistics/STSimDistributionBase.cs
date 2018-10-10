@@ -9,13 +9,6 @@ namespace SyncroSim.STSim
 {
     public abstract class STSimDistributionBase
     {
-        private bool InstanceFieldsInitialized = false;
-
-        private void InitializeInstanceFields()
-        {
-            m_DistributionFrequency = DistributionFrequency.Timestep;
-        }
-
         private int? m_Iteration;
         private int? m_Timestep;
         private int? m_StratumId;
@@ -23,7 +16,7 @@ namespace SyncroSim.STSim
         private int? m_TertiaryStratumId;
         private double? m_DistributionValue;
         private int? m_DistributionTypeId;
-        private DistributionFrequency m_DistributionFrequency;
+        private DistributionFrequency m_DistributionFrequency = DistributionFrequency.Timestep;
         private double? m_DistributionSD;
         private double? m_DistributionMin;
         private double? m_DistributionMax;
@@ -34,11 +27,6 @@ namespace SyncroSim.STSim
             double? distributionValue, int? distributionTypeId, DistributionFrequency? distributionFrequency, 
             double? distributionSD, double? distributionMin, double? distributionMax)
         {
-            if (!InstanceFieldsInitialized)
-            {
-                InitializeInstanceFields();
-                InstanceFieldsInitialized = true;
-            }
             this.m_Iteration = iteration;
             this.m_Timestep = timestep;
             this.m_StratumId = stratumId;

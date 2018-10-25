@@ -211,7 +211,7 @@ namespace SyncroSim.STSim
 
             foreach (string f in Directory.GetFiles(CacheFolder))
             {
-                if (f.EndsWith(Constants.AGE_QUERY_CACHE_TAG))
+                if (f.EndsWith(Constants.AGE_QUERY_CACHE_TAG, StringComparison.Ordinal))
                 {
                     File.Delete(f);
                 }

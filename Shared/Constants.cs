@@ -11,6 +11,8 @@ namespace SyncroSim.STSim
         public const int AGE_KEY_NO_AGES = -1;
         public const int OUTPUT_COLLECTION_WILDCARD_KEY = 0;
         public const double DEFAULT_TRANSITION_ORDER = double.MinValue;
+        public const string AGE_QUERY_CACHE_TAG = "-STSIM-AGE-QUERY";
+        public const string AGECLASS_UPDATE_REQUIRED_TAG = "STSimAgeClassUpdateRequired";
 
         //Run Control
         public const int DATASHEET_RUN_CONTROL_NON_SPATIAL_NUM_CELLS_DEFAULT = 1000;

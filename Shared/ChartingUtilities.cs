@@ -55,14 +55,14 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Gets stochastic time chart status entries for the specified data sheet
+        /// Fills stochastic time status entries for the specified data sheet
         /// </summary>
         /// <param name="store"></param>
         /// <param name="dataSheet"></param>
         /// <param name="chartDescriptors"></param>
         /// <param name="statusEntries"></param>
         /// <remarks></remarks>
-        public static void GetAgeRelatedStatusEntries(DataStore store, DataSheet dataSheet, StochasticTimeStatusCollection statusEntries)
+        public static void FillAgeRelatedStatusEntries(DataStore store, DataSheet dataSheet, StochasticTimeStatusCollection statusEntries)
         {
             IEnumerable<AgeDescriptor> e = AgeUtilities.GetAgeDescriptors(dataSheet.Project);
 
@@ -241,13 +241,14 @@ namespace SyncroSim.STSim
                 return null;
             }
 
+            string tag = GetChartCacheTag(descriptor);
             string query = CreateRawDataQuery(scenario, descriptor, tableName);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query);
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "RawData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt);
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
             }
 
             foreach (DataRow dr in dt.Rows)
@@ -276,13 +277,14 @@ namespace SyncroSim.STSim
             bool isDensity, 
             DataStore store)
         {
+            string tag = GetChartCacheTag(descriptor);
             string query = CreateRawAttributeDataQuery(scenario, descriptor, tableName, attributeTypeColumnName, attributeTypeId);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query);
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "RawData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt);
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
             }
                           
             if (isDensity)
@@ -312,14 +314,15 @@ namespace SyncroSim.STSim
 
         public static Dictionary<string, double> CreateAmountDictionary(Scenario scenario, ChartDescriptor descriptor, DataStore store)
         {
+            string tag = GetChartCacheTag(descriptor);
             Dictionary<string, double> dict = new Dictionary<string, double>();
             string query = CreateAmountQuery(scenario, descriptor);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query);
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "AmountData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt);
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
             }
 
             foreach (DataRow dr in dt.Rows)
@@ -531,6 +534,18 @@ namespace SyncroSim.STSim
             }
 
             return true;
+        }
+
+        private static string GetChartCacheTag(ChartDescriptor descriptor)
+        {
+            if (HasAgeReference(descriptor))
+            {
+                return Constants.AGE_QUERY_CACHE_TAG;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

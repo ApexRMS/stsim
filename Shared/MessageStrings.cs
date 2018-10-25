@@ -27,6 +27,16 @@ namespace SyncroSim.STSim
         public const string ERROR_AGE_DATA_MISSING = "Age classes have been defined but the scenario '{0}' does not contain age data.  You may need to re-run this scenario.";
         public const string ERROR_NO_RESULT_SCENARIOS_FOR_REPORT = "There must be at least one selected ressult scenario create this report.";
 
+        public const string PROMPT_AGE_TYPE_CHANGE = 
+            "Changing your Age Type data will automatically save this library the next time you refresh your charts.  " +
+            "This can take several minutes because all result scenarios for the current project will also be updated.\n\n" + 
+            "Are you sure you want to continue?";
+
+        public const string PROMPT_AGE_GROUP_CHANGE =
+            "Changing your Age Group data will automatically save this library the next time you refresh your charts.  " +
+            "This can take several minutes because all result scenarios for the current project will also be updated.\n\n" +
+            "Are you sure you want to continue?";
+
         //Status Messages
         public const string STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING = "The number of {0}s was not specified.  Using default.";
         public const string STATUS_USING_DEFAULT_MAX_ITERATIONS_WARNING = "The number of iterations was not specified.  Using default.";

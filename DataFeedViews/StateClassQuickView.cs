@@ -98,7 +98,7 @@ namespace SyncroSim.STSim
             this.m_PTGrid.CellBeginEdit += OnProbabilisticCellBeginEdit;
             this.m_PTGrid.CellEndEdit += OnProbabilisticCellEndEdit;
             this.m_PTGrid.DefaultValuesNeeded += OnProbabilisticOnDefaultValuesNeeded;
-            this.m_PTGrid.PressingCmdKey += OnBeforePTGridCmdKey;
+            this.m_PTGrid.BeforeCmdKeyPress += OnBeforePTGridCmdKey;
             this.m_StratumDataSheet.RowsDeleted += OnStratumDeleted;
 
             this.ConfigureContextMenus();
@@ -139,7 +139,7 @@ namespace SyncroSim.STSim
                 this.m_PTGrid.CellBeginEdit -= OnProbabilisticCellBeginEdit;
                 this.m_PTGrid.CellEndEdit -= OnProbabilisticCellEndEdit;
                 this.m_PTGrid.DefaultValuesNeeded -= OnProbabilisticOnDefaultValuesNeeded;
-                this.m_PTGrid.PressingCmdKey -= OnBeforePTGridCmdKey;
+                this.m_PTGrid.BeforeCmdKeyPress -= OnBeforePTGridCmdKey;
                 this.m_StratumDataSheet.RowsDeleted -= OnStratumDeleted;
 
                 if (components != null)

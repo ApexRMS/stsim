@@ -3,6 +3,7 @@
 
 using System.Reflection;
 using System.Windows.Forms;
+using SyncroSim.Core;
 using SyncroSim.Core.Forms;
 
 namespace SyncroSim.STSim
@@ -10,13 +11,13 @@ namespace SyncroSim.STSim
     [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class AgeGroupDataFeedView
     {
+        private BaseDataGridView m_Grid;
+        private MultiRowDataFeedView m_View;
+
         public AgeGroupDataFeedView()
         {
             InitializeComponent();
         }
-
-        private DataGridView m_Grid;
-        private MultiRowDataFeedView m_View;
 
         protected override void InitializeView()
         {
@@ -27,6 +28,7 @@ namespace SyncroSim.STSim
 
             this.Controls.Add(this.m_View);
 
+            this.m_Grid.CellValidating += this.OnCellValidating;
             this.m_Grid.CellDoubleClick += this.OnGridCellDoubleClick;
             this.m_Grid.CellPainting += this.OnGridCellPainting;
             this.m_Grid.KeyDown += this.OnGridKeyDown;
@@ -36,6 +38,7 @@ namespace SyncroSim.STSim
         {
             if (disposing && !this.IsDisposed)
             {
+                this.m_Grid.CellValidating -= this.OnCellValidating;
                 this.m_Grid.CellDoubleClick -= this.OnGridCellDoubleClick;
                 this.m_Grid.CellPainting -= this.OnGridCellPainting;
                 this.m_Grid.KeyDown -= this.OnGridKeyDown;
@@ -49,13 +52,39 @@ namespace SyncroSim.STSim
             base.Dispose(disposing);
         }
 
-        public override void LoadDataFeed(SyncroSim.Core.DataFeed dataFeed)
+        public override void LoadDataFeed(DataFeed dataFeed)
         {
             base.LoadDataFeed(dataFeed);
             this.m_View.LoadDataFeed(dataFeed);
         }
 
-        private void OnGridCellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        private void OnCellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (!this.m_Grid.IsCurrentCellDirty)
+            {
+                return;
+            }
+
+            DataGridViewColumn c = this.m_Grid.Columns[e.ColumnIndex];
+
+            if (c.Name != Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME)
+            {
+                return;
+            }
+
+            if (!AgeUtilities.HasAgeClassUpdateTag(this.Project))
+            {
+                if (MessageBox.Show(MessageStrings.PROMPT_AGE_GROUP_CHANGE, "Age Group", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    this.m_Grid.CancelEdit();
+                    this.ActiveControl = this.m_Grid;
+
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
             {
@@ -68,7 +97,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void OnGridCellPainting(object sender, System.Windows.Forms.DataGridViewCellPaintingEventArgs e)
+        private void OnGridCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
             {
@@ -95,7 +124,11 @@ namespace SyncroSim.STSim
                 }
                 else if (e.KeyCode == Keys.Enter)
                 {
-                    ColorColumns.AssignGridViewColor(this.m_Grid, this.m_Grid.CurrentCell.RowIndex, this.m_Grid.CurrentCell.ColumnIndex);
+                    ColorColumns.AssignGridViewColor(
+                        this.m_Grid, 
+                        this.m_Grid.CurrentCell.RowIndex, 
+                        this.m_Grid.CurrentCell.ColumnIndex);
+
                     e.Handled = true;
                 }
             }

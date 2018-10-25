@@ -2,6 +2,7 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.IO;
 using System.Data;
 using System.Linq;
 using System.Diagnostics;
@@ -179,6 +180,63 @@ namespace SyncroSim.STSim
             }
 
             return null;
+        }
+
+        public static void UpdateAgeClassIfRequired(DataStore store, Project project)
+        {
+            if (project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG))
+            {
+                foreach (Scenario s in project.Library.Scenarios)
+                {
+                    if (!s.IsDeleted && s.IsResult && s.Project == project)
+                    {
+                        UpdateAgeClassWork(store, s);
+                        DeleteAgeRelatedCacheEntries(s);
+                    }
+                }                
+            }
+        }
+
+        public static void UpdateAgeClassWork(DataStore store, Scenario s)
+        {
+            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME));
+            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME));
+            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME));
+            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME));
+        }
+
+        public static void DeleteAgeRelatedCacheEntries(Scenario scenario)
+        {
+            string CacheFolder = StochasticTime.ChartCache.GetCacheFolderName(scenario);
+
+            foreach (string f in Directory.GetFiles(CacheFolder))
+            {
+                if (f.EndsWith(Constants.AGE_QUERY_CACHE_TAG))
+                {
+                    File.Delete(f);
+                }
+            }
+        }
+
+        public static void SetAgeClassUpdateTag(Project project)
+        {
+            if (!project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG))
+            {
+                project.Tags.Add(new Tag(Constants.AGECLASS_UPDATE_REQUIRED_TAG, null));
+            }
+        }
+
+        public static void ClearAgeClassUpdateTag(Project project)
+        {
+            if (project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG))
+            {
+                project.Tags.Remove(Constants.AGECLASS_UPDATE_REQUIRED_TAG);
+            }
+        }
+
+        public static bool HasAgeClassUpdateTag(Project project)
+        {
+            return project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG);
         }
     }
 }

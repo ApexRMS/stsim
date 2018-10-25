@@ -113,6 +113,8 @@
     <Compile Include="Console\STSimConsole.ListReports.cs" />
     <Compile Include="Console\STSimConsole.SpatialSplit.cs" />
     <Compile Include="Console\STSimConsole.cs" />
+    <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
+    <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
     <Compile Include="Runtime\AttributeValueBase.cs" />
     <Compile Include="Runtime\AttributeValueRecord.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Runtime\OutputTransitionAttributeCollection.cs" />
     <Compile Include="Runtime\PatchPrioritization.cs" />
     <Compile Include="Runtime\PatchPrioritizationCollection.cs" />
+    <Compile Include="Runtime\PostProcessTransformer.cs" />
     <Compile Include="Runtime\ProportionAccumulatorMap.cs" />
     <Compile Include="Runtime\StateAttributeValue.cs" />
     <Compile Include="Runtime\StateAttributeValueCollection.cs" />

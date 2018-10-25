@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
+using SyncroSim.Core.Forms;
 using SyncroSim.StochasticTime.Forms;
 
 namespace SyncroSim.STSim
@@ -91,7 +92,7 @@ namespace SyncroSim.STSim
         /// <remarks>
         /// If a request is being made for age data we have to update the age class 
         /// </remarks>
-        public override void PrepareData(
+        public override void GetStatus(
             DataStore store, 
             ChartDescriptorCollection descriptors, 
             StochasticTimeStatusCollection statusEntries, 
@@ -125,9 +126,7 @@ namespace SyncroSim.STSim
                     foreach (string n in Sheets)
                     {
                         DataSheet ds = s.GetDataSheet(n);
-
-                        ChartingUtilities.UpdateAgeClassColumn(store, ds);
-                        ChartingUtilities.GetAgeRelatedStatusEntries(store, ds, statusEntries);
+                        ChartingUtilities.FillAgeRelatedStatusEntries(store, ds, statusEntries);
                     }
                 }
             }
@@ -135,6 +134,17 @@ namespace SyncroSim.STSim
 
         public override DataTable GetData(DataStore store, ChartDescriptor descriptor, DataSheet dataSheet)
         {
+            if (AgeUtilities.HasAgeClassUpdateTag(dataSheet.Project))
+            {
+                WinFormSession sess = (WinFormSession) dataSheet.Session;
+
+                sess.SetStatusMessageWithEvents("Updating age related data...");
+                dataSheet.Library.Save(store);
+                sess.SetStatusMessageWithEvents(string.Empty);
+
+                Debug.Assert(!AgeUtilities.HasAgeClassUpdateTag(dataSheet.Project));
+            }
+
             if (
                 descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
                 descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME)
@@ -181,6 +191,18 @@ namespace SyncroSim.STSim
             }
 
             return null;
+        }
+
+        public override string GetCacheTag(ChartDescriptor descriptor)
+        {
+            if (ChartingUtilities.HasAgeReference(descriptor))
+            {
+                return Constants.AGE_QUERY_CACHE_TAG;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static void AddChartStateClassVariables(SyncroSimLayoutItemCollection items, Project project)

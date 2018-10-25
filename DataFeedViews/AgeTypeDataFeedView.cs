@@ -2,7 +2,7 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System.Reflection;
-using SyncroSim.Common.Forms;
+using System.Windows.Forms;
 
 namespace SyncroSim.STSim
 {
@@ -25,12 +25,22 @@ namespace SyncroSim.STSim
             this.AddStandardCommands();
         }
 
-        protected override void OnBoundTextBoxValidated(System.Windows.Forms.TextBox textBox, string columnName, string newValue)
+        protected override bool OnBoundTextBoxValidating(TextBox textBox, string columnName, string proposedValue)
         {
-            using (HourGlass h = new HourGlass())
+            if (!base.OnBoundTextBoxValidating(textBox, columnName, proposedValue))
             {
-                base.OnBoundTextBoxValidated(textBox, columnName, newValue);
+                return false;
             }
+
+            if (!AgeUtilities.HasAgeClassUpdateTag(this.Project))
+            {
+                if (MessageBox.Show(MessageStrings.PROMPT_AGE_TYPE_CHANGE, "Age Type", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

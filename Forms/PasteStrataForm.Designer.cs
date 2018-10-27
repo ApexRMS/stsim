@@ -90,7 +90,6 @@ namespace SyncroSim.STSim
             this.DataGridViewStrata.MultiSelect = false;
             this.DataGridViewStrata.Name = "DataGridViewStrata";
             this.DataGridViewStrata.PaintGridBorders = true;
-            this.DataGridViewStrata.PaintSelectionRectangle = true;
             this.DataGridViewStrata.RowHeadersVisible = false;
             DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(Convert.ToByte(232)), Convert.ToInt32(Convert.ToByte(232)), Convert.ToInt32(Convert.ToByte(232)));
             this.DataGridViewStrata.RowsDefaultCellStyle = DataGridViewCellStyle5;

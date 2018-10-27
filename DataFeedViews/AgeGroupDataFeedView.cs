@@ -60,6 +60,11 @@ namespace SyncroSim.STSim
 
         private void OnCellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
+            if (e.Cancel == true)
+            {
+                return;
+            }
+
             if (!this.m_Grid.IsCurrentCellDirty)
             {
                 return;

@@ -81,7 +81,6 @@ namespace SyncroSim.STSim
             this.m_PTGrid = this.m_PTView.GridControl;
             this.PanelProbabilistic.Controls.Add(this.m_PTView);
 
-            this.m_DTGrid.RowHeadersVisible = false;
             this.m_DTGrid.PaintGridBorders = false;
             this.m_DTView.ManageOptionalColumns = false;
 
@@ -121,6 +120,9 @@ namespace SyncroSim.STSim
         private void GridConfigAsyncTarget()
         {
             this.m_DTGrid.AllowUserToAddRows = false;
+
+            DataGridViewColumn ToClassCol = this.m_DTGrid.Columns[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME];
+            this.m_DTGrid.CurrentCell = this.m_DTGrid.Rows[0].Cells[ToClassCol.Index];
         }
 
         /// <summary>

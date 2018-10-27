@@ -30,7 +30,6 @@ namespace SyncroSim.STSim
         public void Initialize(Project project, string selectedStratum)
         {
             this.DataGridViewStrata.BackgroundColor = System.Drawing.Color.White;
-            this.DataGridViewStrata.PaintSelectionRectangle = false;
             this.DataGridViewStrata.PaintGridBorders = false;
             this.PanelGrid.ShowBorder = true;
 

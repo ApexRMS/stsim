@@ -566,6 +566,10 @@ namespace SyncroSim.STSim
 
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {
+                        // TODO: if there is a target multiplier check to see if there is a target priority.
+                        // if there is a target priority get the correct multiplier or probability override.
+                        // if the probability override is 1 then a transition for this group and cell must happen.
+                        // Can we use select spatial transition pathway to get the transition?
                         multiplier *= this.GetTransitionTargetMultiplier(tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
                     }
 

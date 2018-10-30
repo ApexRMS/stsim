@@ -457,6 +457,11 @@ namespace SyncroSim.STSim
                 tt.ExpectedAmount = 0.0;
             }
 
+            // TODO: Changes for Transition Target Prioritization
+            // At this point check to see if there are any transition target priorities for the transition group we are simulating
+            // If these exist we need to prepare to track for each priority what the max possible area is.
+            // we need to setup an in memory structure to track: priority, expected area, area possible, cumulative possible, desired area, desired probability.
+             
             foreach (Cell simulationCell in this.m_Cells)
             {
                 foreach (Transition tr in simulationCell.Transitions)
@@ -505,6 +510,10 @@ namespace SyncroSim.STSim
                         {
                             tt.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             Debug.Assert(tt.ExpectedAmount >= 0.0);
+                            // TODO: at this point check to see if there are transition target priorities
+                            // If yes, check if this cell fits within one of the priorities
+                            // If yes calculate the possible amount for this cell and add it to the possible amount for the corresponding priority
+                            // also track the expected amount for the priority.
                         }
                     }
                 }
@@ -517,6 +526,15 @@ namespace SyncroSim.STSim
                     ttarg.Multiplier = ttarg.CurrentValue.Value / ttarg.ExpectedAmount;
                     Debug.Assert(ttarg.Multiplier >= 0.0);
                 }
+
+                // TODO: Check if there are applicable priorities
+                // iterate over the table of priorities that correspond to this target sorted by rank
+                // for each priority calculate to cumulative possible area and compare to target for group
+                // if cumulative possible is less than target set probability override to 1
+                //      for the first record where cumulative possible > target priority calculate the target amount as [total target - cumulative possible for previous priority]
+                //      calculate the probability adjustment as target for priority/expected amount.
+                // for any other stratum where the cumulative possible exceeds the target set the probability override to zero.
+
             }
         }
     }

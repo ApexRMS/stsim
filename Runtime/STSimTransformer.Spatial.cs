@@ -1837,7 +1837,13 @@ namespace SyncroSim.STSim
                 {
                     double multiplier = GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
                     multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
+                    
+                    // TODO: Add transisiton target priority code here
+                    // Determine if there is a target and a target priority
+                    // Get the cell probability override or the appropriate multiplier.
+                    // If there is an override, then don't bother 
                     multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
+                    
 
                     if (this.IsSpatial)
                     {

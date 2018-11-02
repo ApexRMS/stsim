@@ -70,10 +70,6 @@ namespace SyncroSim.STSim
             {
                 return this.m_StratumId;
             }
-            set
-            {
-                this.m_StratumId = value;
-            }
         }
 
         public int? SecondaryStratumId
@@ -82,10 +78,6 @@ namespace SyncroSim.STSim
             {
                 return this.m_SecondaryStratumId;
             }
-            set
-            {
-                this.m_SecondaryStratumId = value;
-            }
         }
 
         public int? TertiaryStratumId
@@ -93,10 +85,6 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_TertiaryStratumId;
-            }
-            set
-            {
-                this.m_TertiaryStratumId = value;
             }
         }
 

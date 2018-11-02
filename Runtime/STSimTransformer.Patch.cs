@@ -313,7 +313,7 @@ namespace SyncroSim.STSim
                     return;
                 }
 
-                if (this.SelectSpatialTransitionPathway(neighborCell, transitionGroup.TransitionGroupId, iteration, timestep) == null)
+                if (this.SelectTransitionPathway(neighborCell, transitionGroup.TransitionGroupId, iteration, timestep) == null)
                 {
                     return;
                 }
@@ -357,7 +357,7 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                if (this.SelectSpatialTransitionPathway(SimulationCell, transitionGroup.TransitionGroupId, iteration, timestep) == null)
+                if (this.SelectTransitionPathway(SimulationCell, transitionGroup.TransitionGroupId, iteration, timestep) == null)
                 {
                     continue;
                 }

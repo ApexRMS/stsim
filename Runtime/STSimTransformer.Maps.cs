@@ -12,6 +12,7 @@ namespace SyncroSim.STSim
         private DeterministicTransitionMap m_DeterministicTransitionMap;
         private TransitionOrderMap m_TransitionOrderMap;
         private TransitionTargetMap m_TransitionTargetMap;
+        private TransitionTargetPrioritizationMap m_TransitionTargetPrioritizationMap;
         private TransitionAttributeTargetMap m_TransitionAttributeTargetMap;
         private TransitionAttributeValueMap m_TransitionAttributeValueMap;
         private TransitionSizeDistributionMap m_TransitionSizeDistributionMap;
@@ -76,6 +77,10 @@ namespace SyncroSim.STSim
             //Create the transition targets map. 
             Debug.Assert(this.m_TransitionTargetMap == null);
             this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
+
+            //Create the transition target prioritizations. 
+            Debug.Assert(this.m_TransitionTargetPrioritizationMap == null);
+            this.m_TransitionTargetPrioritizationMap = new TransitionTargetPrioritizationMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
 
             //Create the transition attribute targets map. 
             Debug.Assert(this.m_TransitionAttributeTargetMap == null);

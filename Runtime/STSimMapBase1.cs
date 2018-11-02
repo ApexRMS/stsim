@@ -35,6 +35,18 @@ namespace SyncroSim.STSim
             this.SetHasItems();
         }
 
+        protected T GetItemExact(int? k1, int? iteration, int? timestep)
+        {
+            SortedKeyMap2<T> m = this.m_map.GetItemExact(k1);
+
+            if (m == null)
+            {
+                return default(T);
+            }
+
+            return m.GetItemExact(iteration, timestep);
+        }
+
         protected T GetItem(int? k1, int? iteration, int? timestep)
         {
             if (!this.HasItems)

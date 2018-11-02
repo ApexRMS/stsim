@@ -457,11 +457,22 @@ namespace SyncroSim.STSim
                 tt.ExpectedAmount = 0.0;
             }
 
-            // TODO: Changes for Transition Target Prioritization
-            // At this point check to see if there are any transition target priorities for the transition group we are simulating
-            // If these exist we need to prepare to track for each priority what the max possible area is.
-            // we need to setup an in memory structure to track: priority, expected area, area possible, cumulative possible, desired area, desired probability.
-             
+            List<TransitionTargetPrioritization> TTPriorRecs = 
+                this.m_TransitionTargetPrioritizationMap.GetPrioritizations(explicitGroup.TransitionGroupId, iteration, timestep);
+
+            if (TTPriorRecs != null)
+            {
+                foreach (TransitionTargetPrioritization pri in TTPriorRecs)
+                {
+                    pri.PossibleAmount = 0.0;
+                    pri.ExpectedAmount = 0.0;
+                    pri.DesiredAmount = null;
+                    pri.CumulativePossibleAmount = 0.0;
+                    pri.ProbabilityMultiplier = 1.0;
+                    pri.ProbabilityOverride = null;
+                }
+            }
+       
             foreach (Cell simulationCell in this.m_Cells)
             {
                 foreach (Transition tr in simulationCell.Transitions)
@@ -504,18 +515,49 @@ namespace SyncroSim.STSim
 
                     foreach (TransitionGroup tgroup in ttype.TransitionGroups)
                     {
-                        TransitionTarget tt = this.m_TransitionTargetMap.GetTransitionTarget(tgroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
+                        TransitionTarget tt = this.m_TransitionTargetMap.GetTransitionTarget(
+                            tgroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                            simulationCell.TertiaryStratumId, iteration, timestep);
 
                         if (tt != null)
                         {
                             tt.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             Debug.Assert(tt.ExpectedAmount >= 0.0);
-                            // TODO: at this point check to see if there are transition target priorities
-                            // If yes, check if this cell fits within one of the priorities
-                            // If yes calculate the possible amount for this cell and add it to the possible amount for the corresponding priority
-                            // also track the expected amount for the priority.
+
+                            List<TransitionTargetPrioritization> lst = this.m_TransitionTargetPrioritizationMap.GetPrioritizations(
+                                tgroup.TransitionGroupId, iteration, timestep);
+
+                            if (lst != null)
+                            {
+                                TransitionTargetPrioritization pri = this.m_TransitionTargetPrioritizationMap.GetSinglePrioritization(
+                                    lst, 
+                                    simulationCell.StratumId, 
+                                    simulationCell.SecondaryStratumId, 
+                                    simulationCell.TertiaryStratumId, 
+                                    simulationCell.StateClassId);
+
+                                if (pri != null)
+                                {
+                                    pri.PossibleAmount += this.m_AmountPerCell;
+                                    pri.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
+                                }
+                            }
                         }
                     }
+                }
+            }
+
+            List<TransitionTargetPrioritization> TargetPriorities = this.m_TransitionTargetPrioritizationMap.GetPrioritizations(
+                explicitGroup.TransitionGroupId, iteration, timestep);
+
+            double TotalCumulativePossibleAmount = 0.0;
+
+            if (TargetPriorities != null)
+            {                
+                foreach (TransitionTargetPrioritization pri in TargetPriorities)
+                {
+                    TotalCumulativePossibleAmount += pri.PossibleAmount;
+                    pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
                 }
             }
 
@@ -527,14 +569,35 @@ namespace SyncroSim.STSim
                     Debug.Assert(ttarg.Multiplier >= 0.0);
                 }
 
-                // TODO: Check if there are applicable priorities
-                // iterate over the table of priorities that correspond to this target sorted by rank
-                // for each priority calculate to cumulative possible area and compare to target for group
-                // if cumulative possible is less than target set probability override to 1
-                //      for the first record where cumulative possible > target priority calculate the target amount as [total target - cumulative possible for previous priority]
-                //      calculate the probability adjustment as target for priority/expected amount.
-                // for any other stratum where the cumulative possible exceeds the target set the probability override to zero.
+                if (TargetPriorities != null)
+                {
+                    double PreviousCumulativeAmount = 0.0;
 
+                    foreach (TransitionTargetPrioritization pri in TargetPriorities)
+                    {
+                        if (ttarg.CurrentValue >= pri.CumulativePossibleAmount)
+                        {
+                            pri.ProbabilityOverride = 1.0;
+                        }
+                        else
+                        {
+                            if (ttarg.CurrentValue > PreviousCumulativeAmount)
+                            {
+                                pri.DesiredAmount = ttarg.CurrentValue - PreviousCumulativeAmount;
+                                pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                            }
+                            else
+                            {
+                                pri.ProbabilityOverride = 0.0;
+                            }
+                        }
+
+                        PreviousCumulativeAmount = pri.CumulativePossibleAmount;
+                    }
+                }
+
+                //DEVTODO: LEO: Consider implications of targets defined by strata.
+                //DEVTODO: LEO: Can we handle two records with the same priority?
             }
         }
     }

@@ -240,6 +240,9 @@
     <Compile Include="Runtime\TransitionTarget.cs" />
     <Compile Include="Runtime\TransitionTargetCollection.cs" />
     <Compile Include="Runtime\TransitionTargetMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritization.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationCollection.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationMap.cs" />
     <Compile Include="Runtime\TransitionType.cs" />
     <Compile Include="Runtime\TransitionTypeCollection.cs" />
     <Compile Include="Runtime\TST.cs" />

@@ -111,6 +111,9 @@ namespace SyncroSim.STSim
             Debug.Assert(this.IsSpatial);
 
             //Get the cell probability.  If it is less than or equal to zero we don't need to continue
+
+            //DEVTODO: LEO, is this OK with the new Transition Prioritization Code?
+
             double CellProbability = this.SpatialCalculateCellProbability(neighboringCell, spreadGroup.TransitionGroupId, iteration, timestep);
 
             if (CellProbability <= 0.0)
@@ -119,7 +122,7 @@ namespace SyncroSim.STSim
             }
 
             //Get the transition pathway.  If there isn't one we don't need to continue
-            Transition tr = this.SelectSpatialTransitionPathway(neighboringCell, spreadGroup.TransitionGroupId, iteration, timestep);
+            Transition tr = this.SelectTransitionPathway(neighboringCell, spreadGroup.TransitionGroupId, iteration, timestep);
 
             if (tr == null)
             {
@@ -180,7 +183,7 @@ namespace SyncroSim.STSim
 
                     if (DistantCell != null)
                     {
-                        Transition DistantTransition = this.SelectSpatialTransitionPathway(DistantCell, spreadGroup.TransitionGroupId, iteration, timestep);
+                        Transition DistantTransition = this.SelectTransitionPathway(DistantCell, spreadGroup.TransitionGroupId, iteration, timestep);
 
                         if (DistantTransition != null)
                         {

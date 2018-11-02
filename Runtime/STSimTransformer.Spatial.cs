@@ -779,74 +779,6 @@ namespace SyncroSim.STSim
             return SimulationCell;
         }
 
-        private Transition SelectSpatialTransitionPathway(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
-        {
-            Debug.Assert(this.IsSpatial);
-
-            double SumProbability = 0.0;
-            TransitionCollection Transitions = new TransitionCollection();
-
-            foreach (Transition tr in simulationCell.Transitions)
-            {
-                TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
-
-                if (tt.PrimaryTransitionGroups.Contains(transitionGroupId))
-                {
-                    double multiplier = this.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
-                    multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
-
-                    foreach (TransitionGroup tg in tt.TransitionGroups)
-                    {
-                        multiplier *= this.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell);
-                        multiplier *= this.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId);
-                    }
-
-                    if (this.m_TransitionAttributeTargets.Count > 0)
-                    {
-                        multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
-                    }
-
-                    SumProbability += tr.Probability * tr.Proportion * multiplier;
-                    Transitions.Add(tr);
-                }
-            }
-
-            double CumulativeProbability = 0.0;
-            double Rand = this.m_RandomGenerator.GetNextDouble();
-
-            foreach (Transition tr in Transitions)
-            {
-                TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
-
-                double multiplier = this.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
-                multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
-
-                foreach (TransitionGroup tg in tt.TransitionGroups)
-                {
-                    multiplier *= this.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId);
-                }
-
-                if (this.m_TransitionAttributeTargets.Count > 0)
-                {
-                    multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
-                }
-
-                CumulativeProbability += ((tr.Probability * tr.Proportion * multiplier) / SumProbability);
-
-                if (CumulativeProbability > Rand)
-                {
-                    return tr;
-                }
-            }
-
-            return null;
-        }
-
         private void GenerateTransitionEvents(List<TransitionEvent> transitionEventList, Dictionary<int, Cell> transitionedCells, Dictionary<int, Cell> initiationCells, int stratumId, int transitionGroupId, int iteration, int timestep, double maxCellProbability, int[] transitionedPixels, ref double expectedArea, Dictionary<int, double[]> rasterTransitionAttrValues)
         {
 #if DEBUG
@@ -968,13 +900,13 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    Transition = this.SelectSpatialTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
+                    Transition = this.SelectTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
                 }
                 else
                 {
                     if (AutoCorrelation == null || (!AutoCorrelation.AutoCorrelation))
                     {
-                        Transition = this.SelectSpatialTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
+                        Transition = this.SelectTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
                     }
                 }
 
@@ -1837,14 +1769,37 @@ namespace SyncroSim.STSim
                 {
                     double multiplier = GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
                     multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                    
-                    // TODO: Add transisiton target priority code here
-                    // Determine if there is a target and a target priority
-                    // Get the cell probability override or the appropriate multiplier.
-                    // If there is an override, then don't bother 
-                    multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
-                    
 
+                    List<TransitionTargetPrioritization> PriorityList = 
+                        this.m_TransitionTargetPrioritizationMap.GetPrioritizations(TransitionGroup.TransitionGroupId, iteration, timestep);
+
+                    double? ProbabilityOverride = null;
+
+                    if (PriorityList != null)
+                    {
+                        TransitionTargetPrioritization pri = this.m_TransitionTargetPrioritizationMap.GetSinglePrioritization(
+                            PriorityList, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                            simulationCell.TertiaryStratumId, simulationCell.StateClassId);
+
+                        if (pri != null)
+                        {
+                            ProbabilityOverride = pri.ProbabilityOverride;
+                            multiplier *= pri.ProbabilityMultiplier;
+                        }
+                        else
+                        {
+                            //DEVTODO: LEO, Consider the implications of some cells not qualifiying for priority.
+
+                            multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                                simulationCell.TertiaryStratumId, iteration, timestep);
+                        }
+                    }
+                    else
+                    {
+                        multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                            simulationCell.TertiaryStratumId, iteration, timestep);
+                    }
+                   
                     if (this.IsSpatial)
                     {
                         multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
@@ -1864,7 +1819,14 @@ namespace SyncroSim.STSim
                         multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
                     }
 
-                    CellProbability += tr.Probability * tr.Proportion * multiplier;
+                    if (!ProbabilityOverride.HasValue)
+                    {
+                        CellProbability += tr.Probability * tr.Proportion * multiplier;
+                    }
+                    else
+                    {
+                        CellProbability = ProbabilityOverride.Value;
+                    }
                 }
             }
 

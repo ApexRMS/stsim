@@ -203,6 +203,10 @@ namespace SyncroSim.STSim
         //Transition Target
         public const string DATASHEET_TRANSITION_TARGET_NAME = "STSim_TransitionTarget";
 
+        //Transition Target Prioritization
+        public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_NAME = "STSim_TransitionTargetPrioritization";
+        public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_PRIORITY_COLUMN_NAME = "Priority";
+
         //Transition Order
         public const string DATASHEET_TRANSITION_ORDER_NAME = "STSim_TransitionOrder";
         public const string DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME = "Order";

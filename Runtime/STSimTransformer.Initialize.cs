@@ -239,6 +239,7 @@ namespace SyncroSim.STSim
             this.FillTransitionAttributeTargetCollection();
             this.FillTransitionOrderCollection();
             this.FillTransitionTargetCollection();
+            this.FillTransitionTargetPrioritizationCollection();
             this.FillTstTransitionGroupCollection();
             this.FillTstRandomizeCollection();
             this.FillTransitionMultiplierValueCollection();

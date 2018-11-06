@@ -609,11 +609,11 @@ namespace SyncroSim.STSim
                                             TargetPrioritizationMultiplierApplied = true;
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    multiplier *= pri.ProbabilityMultiplier;
-                                    TargetPrioritizationMultiplierApplied = true;
+                                    else
+                                    {
+                                        multiplier *= pri.ProbabilityMultiplier;
+                                        TargetPrioritizationMultiplierApplied = true;
+                                    }
                                 }
                             }
                         }

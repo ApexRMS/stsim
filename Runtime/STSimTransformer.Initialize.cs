@@ -41,6 +41,7 @@ namespace SyncroSim.STSim
             this.InitializeStateAttributes();
             this.InitializeTransitionAttributes();
             this.InitializeShufflableTransitionGroups();
+            this.InitializeTransitionTargetPrioritizations();
 
             if (this.IsSpatial)
             {
@@ -360,6 +361,28 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup tg in this.m_TransitionGroups)
             {
                 this.m_ShufflableTransitionGroups.Add(tg);
+            }
+        }
+
+        /// <summary>
+        /// Assigns Target Prioritizations to each target
+        /// </summary>
+        private void InitializeTransitionTargetPrioritizations()
+        {
+            if (this.m_TransitionTargets.Count == 0 || this.m_TransitionTargetPrioritizations.Count == 0)
+            {
+                return;
+            }
+
+            foreach (TransitionTarget t in this.m_TransitionTargets)
+            {
+                List<TransitionTargetPrioritization> l = this.m_TransitionTargetPrioritizationMap.GetPrioritizationList(
+                    t.TransitionGroupId, t.Iteration, t.Timestep);
+
+                if (l != null)
+                {
+                    t.SetPrioritizations(l);
+                }
             }
         }
 

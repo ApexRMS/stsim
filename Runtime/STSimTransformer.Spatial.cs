@@ -1770,33 +1770,48 @@ namespace SyncroSim.STSim
                     double multiplier = GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
                     multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
 
-                    List<TransitionTargetPrioritization> PriorityList = 
-                        this.m_TransitionTargetPrioritizationMap.GetPrioritizations(TransitionGroup.TransitionGroupId, iteration, timestep);
+                    TransitionTarget target = this.m_TransitionTargetMap.GetTransitionTarget(
+                        TransitionGroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId, iteration, timestep);
 
-                    double? ProbabilityOverride = null;
+                    bool TargetPrioritizationMultiplierApplied = false;
 
-                    if (PriorityList != null)
+                    if (target != null)
                     {
-                        TransitionTargetPrioritization pri = this.m_TransitionTargetPrioritizationMap.GetSinglePrioritization(
-                            PriorityList, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                            simulationCell.TertiaryStratumId, simulationCell.StateClassId);
-
-                        if (pri != null)
+                        if (target.Prioritizations != null)
                         {
-                            ProbabilityOverride = pri.ProbabilityOverride;
-                            multiplier *= pri.ProbabilityMultiplier;
-                        }
-                        else
-                        {
-                            //DEVTODO: LEO, Consider the implications of some cells not qualifiying for priority.
+                            TransitionTargetPrioritization pri = target.GetPrioritization(
+                                simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                                simulationCell.TertiaryStratumId, simulationCell.StateClassId);
 
-                            multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                                simulationCell.TertiaryStratumId, iteration, timestep);
+                            if (pri != null)
+                            {
+                                if (pri.ProbabilityOverride.HasValue)
+                                {
+                                    Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
+
+                                    if (pri.ProbabilityOverride.Value == 1.0)
+                                    {
+                                        return 1.0;
+                                    }
+                                    else if (pri.ProbabilityOverride.Value == 0.0)
+                                    {
+                                        return 0.0;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                multiplier *= pri.ProbabilityMultiplier;
+                                TargetPrioritizationMultiplierApplied = true;
+                            }
                         }
                     }
-                    else
+
+                    if (!TargetPrioritizationMultiplierApplied)
                     {
-                        multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                        multiplier *= this.GetTransitionTargetMultiplier(
+                            TransitionGroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
                             simulationCell.TertiaryStratumId, iteration, timestep);
                     }
                    
@@ -1819,14 +1834,7 @@ namespace SyncroSim.STSim
                         multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
                     }
 
-                    if (!ProbabilityOverride.HasValue)
-                    {
-                        CellProbability += tr.Probability * tr.Proportion * multiplier;
-                    }
-                    else
-                    {
-                        CellProbability = ProbabilityOverride.Value;
-                    }
+                    CellProbability += tr.Probability * tr.Proportion * multiplier;
                 }
             }
 

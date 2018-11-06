@@ -555,42 +555,6 @@ namespace SyncroSim.STSim
 
             double CumulativeProbability = 0.0;
             double RandomNextDouble = this.m_RandomGenerator.GetNextDouble();
-            List<TransitionTargetPrioritization> TargetPriorities = this.m_TransitionTargetPrioritizationMap.GetPrioritizations(TransitionGroup.TransitionGroupId, iteration, timestep);
-            double? TargetProbabilityOverride = null;
-            double TargetPrioritizationMultiplier = 1.0;
-
-            if (TargetPriorities != null)
-            {
-                TransitionTargetPrioritization pri = this.m_TransitionTargetPrioritizationMap.GetSinglePrioritization(
-                    TargetPriorities, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell.StateClassId);
-
-                if (pri != null)
-                {
-                    TargetProbabilityOverride = pri.ProbabilityOverride;
-                    TargetPrioritizationMultiplier = pri.ProbabilityMultiplier;
-                }
-            }
-
-            if (TargetProbabilityOverride.HasValue)
-            {
-                if (TargetProbabilityOverride.Value == 1.0)
-                {
-                    Transition tr = this.SelectTransitionPathway(simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
-
-                    this.OnSummaryTransitionOutput(simulationCell, tr, iteration, timestep);
-                    this.OnSummaryTransitionByStateClassOutput(simulationCell, tr, iteration, timestep);
-
-                    this.ChangeCellForProbabilisticTransition(simulationCell, tr, iteration, timestep, rasterTransitionAttrValues);
-                    this.FillProbabilisticTransitionsForCell(simulationCell, iteration, timestep);
-
-                    if (this.IsSpatial)
-                    {
-                        this.UpdateTransitionedPixels(simulationCell, tr.TransitionTypeId, transitionedPixels);
-                    }
-                }
-
-                return;
-            }
 
             foreach (Transition tr in simulationCell.Transitions)
             {
@@ -602,16 +566,64 @@ namespace SyncroSim.STSim
 
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {
-                        if (TargetPrioritizationMultiplier != 1.0)
+                        TransitionTarget target = this.m_TransitionTargetMap.GetTransitionTarget(
+                            tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                            simulationCell.TertiaryStratumId, iteration, timestep);
+
+                        bool TargetPrioritizationMultiplierApplied = false;
+
+                        if (target != null)
                         {
-                            multiplier *= TargetPrioritizationMultiplier;
+                            if (target.Prioritizations != null)
+                            {
+                                TransitionTargetPrioritization pri = target.GetPrioritization(
+                                    simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                                    simulationCell.TertiaryStratumId, simulationCell.StateClassId);
+
+                                if (pri != null)
+                                {
+                                    if (pri.ProbabilityOverride.HasValue)
+                                    {
+                                        Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
+
+                                        if (pri.ProbabilityOverride.Value == 1.0)
+                                        {
+                                            Transition SelectedTransition = this.SelectTransitionPathway(simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
+
+                                            this.OnSummaryTransitionOutput(simulationCell, SelectedTransition, iteration, timestep);
+                                            this.OnSummaryTransitionByStateClassOutput(simulationCell, SelectedTransition, iteration, timestep);
+
+                                            this.ChangeCellForProbabilisticTransition(simulationCell, SelectedTransition, iteration, timestep, rasterTransitionAttrValues);
+                                            this.FillProbabilisticTransitionsForCell(simulationCell, iteration, timestep);
+
+                                            if (this.IsSpatial)
+                                            {
+                                                this.UpdateTransitionedPixels(simulationCell, SelectedTransition.TransitionTypeId, transitionedPixels);
+                                            }
+
+                                            return;
+                                        }
+                                        else if (pri.ProbabilityOverride.Value == 0.0)
+                                        {
+                                            multiplier *= 0.0;
+                                            TargetPrioritizationMultiplierApplied = true;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    multiplier *= pri.ProbabilityMultiplier;
+                                    TargetPrioritizationMultiplierApplied = true;
+                                }
+                            }
                         }
-                        else
+
+                        if (!TargetPrioritizationMultiplierApplied)
                         {
                             multiplier *= this.GetTransitionTargetMultiplier(
                                 tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                                simulationCell.TertiaryStratumId, iteration, timestep);
-                        }            
+                                simulationCell.TertiaryStratumId, iteration, timestep); 
+                        }                                
                     }
 
                     if (this.m_TransitionAttributeTargets.Count > 0)

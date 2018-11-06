@@ -455,21 +455,18 @@ namespace SyncroSim.STSim
             {
                 tt.Multiplier = 1.0;
                 tt.ExpectedAmount = 0.0;
-            }
 
-            List<TransitionTargetPrioritization> TTPriorRecs = 
-                this.m_TransitionTargetPrioritizationMap.GetPrioritizations(explicitGroup.TransitionGroupId, iteration, timestep);
-
-            if (TTPriorRecs != null)
-            {
-                foreach (TransitionTargetPrioritization pri in TTPriorRecs)
+                if (tt.Prioritizations != null)
                 {
-                    pri.PossibleAmount = 0.0;
-                    pri.ExpectedAmount = 0.0;
-                    pri.DesiredAmount = null;
-                    pri.CumulativePossibleAmount = 0.0;
-                    pri.ProbabilityMultiplier = 1.0;
-                    pri.ProbabilityOverride = null;
+                    foreach (TransitionTargetPrioritization pri in tt.Prioritizations)
+                    {
+                        pri.PossibleAmount = 0.0;
+                        pri.ExpectedAmount = 0.0;
+                        pri.DesiredAmount = null;
+                        pri.CumulativePossibleAmount = 0.0;
+                        pri.ProbabilityMultiplier = 1.0;
+                        pri.ProbabilityOverride = null;
+                    }
                 }
             }
        
@@ -524,13 +521,9 @@ namespace SyncroSim.STSim
                             tt.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             Debug.Assert(tt.ExpectedAmount >= 0.0);
 
-                            List<TransitionTargetPrioritization> lst = this.m_TransitionTargetPrioritizationMap.GetPrioritizations(
-                                tgroup.TransitionGroupId, iteration, timestep);
-
-                            if (lst != null)
+                            if (tt.Prioritizations != null)
                             {
-                                TransitionTargetPrioritization pri = this.m_TransitionTargetPrioritizationMap.GetSinglePrioritization(
-                                    lst, 
+                                TransitionTargetPrioritization pri = tt.GetPrioritization(
                                     simulationCell.StratumId, 
                                     simulationCell.SecondaryStratumId, 
                                     simulationCell.TertiaryStratumId, 
@@ -547,57 +540,45 @@ namespace SyncroSim.STSim
                 }
             }
 
-            List<TransitionTargetPrioritization> TargetPriorities = this.m_TransitionTargetPrioritizationMap.GetPrioritizations(
-                explicitGroup.TransitionGroupId, iteration, timestep);
-
-            double TotalCumulativePossibleAmount = 0.0;
-
-            if (TargetPriorities != null)
-            {                
-                foreach (TransitionTargetPrioritization pri in TargetPriorities)
-                {
-                    TotalCumulativePossibleAmount += pri.PossibleAmount;
-                    pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
-                }
-            }
-
             foreach (TransitionTarget ttarg in this.m_TransitionTargets)
             {
                 if (ttarg.ExpectedAmount != 0)
                 {
                     ttarg.Multiplier = ttarg.CurrentValue.Value / ttarg.ExpectedAmount;
                     Debug.Assert(ttarg.Multiplier >= 0.0);
-                }
+                    List<TransitionTargetPrioritization> TargetPriorities = ttarg.Prioritizations;
 
-                if (TargetPriorities != null)
-                {
-                    double PreviousCumulativeAmount = 0.0;
-
-                    foreach (TransitionTargetPrioritization pri in TargetPriorities)
+                    if (TargetPriorities != null)
                     {
-                        if (ttarg.CurrentValue >= pri.CumulativePossibleAmount)
+                        double PreviousCumulativeAmount = 0.0;
+                        double TotalCumulativePossibleAmount = 0.0;
+
+                        foreach (TransitionTargetPrioritization pri in TargetPriorities)
                         {
-                            pri.ProbabilityOverride = 1.0;
-                        }
-                        else
-                        {
-                            if (ttarg.CurrentValue > PreviousCumulativeAmount)
+                            TotalCumulativePossibleAmount += pri.PossibleAmount;
+                            pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
+
+                            if (ttarg.CurrentValue >= pri.CumulativePossibleAmount)
                             {
-                                pri.DesiredAmount = ttarg.CurrentValue - PreviousCumulativeAmount;
-                                pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                pri.ProbabilityOverride = 1.0;
                             }
                             else
                             {
-                                pri.ProbabilityOverride = 0.0;
+                                if (ttarg.CurrentValue > PreviousCumulativeAmount)
+                                {
+                                    pri.DesiredAmount = ttarg.CurrentValue - PreviousCumulativeAmount;
+                                    pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                }
+                                else
+                                {
+                                    pri.ProbabilityOverride = 0.0;
+                                }
                             }
+
+                            PreviousCumulativeAmount = pri.CumulativePossibleAmount;
                         }
-
-                        PreviousCumulativeAmount = pri.CumulativePossibleAmount;
-                    }
+                    }                   
                 }
-
-                //DEVTODO: LEO: Consider implications of targets defined by strata.
-                //DEVTODO: LEO: Can we handle two records with the same priority?
             }
         }
     }

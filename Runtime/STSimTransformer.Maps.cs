@@ -74,15 +74,18 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionOrderMap == null);
             this.m_TransitionOrderMap = new TransitionOrderMap(this.m_TransitionOrders);
 
-            //Create the transition targets map. 
+            //Create the transition targets map.
             Debug.Assert(this.m_TransitionTargetMap == null);
             this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
 
-            //Create the transition target prioritizations. 
+            //Create the full transition target prioritizations map which will validate there are no duplicates
+            TransitionTargetPrioritizationMap2 ttpmap2 = new TransitionTargetPrioritizationMap2(this.ResultScenario, this.m_TransitionTargetPrioritizations);
+
+            //Then create the transition target prioritization map which is not a full map - just a map by transition group, iteration, and timestep
             Debug.Assert(this.m_TransitionTargetPrioritizationMap == null);
             this.m_TransitionTargetPrioritizationMap = new TransitionTargetPrioritizationMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
 
-            //Create the transition attribute targets map. 
+            //Create the transition attribute targets map
             Debug.Assert(this.m_TransitionAttributeTargetMap == null);
             this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
 

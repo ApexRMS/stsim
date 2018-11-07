@@ -383,6 +383,15 @@ namespace SyncroSim.STSim
 
                     if (l != null)
                     {
+                        //We always add a default prioritization if there are any prioritizations.  
+                        //This is both added to the list and set on the target as the default.
+
+                        TransitionTargetPrioritization defaultPrioritization = new TransitionTargetPrioritization(
+                            null, null, t.TransitionGroupId, null, null, null, null, double.MaxValue);
+
+                        l.Add(defaultPrioritization);
+                        t.DefaultPrioritization = defaultPrioritization;
+
                         t.SetPrioritizations(l);
                     }
                 }

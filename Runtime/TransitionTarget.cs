@@ -15,6 +15,7 @@ namespace SyncroSim.STSim
         private double m_Multiplier = 1.0;
         private List<TransitionTargetPrioritization> m_Prioritizations;
         private MultiLevelKeyMap4<TransitionTargetPrioritization> m_PrioritizationMap;
+        private TransitionTargetPrioritization m_DefaultPrioritization;
 
         public TransitionTarget(
             int? iteration, int? timestep, int? stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
@@ -85,6 +86,19 @@ namespace SyncroSim.STSim
             }
         }
 
+        internal TransitionTargetPrioritization DefaultPrioritization
+        {
+            get
+            {
+                return m_DefaultPrioritization;
+            }
+
+            set
+            {
+                m_DefaultPrioritization = value;
+            }
+        }
+
         public override STSimDistributionBase Clone()
         {
             TransitionTarget t = new TransitionTarget(
@@ -98,6 +112,7 @@ namespace SyncroSim.STSim
             t.IsDisabled = this.IsDisabled;
 
             t.SetPrioritizations(this.Prioritizations);
+            t.DefaultPrioritization = this.DefaultPrioritization;
 
             return t;
         }
@@ -114,8 +129,17 @@ namespace SyncroSim.STSim
             int? tertiaryStratumId,
             int stateClassId)
         {
-            return this.m_PrioritizationMap.GetItem(
+            //Look for a prioritization in the map.  If it is not found, return the default.
+
+            TransitionTargetPrioritization pri = this.m_PrioritizationMap.GetItem(
                 stratumId, secondaryStratumId, tertiaryStratumId, stateClassId);
+
+            if (pri == null)
+            {
+                pri = this.m_DefaultPrioritization;
+            }
+
+            return pri;
         }
 
         private void ClonePrioritizationList(List<TransitionTargetPrioritization> prioritizations)

@@ -42,7 +42,10 @@ namespace SyncroSim.STSim
             {
                 foreach (TransitionTarget t in this.m_TransitionTargets)
                 {
-                    t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+                    if (!t.IsDisabled)
+                    {
+                        t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+                    }
                 }
             }
             catch (Exception ex)
@@ -57,7 +60,10 @@ namespace SyncroSim.STSim
             {
                 foreach (TransitionAttributeTarget t in this.m_TransitionAttributeTargets)
                 {
-                    t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+                    if (!t.IsDisabled)
+                    {
+                        t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+                    }
                 }
             }
             catch (Exception ex)
@@ -174,7 +180,10 @@ namespace SyncroSim.STSim
             {
                 foreach (TransitionTarget t in this.m_TransitionTargets)
                 {
-                    t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+                    if (!t.IsDisabled)
+                    {
+                        t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+                    }
                 }
             }
             catch (Exception ex)
@@ -193,7 +202,10 @@ namespace SyncroSim.STSim
             {
                 foreach (TransitionAttributeTarget t in this.m_TransitionAttributeTargets)
                 {
-                    t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+                    if (!t.IsDisabled)
+                    {
+                        t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+                    }
                 }
             }
             catch (Exception ex)

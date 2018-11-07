@@ -718,7 +718,7 @@ namespace SyncroSim.STSim
 
                         TransitionAttributeTarget Target = this.m_TransitionAttributeTargetMap.GetAttributeTarget(AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
 
-                        if (Target != null)
+                        if (Target != null && !Target.IsDisabled)
                         {
                             Target.TargetRemaining -= AttrValue.Value * m_AmountPerCell;
 
@@ -1613,7 +1613,7 @@ namespace SyncroSim.STSim
                             AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
                             simulationCell.TertiaryStratumId, iteration, timestep);
 
-                        if (Target != null)
+                        if (Target != null && !Target.IsDisabled)
                         {
                             if (Target.TargetRemaining <= 0.0)
                             {

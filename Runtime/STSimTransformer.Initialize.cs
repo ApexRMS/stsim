@@ -376,12 +376,15 @@ namespace SyncroSim.STSim
 
             foreach (TransitionTarget t in this.m_TransitionTargets)
             {
-                List<TransitionTargetPrioritization> l = this.m_TransitionTargetPrioritizationMap.GetPrioritizationList(
-                    t.TransitionGroupId, t.Iteration, t.Timestep);
-
-                if (l != null)
+                if (!t.IsDisabled)
                 {
-                    t.SetPrioritizations(l);
+                    List<TransitionTargetPrioritization> l = this.m_TransitionTargetPrioritizationMap.GetPrioritizationList(
+                        t.TransitionGroupId, t.Iteration, t.Timestep);
+
+                    if (l != null)
+                    {
+                        t.SetPrioritizations(l);
+                    }
                 }
             }
         }

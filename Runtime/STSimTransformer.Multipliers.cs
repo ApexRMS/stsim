@@ -32,7 +32,7 @@ namespace SyncroSim.STSim
             TransitionTarget t = this.m_TransitionTargetMap.GetTransitionTarget(
                 transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, iteration, timestep);
 
-            if (t == null)
+            if (t == null || t.IsDisabled)
             {
                 return 1.0;
             }
@@ -48,7 +48,7 @@ namespace SyncroSim.STSim
             TransitionAttributeTarget t = this.m_TransitionAttributeTargetMap.GetAttributeTarget(
                 transitionAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, iteration, timestep);
 
-            if (t == null)
+            if (t == null || t.IsDisabled)
             {
                 return 1.0;
             }
@@ -312,8 +312,11 @@ namespace SyncroSim.STSim
 
             foreach (TransitionAttributeTarget tat in this.m_TransitionAttributeTargets)
             {
-                tat.Multiplier = 1.0;
-                tat.ExpectedAmount = 0.0;
+                if (!tat.IsDisabled)
+                {
+                    tat.Multiplier = 1.0;
+                    tat.ExpectedAmount = 0.0;
+                }
             }
 
             foreach (Cell simulationCell in this.m_Cells)
@@ -328,7 +331,7 @@ namespace SyncroSim.STSim
                         ta.TransitionAttributeId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
                         simulationCell.TertiaryStratumId, iteration, timestep);
 
-                    if (Target == null)
+                    if (Target == null || Target.IsDisabled)
                     {
                         continue;
                     }
@@ -427,7 +430,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionAttributeTarget tat in this.m_TransitionAttributeTargets)
             {
-                if (tat.ExpectedAmount != 0.0)
+                if (!tat.IsDisabled && tat.ExpectedAmount != 0.0)
                 {
                     tat.Multiplier = tat.TargetRemaining / tat.ExpectedAmount;
                     Debug.Assert(tat.Multiplier >= 0.0);
@@ -453,20 +456,23 @@ namespace SyncroSim.STSim
 
             foreach (TransitionTarget tt in this.m_TransitionTargets)
             {
-                tt.Multiplier = 1.0;
-                tt.ExpectedAmount = 0.0;
-
-                if (tt.Prioritizations != null)
+                if (!tt.IsDisabled)
                 {
-                    foreach (TransitionTargetPrioritization pri in tt.Prioritizations)
+                    tt.Multiplier = 1.0;
+                    tt.ExpectedAmount = 0.0;
+
+                    if (tt.Prioritizations != null)
                     {
-                        pri.PossibleAmount = 0.0;
-                        pri.ExpectedAmount = 0.0;
-                        pri.DesiredAmount = null;
-                        pri.CumulativePossibleAmount = 0.0;
-                        pri.ProbabilityMultiplier = 1.0;
-                        pri.ProbabilityOverride = null;
-                    }
+                        foreach (TransitionTargetPrioritization pri in tt.Prioritizations)
+                        {
+                            pri.PossibleAmount = 0.0;
+                            pri.ExpectedAmount = 0.0;
+                            pri.DesiredAmount = null;
+                            pri.CumulativePossibleAmount = 0.0;
+                            pri.ProbabilityMultiplier = 1.0;
+                            pri.ProbabilityOverride = null;
+                        }
+                    }                    
                 }
             }
        
@@ -516,7 +522,7 @@ namespace SyncroSim.STSim
                             tgroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
                             simulationCell.TertiaryStratumId, iteration, timestep);
 
-                        if (tt != null)
+                        if (tt != null && !tt.IsDisabled)
                         {
                             tt.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             Debug.Assert(tt.ExpectedAmount >= 0.0);
@@ -542,7 +548,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionTarget ttarg in this.m_TransitionTargets)
             {
-                if (ttarg.ExpectedAmount != 0)
+                if (!ttarg.IsDisabled && ttarg.ExpectedAmount != 0)
                 {
                     ttarg.Multiplier = ttarg.CurrentValue.Value / ttarg.ExpectedAmount;
                     Debug.Assert(ttarg.Multiplier >= 0.0);

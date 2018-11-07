@@ -1,8 +1,8 @@
 ﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
+using System;
 using System.Diagnostics;
-using System.ComponentModel;
 using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
@@ -21,6 +21,7 @@ namespace SyncroSim.STSim
         private double? m_DistributionMin;
         private double? m_DistributionMax;
         private double? m_CurrentValue;
+        private bool m_IsDisabled;
 
         protected STSimDistributionBase
             (int? iteration, int? timestep, int? stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
@@ -144,13 +145,25 @@ namespace SyncroSim.STSim
             }
         }
 
-        [Browsable(false)]
         public double? CurrentValue
         {
             get
             {
-                Debug.Assert(this.m_CurrentValue.HasValue);
+                this.CHECK_DISABLED();
                 return this.m_CurrentValue;
+            }
+        }
+
+        public bool IsDisabled
+        {
+            get
+            {
+                return m_IsDisabled;
+            }
+
+            set
+            {
+                m_IsDisabled = value;
             }
         }
 
@@ -168,6 +181,8 @@ namespace SyncroSim.STSim
 
         private void InternalInitialize(int iteration, int timestep, STSimDistributionProvider provider)
         {
+            this.CHECK_DISABLED();
+
             if (this.m_DistributionTypeId.HasValue)
             {
                 int IterationToUse = iteration;
@@ -198,9 +213,11 @@ namespace SyncroSim.STSim
 
         private double InternalSample(int iteration, int timestep, STSimDistributionProvider provider, DistributionFrequency frequency)
         {
+            this.CHECK_DISABLED();
+
             if (this.m_DistributionTypeId.HasValue)
             {
-                if (this.m_DistributionFrequency == frequency || this.m_DistributionFrequency == StochasticTime.DistributionFrequency.Always)
+                if (this.m_DistributionFrequency == frequency || this.m_DistributionFrequency == DistributionFrequency.Always)
                 {
                     this.m_CurrentValue = provider.STSimSample(
                         this.m_DistributionTypeId.Value, this.m_DistributionValue, this.m_DistributionSD, this.m_DistributionMin, 
@@ -210,6 +227,14 @@ namespace SyncroSim.STSim
 
             Debug.Assert(this.m_CurrentValue.HasValue);
             return this.m_CurrentValue.Value;
+        }
+
+        protected void CHECK_DISABLED()
+        {
+            if (this.m_IsDisabled)
+            {
+                throw new InvalidOperationException("The item is disabled.");
+            }
         }
     }
 }

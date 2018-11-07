@@ -1209,8 +1209,13 @@ namespace SyncroSim.STSim
                         Iteration, Timestep, StratumId, SecondaryStratumId, TertiaryStratumId, TransitionGroupId, TargetAmount, 
                         DistributionTypeId, DistributionFrequency, DistributionSD, DistributionMin, DistributionMax);
 
-                    this.m_DistributionProvider.Validate(
-                        Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
+                    Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
+
+                    if (!Item.IsDisabled)
+                    {
+                        this.m_DistributionProvider.Validate(
+                            Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
+                    }
 
                     this.m_TransitionTargets.Add(Item);
                 }
@@ -1371,8 +1376,13 @@ namespace SyncroSim.STSim
                         TransitionAttributeTargetId, Iteration, Timestep, StratumId, SecondaryStratumId, TertiaryStratumId, TransitionAttributeTypeId, 
                         TargetAmount, DistributionTypeId, DistributionFrequency, DistributionSD, DistributionMin, DistributionMax);
 
-                    this.m_DistributionProvider.Validate(
-                        Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
+                    Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
+
+                    if (!Item.IsDisabled)
+                    {
+                        this.m_DistributionProvider.Validate(
+                            Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
+                    }
 
                     this.m_TransitionAttributeTargets.Add(Item);
 

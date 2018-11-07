@@ -439,7 +439,7 @@ namespace SyncroSim.STSim
 
                                         foreach (TransitionAttributeTarget tat in d.Values)
                                         {
-                                            if (tat.TargetRemaining > 0.0)
+                                            if (!tat.IsDisabled && tat.TargetRemaining > 0.0)
                                             {
                                                 TargetsMet = false;
                                                 break;
@@ -1776,7 +1776,7 @@ namespace SyncroSim.STSim
 
                     bool TargetPrioritizationMultiplierApplied = false;
 
-                    if (target != null)
+                    if (target != null && !target.IsDisabled)
                     {
                         if (target.Prioritizations != null)
                         {

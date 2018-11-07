@@ -22,7 +22,6 @@ namespace SyncroSim.STSim
             double? distributionSD, double? distributionMin, double? distributionMax) : base(iteration, timestep, stratumId, secondaryStratumId, 
                 tertiaryStratumId, targetAmount, distributionTypeId, distributionFrequency, distributionSD, distributionMin, distributionMax)
         {
-
             this.m_TransitionGroupId = transitionGroupId;
         }
 
@@ -38,11 +37,21 @@ namespace SyncroSim.STSim
         {
             get
             {
+                this.CHECK_DISABLED();
                 return this.m_ExpectedAmount;
             }
             set
             {
+                this.CHECK_DISABLED();
                 this.m_ExpectedAmount = value;
+            }
+        }
+
+        public double ExpectedAmountNoCheck
+        {
+            get
+            {
+                return this.m_ExpectedAmount;
             }
         }
 
@@ -50,11 +59,21 @@ namespace SyncroSim.STSim
         {
             get
             {
+                this.CHECK_DISABLED();
                 return this.m_Multiplier;
             }
             set
             {
+                this.CHECK_DISABLED();
                 this.m_Multiplier = value;
+            }
+        }
+
+        public double MultiplierNoCheck
+        {
+            get
+            {
+                return this.m_Multiplier;
             }
         }
 
@@ -74,8 +93,11 @@ namespace SyncroSim.STSim
                 this.DistributionValue, this.DistributionTypeId, this.DistributionFrequency, 
                 this.DistributionSD, this.DistributionMin, this.DistributionMax);
 
-            t.ExpectedAmount = this.ExpectedAmount;
-            t.Multiplier = this.Multiplier;
+            t.ExpectedAmount = this.ExpectedAmountNoCheck;
+            t.Multiplier = this.MultiplierNoCheck;
+            t.IsDisabled = this.IsDisabled;
+
+            t.SetPrioritizations(this.Prioritizations);
 
             return t;
         }

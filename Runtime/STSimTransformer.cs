@@ -458,7 +458,7 @@ namespace SyncroSim.STSim
                     MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>> tatMap = new MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>>();
 
                     this.ResetTransitionTargetMultipliers(iteration, timestep, TransitionGroup);
-                    this.ResetTranstionAttributeTargetMultipliers(iteration, timestep, RemainingTransitionGroups, tatMap, TransitionGroup);
+                    this.ResetTransitionAttributeTargetMultipliers(iteration, timestep, RemainingTransitionGroups, tatMap, TransitionGroup);
 
                     RemainingTransitionGroups.Remove(TransitionGroup.TransitionGroupId);
 
@@ -588,20 +588,16 @@ namespace SyncroSim.STSim
 
                                         if (pri.ProbabilityOverride.Value == 1.0)
                                         {
-                                            Transition SelectedTransition = this.SelectTransitionPathway(simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
+                                            Transition SelectedTransition = this.SelectTransitionPathway(
+                                                simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
 
-                                            this.OnSummaryTransitionOutput(simulationCell, SelectedTransition, iteration, timestep);
-                                            this.OnSummaryTransitionByStateClassOutput(simulationCell, SelectedTransition, iteration, timestep);
-
-                                            this.ChangeCellForProbabilisticTransition(simulationCell, SelectedTransition, iteration, timestep, rasterTransitionAttrValues);
-                                            this.FillProbabilisticTransitionsForCell(simulationCell, iteration, timestep);
-
-                                            if (this.IsSpatial)
+                                            if (SelectedTransition != null)
                                             {
-                                                this.UpdateTransitionedPixels(simulationCell, SelectedTransition.TransitionTypeId, transitionedPixels);
-                                            }
+                                                this.InvokeProbabilisticTransitionForCell(
+                                                simulationCell, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
 
-                                            return;
+                                                return;
+                                            }
                                         }
                                         else if (pri.ProbabilityOverride.Value == 0.0)
                                         {
@@ -628,6 +624,22 @@ namespace SyncroSim.STSim
 
                     if (this.m_TransitionAttributeTargets.Count > 0)
                     {
+                        double? ProbOverride = this.GetAttributeTargetProbabilityOverride(tt, simulationCell, iteration, timestep);
+
+                        if (ProbOverride.HasValue && ProbOverride.Value == 1.0)
+                        {
+                            Transition SelectedTransition = this.SelectTransitionPathway(
+                                simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
+
+                            if (SelectedTransition != null)
+                            {
+                                this.InvokeProbabilisticTransitionForCell(
+                                    simulationCell, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
+
+                                return;
+                            }
+                        }
+
                         multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
                     }
 
@@ -646,20 +658,26 @@ namespace SyncroSim.STSim
 
                     if (CumulativeProbability > RandomNextDouble)
                     {
-                        this.OnSummaryTransitionOutput(simulationCell, tr, iteration, timestep);
-                        this.OnSummaryTransitionByStateClassOutput(simulationCell, tr, iteration, timestep);
-
-                        this.ChangeCellForProbabilisticTransition(simulationCell, tr, iteration, timestep, rasterTransitionAttrValues);
-                        this.FillProbabilisticTransitionsForCell(simulationCell, iteration, timestep);
-
-                        if (this.IsSpatial)
-                        {
-                            this.UpdateTransitionedPixels(simulationCell, tr.TransitionTypeId, transitionedPixels);
-                        }
-
-                        break;
+                        this.InvokeProbabilisticTransitionForCell(simulationCell, tr, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
+                        return;
                     }
                 }
+            }
+        }
+
+        private void InvokeProbabilisticTransitionForCell(
+            Cell simulationCell, Transition tr, int iteration, int timestep, 
+            int[] transitionedPixels, Dictionary<int, double[]> rasterTransitionAttrValues)
+        {
+            this.OnSummaryTransitionOutput(simulationCell, tr, iteration, timestep);
+            this.OnSummaryTransitionByStateClassOutput(simulationCell, tr, iteration, timestep);
+
+            this.ChangeCellForProbabilisticTransition(simulationCell, tr, iteration, timestep, rasterTransitionAttrValues);
+            this.FillProbabilisticTransitionsForCell(simulationCell, iteration, timestep);
+
+            if (this.IsSpatial)
+            {
+                this.UpdateTransitionedPixels(simulationCell, tr.TransitionTypeId, transitionedPixels);
             }
         }
 
@@ -964,6 +982,7 @@ namespace SyncroSim.STSim
                 this.m_TransitionTargets.Clear();
                 this.FillTransitionTargetCollection();
                 this.InitializeTransitionTargetDistributionValues();
+                this.InitializeTransitionTargetPrioritizations();
                 this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
             }
             else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME)
@@ -1067,6 +1086,7 @@ namespace SyncroSim.STSim
                 this.m_TransitionAttributeTargets.Clear();
                 this.FillTransitionAttributeTargetCollection();
                 this.InitializeTransitionAttributeTargetDistributionValues();
+                this.InitializeTransitionAttributeTargetPrioritizations();
                 this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
             }
             else

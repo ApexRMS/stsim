@@ -207,6 +207,13 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_NAME = "STSim_TransitionTargetPrioritization";
         public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_PRIORITY_COLUMN_NAME = "Priority";
 
+        //Transition Attribute Target
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME = "STSim_TransitionAttributeTarget";
+
+        //Transition Attribute Target Prioritization
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_PRIORITIZATION_NAME = "STSim_TransitionAttributeTargetPrioritization";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_PRIORITIZATION_PRIORITY_COLUMN_NAME = "Priority";
+
         //Transition Order
         public const string DATASHEET_TRANSITION_ORDER_NAME = "STSim_TransitionOrder";
         public const string DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME = "Order";
@@ -283,9 +290,6 @@ namespace SyncroSim.STSim
         //Transition Attribute Value
         public const string DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME = "STSim_TransitionAttributeValue";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME = "Value";
-
-        //Transition Attribute Target
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME = "STSim_TransitionAttributeTarget";
 
         //Terminology
         public const string DATASHEET_TERMINOLOGY_NAME = "STSim_Terminology";

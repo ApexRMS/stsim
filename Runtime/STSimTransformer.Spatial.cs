@@ -376,7 +376,7 @@ namespace SyncroSim.STSim
                 MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>> tatMap = new MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>>();
 
                 this.ResetTransitionTargetMultipliers(iteration, timestep, TransitionGroup);
-                this.ResetTranstionAttributeTargetMultipliers(iteration, timestep, RemainingTransitionGroups, tatMap, TransitionGroup);
+                this.ResetTransitionAttributeTargetMultipliers(iteration, timestep, RemainingTransitionGroups, tatMap, TransitionGroup);
 
                 RemainingTransitionGroups.Remove(TransitionGroup.TransitionGroupId);
 
@@ -1831,6 +1831,21 @@ namespace SyncroSim.STSim
                     if (this.m_TransitionAttributeTargets.Count > 0)
                     {
                         TransitionType tt = this.TransitionTypes[tr.TransitionTypeId];
+
+                        double? ProbOverride = this.GetAttributeTargetProbabilityOverride(tt, simulationCell, iteration, timestep);
+
+                        if (ProbOverride.HasValue)
+                        {
+                            if (ProbOverride.Value == 1.0)
+                            {
+                                return 1.0;
+                            }
+                            else if (ProbOverride.Value == 0.0)
+                            {
+                                return 0.0;
+                            }
+                        }
+
                         multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
                     }
 

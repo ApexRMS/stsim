@@ -36,6 +36,8 @@ namespace SyncroSim.STSim
         private Dictionary<string, StochasticTimeRaster> m_TransitionSpatialInitiationMultiplierRasters = new Dictionary<string, StochasticTimeRaster>();
         private TransitionTargetCollection m_TransitionTargets = new TransitionTargetCollection();
         private TransitionTargetPrioritizationCollection m_TransitionTargetPrioritizations = new TransitionTargetPrioritizationCollection();
+        private TransitionAttributeTargetCollection m_TransitionAttributeTargets = new TransitionAttributeTargetCollection();
+        private TransitionAttributeTargetPrioritizationCollection m_TransitionAttributeTargetPrioritizations = new TransitionAttributeTargetPrioritizationCollection();
         private TransitionOrderCollection m_TransitionOrders = new TransitionOrderCollection();
         private TransitionSizeDistributionCollection m_TransitionSizeDistributions = new TransitionSizeDistributionCollection();
         private TransitionSpreadDistributionCollection m_TransitionSpreadDistributions = new TransitionSpreadDistributionCollection();
@@ -48,7 +50,6 @@ namespace SyncroSim.STSim
         private TransitionPathwayAutoCorrelationCollection m_TransitionPathwayAutoCorrelations = new TransitionPathwayAutoCorrelationCollection();
         private StateAttributeValueCollection m_StateAttributeValues = new StateAttributeValueCollection();
         private TransitionAttributeValueCollection m_TransitionAttributeValues = new TransitionAttributeValueCollection();
-        private TransitionAttributeTargetCollection m_TransitionAttributeTargets = new TransitionAttributeTargetCollection();
         private InputRasters m_InputRasters = new InputRasters();
         private Dictionary<int, bool> m_TransitionAttributeTypesWithTarget = new Dictionary<int, bool>();
 
@@ -1395,6 +1396,77 @@ namespace SyncroSim.STSim
                 {
                     throw new ArgumentException(ds.DisplayName + " -> " + ex.Message);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Fills the transition attribute target prioritization collection
+        /// </summary>
+        /// <remarks></remarks>
+        private void FillTransitionAttributeTargetPrioritizationCollection()
+        {
+            Debug.Assert(this.m_TransitionAttributeTargetPrioritizations.Count == 0);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TARGET_PRIORITIZATION_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int? Iteration = null;
+                int? Timestep = null;
+                int TransitionAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int? StratumId = null;
+                int? SecondaryStratumId = null;
+                int? TertiaryStratumId = null;
+                int? TransitionGroupId = null;
+                int? StateClassId = null;
+                double Priority = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TARGET_PRIORITIZATION_PRIORITY_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+                if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
+                {
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
+                {
+                    Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    StratumId = Convert.ToInt32(dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    SecondaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                TransitionAttributeTargetPrioritization Item = new TransitionAttributeTargetPrioritization(
+                    Iteration,
+                    Timestep,
+                    TransitionAttributeTypeId,
+                    StratumId,
+                    SecondaryStratumId,
+                    TertiaryStratumId,
+                    TransitionGroupId,
+                    StateClassId,
+                    Priority);
+
+                this.m_TransitionAttributeTargetPrioritizations.Add(Item);
             }
         }
 

@@ -283,14 +283,56 @@ namespace SyncroSim.STSim
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
-                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
 
                     if (AttrValue.HasValue)
                     {
                         if (AttrValue.Value > 0.0)
                         {
-                            multiplier *= this.GetTransitionAttributeTargetMultiplier(
-                                tatId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
+                            bool TargetPrioritizationMultiplierApplied = false;
+
+                            TransitionAttributeTarget target = this.m_TransitionAttributeTargetMap.GetAttributeTarget(
+                                tatId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
+                                iteration, timestep);
+
+                            if (target.Prioritizations != null)
+                            {
+                                TransitionAttributeTargetPrioritization pri = target.GetPrioritization(
+                                    simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                                    simulationCell.TertiaryStratumId, tg.TransitionGroupId, simulationCell.StateClassId);
+
+                                if (pri != null)
+                                {
+                                    if (pri.ProbabilityOverride.HasValue)
+                                    {
+                                        Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
+
+                                        if (pri.ProbabilityOverride.Value == 1.0)
+                                        {
+                                            return multiplier;
+                                        }
+                                        else if (pri.ProbabilityOverride.Value == 0.0)
+                                        {
+                                            multiplier *= 0.0;
+                                            TargetPrioritizationMultiplierApplied = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        multiplier *= pri.ProbabilityMultiplier;
+                                        TargetPrioritizationMultiplierApplied = true;
+                                    }
+                                }
+                            }
+
+                            if (!TargetPrioritizationMultiplierApplied)
+                            {
+                                multiplier *= this.GetTransitionAttributeTargetMultiplier(
+                                    tatId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
+                                    simulationCell.TertiaryStratumId, iteration, timestep);
+
+                            }
 
                             break;
                         }
@@ -301,7 +343,46 @@ namespace SyncroSim.STSim
             return multiplier;
         }
 
-        private void ResetTranstionAttributeTargetMultipliers(
+        private double? GetAttributeTargetProbabilityOverride(TransitionType tt, Cell simulationCell, int iteration, int timestep)
+        {
+            foreach (int tatId in this.m_TransitionAttributeTypesWithTarget.Keys)
+            {
+                foreach (TransitionGroup tg in tt.TransitionGroups)
+                {
+                    double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
+                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+
+                    if (AttrValue.HasValue)
+                    {
+                        if (AttrValue.Value > 0.0)
+                        {
+                            TransitionAttributeTarget target = this.m_TransitionAttributeTargetMap.GetAttributeTarget(
+                                tatId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+                                iteration, timestep);
+
+                            if (target.Prioritizations != null)
+                            {
+                                TransitionAttributeTargetPrioritization pri = target.GetPrioritization(
+                                    simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                                    simulationCell.TertiaryStratumId, tg.TransitionGroupId, simulationCell.StateClassId);
+
+                                if (pri != null)
+                                {
+                                    return pri.ProbabilityOverride;
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void ResetTransitionAttributeTargetMultipliers(
             int iteration, int timestep, Dictionary<int, TransitionGroup> remainingTransitionGroups, 
             MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>> tatMap, TransitionGroup currentTransitionGroup)
         {
@@ -316,6 +397,19 @@ namespace SyncroSim.STSim
                 {
                     tat.Multiplier = 1.0;
                     tat.ExpectedAmount = 0.0;
+
+                    if (tat.Prioritizations != null)
+                    {
+                        foreach (TransitionAttributeTargetPrioritization pri in tat.Prioritizations)
+                        {
+                            pri.PossibleAmount = 0.0;
+                            pri.ExpectedAmount = 0.0;
+                            pri.DesiredAmount = null;
+                            pri.CumulativePossibleAmount = 0.0;
+                            pri.ProbabilityMultiplier = 1.0;
+                            pri.ProbabilityOverride = null;
+                        }
+                    }
                 }
             }
 
@@ -422,6 +516,22 @@ namespace SyncroSim.STSim
 
                                 Debug.Assert(Expectation >= 0.0);
                                 Debug.Assert(Target.ExpectedAmount >= 0.0);
+
+                                if (Target.Prioritizations != null)
+                                {
+                                    TransitionAttributeTargetPrioritization pri = Target.GetPrioritization(
+                                        simulationCell.StratumId,
+                                        simulationCell.SecondaryStratumId,
+                                        simulationCell.TertiaryStratumId,
+                                        tg.TransitionGroupId,
+                                        simulationCell.StateClassId);
+
+                                    if (pri != null)
+                                    {
+                                        pri.PossibleAmount += this.m_AmountPerCell;
+                                        pri.ExpectedAmount += Expectation;
+                                    }
+                                }
                             }
                         }
                     }
@@ -434,6 +544,38 @@ namespace SyncroSim.STSim
                 {
                     tat.Multiplier = tat.TargetRemaining / tat.ExpectedAmount;
                     Debug.Assert(tat.Multiplier >= 0.0);
+                    List<TransitionAttributeTargetPrioritization> TargetPriorities = tat.Prioritizations;
+
+                    if (TargetPriorities != null)
+                    {
+                        double PreviousCumulativeAmount = 0.0;
+                        double TotalCumulativePossibleAmount = 0.0;
+
+                        foreach (TransitionAttributeTargetPrioritization pri in TargetPriorities)
+                        {
+                            TotalCumulativePossibleAmount += pri.PossibleAmount;
+                            pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
+
+                            if (tat.TargetRemaining >= pri.CumulativePossibleAmount)
+                            {
+                                pri.ProbabilityOverride = 1.0;
+                            }
+                            else
+                            {
+                                if (tat.TargetRemaining > PreviousCumulativeAmount)
+                                {
+                                    pri.DesiredAmount = tat.TargetRemaining - PreviousCumulativeAmount;
+                                    pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                }
+                                else
+                                {
+                                    pri.ProbabilityOverride = 0.0;
+                                }
+                            }
+
+                            PreviousCumulativeAmount = pri.CumulativePossibleAmount;
+                        }
+                    }
                 }
             }
         }

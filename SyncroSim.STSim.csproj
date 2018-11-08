@@ -189,6 +189,10 @@
     <Compile Include="Runtime\TransitionAttributeTarget.cs" />
     <Compile Include="Runtime\TransitionAttributeTargetCollection.cs" />
     <Compile Include="Runtime\TransitionAttributeTargetMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritization.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationCollection.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationMap2.cs" />
     <Compile Include="Runtime\TransitionAttributeType.cs" />
     <Compile Include="Runtime\TransitionAttributeTypeCollection.cs" />
     <Compile Include="Runtime\TransitionAttributeValue.cs" />

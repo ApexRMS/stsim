@@ -529,7 +529,7 @@ namespace SyncroSim.STSim
 
                                     if (pri != null)
                                     {
-                                        pri.PossibleAmount += this.m_AmountPerCell;
+                                        pri.PossibleAmount += this.m_AmountPerCell * AttrValue.Value;
                                         pri.ExpectedAmount += Expectation;
                                     }
                                 }

@@ -84,7 +84,7 @@ namespace SyncroSim.STSim
 
             //Then create the transition target prioritization map which is not a full map - just a map by transition group, iteration, and timestep
             Debug.Assert(this.m_TransitionTargetPrioritizationKeyMap == null);
-            this.m_TransitionTargetPrioritizationKeyMap = new TransitionTargetPrioritizationKeyMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
+            this.m_TransitionTargetPrioritizationKeyMap = new TransitionTargetPrioritizationKeyMap(this.m_TransitionTargetPrioritizations);
 
             //Create the transition attribute target map
             Debug.Assert(this.m_TransitionAttributeTargetMap == null);
@@ -95,7 +95,7 @@ namespace SyncroSim.STSim
             
             //Then create the transition attribute target prioritization map which is not a full map - just a map by transition attribute type, iteration, and timestep
             Debug.Assert(this.m_TransitionAttributeTargetPrioritizationKeyMap == null);
-            this.m_TransitionAttributeTargetPrioritizationKeyMap = new TransitionAttributeTargetPrioritizationKeyMap(this.ResultScenario, this.m_TransitionAttributeTargetPrioritizations);
+            this.m_TransitionAttributeTargetPrioritizationKeyMap = new TransitionAttributeTargetPrioritizationKeyMap(this.m_TransitionAttributeTargetPrioritizations);
 
             //Create the transition patch prioritization map
             Debug.Assert(this.m_TransitionPatchPrioritizationMap == null);

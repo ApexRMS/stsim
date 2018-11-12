@@ -11,7 +11,7 @@ namespace SyncroSim.STSim
         private Dictionary<int, List<TransitionTargetPrioritization>> m_Map = new Dictionary<int, List<TransitionTargetPrioritization>>();
         private List<List<TransitionTargetPrioritization>> m_Lists = new List<List<TransitionTargetPrioritization>>();
 
-        public TransitionTargetPrioritizationKeyMap(Scenario scenario, TransitionTargetPrioritizationCollection collection)
+        public TransitionTargetPrioritizationKeyMap(TransitionTargetPrioritizationCollection collection)
         {
             foreach (TransitionTargetPrioritization Item in collection)
             {

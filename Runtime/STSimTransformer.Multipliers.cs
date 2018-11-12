@@ -679,14 +679,17 @@ namespace SyncroSim.STSim
                             tt.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             Debug.Assert(tt.ExpectedAmount >= 0.0);
 
-                            TransitionTargetPrioritization pri = tt.GetPrioritization(
-                                simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
+                            if (tt.HasPrioritizations)
+                            {
+                                TransitionTargetPrioritization pri = tt.GetPrioritization(
+                                simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
                                 simulationCell.StateClassId, iteration, timestep);
 
-                            if (pri != null)
-                            {
-                                pri.PossibleAmount += this.m_AmountPerCell;
-                                pri.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
+                                if (pri != null)
+                                {
+                                    pri.PossibleAmount += this.m_AmountPerCell;
+                                    pri.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
+                                }
                             }
                         }
                     }

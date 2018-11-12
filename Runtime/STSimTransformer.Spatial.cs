@@ -1776,36 +1776,31 @@ namespace SyncroSim.STSim
 
                     bool TargetPrioritizationMultiplierApplied = false;
 
-                    if (target != null && !target.IsDisabled)
-                    {
-                        if (target.Prioritizations != null)
+                    if (target != null && !target.IsDisabled && target.HasPrioritizations)
+                    {                       
+                        TransitionTargetPrioritization pri = target.GetPrioritization(
+                            simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                            simulationCell.TertiaryStratumId, simulationCell.StateClassId, 
+                            iteration, timestep);
+                          
+                        if (pri != null && pri.ProbabilityOverride.HasValue)
                         {
-                            TransitionTargetPrioritization pri = target.GetPrioritization(
-                                simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                                simulationCell.TertiaryStratumId, simulationCell.StateClassId);
+                            Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
 
-                            if (pri != null)
+                            if (pri.ProbabilityOverride.Value == 1.0)
                             {
-                                if (pri.ProbabilityOverride.HasValue)
-                                {
-                                    Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
-
-                                    if (pri.ProbabilityOverride.Value == 1.0)
-                                    {
-                                        return 1.0;
-                                    }
-                                    else if (pri.ProbabilityOverride.Value == 0.0)
-                                    {
-                                        return 0.0;
-                                    }
-                                }
+                                return 1.0;
                             }
-                            else
+                            else if (pri.ProbabilityOverride.Value == 0.0)
                             {
-                                multiplier *= pri.ProbabilityMultiplier;
-                                TargetPrioritizationMultiplierApplied = true;
+                                return 0.0;
                             }
-                        }
+                        }                           
+                        else
+                        {
+                            multiplier *= pri.ProbabilityMultiplier;
+                            TargetPrioritizationMultiplierApplied = true;
+                        }                      
                     }
 
                     if (!TargetPrioritizationMultiplierApplied)

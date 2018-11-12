@@ -12,9 +12,9 @@ namespace SyncroSim.STSim
         private DeterministicTransitionMap m_DeterministicTransitionMap;
         private TransitionOrderMap m_TransitionOrderMap;
         private TransitionTargetMap m_TransitionTargetMap;
-        private TransitionTargetPrioritizationMap m_TransitionTargetPrioritizationMap;
+        private TransitionTargetPrioritizationKeyMap m_TransitionTargetPrioritizationKeyMap;
         private TransitionAttributeTargetMap m_TransitionAttributeTargetMap;
-        private TransitionAttributeTargetPrioritizationMap m_TransitionAttributeTargetPrioritizationMap;
+        private TransitionAttributeTargetPrioritizationKeyMap m_TransitionAttributeTargetPrioritizationKeyMap;
         private TransitionAttributeValueMap m_TransitionAttributeValueMap;
         private TransitionSizeDistributionMap m_TransitionSizeDistributionMap;
         private TransitionDirectionMultiplierMap m_TransitionDirectionMultiplierMap;
@@ -80,22 +80,22 @@ namespace SyncroSim.STSim
             this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
 
             //Create the full transition target prioritizations map which will validate there are no duplicates
-            TransitionTargetPrioritizationMap2 ttpmap2 = new TransitionTargetPrioritizationMap2(this.ResultScenario, this.m_TransitionTargetPrioritizations);
+            TransitionTargetPrioritizationValidationMap ttvalmap = new TransitionTargetPrioritizationValidationMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
 
             //Then create the transition target prioritization map which is not a full map - just a map by transition group, iteration, and timestep
-            Debug.Assert(this.m_TransitionTargetPrioritizationMap == null);
-            this.m_TransitionTargetPrioritizationMap = new TransitionTargetPrioritizationMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
+            Debug.Assert(this.m_TransitionTargetPrioritizationKeyMap == null);
+            this.m_TransitionTargetPrioritizationKeyMap = new TransitionTargetPrioritizationKeyMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
 
             //Create the transition attribute target map
             Debug.Assert(this.m_TransitionAttributeTargetMap == null);
             this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
         
             //Create the full transition attribute target prioritizations map which will validate there are no duplicates
-            TransitionAttributeTargetPrioritizationMap2 tatpmap2 = new TransitionAttributeTargetPrioritizationMap2(this.ResultScenario, this.m_TransitionAttributeTargetPrioritizations);        
+            TransitionAttributeTargetPrioritizationValidationMap tatvalmap = new TransitionAttributeTargetPrioritizationValidationMap(this.ResultScenario, this.m_TransitionAttributeTargetPrioritizations);        
             
             //Then create the transition attribute target prioritization map which is not a full map - just a map by transition attribute type, iteration, and timestep
-            Debug.Assert(this.m_TransitionAttributeTargetPrioritizationMap == null);
-            this.m_TransitionAttributeTargetPrioritizationMap = new TransitionAttributeTargetPrioritizationMap(this.ResultScenario, this.m_TransitionAttributeTargetPrioritizations);
+            Debug.Assert(this.m_TransitionAttributeTargetPrioritizationKeyMap == null);
+            this.m_TransitionAttributeTargetPrioritizationKeyMap = new TransitionAttributeTargetPrioritizationKeyMap(this.ResultScenario, this.m_TransitionAttributeTargetPrioritizations);
 
             //Create the transition patch prioritization map
             Debug.Assert(this.m_TransitionPatchPrioritizationMap == null);

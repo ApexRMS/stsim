@@ -296,33 +296,31 @@ namespace SyncroSim.STSim
                                 tatId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
                                 iteration, timestep);
 
-                            if (target.Prioritizations != null)
+                            if (target != null && !target.IsDisabled && target.HasPrioritizations)
                             {
                                 TransitionAttributeTargetPrioritization pri = target.GetPrioritization(
                                     simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                                    simulationCell.TertiaryStratumId, tg.TransitionGroupId, simulationCell.StateClassId);
+                                    simulationCell.TertiaryStratumId, tg.TransitionGroupId, simulationCell.StateClassId, 
+                                    iteration, timestep);
 
-                                if (pri != null)
+                                if (pri != null && pri.ProbabilityOverride.HasValue)
                                 {
-                                    if (pri.ProbabilityOverride.HasValue)
-                                    {
-                                        Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
+                                    Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
 
-                                        if (pri.ProbabilityOverride.Value == 1.0)
-                                        {
-                                            return multiplier;
-                                        }
-                                        else if (pri.ProbabilityOverride.Value == 0.0)
-                                        {
-                                            multiplier *= 0.0;
-                                            TargetPrioritizationMultiplierApplied = true;
-                                        }
-                                    }
-                                    else
+                                    if (pri.ProbabilityOverride.Value == 1.0)
                                     {
-                                        multiplier *= pri.ProbabilityMultiplier;
+                                        return multiplier;
+                                    }
+                                    else if (pri.ProbabilityOverride.Value == 0.0)
+                                    {
+                                        multiplier *= 0.0;
                                         TargetPrioritizationMultiplierApplied = true;
                                     }
+                                }
+                                else
+                                {
+                                    multiplier *= pri.ProbabilityMultiplier;
+                                    TargetPrioritizationMultiplierApplied = true;
                                 }
                             }
 
@@ -361,11 +359,12 @@ namespace SyncroSim.STSim
                                 tatId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
                                 iteration, timestep);
 
-                            if (target.Prioritizations != null)
+                            if (target != null && !target.IsDisabled && target.HasPrioritizations)
                             {
                                 TransitionAttributeTargetPrioritization pri = target.GetPrioritization(
                                     simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                                    simulationCell.TertiaryStratumId, tg.TransitionGroupId, simulationCell.StateClassId);
+                                    simulationCell.TertiaryStratumId, tg.TransitionGroupId, simulationCell.StateClassId, 
+                                    iteration, timestep);
 
                                 if (pri != null)
                                 {
@@ -398,16 +397,21 @@ namespace SyncroSim.STSim
                     tat.Multiplier = 1.0;
                     tat.ExpectedAmount = 0.0;
 
-                    if (tat.Prioritizations != null)
+                    if (tat.HasPrioritizations)
                     {
-                        foreach (TransitionAttributeTargetPrioritization pri in tat.Prioritizations)
+                        List<TransitionAttributeTargetPrioritization> pl = tat.GetPrioritizations(iteration, timestep);
+
+                        if (pl != null)
                         {
-                            pri.PossibleAmount = 0.0;
-                            pri.ExpectedAmount = 0.0;
-                            pri.DesiredAmount = null;
-                            pri.CumulativePossibleAmount = 0.0;
-                            pri.ProbabilityMultiplier = 1.0;
-                            pri.ProbabilityOverride = null;
+                            foreach (TransitionAttributeTargetPrioritization pri in pl)
+                            {
+                                pri.PossibleAmount = 0.0;
+                                pri.ExpectedAmount = 0.0;
+                                pri.DesiredAmount = null;
+                                pri.CumulativePossibleAmount = 0.0;
+                                pri.ProbabilityMultiplier = 1.0;
+                                pri.ProbabilityOverride = null;
+                            }
                         }
                     }
                 }
@@ -517,14 +521,11 @@ namespace SyncroSim.STSim
                                 Debug.Assert(Expectation >= 0.0);
                                 Debug.Assert(Target.ExpectedAmount >= 0.0);
 
-                                if (Target.Prioritizations != null)
+                                if (Target.HasPrioritizations)
                                 {
                                     TransitionAttributeTargetPrioritization pri = Target.GetPrioritization(
-                                        simulationCell.StratumId,
-                                        simulationCell.SecondaryStratumId,
-                                        simulationCell.TertiaryStratumId,
-                                        tg.TransitionGroupId,
-                                        simulationCell.StateClassId);
+                                        simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+                                        tg.TransitionGroupId, simulationCell.StateClassId, iteration, timestep);
 
                                     if (pri != null)
                                     {
@@ -544,36 +545,40 @@ namespace SyncroSim.STSim
                 {
                     tat.Multiplier = tat.TargetRemaining / tat.ExpectedAmount;
                     Debug.Assert(tat.Multiplier >= 0.0);
-                    List<TransitionAttributeTargetPrioritization> TargetPriorities = tat.Prioritizations;
 
-                    if (TargetPriorities != null)
+                    if (tat.HasPrioritizations)
                     {
                         double PreviousCumulativeAmount = 0.0;
                         double TotalCumulativePossibleAmount = 0.0;
 
-                        foreach (TransitionAttributeTargetPrioritization pri in TargetPriorities)
-                        {
-                            TotalCumulativePossibleAmount += pri.PossibleAmount;
-                            pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
+                        List<TransitionAttributeTargetPrioritization> pl = tat.GetPrioritizations(iteration, timestep);
 
-                            if (tat.TargetRemaining >= pri.CumulativePossibleAmount)
+                        if (pl != null)
+                        {
+                            foreach (TransitionAttributeTargetPrioritization pri in pl)
                             {
-                                pri.ProbabilityOverride = 1.0;
-                            }
-                            else
-                            {
-                                if (tat.TargetRemaining > PreviousCumulativeAmount)
+                                TotalCumulativePossibleAmount += pri.PossibleAmount;
+                                pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
+
+                                if (tat.TargetRemaining >= pri.CumulativePossibleAmount)
                                 {
-                                    pri.DesiredAmount = tat.TargetRemaining - PreviousCumulativeAmount;
-                                    pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                    pri.ProbabilityOverride = 1.0;
                                 }
                                 else
                                 {
-                                    pri.ProbabilityOverride = 0.0;
+                                    if (tat.TargetRemaining > PreviousCumulativeAmount)
+                                    {
+                                        pri.DesiredAmount = tat.TargetRemaining - PreviousCumulativeAmount;
+                                        pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                    }
+                                    else
+                                    {
+                                        pri.ProbabilityOverride = 0.0;
+                                    }
                                 }
-                            }
 
-                            PreviousCumulativeAmount = pri.CumulativePossibleAmount;
+                                PreviousCumulativeAmount = pri.CumulativePossibleAmount;
+                            }
                         }
                     }
                 }
@@ -603,16 +608,21 @@ namespace SyncroSim.STSim
                     tt.Multiplier = 1.0;
                     tt.ExpectedAmount = 0.0;
 
-                    if (tt.Prioritizations != null)
+                    if (tt.HasPrioritizations)
                     {
-                        foreach (TransitionTargetPrioritization pri in tt.Prioritizations)
+                        List<TransitionTargetPrioritization> pl = tt.GetPrioritizations(iteration, timestep);
+
+                        if (pl != null)
                         {
-                            pri.PossibleAmount = 0.0;
-                            pri.ExpectedAmount = 0.0;
-                            pri.DesiredAmount = null;
-                            pri.CumulativePossibleAmount = 0.0;
-                            pri.ProbabilityMultiplier = 1.0;
-                            pri.ProbabilityOverride = null;
+                            foreach (TransitionTargetPrioritization pri in pl)
+                            {
+                                pri.PossibleAmount = 0.0;
+                                pri.ExpectedAmount = 0.0;
+                                pri.DesiredAmount = null;
+                                pri.CumulativePossibleAmount = 0.0;
+                                pri.ProbabilityMultiplier = 1.0;
+                                pri.ProbabilityOverride = null;
+                            }
                         }
                     }                    
                 }
@@ -669,19 +679,14 @@ namespace SyncroSim.STSim
                             tt.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             Debug.Assert(tt.ExpectedAmount >= 0.0);
 
-                            if (tt.Prioritizations != null)
-                            {
-                                TransitionTargetPrioritization pri = tt.GetPrioritization(
-                                    simulationCell.StratumId, 
-                                    simulationCell.SecondaryStratumId, 
-                                    simulationCell.TertiaryStratumId, 
-                                    simulationCell.StateClassId);
+                            TransitionTargetPrioritization pri = tt.GetPrioritization(
+                                simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
+                                simulationCell.StateClassId, iteration, timestep);
 
-                                if (pri != null)
-                                {
-                                    pri.PossibleAmount += this.m_AmountPerCell;
-                                    pri.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
-                                }
+                            if (pri != null)
+                            {
+                                pri.PossibleAmount += this.m_AmountPerCell;
+                                pri.ExpectedAmount += (tr.Probability * tr.Proportion * this.m_AmountPerCell * TransMult);
                             }
                         }
                     }
@@ -694,36 +699,40 @@ namespace SyncroSim.STSim
                 {
                     ttarg.Multiplier = ttarg.CurrentValue.Value / ttarg.ExpectedAmount;
                     Debug.Assert(ttarg.Multiplier >= 0.0);
-                    List<TransitionTargetPrioritization> TargetPriorities = ttarg.Prioritizations;
 
-                    if (TargetPriorities != null)
+                    if (ttarg.HasPrioritizations)
                     {
                         double PreviousCumulativeAmount = 0.0;
                         double TotalCumulativePossibleAmount = 0.0;
 
-                        foreach (TransitionTargetPrioritization pri in TargetPriorities)
-                        {
-                            TotalCumulativePossibleAmount += pri.PossibleAmount;
-                            pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
+                        List<TransitionTargetPrioritization> pl = ttarg.GetPrioritizations(iteration, timestep);
 
-                            if (ttarg.CurrentValue >= pri.CumulativePossibleAmount)
+                        if (pl != null)
+                        {
+                            foreach (TransitionTargetPrioritization pri in pl)
                             {
-                                pri.ProbabilityOverride = 1.0;
-                            }
-                            else
-                            {
-                                if (ttarg.CurrentValue > PreviousCumulativeAmount)
+                                TotalCumulativePossibleAmount += pri.PossibleAmount;
+                                pri.CumulativePossibleAmount = TotalCumulativePossibleAmount;
+
+                                if (ttarg.CurrentValue >= pri.CumulativePossibleAmount)
                                 {
-                                    pri.DesiredAmount = ttarg.CurrentValue - PreviousCumulativeAmount;
-                                    pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                    pri.ProbabilityOverride = 1.0;
                                 }
                                 else
                                 {
-                                    pri.ProbabilityOverride = 0.0;
+                                    if (ttarg.CurrentValue > PreviousCumulativeAmount)
+                                    {
+                                        pri.DesiredAmount = ttarg.CurrentValue - PreviousCumulativeAmount;
+                                        pri.ProbabilityMultiplier = pri.DesiredAmount.Value / pri.ExpectedAmount;
+                                    }
+                                    else
+                                    {
+                                        pri.ProbabilityOverride = 0.0;
+                                    }
                                 }
-                            }
 
-                            PreviousCumulativeAmount = pri.CumulativePossibleAmount;
+                                PreviousCumulativeAmount = pri.CumulativePossibleAmount;
+                            }
                         }
                     }                   
                 }

@@ -191,8 +191,10 @@
     <Compile Include="Runtime\TransitionAttributeTargetMap.cs" />
     <Compile Include="Runtime\TransitionAttributeTargetPrioritization.cs" />
     <Compile Include="Runtime\TransitionAttributeTargetPrioritizationCollection.cs" />
-    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationMap.cs" />
-    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationMap2.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationItemMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationKeyMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationListMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationValidationMap.cs" />
     <Compile Include="Runtime\TransitionAttributeType.cs" />
     <Compile Include="Runtime\TransitionAttributeTypeCollection.cs" />
     <Compile Include="Runtime\TransitionAttributeValue.cs" />
@@ -246,8 +248,10 @@
     <Compile Include="Runtime\TransitionTargetMap.cs" />
     <Compile Include="Runtime\TransitionTargetPrioritization.cs" />
     <Compile Include="Runtime\TransitionTargetPrioritizationCollection.cs" />
-    <Compile Include="Runtime\TransitionTargetPrioritizationMap.cs" />
-    <Compile Include="Runtime\TransitionTargetPrioritizationMap2.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationItemMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationKeyMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationListMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationValidationMap.cs" />
     <Compile Include="Runtime\TransitionType.cs" />
     <Compile Include="Runtime\TransitionTypeCollection.cs" />
     <Compile Include="Runtime\TST.cs" />

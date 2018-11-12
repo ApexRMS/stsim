@@ -6,20 +6,25 @@ using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    class TransitionAttributeTargetPrioritizationMap : STSimMapBase1<List<TransitionAttributeTargetPrioritization>>
+    class TransitionAttributeTargetPrioritizationKeyMap
     {
+        private Dictionary<int, List<TransitionAttributeTargetPrioritization>> m_Map = new Dictionary<int, List<TransitionAttributeTargetPrioritization>>();
         private List<List<TransitionAttributeTargetPrioritization>> m_Lists = new List<List<TransitionAttributeTargetPrioritization>>();
 
-        public TransitionAttributeTargetPrioritizationMap(Scenario scenario, TransitionAttributeTargetPrioritizationCollection collection) : base(scenario)
+        public TransitionAttributeTargetPrioritizationKeyMap(Scenario scenario, TransitionAttributeTargetPrioritizationCollection collection)
         {
             foreach (TransitionAttributeTargetPrioritization Item in collection)
             {
-                List<TransitionAttributeTargetPrioritization> l = base.GetItemExact(Item.TransitionAttributeTypeId, Item.Iteration, Item.Timestep);
+                List<TransitionAttributeTargetPrioritization> l;
 
-                if (l == null)
+                if (this.m_Map.ContainsKey(Item.TransitionAttributeTypeId))
+                {
+                    l = this.m_Map[Item.TransitionAttributeTypeId];
+                }
+                else
                 {
                     l = new List<TransitionAttributeTargetPrioritization>();
-                    this.AddItem(Item.TransitionAttributeTypeId, Item.Iteration, Item.Timestep, l);
+                    this.m_Map.Add(Item.TransitionAttributeTypeId, l);
                     this.m_Lists.Add(l);
                 }
 
@@ -35,12 +40,16 @@ namespace SyncroSim.STSim
             }
         }
 
-        public List<TransitionAttributeTargetPrioritization> GetPrioritizationList(
-            int transitionAttributeTypeId,
-            int? iteration,
-            int? timestep)
+        public List<TransitionAttributeTargetPrioritization> GetPrioritizationList(int transitionGroupId)
         {
-            return this.GetItem(transitionAttributeTypeId, iteration, timestep);
+            if (this.m_Map.ContainsKey(transitionGroupId))
+            {
+                return this.m_Map[transitionGroupId];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

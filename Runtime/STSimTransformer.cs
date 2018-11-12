@@ -572,45 +572,40 @@ namespace SyncroSim.STSim
 
                         bool TargetPrioritizationMultiplierApplied = false;
 
-                        if (target != null && !target.IsDisabled)
+                        if (target != null && !target.IsDisabled && target.HasPrioritizations)
                         {
-                            if (target.Prioritizations != null)
+                            TransitionTargetPrioritization pri = target.GetPrioritization(
+                                simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                                simulationCell.TertiaryStratumId, simulationCell.StateClassId, 
+                                iteration, timestep);
+
+                            if (pri != null && pri.ProbabilityOverride.HasValue)
                             {
-                                TransitionTargetPrioritization pri = target.GetPrioritization(
-                                    simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                                    simulationCell.TertiaryStratumId, simulationCell.StateClassId);
+                                Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
 
-                                if (pri != null)
+                                if (pri.ProbabilityOverride.Value == 1.0)
                                 {
-                                    if (pri.ProbabilityOverride.HasValue)
+                                    Transition SelectedTransition = this.SelectTransitionPathway(
+                                        simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
+
+                                    if (SelectedTransition != null)
                                     {
-                                        Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
+                                        this.InvokeProbabilisticTransitionForCell(
+                                        simulationCell, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
 
-                                        if (pri.ProbabilityOverride.Value == 1.0)
-                                        {
-                                            Transition SelectedTransition = this.SelectTransitionPathway(
-                                                simulationCell, TransitionGroup.TransitionGroupId, iteration, timestep);
-
-                                            if (SelectedTransition != null)
-                                            {
-                                                this.InvokeProbabilisticTransitionForCell(
-                                                simulationCell, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
-
-                                                return;
-                                            }
-                                        }
-                                        else if (pri.ProbabilityOverride.Value == 0.0)
-                                        {
-                                            multiplier *= 0.0;
-                                            TargetPrioritizationMultiplierApplied = true;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        multiplier *= pri.ProbabilityMultiplier;
-                                        TargetPrioritizationMultiplierApplied = true;
+                                        return;
                                     }
                                 }
+                                else if (pri.ProbabilityOverride.Value == 0.0)
+                                {
+                                    multiplier *= 0.0;
+                                    TargetPrioritizationMultiplierApplied = true;
+                                }
+                            }
+                            else
+                            {
+                                multiplier *= pri.ProbabilityMultiplier;
+                                TargetPrioritizationMultiplierApplied = true;
                             }
                         }
 

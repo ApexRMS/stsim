@@ -1208,7 +1208,7 @@ namespace SyncroSim.STSim
                 {
                     TransitionTarget Item = new TransitionTarget(
                         Iteration, Timestep, StratumId, SecondaryStratumId, TertiaryStratumId, TransitionGroupId, TargetAmount, 
-                        DistributionTypeId, DistributionFrequency, DistributionSD, DistributionMin, DistributionMax);
+                        DistributionTypeId, DistributionFrequency, DistributionSD, DistributionMin, DistributionMax, this.ResultScenario);
 
                     Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
 
@@ -1375,7 +1375,7 @@ namespace SyncroSim.STSim
                 {
                     TransitionAttributeTarget Item = new TransitionAttributeTarget(
                         TransitionAttributeTargetId, Iteration, Timestep, StratumId, SecondaryStratumId, TertiaryStratumId, TransitionAttributeTypeId, 
-                        TargetAmount, DistributionTypeId, DistributionFrequency, DistributionSD, DistributionMin, DistributionMax);
+                        TargetAmount, DistributionTypeId, DistributionFrequency, DistributionSD, DistributionMin, DistributionMax, this.ResultScenario);
 
                     Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
 

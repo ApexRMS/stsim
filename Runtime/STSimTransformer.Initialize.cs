@@ -380,20 +380,11 @@ namespace SyncroSim.STSim
             {
                 if (!t.IsDisabled)
                 {
-                    List<TransitionTargetPrioritization> l = this.m_TransitionTargetPrioritizationMap.GetPrioritizationList(
-                        t.TransitionGroupId, t.Iteration, t.Timestep);
+                    List<TransitionTargetPrioritization> l = 
+                        this.m_TransitionTargetPrioritizationKeyMap.GetPrioritizationList(t.TransitionGroupId);
 
                     if (l != null)
                     {
-                        //We always add a default prioritization if there are any prioritizations.  
-                        //This is both added to the list and set on the target as the default.
-
-                        TransitionTargetPrioritization defaultPrioritization = new TransitionTargetPrioritization(
-                            null, null, t.TransitionGroupId, null, null, null, null, double.MaxValue);
-
-                        l.Add(defaultPrioritization);
-                        t.DefaultPrioritization = defaultPrioritization;
-
                         t.SetPrioritizations(l);
                     }
                 }
@@ -405,7 +396,7 @@ namespace SyncroSim.STSim
         /// </summary>
         private void InitializeTransitionAttributeTargetPrioritizations()
         {
-            if (this.m_TransitionTargets.Count == 0 || this.m_TransitionTargetPrioritizations.Count == 0)
+            if (this.m_TransitionAttributeTargets.Count == 0 || this.m_TransitionAttributeTargetPrioritizations.Count == 0)
             {
                 return;
             }
@@ -414,20 +405,11 @@ namespace SyncroSim.STSim
             {
                 if (!t.IsDisabled)
                 {
-                    List<TransitionAttributeTargetPrioritization> l = this.m_TransitionAttributeTargetPrioritizationMap.GetPrioritizationList(
-                        t.TransitionAttributeTypeId, t.Iteration, t.Timestep);
+                    List<TransitionAttributeTargetPrioritization> l = 
+                        this.m_TransitionAttributeTargetPrioritizationKeyMap.GetPrioritizationList(t.TransitionAttributeTypeId);
 
                     if (l != null)
                     {
-                        //We always add a default prioritization if there are any prioritizations.  
-                        //This is both added to the list and set on the target as the default.
-
-                        TransitionAttributeTargetPrioritization defaultPrioritization = new TransitionAttributeTargetPrioritization(
-                            null, null, t.TransitionAttributeTypeId, null, null, null, null, null, double.MaxValue);
-
-                        l.Add(defaultPrioritization);
-                        t.DefaultPrioritization = defaultPrioritization;
-
                         t.SetPrioritizations(l);
                     }
                 }

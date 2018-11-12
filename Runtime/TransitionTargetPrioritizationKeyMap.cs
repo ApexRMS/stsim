@@ -6,20 +6,25 @@ using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    class TransitionTargetPrioritizationMap : STSimMapBase1<List<TransitionTargetPrioritization>>
+    class TransitionTargetPrioritizationKeyMap
     {
+        private Dictionary<int, List<TransitionTargetPrioritization>> m_Map = new Dictionary<int, List<TransitionTargetPrioritization>>();
         private List<List<TransitionTargetPrioritization>> m_Lists = new List<List<TransitionTargetPrioritization>>();
 
-        public TransitionTargetPrioritizationMap(Scenario scenario, TransitionTargetPrioritizationCollection collection) : base(scenario)
+        public TransitionTargetPrioritizationKeyMap(Scenario scenario, TransitionTargetPrioritizationCollection collection)
         {
             foreach (TransitionTargetPrioritization Item in collection)
             {
-                List<TransitionTargetPrioritization> l = base.GetItemExact(Item.TransitionGroupId, Item.Iteration, Item.Timestep);
+                List<TransitionTargetPrioritization> l;
 
-                if (l == null)
+                if (this.m_Map.ContainsKey(Item.TransitionGroupId))
                 {
+                    l = this.m_Map[Item.TransitionGroupId];
+                }
+                else
+                { 
                     l = new List<TransitionTargetPrioritization>();
-                    this.AddItem(Item.TransitionGroupId, Item.Iteration, Item.Timestep, l);
+                    this.m_Map.Add(Item.TransitionGroupId, l);
                     this.m_Lists.Add(l);
                 }
 
@@ -35,12 +40,16 @@ namespace SyncroSim.STSim
             }
         }
 
-        public List<TransitionTargetPrioritization> GetPrioritizationList(
-            int transitionGroupId, 
-            int? iteration, 
-            int? timestep)
+        public List<TransitionTargetPrioritization> GetPrioritizationList(int transitionGroupId)
         {
-            return this.GetItem(transitionGroupId, iteration, timestep);
+            if (this.m_Map.ContainsKey(transitionGroupId))
+            {
+                return this.m_Map[transitionGroupId];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionTargetPrioritizationMap2 : STSimMapBase5<TransitionTargetPrioritization>
+    internal class TransitionTargetPrioritizationValidationMap : STSimMapBase5<TransitionTargetPrioritization>
     {
-        public TransitionTargetPrioritizationMap2(Scenario scenario, TransitionTargetPrioritizationCollection collection) : base(scenario)
+        public TransitionTargetPrioritizationValidationMap(Scenario scenario, TransitionTargetPrioritizationCollection collection) : base(scenario)
         {
             foreach (TransitionTargetPrioritization Item in collection)
             {

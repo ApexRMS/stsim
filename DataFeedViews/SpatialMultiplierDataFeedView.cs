@@ -6,11 +6,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using System.Reflection;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class SpatialMultiplierDataFeedView
     {
         public SpatialMultiplierDataFeedView()

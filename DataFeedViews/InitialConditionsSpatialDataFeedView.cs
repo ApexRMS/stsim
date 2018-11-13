@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Text;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Globalization;
 using SyncroSim.Core;
@@ -17,7 +16,6 @@ using System.Linq;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class InitialConditionsSpatialDataFeedView
     {
         public InitialConditionsSpatialDataFeedView()

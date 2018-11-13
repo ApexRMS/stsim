@@ -3,7 +3,6 @@
 
 using System;
 using System.Data;
-using System.Reflection;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using SyncroSim.StochasticTime.Forms;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class STSimMapProvider : MapProvider
     {
         public override void CreateColorMaps(Project project)

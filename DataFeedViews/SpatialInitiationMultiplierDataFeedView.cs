@@ -3,14 +3,12 @@
 
 using System.IO;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class SpatialInitiationMultiplierDataFeedView
     {
         public SpatialInitiationMultiplierDataFeedView()

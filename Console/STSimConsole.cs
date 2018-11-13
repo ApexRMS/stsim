@@ -3,11 +3,9 @@
 
 using System.Linq;
 using SyncroSim.Core;
-using System.Reflection;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class STSimConsole : SyncroSimConsole
     {
         protected override void Execute()

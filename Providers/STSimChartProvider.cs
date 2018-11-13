@@ -4,7 +4,6 @@
 using System;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ using SyncroSim.StochasticTime.Forms;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class STSimChartProvider : ChartProvider
     {
         private const string DENSITY_GROUP_NAME = "stsim_density_group";

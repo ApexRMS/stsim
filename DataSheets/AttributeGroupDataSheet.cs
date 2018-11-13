@@ -4,13 +4,11 @@
 using System;
 using System.Data;
 using SyncroSim.Core;
-using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class AttributeGroupDataSheet : DataSheet
     {
         public override void DeleteRows(IEnumerable<DataRow> rows)

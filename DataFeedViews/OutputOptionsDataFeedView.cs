@@ -2,13 +2,11 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
-using System.Reflection;
 using System.Globalization;
 using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class OutputOptionsDataFeedView
     {
         public OutputOptionsDataFeedView()

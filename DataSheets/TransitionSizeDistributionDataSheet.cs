@@ -2,12 +2,10 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using SyncroSim.Core;
-using System.Reflection;
 using System.Globalization;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class TransitionSizeDistributionDataSheet : DataSheet
     {
         protected override void OnDataSheetChanged(DataSheetMonitorEventArgs e)

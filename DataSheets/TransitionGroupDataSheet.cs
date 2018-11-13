@@ -5,11 +5,9 @@ using System;
 using System.Data;
 using SyncroSim.Core;
 using System.Globalization;
-using System.Reflection;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class TransitionGroupDataSheet : DataSheet
     {
         public override void Validate(object proposedValue, string columnName)

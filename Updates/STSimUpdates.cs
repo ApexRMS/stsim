@@ -3,17 +3,15 @@
 
 using System;
 using System.IO;
-using System.Text;
-using SyncroSim.Core;
-using System.Reflection;
-using System.Globalization;
 using System.Data;
-using System.Collections.Generic;
+using System.Text;
 using System.Diagnostics;
+using System.Globalization;
+using System.Collections.Generic;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class STSimUpdates : UpdateProvider
     {
         public override void PerformUpdate(DataStore store, int currentSchemaVersion)

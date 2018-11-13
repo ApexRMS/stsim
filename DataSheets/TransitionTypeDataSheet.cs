@@ -3,15 +3,13 @@
 
 using System;
 using System.Data;
-using System.Reflection;
+using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class TransitionTypeDataSheet : DataSheet
     {
         private DataTable m_TTData;

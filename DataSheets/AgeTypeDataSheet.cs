@@ -2,11 +2,9 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using SyncroSim.Core;
-using System.Reflection;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude = true, ApplyToMembers = false)]
     class AgeTypeDataSheet : DataSheet
     {
         protected override void Save(DataStore store)

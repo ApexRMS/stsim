@@ -3,11 +3,9 @@
 
 using SyncroSim.Core;
 using System.Globalization;
-using System.Reflection;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class TransitionTargetDataSheet : DataSheet
     {
         protected override void OnDataSheetChanged(DataSheetMonitorEventArgs e)

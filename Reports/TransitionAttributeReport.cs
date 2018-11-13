@@ -3,12 +3,10 @@
 
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using System.Reflection;
 using System.Globalization;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class TransitionAttributeReport : ExportTransformer
     {
         protected override void Export(string location, ExportType exportType)

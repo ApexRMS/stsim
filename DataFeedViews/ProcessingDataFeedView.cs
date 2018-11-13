@@ -3,12 +3,10 @@
 
 using System;
 using SyncroSim.Core;
-using System.Reflection;
 using System.Globalization;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class ProcessingDataFeedView
     {
         public ProcessingDataFeedView()

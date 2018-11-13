@@ -4,10 +4,10 @@
 using System;
 using System.IO;
 using System.Data;
-using SyncroSim.Core;
+using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {

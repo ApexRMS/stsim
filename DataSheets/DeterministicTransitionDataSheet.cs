@@ -4,12 +4,10 @@
 using System;
 using System.Data;
 using SyncroSim.Core;
-using System.Reflection;
 using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class DeterministicTransitionDataSheet : DataSheet
     {
         protected override void OnDataSheetChanged(DataSheetMonitorEventArgs e)

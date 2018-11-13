@@ -3,15 +3,13 @@
 
 using System;
 using System.Data;
-using System.Reflection;
 using System.Globalization;
+using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.StochasticTime;
-using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude = true, ApplyToMembers = false)]
     internal class InitialConditionsSpatialDataSheet : DataSheet
     {
         public event EventHandler<EventArgs> ValidatingRasters;

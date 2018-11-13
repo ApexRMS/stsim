@@ -4,7 +4,6 @@
 using System;
 using System.Data;
 using System.Diagnostics;
-using System.Reflection;
 using System.Globalization;
 using System.Windows.Forms;
 using SyncroSim.Core;
@@ -12,7 +11,6 @@ using SyncroSim.Core.Forms;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class InitialConditionsNonSpatialDataFeedView
     {
         public InitialConditionsNonSpatialDataFeedView()

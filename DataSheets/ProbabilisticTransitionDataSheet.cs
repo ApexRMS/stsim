@@ -3,11 +3,9 @@
 
 using System.Data;
 using SyncroSim.Core;
-using System.Reflection;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class ProbabilisticTransitionDataSheet : DataSheet
     {
         protected override void OnDataSheetChanged(DataSheetMonitorEventArgs e)

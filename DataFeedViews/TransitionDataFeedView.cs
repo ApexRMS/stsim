@@ -2,21 +2,19 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Data;
+using System.Linq;
 using System.Text;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
 using SyncroSim.Common.Forms;
-using System.Data;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class TransitionDataFeedView
     {
         public TransitionDataFeedView()

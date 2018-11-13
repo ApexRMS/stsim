@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Data;
-using System.Reflection;
 using System.Globalization;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
@@ -12,7 +11,6 @@ using SyncroSim.Common.Forms;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class SlopeMultiplierDataFeedView
     {
         public SlopeMultiplierDataFeedView()

@@ -3,21 +3,19 @@
 
 using System;
 using System.IO;
+using System.Data;
+using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Data.Common;
 using System.Globalization;
+using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
 using SyncroSim.Common;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class StateClassSummaryReport : ExportTransformer
     {
         private bool m_SecondaryStrataExist;

@@ -1,14 +1,12 @@
 ﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
-using System.Reflection;
-using System.Windows.Forms;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
+using System.Windows.Forms;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class AgeGroupDataFeedView
     {
         private BaseDataGridView m_Grid;

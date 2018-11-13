@@ -4,14 +4,12 @@
 using System;
 using System.Data;
 using SyncroSim.Core;
-using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal class StateClassDataSheet : DataSheet
     {
         private DataSheet m_SlxSheet;

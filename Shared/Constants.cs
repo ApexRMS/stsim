@@ -53,6 +53,7 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_EXPORT_STRATUM_VARIABLE_NAME = "Stratum";
         public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "str";
         public const string SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME = "secstr";
+        public const string SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME = "terstr";
         public const string SPATIAL_MAP_EXPORT_AGE_VARIABLE_NAME = "Age";
         public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "age";
         public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_VARIABLE_PREFIX = "Tg";

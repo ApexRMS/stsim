@@ -1772,6 +1772,33 @@ namespace SyncroSim.STSim
                 }
             }
 
+            // Create Tertiary Stratum IC raster , if appropriate and/or not already defined
+            if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME].ToString()))
+            {
+                rst.InitIntCells();
+                for (var i = 0; i < numValidCells; i++)
+                {
+                    if (cells[i].TertiaryStratumId.HasValue)
+                    {
+                        rst.IntCells[i] = cells[i].TertiaryStratumId.Value;
+                    }
+                }
+
+                // Test the Tertiary stratum has values worth exporting
+                if (rst.IntCells.Distinct().Count() > 1 || rst.IntCells[0] != StochasticTimeRaster.DefaultNoDataValue)
+                {
+                    // We need to remap the Tertiary Stratum PK to the Raster values ( PK - > ID)
+                    dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_TERTIARY_STRATA_NAME);
+                    rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, StochasticTimeRaster.DefaultNoDataValue);
+
+                    filename = SpatialUtilities.SaveTertiaryStratumInputRaster(rst, this.ResultScenario, iterVal, 0);
+                    File.SetAttributes(filename, FileAttributes.Normal);
+                    drICS[Strings.DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(filename);
+                    dsSpatialIC.AddExternalInputFile(filename);
+                    rasterSaved = true;
+                }
+            }
+
             // Create Age IC raster , if not already defined
             if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME].ToString()))
             {

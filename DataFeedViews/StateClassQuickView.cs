@@ -1,21 +1,19 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Data;
 using System.Text;
 using System.Drawing;
-using System.Reflection;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    [ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
     internal partial class StateClassQuickView
     {
         public StateClassQuickView()

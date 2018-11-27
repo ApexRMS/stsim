@@ -1,6 +1,10 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
+using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
+using SyncroSim.Core;
 using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
@@ -12,16 +16,20 @@ namespace SyncroSim.STSim
         private double m_TargetRemaining;
         private double m_ExpectedAmount;
         private double m_Multiplier = 1.0;
+        private List<TransitionAttributeTargetPrioritization> m_Prioritizations;
+        private TransitionAttributeTargetPrioritizationItemMap m_ItemMap;
+        private TransitionAttributeTargetPrioritizationListMap m_ListMap;
+        private Scenario m_Scenario;
 
         public TransitionAttributeTarget(
             int transitionAttributeTargetId, int? iteration, int? timestep, int? stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
             int transitionAttributeTypeId, double? targetAmount, int? distributionTypeId, DistributionFrequency? distributionFrequency, 
-            double? distributionSD, double? distributionMin, double? distributionMax) : base(iteration, timestep, stratumId, secondaryStratumId,
+            double? distributionSD, double? distributionMin, double? distributionMax, Scenario scenario) : base(iteration, timestep, stratumId, secondaryStratumId,
                 tertiaryStratumId, targetAmount, distributionTypeId, distributionFrequency, distributionSD, distributionMin, distributionMax)
         {
-
             this.m_TransitionAttributeTargetId = transitionAttributeTargetId;
             this.m_TransitionAttributeTypeId = transitionAttributeTypeId;
+            this.m_Scenario = scenario;
         }
 
         public int TransitionAttributeTargetId
@@ -44,11 +52,21 @@ namespace SyncroSim.STSim
         {
             get
             {
+                this.CHECK_DISABLED();
                 return this.m_TargetRemaining;
             }
             set
             {
+                this.CHECK_DISABLED();
                 this.m_TargetRemaining = value;
+            }
+        }
+
+        public double TargetRemainingNoCheck
+        {
+            get
+            {
+                return this.m_TargetRemaining;
             }
         }
 
@@ -56,11 +74,21 @@ namespace SyncroSim.STSim
         {
             get
             {
+                this.CHECK_DISABLED();
                 return this.m_Multiplier;
             }
             set
             {
+                this.CHECK_DISABLED();
                 this.m_Multiplier = value;
+            }
+        }
+
+        public double MultiplierNoCheck
+        {
+            get
+            {
+                return this.m_Multiplier;
             }
         }
 
@@ -68,11 +96,29 @@ namespace SyncroSim.STSim
         {
             get
             {
+                this.CHECK_DISABLED();
                 return this.m_ExpectedAmount;
             }
             set
             {
+                this.CHECK_DISABLED();
                 this.m_ExpectedAmount = value;
+            }
+        }
+
+        public double ExpectedAmountNoCheck
+        {
+            get
+            {
+                return this.m_ExpectedAmount;
+            }
+        }
+
+        public bool HasPrioritizations
+        {
+            get
+            {
+                return (this.m_Prioritizations != null);
             }
         }
 
@@ -81,13 +127,83 @@ namespace SyncroSim.STSim
             TransitionAttributeTarget t = new TransitionAttributeTarget(
                 this.TransitionAttributeTargetId, this.Iteration, this.Timestep, this.StratumId, this.SecondaryStratumId, this.TertiaryStratumId, 
                 this.TransitionAttributeTypeId, this.DistributionValue, this.DistributionTypeId, this.DistributionFrequency, this.DistributionSD, 
-                this.DistributionMin, this.DistributionMax);
+                this.DistributionMin, this.DistributionMax, this.m_Scenario);
 
-            t.TargetRemaining = this.TargetRemaining;
-            t.Multiplier = this.Multiplier;
-            t.ExpectedAmount = this.ExpectedAmount;
+            t.TargetRemaining = this.TargetRemainingNoCheck;
+            t.Multiplier = this.MultiplierNoCheck;
+            t.ExpectedAmount = this.ExpectedAmountNoCheck;
+            t.IsDisabled = this.IsDisabled;
+            t.SetPrioritizations(this.m_Prioritizations);
 
             return t;
+        }
+
+        public void SetPrioritizations(List<TransitionAttributeTargetPrioritization> prioritizations)
+        {
+            this.ClonePrioritizations(prioritizations);
+
+            Debug.Assert(this.m_ItemMap == null);
+            this.m_ItemMap = new TransitionAttributeTargetPrioritizationItemMap(this.m_Prioritizations, this.m_Scenario);
+
+            Debug.Assert(this.m_ListMap == null);
+            this.m_ListMap = new TransitionAttributeTargetPrioritizationListMap(this.m_Prioritizations, this.m_TransitionAttributeTypeId);
+        }
+
+        public List<TransitionAttributeTargetPrioritization> GetPrioritizations(int iteration, int timestep)
+        {
+            return this.m_ListMap.GetPrioritizations(iteration, timestep);
+        }
+
+        public TransitionAttributeTargetPrioritization GetPrioritization(
+            int? stratumId,
+            int? secondaryStratumId,
+            int? tertiaryStratumId,
+            int? transitionGroupId,
+            int? stateClassId, 
+            int iteration, 
+            int timestep)
+        {
+            TransitionAttributeTargetPrioritization pri = this.m_ItemMap.GetPrioritization(
+                stratumId, secondaryStratumId, tertiaryStratumId, transitionGroupId, stateClassId, iteration, timestep);
+
+            if (pri != null)
+            {
+                return pri;
+            }
+
+            List<TransitionAttributeTargetPrioritization> lst = this.m_ListMap.GetPrioritizations(iteration, timestep);
+
+            if (lst != null)
+            {
+                pri = lst.Last();
+                Debug.Assert(pri.Priority == double.MaxValue);
+
+                return pri;
+            }
+
+            return null;
+        }
+
+        private void ClonePrioritizations(List<TransitionAttributeTargetPrioritization> prioritizations)
+        {
+            Debug.Assert(this.m_Prioritizations == null);
+            this.m_Prioritizations = new List<TransitionAttributeTargetPrioritization>();
+
+            foreach (TransitionAttributeTargetPrioritization t in prioritizations)
+            {
+                this.m_Prioritizations.Add(new TransitionAttributeTargetPrioritization(
+                    t.Iteration,
+                    t.Timestep,
+                    t.TransitionAttributeTypeId,
+                    t.StratumId,
+                    t.SecondaryStratumId,
+                    t.TertiaryStratumId,
+                    t.TransitionGroupId,
+                    t.StateClassId,
+                    t.Priority));
+            }
+
+            Debug.Assert(this.m_Prioritizations.Count == prioritizations.Count);
         }
     }
 }

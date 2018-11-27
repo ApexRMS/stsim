@@ -113,6 +113,12 @@
     <Compile Include="Console\STSimConsole.ListReports.cs" />
     <Compile Include="Console\STSimConsole.SpatialSplit.cs" />
     <Compile Include="Console\STSimConsole.cs" />
+    <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.Designer.cs">
+      <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
     <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
@@ -189,6 +195,12 @@
     <Compile Include="Runtime\TransitionAttributeTarget.cs" />
     <Compile Include="Runtime\TransitionAttributeTargetCollection.cs" />
     <Compile Include="Runtime\TransitionAttributeTargetMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritization.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationCollection.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationItemMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationKeyMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationListMap.cs" />
+    <Compile Include="Runtime\TransitionAttributeTargetPrioritizationValidationMap.cs" />
     <Compile Include="Runtime\TransitionAttributeType.cs" />
     <Compile Include="Runtime\TransitionAttributeTypeCollection.cs" />
     <Compile Include="Runtime\TransitionAttributeValue.cs" />
@@ -240,6 +252,12 @@
     <Compile Include="Runtime\TransitionTarget.cs" />
     <Compile Include="Runtime\TransitionTargetCollection.cs" />
     <Compile Include="Runtime\TransitionTargetMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritization.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationCollection.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationItemMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationKeyMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationListMap.cs" />
+    <Compile Include="Runtime\TransitionTargetPrioritizationValidationMap.cs" />
     <Compile Include="Runtime\TransitionType.cs" />
     <Compile Include="Runtime\TransitionTypeCollection.cs" />
     <Compile Include="Runtime\TST.cs" />
@@ -421,7 +439,6 @@
     <Compile Include="Shared\ColorColumns.cs" />
     <Compile Include="Shared\ColorUtilities.cs" />
     <Compile Include="Shared\Constants.cs" />
-    <Compile Include="Shared\DataSheetUtilities.cs" />
     <Compile Include="Shared\DataTableUtilities.cs" />
     <Compile Include="Shared\DTAnalyzer.cs" />
     <Compile Include="Shared\Enums.cs" />
@@ -531,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionDataFeedView.resx">
       <DependentUpon>TransitionDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionSimulationGroupDataFeedView.resx">
+      <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionTypeDataFeedView.resx">
       <DependentUpon>TransitionTypeDataFeedView.cs</DependentUpon>

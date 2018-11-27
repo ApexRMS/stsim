@@ -1,4 +1,4 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System.Diagnostics;
@@ -12,7 +12,9 @@ namespace SyncroSim.STSim
         private DeterministicTransitionMap m_DeterministicTransitionMap;
         private TransitionOrderMap m_TransitionOrderMap;
         private TransitionTargetMap m_TransitionTargetMap;
+        private TransitionTargetPrioritizationKeyMap m_TransitionTargetPrioritizationKeyMap;
         private TransitionAttributeTargetMap m_TransitionAttributeTargetMap;
+        private TransitionAttributeTargetPrioritizationKeyMap m_TransitionAttributeTargetPrioritizationKeyMap;
         private TransitionAttributeValueMap m_TransitionAttributeValueMap;
         private TransitionSizeDistributionMap m_TransitionSizeDistributionMap;
         private TransitionDirectionMultiplierMap m_TransitionDirectionMultiplierMap;
@@ -73,13 +75,27 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionOrderMap == null);
             this.m_TransitionOrderMap = new TransitionOrderMap(this.m_TransitionOrders);
 
-            //Create the transition targets map. 
+            //Create the transition targets map.
             Debug.Assert(this.m_TransitionTargetMap == null);
             this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
 
-            //Create the transition attribute targets map. 
+            //Create the full transition target prioritizations map which will validate there are no duplicates
+            TransitionTargetPrioritizationValidationMap ttvalmap = new TransitionTargetPrioritizationValidationMap(this.ResultScenario, this.m_TransitionTargetPrioritizations);
+
+            //Then create the transition target prioritization map which is not a full map - just a map by transition group, iteration, and timestep
+            Debug.Assert(this.m_TransitionTargetPrioritizationKeyMap == null);
+            this.m_TransitionTargetPrioritizationKeyMap = new TransitionTargetPrioritizationKeyMap(this.m_TransitionTargetPrioritizations);
+
+            //Create the transition attribute target map
             Debug.Assert(this.m_TransitionAttributeTargetMap == null);
             this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
+        
+            //Create the full transition attribute target prioritizations map which will validate there are no duplicates
+            TransitionAttributeTargetPrioritizationValidationMap tatvalmap = new TransitionAttributeTargetPrioritizationValidationMap(this.ResultScenario, this.m_TransitionAttributeTargetPrioritizations);        
+            
+            //Then create the transition attribute target prioritization map which is not a full map - just a map by transition attribute type, iteration, and timestep
+            Debug.Assert(this.m_TransitionAttributeTargetPrioritizationKeyMap == null);
+            this.m_TransitionAttributeTargetPrioritizationKeyMap = new TransitionAttributeTargetPrioritizationKeyMap(this.m_TransitionAttributeTargetPrioritizations);
 
             //Create the transition patch prioritization map
             Debug.Assert(this.m_TransitionPatchPrioritizationMap == null);

@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("ST-Sim Module")]
 [assembly: AssemblyCompany("ApexRMS")]
 [assembly: AssemblyProduct("SyncroSim.STSim")]
-[assembly: AssemblyCopyright("Copyright © 2007-2017 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 
 [assembly: ComVisible(false)]
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // <Assembly: AssemblyVersion("1.0.*")> 
 
-[assembly: AssemblyVersion("3.1.34.0")]
-[assembly: AssemblyFileVersion("3.1.34.0")]
+[assembly: AssemblyVersion("3.1.37.0")]
+[assembly: AssemblyFileVersion("3.1.37.0")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
 

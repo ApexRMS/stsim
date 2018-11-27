@@ -1,4 +1,4 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using SyncroSim.Core;
@@ -33,6 +33,18 @@ namespace SyncroSim.STSim
 
             m.AddItem(iteration, timestep, item);
             this.SetHasItems();
+        }
+
+        protected T GetItemExact(int? k1, int? iteration, int? timestep)
+        {
+            SortedKeyMap2<T> m = this.m_map.GetItemExact(k1);
+
+            if (m == null)
+            {
+                return default(T);
+            }
+
+            return m.GetItemExact(iteration, timestep);
         }
 
         protected T GetItem(int? k1, int? iteration, int? timestep)

@@ -1,4 +1,4 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -376,7 +376,7 @@ namespace SyncroSim.STSim
                 MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>> tatMap = new MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>>();
 
                 this.ResetTransitionTargetMultipliers(iteration, timestep, TransitionGroup);
-                this.ResetTranstionAttributeTargetMultipliers(iteration, timestep, RemainingTransitionGroups, tatMap, TransitionGroup);
+                this.ResetTransitionAttributeTargetMultipliers(iteration, timestep, RemainingTransitionGroups, tatMap, TransitionGroup);
 
                 RemainingTransitionGroups.Remove(TransitionGroup.TransitionGroupId);
 
@@ -439,7 +439,7 @@ namespace SyncroSim.STSim
 
                                         foreach (TransitionAttributeTarget tat in d.Values)
                                         {
-                                            if (tat.TargetRemaining > 0.0)
+                                            if (!tat.IsDisabled && tat.TargetRemaining > 0.0)
                                             {
                                                 TargetsMet = false;
                                                 break;
@@ -779,74 +779,6 @@ namespace SyncroSim.STSim
             return SimulationCell;
         }
 
-        private Transition SelectSpatialTransitionPathway(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
-        {
-            Debug.Assert(this.IsSpatial);
-
-            double SumProbability = 0.0;
-            TransitionCollection Transitions = new TransitionCollection();
-
-            foreach (Transition tr in simulationCell.Transitions)
-            {
-                TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
-
-                if (tt.PrimaryTransitionGroups.Contains(transitionGroupId))
-                {
-                    double multiplier = this.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
-                    multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
-
-                    foreach (TransitionGroup tg in tt.TransitionGroups)
-                    {
-                        multiplier *= this.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell);
-                        multiplier *= this.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId);
-                    }
-
-                    if (this.m_TransitionAttributeTargets.Count > 0)
-                    {
-                        multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
-                    }
-
-                    SumProbability += tr.Probability * tr.Proportion * multiplier;
-                    Transitions.Add(tr);
-                }
-            }
-
-            double CumulativeProbability = 0.0;
-            double Rand = this.m_RandomGenerator.GetNextDouble();
-
-            foreach (Transition tr in Transitions)
-            {
-                TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
-
-                double multiplier = this.GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
-                multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
-
-                foreach (TransitionGroup tg in tt.TransitionGroups)
-                {
-                    multiplier *= this.GetTransitionAdjacencyMultiplier(tg.TransitionGroupId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetExternalSpatialMultipliers(simulationCell, iteration, timestep, tg.TransitionGroupId);
-                }
-
-                if (this.m_TransitionAttributeTargets.Count > 0)
-                {
-                    multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
-                }
-
-                CumulativeProbability += ((tr.Probability * tr.Proportion * multiplier) / SumProbability);
-
-                if (CumulativeProbability > Rand)
-                {
-                    return tr;
-                }
-            }
-
-            return null;
-        }
-
         private void GenerateTransitionEvents(List<TransitionEvent> transitionEventList, Dictionary<int, Cell> transitionedCells, Dictionary<int, Cell> initiationCells, int stratumId, int transitionGroupId, int iteration, int timestep, double maxCellProbability, int[] transitionedPixels, ref double expectedArea, Dictionary<int, double[]> rasterTransitionAttrValues)
         {
 #if DEBUG
@@ -968,13 +900,13 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    Transition = this.SelectSpatialTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
+                    Transition = this.SelectTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
                 }
                 else
                 {
                     if (AutoCorrelation == null || (!AutoCorrelation.AutoCorrelation))
                     {
-                        Transition = this.SelectSpatialTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
+                        Transition = this.SelectTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
                     }
                 }
 
@@ -1864,8 +1796,47 @@ namespace SyncroSim.STSim
                 {
                     double multiplier = GetTransitionMultiplier(tr.TransitionTypeId, iteration, timestep, simulationCell);
                     multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
-                    multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
 
+                    TransitionTarget target = this.m_TransitionTargetMap.GetTransitionTarget(
+                        TransitionGroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId, iteration, timestep);
+
+                    bool TargetPrioritizationMultiplierApplied = false;
+
+                    if (target != null && !target.IsDisabled && target.HasPrioritizations)
+                    {                       
+                        TransitionTargetPrioritization pri = target.GetPrioritization(
+                            simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                            simulationCell.TertiaryStratumId, simulationCell.StateClassId, 
+                            iteration, timestep);
+                          
+                        if (pri != null && pri.ProbabilityOverride.HasValue)
+                        {
+                            Debug.Assert(pri.ProbabilityOverride.Value == 1.0 || pri.ProbabilityOverride.Value == 0.0);
+
+                            if (pri.ProbabilityOverride.Value == 1.0)
+                            {
+                                return 1.0;
+                            }
+                            else if (pri.ProbabilityOverride.Value == 0.0)
+                            {
+                                return 0.0;
+                            }
+                        }                           
+                        else
+                        {
+                            multiplier *= pri.ProbabilityMultiplier;
+                            TargetPrioritizationMultiplierApplied = true;
+                        }                      
+                    }
+
+                    if (!TargetPrioritizationMultiplierApplied)
+                    {
+                        multiplier *= this.GetTransitionTargetMultiplier(
+                            TransitionGroup.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                            simulationCell.TertiaryStratumId, iteration, timestep);
+                    }
+                   
                     if (this.IsSpatial)
                     {
                         multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
@@ -1882,6 +1853,21 @@ namespace SyncroSim.STSim
                     if (this.m_TransitionAttributeTargets.Count > 0)
                     {
                         TransitionType tt = this.TransitionTypes[tr.TransitionTypeId];
+
+                        double? ProbOverride = this.GetAttributeTargetProbabilityOverride(tt, simulationCell, iteration, timestep);
+
+                        if (ProbOverride.HasValue)
+                        {
+                            if (ProbOverride.Value == 1.0)
+                            {
+                                return 1.0;
+                            }
+                            else if (ProbOverride.Value == 0.0)
+                            {
+                                return 0.0;
+                            }
+                        }
+
                         multiplier = this.ModifyMultiplierForTransitionAttributeTarget(multiplier, tt, simulationCell, iteration, timestep);
                     }
 

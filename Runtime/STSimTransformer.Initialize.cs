@@ -1,4 +1,4 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -41,6 +41,8 @@ namespace SyncroSim.STSim
             this.InitializeStateAttributes();
             this.InitializeTransitionAttributes();
             this.InitializeShufflableTransitionGroups();
+            this.InitializeTransitionTargetPrioritizations();
+            this.InitializeTransitionAttributeTargetPrioritizations();
 
             if (this.IsSpatial)
             {
@@ -228,17 +230,20 @@ namespace SyncroSim.STSim
             this.FillStateClassCollection();
             this.FillTransitionGroupCollection();
             this.FillTransitionTypeCollection();
-            this.FillTransitionGroupTypeCollection();
-            this.FillTransitionTypeGroupCollection();
+            this.FillTransitionSimulationGroupCollection();
+            this.FillTypesForTransitionGroups();
+            this.FillGroupsForTransitionTypes();
             this.FillTransitionMultiplierTypeCollection();
             this.FillTransitionAttributeTypeCollection();
             this.FillDeterministicTransitionsCollection();
             this.FillProbabilisticTransitionsCollection();
             this.FillStateAttributeValueCollection();
             this.FillTransitionAttributeValueCollection();
-            this.FillTransitionAttributeTargetCollection();
             this.FillTransitionOrderCollection();
             this.FillTransitionTargetCollection();
+            this.FillTransitionTargetPrioritizationCollection();
+            this.FillTransitionAttributeTargetCollection();
+            this.FillTransitionAttributeTargetPrioritizationCollection();
             this.FillTstTransitionGroupCollection();
             this.FillTstRandomizeCollection();
             this.FillTransitionMultiplierValueCollection();
@@ -359,6 +364,56 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup tg in this.m_TransitionGroups)
             {
                 this.m_ShufflableTransitionGroups.Add(tg);
+            }
+        }
+
+        /// <summary>
+        /// Assigns Target Prioritizations to each target
+        /// </summary>
+        private void InitializeTransitionTargetPrioritizations()
+        {
+            if (this.m_TransitionTargets.Count == 0 || this.m_TransitionTargetPrioritizations.Count == 0)
+            {
+                return;
+            }
+
+            foreach (TransitionTarget t in this.m_TransitionTargets)
+            {
+                if (!t.IsDisabled)
+                {
+                    List<TransitionTargetPrioritization> l = 
+                        this.m_TransitionTargetPrioritizationKeyMap.GetPrioritizationList(t.TransitionGroupId);
+
+                    if (l != null)
+                    {
+                        t.SetPrioritizations(l);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Assigns Target Prioritizations to each attribute target
+        /// </summary>
+        private void InitializeTransitionAttributeTargetPrioritizations()
+        {
+            if (this.m_TransitionAttributeTargets.Count == 0 || this.m_TransitionAttributeTargetPrioritizations.Count == 0)
+            {
+                return;
+            }
+
+            foreach (TransitionAttributeTarget t in this.m_TransitionAttributeTargets)
+            {
+                if (!t.IsDisabled)
+                {
+                    List<TransitionAttributeTargetPrioritization> l = 
+                        this.m_TransitionAttributeTargetPrioritizationKeyMap.GetPrioritizationList(t.TransitionAttributeTypeId);
+
+                    if (l != null)
+                    {
+                        t.SetPrioritizations(l);
+                    }
+                }
             }
         }
 

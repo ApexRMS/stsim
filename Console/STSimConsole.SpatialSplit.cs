@@ -1,13 +1,13 @@
-﻿// ST-Sim: A SyncroSim Module for the ST-Sim State-and-Transition Model.
+﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
 using System.IO;
 using System.Data;
-using SyncroSim.Core;
+using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {

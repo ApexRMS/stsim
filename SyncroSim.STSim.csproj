@@ -113,6 +113,12 @@
     <Compile Include="Console\STSimConsole.ListReports.cs" />
     <Compile Include="Console\STSimConsole.SpatialSplit.cs" />
     <Compile Include="Console\STSimConsole.cs" />
+    <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.Designer.cs">
+      <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
     <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
@@ -433,7 +439,6 @@
     <Compile Include="Shared\ColorColumns.cs" />
     <Compile Include="Shared\ColorUtilities.cs" />
     <Compile Include="Shared\Constants.cs" />
-    <Compile Include="Shared\DataSheetUtilities.cs" />
     <Compile Include="Shared\DataTableUtilities.cs" />
     <Compile Include="Shared\DTAnalyzer.cs" />
     <Compile Include="Shared\Enums.cs" />
@@ -543,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionDataFeedView.resx">
       <DependentUpon>TransitionDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TransitionSimulationGroupDataFeedView.resx">
+      <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionTypeDataFeedView.resx">
       <DependentUpon>TransitionTypeDataFeedView.cs</DependentUpon>

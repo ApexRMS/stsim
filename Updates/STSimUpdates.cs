@@ -352,6 +352,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000066(store);
             }
+
+            if (currentSchemaVersion < 67)
+            {
+                STSIM0000067(store);
+            }
         }
 
         /// <summary>
@@ -2345,6 +2350,62 @@ namespace SyncroSim.STSim
         private static void STSIM0000066(DataStore store)
         {
             UpdateProvider.CreateIndex(store, "STSim_DistributionValue", new[] {"ScenarioID"});
+        }
+
+        /// <summary>
+        /// STSIM0000067
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update:     
+        /// (1.) Creates a record in Transition Simulation Groups for each Transition Group in Transtion Types By Group
+        ///      where IsPrimary is either yes, or null and the group is not auto-generated.
+        /// (2.) Removes the IsPrimary field from STSim_TransitionTypeGroup     
+        /// </remarks>
+        private static void STSIM0000067(DataStore store)
+        {
+            //We need to create the Transition Simulation Group table first
+
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionSimulationGroup(TransitionSimulationGroupID INTEGER PRIMARY KEY AUTOINCREMENT, ProjectID INTEGER, TransitionGroupID INTEGER)");
+
+            //1.  Above
+
+            Dictionary<string, bool> AlreadyAdded = new Dictionary<string, bool>();
+            DataTable TransitionTypeGroupTable = store.CreateDataTable("STSim_TransitionTypeGroup");
+
+            foreach(DataRow dr in TransitionTypeGroupTable.Rows)
+            {
+                int ProjectID = Convert.ToInt32(dr["ProjectID"], CultureInfo.InvariantCulture);
+                int TransitionGroupID = Convert.ToInt32(dr["TransitionGroupID"], CultureInfo.InvariantCulture);
+                string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", ProjectID, TransitionGroupID);
+
+                if (!AlreadyAdded.ContainsKey(k))
+                {
+                    object ObjIsPrimary = dr["IsPrimary"];
+                    object ObjIsAuto = dr["IsAuto"];
+                    bool IsPrimary = (ObjIsPrimary == DBNull.Value || Convert.ToInt32(ObjIsPrimary, CultureInfo.InvariantCulture) != 0);
+                    bool IsAuto = (ObjIsAuto != DBNull.Value && Convert.ToInt32(ObjIsAuto, CultureInfo.InvariantCulture) != 0);
+
+                    if (IsPrimary && !IsAuto)
+                    {
+                        int NextId = Library.GetNextSequenceId(store);
+
+                        string query = string.Format(CultureInfo.InvariantCulture,
+                            "INSERT INTO STSim_TransitionSimulationGroup(TransitionSimulationGroupID, ProjectID, TransitionGroupID) " +
+                            "VALUES({0},{1},{2})", NextId, ProjectID, TransitionGroupID);
+
+                        store.ExecuteNonQuery(query);
+                        AlreadyAdded.Add(k, true);
+                    }                    
+                }        
+            }
+
+            //2.  Above
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_TransitionTypeGroup RENAME TO TEMP_TABLE");
+            store.ExecuteNonQuery("CREATE TABLE STSim_TransitionTypeGroup(TransitionTypeGroupID INTEGER PRIMARY KEY AUTOINCREMENT, ProjectID INTEGER, TransitionTypeID INTEGER, TransitionGroupID INTEGER, IsAuto INTEGER)");
+            store.ExecuteNonQuery("INSERT INTO STSim_TransitionTypeGroup(TransitionTypeGroupID, ProjectID, TransitionTypeID, TransitionGroupID, IsAuto) SELECT TransitionTypeGroupID, ProjectID, TransitionTypeID, TransitionGroupID, IsAuto FROM TEMP_TABLE");
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
         }
     }
 }

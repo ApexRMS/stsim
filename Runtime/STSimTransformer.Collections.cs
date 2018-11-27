@@ -18,10 +18,12 @@ namespace SyncroSim.STSim
         private StratumCollection m_SecondaryStrata = new StratumCollection();
         private StratumCollection m_TertiaryStrata = new StratumCollection();
         private StateClassCollection m_StateClasses = new StateClassCollection();
+        private TransitionTypeCollection m_TransitionTypes = new TransitionTypeCollection();
         private TransitionGroupCollection m_TransitionGroups = new TransitionGroupCollection();
+        private TransitionGroupCollection m_PrimaryTransitionGroups = new TransitionGroupCollection();
+        private TransitionGroupCollection m_TransitionSimulationGroups = new TransitionGroupCollection();
         private List<TransitionGroup> m_ShufflableTransitionGroups = new List<TransitionGroup>();
         private List<TransitionGroup> m_TransitionSpreadGroups = new List<TransitionGroup>();
-        private TransitionTypeCollection m_TransitionTypes = new TransitionTypeCollection();
         private TransitionAttributeTypeCollection m_TransitionAttributeTypes = new TransitionAttributeTypeCollection();
         private TransitionMultiplierTypeCollection m_TransitionMultiplierTypes = new TransitionMultiplierTypeCollection();
         private PatchPrioritizationCollection m_PatchPrioritizations = new PatchPrioritizationCollection();
@@ -198,6 +200,7 @@ namespace SyncroSim.STSim
 #if DEBUG
         private bool TRANSITION_TYPES_FILLED;
         private bool TRANSITION_GROUPS_FILLED;
+        private bool TRANSITION_SIM_GROUPS_FILLED;
 #endif
 
         /// <summary>
@@ -264,132 +267,182 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Fills the Transition Type collection of Transition Groups
+        /// Fills the transition simulation group collection
+        /// </summary>
+        private void FillTransitionSimulationGroupCollection()
+        {
+            Debug.Assert(this.m_TransitionSimulationGroups.Count == 0);
+            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_SIMULATION_GROUP_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                Debug.Assert(!this.m_TransitionSimulationGroups.Contains(tg));
+
+                if (!this.m_TransitionSimulationGroups.Contains(tg))
+                {
+                    this.m_TransitionSimulationGroups.Add(tg);
+                }
+            }
+
+#if DEBUG
+            TRANSITION_SIM_GROUPS_FILLED = true;
+#endif
+        }
+
+        /// <summary>
+        /// Fills the groups for each transition type
         /// </summary>
         /// <remarks>
-        /// This function must be called after _both_ the transition group and transition type collections have been filled
+        /// This function must not be called before the transition group, simulation group, 
+        /// and transition type collections have been filled
         /// </remarks>
-        private void FillTransitionTypeGroupCollection()
+        private void FillGroupsForTransitionTypes()
         {
 #if DEBUG
             Debug.Assert(TRANSITION_TYPES_FILLED);
             Debug.Assert(TRANSITION_GROUPS_FILLED);
+            Debug.Assert(TRANSITION_SIM_GROUPS_FILLED);
 #endif
 
-            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
+            DataSheet DSTypeGroup = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
 
-            foreach (TransitionType tt in this.m_TransitionTypes)
+            //For every transition type...
+
+            foreach (TransitionType TType in this.m_TransitionTypes)
             {
-                Debug.Assert(tt.TransitionGroups.Count == 0);
+                Debug.Assert(TType.TransitionGroups.Count == 0);
+
+                //Find the groups it belongs to...
 
                 string query = string.Format(CultureInfo.InvariantCulture, 
-                    "{0}={1}", Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME, tt.TransitionTypeId);
+                    "{0}={1}", Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME, TType.TransitionTypeId);
 
-                DataRow[] rows = ds.GetData().Select(query);
-                bool HasNonAutoPrimaryGroup = false;
+                DataRow[] TGroupRows = DSTypeGroup.GetData().Select(query);
+                bool TypeHasNonAutoPrimaryGroup = false;
 
-                //When adding the transition groups, we only want to add an auto-generated
-                //primary transition group if there is not already a user-defined one. To ensure
-                //this we loop over the groups twice with the user-defined ones taking precedcence.
+                //When adding the primary transition groups, we only want to add an auto-generated
+                //group if there is not already a user-defined one. To ensure this, we loop over the 
+                //groups twice with the user-defined ones taking precedcence.
 
                 //User Defined
 
-                foreach (DataRow dr in rows)
+                foreach (DataRow TGroupRow in TGroupRows)
                 {
-                    int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int tgid = Convert.ToInt32(TGroupRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                     TransitionGroup tg = this.m_TransitionGroups[tgid];
 
-                    if (!tg.IsAuto)
+                    if (!tg.IsAuto) 
                     {
-                        Debug.Assert(!tt.TransitionGroups.Contains(tgid));
-                        tt.TransitionGroups.Add(tg);
+                        Debug.Assert(!TType.TransitionGroups.Contains(tgid));
+                        TType.TransitionGroups.Add(tg);
 
-                        if (DataSheetUtilities.IsPrimaryTypeByGroup(dr))
+                        if (this.m_TransitionSimulationGroups.Contains(tg))  //If it's primary
                         {
-                            tt.PrimaryTransitionGroups.Add(tg);
-                            HasNonAutoPrimaryGroup = true;
+                            TType.PrimaryTransitionGroups.Add(tg);                        
+                            TypeHasNonAutoPrimaryGroup = true;
+
+                            if (!this.m_PrimaryTransitionGroups.Contains(tg))  //Global primary group list
+                            {
+                                this.m_PrimaryTransitionGroups.Add(tg);
+                            }
                         }
                     }
                 }
 
                 //Auto Generated
 
-                foreach (DataRow dr in rows)
+                if (!TypeHasNonAutoPrimaryGroup)
                 {
-                    int tgid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                    TransitionGroup tg = this.m_TransitionGroups[tgid];
-
-                    if (tg.IsAuto)
+                    foreach (DataRow TGroupRow in TGroupRows)
                     {
-                        Debug.Assert(!tt.TransitionGroups.Contains(tgid));
-                        tt.TransitionGroups.Add(tg);
+                        int tgid = Convert.ToInt32(TGroupRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                        TransitionGroup tg = this.m_TransitionGroups[tgid];
 
-                        if (DataSheetUtilities.IsPrimaryTypeByGroup(dr) && (!HasNonAutoPrimaryGroup))
+                        if (tg.IsAuto) 
                         {
-                            tt.PrimaryTransitionGroups.Add(tg);
+                            Debug.Assert(!TType.TransitionGroups.Contains(tgid));
+
+                            TType.TransitionGroups.Add(tg);
+                            TType.PrimaryTransitionGroups.Add(tg);
+
+                            if (!this.m_PrimaryTransitionGroups.Contains(tg))  //Global primary group list
+                            {
+                                this.m_PrimaryTransitionGroups.Add(tg);
+                            }
                         }
                     }
                 }
 
-                if (tt.PrimaryTransitionGroups.Count > 1)
+                if (TType.PrimaryTransitionGroups.Count > 1)
                 {
                     string msg = string.Format(CultureInfo.InvariantCulture, 
-                        "The transition type '{0}' has more than one primary transition group.", tt.DisplayName);
+                        "The transition type '{0}' has more than one primary transition group.", TType.DisplayName);
 
                     this.RecordStatus(StatusType.Warning, msg);
                 }
+
+                Debug.Assert(TType.PrimaryTransitionGroups.Count > 0);
             }
         }
 
         /// <summary>
-        /// Fills the Transition Group collection of Transition Types
+        /// Fills the types for each transition group
         /// </summary>
         /// <remarks>
-        /// This function must be called after _both_ the transition group and transition type collections have been filled
+        /// This function must not be called before the transition group, simulation group, 
+        /// and transition type collections have been filled
         /// </remarks>
-        private void FillTransitionGroupTypeCollection()
+        private void FillTypesForTransitionGroups()
         {
 #if DEBUG
             Debug.Assert(TRANSITION_TYPES_FILLED);
             Debug.Assert(TRANSITION_GROUPS_FILLED);
+            Debug.Assert(TRANSITION_SIM_GROUPS_FILLED);
 #endif
 
             DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
 
-            //We only want to add a type to an auto-generated group if that type is not already
+            //We only want to add a primary type to an auto-generated group if that type is not already
             //a primary type in a user-defined group.  To ensure this, we loop over the groups
             //twice with the user-defined ones taking precedcence.
 
-            Dictionary<int, bool> d = new Dictionary<int, bool>();
+            Dictionary<int, bool> PrimaryTypesAdded = new Dictionary<int, bool>();
 
             //User defined
 
-            foreach (TransitionGroup tg in this.m_TransitionGroups)
+            foreach (TransitionGroup TGroup in this.m_TransitionGroups)
             {
-                if (!tg.IsAuto)
+                if (!TGroup.IsAuto) 
                 {
-                    Debug.Assert(tg.TransitionTypes.Count == 0);                
-                    string query = string.Format(CultureInfo.InvariantCulture, "{0}={1}", Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tg.TransitionGroupId);
-                    DataRow[] rows = ds.GetData().Select(query);
+                    Debug.Assert(TGroup.TransitionTypes.Count == 0); 
+                                   
+                    string query = string.Format(CultureInfo.InvariantCulture, 
+                        "{0}={1}", Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, TGroup.TransitionGroupId);
 
-                    foreach (DataRow dr in rows)
+                    DataRow[] TTypeRows = ds.GetData().Select(query);
+                    bool IsSimulationGroup = this.m_TransitionSimulationGroups.Contains(TGroup);
+
+                    foreach (DataRow TTypeRow in TTypeRows)
                     {
-                        int ttid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                        TransitionType tt = this.m_TransitionTypes[ttid];
+                        int ttid = Convert.ToInt32(TTypeRow[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                        TransitionType TType = this.m_TransitionTypes[ttid];
 
-                        Debug.Assert(!tg.TransitionTypes.Contains(ttid));
-                        Debug.Assert(!tg.PrimaryTransitionTypes.Contains(ttid));
+                        Debug.Assert(!TGroup.TransitionTypes.Contains(ttid));
+                        Debug.Assert(!TGroup.PrimaryTransitionTypes.Contains(ttid));
 
-                        tg.TransitionTypes.Add(tt);
+                        TGroup.TransitionTypes.Add(TType);
 
-                        if (DataSheetUtilities.IsPrimaryTypeByGroup(dr))
+                        if (IsSimulationGroup)
                         {
-                            tg.PrimaryTransitionTypes.Add(tt);
+                            TGroup.PrimaryTransitionTypes.Add(TType);
 
-                            if (!d.ContainsKey(tt.TransitionTypeId))
+                            if (!PrimaryTypesAdded.ContainsKey(TType.TransitionTypeId))
                             {
-                                d.Add(tt.TransitionTypeId, true);
-                            }
+                                PrimaryTypesAdded.Add(TType.TransitionTypeId, true);
+                            }                           
                         }
                     }
                 }
@@ -397,27 +450,30 @@ namespace SyncroSim.STSim
 
             //Auto Generated
 
-            foreach (TransitionGroup tg in this.m_TransitionGroups)
+            foreach (TransitionGroup TGroup in this.m_TransitionGroups)
             {
-                if (tg.IsAuto)
+                if (TGroup.IsAuto) 
                 {
-                    Debug.Assert(tg.TransitionTypes.Count == 0);
-                    string query = string.Format(CultureInfo.InvariantCulture, "{0}={1}", Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tg.TransitionGroupId);
-                    DataRow[] rows = ds.GetData().Select(query);
+                    Debug.Assert(TGroup.TransitionTypes.Count == 0);
 
-                    foreach (DataRow dr in rows)
+                    string query = string.Format(CultureInfo.InvariantCulture, 
+                        "{0}={1}", Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, TGroup.TransitionGroupId);
+
+                    DataRow[] TTypeRows = ds.GetData().Select(query);
+
+                    foreach (DataRow TTypeRow in TTypeRows)
                     {
-                        int ttid = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                        TransitionType tt = this.m_TransitionTypes[ttid];
+                        int ttid = Convert.ToInt32(TTypeRow[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                        TransitionType TType = this.m_TransitionTypes[ttid];
 
-                        Debug.Assert(!tg.TransitionTypes.Contains(ttid));
-                        Debug.Assert(!tg.PrimaryTransitionTypes.Contains(ttid));
+                        Debug.Assert(!TGroup.TransitionTypes.Contains(ttid));
+                        Debug.Assert(!TGroup.PrimaryTransitionTypes.Contains(ttid));
 
-                        tg.TransitionTypes.Add(tt);
+                        TGroup.TransitionTypes.Add(TType);
 
-                        if (DataSheetUtilities.IsPrimaryTypeByGroup(dr) && (!d.ContainsKey(tt.TransitionTypeId)))
+                        if (!PrimaryTypesAdded.ContainsKey(TType.TransitionTypeId))
                         {
-                            tg.PrimaryTransitionTypes.Add(tt);
+                            TGroup.PrimaryTransitionTypes.Add(TType);
                         }
                     }
                 }
@@ -2389,24 +2445,6 @@ namespace SyncroSim.STSim
             Debug.Assert(this.TRANSITION_GROUPS_FILLED);
 #endif
 
-            //First, get all the primary transition groups
-
-            Dictionary<int, bool> d = new Dictionary<int, bool>();
-            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
-
-            foreach (DataRow dr in ds.GetData().Rows)
-            {
-                if (DataSheetUtilities.IsPrimaryTypeByGroup(dr))
-                {
-                    int id = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-
-                    if (!d.ContainsKey(id))
-                    {
-                        d.Add(id, true);
-                    }
-                }
-            }
-
             //Then, verify that each collection has at least one primary transition group
 
             bool TransitionTargetsGroupFound = true;
@@ -2416,7 +2454,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionTarget t in this.m_TransitionTargets)
             {
-                if (!d.ContainsKey(t.TransitionGroupId))
+                if (!this.m_PrimaryTransitionGroups.Contains(t.TransitionGroupId))
                 {
                     TransitionTargetsGroupFound = false;
                     break;
@@ -2425,7 +2463,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionPatchPrioritization t in this.m_TransitionPatchPrioritizations)
             {
-                if (!d.ContainsKey(t.TransitionGroupId))
+                if (!this.m_PrimaryTransitionGroups.Contains(t.TransitionGroupId))
                 {
                     TransitionPatchPrioritizationGroupFound = false;
                     break;
@@ -2434,7 +2472,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionDirectionMultiplier t in this.m_TransitionDirectionMultipliers)
             {
-                if (!d.ContainsKey(t.TransitionGroupId))
+                if (!this.m_PrimaryTransitionGroups.Contains(t.TransitionGroupId))
                 {
                     TransitionDirectionMultipliersGroupFound = false;
                     break;
@@ -2443,7 +2481,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionSlopeMultiplier t in this.m_TransitionSlopeMultipliers)
             {
-                if (!d.ContainsKey(t.TransitionGroupId))
+                if (!this.m_PrimaryTransitionGroups.Contains(t.TransitionGroupId))
                 {
                     TransitionSlopeMultipliersGroupFound = false;
                     break;

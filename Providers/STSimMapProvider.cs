@@ -121,39 +121,136 @@ namespace SyncroSim.STSim
 
         private static void AddMapTransitionGroupVariables(Project project, DataStore store, SyncroSimLayoutItemCollection items, string dataSheetName, string fileColumnName, string filterColumnName, string extendedIdentifier, string prefix, string colorMapSource)
         {
-            DataSheet dstg = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
-            DataSheet dsttg = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
-            DataTable dttg = dstg.GetData(store);
-            DataTable dtttg = dsttg.GetData(store);
-            DataView dvtg = new DataView(dttg, null, dstg.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
+            Dictionary<int, TransitionGroup> PrimaryGroups = GetPrimaryTransitionGroups(project);
+            List<TransitionGroup> PrimaryGroupList = new List<TransitionGroup>();
 
-            foreach (DataRowView drv in dvtg)
+            foreach (TransitionGroup g in PrimaryGroups.Values)
             {
-                int tgid = Convert.ToInt32(drv.Row[dstg.ValidationTable.ValueMember], CultureInfo.InvariantCulture);
-                string query = string.Format(CultureInfo.InvariantCulture, "{0}={1}", Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME, tgid);
-                DataRow[] rows = dtttg.Select(query);
+                PrimaryGroupList.Add(g);
+            }
 
-                foreach (DataRow dr in rows)
+            PrimaryGroupList.Sort((TransitionGroup g1, TransitionGroup g2) =>
+            {
+                return string.Compare(g1.DisplayName, g2.DisplayName);
+            });
+
+            foreach (TransitionGroup g in PrimaryGroupList)
+            {
+                string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, g.TransitionGroupId);
+                SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, g.DisplayName, false);
+
+                Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
+                Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
+                Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
+                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", extendedIdentifier));
+                Item.Properties.Add(new MetaDataProperty("itemId", g.TransitionGroupId.ToString(CultureInfo.InvariantCulture)));
+                Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
+
+                items.Add(Item);
+            }
+        }
+
+        private static Dictionary<int, TransitionGroup> GetPrimaryTransitionGroups(Project project)
+        {
+            TransitionTypeCollection TransitionTypes = GetTransitionTypes(project);
+            TransitionGroupCollection TransitionGroups = GetTransitionGroups(project);
+            Dictionary<int, bool> TransitionSimulationGroups = GetTransitionSimulationGroups(project);
+            DataSheet TypeGroupDataSheet = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
+            Dictionary<int, TransitionGroup> PrimaryGroups = new Dictionary<int, TransitionGroup>();
+
+            foreach (TransitionType TType in TransitionTypes)
+            {
+                string query = string.Format(CultureInfo.InvariantCulture,
+                    "{0}={1}", Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME, TType.TransitionTypeId);
+
+                DataRow[] TGroupRows = TypeGroupDataSheet.GetData().Select(query);
+                bool TypeHasNonAutoPrimaryGroup = false;
+
+                foreach (DataRow TGroupRow in TGroupRows)
                 {
-                    if (DataSheetUtilities.IsPrimaryTypeByGroup(dr))
+                    int tgid = Convert.ToInt32(TGroupRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    TransitionGroup tg = TransitionGroups[tgid];
+
+                    if (!tg.IsAuto)
                     {
-                        string DisplayName = Convert.ToString(drv.Row[dstg.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
-                        string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, tgid);
-                        SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, DisplayName, false);
+                        if (TransitionSimulationGroups.ContainsKey(tgid))
+                        {
+                            TypeHasNonAutoPrimaryGroup = true;
 
-                        Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
-                        Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
-                        Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
-                        Item.Properties.Add(new MetaDataProperty("extendedIdentifier", extendedIdentifier));
-                        Item.Properties.Add(new MetaDataProperty("itemId", tgid.ToString(CultureInfo.InvariantCulture)));
-                        Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
+                            if (!PrimaryGroups.ContainsKey(tgid))
+                            {
+                                PrimaryGroups.Add(tgid, tg);
+                            }
+                        }
+                    }
+                }
 
-                        items.Add(Item);
+                if (!TypeHasNonAutoPrimaryGroup)
+                {
+                    foreach (DataRow TGroupRow in TGroupRows)
+                    {
+                        int tgid = Convert.ToInt32(TGroupRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                        TransitionGroup tg = TransitionGroups[tgid];
 
-                        break;
+                        if (tg.IsAuto)
+                        {
+                            if (!PrimaryGroups.ContainsKey(tgid))
+                            {
+                                PrimaryGroups.Add(tgid, tg);
+                            }
+                        }
                     }
                 }
             }
+
+            return PrimaryGroups;
+        }
+
+        private static TransitionTypeCollection GetTransitionTypes(Project project)
+        {
+            TransitionTypeCollection types = new TransitionTypeCollection();
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int TransitionTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
+
+                types.Add(new TransitionType(TransitionTypeId, DisplayName, 0));
+            }
+
+            return types;
+        }
+
+        private static TransitionGroupCollection GetTransitionGroups(Project project)
+        {
+            TransitionGroupCollection groups = new TransitionGroupCollection();
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int TransitionGroupId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
+                bool IsAuto = DataTableUtilities.GetDataBool(dr, Strings.IS_AUTO_COLUMN_NAME);
+
+                groups.Add(new TransitionGroup(TransitionGroupId, DisplayName, IsAuto));
+            }
+
+            return groups;
+        }
+
+        private static Dictionary<int, bool> GetTransitionSimulationGroups(Project project)
+        {
+            Dictionary<int, bool> groups = new Dictionary<int, bool>();
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                groups.Add(TransitionGroupId, true);
+            }
+
+            return groups;
         }
 
         private static void AddMapStateAttributes(SyncroSimLayoutItemCollection items, Project project, DataStore store, DataView attrGroupsView)

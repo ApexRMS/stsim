@@ -1,6 +1,7 @@
 ﻿// A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
@@ -9,6 +10,7 @@ namespace SyncroSim.STSim
     {
         private int m_TransitionGroupId;
         private string m_DisplayName;
+        private string m_ToStringName;
         private TransitionTypeCollection m_TransitionTypes = new TransitionTypeCollection();
         private TransitionTypeCollection m_PrimaryTransitionTypes = new TransitionTypeCollection();
         private Dictionary<int, Cell> m_TransitionSpreadCells = new Dictionary<int, Cell>();
@@ -23,6 +25,15 @@ namespace SyncroSim.STSim
             this.m_TransitionGroupId = transitionGroupId;
             this.m_DisplayName = transitionGroupName;
             this.m_IsAuto = isAuto;
+
+            this.m_ToStringName = string.Format(CultureInfo.InvariantCulture,
+                "{0}-{1}-{2}",
+                this.m_TransitionGroupId, this.m_DisplayName, this.m_IsAuto ? "(IsAuto=True)" : "(IsAuto=False)");
+        }
+
+        public override string ToString()
+        {
+            return this.m_ToStringName;
         }
 
         public int TransitionGroupId

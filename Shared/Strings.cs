@@ -100,11 +100,13 @@ namespace SyncroSim.STSim
         //Transition group
         public const string DATASHEET_TRANSITION_GROUP_NAME = "STSim_TransitionGroup";
 
+        //Transition Simulation Group
+        public const string DATASHEET_TRANSITION_SIMULATION_GROUP_NAME = "STSim_TransitionSimulationGroup";
+
         //Transition type group
         public const string DATASHEET_TRANSITION_TYPE_GROUP_NAME = "STSim_TransitionTypeGroup";
         public const string DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME = "TransitionTypeID";
         public const string DATASHEET_TRANSITION_TYPE_GROUP_GROUP_COLUMN_NAME = "TransitionGroupID";
-        public const string DATASHEET_TRANSITION_TYPE_GROUP_PRIMARY_COLUMN_NAME = "IsPrimary";
 
         //Age Type
         public const string DATASHEET_AGE_TYPE_NAME = "STSim_AgeType";

@@ -230,8 +230,9 @@ namespace SyncroSim.STSim
             this.FillStateClassCollection();
             this.FillTransitionGroupCollection();
             this.FillTransitionTypeCollection();
-            this.FillTransitionGroupTypeCollection();
-            this.FillTransitionTypeGroupCollection();
+            this.FillTransitionSimulationGroupCollection();
+            this.FillTypesForTransitionGroups();
+            this.FillGroupsForTransitionTypes();
             this.FillTransitionMultiplierTypeCollection();
             this.FillTransitionAttributeTypeCollection();
             this.FillDeterministicTransitionsCollection();

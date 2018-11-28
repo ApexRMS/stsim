@@ -22,19 +22,22 @@ namespace SyncroSim.STSim
 
             this.SetCheckBoxBinding(this.CheckBoxSummarySC, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxSummarySCTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxSummarySCAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummarySCZeroValues, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_ZERO_VALUES_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryTR, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxSummaryTRTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxSummaryTRAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_AGES_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryTRCalcIntervalMean, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_INTERVAL_MEAN_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryTRSC, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxSummaryTRSCTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummarySA, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxSummarySATimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxSummarySAAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_AGES_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryTA, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxSummaryTATimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxSummaryTAAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryOmitSS, Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryOmitTS, Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME);
-
             this.SetCheckBoxBinding(this.CheckBoxRasterSC, Strings.DATASHEET_OO_RASTER_OUTPUT_SC_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxRasterSCTimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxRasterTR, Strings.DATASHEET_OO_RASTER_OUTPUT_TR_COLUMN_NAME);
@@ -141,7 +144,11 @@ namespace SyncroSim.STSim
 
             //Checkboxes
             this.CheckBoxSummarySCZeroValues.Enabled = this.CheckBoxSummarySC.Checked;
+            this.CheckBoxSummarySCAges.Enabled = this.CheckBoxSummarySC.Checked;
             this.CheckBoxSummaryTRCalcIntervalMean.Enabled = this.CheckBoxSummaryTR.Checked;
+            this.CheckBoxSummaryTRAges.Enabled = this.CheckBoxSummaryTR.Checked;
+            this.CheckBoxSummarySAAges.Enabled = this.CheckBoxSummarySA.Checked;
+            this.CheckBoxSummaryTAAges.Enabled = this.CheckBoxSummaryTA.Checked;
         }
 
         protected override void OnBoundCheckBoxChanged(System.Windows.Forms.CheckBox checkBox, string columnName)

@@ -203,16 +203,20 @@ namespace SyncroSim.STSim
 
             this.m_CreateSummaryStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME]);
             this.m_SummaryStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
+            this.m_SummaryStateClassOutputAges = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME]);
             this.m_SummaryStateClassZeroValues = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_ZERO_VALUES_COLUMN_NAME]);
             this.m_CreateSummaryTransitionOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_COLUMN_NAME]);
             this.m_SummaryTransitionOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_TIMESTEPS_COLUMN_NAME]);
+            this.m_SummaryTransitionOutputAges = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_AGES_COLUMN_NAME]);
             this.m_SummaryTransitionOutputAsIntervalMean = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_INTERVAL_MEAN_COLUMN_NAME]);
             this.m_CreateSummaryTransitionByStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_COLUMN_NAME]);
             this.m_SummaryTransitionByStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_TIMESTEPS_COLUMN_NAME]);
             this.m_CreateSummaryStateAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME]);
             this.m_SummaryStateAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME]);
+            this.m_SummaryStateAttributeOutputAges = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_AGES_COLUMN_NAME]);
             this.m_CreateSummaryTransitionAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME]);
             this.m_SummaryTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
+            this.m_SummaryTransitionAttributeOutputAges = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME]);
             this.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME]);
             this.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME]);
         }

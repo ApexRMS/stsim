@@ -131,14 +131,36 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the age reporting helper
+        /// Initializes the age reporting helpers
         /// </summary>
         /// <remarks></remarks>
-        private void InitializeAgeReportingHelper()
+        private void InitializeAgeReportingHelpers()
         {
-            Debug.Assert(this.m_AgeReportingHelper == null);
+            Debug.Assert(this.m_AgeReportingHelperSC == null);
+            Debug.Assert(this.m_AgeReportingHelperTR == null);
+            Debug.Assert(this.m_AgeReportingHelperSA == null);
+            Debug.Assert(this.m_AgeReportingHelperTA == null);
 
-            this.m_AgeReportingHelper = new AgeHelper(false, 0, 0);
+            this.m_AgeReportingHelperSC = new AgeHelper(false, 0, 0);
+            this.m_AgeReportingHelperTR = new AgeHelper(false, 0, 0);
+            this.m_AgeReportingHelperSA = new AgeHelper(false, 0, 0);
+            this.m_AgeReportingHelperTA = new AgeHelper(false, 0, 0);
+
+            //If not reporting any ages then all age helpers are disabled
+            //-----------------------------------------------------------
+
+            if (
+                !this.m_SummaryStateClassOutputAges && 
+                !this.m_SummaryTransitionOutputAges && 
+                !this.m_SummaryStateAttributeOutputAges && 
+                !this.m_SummaryTransitionAttributeOutputAges)
+            {
+                return;
+            }
+
+            //If ages are not configured then all age helpers are disabled
+            //------------------------------------------------------------
+
             DataRow dr = this.Project.GetDataSheet(Strings.DATASHEET_AGE_TYPE_NAME).GetDataRow();
 
             if (dr == null)
@@ -146,12 +168,14 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            //If the age configuration is invalid then all age helpers are disabled
+            //---------------------------------------------------------------------
+
             if (dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME] != DBNull.Value)
             {
                 if (dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME] == DBNull.Value)
                 {
                     this.RecordStatus(StatusType.Warning, "Age reporting freqency set without age reporting maximum.  Not reporting ages.");
-
                     return;
                 }
             }
@@ -161,7 +185,6 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME] == DBNull.Value)
                 {
                     this.RecordStatus(StatusType.Warning, "Age reporting maximum set without age reporting frequency.  Not reporting ages.");
-
                     return;
                 }
             }
@@ -172,11 +195,39 @@ namespace SyncroSim.STSim
             if (m < f)
             {
                 this.RecordStatus(StatusType.Warning, "Age reporting maximum is less than age reporting frequency.  Not reporting ages.");
-
                 return;
             }
 
-            this.m_AgeReportingHelper = new AgeHelper(true, f, m);
+            //If the user has requested age reporting for state attributes but has not enabled them for 
+            //state classes then we need a warning because the attribute age output cannot be generated
+            //without also having it for state classes.
+
+            if (this.m_SummaryStateAttributeOutputAges && !this.m_SummaryStateClassOutputAges)
+            {
+                this.RecordStatus(StatusType.Warning, "Age reporting for State Attributes requires age reporting for State Classes.  Not generating ages for State Attributes.");
+            }
+
+            //Only enable an age helper if that type of output is enabled
+
+            if (this.m_SummaryStateClassOutputAges)
+            {
+                this.m_AgeReportingHelperSC = new AgeHelper(true, f, m);
+            }
+
+            if (this.m_SummaryTransitionOutputAges)
+            {
+                this.m_AgeReportingHelperTR = new AgeHelper(true, f, m);
+            }
+
+            if (this.m_SummaryStateAttributeOutputAges)
+            {
+                this.m_AgeReportingHelperSA = new AgeHelper(true, f, m);
+            }
+
+            if (this.m_SummaryTransitionAttributeOutputAges)
+            {
+                this.m_AgeReportingHelperTA = new AgeHelper(true, f, m);
+            }           
         }
 
         /// <summary>

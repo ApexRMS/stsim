@@ -18,7 +18,10 @@ namespace SyncroSim.STSim
         private RandomGenerator m_RandomGenerator = new RandomGenerator();
         private STSimDistributionProvider m_DistributionProvider;
         private string m_TimestepUnitsLower = "timestep";
-        private AgeHelper m_AgeReportingHelper;
+        private AgeHelper m_AgeReportingHelperSC;
+        private AgeHelper m_AgeReportingHelperTR;
+        private AgeHelper m_AgeReportingHelperSA;
+        private AgeHelper m_AgeReportingHelperTA;
         private double m_AmountPerCell;
         private int m_TimestepZero;
         private bool m_IsSpatial;
@@ -289,7 +292,7 @@ namespace SyncroSim.STSim
 
             this.InitializeOutputOptions();
             this.InitializeDistributionProvider();
-            this.InitializeAgeReportingHelper();
+            this.InitializeAgeReportingHelpers();
             this.InitializeModelCollections();
             this.NormalizeForUserDistributions();
             this.InitializeDistributionValues();

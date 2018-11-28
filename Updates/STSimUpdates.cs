@@ -357,6 +357,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000067(store);
             }
+
+            if (currentSchemaVersion < 68)
+            {
+                STSIM0000068(store);
+            }
         }
 
         /// <summary>
@@ -2405,6 +2410,126 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("ALTER TABLE STSim_TransitionTypeGroup RENAME TO TEMP_TABLE");
             store.ExecuteNonQuery("CREATE TABLE STSim_TransitionTypeGroup(TransitionTypeGroupID INTEGER PRIMARY KEY AUTOINCREMENT, ProjectID INTEGER, TransitionTypeID INTEGER, TransitionGroupID INTEGER, IsAuto INTEGER)");
             store.ExecuteNonQuery("INSERT INTO STSim_TransitionTypeGroup(TransitionTypeGroupID, ProjectID, TransitionTypeID, TransitionGroupID, IsAuto) SELECT TransitionTypeGroupID, ProjectID, TransitionTypeID, TransitionGroupID, IsAuto FROM TEMP_TABLE");
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+        }
+
+        /// <summary>
+        /// STSIM0000068
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This adds age output configuration columns to STSim_OutputOptions
+        /// </remarks>
+        private static void STSIM0000068(DataStore store)
+        {
+            string CreateQuery =
+               "CREATE TABLE STSim_OutputOptions(" +
+               "OutputOptionsID             INTEGER PRIMARY KEY AUTOINCREMENT," +
+               "ScenarioID                  INTEGER," +
+               "SummaryOutputSC             INTEGER," +
+               "SummaryOutputSCTimesteps    INTEGER," +
+               "SummaryOutputSCAges         INTEGER," +
+               "SummaryOutputSCZeroValues   INTEGER," +
+               "SummaryOutputTR             INTEGER," +
+               "SummaryOutputTRTimesteps    INTEGER," +
+               "SummaryOutputTRAges         INTEGER," +
+               "SummaryOutputTRIntervalMean INTEGER," +
+               "SummaryOutputTRSC           INTEGER," +
+               "SummaryOutputTRSCTimesteps  INTEGER," +
+               "SummaryOutputSA             INTEGER," +
+               "SummaryOutputSATimesteps    INTEGER," +
+               "SummaryOutputSAAges         INTEGER," +
+               "SummaryOutputTA             INTEGER," +
+               "SummaryOutputTATimesteps    INTEGER," +
+               "SummaryOutputTAAges         INTEGER," +
+               "SummaryOutputOmitSS         INTEGER," +
+               "SummaryOutputOmitTS         INTEGER," +
+               "RasterOutputSC              INTEGER," +
+               "RasterOutputSCTimesteps     INTEGER," +
+               "RasterOutputTR              INTEGER," +
+               "RasterOutputTRTimesteps     INTEGER," +
+               "RasterOutputAge             INTEGER," +
+               "RasterOutputAgeTimesteps    INTEGER," +
+               "RasterOutputTST             INTEGER," +
+               "RasterOutputTSTTimesteps    INTEGER," +
+               "RasterOutputST              INTEGER," +
+               "RasterOutputSTTimesteps     INTEGER," +
+               "RasterOutputSA              INTEGER," +
+               "RasterOutputSATimesteps     INTEGER," +
+               "RasterOutputTA              INTEGER," +
+               "RasterOutputTATimesteps     INTEGER," +
+               "RasterOutputAATP            INTEGER," +
+               "RasterOutputAATPTimesteps   INTEGER)";
+
+            store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions RENAME TO TEMP_TABLE");
+            store.ExecuteNonQuery(CreateQuery);
+
+            store.ExecuteNonQuery("INSERT INTO STSim_OutputOptions(" +
+               "ScenarioID," +
+               "SummaryOutputSC," +
+               "SummaryOutputSCTimesteps," +
+               "SummaryOutputSCZeroValues," +
+               "SummaryOutputTR," +
+               "SummaryOutputTRTimesteps," +
+               "SummaryOutputTRIntervalMean," +
+               "SummaryOutputTRSC," +
+               "SummaryOutputTRSCTimesteps ," +
+               "SummaryOutputSA," +
+               "SummaryOutputSATimesteps," +
+               "SummaryOutputTA," +
+               "SummaryOutputTATimesteps," +
+               "SummaryOutputOmitSS," +
+               "SummaryOutputOmitTS," +
+               "RasterOutputSC," +
+               "RasterOutputSCTimesteps," +
+               "RasterOutputTR," +
+               "RasterOutputTRTimesteps," +
+               "RasterOutputAge," +
+               "RasterOutputAgeTimesteps," +
+               "RasterOutputTST," +
+               "RasterOutputTSTTimesteps," +
+               "RasterOutputST," +
+               "RasterOutputSTTimesteps," +
+               "RasterOutputSA," +
+               "RasterOutputSATimesteps," +
+               "RasterOutputTA," +
+               "RasterOutputTATimesteps," +
+               "RasterOutputAATP," +
+               "RasterOutputAATPTimesteps) " +   
+               "SELECT " + 
+               "ScenarioID," +
+               "SummaryOutputSC," +
+               "SummaryOutputSCTimesteps," +
+               "SummaryOutputSCZeroValues," +
+               "SummaryOutputTR," +
+               "SummaryOutputTRTimesteps," +
+               "SummaryOutputTRIntervalMean," +
+               "SummaryOutputTRSC," +
+               "SummaryOutputTRSCTimesteps ," +
+               "SummaryOutputSA," +
+               "SummaryOutputSATimesteps," +
+               "SummaryOutputTA," +
+               "SummaryOutputTATimesteps," +
+               "SummaryOutputOmitSS," +
+               "SummaryOutputOmitTS," +
+               "RasterOutputSC," +
+               "RasterOutputSCTimesteps," +
+               "RasterOutputTR," +
+               "RasterOutputTRTimesteps," +
+               "RasterOutputAge," +
+               "RasterOutputAgeTimesteps," +
+               "RasterOutputTST," +
+               "RasterOutputTSTTimesteps," +
+               "RasterOutputST," +
+               "RasterOutputSTTimesteps," +
+               "RasterOutputSA," +
+               "RasterOutputSATimesteps," +
+               "RasterOutputTA," +
+               "RasterOutputTATimesteps," +
+               "RasterOutputAATP," +
+               "RasterOutputAATPTimesteps " +
+               "FROM TEMP_TABLE");
+
             store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
         }
     }

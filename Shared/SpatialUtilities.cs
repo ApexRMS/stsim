@@ -33,6 +33,15 @@ namespace SyncroSim.STSim
             return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME),fileName);
         }
 
+         public static string SaveTertiaryStratumInputRaster(StochasticTimeRaster raster, Scenario scenario, int iteration, int timestep)
+         {
+             string fileName;
+             //        Name template = Itx-Tsy-terstr.tif
+             fileName = string.Format(CultureInfo.InvariantCulture, "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture), timestep.ToString("0000", CultureInfo.InvariantCulture), Constants.SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME);
+
+             return RasterFiles.SaveIntegerInputRaster(raster, scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME), fileName);
+         }
+
         public static string SaveStateClassInputRaster(StochasticTimeRaster raster, Scenario scenario, int iteration, int timestep)
         {
             string fileName;

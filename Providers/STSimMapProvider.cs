@@ -46,10 +46,10 @@ namespace SyncroSim.STSim
                 AddCategoricalVariables(project, g0);
 
                 //Transitions
-                AddMapTransitionGroupVariables(project, store, g1.Items, "STSim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
+                AddMapTransitionGroupVariables(project, g1.Items, "STSim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
                 //Average Annual Transition Probability
-                AddMapTransitionGroupVariables(project, store, g2.Items, "STSim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(project, g2.Items, "STSim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
                 //State Attributes
                 AddMapStateAttributes(g3.Items, project, store, AttrGroupView);
@@ -119,7 +119,7 @@ namespace SyncroSim.STSim
             g0.Items.Add(i3);
         }
 
-        private static void AddMapTransitionGroupVariables(Project project, DataStore store, SyncroSimLayoutItemCollection items, string dataSheetName, string fileColumnName, string filterColumnName, string extendedIdentifier, string prefix, string colorMapSource)
+        private static void AddMapTransitionGroupVariables(Project project, SyncroSimLayoutItemCollection items, string dataSheetName, string fileColumnName, string filterColumnName, string extendedIdentifier, string prefix, string colorMapSource)
         {
             Dictionary<int, TransitionGroup> PrimaryGroups = GetPrimaryTransitionGroups(project);
             List<TransitionGroup> PrimaryGroupList = new List<TransitionGroup>();
@@ -131,7 +131,7 @@ namespace SyncroSim.STSim
 
             PrimaryGroupList.Sort((TransitionGroup g1, TransitionGroup g2) =>
             {
-                return string.Compare(g1.DisplayName, g2.DisplayName);
+                return string.Compare(g1.DisplayName, g2.DisplayName, StringComparison.CurrentCulture);
             });
 
             foreach (TransitionGroup g in PrimaryGroupList)

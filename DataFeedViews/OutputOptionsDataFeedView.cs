@@ -2,19 +2,22 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Data;
 using System.Globalization;
+using System.Windows.Forms;
 using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
     internal partial class OutputOptionsDataFeedView
     {
+        private bool m_SettingCheckBox;
+        private const string DEFAULT_TIMESTEP_VALUE = "1";
+
         public OutputOptionsDataFeedView()
         {
             InitializeComponent();
         }
-
-        private const string DEFAULT_TIMESTEP_VALUE = "1";
 
         public override void LoadDataFeed(DataFeed dataFeed)
         {
@@ -91,23 +94,23 @@ namespace SyncroSim.STSim
 
         private void OnTerminologyChanged(DataSheetMonitorEventArgs e)
         {
-            string t = Convert.ToString(
+            string NewTimestepsText = Convert.ToString(
                 e.GetValue("TimestepUnits", "Timestep"), 
                 CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture);
 
-            this.LabelSummarySCTimesteps.Text = t;
-            this.LabelSummaryTRTimesteps.Text = t;
-            this.LabelSummaryTRSCTimesteps.Text = t;
-            this.LabelSummarySATimesteps.Text = t;
-            this.LabelSummaryTATimesteps.Text = t;
-            this.LabelRasterSCTimesteps.Text = t;
-            this.LabelRasterTRTimesteps.Text = t;
-            this.LabelRasterAgeTimesteps.Text = t;
-            this.LabelRasterTSTTimesteps.Text = t;
-            this.LabelRasterSTTimesteps.Text = t;
-            this.LabelRasterSATimesteps.Text = t;
-            this.LabelRasterTATimesteps.Text = t;
-            this.LabelRasterAATPTimesteps.Text = t;
+            this.LabelSummarySCTimesteps.Text = NewTimestepsText;
+            this.LabelSummaryTRTimesteps.Text = NewTimestepsText;
+            this.LabelSummaryTRSCTimesteps.Text = NewTimestepsText;
+            this.LabelSummarySATimesteps.Text = NewTimestepsText;
+            this.LabelSummaryTATimesteps.Text = NewTimestepsText;
+            this.LabelRasterSCTimesteps.Text = NewTimestepsText;
+            this.LabelRasterTRTimesteps.Text = NewTimestepsText;
+            this.LabelRasterAgeTimesteps.Text = NewTimestepsText;
+            this.LabelRasterTSTTimesteps.Text = NewTimestepsText;
+            this.LabelRasterSTTimesteps.Text = NewTimestepsText;
+            this.LabelRasterSATimesteps.Text = NewTimestepsText;
+            this.LabelRasterTATimesteps.Text = NewTimestepsText;
+            this.LabelRasterAATPTimesteps.Text = NewTimestepsText;
         }
 
         private void EnableControls()
@@ -151,64 +154,61 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTAAges.Enabled = this.CheckBoxSummaryTA.Checked;
         }
 
-        protected override void OnBoundCheckBoxChanged(System.Windows.Forms.CheckBox checkBox, string columnName)
+        protected override void OnBoundCheckBoxChanged(CheckBox checkBox, string columnName)
         {
+            if (this.m_SettingCheckBox)
+            {
+                return;
+            }
+
             base.OnBoundCheckBoxChanged(checkBox, columnName);
 
-            if (checkBox == this.CheckBoxSummarySC && this.CheckBoxSummarySC.Checked & string.IsNullOrEmpty(this.TextBoxSummarySCTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxSummarySCTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxSummaryTR && this.CheckBoxSummaryTR.Checked & string.IsNullOrEmpty(this.TextBoxSummaryTRTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxSummaryTRTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxSummaryTRSC && this.CheckBoxSummaryTRSC.Checked & string.IsNullOrEmpty(this.TextBoxSummaryTRSCTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxSummaryTRSCTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxSummarySA && this.CheckBoxSummarySA.Checked & string.IsNullOrEmpty(this.TextBoxSummarySATimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxSummarySATimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxSummaryTA && this.CheckBoxSummaryTA.Checked & string.IsNullOrEmpty(this.TextBoxSummaryTATimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxSummaryTATimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterSC && this.CheckBoxRasterSC.Checked & string.IsNullOrEmpty(this.TextBoxRasterSCTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterSCTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterTR && this.CheckBoxRasterTR.Checked & string.IsNullOrEmpty(this.TextBoxRasterTRTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterTRTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterAge && this.CheckBoxRasterAge.Checked & string.IsNullOrEmpty(this.TextBoxRasterAgeTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterAgeTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterTST && this.CheckBoxRasterTST.Checked & string.IsNullOrEmpty(this.TextBoxRasterTSTTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterTSTTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterST && this.CheckBoxRasterST.Checked & string.IsNullOrEmpty(this.TextBoxRasterSTTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterSTTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterSA && this.CheckBoxRasterSA.Checked & string.IsNullOrEmpty(this.TextBoxRasterSATimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterSATimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterTA && this.CheckBoxRasterTA.Checked & string.IsNullOrEmpty(this.TextBoxRasterTATimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterTATimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
-            else if (checkBox == this.CheckBoxRasterAATP && this.CheckBoxRasterAATP.Checked & string.IsNullOrEmpty(this.TextBoxRasterAATPTimesteps.Text))
-            {
-                this.SetTextBoxData(this.TextBoxRasterAATPTimesteps, DEFAULT_TIMESTEP_VALUE);
-            }
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummarySC, this.TextBoxSummarySCTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummaryTR, this.TextBoxSummaryTRTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummaryTRSC, this.TextBoxSummaryTRSCTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummarySA, this.TextBoxSummarySATimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummaryTA, this.TextBoxSummaryTATimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterSC, this.TextBoxRasterSCTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTR, this.TextBoxRasterTRTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterAge, this.TextBoxRasterAgeTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTST, this.TextBoxRasterTSTTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterST, this.TextBoxRasterSTTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterSA, this.TextBoxRasterSATimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTA, this.TextBoxRasterTATimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterAATP, this.TextBoxRasterAATPTimesteps);
+
+            this.m_SettingCheckBox = true;
+            this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummarySC, this.CheckBoxSummarySCAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME);
+            this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummaryTR, this.CheckBoxSummaryTRAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_AGES_COLUMN_NAME);
+            this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummarySA, this.CheckBoxSummarySAAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_AGES_COLUMN_NAME);
+            this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummaryTA, this.CheckBoxSummaryTAAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME);
+            this.m_SettingCheckBox = false;
 
             this.EnableControls();
+        }
+
+        private void SetDefaultTimestepsIfCondition(CheckBox cbSender, CheckBox cbCompare, TextBox tb)
+        {
+            if (cbSender == cbCompare && cbCompare.Checked)
+            {
+                if (string.IsNullOrEmpty(tb.Text))
+                {
+                    this.SetTextBoxData(tb, DEFAULT_TIMESTEP_VALUE);
+                }
+            }
+        }
+
+        private void SetCheckBoxValueIfCondition(CheckBox cbSender, CheckBox cbCompare, CheckBox cbTarget, string columnName)
+        {
+            if (cbSender == cbCompare && cbCompare.Checked)
+            {
+                if (!cbTarget.Checked)
+                {
+                    DataRow dr = this.DataFeed.GetDataSheet(Strings.DATASHEET_OO_NAME).GetDataRow();
+                    dr[columnName] = Booleans.BoolToInt(true);
+                    cbTarget.Checked = true;
+                }
+            }
         }
     }
 }

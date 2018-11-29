@@ -255,6 +255,7 @@ namespace SyncroSim.STSim
         {
             base.Configure();
 
+            this.ConfigureIsSpatialRunFlag();
             this.ConfigureTimestepUnits();
             this.NormalizeRunControl();
             this.NormalizeOutputOptions();
@@ -262,7 +263,6 @@ namespace SyncroSim.STSim
             // We need to normalize the Initial Conditions here, so that we can run in Multiprocessor mode 
             // with the same Input config & raster files
 
-            this.ConfigureIsSpatialRunFlag();
             this.NormalizeMapIds();
             this.NormalizeInitialConditions();
 

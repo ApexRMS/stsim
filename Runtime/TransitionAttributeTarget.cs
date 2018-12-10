@@ -133,7 +133,11 @@ namespace SyncroSim.STSim
             t.Multiplier = this.MultiplierNoCheck;
             t.ExpectedAmount = this.ExpectedAmountNoCheck;
             t.IsDisabled = this.IsDisabled;
-            t.SetPrioritizations(this.m_Prioritizations);
+
+            if (this.m_Prioritizations != null)
+            {
+                t.SetPrioritizations(this.m_Prioritizations);
+            }
 
             return t;
         }

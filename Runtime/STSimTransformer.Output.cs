@@ -706,7 +706,7 @@ namespace SyncroSim.STSim
         {
             if (this.IsSummaryTransitionTimestep(timestep))
             {
-                TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+                 TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
 
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {

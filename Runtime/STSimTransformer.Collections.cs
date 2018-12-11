@@ -354,18 +354,20 @@ namespace SyncroSim.STSim
 
                 //Auto Generated
 
-                if (!TypeHasNonAutoPrimaryGroup)
+               
+                foreach (DataRow TGroupRow in TGroupRows)
                 {
-                    foreach (DataRow TGroupRow in TGroupRows)
+                    int tgid = Convert.ToInt32(TGroupRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                    if (tg.IsAuto)
                     {
-                        int tgid = Convert.ToInt32(TGroupRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                        TransitionGroup tg = this.m_TransitionGroups[tgid];
+                        Debug.Assert(!TType.TransitionGroups.Contains(tgid));
 
-                        if (tg.IsAuto) 
+                        TType.TransitionGroups.Add(tg);
+
+                        if (!TypeHasNonAutoPrimaryGroup)
                         {
-                            Debug.Assert(!TType.TransitionGroups.Contains(tgid));
-
-                            TType.TransitionGroups.Add(tg);
                             TType.PrimaryTransitionGroups.Add(tg);
 
                             if (!this.m_PrimaryTransitionGroups.Contains(tg))  //Global primary group list
@@ -375,6 +377,8 @@ namespace SyncroSim.STSim
                         }
                     }
                 }
+                
+                
 
                 if (TType.PrimaryTransitionGroups.Count > 1)
                 {

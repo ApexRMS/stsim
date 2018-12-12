@@ -242,7 +242,7 @@ namespace SyncroSim.STSim
         private static Dictionary<int, bool> GetTransitionSimulationGroups(Project project)
         {
             Dictionary<int, bool> groups = new Dictionary<int, bool>();
-            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_SIMULATION_GROUP_NAME);
 
             foreach (DataRow dr in ds.GetData().Rows)
             {

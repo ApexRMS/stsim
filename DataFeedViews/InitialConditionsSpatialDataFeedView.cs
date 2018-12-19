@@ -423,9 +423,9 @@ namespace SyncroSim.STSim
         /// </remarks>
         private void ChooseRasterFile(int rowIndex, int colIndex)
         {
-            string rasterFilename = RasterUtilities.ChooseRasterFileName("Initial Conditions Raster File", this);
+            string FileName = RasterUtilities.ChooseRasterFileName("Initial Conditions Raster File", this);
 
-            if (rasterFilename == null)
+            if (FileName == null)
             {
                 return;
             }
@@ -434,23 +434,19 @@ namespace SyncroSim.STSim
 
             using (HourGlass h = new HourGlass())
             {
-                StochasticTimeRaster rast = new StochasticTimeRaster();
-
                 try
                 {
-                    RasterFiles.LoadRasterFile(rasterFilename, rast, RasterDataType.DTInteger);
+                    StochasticTimeRaster rast = new StochasticTimeRaster(FileName, RasterDataType.DTInteger);
 
-                    //Complain to the user if no projection associated with this Primary Stratum file
-
-                    if (colIndex == PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX && rast.ProjectionString == "")
+                    if (colIndex == PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX && rast.Projection == null)
                     {
-                        const string sMsg = "There is no projection associated with this raster file. The model will still run but outputs will also have no projection.";
-                        FormsUtilities.InformationMessageBox(sMsg);
+                        const string msg = "There is no projection associated with this raster file. The model will still run but outputs will also have no projection.";
+                        FormsUtilities.InformationMessageBox(msg);
                     }
 
-                    SetICSpatialFile(rowIndex, colIndex, rasterFilename);
+                    SetICSpatialFile(rowIndex, colIndex, FileName);
                 }
-                catch (GdalException e)
+                catch (Exception e)
                 {
                     FormsUtilities.ErrorMessageBox(e.Message);
                     return;

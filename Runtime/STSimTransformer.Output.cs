@@ -584,21 +584,19 @@ namespace SyncroSim.STSim
                 if (this.IsRasterTransitionTimestep(timestep))
                 {
                     //Set up a raster as input to the Raster output function
-                    StochasticTimeRaster rastOP = new StochasticTimeRaster();
-                    this.m_InputRasters.GetMetadata(rastOP);
+                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
                     rastOP.IntCells = transitionedPixels;
 
                     //Dont bother if there haven't been any transitions
                     if (transitionedPixels.Distinct().Count() > 1)
                     {
-                        RasterFiles.SaveOutputRaster(
+                        Spatial.WriteRasterData(
                             rastOP, 
                             this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
-                            RasterDataType.DTInteger, 
                             iteration, 
                             timestep, 
-                            Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, 
                             transitionGroupId, 
+                            Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, 
                             Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                     }
                 }
@@ -626,18 +624,16 @@ namespace SyncroSim.STSim
                 foreach (int AttributeId in RasterTransitionAttrValues.Keys)
                 {
                     //Set up a raster as input to the Raster output function
-                    StochasticTimeRaster rastOP = new StochasticTimeRaster();
-                    this.m_InputRasters.GetMetadata(rastOP);
+                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     rastOP.DblCells = RasterTransitionAttrValues[AttributeId];
 
-                    RasterFiles.SaveOutputRaster(
+                    Spatial.WriteRasterData(
                         rastOP, 
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE), 
-                        RasterDataType.DTDouble, 
                         iteration, 
                         timestep, 
+                        AttributeId,
                         Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, 
-                        AttributeId, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -706,7 +702,7 @@ namespace SyncroSim.STSim
         {
             if (this.IsSummaryTransitionTimestep(timestep))
             {
-                 TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+                TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
 
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
@@ -862,7 +858,7 @@ namespace SyncroSim.STSim
                         if (this.IsSpatial & this.IsRasterTransitionAttributeTimestep(timestep))
                         {
                             double[] arr = rasterTransitionAttrValues[AttributeTypeId];
-                            if (arr[simulationCell.CellId] == StochasticTimeRaster.DefaultNoDataValue)
+                            if (arr[simulationCell.CellId] == Spatial.DefaultNoDataValue)
                             {
                                 arr[simulationCell.CellId] = AttrValue.Value;
                             }
@@ -1280,10 +1276,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateClassTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = new StochasticTimeRaster();
-                // Fetch the raster metadata from the InpRasters object
-                this.m_InputRasters.GetMetadata(rastOutput);
-                rastOutput.InitIntCells();
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                 // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
@@ -1295,21 +1288,20 @@ namespace SyncroSim.STSim
                 DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
 
                 //DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
-                rastOutput.IntCells = RasterCells.RemapRasterCells(
+                rastOutput.IntCells = Spatial.RemapRasterCells(
                     rastOutput.IntCells, 
                     dsRemap, 
                     Strings.DATASHEET_MAPID_COLUMN_NAME, 
                     false, 
-                    StochasticTimeRaster.DefaultNoDataValue);
+                    Spatial.DefaultNoDataValue);
 
-                RasterFiles.SaveOutputRaster(
+                Spatial.WriteRasterData(
                     rastOutput,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_CLASS),
-                    RasterDataType.DTInteger,
                     iteration,
                     timestep,
-                    Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME,
                     null,
+                    Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1328,10 +1320,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterAgeTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = new StochasticTimeRaster();
-                // Fetch the raster metadata from the InpRasters object
-                this.m_InputRasters.GetMetadata(rastOutput);
-                rastOutput.InitIntCells();
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                 // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
@@ -1339,11 +1328,13 @@ namespace SyncroSim.STSim
                     rastOutput.IntCells[c.CellId] = c.Age;
                 }
 
-                RasterFiles.SaveOutputRaster(rastOutput, this.ResultScenario.GetDataSheet(
-                    Constants.DATASHEET_OUTPUT_SPATIAL_AGE), 
-                    RasterDataType.DTInteger, iteration, timestep, 
+                Spatial.WriteRasterData(
+                    rastOutput, 
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AGE), 
+                    iteration, 
+                    timestep,
+                     null,                     
                     Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, 
-                    null, 
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1361,17 +1352,12 @@ namespace SyncroSim.STSim
             }
 
             if (this.IsRasterTstTimestep(timestep))
-            {
-                // Loop thru Transition Groups       
+            {     
                 foreach (TransitionGroup tg in this.m_TransitionGroups)
                 {
-                    StochasticTimeRaster rastOutput = new StochasticTimeRaster();
-                    // Fetch the raster metadata from the InpRasters object
-                    this.m_InputRasters.GetMetadata(rastOutput);
-                    rastOutput.InitIntCells();
+                    StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
-                    // Fetch the raster data from the Cells collection
-                    foreach (SyncroSim.STSim.Cell cell in this.Cells)
+                    foreach (Cell cell in this.Cells)
                     {
                         if (cell.TstValues.Count != 0)
                         {
@@ -1386,16 +1372,15 @@ namespace SyncroSim.STSim
                     // If no values other than NODATAValue in rastOutput, then supress output for this timestep
                     var distinctVals = rastOutput.IntCells.Distinct();
 
-                    if (distinctVals.Count() > 1 || (distinctVals.Count() == 1 && distinctVals.First() != StochasticTimeRaster.DefaultNoDataValue))
+                    if (distinctVals.Count() > 1 || (distinctVals.Count() == 1 && distinctVals.First() != Spatial.DefaultNoDataValue))
                     {
-                        RasterFiles.SaveOutputRaster(
+                        Spatial.WriteRasterData(
                             rastOutput,
                             this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TST),
-                            RasterDataType.DTInteger,
                             iteration,
                             timestep,
-                            Constants.SPATIAL_MAP_TST_VARIABLE_NAME, 
                             tg.TransitionGroupId,
+                            Constants.SPATIAL_MAP_TST_VARIABLE_NAME, 
                             Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                     }
                 }
@@ -1416,10 +1401,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStratumTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = new StochasticTimeRaster();
-                // Fetch the raster metadata from the InpRasters object
-                this.m_InputRasters.GetMetadata(rastOutput);
-                rastOutput.InitIntCells();
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                 foreach (Cell c in this.Cells)
                 {
@@ -1432,21 +1414,20 @@ namespace SyncroSim.STSim
 
                 //DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
 
-                rastOutput.IntCells = RasterCells.RemapRasterCells(
+                rastOutput.IntCells = Spatial.RemapRasterCells(
                     rastOutput.IntCells, 
                     dsRemap, 
                     Strings.DATASHEET_MAPID_COLUMN_NAME, 
                     false, 
-                    StochasticTimeRaster.DefaultNoDataValue);
+                    Spatial.DefaultNoDataValue);
 
-                RasterFiles.SaveOutputRaster(
+                Spatial.WriteRasterData(
                     rastOutput,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STRATUM),
-                    RasterDataType.DTInteger, 
                     iteration,
                     timestep,
-                    Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME,
                     null,
+                    Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1467,9 +1448,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateAttributeTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = new StochasticTimeRaster();
-                // Fetch the raster metadata from the InpRasters object
-                this.m_InputRasters.GetMetadata(rastOutput);
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
                 {
@@ -1488,13 +1467,13 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    RasterFiles.SaveOutputRaster(
+                    Spatial.WriteRasterData(
                         rastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),
-                        RasterDataType.DTDouble, 
                         iteration,
                         timestep,
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,AttributeTypeId,
+                        AttributeTypeId,
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
 
@@ -1515,14 +1494,13 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    RasterFiles.SaveOutputRaster(
+                    Spatial.WriteRasterData(
                         rastOutput, 
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE), 
-                        RasterDataType.DTDouble, 
                         iteration, 
                         timestep, 
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, 
                         AttributeTypeId, 
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1587,11 +1565,11 @@ namespace SyncroSim.STSim
 
                         for (var i = 0; i < this.m_InputRasters.NumberCells; i++)
                         {
-                            stateAttrVals[i] = StochasticTimeRaster.DefaultNoDataValue;
+                            stateAttrVals[i] = Spatial.DefaultNoDataValue;
                         }
 
                         // Loop thru raster and pull out the State Attribute Value for each cell
-                        foreach (SyncroSim.STSim.Cell cell in this.Cells)
+                        foreach (Cell cell in this.Cells)
                         {
                             // Pull out the values 1st, before doing the neighbor averaging, to get our repeated cost if GetValue.
                             double? attrValue = null;
@@ -1635,10 +1613,7 @@ namespace SyncroSim.STSim
                             attrValueCnt = 0;
 
                             // Calculate row/column once, to eek performance ( small improvement) 
-    //                        Dim cellRow As Integer
-    //                        Dim cellColumn As Integer
                             this.m_InputRasters.GetRowColForId(i, ref cellRow, ref cellColumn);
-
 
                             foreach (CellOffset offset in listNeighbors)
                             {
@@ -1649,7 +1624,7 @@ namespace SyncroSim.STSim
                                     double attrValue = stateAttrVals[neighborCellId];
 
                                     // If NO_DATA, don't include in the averaging
-                                    if (!attrValue.Equals(StochasticTimeRaster.DefaultNoDataValue))
+                                    if (!attrValue.Equals(Spatial.DefaultNoDataValue))
                                     {
                                         attrValueTotal += Convert.ToDouble(attrValue);
                                         attrValueCnt += 1;
@@ -1664,7 +1639,7 @@ namespace SyncroSim.STSim
                             }
                             else
                             {
-                                stateAttrAvgs[i] = StochasticTimeRaster.DefaultNoDataValue;
+                                stateAttrAvgs[i] = Spatial.DefaultNoDataValue;
                             }
                         }
 
@@ -1702,10 +1677,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dictAatp.Keys)
                 {
                     double[] aatp = dictAatp[timestep];
-
-                    StochasticTimeRaster rastAatp = new StochasticTimeRaster();
-                    // Fetch the raster metadata from the InpRasters object
-                    this.m_InputRasters.GetMetadata(rastAatp);
+                    StochasticTimeRaster rastAatp = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
 
                     //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
                     var aatpDistinct = aatp.Distinct();
@@ -1726,7 +1698,14 @@ namespace SyncroSim.STSim
 
                     rastAatp.DblCells = aatp;
 
-                    RasterFiles.SaveOutputRaster(rastAatp, this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY), RasterDataType.DTDouble, 0, timestep, Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, tgId, Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Spatial.WriteRasterData(
+                        rastAatp, 
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY), 
+                        0, 
+                        timestep, 
+                        tgId, 
+                        Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, 
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
         }
@@ -1757,7 +1736,7 @@ namespace SyncroSim.STSim
             if (distArray.Count() == 1)
             {
                 var el0 = distArray.ElementAt(0);
-                if (el0.Equals(0.0) || el0.Equals(StochasticTimeRaster.DefaultNoDataValue))
+                if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
                 {
                     //  Debug.Print("Found all 0's or NO_DATA_VALUES")
                     return;

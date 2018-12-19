@@ -87,7 +87,7 @@ namespace SyncroSim.STSim
                 if (this.IsSpatial)
                 {
                     //Only create a Cell in the Collection if Stratum or StateClass <>0, to conserve memory.
-                    if (this.m_InputRasters.SClassCells[CellId] == 0 || this.m_InputRasters.StratumCells[CellId] == 0)
+                    if (this.m_InputRasters.SClassCells[CellId] == 0 || this.m_InputRasters.PrimaryStratumCells[CellId] == 0)
                     {
                         continue;
                     }
@@ -353,7 +353,6 @@ namespace SyncroSim.STSim
                 }
 
                 //Auto Generated
-
                
                 foreach (DataRow TGroupRow in TGroupRows)
                 {
@@ -377,9 +376,7 @@ namespace SyncroSim.STSim
                         }
                     }
                 }
-                
-                
-
+                               
                 if (TType.PrimaryTransitionGroups.Count > 1)
                 {
                     string msg = string.Format(CultureInfo.InvariantCulture, 
@@ -1679,11 +1676,9 @@ namespace SyncroSim.STSim
                 TransitionSpatialMultiplier Multiplier = new TransitionSpatialMultiplier(
                     TransitionSpatialMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName);
 
-                string tsmFilename = RasterFiles.GetInputFileName(ds, FileName, false);
-                StochasticTimeRaster rastTSM = new StochasticTimeRaster();
+                string tsmFilename = Spatial.GetSpatialInputFileName(ds, FileName, false);
+                StochasticTimeRaster rastTSM = new StochasticTimeRaster(tsmFilename, RasterDataType.DTDouble);
                 string compareMsg = "";
-
-                RasterFiles.LoadRasterFile(tsmFilename, rastTSM, RasterDataType.DTDouble);
 
                 //Compare the TSM raster metadata to that of the Initial Condition raster files
 
@@ -1753,11 +1748,9 @@ namespace SyncroSim.STSim
                 TransitionSpatialInitiationMultiplier Multiplier = new TransitionSpatialInitiationMultiplier(
                     TransitionSpatialInitiationMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName);
 
-                string tsimFilename = RasterFiles.GetInputFileName(ds, FileName, false);
-                StochasticTimeRaster rastTSIM = new StochasticTimeRaster();
+                string tsimFilename = Spatial.GetSpatialInputFileName(ds, FileName, false);
+                StochasticTimeRaster rastTSIM = new StochasticTimeRaster(tsimFilename, RasterDataType.DTDouble);
                 string cmpMsg = "";
-
-                RasterFiles.LoadRasterFile(tsimFilename, rastTSIM, RasterDataType.DTDouble);
 
                 //Compare the TSIM raster metadata to that of the Initial Condition raster files
                 var cmpRes = this.m_InputRasters.CompareMetadata(rastTSIM, ref cmpMsg);

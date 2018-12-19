@@ -85,7 +85,7 @@ namespace SyncroSim.STSim
 
                 // Save the final merged tgap raster, giving it the same name/path as the 1st file in the dictionary for this Strata
                 string newFilename = dictFilenames[k][0];
-                m.Save(newFilename, StochasticTime.RasterCompression.GetGeoTiffCompressionType(this.Library));
+                m.Save(newFilename, StochasticTime.Spatial.GetGeoTiffCompressionType(this.Library));
             }
         }
 

@@ -105,14 +105,14 @@ namespace SyncroSim.STSim
 
             foreach (ChartDescriptor d in descriptors)
             {
-                if (d.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
-                    d.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME ||
-                    d.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
-                    d.DataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
+                if (d.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
+                    d.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME ||
+                    d.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
+                    d.DatasheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
                 {
-                    if (!Sheets.Contains(d.DataSheetName))
+                    if (!Sheets.Contains(d.DatasheetName))
                     {
-                        Sheets.Add(d.DataSheetName);
+                        Sheets.Add(d.DatasheetName);
                     }
                 }
             }
@@ -144,8 +144,8 @@ namespace SyncroSim.STSim
             }
 
             if (
-                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
-                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME)
+                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
+                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME)
             {
                 if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME)
                 {
@@ -163,8 +163,8 @@ namespace SyncroSim.STSim
                 }
             }
             else if (
-                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
-                descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
+                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
+                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
             {
                 string[] s = descriptor.VariableName.Split('-');
 
@@ -175,7 +175,7 @@ namespace SyncroSim.STSim
                 bool IsDensity = (s[0] == "attrdensity");
                 string ColumnName = null;
 
-                if (descriptor.DataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME)
+                if (descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME)
                 {
                     ColumnName = Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
                 }

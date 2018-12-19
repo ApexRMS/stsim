@@ -6,6 +6,7 @@ using System.IO;
 using System.Globalization;
 using SyncroSim.StochasticTime;
 using System.Diagnostics;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
@@ -29,39 +30,38 @@ namespace SyncroSim.STSim
         /// all merged files should be consistent in this regard.</remarks>
         public void Merge(string inpRasterFileName, int numIterations)
         {
-            StochasticTimeRaster rastInput = new StochasticTimeRaster();
-            RasterDataType dataType = RasterDataType.DTDouble;
-
             // 1st time thru?
             if (m_rasterMerge == null)
             {
-                m_rasterMerge = new StochasticTimeRaster();
-                RasterFiles.LoadRasterFile(inpRasterFileName, m_rasterMerge, dataType);
+                this.m_rasterMerge = new StochasticTimeRaster(inpRasterFileName, RasterDataType.DTDouble);
 
                 // Apply the numIterations to each cell
-                m_rasterMerge.ScaleDbl(numIterations);
+                m_rasterMerge.ScaleDblCells(numIterations);
                 return;
             }
 
-            RasterFiles.LoadRasterFile(inpRasterFileName, rastInput, dataType);
+            StochasticTimeRaster rastInput = new StochasticTimeRaster(inpRasterFileName, RasterDataType.DTDouble);
 
             // Crude metadata compare
-            if (rastInput.NumberCols != m_rasterMerge.NumberCols || rastInput.NumberRows != m_rasterMerge.NumberRows)
+            if (rastInput.Width != m_rasterMerge.Width || rastInput.Height != m_rasterMerge.Height)
             {
-                string sMsg = string.Format(CultureInfo.InvariantCulture, "The metadata of the merge raster file '{0}' does not match that used in previous raster files.", inpRasterFileName);
+                string sMsg = string.Format(CultureInfo.InvariantCulture, 
+                    "The metadata of the merge raster file '{0}' does not match that used in previous raster files.", 
+                    inpRasterFileName);
+
                 throw new ArgumentException(sMsg);
             }
 
             // Apply the number of iterations multiplier
-            rastInput.ScaleDbl(numIterations);
+            rastInput.ScaleDblCells(numIterations);
 
             // Now lets arithmetically merge this new raster with previous 
-            m_rasterMerge.AddDbl(rastInput);
+            m_rasterMerge.AddDblCells(rastInput);
         }
 
         public void Multiply(double mutliplier)
         {
-            m_rasterMerge.ScaleDbl(mutliplier);
+            m_rasterMerge.ScaleDblCells(mutliplier);
         }
 
         /// <summary>
@@ -79,14 +79,13 @@ namespace SyncroSim.STSim
                 File.Delete(mergedRasterOutputFilename);
             }
 
-            //DEVNOTE: Use Default NODATA_Value for all spatial output raster files
-            m_rasterMerge.NoDataValue = StochasticTimeRaster.DefaultNoDataValue;
+            Debug.Assert(this.m_rasterMerge.DataType == RasterDataType.DTDouble);
+            Debug.Assert(this.m_rasterMerge.NoDataValue == Spatial.DefaultNoDataValue);
 
-            if (!RasterFiles.ProcessDoubleRasterToFile(m_rasterMerge, mergedRasterOutputFilename, compressionType))
-            {
-                string sMsg = string.Format(CultureInfo.InvariantCulture, "Unable to process merged raster file '{0}'", mergedRasterOutputFilename);
-                throw new ArgumentException(sMsg);
-            }
+            StochasticTimeRaster OutRast = new StochasticTimeRaster(mergedRasterOutputFilename, this.m_rasterMerge);
+
+            OutRast.DblCells = this.m_rasterMerge.DblCells;
+            OutRast.Save(compressionType, true);
 
             Debug.Print("Saved Merged TGAP file to '" + mergedRasterOutputFilename + "'");
         }

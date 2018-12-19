@@ -72,7 +72,7 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                if (cell.StateClassId != StochasticTimeRaster.DefaultNoDataValue)
+                if (cell.StateClassId != Spatial.DefaultNoDataValue)
                 {
                     if (cell.StateClassId != icd.StateClassId)
                     {
@@ -80,7 +80,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                if (cell.SecondaryStratumId != StochasticTimeRaster.DefaultNoDataValue)
+                if (cell.SecondaryStratumId != Spatial.DefaultNoDataValue)
                 {
                     if (cell.SecondaryStratumId != icd.SecondaryStratumId)
                     {
@@ -88,7 +88,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                if (cell.TertiaryStratumId != StochasticTimeRaster.DefaultNoDataValue)
+                if (cell.TertiaryStratumId != Spatial.DefaultNoDataValue)
                 {
                     if (cell.TertiaryStratumId != icd.TertiaryStratumId)
                     {
@@ -96,7 +96,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                if (cell.Age != StochasticTimeRaster.DefaultNoDataValue)
+                if (cell.Age != Spatial.DefaultNoDataValue)
                 {
                     if (cell.Age < icd.AgeMin || cell.Age > icd.AgeMax)
                     {

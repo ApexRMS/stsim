@@ -2,59 +2,53 @@
 // Copyright © 2007-2018 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System;
-using System.Globalization;
-using SyncroSim.StochasticTime;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
+using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
     public class InputRasters
     {
-        private int m_numRows; // Number of cell rows
-        private int m_numCols; // Number of cell columns
-        private decimal m_cellSize; // Cell size
-        private decimal m_XllCorner; //X coordinate of the origin (by lower left corner of the cell).
-        private decimal m_YllCorner; //Y coordinate of the origin (by lower left corner of the cell).
-        private int[] m_sclass_cells; // Single dimension array of State Class raster cells.
-        private int[] m_stratum_cells; // Single dimension array of Primary Stratum raster cells.
-        private int[] m_secondary_stratum_cells; // Single dimension array of Secondary Stratum raster cells.
-        private int[] m_tertiary_stratum_cells; // Single dimension array of Tertiary Stratum raster cells.
-        private int[] m_age_cells; // Single dimension array of Age raster cells.
-        private double[] m_dem_cells; // Single dimension array of Digital Elevation Model (DEM) raster cells.
+        private int m_Width; // Number of cell columns
+        private int m_Height; // Number of cell rows
+        private double m_cellSize; // Cell size
+        private double m_XllCorner; //X coordinate of the origin (by lower left corner of the cell).
+        private double m_YllCorner; //Y coordinate of the origin (by lower left corner of the cell).
         private double m_NoDataValue = -9999; // The NODATA value of the raster
-        private string m_projectionString; // Store the contents of the Raster .prj file here, so we can create a name.prj file when Exporting Raster
+        private string m_Projection; // Store the contents of the Raster .prj file here, so we can create a name.prj file when Exporting Raster
         private double m_cellArea; // The cell area
         private bool m_cellAreaOverride; // Is the cell area overriden by the user
         private string m_cellSizeUnits; // The raster native cell units
-        private string m_primary_stratum_name; //The name of the Primary Stratum raster file
-        private string m_secondary_stratum_name; //The name of the Secondary Stratum raster file
-        private string m_tertiary_stratum_name; //The name of the Tertiary Stratum raster file
-        private string m_stateClass_name; //The name of the State Class raster file
-        private string m_age_name; //The name of the Age raster file
-        private string m_dem_name; //The name of the DEM raster file
+        private StochasticTimeRaster m_PrimaryStratumRaster;
+        private StochasticTimeRaster m_SecondaryStratumRaster;
+        private StochasticTimeRaster m_TertiaryStratumRaster;
+        private StochasticTimeRaster m_StateClassRaster;
+        private StochasticTimeRaster m_AgeRaster;
+        private StochasticTimeRaster m_DEMRaster;
 
-        public int NumberRows
+        public int Width
         {
             get
             {
-                return m_numRows;
+                return m_Width;
             }
             set
             {
-                m_numRows = value;
+                m_Width = value;
             }
         }
 
-        public int NumberColumns
+        public int Height
         {
             get
             {
-                return m_numCols;
+                return m_Height;
             }
             set
             {
-                m_numCols = value;
+                m_Height = value;
             }
         }
 
@@ -62,11 +56,11 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_numCols * m_numRows;
+                return m_Width * m_Height;
             }
         }
 
-        public decimal CellSize
+        public double CellSize
         {
             get
             {
@@ -78,48 +72,39 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Primary Stratum Cells
-        /// </summary>
-        public int[] StratumCells
+        public int[] PrimaryStratumCells
         {
             get
             {
-                return m_stratum_cells;
+                return this.m_PrimaryStratumRaster.IntCells;
             }
             set
             {
-                m_stratum_cells = value;
+                this.m_PrimaryStratumRaster.IntCells = value;
             }
         }
 
-        /// <summary>
-        /// Secondary Stratum Cells
-        /// </summary>
         public int[] SecondaryStratumCells
         {
             get
             {
-                return m_secondary_stratum_cells;
+                return this.m_SecondaryStratumRaster.IntCells;
             }
             set
             {
-                m_secondary_stratum_cells = value;
+                this.m_SecondaryStratumRaster.IntCells = value;
             }
         }
 
-        /// <summary>
-        /// Tertiary Stratum Cells
-        /// </summary>
         public int[] TertiaryStratumCells
         {
             get
             {
-                return m_tertiary_stratum_cells;
+                return this.m_TertiaryStratumRaster.IntCells;
             }
             set
             {
-                m_tertiary_stratum_cells = value;
+                this.m_TertiaryStratumRaster.IntCells = value;
             }
         }
 
@@ -127,11 +112,11 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_sclass_cells;
+                return this.m_StateClassRaster.IntCells;
             }
             set
             {
-                m_sclass_cells = value;
+                this.m_StateClassRaster.IntCells = value;
             }
         }
 
@@ -139,62 +124,47 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_age_cells;
+                return this.m_AgeRaster.IntCells;
             }
             set
             {
-                m_age_cells = value;
+                this.m_AgeRaster.IntCells = value;
             }
         }
 
-        /// <summary>
-        /// Digital Elevation Model (DEM) Cells
-        /// </summary>
         public double[] DemCells
         {
             get
             {
-                return m_dem_cells;
+                return this.m_DEMRaster.DblCells;
             }
             set
             {
-                m_dem_cells = value;
+                this.m_DEMRaster.DblCells = value;
             }
         }
 
-        public string ProjectionString
+        public string Projection
         {
             get
             {
-                return m_projectionString;
-            }
-            set
-            {
-                m_projectionString = value;
+                return m_Projection;
             }
         }
 
-        public decimal XllCorner
+        public double XllCorner
         {
             get
             {
                 return m_XllCorner;
             }
-            set
-            {
-                m_XllCorner = value;
-            }
         }
 
-        public decimal YllCorner
+        public double YllCorner
         {
             get
             {
                 return m_YllCorner;
-            }
-            set
-            {
-                m_YllCorner = value;
             }
         }
 
@@ -204,25 +174,15 @@ namespace SyncroSim.STSim
             {
                 return m_NoDataValue;
             }
-            set
-            {
-                m_NoDataValue = value;
-            }
         }
 
-        /// <summary>
-        /// Get the NoDataValue as an Integer. Stored internally as a Double
-        /// </summary>
-        /// <value></value>
-        /// <returns></returns>
-        /// <remarks></remarks>
         public int NoDataValueAsInteger
         {
             get
             {
                 if (m_NoDataValue < int.MinValue || m_NoDataValue > int.MaxValue)
                 {
-                    return StochasticTimeRaster.DefaultNoDataValue;
+                    return Spatial.DefaultNoDataValue;
                 }
                 else
                 {
@@ -271,11 +231,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_primary_stratum_name;
-            }
-            set
-            {
-                m_primary_stratum_name = value;
+                return this.m_PrimaryStratumRaster.FileName;
             }
         }
 
@@ -283,11 +239,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_secondary_stratum_name;
-            }
-            set
-            {
-                m_secondary_stratum_name = value;
+                return this.m_SecondaryStratumRaster.FileName;
             }
         }
 
@@ -295,11 +247,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_tertiary_stratum_name;
-            }
-            set
-            {
-                m_tertiary_stratum_name = value;
+                return this.m_TertiaryStratumRaster.FileName;
             }
         }
 
@@ -307,11 +255,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_stateClass_name;
-            }
-            set
-            {
-                m_stateClass_name = value;
+                return this.m_StateClassRaster.FileName;
             }
         }
 
@@ -319,11 +263,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_age_name;
-            }
-            set
-            {
-                m_age_name = value;
+                return this.m_AgeRaster.FileName;
             }
         }
 
@@ -331,47 +271,122 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return m_dem_name;
-            }
-            set
-            {
-                m_dem_name = value;
+                return this.m_DEMRaster.FileName;
             }
         }
 
-        /// <summary>
-        /// Set the Raster metadata properties within the current class instance
-        /// </summary>
-        /// <param name="raster">The source of the metadata values</param>
-        /// <remarks></remarks>
+        public StochasticTimeRaster PrimaryStratumRaster
+        {
+            get
+            {
+                return m_PrimaryStratumRaster;
+            }
+            set
+            {
+                m_PrimaryStratumRaster = value;
+            }
+        }
+
+        public StochasticTimeRaster SecondaryStratumRaster
+        {
+            get
+            {
+                return m_SecondaryStratumRaster;
+            }
+            set
+            {
+                m_SecondaryStratumRaster = value;
+            }
+        }
+
+        public StochasticTimeRaster TertiaryStratumRaster
+        {
+            get
+            {
+                return m_TertiaryStratumRaster;
+            }
+            set
+            {
+                m_TertiaryStratumRaster = value;
+            }
+        }
+
+        public StochasticTimeRaster StateClassRaster
+        {
+            get
+            {
+                return m_StateClassRaster;
+            }
+            set
+            {
+                m_StateClassRaster = value;
+            }
+        }
+
+        public StochasticTimeRaster AgeRaster
+        {
+            get
+            {
+                return m_AgeRaster;
+            }
+            set
+            {
+                m_AgeRaster = value;
+            }
+        }
+
+        public StochasticTimeRaster DEMRaster
+        {
+            get
+            {
+                return m_DEMRaster;
+            }
+            set
+            {
+                m_DEMRaster = value;
+            }
+        }
+
         public void SetMetadata(StochasticTimeRaster raster)
         {
-            this.m_numCols = raster.NumberCols;
-            this.m_numRows = raster.NumberRows;
+            this.m_Width = raster.Width;
+            this.m_Height = raster.Height;
             this.m_cellSize = raster.CellSize;
             this.m_cellSizeUnits = raster.CellSizeUnits;
             this.m_XllCorner = raster.XllCorner;
             this.m_YllCorner = raster.YllCorner;
             this.m_NoDataValue = raster.NoDataValue;
-            this.m_projectionString = raster.ProjectionString;
+            this.m_Projection = raster.Projection;
         }
 
-        /// <summary>
-        /// Set the metadata properties in the specified Raster object based on the current Metadata values
-        /// in the current class instance
-        /// </summary>
-        /// <param name="raster"></param>
-        /// <remarks></remarks>
-        public void GetMetadata(StochasticTimeRaster raster)
+        public StochasticTimeRaster CreateOutputRaster(RasterDataType dataType)
         {
-            raster.NumberCols = m_numCols;
-            raster.NumberRows = m_numRows;
-            raster.CellSize = m_cellSize;
-            raster.CellSizeUnits = m_cellSizeUnits;
-            raster.XllCorner = m_XllCorner;
-            raster.YllCorner = m_YllCorner;
-            raster.NoDataValue = m_NoDataValue;
-            raster.ProjectionString = m_projectionString;
+            StochasticTimeRaster rast = new StochasticTimeRaster(
+                "output",
+                dataType,  
+                1,                                
+                this.m_Width, 
+                this.m_Height,
+                this.m_XllCorner, 
+                this.m_YllCorner,                 
+                this.m_cellSize, 
+                this.m_cellSizeUnits, 
+                this.m_Projection,
+                this.m_PrimaryStratumRaster.GeoTransform,
+                this.m_NoDataValue,
+                false, 
+                Spatial.UndefinedRasterBand);
+
+            if (dataType == RasterDataType.DTInteger)
+            {
+                rast.InitIntCells();
+            }
+            else
+            {
+                rast.InitDblCells();
+            }
+
+            return rast;
         }
 
         /// <summary>
@@ -386,22 +401,22 @@ namespace SyncroSim.STSim
             compareMsg = "";
 
             // Test number of cols. 
-            if (this.NumberColumns != raster.NumberCols)
+            if (this.Width != raster.Width)
             {
-                compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Columns ({1} vs {0})", this.NumberColumns, raster.NumberCols);
+                compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Columns ({1} vs {0})", this.Width, raster.Width);
                 return CompareMetadataResult.ImportantDifferences;
             }
 
             // Test number of rows. 
-            if (this.NumberRows != raster.NumberRows)
+            if (this.Height != raster.Height)
             {
-                compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Rows ({1} vs {0})", this.NumberRows, raster.NumberRows);
+                compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Rows ({1} vs {0})", this.Height, raster.Height);
                 return CompareMetadataResult.ImportantDifferences;
             }
 
             // Test XLL Corner. See if NOT negligable difference - arbitrarily 1/10 of cell size. 
             // Can't use equality, because of float error 
-            if (Math.Abs(this.XllCorner - raster.XllCorner) > (this.CellSize / (decimal)10.0))
+            if (Math.Abs(this.XllCorner - raster.XllCorner) > (this.CellSize / 10.0))
             {
                 compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in XllCorner ({1} vs {0})", this.XllCorner, raster.XllCorner);
                 retVal = CompareMetadataResult.UnimportantDifferences;
@@ -409,21 +424,21 @@ namespace SyncroSim.STSim
 
             // Test YLL Corner.  See if NOT negligable difference - arbitrarily 1/10 of cell size. 
             // Can't use equality, because of float error  
-            if (Math.Abs(this.YllCorner - raster.YllCorner) > (this.CellSize / (decimal)10.0))
+            if (Math.Abs(this.YllCorner - raster.YllCorner) > (this.CellSize / 10.0))
             {
                 compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in YllCorner ({1} vs {0})", this.YllCorner, raster.YllCorner);
                 retVal = CompareMetadataResult.UnimportantDifferences;
             }
 
             // Test ProjectionString 
-            if (this.ProjectionString != raster.ProjectionString)
+            if (this.Projection != raster.Projection)
             {
                 compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Projection String");
                 retVal = CompareMetadataResult.UnimportantDifferences;
             }
 
             // Test Cell Size. Cant use equality because of precision errors ( eg. 30D vs 30.000000000004D)
-            if (Math.Abs(this.CellSize - raster.CellSize) > (decimal) 0.0001)
+            if (Math.Abs(this.CellSize - raster.CellSize) > 0.0001)
             {
                 compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Cell Size ({1} vs {0})", this.CellSize, raster.CellSize);
                 retVal = CompareMetadataResult.UnimportantDifferences;
@@ -450,8 +465,8 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(cellNumber < this.NumberCells);
 
-            col = cellNumber % this.m_numCols;
-            row = cellNumber / this.m_numCols;
+            col = cellNumber % this.m_Width;
+            row = cellNumber / this.m_Width;
         }
 
         /// <summary>
@@ -463,10 +478,10 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         public int GetIdForRowCol(int row, int column)
         {
-            Debug.Assert(row < this.NumberRows);
-            Debug.Assert(column < this.NumberColumns);
+            Debug.Assert(row < this.Height);
+            Debug.Assert(column < this.Width);
 
-            return row * m_numCols + column;
+            return row * m_Width + column;
         }
 
         /// <summary>
@@ -489,19 +504,18 @@ namespace SyncroSim.STSim
             int cellRow = 0;
             int cellCol = 0;
 
-
             this.GetRowColForId(initiationCellId, ref cellRow, ref cellCol);
 
             // For NW, specify row/col offset of -1,-1
             int newCol = cellCol + colOffset;
             int newRow = cellRow + rowOffset;
 
-            if (newCol < 0 || newCol >= this.NumberColumns)
+            if (newCol < 0 || newCol >= this.Width)
             {
                 return -1;
             }
 
-            if (newRow < 0 || newRow >= this.NumberRows)
+            if (newRow < 0 || newRow >= this.Height)
             {
                 return -1;
             }
@@ -531,12 +545,12 @@ namespace SyncroSim.STSim
             int newCol = cellColumn + colOffset;
             int newRow = cellRow + rowOffset;
 
-            if (newCol < 0 || newCol >= this.NumberColumns)
+            if (newCol < 0 || newCol >= this.Width)
             {
                 return -1;
             }
 
-            if (newRow < 0 || newRow >= this.NumberRows)
+            if (newRow < 0 || newRow >= this.Height)
             {
                 return -1;
             }
@@ -622,7 +636,6 @@ namespace SyncroSim.STSim
         /// <returns>A List of cell offset founds</returns>
         public IEnumerable<CellOffset> GetCellNeighborOffsetsForRadius(double radius)
         {
-
             // The max number of cell rows and columns for the specified radius
             int numRadiusCells = Convert.ToInt32(Math.Truncate((radius) / this.GetCellSizeMeters()));
 
@@ -706,5 +719,4 @@ namespace SyncroSim.STSim
             return Math.Sqrt(System.Math.Pow(rowDiff, 2) + System.Math.Pow(colDiff, 2)) * (double)this.CellSize;
         }
     }
-
 }

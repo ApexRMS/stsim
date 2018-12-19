@@ -50,7 +50,7 @@ namespace SyncroSim.STSim
 
                         try
                         {
-                            this.ValidateRaster(rast, FirstRaster.NumberRows, FirstRaster.NumberCols, s);
+                            this.ValidateRaster(rast, FirstRaster.Height, FirstRaster.Width, s);
                         }
                         catch (Exception)
                         {
@@ -110,7 +110,7 @@ namespace SyncroSim.STSim
 
                                 try
                                 {
-                                    this.ValidateRaster(rast, FirstRaster.NumberRows, FirstRaster.NumberCols, s);
+                                    this.ValidateRaster(rast, FirstRaster.Height, FirstRaster.Width, s);
                                 }
                                 catch (Exception)
                                 {
@@ -144,14 +144,19 @@ namespace SyncroSim.STSim
                 DataRow FirstRow = ThisData.DefaultView[0].Row;
                 StochasticTimeRaster FirstRast = this.LoadRaster(FirstRow, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
 
-                drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME] = FirstRast.NumberRows;
-                drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME] = FirstRast.NumberCols;
-                drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME] = FirstRast.NumberValidCells;
+                if (FirstRast.IntCells == null)
+                {
+                    FirstRast.LoadData();
+                }
+
+                drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME] = FirstRast.Height;
+                drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME] = FirstRast.Width;
+                drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME] = FirstRast.GetNumberValidCells();
                 drProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME] = FirstRast.XllCorner;
                 drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME] = FirstRast.YllCorner;
                 drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] = FirstRast.CellSize;
                 drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME] = FirstRast.CellSizeUnits;
-                drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME] = FirstRast.ProjectionString;
+                drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME] = FirstRast.Projection;
                 drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME] = false;
 
                 string amountlabel = null;
@@ -183,11 +188,13 @@ namespace SyncroSim.STSim
         private StochasticTimeRaster LoadRaster(DataRow dr, string fileNameColumn)
         {
             string FileName = Convert.ToString(dr[fileNameColumn], CultureInfo.InvariantCulture);
-            string psFilename = RasterFiles.GetInputFileName(this, FileName, true);
-            StochasticTimeRaster rast = new StochasticTimeRaster();
+            string InputFilename = Spatial.GetSpatialInputFileName(this, FileName, true);
 
-            RasterFiles.LoadRasterFile(psFilename, rast, RasterDataType.DTInteger);
-            return rast;
+            return new StochasticTimeRaster(
+                InputFilename, 
+                RasterDataType.DTInteger, 
+                false, 
+                Spatial.UndefinedRasterBand);
         }
 
         private void ValidateRaster(StochasticTimeRaster rast, int rows, int columns, string columnName)
@@ -212,7 +219,7 @@ namespace SyncroSim.STSim
                 ColumnDisplayName = SecondaryStratumLabel;
             }
 
-            if (rast.NumberRows != rows)
+            if (rast.Height != rows)
             {
                 string msg = null;
 
@@ -231,7 +238,7 @@ namespace SyncroSim.STSim
 
                 throw new DataException(msg);
             }
-            else if (rast.NumberCols != columns)
+            else if (rast.Width != columns)
             {
                 string msg = null;
 

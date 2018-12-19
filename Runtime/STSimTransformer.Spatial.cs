@@ -203,7 +203,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private double GetCellElevation(Cell cell)
         {
-            if (this.m_InputRasters.DemCells == null || (this.m_InputRasters.DemCells.Count() == 0))
+            if (this.m_InputRasters.DEMRaster == null || (this.m_InputRasters.DemCells.Count() == 0))
             {
                 return 1.0;
             }
@@ -226,7 +226,7 @@ namespace SyncroSim.STSim
             {
                 double[] attrVals = this.m_TransitionAdjacencyStateAttributeValueMap[transitionGroupId];
 
-                if (attrVals[cell.CellId] == StochasticTimeRaster.DefaultNoDataValue)
+                if (attrVals[cell.CellId] == Spatial.DefaultNoDataValue)
                 {
                     return null;
                 }
@@ -297,7 +297,7 @@ namespace SyncroSim.STSim
                     // initialize to DEFAULT_NO_DATA_VLAUE
                     for (var i = 0; i < this.m_InputRasters.NumberCells; i++)
                     {
-                        transitionPixel[i] = StochasticTimeRaster.DefaultNoDataValue;
+                        transitionPixel[i] = Spatial.DefaultNoDataValue;
                     }
                 }
 
@@ -330,7 +330,7 @@ namespace SyncroSim.STSim
 
                     for (int i = 0; i < this.m_InputRasters.NumberCells; i++)
                     {
-                        arr[i] = StochasticTimeRaster.DefaultNoDataValue;
+                        arr[i] = Spatial.DefaultNoDataValue;
                     }
 
                     dict.Add(id, arr);
@@ -1313,24 +1313,23 @@ namespace SyncroSim.STSim
                 // So we've got a PS file defined, so lets load it up
                 // Load the Primary Stratum Raster
                 string rasterFileName = ics.PrimaryStratumFileName;
-                string fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                StochasticTimeRaster raster = new StochasticTimeRaster();
-
-                RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger);
+                string fullFileName = Spatial.GetSpatialInputFileName(dsIC, rasterFileName, false);
+                StochasticTimeRaster PrimaryStratumRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
 
                 // Now lets remap the ID's in the raster to the Stratum PK values
                 dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
-                primary_stratum_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+                primary_stratum_cells = Spatial.RemapRasterCells(PrimaryStratumRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
 
                 // Load the State Class Raster, if defined
                 if (StateClassDefined)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, ics.StateClassFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger);
+                    fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.StateClassFileName, false);
+                    StochasticTimeRaster StateClassRaster = new StochasticTimeRaster(fullFileName, PrimaryStratumRaster);
+                    StateClassRaster.LoadData();
 
                     // Now lets remap the ID's in the raster to the State Class PK values
                     dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
-                    stateclass_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+                    stateclass_cells = Spatial.RemapRasterCells(StateClassRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
 
                     if (stateclass_cells.Count() != primary_stratum_cells.Count())
                     {
@@ -1342,10 +1341,11 @@ namespace SyncroSim.STSim
                 // Load the Age Raster, if defined
                 if (AgeDefined)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, ics.AgeFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger);
+                    fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.AgeFileName, false);
+                    StochasticTimeRaster AgeRaster = new StochasticTimeRaster(fullFileName, PrimaryStratumRaster);
+                    AgeRaster.LoadData();
 
-                    age_cells = raster.IntCells;
+                    age_cells = AgeRaster.IntCells;
 
                     if (age_cells.Count() != primary_stratum_cells.Count())
                     {
@@ -1357,12 +1357,13 @@ namespace SyncroSim.STSim
                 // Load the Secondary Stratum Raster, if defined
                 if (SecondaryStratumDefined)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, ics.SecondaryStratumFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger);
+                    fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.SecondaryStratumFileName, false);
+                    StochasticTimeRaster SecondaryStratumRaster = new StochasticTimeRaster(fullFileName, PrimaryStratumRaster);
+                    SecondaryStratumRaster.LoadData();
 
                     // Now lets remap the ID's in the raster to the Secondary Stratum PK values
                     dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_SECONDARY_STRATA_NAME);
-                    secondary_stratum_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+                    secondary_stratum_cells = Spatial.RemapRasterCells(SecondaryStratumRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
 
                     if (secondary_stratum_cells.Count() != primary_stratum_cells.Count())
                     {
@@ -1374,12 +1375,13 @@ namespace SyncroSim.STSim
                 // Load the Tertiary Stratum Raster, if defined
                 if (TertiaryStratumDefined)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, ics.TertiaryStratumFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, raster, RasterDataType.DTInteger);
+                    fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.TertiaryStratumFileName, false);
+                    StochasticTimeRaster TertiaryStratumRaster = new StochasticTimeRaster(fullFileName, PrimaryStratumRaster);
+                    TertiaryStratumRaster.LoadData();
 
                     // Now lets remap the ID's in the raster to the Tertiary Stratum PK values
                     dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_TERTIARY_STRATA_NAME);
-                    tertiary_stratum_cells = RasterCells.RemapRasterCells(raster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+                    tertiary_stratum_cells = Spatial.RemapRasterCells(TertiaryStratumRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
 
                     if (tertiary_stratum_cells.Count() != primary_stratum_cells.Count())
                     {
@@ -1401,7 +1403,7 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        c.StateClassId = StochasticTimeRaster.DefaultNoDataValue;
+                        c.StateClassId = Spatial.DefaultNoDataValue;
                     }
 
                     if (AgeDefined)
@@ -1410,7 +1412,7 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        c.Age = StochasticTimeRaster.DefaultNoDataValue;
+                        c.Age = Spatial.DefaultNoDataValue;
                     }
 
                     if (SecondaryStratumDefined)
@@ -1419,7 +1421,7 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        c.SecondaryStratumId = StochasticTimeRaster.DefaultNoDataValue;
+                        c.SecondaryStratumId = Spatial.DefaultNoDataValue;
                     }
 
                     if (TertiaryStratumDefined)
@@ -1428,7 +1430,7 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        c.TertiaryStratumId = StochasticTimeRaster.DefaultNoDataValue;
+                        c.TertiaryStratumId = Spatial.DefaultNoDataValue;
                     }
 
                     cells.Add(c);
@@ -1575,8 +1577,8 @@ namespace SyncroSim.STSim
         private bool SaveCellsToUndefinedICRasters(List<Cell> cells, int? iteration)
         {
             bool rasterSaved = false;
-
             int iterVal = 0;
+
             if (iteration == null)
             {
                 iterVal = 0;
@@ -1585,23 +1587,35 @@ namespace SyncroSim.STSim
             {
                 iterVal = iteration.Value;
             }
-
-            // OK, we've got an Initialized cells collection. So now lets create the Initial Condition rasters as required.
-            int numValidCells = cells.Count;
-            StochasticTimeRaster rst = new StochasticTimeRaster();
-
-
-            // Get the IC Spatial properties
+         
             DataSheet dsSpIcProp = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
             DataRow drProp = dsSpIcProp.GetDataRow();
 
-            rst.ProjectionString = drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME].ToString();
-            rst.NumberCols = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME], CultureInfo.InvariantCulture);
-            rst.NumberRows = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME], CultureInfo.InvariantCulture);
-            rst.CellSize = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME], CultureInfo.InvariantCulture);
-            rst.CellSizeUnits = drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME].ToString();
-            rst.XllCorner = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
-            rst.YllCorner = Convert.ToDecimal(drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
+            int Width = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            int Height = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME], CultureInfo.InvariantCulture);
+            double xll = Convert.ToDouble(drProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
+            double yll = Convert.ToDouble(drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
+            double cellsize = Convert.ToDouble(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME], CultureInfo.InvariantCulture);
+            string cellsizeunits = drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME].ToString();
+            string projection = drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME].ToString(); 
+            double[] geo = Spatial.CreateGeoTransform((double)xll, (double)yll, Height, (double)cellsize);             
+            int numValidCells = cells.Count;
+
+            StochasticTimeRaster TemplateRaster = new StochasticTimeRaster(
+                "template",
+                RasterDataType.DTInteger, 
+                1, 
+                Width,
+                Height,
+                xll, 
+                yll, 
+                cellsize, 
+                cellsizeunits, 
+                projection,
+                geo,
+                Spatial.DefaultNoDataValue,
+                false, 
+                Spatial.UndefinedRasterBand);
 
             // We also need to get the datarow for this InitialConditionSpatial
             string filter = null;
@@ -1633,54 +1647,74 @@ namespace SyncroSim.STSim
                 drICS = drICSpatials[0];
             }
 
-            DataSheet dsRemap = null;
-            string filename = null;
-
-            // Create Primary Stratum file,  if not already defined
+            // Create Primary Stratum file, if not already defined
             if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME].ToString()))
             {
+                string FileName = CreatePrimaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
+                StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
+                GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+
                 rst.InitIntCells();
+
                 for (var i = 0; i < numValidCells; i++)
                 {
                     rst.IntCells[i] = cells[i].StratumId;
                 }
 
                 // We need to remap the Primary Stratum PK to the Raster values ( PK - > ID)
-                dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
-                rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, StochasticTimeRaster.DefaultNoDataValue);
+                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+                rst.IntCells = Spatial.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, Spatial.DefaultNoDataValue);
 
-                filename = SpatialUtilities.SavePrimaryStratumInputRaster(rst, this.ResultScenario, iterVal, 0);
-                File.SetAttributes(filename, FileAttributes.Normal);
-                drICS[Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(filename);
-                dsSpatialIC.AddExternalInputFile(filename);
+                rst.Save(comptype, false);
+                drICS[Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(FileName);
+                dsSpatialIC.AddExternalInputFile(FileName);
                 rasterSaved = true;
             }
+            else
+            {
+                //If the primary stratum raster is defined then we are going to use that for the template
+                //because the current version of the GDAL API returns a slightly different projection string
+                //than the one that might be in the spatial initial conditions properties.
 
+                string BaseFileName = (string)drICS[Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME];
+                string FullFileName = Spatial.GetSpatialInputFileName(dsSpatialIC, BaseFileName, false);
+
+                TemplateRaster = new StochasticTimeRaster(FullFileName, RasterDataType.DTInteger, false, Spatial.DefaultNoDataValue);
+            }
 
             // Create State Class IC raster, if not already defined
             if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME].ToString()))
             {
+                string FileName = CreateStateClassInputRasterFileName(this.ResultScenario, iterVal, 0);
+                StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
+                GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+
                 rst.InitIntCells();
+
                 for (var i = 0; i < numValidCells; i++)
                 {
                     rst.IntCells[i] = cells[i].StateClassId;
                 }
 
                 // We need to remap the State Class PK to the Raster values ( PK - > ID)
-                dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
-                rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, StochasticTimeRaster.DefaultNoDataValue);
+                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
+                rst.IntCells = Spatial.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, Spatial.DefaultNoDataValue);
 
-                filename = SpatialUtilities.SaveStateClassInputRaster(rst, this.ResultScenario, iterVal, 0);
-                File.SetAttributes(filename, FileAttributes.Normal);
-                drICS[Strings.DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME] = Path.GetFileName(filename);
-                dsSpatialIC.AddExternalInputFile(filename);
+                rst.Save(comptype, false);
+                drICS[Strings.DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME] = Path.GetFileName(FileName);
+                dsSpatialIC.AddExternalInputFile(FileName);
                 rasterSaved = true;
             }
 
             // Create Secondary Stratum IC raster , if appropriate and/or not already defined
             if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME].ToString()))
             {
+                string FileName = CreateSecondaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
+                StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
+                GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+
                 rst.InitIntCells();
+
                 for (var i = 0; i < numValidCells; i++)
                 {
                     if (cells[i].SecondaryStratumId.HasValue)
@@ -1690,24 +1724,28 @@ namespace SyncroSim.STSim
                 }
 
                 // Test the 2nd stratum has values worth exporting
-                if (rst.IntCells.Distinct().Count() > 1 || rst.IntCells[0] != StochasticTimeRaster.DefaultNoDataValue)
+                if (rst.IntCells.Distinct().Count() > 1 || rst.IntCells[0] != Spatial.DefaultNoDataValue)
                 {
                     // We need to remap the Stratum PK to the Raster values ( PK - > ID)
-                    dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_SECONDARY_STRATA_NAME);
-                    rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, StochasticTimeRaster.DefaultNoDataValue);
+                    DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_SECONDARY_STRATA_NAME);
+                    rst.IntCells = Spatial.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, Spatial.DefaultNoDataValue);
 
-                    filename = SpatialUtilities.SaveSecondaryStratumInputRaster(rst, this.ResultScenario, iterVal, 0);
-                    File.SetAttributes(filename, FileAttributes.Normal);
-                    drICS[Strings.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(filename);
-                    dsSpatialIC.AddExternalInputFile(filename);
+                    rst.Save(comptype, false);
+                    drICS[Strings.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(FileName);
+                    dsSpatialIC.AddExternalInputFile(FileName);
                     rasterSaved = true;
                 }
             }
 
-            // Create Tertiary Stratum IC raster , if appropriate and/or not already defined
+            // Create Tertiary Stratum IC raster, if appropriate and/or not already defined
             if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME].ToString()))
             {
+                string FileName = CreateTertiaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
+                StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
+                GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+
                 rst.InitIntCells();
+
                 for (var i = 0; i < numValidCells; i++)
                 {
                     if (cells[i].TertiaryStratumId.HasValue)
@@ -1717,34 +1755,36 @@ namespace SyncroSim.STSim
                 }
 
                 // Test the Tertiary stratum has values worth exporting
-                if (rst.IntCells.Distinct().Count() > 1 || rst.IntCells[0] != StochasticTimeRaster.DefaultNoDataValue)
+                if (rst.IntCells.Distinct().Count() > 1 || rst.IntCells[0] != Spatial.DefaultNoDataValue)
                 {
                     // We need to remap the Tertiary Stratum PK to the Raster values ( PK - > ID)
-                    dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_TERTIARY_STRATA_NAME);
-                    rst.IntCells = RasterCells.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, StochasticTimeRaster.DefaultNoDataValue);
+                    DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_TERTIARY_STRATA_NAME);
+                    rst.IntCells = Spatial.RemapRasterCells(rst.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME, false, Spatial.DefaultNoDataValue);
 
-                    filename = SpatialUtilities.SaveTertiaryStratumInputRaster(rst, this.ResultScenario, iterVal, 0);
-                    File.SetAttributes(filename, FileAttributes.Normal);
-                    drICS[Strings.DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(filename);
-                    dsSpatialIC.AddExternalInputFile(filename);
+                    rst.Save(comptype, false);
+                    drICS[Strings.DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME] = Path.GetFileName(FileName);
+                    dsSpatialIC.AddExternalInputFile(FileName);
                     rasterSaved = true;
                 }
             }
 
-            // Create Age IC raster , if not already defined
+            // Create Age IC raster, if not already defined
             if (string.IsNullOrEmpty(drICS[Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME].ToString()))
             {
-                //Create Age IC Raster
+                string FileName = CreateAgeInputRasterFileName(this.ResultScenario, iterVal, 0);
+                StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
+                GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+
                 rst.InitIntCells();
+
                 for (var i = 0; i < numValidCells; i++)
                 {
                     rst.IntCells[i] = cells[i].Age;
                 }
 
-                filename = SpatialUtilities.SaveAgeInputRaster(rst, this.ResultScenario, iterVal, 0);
-                File.SetAttributes(filename, FileAttributes.Normal);
-                drICS[Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME] = Path.GetFileName(filename);
-                dsSpatialIC.AddExternalInputFile(filename);
+                rst.Save(comptype, false);
+                drICS[Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME] = Path.GetFileName(FileName);
+                dsSpatialIC.AddExternalInputFile(FileName);
                 rasterSaved = true;
             }
 
@@ -1853,7 +1893,6 @@ namespace SyncroSim.STSim
                     if (this.m_TransitionAttributeTargets.Count > 0)
                     {
                         TransitionType tt = this.TransitionTypes[tr.TransitionTypeId];
-
                         double? ProbOverride = this.GetAttributeTargetProbabilityOverride(tt, simulationCell, iteration, timestep);
 
                         if (ProbOverride.HasValue)
@@ -1902,21 +1941,21 @@ namespace SyncroSim.STSim
                 Cell c = this.m_Cells[i];
 
                 c.StateClassId = this.m_InputRasters.SClassCells[i];
-                c.StratumId = this.m_InputRasters.StratumCells[i];
+                c.StratumId = this.m_InputRasters.PrimaryStratumCells[i];
 
                 Debug.Assert(!(c.StateClassId == 0 || c.StratumId == 0), "The Cell object should never have been created with StateClass or Stratum = 0");
 
-                if (this.m_InputRasters.SecondaryStratumCells != null)
+                if (this.m_InputRasters.SecondaryStratumRaster != null)
                 {
                     c.SecondaryStratumId = this.m_InputRasters.SecondaryStratumCells[i];
                 }
 
-                if (this.m_InputRasters.TertiaryStratumCells != null)
+                if (this.m_InputRasters.TertiaryStratumRaster != null)
                 {
                     c.TertiaryStratumId = this.m_InputRasters.TertiaryStratumCells[i];
                 }
 
-                if (this.m_InputRasters.AgeCells == null)
+                if (this.m_InputRasters.AgeRaster == null)
                 {
                     this.InitializeCellAge(c, c.StratumId, c.StateClassId, 0, int.MaxValue, iteration, this.m_TimestepZero);
                 }
@@ -1955,12 +1994,10 @@ namespace SyncroSim.STSim
                 this.OnSummaryStateClassOutput(c, iteration, this.m_TimestepZero);
                 this.OnSummaryStateAttributeOutput(c, iteration, this.m_TimestepZero);
 
-				if (CellInitialized != null)
-                    CellInitialized(this, new CellEventArgs(c, iteration, this.m_TimestepZero));
+                CellInitialized?.Invoke(this, new CellEventArgs(c, iteration, this.m_TimestepZero));
             }
 
-			if (CellsInitialized != null)
-                CellsInitialized(this, new CellEventArgs(null, iteration, this.m_TimestepZero));
+            CellsInitialized?.Invoke(this, new CellEventArgs(null, iteration, this.m_TimestepZero));
         }
 
         /// <summary>
@@ -1970,169 +2007,122 @@ namespace SyncroSim.STSim
         private void InitializeRasterData(int iteration)
         {
             Debug.Assert(this.IsSpatial);
-
-            StochasticTimeRaster rastSclass = new StochasticTimeRaster();
-            StochasticTimeRaster rastPrimaryStratum = new StochasticTimeRaster();
-            StochasticTimeRaster rastSecondaryStratum = new StochasticTimeRaster();
-            StochasticTimeRaster rastTertiaryStratum = new StochasticTimeRaster();
-            StochasticTimeRaster rastAge = new StochasticTimeRaster();
-            StochasticTimeRaster rastDem = new StochasticTimeRaster();
-            InputRasters inpRasts = this.m_InputRasters;
-            string sMsg = null;
+            string Message = null;
 
             // Now import the rasters, if they are configured in the RasterInitialCondition 
             DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
-
             InitialConditionsSpatial ics = this.m_InitialConditionsSpatialMap.GetICS(iteration);
+
             if (ics == null)
             {
                 throw new ArgumentException(MessageStrings.ERROR_NO_APPLICABLE_INITIAL_CONDITIONS_SPATIAL_RECORDS);
             }
 
-            // Load the State Class Raster
-            string rasterFileName = null;
-            string fullFileName = null;
-
-            rasterFileName = ics.StateClassFileName;
-
-            if (rasterFileName.Length > 0)
+            if (ics.StateClassFileName == null || ics.PrimaryStratumFileName == null)
             {
-                if (rasterFileName != inpRasts.StateClassName)
-                {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, rastSclass, RasterDataType.DTInteger);
-
-                    inpRasts.StateClassName = rasterFileName;
-                    // Now lets remap the ID's in the raster to the SClass PK values
-                    DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
-                    inpRasts.SClassCells = RasterCells.RemapRasterCells(rastSclass.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
-                }
-            }
-            else
-            {
-                // IC State Class file must be defined
                 throw new ArgumentException(MessageStrings.ERROR_SPATIAL_FILE_NOT_DEFINED);
             }
 
-            // Load the Primary Stratum Raster
-            rasterFileName = ics.PrimaryStratumFileName;
-
-            if (rasterFileName.Length > 0)
+            //State Class Raster
+            if (this.m_InputRasters.StateClassRaster == null || ics.StateClassFileName != this.m_InputRasters.StateClassName)
             {
-                if (rasterFileName != inpRasts.PrimaryStratumName)
+                string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.StateClassFileName, false);
+                this.m_InputRasters.StateClassRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
+                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
+                this.m_InputRasters.SClassCells = Spatial.RemapRasterCells(this.m_InputRasters.StateClassRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+            }
+
+            //Primary Stratum Raster
+            if (this.m_InputRasters.PrimaryStratumRaster == null || ics.PrimaryStratumFileName != this.m_InputRasters.PrimaryStratumName)
+            {
+                string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.PrimaryStratumFileName, false);
+                this.m_InputRasters.PrimaryStratumRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
+
+                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+                this.m_InputRasters.PrimaryStratumCells = Spatial.RemapRasterCells(this.m_InputRasters.PrimaryStratumRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+
+                if (string.IsNullOrWhiteSpace(this.m_InputRasters.PrimaryStratumRaster.Projection))
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, rastPrimaryStratum, RasterDataType.DTInteger);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISSING_PROJECTION_WARNING, fullFileName);
+                    this.RecordStatus(StatusType.Information, Message);
+                }
 
-                    // Only set the metadata the 1st time thru
-                    if (string.IsNullOrEmpty(inpRasts.PrimaryStratumName))
-                    {
-                        inpRasts.SetMetadata(rastPrimaryStratum);
-                    }
-
-                    inpRasts.PrimaryStratumName = rasterFileName;
-
-                    // Now lets remap the ID's in the raster to the Stratum PK values
-                    DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
-                    inpRasts.StratumCells = RasterCells.RemapRasterCells(rastPrimaryStratum.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
-
-                    // See if the Primary Stratum has a Projection associated with it
-                    if (rastPrimaryStratum.ProjectionString == "")
-                    {
-                        sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISSING_PROJECTION_WARNING, fullFileName);
-                        this.RecordStatus(StatusType.Information, sMsg);
-                    }
+                if (iteration == this.MinimumIteration)
+                {
+                    this.m_InputRasters.SetMetadata(this.m_InputRasters.PrimaryStratumRaster);
                 }
             }
-            else
-            {
-                // IC Stratum file must be defined
-                throw new ArgumentException(MessageStrings.ERROR_SPATIAL_FILE_NOT_DEFINED);
-            }
 
-            // Load the Secondary Stratum Raster
-            rasterFileName = ics.SecondaryStratumFileName;
-
-            if (rasterFileName.Length > 0)
+            //Secondary Stratum Raster
+            if (!string.IsNullOrEmpty(ics.SecondaryStratumFileName))
             {
-                if (rasterFileName != inpRasts.SecondaryStratumName)
+                if (this.m_InputRasters.SecondaryStratumRaster == null || ics.SecondaryStratumFileName != this.m_InputRasters.SecondaryStratumName)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, rastSecondaryStratum, RasterDataType.DTInteger);
-                    inpRasts.SecondaryStratumName = rasterFileName;
-                    // Now lets remap the ID's in the raster to the Secondary Stratum PK values
+                    string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.SecondaryStratumFileName, false);
+                    this.m_InputRasters.SecondaryStratumRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
                     DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_SECONDARY_STRATA_NAME);
-                    inpRasts.SecondaryStratumCells = RasterCells.RemapRasterCells(rastSecondaryStratum.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+                    this.m_InputRasters.SecondaryStratumCells = Spatial.RemapRasterCells(this.m_InputRasters.SecondaryStratumRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
                 }
             }
             else
             {
-                // IC Secondary Stratum file does not have to be defined
-                inpRasts.SecondaryStratumName = "";
+                this.m_InputRasters.SecondaryStratumRaster = null;
             }
 
-            // Load the Tertiary Stratum Raster
-            rasterFileName = ics.TertiaryStratumFileName;
-
-            if (rasterFileName.Length > 0)
+            //Tertiary Stratum Raster
+            if (!string.IsNullOrEmpty(ics.TertiaryStratumFileName))
             {
-                if (rasterFileName != inpRasts.TertiaryStratumName)
+                if (this.m_InputRasters.TertiaryStratumRaster == null || ics.TertiaryStratumFileName != this.m_InputRasters.TertiaryStratumName)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, rastTertiaryStratum, RasterDataType.DTInteger);
-                    inpRasts.TertiaryStratumName = rasterFileName;
-                    // Now lets remap the ID's in the raster to the Tertiary Stratum PK values
+                    string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.TertiaryStratumFileName, false);
+                    this.m_InputRasters.TertiaryStratumRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
                     DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_TERTIARY_STRATA_NAME);
-                    inpRasts.TertiaryStratumCells = RasterCells.RemapRasterCells(rastTertiaryStratum.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
+                    this.m_InputRasters.TertiaryStratumCells = Spatial.RemapRasterCells(this.m_InputRasters.TertiaryStratumRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
                 }
             }
             else
             {
-                // IC Tertiary Stratum file does not have to be defined
-                inpRasts.TertiaryStratumName = "";
+                this.m_InputRasters.TertiaryStratumRaster = null;
             }
 
-            // Load the Age Raster
-            rasterFileName = ics.AgeFileName;
-
-            if (rasterFileName.Length > 0)
+            //Age Raster
+            if (!string.IsNullOrEmpty(ics.AgeFileName))
             {
-                if (rasterFileName != inpRasts.AgeName)
+                if (this.m_InputRasters.AgeRaster == null || ics.AgeFileName != this.m_InputRasters.AgeName)
                 {
-                    fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                    RasterFiles.LoadRasterFile(fullFileName, rastAge, RasterDataType.DTInteger);
-                    inpRasts.AgeName = rasterFileName;
-                    inpRasts.AgeCells = rastAge.IntCells;
+                    string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.AgeFileName, false);
+                    this.m_InputRasters.AgeRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
                 }
             }
             else
             {
-                inpRasts.AgeName = "";
+                this.m_InputRasters.AgeRaster = null;
             }
 
-            // Load the Digital Elevation Model (DEM) Raster
+            //Digital Elevation Model (DEM) Raster
             dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME);
             DataRow drRIS = dsIC.GetDataRow();
 
             if (drRIS != null)
             {
-                rasterFileName = drRIS[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME].ToString();
+                string rasterFileName = drRIS[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME].ToString();
 
-                if (rasterFileName.Length > 0)
+                if (!string.IsNullOrEmpty(rasterFileName))
                 {
-                    if (rasterFileName != inpRasts.DemName)
+                    if (this.m_InputRasters.DEMRaster == null || rasterFileName != this.m_InputRasters.DemName)
                     {
-                        fullFileName = RasterFiles.GetInputFileName(dsIC, rasterFileName, false);
-                        RasterFiles.LoadRasterFile(fullFileName, rastDem, RasterDataType.DTDouble);
-
-                        inpRasts.DemName = rasterFileName;
-                        inpRasts.DemCells = rastDem.DblCells;
+                        string fullFileName = Spatial.GetSpatialInputFileName(dsIC, rasterFileName, false);
+                        this.m_InputRasters.DEMRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTDouble);
                     }
                 }
                 else
                 {
-                    inpRasts.DemName = "";
+                    this.m_InputRasters.DEMRaster = null;
                 }
+            }
+            else
+            {
+                this.m_InputRasters.DEMRaster = null;
             }
 
             // Compare the rasters to make sure meta data matches. Note that we might not have loaded a raster 
@@ -2141,99 +2131,99 @@ namespace SyncroSim.STSim
             CompareMetadataResult cmpResult = 0;
             string cmpMsg = "";
 
+            // State Class
+            if (this.m_InputRasters.StateClassRaster != null && this.m_InputRasters.StateClassRaster.TotalCells > 0)
+            {
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.StateClassRaster, ref cmpMsg);
+                if (cmpResult == CompareMetadataResult.ImportantDifferences)
+                {
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.StateClassName, cmpMsg);
+                    throw new STSimException(Message);
+                }
+                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
+                {
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.StateClassName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
+                }
+            }
+
             // Primary Stratum
-            if (rastPrimaryStratum.NumberCells > 0)
+            if (this.m_InputRasters.PrimaryStratumRaster != null && this.m_InputRasters.PrimaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = inpRasts.CompareMetadata(rastPrimaryStratum, ref cmpMsg);
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.PrimaryStratumRaster, ref cmpMsg);
                 if (cmpResult == CompareMetadataResult.ImportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.PrimaryStratumName, cmpMsg);
-                    throw new STSimException(sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.PrimaryStratumName, cmpMsg);
+                    throw new STSimException(Message);
                 }
                 else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.PrimaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, sMsg);
-                }
-            }
-
-            // SClass is mandatory
-            if (rastSclass.NumberCells > 0)
-            {
-                cmpResult = inpRasts.CompareMetadata(rastSclass, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.ImportantDifferences)
-                {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.StateClassName, cmpMsg);
-                    throw new STSimException(sMsg);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.StateClassName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, sMsg);
-                }
-            }
-
-            // Age
-            if (rastAge.NumberCells > 0)
-            {
-                cmpResult = inpRasts.CompareMetadata(rastAge, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.ImportantDifferences)
-                {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.AgeName, cmpMsg);
-                    throw new STSimException(sMsg);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.AgeName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.PrimaryStratumName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
                 }
             }
 
             //Secondary Stratum
-            if (rastSecondaryStratum.NumberCells > 0)
+            if (this.m_InputRasters.SecondaryStratumRaster != null && this.m_InputRasters.SecondaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = inpRasts.CompareMetadata(rastSecondaryStratum, ref cmpMsg);
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.SecondaryStratumRaster, ref cmpMsg);
                 if (cmpResult == CompareMetadataResult.ImportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.SecondaryStratumName, cmpMsg);
-                    throw new STSimException(sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.SecondaryStratumName, cmpMsg);
+                    throw new STSimException(Message);
                 }
                 else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.SecondaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.SecondaryStratumName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
                 }
             }
 
             //Tertiary Stratum
-            if (rastTertiaryStratum.NumberCells > 0)
+            if (this.m_InputRasters.TertiaryStratumRaster != null && this.m_InputRasters.TertiaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = inpRasts.CompareMetadata(rastTertiaryStratum, ref cmpMsg);
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.TertiaryStratumRaster, ref cmpMsg);
                 if (cmpResult == CompareMetadataResult.ImportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.TertiaryStratumName, cmpMsg);
-                    throw new STSimException(sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.TertiaryStratumName, cmpMsg);
+                    throw new STSimException(Message);
                 }
                 else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.TertiaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.TertiaryStratumName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
+                }
+            }
+
+            // Age
+            if (this.m_InputRasters.AgeRaster != null && this.m_InputRasters.AgeRaster.TotalCells > 0)
+            {
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.AgeRaster, ref cmpMsg);
+                if (cmpResult == CompareMetadataResult.ImportantDifferences)
+                {
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.AgeName, cmpMsg);
+                    throw new STSimException(Message);
+                }
+                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
+                {
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.AgeName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
                 }
             }
 
             //DEM 
-            if (rastDem.NumberCells > 0)
+            if (this.m_InputRasters.DEMRaster != null && this.m_InputRasters.DEMRaster.TotalCells > 0)
             {
-                cmpResult = inpRasts.CompareMetadata(rastDem, ref cmpMsg);
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.DEMRaster, ref cmpMsg);
                 if (cmpResult == CompareMetadataResult.ImportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, inpRasts.DemName, cmpMsg);
-                    throw new STSimException(sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.DemName, cmpMsg);
+                    throw new STSimException(Message);
                 }
                 else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
                 {
-                    sMsg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, inpRasts.DemName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, sMsg);
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.DemName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
                 }
             }
         }
@@ -2279,7 +2269,7 @@ namespace SyncroSim.STSim
                         {
                             if (!this.Cells.Contains(i))
                             {
-                                aatp[i] = StochasticTimeRaster.DefaultNoDataValue;
+                                aatp[i] = Spatial.DefaultNoDataValue;
                             }
                             else
                             {
@@ -2293,6 +2283,73 @@ namespace SyncroSim.STSim
 
                 this.m_AnnualAvgTransitionProbMap.Add(tg.TransitionGroupId, dicTgAATP);
             }
+        }
+
+        private static string CreatePrimaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        {
+            //Name template = Itx-Tsy-Stratum.tif
+            string f = string.Format(
+                CultureInfo.InvariantCulture,
+                "It{0}-Ts{1}-{2}",
+                iteration.ToString("0000", CultureInfo.InvariantCulture),
+                timestep.ToString("0000", CultureInfo.InvariantCulture),
+                Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME);
+
+            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
+        }
+
+        private static string CreateSecondaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        {
+            //Name template = Itx-Tsy-secstr.tif
+            string f = string.Format(
+                CultureInfo.InvariantCulture, "It{0}-Ts{1}-{2}",
+                iteration.ToString("0000", CultureInfo.InvariantCulture),
+                timestep.ToString("0000", CultureInfo.InvariantCulture),
+                Constants.SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME);
+
+            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
+        }
+
+        private static string CreateTertiaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        {
+            //Name template = Itx-Tsy-terstr.tif
+            string f = string.Format(
+                CultureInfo.InvariantCulture,
+                "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture),
+                timestep.ToString("0000", CultureInfo.InvariantCulture),
+                Constants.SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME);
+
+            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
+        }
+
+        private static string CreateStateClassInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        {
+            //Name template = Itx-Tsy-sc.tif
+            string f = string.Format(
+                CultureInfo.InvariantCulture,
+                "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture),
+                timestep.ToString("0000", CultureInfo.InvariantCulture),
+                Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME);
+
+            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
+        }
+
+        private static string CreateAgeInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        {
+            //Name template = Itx-Tsy-Age.tif
+            string f = string.Format(
+                CultureInfo.InvariantCulture,
+                "It{0}-Ts{1}-{2}.tif",
+                iteration.ToString("0000", CultureInfo.InvariantCulture),
+                timestep.ToString("0000", CultureInfo.InvariantCulture),
+                Constants.SPATIAL_MAP_AGE_VARIABLE_NAME);
+
+            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
         }
     }
 }

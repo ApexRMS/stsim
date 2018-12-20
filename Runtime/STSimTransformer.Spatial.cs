@@ -1562,7 +1562,25 @@ namespace SyncroSim.STSim
             drSpIcProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME] = 0;
 
             // DEVNOTE: Set Projection  - Corresponds to NAD83 / UTM zone 12N EPSG:26912. Totally arbitrary, but need something to support units of Meters.
-            drSpIcProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME] = "+proj=utm +zone=10 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+            // Use gdalsrsinfo -o WKT_SIMPLE "EPSG:26912" to get the following
+
+            string default_proj_wkt = @"PROJCS[""NAD83 / UTM zone 12N"",
+            GEOGCS[""NAD83"",
+            DATUM[""North_American_Datum_1983"",
+            SPHEROID[""GRS 1980"", 6378137, 298.257222101],
+            TOWGS84[0, 0, 0, 0, 0, 0, 0]],
+            PRIMEM[""Greenwich"", 0],
+            UNIT[""degree"", 0.0174532925199433]],
+            PROJECTION[""Transverse_Mercator""],
+            PARAMETER[""latitude_of_origin"", 0],
+            PARAMETER[""central_meridian"", -111],
+            PARAMETER[""scale_factor"", 0.9996],
+            PARAMETER[""false_easting"", 500000],
+            PARAMETER[""false_northing"", 0],
+            UNIT[""metre"", 1]]";
+
+            drSpIcProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME] = default_proj_wkt;
+
         }
 
         /// <summary>
@@ -1597,7 +1615,7 @@ namespace SyncroSim.STSim
             double yll = Convert.ToDouble(drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME], CultureInfo.InvariantCulture);
             double cellsize = Convert.ToDouble(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME], CultureInfo.InvariantCulture);
             string cellsizeunits = drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME].ToString();
-            string projection = drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME].ToString(); 
+            string projection = drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME].ToString();
             double[] geo = Spatial.CreateGeoTransform((double)xll, (double)yll, Height, (double)cellsize);             
             int numValidCells = cells.Count;
 

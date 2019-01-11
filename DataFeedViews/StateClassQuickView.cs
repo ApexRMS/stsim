@@ -119,8 +119,16 @@ namespace SyncroSim.STSim
         {
             this.m_DTGrid.AllowUserToAddRows = false;
 
-            DataGridViewColumn ToClassCol = this.m_DTGrid.Columns[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME];
-            this.m_DTGrid.CurrentCell = this.m_DTGrid.Rows[0].Cells[ToClassCol.Index];
+            if (this.m_DTToClassVisible)
+            {
+                DataGridViewColumn ToClassCol = this.m_DTGrid.Columns[Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME];
+                this.m_DTGrid.CurrentCell = this.m_DTGrid.Rows[0].Cells[ToClassCol.Index];
+            }
+            else
+            {
+                DataGridViewColumn FromClassCol = this.m_DTGrid.Columns[Strings.DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME];
+                this.m_DTGrid.CurrentCell = this.m_DTGrid.Rows[0].Cells[FromClassCol.Index];
+            }
         }
 
         /// <summary>
@@ -754,7 +762,7 @@ namespace SyncroSim.STSim
             this.m_DTTimestepVisible = ColumnContainsData(Strings.DATASHEET_TIMESTEP_COLUMN_NAME, this.m_DTGrid);
             this.m_DTStratumVisible = false;
             this.m_DTToStratumVisible = ColumnContainsData(Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME, this.m_DTGrid);
-            this.m_DTToClassVisible = true;
+            this.m_DTToClassVisible = ColumnContainsData(Strings.DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME, this.m_DTGrid);
             this.m_DTAgeMinVisible = ColumnContainsData(Strings.DATASHEET_AGE_MIN_COLUMN_NAME, this.m_DTGrid);
             this.m_DTAgeMaxVisible = ColumnContainsData(Strings.DATASHEET_AGE_MAX_COLUMN_NAME, this.m_DTGrid);
 

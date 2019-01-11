@@ -9,10 +9,10 @@ namespace SyncroSim.STSim.Shared
     {
         public static void CopyDirectory(string sourceDirectory, string targetDirectory)
         {
-            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
-            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+            DirectoryInfo SourceDirInfo = new DirectoryInfo(sourceDirectory);
+            DirectoryInfo TargetDirInfo = new DirectoryInfo(targetDirectory);
 
-            CopyDirectory(diSource, diTarget);
+            CopyDirectory(SourceDirInfo, TargetDirInfo);
         }
 
         public static void CopyDirectory(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory)
@@ -34,8 +34,8 @@ namespace SyncroSim.STSim.Shared
 
             foreach (DirectoryInfo SourceSubDir in sourceDirectory.GetDirectories())
             {
-                DirectoryInfo targetDi = targetDirectory.CreateSubdirectory(SourceSubDir.Name);
-                CopyDirectory(SourceSubDir, targetDi);
+                DirectoryInfo TargetDir = targetDirectory.CreateSubdirectory(SourceSubDir.Name);
+                CopyDirectory(SourceSubDir, TargetDir);
             }
         }
     }

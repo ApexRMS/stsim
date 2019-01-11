@@ -21,7 +21,6 @@ namespace SyncroSim.STSim
         private void AddICS(InitialConditionsSpatial ics)
         {
             this.m_Map.AddItem(ics.Iteration, ics);
-
             this.m_HasItems = true;
         }
 
@@ -33,7 +32,6 @@ namespace SyncroSim.STSim
             }
 
             InitialConditionsSpatial l = this.m_Map.GetItem(iteration);
-
             return l;
         }
     }

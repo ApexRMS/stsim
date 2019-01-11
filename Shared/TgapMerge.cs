@@ -21,8 +21,8 @@ namespace SyncroSim.STSim
         private StochasticTimeRaster m_rasterMerge;
 
         /// <summary>
-        /// Arithmetically merge the specified TGAP (Average Annual Transition Probability)  raster with previous raster merges. Call this method once for every TGAP raster file you 
-        /// want to merge. It will copy each non-NO_DATA_VALUE pixel to merged raster.
+        /// Arithmetically merge the specified TGAP (Average Annual Transition Probability) raster with previous raster merges. 
+        /// Call this method once for every TGAP raster file you want to merge. It will copy each non-NO_DATA_VALUE pixel to merged raster.
         /// </summary>
         /// <param name="inpRasterFileName">The absolute filename of the TGAP raster file you want to add to the merged result</param>
         /// <param name="numIterations">The number of iterations performed when generating this Tgap raster. Used for weighting the cell values when merging.</param>
@@ -85,7 +85,7 @@ namespace SyncroSim.STSim
             StochasticTimeRaster OutRast = new StochasticTimeRaster(mergedRasterOutputFilename, this.m_rasterMerge);
 
             OutRast.DblCells = this.m_rasterMerge.DblCells;
-            OutRast.Save(compressionType, true);
+            OutRast.Save(compressionType);
 
             Debug.Print("Saved Merged TGAP file to '" + mergedRasterOutputFilename + "'");
         }

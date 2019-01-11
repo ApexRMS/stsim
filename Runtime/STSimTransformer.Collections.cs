@@ -1684,14 +1684,14 @@ namespace SyncroSim.STSim
 
                 var cmpRes = this.m_InputRasters.CompareMetadata(rastTSM, ref compareMsg);
 
-                if (cmpRes == STSim.CompareMetadataResult.ImportantDifferences)
+                if (cmpRes == CompareMetadataResult.ImportantDifferences)
                 {
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_METADATA_WARNING, tsmFilename);
                     RecordStatus(StatusType.Warning, msg);
                 }
                 else
                 {
-                    if (cmpRes == STSim.CompareMetadataResult.UnimportantDifferences)
+                    if (cmpRes == CompareMetadataResult.UnimportantDifferences)
                     {
                         string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_METADATA_INFO, tsmFilename, compareMsg);
                         RecordStatus(StatusType.Information, msg);

@@ -139,14 +139,18 @@ namespace SyncroSim.STSim
             }
         }
 
-        public double? GetAttributeValueNoAge(int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep)
+        public double? GetAttributeValueNoAge(
+            int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep)
         {
-            return this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep);
+            return this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
+                stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep);
         }
 
-        public double? GetAttributeValueByAge(int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep, int age)
+        public double? GetAttributeValueByAge(
+            int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep, int age)
         {
-            return this.m_StateAttributeValueMapAges.GetAttributeValueByAge(stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep, age);
+            return this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
+                stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep, age);
         }
 
         /// <summary>
@@ -418,8 +422,7 @@ namespace SyncroSim.STSim
 
                 if (dt != null)
                 {
-					if (CellBeforeTransitions != null)
-                        CellBeforeTransitions(this, new CellChangeEventArgs(simulationCell, iteration, timestep, dt, null));
+                    CellBeforeTransitions?.Invoke(this, new CellChangeEventArgs(simulationCell, iteration, timestep, dt, null));
                 }
             }
 
@@ -428,8 +431,7 @@ namespace SyncroSim.STSim
                 Dictionary<int, double[]> RasterTransitionAttrValues = CreateRasterTransitionAttributeArrays(timestep);
                 Dictionary<int, int[]> dictTransitionedPixels = CreateTransitionGroupTransitionedPixels();
 
-				if (ApplyingSpatialTransitions != null)
-                    ApplyingSpatialTransitions(this, new SpatialTransitionEventArgs(iteration, timestep));
+                ApplyingSpatialTransitions?.Invoke(this, new SpatialTransitionEventArgs(iteration, timestep));
 
                 this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);

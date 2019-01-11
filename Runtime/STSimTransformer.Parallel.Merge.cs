@@ -19,14 +19,21 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         public override void Merge()
         {
-            //Merges the external Spatial TGAP files
-            ProcessAverageTransitionProbabilityFiles();
+            if (this.IsSpatialMultiprocessing())
+            {
+                base.Merge();
+            }
+            else
+            {
+                //Merges the external Spatial TGAP files
+                ProcessAverageTransitionProbabilityFiles();
 
-            //Do the normal merge
-            base.Merge();
+                //Do the normal merge
+                base.Merge();
 
-            //Merges the datasheet records for Spatial TGAP files
-            ProcessAverageTransitionProbabilityDatasheet();
+                //Merges the datasheet records for Spatial TGAP files
+                ProcessAverageTransitionProbabilityDatasheet();
+            }
         }
 
         /// <summary>
@@ -104,7 +111,7 @@ namespace SyncroSim.STSim
                 using (DataStore store = Session.CreateDataStore(new DataStoreConnection(Strings.SQLITE_DATASTORE_NAME, j.Library)))
                 {
                     int MergeScenarioId = ParallelTransformer.GetMergeScenarioId(store);
-                    string OutputFolderName = GetExternalFileOutputFolder(j.Library, MergeScenarioId, false);
+                    string OutputFolderName = GetJobOutputScenarioFolderName(j.Library, MergeScenarioId, false);
 
                     if (!Directory.Exists(OutputFolderName))
                     {
@@ -184,7 +191,7 @@ namespace SyncroSim.STSim
         private static string GetAATPSpatialOutputFolder(string fileName, int scenarioId)
         {
             return Path.Combine(
-                GetExternalFileInputOutputFolderName(fileName, scenarioId, ".output", false), 
+                GetJobOutputScenarioFolderName(fileName, scenarioId, false), 
                 Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY);
         }
 

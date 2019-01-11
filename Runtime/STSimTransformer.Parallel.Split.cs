@@ -34,7 +34,28 @@ namespace SyncroSim.STSim
             }
             else
             {
+                if (this.IsSpatialMultiprocessing())
+                {
+                    this.WarnAboutTargets();
+                }
+
                 base.Split(maximumJobs);
+            }
+        }
+
+        private void WarnAboutTargets()
+        {
+            bool HasTransitionTargets = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_TARGET_NAME).HasData();
+            bool HasTransitionAttributeTargets = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME).HasData();
+
+            if (HasTransitionTargets || HasTransitionAttributeTargets)
+            {
+                this.RecordStatus(StatusType.Information,
+                    "Targets for transitions or transition attributes are being used in conjunction with spatial multiprocessing." + 
+                    Environment.NewLine + 
+                    "If the mask boundaries do not match the boundaries for the targets (i.e., strata boundaries) the results will not reflect the input targets accurately.");
+
+                this.Library.Save();
             }
         }
 
@@ -437,11 +458,6 @@ namespace SyncroSim.STSim
 
                 foreach (DataSheet ds in df.DataSheets)
                 {
-                    if (!ds.IsPersistable)
-                    {
-                        continue;
-                    }
-
                     foreach (DataSheetColumn dc in ds.Columns)
                     {
                         if (dc.ValidationTable != null && 

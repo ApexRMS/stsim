@@ -871,7 +871,7 @@ namespace SyncroSim.STSim
             }
 
             // See if there any rows that have colors assigned - otherwise we'd 
-            // create an empty color map, which will be confusing to the Spatial map module
+            // create an empty color map, which will be confusing to the Spatial map package
 
             bool bColorsExist = false;
 

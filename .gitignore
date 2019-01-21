@@ -1,0 +1,14 @@
+bin/
+obj/
+Debug/
+Release/
+x86/
+x64/
+.vs/
+*.user
+*.dll
+*.pdb
+*.exe
+*.ssim
+*.db
+*.opendb

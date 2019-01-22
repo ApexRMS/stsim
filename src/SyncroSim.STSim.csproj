@@ -86,6 +86,30 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SyncroSim.Common">
+      <HintPath>..\..\bin\SyncroSim.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SyncroSim.Common.Forms">
+      <HintPath>..\..\bin\SyncroSim.Common.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SyncroSim.Core">
+      <HintPath>..\..\bin\SyncroSim.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SyncroSim.Core.Forms">
+      <HintPath>..\..\bin\SyncroSim.Core.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SyncroSim.StochasticTime">
+      <HintPath>..\..\bin\SyncroSim.StochasticTime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SyncroSim.StochasticTime.Forms">
+      <HintPath>..\..\bin\SyncroSim.StochasticTime.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -580,7 +604,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="module.config">
+    <None Include="package.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Application.myapp">
@@ -608,32 +632,6 @@
     <Content Include="Images\Plus16x16.png" />
     <Content Include="Images\Previous16x16.png" />
     <Content Include="Images\Search16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CommonForms\SyncroSim.Common.Forms.csproj">
-      <Project>{13919907-3117-49c5-bb13-2a5d4ccefa57}</Project>
-      <Name>SyncroSim.Common.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\SyncroSim.Common.csproj">
-      <Project>{1376529f-fc5a-43e8-8554-8341b4fe2496}</Project>
-      <Name>SyncroSim.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CoreForms\SyncroSim.Core.Forms.csproj">
-      <Project>{ea3a4b6e-d4db-466d-b510-6a38918f2dd8}</Project>
-      <Name>SyncroSim.Core.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\SyncroSim.Core.csproj">
-      <Project>{af51a2a0-349a-4a3c-bec2-906e605db6d7}</Project>
-      <Name>SyncroSim.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StochasticTimeForms\SyncroSim.StochasticTime.Forms.csproj">
-      <Project>{577b7bdd-e5fa-41af-887a-e4a12b691ff8}</Project>
-      <Name>SyncroSim.StochasticTime.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StochasticTime\SyncroSim.StochasticTime.csproj">
-      <Project>{ac26a679-5fb6-4cae-9b08-e0ea8027c628}</Project>
-      <Name>SyncroSim.StochasticTime</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -87,27 +87,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SyncroSim.Common">
-      <HintPath>..\..\bin\SyncroSim.Common.dll</HintPath>
+      <HintPath>..\..\ssimbin\SyncroSim.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SyncroSim.Common.Forms">
-      <HintPath>..\..\bin\SyncroSim.Common.Forms.dll</HintPath>
+      <HintPath>..\..\ssimbin\SyncroSim.Common.Forms.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SyncroSim.Core">
-      <HintPath>..\..\bin\SyncroSim.Core.dll</HintPath>
+      <HintPath>..\..\ssimbin\SyncroSim.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SyncroSim.Core.Forms">
-      <HintPath>..\..\bin\SyncroSim.Core.Forms.dll</HintPath>
+      <HintPath>..\..\ssimbin\SyncroSim.Core.Forms.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SyncroSim.StochasticTime">
-      <HintPath>..\..\bin\SyncroSim.StochasticTime.dll</HintPath>
+      <HintPath>..\..\ssimbin\SyncroSim.StochasticTime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SyncroSim.StochasticTime.Forms">
-      <HintPath>..\..\bin\SyncroSim.StochasticTime.Forms.dll</HintPath>
+      <HintPath>..\..\ssimbin\SyncroSim.StochasticTime.Forms.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

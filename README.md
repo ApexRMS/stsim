@@ -1,2 +1,2 @@
-# carep
-A SyncroSim Package for the Caribou Energy Protein Model.
+# stsim
+A SyncroSim Package for the ST-Sim State and Transition Model.

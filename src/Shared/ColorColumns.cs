@@ -64,7 +64,7 @@ namespace SyncroSim.STSim
             ColorDialog cd = new ColorDialog();
             cd.Color = clr;
 
-            if (cd.ShowDialog() == DialogResult.OK)
+            if (cd.ShowDialog(gridView) == DialogResult.OK)
             {
                 gridView.BeginEdit(false);
                 cell.Value = ColorUtilities.StringFromColor(cd.Color);

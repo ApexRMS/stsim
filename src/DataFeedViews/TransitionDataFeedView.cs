@@ -599,7 +599,7 @@ namespace SyncroSim.STSim
         {
             TransitionDiagramPasteSpecialForm dlg = new TransitionDiagramPasteSpecialForm();
 
-            if (dlg.ShowDialog() != DialogResult.OK)
+            if (dlg.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }

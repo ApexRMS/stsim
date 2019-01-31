@@ -1617,12 +1617,12 @@ namespace SyncroSim.STSim
         /// </remarks>
         private static void STSIM0000047(DataStore store)
         {
-            if (store.TableExists("STime_Chart"))
-            {
+            if (TableHasColumn("STime_Chart", "Model", store))
+            {             
                 store.ExecuteNonQuery("UPDATE STime_Chart SET Model='stsim-model-transformer', ModelDisplayName='ST-Sim State and Transition'");
             }
 
-            if (store.TableExists("STime_Map"))
+            if (TableHasColumn("STime_Map", "Model", store))
             {
                 store.ExecuteNonQuery("UPDATE STime_Map SET Model='stsim-model-transformer', ModelDisplayName='ST-Sim State and Transition'");
             }

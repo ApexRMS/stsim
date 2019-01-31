@@ -131,5 +131,19 @@ namespace SyncroSim.STSim
                 return criteria;
             }
         }
+
+        private static bool TableHasColumn(string tableName, string columnName, DataStore store)
+        {
+            if (!store.TableExists(tableName))
+            {
+                return false;
+            }
+            else
+            {
+                string query = string.Format(CultureInfo.InvariantCulture, "SELECT 1 FROM [{0}]", tableName);
+                DataTable dt = store.CreateDataTableFromQuery(query, "Table");
+                return dt.Columns.Contains(columnName);
+            }
+        }
     }
 }

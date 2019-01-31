@@ -140,7 +140,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                string query = string.Format(CultureInfo.InvariantCulture, "SELECT 1 FROM [{0}]", tableName);
+                string query = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM [{0}] LIMIT 1", tableName);
                 DataTable dt = store.CreateDataTableFromQuery(query, "Table");
                 return dt.Columns.Contains(columnName);
             }

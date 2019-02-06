@@ -69,7 +69,11 @@ namespace SyncroSim.STSim
         private void ConfigureIsSpatialRunFlag()
         {
             DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
-            this.m_IsSpatial = DataTableUtilities.GetDataBool(dr[Strings.RUN_CONTROL_IS_SPATIAL_COLUMN_NAME]);
+
+            if (dr != null)
+            {
+                this.m_IsSpatial = DataTableUtilities.GetDataBool(dr[Strings.RUN_CONTROL_IS_SPATIAL_COLUMN_NAME]);
+            }
         }
 
         /// <summary>

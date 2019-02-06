@@ -17,7 +17,14 @@ namespace SyncroSim.STSim
 
         public override string GetDeleteRowsConfirmation()
         {
-            return MessageStrings.PROMPT_AGE_TYPE_CHANGE;
+            if (ProjectUtilities.ProjectHasResults(this.Project))
+            {
+                return MessageStrings.PROMPT_AGE_TYPE_CHANGE;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected override void OnRowsAdded(object sender, DataSheetRowEventArgs e)

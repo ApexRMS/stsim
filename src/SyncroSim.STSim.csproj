@@ -476,6 +476,7 @@
     <Compile Include="Shared\MessageStrings.cs" />
     <Compile Include="Shared\NullableUtilities.cs" />
     <Compile Include="Shared\RasterUtilities.cs" />
+    <Compile Include="Shared\ProjectUtilities.cs" />
     <Compile Include="Shared\Strings.cs" />
     <Compile Include="Shared\TerminologyUtilities.cs" />
     <Compile Include="Shared\TgapMerge.cs" />

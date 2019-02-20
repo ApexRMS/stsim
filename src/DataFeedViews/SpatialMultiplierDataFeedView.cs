@@ -2,10 +2,10 @@
 // Copyright © 2007-2019 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.
 
 using System.IO;
-using System.Drawing;
 using System.Windows.Forms;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
+using SyncroSim.Common.Forms;
 
 namespace SyncroSim.STSim
 {
@@ -60,7 +60,7 @@ namespace SyncroSim.STSim
                 this.m_MultipliersDataGrid.KeyDown += this.OnGridKeyDown;
 
                 //Configure columns
-                this.m_MultipliersDataGrid.Columns[FILE_NAME_COLUMN_INDEX].DefaultCellStyle.BackColor = Color.LightGray;
+                this.m_MultipliersDataGrid.Columns[FILE_NAME_COLUMN_INDEX].DefaultCellStyle.BackColor = Constants.READONLY_COLUMN_COLOR;
 
                 //Add the browse button column
                 DataGridViewButtonColumn BrowseColumn = new DataGridViewButtonColumn();
@@ -132,21 +132,21 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            DataGridViewEditMode OldMode = this.m_MultipliersDataGrid.EditMode;
-            this.m_MultipliersDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+            using (HourGlass h = new HourGlass())
+            {
+                DataGridViewEditMode OldMode = this.m_MultipliersDataGrid.EditMode;
 
-            this.m_MultipliersDataGrid.CurrentCell = this.m_MultipliersDataGrid.Rows[rowIndex].Cells[FILE_NAME_COLUMN_INDEX];
-            this.m_MultipliersDataGrid.Rows[rowIndex].Cells[FILE_NAME_COLUMN_INDEX].Value = Path.GetFileName(RasterFile);
-            this.m_MultipliersDataGrid.NotifyCurrentCellDirty(true);
+                this.m_MultipliersDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+                this.m_MultipliersDataGrid.CurrentCell = this.m_MultipliersDataGrid.Rows[rowIndex].Cells[FILE_NAME_COLUMN_INDEX];
+                this.m_MultipliersDataGrid.Rows[rowIndex].Cells[FILE_NAME_COLUMN_INDEX].Value = Path.GetFileName(RasterFile);
+                this.m_MultipliersDataGrid.NotifyCurrentCellDirty(true);
+                this.m_MultipliersDataGrid.BeginEdit(false);
+                this.m_MultipliersDataGrid.EndEdit();
+                this.m_MultipliersDataGrid.CurrentCell = this.m_MultipliersDataGrid.Rows[rowIndex].Cells[BROWSE_COLUMN_INDEX];
 
-            this.m_MultipliersDataGrid.BeginEdit(false);
-            this.m_MultipliersDataGrid.EndEdit();
-
-            this.m_MultipliersDataGrid.CurrentCell = this.m_MultipliersDataGrid.Rows[rowIndex].Cells[BROWSE_COLUMN_INDEX];
-
-            ds.AddExternalInputFile(RasterFile);
-
-            this.m_MultipliersDataGrid.EditMode = OldMode;
+                ds.AddExternalInputFile(RasterFile);
+                this.m_MultipliersDataGrid.EditMode = OldMode;
+            }
         }
 
         private void OnNewCellEnterAsync()

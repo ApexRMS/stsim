@@ -4,6 +4,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Data;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
@@ -11,8 +13,6 @@ using SyncroSim.Core;
 using SyncroSim.Core.Forms;
 using SyncroSim.StochasticTime;
 using SyncroSim.Common.Forms;
-using System.Data;
-using System.Linq;
 
 namespace SyncroSim.STSim
 {
@@ -208,7 +208,6 @@ namespace SyncroSim.STSim
                     }
 
                     this.m_ICSpatialFilesDataGrid.CurrentCell = this.m_ICSpatialFilesDataGrid.Rows[Row].Cells[Col];
-
                     break;
             }
         }
@@ -224,7 +223,6 @@ namespace SyncroSim.STSim
                 case AGE_FILE_NAME_COLUMN_INDEX:
 
                     this.Session.MainForm.BeginInvoke(new DelegateNoArgs(this.OnNewCellEnterAsync), null);
-
                     break;
             }
         }
@@ -242,7 +240,6 @@ namespace SyncroSim.STSim
                     case AGE_BROWSE_COLUMN_INDEX:
 
                         ChooseRasterFile(e.RowIndex, e.ColumnIndex - 1);
-
                         break;
                 }
             }
@@ -303,21 +300,24 @@ namespace SyncroSim.STSim
 
         private void SetICSpatialFile(int rowIndex, int colIndex, string rasterFullFilename)
         {
-            DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
-            DataGridViewEditMode OldMode = this.m_ICSpatialFilesDataGrid.EditMode;
+            using (HourGlass h = new HourGlass())
+            {
+                DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+                DataGridViewEditMode OldMode = this.m_ICSpatialFilesDataGrid.EditMode;
 
-            this.m_ICSpatialFilesDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            this.m_ICSpatialFilesDataGrid.CurrentCell = this.m_ICSpatialFilesDataGrid.Rows[rowIndex].Cells[colIndex];
-            this.m_ICSpatialFilesDataGrid.Rows[rowIndex].Cells[colIndex].Value = Path.GetFileName(rasterFullFilename);
-            this.m_ICSpatialFilesDataGrid.NotifyCurrentCellDirty(true);
+                this.m_ICSpatialFilesDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+                this.m_ICSpatialFilesDataGrid.CurrentCell = this.m_ICSpatialFilesDataGrid.Rows[rowIndex].Cells[colIndex];
+                this.m_ICSpatialFilesDataGrid.Rows[rowIndex].Cells[colIndex].Value = Path.GetFileName(rasterFullFilename);
+                this.m_ICSpatialFilesDataGrid.NotifyCurrentCellDirty(true);
 
-            this.m_ICSpatialFilesDataGrid.BeginEdit(false);
-            this.m_ICSpatialFilesDataGrid.EndEdit();
+                this.m_ICSpatialFilesDataGrid.BeginEdit(false);
+                this.m_ICSpatialFilesDataGrid.EndEdit();
 
-            this.m_ICSpatialFilesDataGrid.CurrentCell = this.m_ICSpatialFilesDataGrid.Rows[rowIndex].Cells[colIndex + 1];
-            ds.AddExternalInputFile(rasterFullFilename);
+                this.m_ICSpatialFilesDataGrid.CurrentCell = this.m_ICSpatialFilesDataGrid.Rows[rowIndex].Cells[colIndex + 1];
+                ds.AddExternalInputFile(rasterFullFilename);
 
-            this.m_ICSpatialFilesDataGrid.EditMode = OldMode;
+                this.m_ICSpatialFilesDataGrid.EditMode = OldMode;
+            }
         }
 
         private void ResetControls()

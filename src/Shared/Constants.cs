@@ -85,5 +85,8 @@ namespace SyncroSim.STSim
 
         //Spatial Map file naming Regex filter, containing 1 ID value
         public const string FILE_FILTER_ID_REGEX = "^(.*){0}-([\\d]*)\\.(tif|vrt)$";
+
+        //General colors
+        public static Color READONLY_COLUMN_COLOR = Color.FromArgb(232, 232, 232);
     }
 }

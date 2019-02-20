@@ -945,7 +945,7 @@ namespace SyncroSim.STSim
         private static void SetColumnReadOnly(string columnName, DataGridView grid)
         {
             DataGridViewColumn col = grid.Columns[columnName];
-            col.DefaultCellStyle.BackColor = Color.FromArgb(232, 232, 232);
+            col.DefaultCellStyle.BackColor = Constants.READONLY_COLUMN_COLOR;
             col.ReadOnly = true;
         }
 

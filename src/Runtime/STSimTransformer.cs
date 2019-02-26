@@ -1151,5 +1151,4 @@ namespace SyncroSim.STSim
             return this.m_TransitionMap.GetTransitions(stratumId, stateClassId, iteration, timestep);
         }
     }
-
 }

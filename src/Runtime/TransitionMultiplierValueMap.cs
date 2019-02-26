@@ -16,7 +16,6 @@ namespace SyncroSim.STSim
             TransitionMultiplierValueCollection multipliers, 
             STSimDistributionProvider distributionProvider) : base(scenario)
         {
-
             this.m_DistributionProvider = distributionProvider;
 
             foreach (TransitionMultiplierValue item in multipliers)

@@ -314,6 +314,23 @@ namespace SyncroSim.STSim
             this.ProcessRasterAATPOutput();
         }
 
+        public override void PostProcess()
+        {
+            base.PostProcess();
+
+            //After the entire transformation is complete we must update the age classes
+
+            using (SyncroSimTransactionScope scope = Session.CreateTransactionScope())
+            {
+                using (DataStore store = this.Library.CreateDataStore())
+                {
+                    AgeUtilities.UpdateAgeClassWork(store, this.ResultScenario);
+                }
+
+                scope.Complete();
+            }
+        }
+
         private void InternalOnBeforeIteration(int iteration)
         {
             this.ResampleExternalVariableValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);

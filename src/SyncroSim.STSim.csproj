@@ -176,7 +176,6 @@
     <Compile Include="Runtime\OutputTransitionAttributeCollection.cs" />
     <Compile Include="Runtime\PatchPrioritization.cs" />
     <Compile Include="Runtime\PatchPrioritizationCollection.cs" />
-    <Compile Include="Runtime\PostProcessTransformer.cs" />
     <Compile Include="Runtime\ProportionAccumulatorMap.cs" />
     <Compile Include="Runtime\StateAttributeValue.cs" />
     <Compile Include="Runtime\StateAttributeValueCollection.cs" />

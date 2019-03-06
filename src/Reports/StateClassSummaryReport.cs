@@ -145,6 +145,7 @@ namespace SyncroSim.STSim
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private void CreateCSVReport(string fileName, DataStore store)
         {
             string Propn2Title = "ProportionOfStratumID";
@@ -326,8 +327,6 @@ namespace SyncroSim.STSim
                                 }
                             }
                         }
-
-                        reader.Close();
                     }
                 }
             }

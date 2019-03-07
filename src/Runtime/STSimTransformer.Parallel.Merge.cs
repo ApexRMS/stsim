@@ -165,7 +165,7 @@ namespace SyncroSim.STSim
 
                     foreach (string f in Directory.GetFiles(OutputFolderName, "tgap_*.tif"))
                     {
-                        string key = Path.GetFileName(f).ToLower(CultureInfo.InvariantCulture);
+                        string key = Path.GetFileName(f).ToUpperInvariant();
 
                         if (!dict.ContainsKey(key))
                         {

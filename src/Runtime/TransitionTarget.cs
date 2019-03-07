@@ -41,12 +41,12 @@ namespace SyncroSim.STSim
         {
             get
             {
-                this.CHECK_DISABLED();
+                this.CheckDisabled();
                 return this.m_ExpectedAmount;
             }
             set
             {
-                this.CHECK_DISABLED();
+                this.CheckDisabled();
                 this.m_ExpectedAmount = value;
             }
         }
@@ -63,12 +63,12 @@ namespace SyncroSim.STSim
         {
             get
             {
-                this.CHECK_DISABLED();
+                this.CheckDisabled();
                 return this.m_Multiplier;
             }
             set
             {
-                this.CHECK_DISABLED();
+                this.CheckDisabled();
                 this.m_Multiplier = value;
             }
         }

@@ -1,0 +1,1853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">c:\program files (x86)\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/../stsim-stockflow/src/bin/x86/Debug/</Directory>
+  </AssemblyReferenceDirectories>
+  <Target Name="$(ProjectDir)/src/bin/x86/Debug/SyncroSim.STSim.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Namespaces>
+   <Namespace Name="SyncroSim.STSim">
+    <Messages>
+     <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+      <Issue Name="Namespace">
+       <Item>Sim</Item>
+       <Item>SyncroSim.STSim</Item>
+      </Issue>
+      <Issue Name="Namespace">
+       <Item>Sim</Item>
+       <Item>SyncroSim.STSim</Item>
+      </Issue>
+      <Notes>
+       <User Name="Alex">
+        <Note Id="0" />
+       </User>
+      </Notes>
+     </Message>
+     <Message Id="Syncro" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+      <Issue Name="Namespace">
+       <Item>Syncro</Item>
+       <Item>SyncroSim.STSim</Item>
+      </Issue>
+      <Notes>
+       <User Name="Alex">
+        <Note Id="0" />
+       </User>
+      </Notes>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/src/bin/x86/Debug/SyncroSim.STSim.dll">
+    <Modules>
+     <Module Name="syncrosim.stsim.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2019-03-07 00:38:52Z">
+        <Issue Name="NoStrongName">
+         <Item>'SyncroSim.STSim.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="Alex">
+          <Note Id="0" />
+         </User>
+        </Notes>
+       </Message>
+       <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+        <Issue Name="Assembly">
+         <Item>Sim</Item>
+         <Item>'SyncroSim.STSim.dll'</Item>
+        </Issue>
+        <Issue Name="Assembly">
+         <Item>Sim</Item>
+         <Item>'SyncroSim.STSim.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="Alex">
+          <Note Id="0" />
+         </User>
+        </Notes>
+       </Message>
+       <Message Id="Syncro" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+        <Issue Name="Assembly">
+         <Item>Syncro</Item>
+         <Item>'SyncroSim.STSim.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="Alex">
+          <Note Id="0" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="SyncroSim.STSim">
+        <Types>
+         <Type Name="AdjacencyMultiplierDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'AdjacencyMultiplierDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AgeGroupDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'AgeGroupDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OnCellValidating(System.Object,System.Windows.Forms.DataGridViewCellValidatingEventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'AgeGroupDataFeedView.OnCellValidating(object, DataGridViewCellValidatingEventArgs)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="13" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="AgeGroupDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'AgeGroupDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AgeTypeDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'AgeTypeDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OnBoundTextBoxValidating(System.Windows.Forms.TextBox,System.String,System.String)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'AgeTypeDataFeedView.OnBoundTextBoxValidating(TextBox, string, string)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="13" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="AgeTypeDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'AgeTypeDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AttributeGroupDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'AttributeGroupDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DeterministicTransition">
+          <Members>
+           <Member Name="#.ctor(System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'DeterministicTransition.DeterministicTransition(int?, int?, int?, int, int?, int?, int, int)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Timestep">
+            <Messages>
+             <Message Id="Timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Timestep</Item>
+               <Item>'DeterministicTransition.Timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DeterministicTransitionDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'DeterministicTransitionDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DistributionValueDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'DistributionValueDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#InitializeView()">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'DistributionValueDataFeedView.InitializeView()'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="InitialConditionsNonSpatialDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'InitialConditionsNonSpatialDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OnDataSheetChanged(SyncroSim.Core.DataSheetMonitorEventArgs)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'InitialConditionsNonSpatialDataFeedView.OnDataSheetChanged(DataSheetMonitorEventArgs)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="InitialConditionsSpatialDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'InitialConditionsSpatialDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#BuildLowerCaseLabel(System.String)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'InitialConditionsSpatialDataFeedView.BuildLowerCaseLabel(string)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ChooseRasterFile(System.Int32,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InitialConditionsSpatialDataFeedView.ChooseRasterFile(int, int)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnTerminologyChanged(SyncroSim.Core.DataSheetMonitorEventArgs)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'InitialConditionsSpatialDataFeedView.OnTerminologyChanged(DataSheetMonitorEventArgs)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RefreshCalculatedValues()">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'InitialConditionsSpatialDataFeedView.RefreshCalculatedValues()'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Issue Name="ToUpperInvariant">
+               <Item>'InitialConditionsSpatialDataFeedView.RefreshCalculatedValues()'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Issue Name="ToUpperInvariant">
+               <Item>'InitialConditionsSpatialDataFeedView.RefreshCalculatedValues()'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="InitialConditionsSpatialDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'InitialConditionsSpatialDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="InputRasters">
+          <Messages>
+           <Message Id="Rasters" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Rasters</Item>
+             <Item>'InputRasters'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AgeCells">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InputRasters.AgeCells'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CompareMetadata(SyncroSim.StochasticTime.StochasticTimeRaster,System.String&amp;)">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Level="CriticalWarning">
+               <Item>'compareMsg'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="6" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DemCells">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InputRasters.DemCells'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DEMRaster">
+            <Messages>
+             <Message Id="DEM" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>DEM</Item>
+               <Item>'InputRasters.DEMRaster'</Item>
+               <Item>Dem</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="3" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCellSizeDiagonalMeters()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Certainty="50">
+               <Item>'InputRasters.GetCellSizeDiagonalMeters()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="14" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCellSizeMeters()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Certainty="50">
+               <Item>'InputRasters.GetCellSizeMeters()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="14" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetRowColForId(System.Int32,System.Int32&amp;,System.Int32&amp;)">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Certainty="50">
+               <Item>'row'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="6" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="2#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Certainty="50">
+               <Item>'col'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="6" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#NoDataValueAsInteger">
+            <Messages>
+             <Message Id="integer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Integer</Item>
+               <Item>'InputRasters.NoDataValueAsInteger'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="7" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PrimaryStratumCells">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InputRasters.PrimaryStratumCells'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SClassCells">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InputRasters.SClassCells'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SecondaryStratumCells">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InputRasters.SecondaryStratumCells'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TertiaryStratumCells">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'InputRasters.TertiaryStratumCells'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#XllCorner">
+            <Messages>
+             <Message Id="Xll" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Xll</Item>
+               <Item>'InputRasters.XllCorner'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#YllCorner">
+            <Messages>
+             <Message Id="Yll" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Yll</Item>
+               <Item>'InputRasters.YllCorner'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OutputOptionsDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'OutputOptionsDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OnTerminologyChanged(SyncroSim.Core.DataSheetMonitorEventArgs)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'OutputOptionsDataFeedView.OnTerminologyChanged(DataSheetMonitorEventArgs)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PasteStrataForm">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'PasteStrataForm'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PrimaryStratumDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'PrimaryStratumDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ProbabilisticTransitionDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'ProbabilisticTransitionDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ProcessingDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'ProcessingDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OnTerminologyChanged(SyncroSim.Core.DataSheetMonitorEventArgs)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'ProcessingDataFeedView.OnTerminologyChanged(DataSheetMonitorEventArgs)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RunControlDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'RunControlDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OnTerminologyChanged(SyncroSim.Core.DataSheetMonitorEventArgs)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'RunControlDataFeedView.OnTerminologyChanged(DataSheetMonitorEventArgs)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SlopeMultiplierDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'SlopeMultiplierDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SpatialInitiationMultiplierDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'SpatialInitiationMultiplierDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SpatialMultiplierDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'SpatialMultiplierDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="StateAttributeReport">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'StateAttributeReport'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="StateClassDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'StateClassDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="StateClassDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'StateClassDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="StateClassSummaryReport">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'StateClassSummaryReport'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="STSimChartProvider">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'STSimChartProvider'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="STSimConsole">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'STSimConsole'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="STSimDistributionBase">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimDistributionBase'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;SyncroSim.StochasticTime.DistributionFrequency&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimDistributionBase.STSimDistributionBase(int?, int?, int?, int?, int?, double?, int?, DistributionFrequency?, double?, double?, double?)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Initialize(System.Int32,System.Int32,SyncroSim.STSim.STSimDistributionProvider)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimDistributionBase.Initialize(int, int, STSimDistributionProvider)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Sample(System.Int32,System.Int32,SyncroSim.STSim.STSimDistributionProvider,SyncroSim.StochasticTime.DistributionFrequency)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimDistributionBase.Sample(int, int, STSimDistributionProvider, DistributionFrequency)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Timestep">
+            <Messages>
+             <Message Id="Timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Timestep</Item>
+               <Item>'STSimDistributionBase.Timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="STSimDistributionBaseExpander">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimDistributionBaseExpander'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="STSimDistributionProvider">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimDistributionProvider'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#STSimInitializeDistributionValues()">
+            <Messages>
+             <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Sim</Item>
+               <Item>'STSimDistributionProvider.STSimInitializeDistributionValues()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#STSimSample(System.Int32,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Int32,System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;)">
+            <Messages>
+             <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Sim</Item>
+               <Item>'STSimDistributionProvider.STSimSample(int, double?, double?, double?, double?, int, int, int?, int?)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimDistributionProvider.STSimSample(int, double?, double?, double?, double?, int, int, int?, int?)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="STSimDistributionValue">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimDistributionValue'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;SyncroSim.StochasticTime.DistributionFrequency&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;,System.Nullable`1&lt;System.Double&gt;)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimDistributionValue.STSimDistributionValue(int?, int?, int?, int?, int?, int, int?, double?, double?, double?, int?, DistributionFrequency?, double?, double?, double?, double?)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="STSimEventArgs">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimEventArgs'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Timestep">
+            <Messages>
+             <Message Id="Timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Timestep</Item>
+               <Item>'STSimEventArgs.Timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="STSimException">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimException'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="STSimMapDuplicateItemException">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimMapDuplicateItemException'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="STSimTransformer">
+          <Messages>
+           <Message Id="Sim" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue Name="Type">
+             <Item>Sim</Item>
+             <Item>'STSimTransformer'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ConfigureTimestepUnits()">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'STSimTransformer.ConfigureTimestepUnits()'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateSpatialICFromCombinedIC()">
+            <Messages>
+             <Message TypeName="AvoidExcessiveLocals" Category="Microsoft.Performance" CheckId="CA1809" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Compiler">
+               <Item>'STSimTransformer.CreateSpatialICFromCombinedIC()'</Item>
+               <Item>68</Item>
+               <Item>26</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="1" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DetermineTargetAgeProbabilistic(System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Int32,System.Int32,SyncroSim.STSim.Transition)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimTransformer.DetermineTargetAgeProbabilistic(int, int?, int, int, int, Transition)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAttributeValueByAge(System.Int32,System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimTransformer.GetAttributeValueByAge(int, int, int?, int?, int, int, int, int)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAttributeValueNoAge(System.Int32,System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimTransformer.GetAttributeValueNoAge(int, int, int?, int?, int, int, int)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InitializeCollectionMaps()">
+            <Messages>
+             <Message Id="tatvalmap" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'STSimTransformer.InitializeCollectionMaps()'</Item>
+               <Item>'tatvalmap'</Item>
+               <Item>'TransitionAttributeTargetPrioritizationValidationMap'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="10" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="ttvalmap" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue>
+               <Item>'STSimTransformer.InitializeCollectionMaps()'</Item>
+               <Item>'ttvalmap'</Item>
+               <Item>'TransitionTargetPrioritizationValidationMap'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="11" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InputRasters">
+            <Messages>
+             <Message Id="Rasters" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Rasters</Item>
+               <Item>'STSimTransformer.InputRasters'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsOutputTimestep(System.Int32,System.Int32,System.Boolean)">
+            <Messages>
+             <Message Id="Timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Timestep</Item>
+               <Item>'STSimTransformer.IsOutputTimestep(int, int, bool)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'STSimTransformer.IsOutputTimestep(int, int, bool)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TimestepZero">
+            <Messages>
+             <Message Id="Timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Timestep</Item>
+               <Item>'STSimTransformer.TimestepZero'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="STSimUpdates">
+          <Members>
+           <Member Name="#STSIM0000040(SyncroSim.Core.DataStore)">
+            <Messages>
+             <Message Id="store" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2019-03-07 00:38:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'store'</Item>
+               <Item>'STSimUpdates.STSIM0000040(DataStore)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="12" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#STSIM0000058(SyncroSim.Core.DataStore)">
+            <Messages>
+             <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Body">
+               <Item>'STSimUpdates.STSIM0000058(DataStore)'</Item>
+               <Item>'string[,]'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Transition">
+          <Members>
+           <Member Name="#.ctor(System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Int32,System.Double,System.Double,System.Int32,System.Int32,System.Int32,System.Boolean,System.Int32,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'Transition.Transition(int?, int?, int?, int, int?, int?, int?, int?, int, double, double, int, int, int, bool, int, int, int)'</Item>
+               <Item>timestep</Item>
+               <Item>'timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="tst" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="MemberParameter">
+               <Item>'Transition.Transition(int?, int?, int?, int, int?, int?, int?, int?, int, double, double, int, int, int, bool, int, int, int)'</Item>
+               <Item>tst</Item>
+               <Item>'tstMaximum'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Transition.Transition(int?, int?, int?, int, int?, int?, int?, int?, int, double, double, int, int, int, bool, int, int, int)'</Item>
+               <Item>tst</Item>
+               <Item>'tstMinimum'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Transition.Transition(int?, int?, int?, int, int?, int?, int?, int?, int, double, double, int, int, int, bool, int, int, int)'</Item>
+               <Item>tst</Item>
+               <Item>'tstRelative'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Timestep">
+            <Messages>
+             <Message Id="Timestep" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Timestep</Item>
+               <Item>'Transition.Timestep'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TstMaximum">
+            <Messages>
+             <Message Id="Tst" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Tst</Item>
+               <Item>'Transition.TstMaximum'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TstMinimum">
+            <Messages>
+             <Message Id="Tst" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Tst</Item>
+               <Item>'Transition.TstMinimum'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TstRelative">
+            <Messages>
+             <Message Id="Tst" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Member">
+               <Item>Tst</Item>
+               <Item>'Transition.TstRelative'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TransitionAttributeReport">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionAttributeReport'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#GetFirstStratumTabWithData()">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Local">
+               <Item>'item'</Item>
+               <Item>'StratumTabStripItem'</Item>
+               <Item>'TransitionDataFeedView.GetFirstStratumTabWithData()'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsDataSheetEvent(System.Object,System.String)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Parameter">
+               <Item>'sender'</Item>
+               <Item>'DataSheet'</Item>
+               <Item>'TransitionDataFeedView.IsDataSheetEvent(object, string)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnDiagramZoomChanged(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Local">
+               <Item>'Item'</Item>
+               <Item>'StratumTabStripItem'</Item>
+               <Item>'TransitionDataFeedView.OnDiagramZoomChanged(object, EventArgs)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnExecuteFilterTransitionsCommand(SyncroSim.Core.Forms.Command)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Local">
+               <Item>'Item'</Item>
+               <Item>'StratumTabStripItem'</Item>
+               <Item>'TransitionDataFeedView.OnExecuteFilterTransitionsCommand(Command)'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnSelectedTabItemChanged()">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2019-03-07 00:38:52Z">
+              <Issue Name="Local">
+               <Item>'item'</Item>
+               <Item>'StratumTabStripItem'</Item>
+               <Item>'TransitionDataFeedView.OnSelectedTabItemChanged()'</Item>
+               <Item>castclass</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="5" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TransitionGroupDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionGroupDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionSizeDistributionDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionSizeDistributionDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionStateSummaryReport">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionStateSummaryReport'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionStratumStateClass">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionStratumStateClass'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionStratumStateClassCollection">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionStratumStateClassCollection'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionSummaryReport">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionSummaryReport'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionTargetDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionTargetDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionTypeDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionTypeDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionTypeDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionTypeDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionTypeGroupDataFeedView">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionTypeGroupDataFeedView'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TransitionTypeGroupDataSheet">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Excluded" Created="2019-03-07 00:38:52Z">
+            <Issue>
+             <Item>'TransitionTypeGroupDataSheet'</Item>
+            </Issue>
+            <Notes>
+             <User Name="Alex">
+              <Note Id="2" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="Alex">
+    <Note Id="0" Modified="2019-03-07 00:39:19Z">Won't fix</Note>
+    <Note Id="1" Modified="2019-03-07 00:39:30Z">Won't fix</Note>
+    <Note Id="2" Modified="2019-03-07 00:39:37Z">Won't fix</Note>
+    <Note Id="3" Modified="2019-03-07 00:39:45Z">Won't fix</Note>
+    <Note Id="4" Modified="2019-03-07 00:40:07Z">Won't fix</Note>
+    <Note Id="5" Modified="2019-03-07 00:40:21Z">Won't fix</Note>
+    <Note Id="6" Modified="2019-03-07 00:43:59Z">Won't fix</Note>
+    <Note Id="7" Modified="2019-03-07 00:46:19Z">Won't fix</Note>
+    <Note Id="8" Modified="2019-03-07 00:46:41Z">Won't fix</Note>
+    <Note Id="9" Modified="2019-03-07 00:48:49Z">Won't fix</Note>
+    <Note Id="10" Modified="2019-03-07 00:49:17Z">Won't fix</Note>
+    <Note Id="11" Modified="2019-03-07 00:49:28Z">Won't fix</Note>
+    <Note Id="12" Modified="2019-03-07 00:49:39Z">Won't fix</Note>
+    <Note Id="13" Modified="2019-03-07 00:51:12Z">Won't fix</Note>
+    <Note Id="14" Modified="2019-03-07 00:51:18Z">Won't fix</Note>
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidExcessiveLocals" Category="Microsoft.Performance" CheckId="CA1809">
+    <Resolution Name="Compiler">{0} has {1} local variables, {2} of which were generated by the compiler. Refactor {0} so that it uses fewer than 64 local variables.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
+    <Resolution Name="Local">{0}, a variable, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+    <Resolution Name="Parameter">{0}, a parameter, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045">
+    <Resolution Name="Default">Consider a design that does not require that {0} be a reference parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Assembly">Correct the spelling of '{0}' in assembly name {1}.</Resolution>
+    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
+    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
+    <Resolution Name="LanguageSpecificMember">Consider replacing the language-specific data type identifier '{0}' in member name {1} with either a language-independent equivalent or a more generic term, such as 'value'.</Resolution>
+   </Rule>
+   <Rule TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308">
+    <Resolution Name="ToUpperInvariant">In method {0}, replace the call to {1} with String.ToUpperInvariant().</Resolution>
+   </Rule>
+   <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
+    <Resolution Name="Body">{0} uses a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+    <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

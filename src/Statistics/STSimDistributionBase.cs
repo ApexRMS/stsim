@@ -149,7 +149,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                this.CHECK_DISABLED();
+                this.CheckDisabled();
                 return this.m_CurrentValue;
             }
         }
@@ -181,7 +181,7 @@ namespace SyncroSim.STSim
 
         private void InternalInitialize(int iteration, int timestep, STSimDistributionProvider provider)
         {
-            this.CHECK_DISABLED();
+            this.CheckDisabled();
 
             if (this.m_DistributionTypeId.HasValue)
             {
@@ -213,7 +213,7 @@ namespace SyncroSim.STSim
 
         private double InternalSample(int iteration, int timestep, STSimDistributionProvider provider, DistributionFrequency frequency)
         {
-            this.CHECK_DISABLED();
+            this.CheckDisabled();
 
             if (this.m_DistributionTypeId.HasValue)
             {
@@ -229,7 +229,7 @@ namespace SyncroSim.STSim
             return this.m_CurrentValue.Value;
         }
 
-        protected void CHECK_DISABLED()
+        protected void CheckDisabled()
         {
             if (this.m_IsDisabled)
             {

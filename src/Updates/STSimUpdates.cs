@@ -41,6 +41,20 @@ namespace SyncroSim.STSim
 #endif
         }
 
+#if DEBUG
+
+        private static void ASSERT_INDEX_EXISTS(DataStore store, string tableName)
+        {
+            if (store.TableExists(tableName))
+            {
+                string IndexName = tableName + "_Index";
+                string Query = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(name) FROM sqlite_master WHERE type = 'index' AND name = '{0}'", IndexName);
+                Debug.Assert((long)store.ExecuteScalar(Query) == 1);
+            }
+        }
+
+#endif
+
         private static void PerformUpdateInternal(DataStore store, int currentSchemaVersion)
         {
             if (currentSchemaVersion < 1)

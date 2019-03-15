@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("ST-Sim Package")]
 [assembly: AssemblyCompany("ApexRMS")]
 [assembly: AssemblyProduct("SyncroSim.STSim")]
-[assembly: AssemblyCopyright("Copyright © 2007-2019 Apex Resource Management Solution Ltd. (ApexRMS). All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 
 [assembly: ComVisible(false)]

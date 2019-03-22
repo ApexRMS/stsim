@@ -2544,6 +2544,11 @@ namespace SyncroSim.STSim
                "RasterOutputAATPTimesteps " +
                "FROM TEMP_TABLE");
 
+            store.ExecuteNonQuery("UPDATE STSim_OutputOptions SET SummaryOutputSCAges=-1");
+            store.ExecuteNonQuery("UPDATE STSim_OutputOptions SET SummaryOutputTRAges=-1");
+            store.ExecuteNonQuery("UPDATE STSim_OutputOptions SET SummaryOutputSAAges=-1");
+            store.ExecuteNonQuery("UPDATE STSim_OutputOptions SET SummaryOutputTAAges=-1");
+
             store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
         }
     }

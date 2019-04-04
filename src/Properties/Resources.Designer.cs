@@ -163,6 +163,16 @@ namespace SyncroSim.STSim.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Open16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Open16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Paste16x16 {
             get {
                 object obj = ResourceManager.GetObject("Paste16x16", resourceCulture);

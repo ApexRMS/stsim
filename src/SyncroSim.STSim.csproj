@@ -629,6 +629,7 @@
     <Content Include="Images\Next16x16.png" />
     <Content Include="Images\OK16x16.png" />
     <Content Include="Images\OK16x16Disabled.png" />
+    <Content Include="Images\Open16x16.png" />
     <Content Include="Images\Paste16x16.png" />
     <Content Include="Images\Plus16x16.png" />
     <Content Include="Images\Previous16x16.png" />

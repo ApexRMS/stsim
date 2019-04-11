@@ -80,8 +80,6 @@ namespace SyncroSim.STSim
             }
 
             Debug.Assert(this.m_rasterMerge.DataType == RasterDataType.DTDouble);
-            Debug.Assert(this.m_rasterMerge.NoDataValue == Spatial.DefaultNoDataValue);
-
             StochasticTimeRaster OutRast = new StochasticTimeRaster(mergedRasterOutputFilename, this.m_rasterMerge);
 
             OutRast.DblCells = this.m_rasterMerge.DblCells;

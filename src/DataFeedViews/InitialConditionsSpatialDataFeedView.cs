@@ -115,8 +115,6 @@ namespace SyncroSim.STSim
             this.m_FilesDataSheet = (InitialConditionsSpatialDataSheet)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             this.m_FilesDataSheet.ValidatingRasters += this.OnValidatingRasters;
             this.m_FilesDataSheet.RastersValidated += this.OnRastersValidated;
-
-            this.ActiveControl = this.m_FilesDataGrid;
         }
 
         public override void RefreshControls()

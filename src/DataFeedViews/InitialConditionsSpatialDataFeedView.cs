@@ -26,6 +26,7 @@ namespace SyncroSim.STSim
 
         private bool m_InRefresh;
         private bool m_ColumnsInitialized;
+        private bool m_AllowColumnEdits;
         private bool m_CellAreaCalcHasChanges;
         private int m_CellMouseColIndex = -1;
         private int m_CellMouseRowIndex = -1;
@@ -165,7 +166,13 @@ namespace SyncroSim.STSim
         {
             DataGridViewColumn IterCol = this.m_FilesDataGrid.Columns["Iteration"];
 
-            if (e.ColumnIndex != IterCol.Index)
+            //Always allow editing of the Iteration column
+            if (e.ColumnIndex == IterCol.Index)
+            {
+                return;
+            }
+
+            if (!this.m_AllowColumnEdits)
             {
                 e.Cancel = true;
             }
@@ -222,6 +229,11 @@ namespace SyncroSim.STSim
 
         private void OnGridCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            {
+                return;
+            }
+
             DataGridViewCell Cell = this.m_FilesDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
             if (!Cell.OwningRow.Selected)
@@ -351,23 +363,31 @@ namespace SyncroSim.STSim
 
         private void SetICSpatialFile(int rowIndex, int colIndex, string rasterFullFilename)
         {
-            using (HourGlass h = new HourGlass())
+            try
             {
-                DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
-                DataGridViewEditMode OldMode = this.m_FilesDataGrid.EditMode;
+                this.m_AllowColumnEdits = true;
 
-                this.m_FilesDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-                this.m_FilesDataGrid.CurrentCell = this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex];
-                this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex].Value = Path.GetFileName(rasterFullFilename);
-                this.m_FilesDataGrid.NotifyCurrentCellDirty(true);
+                using (HourGlass h = new HourGlass())
+                {
+                    DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+                    DataGridViewEditMode OldMode = this.m_FilesDataGrid.EditMode;
 
-                this.m_FilesDataGrid.BeginEdit(false);
-                this.m_FilesDataGrid.EndEdit();
+                    this.m_FilesDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+                    this.m_FilesDataGrid.CurrentCell = this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex];
 
-                this.m_FilesDataGrid.CurrentCell = this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex + 1];
-                ds.AddExternalInputFile(rasterFullFilename);
+                    this.m_FilesDataGrid.BeginEdit(false);
+                    this.m_FilesDataGrid.EditingControl.Text = Path.GetFileName(rasterFullFilename);
+                    this.m_FilesDataGrid.EndEdit();
 
-                this.m_FilesDataGrid.EditMode = OldMode;
+                    this.m_FilesDataGrid.CurrentCell = this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex + 1];
+                    this.m_FilesDataGrid.EditMode = OldMode;
+
+                    ds.AddExternalInputFile(rasterFullFilename);
+                }
+            }
+            finally
+            {
+                this.m_AllowColumnEdits = false;
             }
         }
 

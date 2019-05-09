@@ -217,10 +217,13 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
+                if (dr.RowState != DataRowState.Deleted)
+                {
+                    int TransitionTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                    string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
 
-                types.Add(new TransitionType(TransitionTypeId, DisplayName, 0));
+                    types.Add(new TransitionType(TransitionTypeId, DisplayName, 0));                    
+                }
             }
 
             return types;
@@ -233,11 +236,14 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
-                bool IsAuto = DataTableUtilities.GetDataBool(dr, Strings.IS_AUTO_COLUMN_NAME);
+                if (dr.RowState != DataRowState.Deleted)
+                {
+                    int TransitionGroupId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                    string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
+                    bool IsAuto = DataTableUtilities.GetDataBool(dr, Strings.IS_AUTO_COLUMN_NAME);
 
-                groups.Add(new TransitionGroup(TransitionGroupId, DisplayName, IsAuto));
+                    groups.Add(new TransitionGroup(TransitionGroupId, DisplayName, IsAuto));
+                }
             }
 
             return groups;
@@ -250,8 +256,11 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                groups.Add(TransitionGroupId, true);
+                if (dr.RowState != DataRowState.Deleted)
+                {
+                    int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    groups.Add(TransitionGroupId, true);
+                }
             }
 
             return groups;

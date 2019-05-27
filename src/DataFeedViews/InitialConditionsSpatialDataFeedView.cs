@@ -101,11 +101,11 @@ namespace SyncroSim.STSim
                 this.m_FilesDataGrid.KeyDown += this.OnGridKeyDown;
 
                 //Add browse button columns
-                this.m_FilesDataGrid.Columns.Insert(PRIMARY_STRATUM_BROWSE_COLUMN_INDEX, this.CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(SECONDARY_STRATUM_BROWSE_COLUMN_INDEX, this.CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(TERTIARY_STRATUM_BROWSE_COLUMN_INDEX, this.CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(SCLASS_BROWSE_COLUMN_INDEX, this.CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(AGE_BROWSE_COLUMN_INDEX, this.CreateButtonColumn());
+                this.m_FilesDataGrid.Columns.Insert(PRIMARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_FilesDataGrid.Columns.Insert(SECONDARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_FilesDataGrid.Columns.Insert(TERTIARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_FilesDataGrid.Columns.Insert(SCLASS_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_FilesDataGrid.Columns.Insert(AGE_BROWSE_COLUMN_INDEX, CreateButtonColumn());
 
                 this.m_ColumnsInitialized = true;
             }
@@ -134,7 +134,7 @@ namespace SyncroSim.STSim
             this.TableCalculated.Enabled = enable;
         }
 
-        private DataGridViewTextBoxColumn CreateButtonColumn()
+        private static DataGridViewTextBoxColumn CreateButtonColumn()
         {
             DataGridViewTextBoxColumn c = new DataGridViewTextBoxColumn();
 

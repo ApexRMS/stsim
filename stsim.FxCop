@@ -1395,6 +1395,21 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#STSIM0000100(SyncroSim.Core.DataStore)">
+            <Messages>
+             <Message Id="store" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2019-05-27 19:38:56Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'store'</Item>
+               <Item>'STSimUpdates.STSIM0000100(DataStore)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Alex">
+                <Note Id="15" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
           </Members>
          </Type>
          <Type Name="Transition">
@@ -1792,6 +1807,7 @@
     <Note Id="12" Modified="2019-03-07 00:49:39Z">Won't fix</Note>
     <Note Id="13" Modified="2019-03-07 00:51:12Z">Won't fix</Note>
     <Note Id="14" Modified="2019-03-07 00:51:18Z">Won't fix</Note>
+    <Note Id="15" Modified="2019-05-27 19:39:08Z">Won't fix</Note>
    </User>
   </Notes>
   <Rules>

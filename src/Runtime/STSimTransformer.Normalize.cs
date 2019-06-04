@@ -504,6 +504,7 @@ namespace SyncroSim.STSim
             {
                 NormalizeMapIds(this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME));
                 NormalizeMapIds(this.Project.GetDataSheet(Strings.DATASHEET_SECONDARY_STRATA_NAME));
+                NormalizeMapIds(this.Project.GetDataSheet(Strings.DATASHEET_TERTIARY_STRATA_NAME));
                 NormalizeMapIds(this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME));
                 NormalizeMapIds(this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_NAME));
             }
@@ -542,7 +543,6 @@ namespace SyncroSim.STSim
             if (noIDFound)
             {
                 string msg = string.Format(CultureInfo.InvariantCulture, "ID values not specified for '{0}'.  Using defaults.", ds.DisplayName);
-
                 this.RecordStatus(StatusType.Information, msg);
             }
         }

@@ -379,8 +379,8 @@ namespace SyncroSim.STSim
                                
                 if (TType.PrimaryTransitionGroups.Count > 1)
                 {
-                    string msg = string.Format(CultureInfo.InvariantCulture, 
-                        "The transition type '{0}' has more than one primary transition group.", TType.DisplayName);
+                    string msg = string.Format(CultureInfo.InvariantCulture,
+                        "The transition type '{0}' has more than one transition simulation group.", TType.DisplayName);
 
                     this.RecordStatus(StatusType.Warning, msg);
                 }

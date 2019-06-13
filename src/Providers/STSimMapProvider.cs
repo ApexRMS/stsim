@@ -43,6 +43,7 @@ namespace SyncroSim.STSim
                 SyncroSimLayoutItem g2 = new SyncroSimLayoutItem("AATPGroup", "Average Annual Probability", true);
                 SyncroSimLayoutItem g3 = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
                 SyncroSimLayoutItem g4 = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
+                SyncroSimLayoutItem g5 = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
 
                 DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
 
@@ -60,6 +61,9 @@ namespace SyncroSim.STSim
 
                 //Transition Attributes
                 AddMapTransitionAttributes(g4.Items, project, store, AttrGroupView);
+
+                //Transition Events
+                AddMapTransitionGroupVariables(project, g5.Items, "STSim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
                 layout.Items.Add(g0);
 
@@ -81,6 +85,11 @@ namespace SyncroSim.STSim
                 if (g4.Items.Count > 0)
                 {
                     layout.Items.Add(g4);
+                }
+
+                if (g5.Items.Count > 0)
+                {
+                    layout.Items.Add(g5);
                 }
             }
         }

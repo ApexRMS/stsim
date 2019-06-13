@@ -267,6 +267,25 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Updates the transitioned pixel events array for the specified timestep
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="transitionTypeId"></param>
+        /// <param name="transitionedPixels"></param>
+        /// <remarks></remarks>
+        private void UpdateTransitionedPixelEvents(Cell cell, int eventId, int[] transitionedPixels)
+        {
+            Debug.Assert(this.IsSpatial);
+
+            if (!this.m_CreateRasterSizeClassOutput)
+            {
+                return;
+            }
+
+            transitionedPixels[cell.CellId] = eventId;
+        }
+
+        /// <summary>
         /// Creates a dictionary of transitioned pixel arrays, with Transition Group Id as the dictionary key
         /// </summary>
         /// <returns>Dictionary(Of Integer, Integer())</returns>
@@ -345,12 +364,15 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="iteration"></param>
         /// <param name="timestep"></param>
-        /// <remarks></remarks>
+        /// <param name="rasterTransitionAttrValues"></param>
+        /// <param name="dictTransitionedPixels"></param>
+        /// <param name="dictTransitionedEventPixels"></param>
         private void ApplyProbabilisticTransitionsRaster(
             int iteration, 
             int timestep, 
             Dictionary<int, double[]> rasterTransitionAttrValues, 
-            Dictionary<int, int[]> dictTransitionedPixels)
+            Dictionary<int, int[]> dictTransitionedPixels, 
+            Dictionary<int, int[]> dictTransitionedEventPixels)
         {
             Debug.Assert(this.IsSpatial);
 
@@ -372,6 +394,9 @@ namespace SyncroSim.STSim
                 {
                     continue;
                 }
+
+                int TransitionEventId = Constants.STARTING_TRANSITION_EVENT_ID;
+                Debug.Assert(TransitionEventId > 0);
 
                 MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>> tatMap = new MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>>();
 
@@ -418,9 +443,19 @@ namespace SyncroSim.STSim
                                 List<TransitionEvent> TransitionEventList = this.CreateTransitionEventList(Stratum.StratumId, TransitionGroup.TransitionGroupId, iteration, timestep, ExpectedArea);
 
                                 this.GenerateTransitionEvents(
-                                    TransitionEventList, TransitionedCells, InitiationCells, Stratum.StratumId, TransitionGroup.TransitionGroupId, 
-                                    iteration, timestep, MaxCellProbability, dictTransitionedPixels[TransitionGroup.TransitionGroupId], 
-                                    ref ExpectedArea, rasterTransitionAttrValues);
+                                    TransitionEventList, 
+                                    TransitionedCells, 
+                                    InitiationCells, 
+                                    Stratum.StratumId, 
+                                    TransitionGroup.TransitionGroupId, 
+                                    iteration, 
+                                    timestep, 
+                                    MaxCellProbability, 
+                                    dictTransitionedPixels[TransitionGroup.TransitionGroupId], 
+                                    dictTransitionedEventPixels[TransitionGroup.TransitionGroupId], 
+                                    ref ExpectedArea, 
+                                    ref TransitionEventId, 
+                                    rasterTransitionAttrValues);
 
                                 if (!GroupHasTarget)
                                 {
@@ -463,7 +498,12 @@ namespace SyncroSim.STSim
             }
         }
 
-        private List<TransitionEvent> CreateTransitionEventList(int stratumId, int transitionGroupId, int iteration, int timestep, double expectedArea)
+        private List<TransitionEvent> CreateTransitionEventList(
+            int stratumId, 
+            int transitionGroupId,
+            int iteration, 
+            int timestep, 
+            double expectedArea)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(expectedArea > 0.0);
@@ -506,11 +546,18 @@ namespace SyncroSim.STSim
             }
 
             this.SortTransitionEventList(stratumId, transitionGroupId, iteration, timestep, TransitionEventList);
-
             return TransitionEventList;
         }
 
-        private void GetTargetSizeClass(int stratumId, int transitionGroupId, int iteration, int timestep, double areaDifference, ref double minimumSizeOut, ref double maximumSizeOut, ref double targetSizeOut)
+        private void GetTargetSizeClass(
+            int stratumId, 
+            int transitionGroupId, 
+            int iteration, 
+            int timestep, 
+            double areaDifference, 
+            ref double minimumSizeOut, 
+            ref double maximumSizeOut, 
+            ref double targetSizeOut)
         {
             Debug.Assert(this.IsSpatial);
 
@@ -566,7 +613,8 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private bool MaximizeFidelityToTotalArea(int transitionGroupId, int stratumId, int iteration, int timestep)
         {
-            TransitionSizePrioritization tsp = this.m_TransitionSizePrioritizationMap.GetSizePrioritization(transitionGroupId, stratumId, iteration, timestep);
+            TransitionSizePrioritization tsp = this.m_TransitionSizePrioritizationMap.GetSizePrioritization(
+                transitionGroupId, stratumId, iteration, timestep);
 
             if (tsp == null)
             {
@@ -613,7 +661,8 @@ namespace SyncroSim.STSim
             {
                 foreach (int? ts in TertiaryStratumIds)
                 {
-                    TransitionTarget tt = this.m_TransitionTargetMap.GetTransitionTarget(transitionGroupId, stratumId, ss, ts, iteration, timestep);
+                    TransitionTarget tt = this.m_TransitionTargetMap.GetTransitionTarget(
+                        transitionGroupId, stratumId, ss, ts, iteration, timestep);
 
                     if (tt != null)
                     {
@@ -650,7 +699,12 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        private void SortTransitionEventList(int stratumId, int transitionGroupId, int iteration, int timestep, List<TransitionEvent> transitionEventList)
+        private void SortTransitionEventList(
+            int stratumId, 
+            int transitionGroupId, 
+            int iteration, 
+            int timestep, 
+            List<TransitionEvent> transitionEventList)
         {
             TransitionSizePrioritization tsp = this.m_TransitionSizePrioritizationMap.GetSizePrioritization(
                 transitionGroupId, stratumId, iteration, timestep);
@@ -679,8 +733,13 @@ namespace SyncroSim.STSim
         }
 
         private Dictionary<int, Cell> CreateInitiationCellCollection(
-            Dictionary<int, Cell> transitionedCells, int stratumId, int transitionGroupId, int iteration, int timestep, 
-            ref double expectedAreaOut, ref double maxCellProbabilityOut)
+            Dictionary<int, Cell> transitionedCells, 
+            int stratumId, 
+            int transitionGroupId, 
+            int iteration, 
+            int timestep, 
+            ref double expectedAreaOut, 
+            ref double maxCellProbabilityOut)
         {
             Debug.Assert(this.IsSpatial);
 
@@ -779,12 +838,26 @@ namespace SyncroSim.STSim
             return SimulationCell;
         }
 
-        private void GenerateTransitionEvents(List<TransitionEvent> transitionEventList, Dictionary<int, Cell> transitionedCells, Dictionary<int, Cell> initiationCells, int stratumId, int transitionGroupId, int iteration, int timestep, double maxCellProbability, int[] transitionedPixels, ref double expectedArea, Dictionary<int, double[]> rasterTransitionAttrValues)
+        private void GenerateTransitionEvents(
+            List<TransitionEvent> transitionEventList, 
+            Dictionary<int, Cell> transitionedCells, 
+            Dictionary<int, Cell> initiationCells, 
+            int stratumId, 
+            int transitionGroupId, 
+            int iteration, 
+            int timestep, 
+            double maxCellProbability, 
+            int[] transitionedPixels, 
+            int[] transitionedEventPixels,
+            ref double expectedArea, 
+            ref int transitionEventId,
+            Dictionary<int, double[]> rasterTransitionAttrValues)
         {
 #if DEBUG
 
             Debug.Assert(this.IsSpatial);
             Debug.Assert(maxCellProbability > 0.0);
+            Debug.Assert(transitionEventId > 0);
 
             foreach (Cell c in initiationCells.Values)
             {
@@ -826,18 +899,42 @@ namespace SyncroSim.STSim
                         TransitionSizePrioritization tsp = this.m_TransitionSizePrioritizationMap.GetSizePrioritization(
                             transitionGroupId, stratumId, iteration, timestep);
 
+                        transitionEventId += 1;
+
                         this.GrowTransitionEvent(
-                            transitionEventList, TransitionEvent, transitionedCells, initiationCells, InitiationCell, transitionGroupId, 
-                            iteration, timestep, transitionedPixels, ref expectedArea, rasterTransitionAttrValues, tsp);
+                            transitionEventList, 
+                            TransitionEvent, 
+                            transitionedCells, 
+                            initiationCells, 
+                            InitiationCell, 
+                            transitionGroupId, 
+                            iteration, timestep, 
+                            transitionedPixels, 
+                            transitionedEventPixels, 
+                            ref expectedArea, 
+                            transitionEventId, 
+                            rasterTransitionAttrValues, 
+                            tsp);
                     }
                 }
             }
         }
 
         private void GrowTransitionEvent(
-            List<TransitionEvent> transitionEventList, TransitionEvent transitionEvent, Dictionary<int, Cell> transitionedCells, 
-            Dictionary<int, Cell> initiationCells, Cell initiationCell, int transitionGroupId, int iteration, int timestep, 
-            int[] transitionedPixels, ref double expectedArea, Dictionary<int, double[]> rasterTransitionAttrValues, TransitionSizePrioritization tsp)
+            List<TransitionEvent> transitionEventList, 
+            TransitionEvent transitionEvent, 
+            Dictionary<int, Cell> transitionedCells, 
+            Dictionary<int, Cell> initiationCells, 
+            Cell initiationCell, 
+            int transitionGroupId, 
+            int iteration, 
+            int timestep, 
+            int[] transitionedPixels, 
+            int[] transitionedEventPixels,
+            ref double expectedArea, 
+            int transitionEventId,
+            Dictionary<int, double[]> rasterTransitionAttrValues, 
+            TransitionSizePrioritization tsp)
         {
             Debug.Assert(this.IsSpatial);
 
@@ -856,7 +953,13 @@ namespace SyncroSim.STSim
                 GrowEventRecord CurrentRecord = EventCandidates.RemoveRecord();
                 List<Cell> neighbors = this.GetNeighboringCells(CurrentRecord.Cell);
 
-                TransitionPathwayAutoCorrelation AutoCorrelation = this.m_TransitionPathwayAutoCorrelationMap.GetCorrelation(transitionGroupId, CurrentRecord.Cell.StratumId, CurrentRecord.Cell.SecondaryStratumId, CurrentRecord.Cell.TertiaryStratumId, iteration, timestep);
+                TransitionPathwayAutoCorrelation AutoCorrelation = 
+                    this.m_TransitionPathwayAutoCorrelationMap.GetCorrelation(
+                        transitionGroupId, 
+                        CurrentRecord.Cell.StratumId, 
+                        CurrentRecord.Cell.SecondaryStratumId, 
+                        CurrentRecord.Cell.TertiaryStratumId, 
+                        iteration, timestep);
 
                 if (AutoCorrelation != null)
                 {
@@ -921,7 +1024,7 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                this.OnSummaryTransitionOutput(CurrentRecord.Cell, Transition, iteration, timestep);
+                this.OnSummaryTransitionOutput(CurrentRecord.Cell, Transition, iteration, timestep, transitionEventId);
                 this.OnSummaryTransitionByStateClassOutput(CurrentRecord.Cell, Transition, iteration, timestep);
 
                 this.ChangeCellForProbabilisticTransition(CurrentRecord.Cell, Transition, iteration, timestep, rasterTransitionAttrValues);
@@ -935,6 +1038,7 @@ namespace SyncroSim.STSim
 
                 this.UpdateCellPatchMembership(transitionGroupId, CurrentRecord.Cell);
                 this.UpdateTransitionedPixels(CurrentRecord.Cell, Transition.TransitionTypeId, transitionedPixels);
+                this.UpdateTransitionedPixelEvents(CurrentRecord.Cell, transitionEventId, transitionedEventPixels);
 
                 Debug.Assert(!transitionedCells.ContainsKey(CurrentRecord.Cell.CellId));
 

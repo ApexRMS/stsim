@@ -51,6 +51,8 @@ namespace SyncroSim.STSim
         private int m_RasterTransitionAttributeOutputTimesteps;
         private bool m_CreateRasterAATPOutput;
         private int m_RasterAATPTimesteps;
+        private bool m_CreateRasterSizeClassOutput;
+        private int m_RasterSizeClassTimesteps;
 
         //Output Collections
         private OutputStratumStateCollection m_SummaryStratumStateResults = new OutputStratumStateCollection();
@@ -164,6 +166,20 @@ namespace SyncroSim.STSim
         private bool IsRasterTransitionTimestep(int timestep)
         {
             return this.IsOutputTimestep(timestep, this.m_RasterTransitionOutputTimesteps, this.m_CreateRasterTransitionOutput);
+        }
+
+        /// <summary>
+        /// Determines whether or not to do Raster Size Class output for the specified timestep
+        /// </summary>
+        /// <param name="timestep">The timestep</param>
+        /// <returns>
+        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
+        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
+        /// </returns>
+        /// <remarks></remarks>
+        private bool IsRasterTransitionSizeClassTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterSizeClassTimesteps, this.m_CreateRasterSizeClassOutput);
         }
 
         /// <summary>
@@ -288,6 +304,21 @@ namespace SyncroSim.STSim
             }
 
             return false;
+        }
+
+        internal int GetEventIdKey(int? value)
+        {
+            if (!this.m_CreateRasterSizeClassOutput)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+
+            if (!value.HasValue)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+
+            return value.Value;
         }
 
         internal int GetSecondaryStratumIdKey(int? value)
@@ -416,8 +447,9 @@ namespace SyncroSim.STSim
         /// <param name="currentTransition">The current transition</param>
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
+        /// <param name="eventId">The current event Id</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void OnSummaryTransitionOutput(Cell simulationCell, Transition currentTransition, int iteration, int timestep)
+        private void OnSummaryTransitionOutput(Cell simulationCell, Transition currentTransition, int iteration, int timestep, Nullable<int> eventId)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
             {
@@ -426,11 +458,11 @@ namespace SyncroSim.STSim
 
             if (this.m_SummaryTransitionOutputAsIntervalMean)
             {
-                this.RecordTransitionOutputIntervalMeanMethod(simulationCell, currentTransition, iteration, timestep);
+                this.RecordTransitionOutputIntervalMeanMethod(simulationCell, currentTransition, iteration, timestep, eventId);
             }
             else
             {
-                this.RecordTransitionOutputNormalMethod(simulationCell, currentTransition, iteration, timestep);
+                this.RecordTransitionOutputNormalMethod(simulationCell, currentTransition, iteration, timestep, eventId);
             }
         }
 
@@ -611,6 +643,43 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Record transition type changes for the specified Transition Group for event data.
+        /// </summary>
+        /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
+        /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
+        /// <param name="iteration">The current iteration</param>
+        /// <param name="timestep">The current timestep</param>
+        /// <remarks></remarks>
+        private void OnRasterTransitionEventOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
+        {
+            //Loop thru the Transition Groups found in the dictionary
+            foreach (int transitionGroupId in dictTransitionedPixels.Keys)
+            {
+                int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (this.IsRasterTransitionSizeClassTimestep(timestep))
+                {
+                    //Set up a raster as input to the Raster output function
+                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                    rastOP.IntCells = transitionedPixels;
+
+                    //Dont bother if there haven't been any transitions
+                    if (transitionedPixels.Distinct().Count() > 1)
+                    {
+                        Spatial.WriteRasterData(
+                            rastOP,
+                            this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
+                            iteration,
+                            timestep,
+                            transitionGroupId,
+                            Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX,
+                            Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Record transition attribute changes for the specified Transition Group.
         /// </summary>
         /// <param name="RasterTransitionAttrValues"></param>
@@ -647,7 +716,12 @@ namespace SyncroSim.STSim
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void RecordTransitionOutputIntervalMeanMethod(Cell simulationCell, Transition currentTransition, int iteration, int timestep)
+        private void RecordTransitionOutputIntervalMeanMethod(
+            Cell simulationCell, 
+            Transition currentTransition, 
+            int iteration, 
+            int timestep, 
+            Nullable<int> eventId)
         {
             //Look up the output record using the aggregator timestep instead of the actual timestep.
             int AggregatorTimestep = this.m_IntervalMeanTimestepMap.GetValue(timestep);
@@ -656,15 +730,17 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
+                int EventIdKey = this.GetEventIdKey(eventId);
 
-                SevenIntegerLookupKey key = new SevenIntegerLookupKey(
+                EightIntegerLookupKey key = new EightIntegerLookupKey(
                     simulationCell.StratumId, 
                     GetSecondaryStratumIdKey(simulationCell), 
                     GetTertiaryStratumIdKey(simulationCell), 
                     iteration, 
                     AggregatorTimestep, 
                     tg.TransitionGroupId, 
-                    AgeKey);
+                    AgeKey, 
+                    EventIdKey);
 
                 if (this.m_SummaryStratumTransitionResults.Contains(key))
                 {
@@ -683,6 +759,8 @@ namespace SyncroSim.STSim
                         this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age), 
                         this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age), 
                         AgeKey, 
+                        eventId,
+                        EventIdKey,
                         this.m_AmountPerCell);
 
                     this.m_SummaryStratumTransitionResults.Add(ost);
@@ -697,48 +775,68 @@ namespace SyncroSim.STSim
         /// <param name="currentTransition">The current transition</param>
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
+        /// <param name="eventId">The event Id</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void RecordTransitionOutputNormalMethod(Cell simulationCell, Transition currentTransition, int iteration, int timestep)
+        private void RecordTransitionOutputNormalMethod(
+            Cell simulationCell, 
+            Transition currentTransition, 
+            int iteration, 
+            int timestep, 
+            Nullable<int> eventId)
         {
-            if (this.IsSummaryTransitionTimestep(timestep))
+            bool IsSummaryTimestep = this.IsSummaryTransitionTimestep(timestep);
+            bool IsSizeClassTimestep = this.IsRasterTransitionSizeClassTimestep(timestep);
+
+            if (!IsSummaryTimestep && !IsSizeClassTimestep)
             {
-                TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+                return;
+            }
 
-                foreach (TransitionGroup tg in tt.TransitionGroups)
+            if (!this.m_CreateSummaryTransitionOutput && !this.m_CreateRasterSizeClassOutput)
+            {
+                return;
+            }
+
+            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+
+            foreach (TransitionGroup tg in tt.TransitionGroups)
+            {
+                int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
+                int EventIdKey = this.GetEventIdKey(eventId);
+
+                EightIntegerLookupKey key = new EightIntegerLookupKey(
+                    simulationCell.StratumId, 
+                    GetSecondaryStratumIdKey(simulationCell),
+                    GetTertiaryStratumIdKey(simulationCell),
+                    iteration, 
+                    timestep, 
+                    tg.TransitionGroupId, 
+                    AgeKey, 
+                    EventIdKey);
+
+                if (this.m_SummaryStratumTransitionResults.Contains(key))
                 {
-                    int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
-
-                    SevenIntegerLookupKey key = new SevenIntegerLookupKey(
-                        simulationCell.StratumId, 
-                        GetSecondaryStratumIdKey(simulationCell),
-                        GetTertiaryStratumIdKey(simulationCell),
-                        iteration, 
-                        timestep, 
-                        tg.TransitionGroupId, 
-                        AgeKey);
-
-                    if (this.m_SummaryStratumTransitionResults.Contains(key))
-                    {
-                        OutputStratumTransition ost = this.m_SummaryStratumTransitionResults[key];
-                        ost.Amount += this.m_AmountPerCell;
-                    }
-                    else
-                    {
-                        OutputStratumTransition ost = new OutputStratumTransition(
-                            simulationCell.StratumId, 
-                            GetSecondaryStratumIdValue(simulationCell),
-                            GetTertiaryStratumIdValue(simulationCell), 
-                            iteration, 
-                            timestep, 
-                            tg.TransitionGroupId, 
-                            this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age), 
-                            this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
-                            AgeKey, 
-                            this.m_AmountPerCell);
-
-                        this.m_SummaryStratumTransitionResults.Add(ost);
-                    }
+                    OutputStratumTransition ost = this.m_SummaryStratumTransitionResults[key];
+                    ost.Amount += this.m_AmountPerCell;
                 }
+                else
+                {
+                    OutputStratumTransition ost = new OutputStratumTransition(
+                        simulationCell.StratumId,
+                        GetSecondaryStratumIdValue(simulationCell),
+                        GetTertiaryStratumIdValue(simulationCell),
+                        iteration,
+                        timestep,
+                        tg.TransitionGroupId,
+                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
+                        AgeKey,
+                        eventId,
+                        EventIdKey,
+                        this.m_AmountPerCell);
+
+                    this.m_SummaryStratumTransitionResults.Add(ost);
+                }               
             }
         }
 
@@ -1073,57 +1171,78 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void ProcessSummaryStratumTransitionResults(int timestep, DataTable table)
         {
-            if (this.m_CreateSummaryTransitionOutput)
+            bool IsSummaryTimestep = this.IsSummaryTransitionTimestep(timestep);
+            bool IsSizeClassTimestep = this.IsRasterTransitionSizeClassTimestep(timestep);
+
+            if (!IsSummaryTimestep && !IsSizeClassTimestep)
             {
-                if (this.IsSummaryTransitionTimestep(timestep))
+                return;
+            }
+
+            if (!this.m_CreateSummaryTransitionOutput && !this.m_CreateRasterSizeClassOutput)
+            {
+                return;
+            }
+
+            foreach (OutputStratumTransition r in this.m_SummaryStratumTransitionResults)
+            {
+                double AmountToReport = 0;
+
+                if (this.m_SummaryTransitionOutputAsIntervalMean)
                 {
-                    foreach (OutputStratumTransition r in this.m_SummaryStratumTransitionResults)
+                    if (timestep == (this.m_TimestepZero + 1))
                     {
-                        double AmountToReport = 0;
-
-                        if (this.m_SummaryTransitionOutputAsIntervalMean)
-                        {
-                            if (timestep == (this.m_TimestepZero + 1))
-                            {
-                                return;
-                            }
-
-                            double divisor = this.m_SummaryTransitionOutputTimesteps;
-
-                            if (r.Timestep == this.MaximumTimestep)
-                            {
-                                if ((r.Timestep % this.m_SummaryTransitionOutputTimesteps) != 0)
-                                {
-                                    divisor = ((r.Timestep - this.m_TimestepZero) % this.m_SummaryTransitionOutputTimesteps);
-                                }
-                            }
-
-                            AmountToReport = r.Amount / divisor;
-                        }
-                        else
-                        {
-                            AmountToReport = r.Amount;
-                        }
-
-                        DataRow dr = table.NewRow();
-
-                        dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
-                        dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
-                        dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
-                        dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
-                        dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                        dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = r.TransitionGroupId;
-                        dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
-                        dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
-                        dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
-                        dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
-
-                        table.Rows.Add(dr);
+                        return;
                     }
 
-                    this.m_SummaryStratumTransitionResults.Clear();
+                    double divisor = this.m_SummaryTransitionOutputTimesteps;
+
+                    if (r.Timestep == this.MaximumTimestep)
+                    {
+                        if ((r.Timestep % this.m_SummaryTransitionOutputTimesteps) != 0)
+                        {
+                            divisor = ((r.Timestep - this.m_TimestepZero) % this.m_SummaryTransitionOutputTimesteps);
+                        }
+                    }
+
+                    AmountToReport = r.Amount / divisor;
                 }
+                else
+                {
+                    AmountToReport = r.Amount;
+                }
+
+                DataRow dr = table.NewRow();
+
+                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = r.TransitionGroupId;
+                dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
+                dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
+                dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
+
+                if (this.m_CreateRasterSizeClassOutput)
+                {
+                    object SCValue = this.m_SizeClassHelper.GetSizeClassDatabaseValue(AmountToReport);
+
+                    dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = SCValue;
+
+                    if (SCValue != DBNull.Value)
+                    {
+                        dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.EventId);
+                    }                    
+                }
+
+                table.Rows.Add(dr);
             }
+
+            this.m_SummaryStratumTransitionResults.Clear();
         }
 
         /// <summary>

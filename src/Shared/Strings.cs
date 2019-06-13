@@ -59,6 +59,8 @@ namespace SyncroSim.STSim
         public const string DATASHEET_AGE_MIN_COLUMN_NAME = "AgeMin";
         public const string DATASHEET_AGE_MAX_COLUMN_NAME = "AgeMax";
         public const string DATASHEET_AGE_CLASS_COLUMN_NAME = "AgeClass";
+        public const string DATASHEET_EVENT_ID_COLUMN_NAME = "EventID";
+        public const string DATASHEET_SIZE_CLASS_ID_COLUMN_NAME = "SizeClassID";
         public const string DATASHEET_COLOR_COLUMN_NAME = "Color";
         public const string DATASHEET_LEGEND_COLUMN_NAME = "Legend";
         public const string DATASHEET_AMOUNT_COLUMN_NAME = "Amount";
@@ -116,6 +118,10 @@ namespace SyncroSim.STSim
         //Age Group
         public const string DATASHEET_AGE_GROUP_NAME = "STSim_AgeGroup";
         public const string DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME = "MaximumAge";
+
+        //Size Class
+        public const string DATASHEET_SIZE_CLASS_NAME = "STSim_SizeClass";
+        public const string DATASHEET_SIZE_CLASS_MAXIMUM_SIZE_COLUMN_NAME = "MaximumSize";
 
         //Transition multiplier type
         public const string DATASHEET_TRANSITION_MULTIPLIER_TYPE_NAME = "STSim_TransitionMultiplierType";

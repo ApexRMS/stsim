@@ -169,7 +169,7 @@ namespace SyncroSim.STSim
 
                 if (SpreadDistance >= MinThreshold && SpreadDistance <= MaxThreshold)
                 {
-                    this.OnSummaryTransitionOutput(neighboringCell, tr, iteration, timestep);
+                    this.OnSummaryTransitionOutput(neighboringCell, tr, iteration, timestep, null);
                     this.OnSummaryTransitionByStateClassOutput(neighboringCell, tr, iteration, timestep);
 
                     this.ChangeCellForProbabilisticTransition(neighboringCell, tr, iteration, timestep, rasterTransitionAttrValues);
@@ -187,7 +187,7 @@ namespace SyncroSim.STSim
 
                         if (DistantTransition != null)
                         {
-                            this.OnSummaryTransitionOutput(DistantCell, DistantTransition, iteration, timestep);
+                            this.OnSummaryTransitionOutput(DistantCell, DistantTransition, iteration, timestep, null);
                             this.OnSummaryTransitionByStateClassOutput(DistantCell, DistantTransition, iteration, timestep);
 
                             this.ChangeCellForProbabilisticTransition(DistantCell, DistantTransition, iteration, timestep, rasterTransitionAttrValues);

@@ -13,6 +13,7 @@ namespace SyncroSim.STSim
         public const double DEFAULT_TRANSITION_ORDER = double.MinValue;
         public const string AGE_QUERY_CACHE_TAG = "-STSIM-AGE-QUERY";
         public const string AGECLASS_UPDATE_REQUIRED_TAG = "STSimAgeClassUpdateRequired";
+        public const int STARTING_TRANSITION_EVENT_ID = 1;
 
         //Run Control
         public const int DATASHEET_RUN_CONTROL_NON_SPATIAL_NUM_CELLS_DEFAULT = 1000;
@@ -58,6 +59,8 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "age";
         public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_VARIABLE_PREFIX = "Tg";
         public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "tg";
+        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "Tge";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "tge";
         public const string SPATIAL_MAP_EXPORT_TST_VARIABLE_NAME = "Tst";
         public const string SPATIAL_MAP_TST_VARIABLE_NAME = "tst";
         public const string SPATIAL_MAP_EXPORT_STATE_ATTRIBUTE_VARIABLE_PREFIX = "Sa";
@@ -72,6 +75,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_SPATIAL_STATE_CLASS = "STSim_OutputSpatialState";
         public const string DATASHEET_OUTPUT_SPATIAL_AGE = "STSim_OutputSpatialAge";
         public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION = "STSim_OutputSpatialTransition";
+        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT = "STSim_OutputSpatialTransitionEvent";
         public const string DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE = "STSim_OutputSpatialStateAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "STSim_OutputSpatialTransitionAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TST = "STSim_OutputSpatialTST";

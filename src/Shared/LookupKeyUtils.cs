@@ -5,11 +5,11 @@ namespace SyncroSim.STSim
 {
     internal static class LookupKeyUtils
     {
-        public static int GetOutputCollectionKey(int? stratumId)
+        public static int GetOutputCollectionKey(int? value)
         {
-            if (stratumId.HasValue)
+            if (value.HasValue)
             {
-                return stratumId.Value;
+                return value.Value;
             }
             else
             {

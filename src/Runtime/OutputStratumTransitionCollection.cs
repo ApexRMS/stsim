@@ -6,19 +6,23 @@ using System.Collections.ObjectModel;
 
 namespace SyncroSim.STSim
 {
-    internal class OutputStratumTransitionCollection : KeyedCollection<SevenIntegerLookupKey, OutputStratumTransition>
+    internal class OutputStratumTransitionCollection : KeyedCollection<EightIntegerLookupKey, OutputStratumTransition>
     {
-        public OutputStratumTransitionCollection() : base(new SevenIntegerLookupKeyEqualityComparer())
+        public OutputStratumTransitionCollection() : base(new EightIntegerLookupKeyEqualityComparer())
         {
         }
 
-        protected override SevenIntegerLookupKey GetKeyForItem(OutputStratumTransition item)
+        protected override EightIntegerLookupKey GetKeyForItem(OutputStratumTransition item)
         {
-            return new SevenIntegerLookupKey(
+            return new EightIntegerLookupKey(
                 item.StratumId, 
                 LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId), 
                 LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId), 
-                item.Iteration, item.Timestep, item.TransitionGroupId, item.AgeKey);
+                item.Iteration, 
+                item.Timestep, 
+                item.TransitionGroupId, 
+                item.AgeKey, 
+                item.EventIdKey);
         }
     }
 }

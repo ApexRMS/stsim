@@ -2,12 +2,12 @@
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Diagnostics;
+using System.Globalization;
+using SyncroSim.StochasticTime;
+using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Common;
-using SyncroSim.StochasticTime;
-using System.Globalization;
-using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -22,6 +22,7 @@ namespace SyncroSim.STSim
         private AgeHelper m_AgeReportingHelperTR;
         private AgeHelper m_AgeReportingHelperSA;
         private AgeHelper m_AgeReportingHelperTA;
+        private SizeClassHelper m_SizeClassHelper;
         private double m_AmountPerCell;
         private int m_TimestepZero;
         private bool m_IsSpatial;
@@ -297,6 +298,7 @@ namespace SyncroSim.STSim
             this.InitializeOutputOptions();
             this.InitializeDistributionProvider();
             this.InitializeAgeReportingHelpers();
+            this.InitializeSizeClassHelper();
             this.InitializeModelCollections();
             this.NormalizeForUserDistributions();
             this.InitializeDistributionValues();
@@ -447,12 +449,14 @@ namespace SyncroSim.STSim
             {
                 Dictionary<int, double[]> RasterTransitionAttrValues = CreateRasterTransitionAttributeArrays(timestep);
                 Dictionary<int, int[]> dictTransitionedPixels = CreateTransitionGroupTransitionedPixels();
+                Dictionary<int, int[]> dictTransitionedEventPixels = CreateTransitionGroupTransitionedPixels();
 
                 ApplyingSpatialTransitions?.Invoke(this, new SpatialTransitionEventArgs(iteration, timestep));
 
-                this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
+                this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels, dictTransitionedEventPixels);
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
                 this.OnRasterTransitionOutput(iteration, timestep, dictTransitionedPixels);
+                this.OnRasterTransitionEventOutput(iteration, timestep, dictTransitionedEventPixels);
 
                 foreach (Cell simulationCell in this.m_Cells)
                 {
@@ -686,7 +690,7 @@ namespace SyncroSim.STSim
             Cell simulationCell, Transition tr, int iteration, int timestep, 
             int[] transitionedPixels, Dictionary<int, double[]> rasterTransitionAttrValues)
         {
-            this.OnSummaryTransitionOutput(simulationCell, tr, iteration, timestep);
+            this.OnSummaryTransitionOutput(simulationCell, tr, iteration, timestep, null);
             this.OnSummaryTransitionByStateClassOutput(simulationCell, tr, iteration, timestep);
 
             this.ChangeCellForProbabilisticTransition(simulationCell, tr, iteration, timestep, rasterTransitionAttrValues);

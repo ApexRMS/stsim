@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
@@ -275,6 +276,17 @@ namespace SyncroSim.STSim
 
                 this.ValidateSpatialPrimaryGroups();
             }
+        }
+
+        /// <summary>
+        /// Initializes the size class helper
+        /// </summary>
+        private void InitializeSizeClassHelper()
+        {
+            Debug.Assert(this.m_SizeClassHelper == null);
+
+            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_SIZE_CLASS_NAME);
+            this.m_SizeClassHelper = new SizeClassHelper(ds);
         }
 
         /// <summary>

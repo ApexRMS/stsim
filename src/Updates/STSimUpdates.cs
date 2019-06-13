@@ -385,6 +385,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000100(store);   
             }
+
+            if (currentSchemaVersion < 101)
+            {
+                STSIM0000101(store);   
+            }
         }
 
         /// <summary>
@@ -2569,6 +2574,28 @@ namespace SyncroSim.STSim
         private static void STSIM0000100(DataStore store)
         {
             return;
+        }
+
+        /// <summary>
+        /// STSIM0000101
+        /// </summary>
+        /// <remarks>
+        /// This update:
+        /// 1.  Adds SizeClass fields to the STSim_OutputOptions table.
+        /// 2.  Adds a SizeClass field to the STSim_OutputStratumAmount table.
+        /// </remarks>
+        private static void STSIM0000101(DataStore store)
+        {
+            if (store.TableExists("STSim_OutputOptions"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions ADD COLUMN RasterOutputSizeClass INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions ADD COLUMN RasterOutputSizeClassTimesteps INTEGER");
+            }
+
+            if (store.TableExists("STSim_OutputStratumTransition"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratumTransition ADD COLUMN SizeClass INTEGER");
+            }
         }
     }
 }

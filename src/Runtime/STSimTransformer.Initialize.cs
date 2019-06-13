@@ -203,6 +203,8 @@ namespace SyncroSim.STSim
                 this.m_RasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
                 this.m_CreateRasterAATPOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME]);
                 this.m_RasterAATPTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME]);
+                this.m_CreateRasterSizeClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME]);
+                this.m_RasterSizeClassTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME]);
             }
 
             this.m_CreateSummaryStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME]);

@@ -42,7 +42,7 @@ namespace SyncroSim.STSim
                 g0.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
 
                 g1.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumTransition"));
-                g1.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass"));
+                g1.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
 
                 g2.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStateAttribute"));
                 g2.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));

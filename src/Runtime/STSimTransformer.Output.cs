@@ -1227,7 +1227,7 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
 
-                if (this.m_CreateRasterSizeClassOutput)
+                if (this.m_CreateRasterSizeClassOutput && r.EventId.HasValue)
                 {
                     object SCValue = this.m_SizeClassHelper.GetSizeClassDatabaseValue(AmountToReport);
 
@@ -1235,6 +1235,7 @@ namespace SyncroSim.STSim
 
                     if (SCValue != DBNull.Value)
                     {
+                        Debug.Assert(r.EventId.HasValue);
                         dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.EventId);
                     }                    
                 }

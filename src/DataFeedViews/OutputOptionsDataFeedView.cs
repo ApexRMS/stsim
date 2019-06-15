@@ -57,8 +57,8 @@ namespace SyncroSim.STSim
             this.SetTextBoxBinding(this.TextBoxRasterTATimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxRasterAATP, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxRasterAATPTimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxRasterSizeClass, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxRasterSizeClassTimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxRasterTransitionEvents, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxRasterTranstionEventTimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME);
 
             this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
             this.AddStandardCommands();
@@ -113,7 +113,7 @@ namespace SyncroSim.STSim
             this.LabelRasterSATimesteps.Text = NewTimestepsText;
             this.LabelRasterTATimesteps.Text = NewTimestepsText;
             this.LabelRasterAATPTimesteps.Text = NewTimestepsText;
-            this.LabelRasterSizeClassTimesteps.Text = NewTimestepsText;
+            this.LabelRasterTransitionEventTimesteps.Text = NewTimestepsText;
         }
 
         private void EnableControls()
@@ -132,7 +132,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterSATimesteps.Enabled = this.CheckBoxRasterSA.Checked;
             this.TextBoxRasterTATimesteps.Enabled = this.CheckBoxRasterTA.Checked;
             this.TextBoxRasterAATPTimesteps.Enabled = this.CheckBoxRasterAATP.Checked;
-            this.TextBoxRasterSizeClassTimesteps.Enabled = this.CheckBoxRasterSizeClass.Checked;
+            this.TextBoxRasterTranstionEventTimesteps.Enabled = this.CheckBoxRasterTransitionEvents.Checked;
 
             //Timesteps labels
             this.LabelSummarySCTimesteps.Enabled = this.CheckBoxSummarySC.Checked;
@@ -148,7 +148,7 @@ namespace SyncroSim.STSim
             this.LabelRasterSATimesteps.Enabled = this.CheckBoxRasterSA.Checked;
             this.LabelRasterTATimesteps.Enabled = this.CheckBoxRasterTA.Checked;
             this.LabelRasterAATPTimesteps.Enabled = this.CheckBoxRasterAATP.Checked;
-            this.LabelRasterSizeClassTimesteps.Enabled = this.CheckBoxRasterSizeClass.Checked;
+            this.LabelRasterTransitionEventTimesteps.Enabled = this.CheckBoxRasterTransitionEvents.Checked;
 
             //Checkboxes
             this.CheckBoxSummarySCZeroValues.Enabled = this.CheckBoxSummarySC.Checked;
@@ -181,7 +181,7 @@ namespace SyncroSim.STSim
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterSA, this.TextBoxRasterSATimesteps);
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTA, this.TextBoxRasterTATimesteps);
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterAATP, this.TextBoxRasterAATPTimesteps);
-            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterSizeClass, this.TextBoxRasterSizeClassTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTransitionEvents, this.TextBoxRasterTranstionEventTimesteps);
 
             this.m_SettingCheckBox = true;
             this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummarySC, this.CheckBoxSummarySCAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME);

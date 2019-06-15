@@ -51,8 +51,8 @@ namespace SyncroSim.STSim
         private int m_RasterTransitionAttributeOutputTimesteps;
         private bool m_CreateRasterAATPOutput;
         private int m_RasterAATPTimesteps;
-        private bool m_CreateRasterSizeClassOutput;
-        private int m_RasterSizeClassTimesteps;
+        private bool m_CreateRasterTransitionEventOutput;
+        private int m_RasterTransitionEventTimesteps;
 
         //Output Collections
         private OutputStratumStateCollection m_SummaryStratumStateResults = new OutputStratumStateCollection();
@@ -169,7 +169,7 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Determines whether or not to do Raster Size Class output for the specified timestep
+        /// Determines whether or not to do Raster Transition Event output for the specified timestep
         /// </summary>
         /// <param name="timestep">The timestep</param>
         /// <returns>
@@ -177,9 +177,9 @@ namespace SyncroSim.STSim
         /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
         /// </returns>
         /// <remarks></remarks>
-        private bool IsRasterTransitionSizeClassTimestep(int timestep)
+        private bool IsRasterTransitionEventTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_RasterSizeClassTimesteps, this.m_CreateRasterSizeClassOutput);
+            return this.IsOutputTimestep(timestep, this.m_RasterTransitionEventTimesteps, this.m_CreateRasterTransitionEventOutput);
         }
 
         /// <summary>
@@ -306,19 +306,16 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        internal int GetEventIdKey(int? value)
+        internal static int GetEventIdKey(int? value)
         {
-            if (!this.m_CreateRasterSizeClassOutput)
-            {
-                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
-            }
-
             if (!value.HasValue)
             {
                 return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
             }
-
-            return value.Value;
+            else
+            {
+                return value.Value;
+            }          
         }
 
         internal int GetSecondaryStratumIdKey(int? value)
@@ -458,7 +455,7 @@ namespace SyncroSim.STSim
 
             if (this.m_SummaryTransitionOutputAsIntervalMean)
             {
-                this.RecordTransitionOutputIntervalMeanMethod(simulationCell, currentTransition, iteration, timestep, eventId);
+                this.RecordTransitionOutputIntervalMeanMethod(simulationCell, currentTransition, iteration, timestep);
             }
             else
             {
@@ -608,31 +605,33 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void OnRasterTransitionOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
         {
+            if (!this.IsRasterTransitionTimestep(timestep))
+            {
+                return;
+            }
+
             //Loop thru the Transition Groups found in the dictionary
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
 
-                if (this.IsRasterTransitionTimestep(timestep))
+                //Set up a raster as input to the Raster output function
+                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                rastOP.IntCells = transitionedPixels;
+
+                //Dont bother if there haven't been any transitions
+                if (transitionedPixels.Distinct().Count() > 1)
                 {
-                    //Set up a raster as input to the Raster output function
-                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                    rastOP.IntCells = transitionedPixels;
-
-                    //Dont bother if there haven't been any transitions
-                    if (transitionedPixels.Distinct().Count() > 1)
-                    {
-                        Spatial.WriteRasterData(
-                            rastOP, 
-                            this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
-                            iteration, 
-                            timestep, 
-                            transitionGroupId, 
-                            Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, 
-                            Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                    }
+                    Spatial.WriteRasterData(
+                        rastOP, 
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
+                        iteration, 
+                        timestep, 
+                        transitionGroupId, 
+                        Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, 
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
-
+                
                 //Transition Summary Rasters
                 RecordAnnualAvgTransitionProbabilityOutput(
                     this.MaximumIteration - this.MinimumIteration + 1, 
@@ -652,30 +651,32 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void OnRasterTransitionEventOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
         {
+            if (!this.IsRasterTransitionEventTimestep(timestep))
+            {
+                return;
+            }
+
             //Loop thru the Transition Groups found in the dictionary
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
 
-                if (this.IsRasterTransitionSizeClassTimestep(timestep))
-                {
-                    //Set up a raster as input to the Raster output function
-                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                    rastOP.IntCells = transitionedPixels;
+                //Set up a raster as input to the Raster output function
+                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                rastOP.IntCells = transitionedPixels;
 
-                    //Dont bother if there haven't been any transitions
-                    if (transitionedPixels.Distinct().Count() > 1)
-                    {
-                        Spatial.WriteRasterData(
-                            rastOP,
-                            this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
-                            iteration,
-                            timestep,
-                            transitionGroupId,
-                            Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX,
-                            Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                    }
-                }
+                //Dont bother if there haven't been any transitions
+                if (transitionedPixels.Distinct().Count() > 1)
+                {
+                    Spatial.WriteRasterData(
+                        rastOP,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
+                        iteration,
+                        timestep,
+                        transitionGroupId,
+                        Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }               
             }
         }
 
@@ -720,17 +721,16 @@ namespace SyncroSim.STSim
             Cell simulationCell, 
             Transition currentTransition, 
             int iteration, 
-            int timestep, 
-            Nullable<int> eventId)
+            int timestep)
         {
             //Look up the output record using the aggregator timestep instead of the actual timestep.
             int AggregatorTimestep = this.m_IntervalMeanTimestepMap.GetValue(timestep);
             TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+            int EventIdKey = 0;
 
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
-                int EventIdKey = this.GetEventIdKey(eventId);
 
                 EightIntegerLookupKey key = new EightIntegerLookupKey(
                     simulationCell.StratumId, 
@@ -739,7 +739,7 @@ namespace SyncroSim.STSim
                     iteration, 
                     AggregatorTimestep, 
                     tg.TransitionGroupId, 
-                    AgeKey, 
+                    AgeKey,
                     EventIdKey);
 
                 if (this.m_SummaryStratumTransitionResults.Contains(key))
@@ -759,7 +759,7 @@ namespace SyncroSim.STSim
                         this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age), 
                         this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age), 
                         AgeKey, 
-                        eventId,
+                        null,
                         EventIdKey,
                         this.m_AmountPerCell);
 
@@ -784,15 +784,7 @@ namespace SyncroSim.STSim
             int timestep, 
             Nullable<int> eventId)
         {
-            bool IsSummaryTimestep = this.IsSummaryTransitionTimestep(timestep);
-            bool IsSizeClassTimestep = this.IsRasterTransitionSizeClassTimestep(timestep);
-
-            if (!IsSummaryTimestep && !IsSizeClassTimestep)
-            {
-                return;
-            }
-
-            if (!this.m_CreateSummaryTransitionOutput && !this.m_CreateRasterSizeClassOutput)
+            if (!this.IsSummaryTransitionTimestep(timestep))
             {
                 return;
             }
@@ -802,7 +794,7 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
-                int EventIdKey = this.GetEventIdKey(eventId);
+                int EventIdKey = GetEventIdKey(eventId);
 
                 EightIntegerLookupKey key = new EightIntegerLookupKey(
                     simulationCell.StratumId, 
@@ -1171,15 +1163,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void ProcessSummaryStratumTransitionResults(int timestep, DataTable table)
         {
-            bool IsSummaryTimestep = this.IsSummaryTransitionTimestep(timestep);
-            bool IsSizeClassTimestep = this.IsRasterTransitionSizeClassTimestep(timestep);
-
-            if (!IsSummaryTimestep && !IsSizeClassTimestep)
-            {
-                return;
-            }
-
-            if (!this.m_CreateSummaryTransitionOutput && !this.m_CreateRasterSizeClassOutput)
+            if (!this.IsSummaryTransitionTimestep(timestep))
             {
                 return;
             }
@@ -1227,10 +1211,9 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
 
-                if (this.m_CreateRasterSizeClassOutput && r.EventId.HasValue)
+                if (r.EventId.HasValue)
                 {
                     object SCValue = this.m_SizeClassHelper.GetSizeClassDatabaseValue(AmountToReport);
-
                     dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = SCValue;
 
                     if (SCValue != DBNull.Value)

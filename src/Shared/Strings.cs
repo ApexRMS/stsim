@@ -345,8 +345,8 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "RasterOutputTATimesteps";
         public const string DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME = "RasterOutputAATP";
         public const string DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME = "RasterOutputAATPTimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME = "RasterOutputSizeClass";
-        public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME = "RasterOutputSizeClassTimesteps";
+        public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME = "RasterOutputTransitionEvents";
+        public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME = "RasterOutputTransitionEventTimesteps";
 
         //Distribution Type Data Feed
         public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "STime_DistributionType";

@@ -2581,15 +2581,15 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <remarks>
         /// This update:
-        /// 1.  Adds SizeClass fields to the STSim_OutputOptions table.
+        /// 1.  Adds Transition Event related fields to the STSim_OutputOptions table.
         /// 2.  Adds SizeClassID and EventID fields to the STSim_OutputStratumTransition table.
         /// </remarks>
         private static void STSIM0000101(DataStore store)
         {
             if (store.TableExists("STSim_OutputOptions"))
             {
-                store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions ADD COLUMN RasterOutputSizeClass INTEGER");
-                store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions ADD COLUMN RasterOutputSizeClassTimesteps INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions ADD COLUMN RasterOutputTransitionEvents INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE STSim_OutputOptions ADD COLUMN RasterOutputTransitionEventTimesteps INTEGER");
             }
 
             if (store.TableExists("STSim_OutputStratumTransition"))

@@ -277,7 +277,7 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
 
-            if (!this.m_CreateRasterSizeClassOutput)
+            if (!this.m_CreateRasterTransitionEventOutput)
             {
                 return;
             }
@@ -396,7 +396,7 @@ namespace SyncroSim.STSim
                 }
 
                 int TransitionEventId = Constants.STARTING_TRANSITION_EVENT_ID;
-                Debug.Assert(TransitionEventId > 0);
+                Debug.Assert(TransitionEventId == 0);
 
                 MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>> tatMap = new MultiLevelKeyMap1<Dictionary<int, TransitionAttributeTarget>>();
 
@@ -857,7 +857,7 @@ namespace SyncroSim.STSim
 
             Debug.Assert(this.IsSpatial);
             Debug.Assert(maxCellProbability > 0.0);
-            Debug.Assert(transitionEventId > 0);
+            Debug.Assert(transitionEventId >= 0);
 
             foreach (Cell c in initiationCells.Values)
             {

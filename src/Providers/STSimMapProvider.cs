@@ -63,7 +63,7 @@ namespace SyncroSim.STSim
                 AddMapTransitionAttributes(g4.Items, project, store, AttrGroupView);
 
                 //Transition Events
-                AddMapTransitionGroupVariables(project, g5.Items, "STSim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
+                AddMapTransitionGroupVariables(project, g5.Items, "STSim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
                 layout.Items.Add(g0);
 

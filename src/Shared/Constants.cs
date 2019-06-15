@@ -13,7 +13,7 @@ namespace SyncroSim.STSim
         public const double DEFAULT_TRANSITION_ORDER = double.MinValue;
         public const string AGE_QUERY_CACHE_TAG = "-STSIM-AGE-QUERY";
         public const string AGECLASS_UPDATE_REQUIRED_TAG = "STSimAgeClassUpdateRequired";
-        public const int STARTING_TRANSITION_EVENT_ID = 1;
+        public const int STARTING_TRANSITION_EVENT_ID = 0;
 
         //Run Control
         public const int DATASHEET_RUN_CONTROL_NON_SPATIAL_NUM_CELLS_DEFAULT = 1000;

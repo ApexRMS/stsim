@@ -204,8 +204,8 @@ namespace SyncroSim.STSim
                 this.m_RasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
                 this.m_CreateRasterAATPOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME]);
                 this.m_RasterAATPTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterSizeClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME]);
-                this.m_RasterSizeClassTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME]);
+                this.m_CreateRasterTransitionEventOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME]);
+                this.m_RasterTransitionEventTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME]);
             }
 
             this.m_CreateSummaryStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME]);
@@ -226,6 +226,17 @@ namespace SyncroSim.STSim
             this.m_SummaryTransitionAttributeOutputAges = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME]);
             this.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME]);
             this.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME]);
+
+            if (this.m_SummaryTransitionOutputAsIntervalMean)
+            {
+                DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_SIZE_CLASS_NAME);
+
+                if (ds.GetData().Rows.Count > 0)
+                {
+                    this.RecordStatus(StatusType.Information,
+                        "Transition Summary Output won't include size information if Interval Mean selected.");
+                }
+            }
         }
 
         /// <summary>
@@ -292,7 +303,9 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Creates a dictionary that maps all timesteps to another 'aggregator' timestep
         /// </summary>
-        /// <remarks>This function exists to support the 'calculate as interval mean values' feature for summary transition output.</remarks>
+        /// <remarks>
+        /// This function exists to support the 'calculate as interval mean values' feature for summary transition output.
+        /// </remarks>
         internal void InitializeIntervalMeanTimestepMap()
         {
             Debug.Assert(this.m_IntervalMeanTimestepMap == null);
@@ -304,7 +317,11 @@ namespace SyncroSim.STSim
 
             Debug.Assert(this.MinimumTimestep > 0);
 
-            this.m_IntervalMeanTimestepMap = new IntervalMeanTimestepMap(this.MinimumTimestep, this.MaximumTimestep, this.m_TimestepZero, this.m_SummaryTransitionOutputTimesteps);
+            this.m_IntervalMeanTimestepMap = new IntervalMeanTimestepMap(
+                this.MinimumTimestep, 
+                this.MaximumTimestep, 
+                this.m_TimestepZero, 
+                this.m_SummaryTransitionOutputTimesteps);
         }
 
         /// <summary>

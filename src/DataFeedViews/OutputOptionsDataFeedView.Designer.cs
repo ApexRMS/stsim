@@ -32,9 +32,9 @@ namespace SyncroSim.STSim
         private void InitializeComponent()
         {
             this.GroupBoxSpatialOutput = new System.Windows.Forms.GroupBox();
-            this.CheckBoxRasterSizeClass = new System.Windows.Forms.CheckBox();
-            this.LabelRasterSizeClassTimesteps = new System.Windows.Forms.Label();
-            this.TextBoxRasterSizeClassTimesteps = new System.Windows.Forms.TextBox();
+            this.CheckBoxRasterTransitionEvents = new System.Windows.Forms.CheckBox();
+            this.LabelRasterTransitionEventTimesteps = new System.Windows.Forms.Label();
+            this.TextBoxRasterTranstionEventTimesteps = new System.Windows.Forms.TextBox();
             this.CheckBoxRasterAATP = new System.Windows.Forms.CheckBox();
             this.LabelRasterAATPTimesteps = new System.Windows.Forms.Label();
             this.TextBoxRasterAATPTimesteps = new System.Windows.Forms.TextBox();
@@ -89,9 +89,9 @@ namespace SyncroSim.STSim
             // 
             // GroupBoxSpatialOutput
             // 
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterSizeClass);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterSizeClassTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterSizeClassTimesteps);
+            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterTransitionEvents);
+            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterTransitionEventTimesteps);
+            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterTranstionEventTimesteps);
             this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterAATP);
             this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterAATPTimesteps);
             this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterAATPTimesteps);
@@ -123,32 +123,32 @@ namespace SyncroSim.STSim
             this.GroupBoxSpatialOutput.TabStop = false;
             this.GroupBoxSpatialOutput.Text = "Spatial output";
             // 
-            // CheckBoxRasterSizeClass
+            // CheckBoxRasterTransitionEvents
             // 
-            this.CheckBoxRasterSizeClass.AutoSize = true;
-            this.CheckBoxRasterSizeClass.Location = new System.Drawing.Point(11, 207);
-            this.CheckBoxRasterSizeClass.Name = "CheckBoxRasterSizeClass";
-            this.CheckBoxRasterSizeClass.Size = new System.Drawing.Size(130, 17);
-            this.CheckBoxRasterSizeClass.TabIndex = 24;
-            this.CheckBoxRasterSizeClass.Text = "Transition sizes every:";
-            this.CheckBoxRasterSizeClass.UseVisualStyleBackColor = true;
+            this.CheckBoxRasterTransitionEvents.AutoSize = true;
+            this.CheckBoxRasterTransitionEvents.Location = new System.Drawing.Point(11, 207);
+            this.CheckBoxRasterTransitionEvents.Name = "CheckBoxRasterTransitionEvents";
+            this.CheckBoxRasterTransitionEvents.Size = new System.Drawing.Size(139, 17);
+            this.CheckBoxRasterTransitionEvents.TabIndex = 24;
+            this.CheckBoxRasterTransitionEvents.Text = "Transition events every:";
+            this.CheckBoxRasterTransitionEvents.UseVisualStyleBackColor = true;
             // 
-            // LabelRasterSizeClassTimesteps
+            // LabelRasterTransitionEventTimesteps
             // 
-            this.LabelRasterSizeClassTimesteps.AutoSize = true;
-            this.LabelRasterSizeClassTimesteps.Location = new System.Drawing.Point(312, 207);
-            this.LabelRasterSizeClassTimesteps.Name = "LabelRasterSizeClassTimesteps";
-            this.LabelRasterSizeClassTimesteps.Size = new System.Drawing.Size(51, 13);
-            this.LabelRasterSizeClassTimesteps.TabIndex = 26;
-            this.LabelRasterSizeClassTimesteps.Text = "timesteps";
+            this.LabelRasterTransitionEventTimesteps.AutoSize = true;
+            this.LabelRasterTransitionEventTimesteps.Location = new System.Drawing.Point(312, 207);
+            this.LabelRasterTransitionEventTimesteps.Name = "LabelRasterTransitionEventTimesteps";
+            this.LabelRasterTransitionEventTimesteps.Size = new System.Drawing.Size(51, 13);
+            this.LabelRasterTransitionEventTimesteps.TabIndex = 26;
+            this.LabelRasterTransitionEventTimesteps.Text = "timesteps";
             // 
-            // TextBoxRasterSizeClassTimesteps
+            // TextBoxRasterTranstionEventTimesteps
             // 
-            this.TextBoxRasterSizeClassTimesteps.Location = new System.Drawing.Point(254, 204);
-            this.TextBoxRasterSizeClassTimesteps.Name = "TextBoxRasterSizeClassTimesteps";
-            this.TextBoxRasterSizeClassTimesteps.Size = new System.Drawing.Size(50, 20);
-            this.TextBoxRasterSizeClassTimesteps.TabIndex = 25;
-            this.TextBoxRasterSizeClassTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.TextBoxRasterTranstionEventTimesteps.Location = new System.Drawing.Point(254, 204);
+            this.TextBoxRasterTranstionEventTimesteps.Name = "TextBoxRasterTranstionEventTimesteps";
+            this.TextBoxRasterTranstionEventTimesteps.Size = new System.Drawing.Size(50, 20);
+            this.TextBoxRasterTranstionEventTimesteps.TabIndex = 25;
+            this.TextBoxRasterTranstionEventTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterAATP
             // 
@@ -677,8 +677,8 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.CheckBox CheckBoxSummarySAAges;
         internal System.Windows.Forms.CheckBox CheckBoxSummaryTRAges;
         internal System.Windows.Forms.CheckBox CheckBoxSummarySCAges;
-        internal System.Windows.Forms.CheckBox CheckBoxRasterSizeClass;
-        internal System.Windows.Forms.Label LabelRasterSizeClassTimesteps;
-        internal System.Windows.Forms.TextBox TextBoxRasterSizeClassTimesteps;
+        internal System.Windows.Forms.CheckBox CheckBoxRasterTransitionEvents;
+        internal System.Windows.Forms.Label LabelRasterTransitionEventTimesteps;
+        internal System.Windows.Forms.TextBox TextBoxRasterTranstionEventTimesteps;
     }
 }

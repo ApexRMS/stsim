@@ -95,6 +95,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_STATECLASS_NAME = "STSim_StateClass";
         public const string DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME = "StateLabelXID";
         public const string DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME = "StateLabelYID";
+        public const string DATASHEET_IS_AUTO_NAME_COLUMN_NAME = "IsAutoName";
 
         //Transition type
         public const string DATASHEET_TRANSITION_TYPE_NAME = "STSim_TransitionType";

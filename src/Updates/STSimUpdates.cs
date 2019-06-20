@@ -390,6 +390,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000101(store);   
             }
+
+            if (currentSchemaVersion < 102)
+            {
+                STSIM0000102(store);   
+            }
         }
 
         /// <summary>
@@ -2596,6 +2601,21 @@ namespace SyncroSim.STSim
             {
                 store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratumTransition ADD COLUMN SizeClassID INTEGER");
                 store.ExecuteNonQuery("ALTER TABLE STSim_OutputStratumTransition ADD COLUMN EventID INTEGER");
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000102
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update will add an IsAutoName column to the STSim_StateClass table
+        /// </remarks>
+        private static void STSIM0000102(DataStore store)
+        {
+            if (store.TableExists("STSim_StateClass"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE STSim_StateClass ADD COLUMN IsAutoName INTEGER");
             }
         }
     }

@@ -168,29 +168,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        public double NoDataValue
-        {
-            get
-            {
-                return m_NoDataValue;
-            }
-        }
-
-        public int NoDataValueAsInteger
-        {
-            get
-            {
-                if (m_NoDataValue < int.MinValue || m_NoDataValue > int.MaxValue)
-                {
-                    return Spatial.DefaultNoDataValue;
-                }
-                else
-                {
-                    return Convert.ToInt32(m_NoDataValue);
-                }
-            }
-        }
-
         public double CellArea
         {
             get
@@ -355,7 +332,7 @@ namespace SyncroSim.STSim
             this.m_cellSizeUnits = raster.CellSizeUnits;
             this.m_XllCorner = raster.XllCorner;
             this.m_YllCorner = raster.YllCorner;
-            this.m_NoDataValue = raster.NoDataValue;
+            this.m_NoDataValue = Spatial.DefaultNoDataValue;
             this.m_Projection = raster.Projection;
         }
 

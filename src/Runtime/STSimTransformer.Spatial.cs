@@ -2084,7 +2084,7 @@ namespace SyncroSim.STSim
                 else
                 {
                     c.Age = this.m_InputRasters.AgeCells[i];
-                    int ndv = this.m_InputRasters.NoDataValueAsInteger;
+                    int ndv = Spatial.DefaultNoDataValue;
 
                     if (c.Age == ndv && ndv != 0)
                     {

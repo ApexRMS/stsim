@@ -364,8 +364,8 @@ namespace SyncroSim.STSim
                     WhereClause, IncData);
             }
 
-            string query = string.Format(CultureInfo.InvariantCulture, 
-                "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM STSim_OutputStratum WHERE ({0}) GROUP BY Iteration, Timestep", 
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM stsim__OutputStratum WHERE ({0}) GROUP BY Iteration, Timestep", 
                 WhereClause);
 
             return query;

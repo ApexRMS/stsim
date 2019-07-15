@@ -38,16 +38,16 @@ namespace SyncroSim.STSim
                     TransitionAttrDataSheet.ValidationTable.DisplayMember, 
                     DataViewRowState.CurrentRows);
 
-                g0.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumState"));
+                g0.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStratumState"));
                 g0.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
 
-                g1.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumTransition"));
+                g1.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStratumTransition"));
                 g1.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
 
-                g2.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStateAttribute"));
+                g2.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStateAttribute"));
                 g2.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
 
-                g3.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputTransitionAttribute"));
+                g3.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputTransitionAttribute"));
                 g3.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
 
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, project);
@@ -217,8 +217,8 @@ namespace SyncroSim.STSim
             SyncroSimLayoutItem Normal = new SyncroSimLayoutItem(Strings.STATE_CLASS_AMOUNT_VARIABLE_NAME, disp, false);
             SyncroSimLayoutItem Proportion = new SyncroSimLayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
-            Normal.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumState"));
-            Proportion.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumState"));
+            Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStratumState"));
+            Proportion.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStratumState"));
 
             Normal.Properties.Add(new MetaDataProperty("column", "Amount"));
             Proportion.Properties.Add(new MetaDataProperty("column", "Amount"));
@@ -244,8 +244,8 @@ namespace SyncroSim.STSim
             SyncroSimLayoutItem Normal = new SyncroSimLayoutItem(Strings.TRANSITION_AMOUNT_VARIABLE_NAME, disp, false);
             SyncroSimLayoutItem Proportion = new SyncroSimLayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
-            Normal.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumTransition"));
-            Proportion.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputStratumTransition"));
+            Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStratumTransition"));
+            Proportion.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputStratumTransition"));
 
             Normal.Properties.Add(new MetaDataProperty("column", "Amount"));
             Proportion.Properties.Add(new MetaDataProperty("column", "Amount"));

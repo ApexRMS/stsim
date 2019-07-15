@@ -276,23 +276,27 @@ namespace SyncroSim.STSim
         {
             if (store.TableExists("SF_OutputFlow"))
             {
+                store.ExecuteNonQuery("DROP INDEX IF EXISTS SF_OutputFlow_Index_FT");
                 store.ExecuteNonQuery("CREATE INDEX SF_OutputFlow_Index_FT ON SF_OutputFlow(FlowTypeID)");
             }
 
             if (store.TableExists("SF_OutputFlowGroupMultiplier"))
             {
                 store.ExecuteNonQuery("DELETE FROM SF_OutputFlowGroupMultiplier");
+                store.ExecuteNonQuery("DROP INDEX IF EXISTS SF_OutputFlowGroupMultiplier_Index_FT");
                 store.ExecuteNonQuery("CREATE INDEX SF_OutputFlowGroupMultiplier_Index_FT ON SF_OutputFlowGroupMultiplier(FlowTypeID)");
             }
 
             if (store.TableExists("SF_OutputStock"))
             {
+                store.ExecuteNonQuery("DROP INDEX IF EXISTS SF_OutputStock_Index_ST");
                 store.ExecuteNonQuery("CREATE INDEX SF_OutputStock_Index_ST ON SF_OutputStock(StockTypeID)");
             }
 
             if (store.TableExists("SF_OutputStockGroupMultiplier"))
             {
                 store.ExecuteNonQuery("DELETE FROM SF_OutputStockGroupMultiplier");
+                store.ExecuteNonQuery("DROP INDEX IF EXISTS SF_OutputStockGroupMultiplier_Index_ST");
                 store.ExecuteNonQuery("CREATE INDEX SF_OutputStockGroupMultiplier_Index_ST ON SF_OutputStockGroupMultiplier(StockTypeID)");
             }
         }

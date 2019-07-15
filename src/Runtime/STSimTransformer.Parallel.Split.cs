@@ -446,8 +446,8 @@ namespace SyncroSim.STSim
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
             string ids = Convert.ToString(splitDataRow["SecondaryStratumIds"], CultureInfo.InvariantCulture);
 
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, 
-                "DELETE FROM STSim_SecondaryStratum WHERE SecondaryStratumID NOT IN({0})", ids));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture,
+                "DELETE FROM stsim__SecondaryStratum WHERE SecondaryStratumID NOT IN({0})", ids));
 
             foreach (DataFeed df in scenario.DataFeeds)
             {
@@ -462,7 +462,7 @@ namespace SyncroSim.STSim
                     {
                         if (dc.ValidationTable != null && 
                             dc.ValidationType == ColumnValidationType.IsDataSheet && 
-                            dc.Formula1 == "STSim_SecondaryStratum")
+                            dc.Formula1 == "stsim__SecondaryStratum")
                         {
                             store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, 
                                 "DELETE FROM [{0}] WHERE {1} NOT IN ({2})", ds.Name, dc.Name, ids));
@@ -475,9 +475,9 @@ namespace SyncroSim.STSim
         private static void UpdateInitialConditions(DataRow splitDataRow, DataStore store)
         {
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatial SET TotalAmount={0}", Convert.ToDouble(splitDataRow["JobTotalAmount"], CultureInfo.InvariantCulture)));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatial SET NumCells={0}", Convert.ToDouble(splitDataRow["JobNumCells"], CultureInfo.InvariantCulture)));       
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_InitialConditionsNonSpatialDistribution SET RelativeAmount=(RelativeAmount * {0})", Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture)));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__InitialConditionsNonSpatial SET TotalAmount={0}", Convert.ToDouble(splitDataRow["JobTotalAmount"], CultureInfo.InvariantCulture)));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__InitialConditionsNonSpatial SET NumCells={0}", Convert.ToDouble(splitDataRow["JobNumCells"], CultureInfo.InvariantCulture)));       
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__InitialConditionsNonSpatialDistribution SET RelativeAmount=(RelativeAmount * {0})", Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture)));
         }
 
         private static void UpdateTransitionTargets(DataRow splitDataRow, DataStore store)
@@ -485,10 +485,10 @@ namespace SyncroSim.STSim
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
             double ratio = Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture);
 
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET Amount=(Amount * {0}) WHERE SecondaryStratumID IS NULL", ratio));        
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET DistributionSD=(DistributionSD * {0}) WHERE SecondaryStratumID IS NULL", ratio));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET DistributionMin=(DistributionMin * {0}) WHERE SecondaryStratumID IS NULL", ratio));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionTarget SET DistributionMax=(DistributionMax * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionTarget SET Amount=(Amount * {0}) WHERE SecondaryStratumID IS NULL", ratio));        
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionTarget SET DistributionSD=(DistributionSD * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionTarget SET DistributionMin=(DistributionMin * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionTarget SET DistributionMax=(DistributionMax * {0}) WHERE SecondaryStratumID IS NULL", ratio));
         }
 
         private static void UpdateTransitionAttributeTargets(DataRow splitDataRow, DataStore store)
@@ -496,10 +496,10 @@ namespace SyncroSim.STSim
             Debug.Assert(splitDataRow["SecondaryStratumIds"] != DBNull.Value);
             double ratio = Convert.ToDouble(splitDataRow["RATIO"], CultureInfo.InvariantCulture);
 
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET Amount=(Amount * {0}) WHERE SecondaryStratumID IS NULL", ratio));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET DistributionSD=(DistributionSD * {0}) WHERE SecondaryStratumID IS NULL", ratio));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET DistributionMin=(DistributionMin * {0}) WHERE SecondaryStratumID IS NULL", ratio));
-            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE STSim_TransitionAttributeTarget SET DistributionMax=(DistributionMax * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionAttributeTarget SET Amount=(Amount * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionAttributeTarget SET DistributionSD=(DistributionSD * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionAttributeTarget SET DistributionMin=(DistributionMin * {0}) WHERE SecondaryStratumID IS NULL", ratio));
+            store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture, "UPDATE stsim__TransitionAttributeTarget SET DistributionMax=(DistributionMax * {0}) WHERE SecondaryStratumID IS NULL", ratio));
         }
 
         private List<int> GetApplicableSecondaryStrata()

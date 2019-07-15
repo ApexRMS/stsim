@@ -6,7 +6,7 @@ namespace SyncroSim.STSim
     internal static class Strings
     {
         //General
-        public const string AGE_VALIDATION_TABLE_NAME = "STSim_AgeClass";
+        public const string AGE_VALIDATION_TABLE_NAME = "stsim__AgeClass";
         public const string STOCHASTIC_TIME_CHART_ANALYZER_TABLE_DATA_KEY = "StochasticTimeChartTableData";
         public const string CLIPBOARD_FORMAT_TRANSITION_DIAGRAM = "DataSheetTransitionDiagram";
 
@@ -77,78 +77,78 @@ namespace SyncroSim.STSim
         public const string AUTO_COLUMN_SUFFIX = "[Type]";
 
         //State Label X
-        public const string DATASHEET_STATE_LABEL_X_NAME = "STSim_StateLabelX";
+        public const string DATASHEET_STATE_LABEL_X_NAME = "stsim__StateLabelX";
 
         //State label Y
-        public const string DATASHEET_STATE_LABEL_Y_NAME = "STSim_StateLabelY";
+        public const string DATASHEET_STATE_LABEL_Y_NAME = "stsim__StateLabelY";
 
         //Stratum
-        public const string DATASHEET_STRATA_NAME = "STSim_Stratum";
+        public const string DATASHEET_STRATA_NAME = "stsim__Stratum";
 
         //Secondary Stratum
-        public const string DATASHEET_SECONDARY_STRATA_NAME = "STSim_SecondaryStratum";
+        public const string DATASHEET_SECONDARY_STRATA_NAME = "stsim__SecondaryStratum";
 
         //Tertiary Stratum
-        public const string DATASHEET_TERTIARY_STRATA_NAME = "STSim_TertiaryStratum";
+        public const string DATASHEET_TERTIARY_STRATA_NAME = "stsim__TertiaryStratum";
 
         //State class
-        public const string DATASHEET_STATECLASS_NAME = "STSim_StateClass";
+        public const string DATASHEET_STATECLASS_NAME = "stsim__StateClass";
         public const string DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME = "StateLabelXID";
         public const string DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME = "StateLabelYID";
         public const string DATASHEET_IS_AUTO_NAME_COLUMN_NAME = "IsAutoName";
 
         //Transition type
-        public const string DATASHEET_TRANSITION_TYPE_NAME = "STSim_TransitionType";
+        public const string DATASHEET_TRANSITION_TYPE_NAME = "stsim__TransitionType";
 
         //Transition group
-        public const string DATASHEET_TRANSITION_GROUP_NAME = "STSim_TransitionGroup";
+        public const string DATASHEET_TRANSITION_GROUP_NAME = "stsim__TransitionGroup";
 
         //Transition Simulation Group
-        public const string DATASHEET_TRANSITION_SIMULATION_GROUP_NAME = "STSim_TransitionSimulationGroup";
+        public const string DATASHEET_TRANSITION_SIMULATION_GROUP_NAME = "stsim__TransitionSimulationGroup";
 
         //Transition type group
-        public const string DATASHEET_TRANSITION_TYPE_GROUP_NAME = "STSim_TransitionTypeGroup";
+        public const string DATASHEET_TRANSITION_TYPE_GROUP_NAME = "stsim__TransitionTypeGroup";
         public const string DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME = "TransitionTypeID";
         public const string DATASHEET_TRANSITION_TYPE_GROUP_GROUP_COLUMN_NAME = "TransitionGroupID";
 
         //Age Type
-        public const string DATASHEET_AGE_TYPE_NAME = "STSim_AgeType";
+        public const string DATASHEET_AGE_TYPE_NAME = "stsim__AgeType";
         public const string DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME = "Frequency";
         public const string DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME = "MaximumAge";
 
         //Age Group
-        public const string DATASHEET_AGE_GROUP_NAME = "STSim_AgeGroup";
+        public const string DATASHEET_AGE_GROUP_NAME = "stsim__AgeGroup";
         public const string DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME = "MaximumAge";
 
         //Size Class
-        public const string DATASHEET_SIZE_CLASS_NAME = "STSim_SizeClass";
+        public const string DATASHEET_SIZE_CLASS_NAME = "stsim__SizeClass";
         public const string DATASHEET_SIZE_CLASS_MAXIMUM_SIZE_COLUMN_NAME = "MaximumSize";
 
         //Transition multiplier type
-        public const string DATASHEET_TRANSITION_MULTIPLIER_TYPE_NAME = "STSim_TransitionMultiplierType";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_TYPE_NAME = "stsim__TransitionMultiplierType";
 
         //Patch Prioritization
-        public const string DATASHEET_PATCH_PRIORITIZATION_NAME = "STSim_PatchPrioritization";
+        public const string DATASHEET_PATCH_PRIORITIZATION_NAME = "stsim__PatchPrioritization";
         public const string PATCH_PRIORITIZATION_SMALLEST = "Smallest";
         public const string PATCH_PRIORITIZATION_SMALLEST_EDGES_ONLY = "Smallest (transition edges only)";
         public const string PATCH_PRIORITIZATION_LARGEST = "Largest";
         public const string PATCH_PRIORITIZATION_LARGEST_EDGES_ONLY = "Largest (transition edges only)";
 
         //Attribute Group
-        public const string DATASHEET_ATTRIBUTE_GROUP_NAME = "STSim_AttributeGroup";
+        public const string DATASHEET_ATTRIBUTE_GROUP_NAME = "stsim__AttributeGroup";
 
         //State Attribute Type
-        public const string DATASHEET_STATE_ATTRIBUTE_TYPE_NAME = "STSim_StateAttributeType";
+        public const string DATASHEET_STATE_ATTRIBUTE_TYPE_NAME = "stsim__StateAttributeType";
         public const string DATASHEET_STATE_ATTRIBUTE_TYPE_GROUP_COLUMN_NAME = "AttributeGroupID";
         public const string DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME = "Units";
 
         //Transition Attribute Type
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME = "STSim_TransitionAttributeType";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME = "stsim__TransitionAttributeType";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_GROUP_COLUMN_NAME = "AttributeGroupID";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME = "Units";
 
         //Run control
-        public const string DATASHEET_RUN_CONTROL_NAME = "STSim_RunControl";
+        public const string DATASHEET_RUN_CONTROL_NAME = "stsim__RunControl";
         public const string RUN_CONTROL_MIN_ITERATION_COLUMN_NAME = "MinimumIteration";
         public const string RUN_CONTROL_MAX_ITERATION_COLUMN_NAME = "MaximumIteration";
         public const string RUN_CONTROL_MIN_TIMESTEP_COLUMN_NAME = "MinimumTimestep";
@@ -156,16 +156,16 @@ namespace SyncroSim.STSim
         public const string RUN_CONTROL_IS_SPATIAL_COLUMN_NAME = "IsSpatial";
 
         //Non-Spatial Initial conditions
-        public const string DATASHEET_NSIC_NAME = "STSim_InitialConditionsNonSpatial";
+        public const string DATASHEET_NSIC_NAME = "stsim__InitialConditionsNonSpatial";
         public const string DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME = "TotalAmount";
         public const string DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME = "NumCells";
         public const string DATASHEET_NSIC_CALC_FROM_DIST_COLUMN_NAME = "CalcFromDist";
-        public const string DATASHEET_NSIC_DISTRIBUTION_NAME = "STSim_InitialConditionsNonSpatialDistribution";
+        public const string DATASHEET_NSIC_DISTRIBUTION_NAME = "stsim__InitialConditionsNonSpatialDistribution";
         public const string DATASHEET_NSIC_DISTRIBUTION_DISPLAY_NAME = "Initial Conditions Distribution";
         public const string DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME = "RelativeAmount";
 
         //Spatial Initial Conditions Properties
-        public const string DATASHEET_SPPIC_NAME = "STSim_InitialConditionsSpatialProperties";
+        public const string DATASHEET_SPPIC_NAME = "stsim__InitialConditionsSpatialProperties";
         public const string DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
         public const string DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME = "NumRows";
         public const string DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME = "NumCells";
@@ -178,7 +178,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_SPPIC_SRS_COLUMN_NAME = "SRS";
 
         //Spatial Initial Conditions Files
-        public const string DATASHEET_SPIC_NAME = "STSim_InitialConditionsSpatial";
+        public const string DATASHEET_SPIC_NAME = "stsim__InitialConditionsSpatial";
         public const string DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
         public const string DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
         public const string DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME = "TertiaryStratumFileName";
@@ -186,7 +186,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_SPIC_AGE_FILE_COLUMN_NAME = "AgeFileName";
 
         //Deterministic Transitions
-        public const string DATASHEET_DT_NAME = "STSim_DeterministicTransition";
+        public const string DATASHEET_DT_NAME = "stsim__DeterministicTransition";
         public const string DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME = "StratumIDSource";
         public const string DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME = "StateClassIDSource";
         public const string DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME = "StratumIDDest";
@@ -194,7 +194,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_DT_LOCATION_COLUMN_NAME = "Location";
 
         //Probabilisitic Transitions
-        public const string DATASHEET_PT_NAME = "STSim_Transition";
+        public const string DATASHEET_PT_NAME = "stsim__Transition";
         public const string DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME = "StratumIDSource";
         public const string DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME = "StateClassIDSource";
         public const string DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME = "StratumIDDest";
@@ -210,98 +210,98 @@ namespace SyncroSim.STSim
         public const string DATASHEET_PT_PROBXPROPN_COLUMN_NAME = "ProbXPropn";
 
         //Transition Target
-        public const string DATASHEET_TRANSITION_TARGET_NAME = "STSim_TransitionTarget";
+        public const string DATASHEET_TRANSITION_TARGET_NAME = "stsim__TransitionTarget";
 
         //Transition Target Prioritization
-        public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_NAME = "STSim_TransitionTargetPrioritization";
+        public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_NAME = "stsim__TransitionTargetPrioritization";
         public const string DATASHEET_TRANSITION_TARGET_PRIORITIZATION_PRIORITY_COLUMN_NAME = "Priority";
 
         //Transition Attribute Target
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME = "STSim_TransitionAttributeTarget";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME = "stsim__TransitionAttributeTarget";
 
         //Transition Attribute Target Prioritization
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_PRIORITIZATION_NAME = "STSim_TransitionAttributeTargetPrioritization";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_PRIORITIZATION_NAME = "stsim__TransitionAttributeTargetPrioritization";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_TARGET_PRIORITIZATION_PRIORITY_COLUMN_NAME = "Priority";
 
         //Transition Order
-        public const string DATASHEET_TRANSITION_ORDER_NAME = "STSim_TransitionOrder";
+        public const string DATASHEET_TRANSITION_ORDER_NAME = "stsim__TransitionOrder";
         public const string DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME = "Order";
 
         //Time Since Transition Group
-        public const string DATASHEET_TST_GROUP_NAME = "STSim_TimeSinceTransitionGroup";
+        public const string DATASHEET_TST_GROUP_NAME = "stsim__TimeSinceTransitionGroup";
 
         //Time Since Transition Randomize
-        public const string DATASHEET_TST_RANDOMIZE_NAME = "STSim_TimeSinceTransitionRandomize";
+        public const string DATASHEET_TST_RANDOMIZE_NAME = "stsim__TimeSinceTransitionRandomize";
         public const string DATASHEET_TST_RANDOMIZE_MIN_INITIAL_TST_COLUMN_NAME = "MinInitialTST";
         public const string DATASHEET_TST_RANDOMIZE_MAX_INITIAL_TST_COLUMN_NAME = "MaxInitialTST";
 
         //Transition multiplier value
-        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME = "STSim_TransitionMultiplierValue";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME = "stsim__TransitionMultiplierValue";
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeID";
 
         //Transition spatial multiplier
-        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME = "STSim_TransitionSpatialMultiplier";
+        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME = "stsim__TransitionSpatialMultiplier";
         public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeID";
         public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FILE_COLUMN_NAME = "MultiplierFilename";
 
         //Transition spatial initiation multiplier
-        public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME = "STSim_TransitionSpatialInitiationMultiplier";
+        public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME = "stsim__TransitionSpatialInitiationMultiplier";
         public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FILE_COLUMN_NAME = "MultiplierFilename";
 
         //Transition Size Distribution
-        public const string DATASHEET_TRANSITION_SIZE_DISTRIBUTION_NAME = "STSim_TransitionSizeDistribution";
+        public const string DATASHEET_TRANSITION_SIZE_DISTRIBUTION_NAME = "stsim__TransitionSizeDistribution";
         public const string DATASHEET_TRANSITION_SIZE_DISTRIBUTION_MAXIMUM_AREA_COLUMN_NAME = "MaximumArea";
         public const string DATASHEET_TRANSITION_SIZE_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME = "RelativeAmount";
 
         //Transition Spread Distribution
-        public const string DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_NAME = "STSim_TransitionSpreadDistribution";
+        public const string DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_NAME = "stsim__TransitionSpreadDistribution";
         public const string DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_MAXIMUM_DISTANCE_COLUMN_NAME = "MaximumDistance";
         public const string DATASHEET_TRANSITION_SPREAD_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME = "RelativeAmount";
 
         //Transition Direction Multiplier
-        public const string DATASHEET_TRANSITION_DIRECTION_MULTIPLER_NAME = "STSim_TransitionDirectionMultiplier";
+        public const string DATASHEET_TRANSITION_DIRECTION_MULTIPLER_NAME = "stsim__TransitionDirectionMultiplier";
         public const string DATASHEET_TRANSITION_DIRECTION_MULTIPLER_CARDINAL_DIRECTION_COLUMN_NAME = "CardinalDirection";
 
         //Transition Slope Multiplier
-        public const string DATAFEED_TRANSITION_SLOPE_MULTIPLIER_NAME = "STSim_TransitionSlopeMultiplierDataFeed";
-        public const string DATASHEET_DIGITAL_ELEVATION_MODEL_NAME = "STSim_DigitalElevationModel";
+        public const string DATAFEED_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim__TransitionSlopeMultiplierDataFeed";
+        public const string DATASHEET_DIGITAL_ELEVATION_MODEL_NAME = "stsim__DigitalElevationModel";
         public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME = "DigitalElevationModelFilename";
-        public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_NAME = "STSim_TransitionSlopeMultiplier";
+        public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim__TransitionSlopeMultiplier";
         public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME = "Slope";
 
         //Transition Adjacency Multiplier
-        public const string DATAFEED_TRANSITION_ADJACENCY_MULTIPLIER_NAME = "STSim_TransitionAdjacencyMultiplierDataFeed";
-        public const string DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_NAME = "STSim_TransitionAdjacencyMultiplier";
+        public const string DATAFEED_TRANSITION_ADJACENCY_MULTIPLIER_NAME = "stsim__TransitionAdjacencyMultiplierDataFeed";
+        public const string DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_NAME = "stsim__TransitionAdjacencyMultiplier";
         public const string DATASHEET_TRANSITION_ADJACENCY_ATTRIBUTE_VALUE_COLUMN_NAME = "AttributeValue";
-        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NAME = "STSim_TransitionAdjacencySetting";
+        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NAME = "stsim__TransitionAdjacencySetting";
         public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NR_COLUMN_NAME = "NeighborhoodRadius";
         public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME = "UpdateFrequency";
 
         //Transition Patch Prioritization
-        public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_NAME = "STSim_TransitionPatchPrioritization";
+        public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_NAME = "stsim__TransitionPatchPrioritization";
         public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_PP_COLUMN_NAME = "PatchPrioritizationID";
 
         //Transition Size Prioritization
-        public const string DATASHEET_TRANSITION_SIZE_PRIORITIZATION_NAME = "STSim_TransitionSizePrioritization";
+        public const string DATASHEET_TRANSITION_SIZE_PRIORITIZATION_NAME = "stsim__TransitionSizePrioritization";
         public const string DATASHEET_TRANSITION_SIZE_PRIORITIZATION_PRIORITY_TYPE_COLUMN_NAME = "Priority";
         public const string DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFDIST_COLUMN_NAME = "MaximizeFidelityToDistribution";
         public const string DATASHEET_TRANSITION_SIZE_PRIORITIZATION_MFAREA_COLUMN_NAME = "MaximizeFidelityToTotalArea";
 
         //Transition Pathway Auto-Correlation
-        public const string DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_NAME = "STSim_TransitionPathwayAutoCorrelation";
+        public const string DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_NAME = "stsim__TransitionPathwayAutoCorrelation";
         public const string DATASHEET_TRANSITION_PATHWAY_AUTO_CORRELATION_COLUMN_NAME = "AutoCorrelation";
         public const string DATASHEET_TRANSITION_PATHWAY_SPREAD_TO_COLUMN_NAME = "SpreadTo";
 
         //State Attribute Value
-        public const string DATASHEET_STATE_ATTRIBUTE_VALUE_NAME = "STSim_StateAttributeValue";
+        public const string DATASHEET_STATE_ATTRIBUTE_VALUE_NAME = "stsim__StateAttributeValue";
         public const string DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME = "Value";
 
         //Transition Attribute Value
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME = "STSim_TransitionAttributeValue";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME = "stsim__TransitionAttributeValue";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME = "Value";
 
         //Terminology
-        public const string DATASHEET_TERMINOLOGY_NAME = "STSim_Terminology";
+        public const string DATASHEET_TERMINOLOGY_NAME = "stsim__Terminology";
         public const string DATASHEET_TERMINOLOGY_AMOUNT_LABEL_COLUMN_NAME = "AmountLabel";
         public const string DATASHEET_TERMINOLOGY_AMOUNT_UNITS_COLUMN_NAME = "AmountUnits";
         public const string DATASHEET_TERMINOLOGY_STATELABELX_COLUMN_NAME = "StateLabelX";
@@ -311,7 +311,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME = "TertiaryStratumLabel";
 
         //Output Options
-        public const string DATASHEET_OO_NAME = "STSim_OutputOptions";
+        public const string DATASHEET_OO_NAME = "stsim__OutputOptions";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME = "SummaryOutputSC";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "SummaryOutputSCTimesteps";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME = "SummaryOutputSCAges";
@@ -350,12 +350,12 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME = "RasterOutputTransitionEventTimesteps";
 
         //Distribution Type Data Feed
-        public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "STime_DistributionType";
+        public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "stime__DistributionType";
         public const string DISTRIBUTION_TYPE_IS_INTERNAL_COLUMN_NAME = "IsInternal";
         public const string DISTRIBUTION_TYPE_NAME_UNIFORM_INTEGER = "Uniform Integer";
 
         //Distribution Value Data Feed
-        public const string DISTRIBUTION_VALUE_DATASHEET_NAME = "STSim_DistributionValue";
+        public const string DISTRIBUTION_VALUE_DATASHEET_NAME = "stsim__DistributionValue";
         public const string DISTRIBUTION_VALUE_DIST_TYPE_ID_COLUMN_NAME = "DistributionTypeID";
         public const string DISTRIBUTION_VALUE_EXTVAR_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeID";
         public const string DISTRIBUTION_VALUE_EXTVAR_MIN_COLUMN_NAME = "ExternalVariableMin";
@@ -369,29 +369,29 @@ namespace SyncroSim.STSim
         public const string DISTRIBUTION_VALUE_VALUE_DIST_RELATIVE_FREQUENCY_COLUMN_NAME = "ValueDistributionRelativeFrequency";
 
         //Processing
-        public const string DATASHEET_PROCESSING_NAME = "STSim_Processing";
+        public const string DATASHEET_PROCESSING_NAME = "stsim__Processing";
         public const string DATASHEET_PROCESSING_SPLIT_BY_SS_COLUMN_NAME = "SplitBySecondaryStrata";
 
         //Output Stratum Amount
-        public const string DATASHEET_OUTPUT_STRATUM_NAME = "STSim_OutputStratum";
+        public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim__OutputStratum";
 
         //Output Stratum State
-        public const string DATASHEET_OUTPUT_STRATUM_STATE_NAME = "STSim_OutputStratumState";
+        public const string DATASHEET_OUTPUT_STRATUM_STATE_NAME = "stsim__OutputStratumState";
 
         //Output Stratum Transition
-        public const string DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME = "STSim_OutputStratumTransition";
+        public const string DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME = "stsim__OutputStratumTransition";
 
         //OutputStratumTransitionState
-        public const string DATASHEET_OUTPUT_STRATUM_TRANSITION_STATE_NAME = "STSim_OutputStratumTransitionState";
+        public const string DATASHEET_OUTPUT_STRATUM_TRANSITION_STATE_NAME = "stsim__OutputStratumTransitionState";
 
         //OutputStateAttribute
-        public const string DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME = "STSim_OutputStateAttribute";
+        public const string DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME = "stsim__OutputStateAttribute";
 
         //OutputTransitionAttribute
-        public const string DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME = "STSim_OutputTransitionAttribute";
+        public const string DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME = "stsim__OutputTransitionAttribute";
 
         //Processing
-        public const string DATASHEET_STSIM_PROCESSING_NAME = "STSim_Processing";
+        public const string DATASHEET_STSIM_PROCESSING_NAME = "stsim__Processing";
         public const string DATASHEET_STSIM_PROCESSING_JOBS_BY_STRATA_COLUMN_NAME = "JobsByStrata";
 
         //Charting Variables

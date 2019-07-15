@@ -51,10 +51,10 @@ namespace SyncroSim.STSim
                 AddCategoricalVariables(project, g0);
 
                 //Transitions
-                AddMapTransitionGroupVariables(project, g1.Items, "STSim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
+                AddMapTransitionGroupVariables(project, g1.Items, "stsim__OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
                 //Average Annual Transition Probability
-                AddMapTransitionGroupVariables(project, g2.Items, "STSim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(project, g2.Items, "stsim__OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
                 //State Attributes
                 AddMapStateAttributes(g3.Items, project, store, AttrGroupView);
@@ -63,7 +63,7 @@ namespace SyncroSim.STSim
                 AddMapTransitionAttributes(g4.Items, project, store, AttrGroupView);
 
                 //Transition Events
-                AddMapTransitionGroupVariables(project, g5.Items, "STSim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(project, g5.Items, "stsim__OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
                 layout.Items.Add(g0);
 
@@ -115,15 +115,15 @@ namespace SyncroSim.STSim
             SyncroSimLayoutItem i2 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", false);
             SyncroSimLayoutItem i3 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
 
-            i1.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputSpatialState"));
+            i1.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputSpatialState"));
             i1.Properties.Add(new MetaDataProperty("column", "Filename"));
             i1.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
 
-            i2.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputSpatialAge"));
+            i2.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputSpatialAge"));
             i2.Properties.Add(new MetaDataProperty("column", "Filename"));
             i2.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
-            i3.Properties.Add(new MetaDataProperty("dataSheet", "STSim_OutputSpatialStratum"));
+            i3.Properties.Add(new MetaDataProperty("dataSheet", "stsim__OutputSpatialStratum"));
             i3.Properties.Add(new MetaDataProperty("column", "Filename"));
             i3.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
 
@@ -281,7 +281,7 @@ namespace SyncroSim.STSim
 
             AddMapNonGroupedAttributes(
                 store, items, StateAttrsDataSheet, 
-                "STSim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID",
+                "stsim__OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID",
                 Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, null);
 
             Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
@@ -298,7 +298,7 @@ namespace SyncroSim.STSim
 
             AddMapGroupedAttributes(
                 store, GroupsDict, StateAttrsDataSheet, 
-                "STSim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
+                "stsim__OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
                 Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, null);
 
             foreach (SyncroSimLayoutItem g in GroupsList)
@@ -316,7 +316,7 @@ namespace SyncroSim.STSim
 
             AddMapNonGroupedAttributes(
                 store, items, TransitionAttrsDataSheet, 
-                "STSim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID", 
+                "stsim__OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID", 
                 Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, null);
 
             Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
@@ -333,7 +333,7 @@ namespace SyncroSim.STSim
 
             AddMapGroupedAttributes(
                 store, GroupsDict, TransitionAttrsDataSheet, 
-                "STSim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID",
+                "stsim__OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID",
                 Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, null);
 
             foreach (SyncroSimLayoutItem g in GroupsList)

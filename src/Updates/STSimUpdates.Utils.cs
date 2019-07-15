@@ -38,9 +38,13 @@ namespace SyncroSim.STSim
             {
                 dt = store.CreateDataTable("SSim_File");
             }
-            else
+            else if (store.TableExists("SSim_SysFolder"))
             {
                 dt = store.CreateDataTable("SSim_SysFolder");
+            }
+            else
+            {
+                dt = store.CreateDataTable("system__SysFolder");
             }
 
             DataRow dr = null;

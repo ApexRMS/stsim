@@ -93,12 +93,22 @@ namespace SyncroSim.STSim
 #if DEBUG
             Dictionary<int, Cell> dict = new Dictionary<int, Cell>();
 #endif
+            bool ExceededNumCells = false;
 
             foreach (InitialConditionsDistribution icd in icds)
             {
-                // DEVNOTE:To support multiple iterations, use relativeAmount / sum For Iteration as scale of total number of cells. Number of cells determined by 1st iteration specified. 
-                // Otherwise, there's too much likelyhood that Number of cells will vary per iteration, which we cant/wont support.
-                int numCellsForICD = Convert.ToInt32(Math.Round(icd.RelativeAmount / sumOfRelativeAmountForIteration * numCells));
+                if (ExceededNumCells)
+                {
+                    break;
+                }
+
+                // DEVNOTE:To support multiple iterations, use relativeAmount / sum For Iteration as scale of total number of cells. 
+                // Number of cells determined by 1st iteration specified. Otherwise, there's too much likelyhood that Number of cells 
+                //will vary per iteration, which we can't/won't support.
+
+                double Rounded = Math.Round(icd.RelativeAmount / sumOfRelativeAmountForIteration * numCells);
+                int numCellsForICD = Convert.ToInt32(Rounded);
+
                 for (int i = 0; i < numCellsForICD; i++)
                 {
                     Cell c = this.Cells[CellIndex];
@@ -111,6 +121,12 @@ namespace SyncroSim.STSim
                     this.PostInitializeCellNonRaster(c, iteration);
 
                     CellIndex += 1;
+
+                    if (CellIndex >= this.Cells.Count)
+                    {
+                        ExceededNumCells = true;
+                        break;
+                    }
                 }
             }
 

@@ -44,7 +44,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                dt = store.CreateDataTable("system__SysFolder");
+                dt = store.CreateDataTable("core_SysFolder");
             }
 
             DataRow dr = null;

@@ -23,20 +23,20 @@ namespace SyncroSim.STSim
             //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
             //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
 
-            ASSERT_INDEX_EXISTS(store, "stsim__Transition");
-            ASSERT_INDEX_EXISTS(store, "stsim__InitialConditionsNonSpatialDistribution");
-            ASSERT_INDEX_EXISTS(store, "stsim__TransitionTarget");
-            ASSERT_INDEX_EXISTS(store, "stsim__TransitionMultiplierValue");
-            ASSERT_INDEX_EXISTS(store, "stsim__StateAttributeValue");
-            ASSERT_INDEX_EXISTS(store, "stsim__TransitionAttributeValue");
-            ASSERT_INDEX_EXISTS(store, "stsim__TransitionAttributeTarget");
-            ASSERT_INDEX_EXISTS(store, "stsim__DistributionValue");
-            ASSERT_INDEX_EXISTS(store, "stsim__OutputStratum");
-            ASSERT_INDEX_EXISTS(store, "stsim__OutputStratumState");
-            ASSERT_INDEX_EXISTS(store, "stsim__OutputStratumTransition");
-            ASSERT_INDEX_EXISTS(store, "stsim__OutputStratumTransitionState");
-            ASSERT_INDEX_EXISTS(store, "stsim__OutputStateAttribute");
-            ASSERT_INDEX_EXISTS(store, "stsim__OutputTransitionAttribute");
+            ASSERT_INDEX_EXISTS(store, "stsim_Transition");
+            ASSERT_INDEX_EXISTS(store, "stsim_InitialConditionsNonSpatialDistribution");
+            ASSERT_INDEX_EXISTS(store, "stsim_TransitionTarget");
+            ASSERT_INDEX_EXISTS(store, "stsim_TransitionMultiplierValue");
+            ASSERT_INDEX_EXISTS(store, "stsim_StateAttributeValue");
+            ASSERT_INDEX_EXISTS(store, "stsim_TransitionAttributeValue");
+            ASSERT_INDEX_EXISTS(store, "stsim_TransitionAttributeTarget");
+            ASSERT_INDEX_EXISTS(store, "stsim_DistributionValue");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratum");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumState");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransition");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransitionState");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputStateAttribute");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputTransitionAttribute");
 
 #endif
         }
@@ -1495,14 +1495,14 @@ namespace SyncroSim.STSim
         /// </remarks>
         private static void STSIM0000043(DataStore store)
         {
-            DataTable Projects = store.CreateDataTable("system__Project");
-            DataTable Scenarios = store.CreateDataTable("system__Scenario");
+            DataTable Projects = store.CreateDataTable("core_Project");
+            DataTable Scenarios = store.CreateDataTable("core_Scenario");
             Dictionary<int, DataTable> DistTables = new Dictionary<int, DataTable>();
 
             foreach (DataRow ProjectRow in Projects.Rows)
             {
                 int ProjectId = Convert.ToInt32(ProjectRow["ProjectID"], CultureInfo.InvariantCulture);
-                DataTable DistributionTypes = store.CreateDataTableFromQuery(string.Format(CultureInfo.InvariantCulture, "SELECT * FROM stime__DistributionType WHERE ProjectID={0}", ProjectId), "DistributionTypes");
+                DataTable DistributionTypes = store.CreateDataTableFromQuery(string.Format(CultureInfo.InvariantCulture, "SELECT * FROM corestime_DistributionType WHERE ProjectID={0}", ProjectId), "DistributionTypes");
                 Debug.Assert(DistributionTypes.Rows.Count == 4);
                 DistTables.Add(ProjectId, DistributionTypes);
             }
@@ -1611,7 +1611,7 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("CREATE TABLE STSim_TransitionSizePrioritization(TransitionSizePrioritizationID INTEGER PRIMARY KEY AUTOINCREMENT, ScenarioID INTEGER, Iteration INTEGER, Timestep INTEGER, StratumID INTEGER, TransitionGroupID INTEGER, Priority INTEGER)");
             }
 
-            DataTable dt = store.CreateDataTable("system__Scenario");
+            DataTable dt = store.CreateDataTable("core_Scenario");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -1741,8 +1741,8 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("INSERT INTO STSim_DistributionValue(ScenarioID, Iteration, Timestep, DistributionTypeID, ExternalVariableTypeID, ExternalVariableMin, ExternalVariableMax, ValueDistributionMin, ValueDistributionMax, ValueDistributionRelativeFrequency) SELECT ScenarioID, Iteration, Timestep, DistributionTypeID, ExternalVariableTypeID, ExternalVariableMin, ExternalVariableMax, ValueDistributionMin, ValueDistributionMax, ValueDistributionRelativeFrequency FROM STime_DistributionValue");
 
             //3. Above
-            DataTable Projects = store.CreateDataTable("system__Project");
-            DataTable Scenarios = store.CreateDataTable("system__Scenario");
+            DataTable Projects = store.CreateDataTable("core_Project");
+            DataTable Scenarios = store.CreateDataTable("core_Scenario");
             Dictionary<int, int> IDLookup = new Dictionary<int, int>();
 
             foreach (DataRow ProjectRow in Projects.Rows)
@@ -1975,7 +1975,7 @@ namespace SyncroSim.STSim
         private static void STSIM0000058(DataStore store)
         {
             // Loop thru all the results scenarios in the library
-            DataTable dtScenarios = store.CreateDataTable("system__Scenario");
+            DataTable dtScenarios = store.CreateDataTable("core_Scenario");
 
             string[,] outputDatasheets =
             {
@@ -2633,9 +2633,10 @@ namespace SyncroSim.STSim
         /// </remarks>
         private static void STSIM0000103(DataStore store)
         {
-            UpdateProvider.RenameTablesWithPrefix(store, "STSim_", "stsim__");
-            UpdateProvider.RenameInputFoldersWithPrefix(store, "STSim_", "stsim__");
-            UpdateProvider.RenameOutputFoldersWithPrefix(store, "STSim_", "stsim__");
+            UpdateProvider.RenameTable(store, "STSim_Processing", "stsim_Multiprocessing", true);
+            UpdateProvider.RenameTablesWithPrefix(store, "STSim_", "stsim_");
+            UpdateProvider.RenameInputFoldersWithPrefix(store, "STSim_", "stsim_");
+            UpdateProvider.RenameOutputFoldersWithPrefix(store, "STSim_", "stsim_");
 
             store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_InitialConditionsNonSpatialDistribution_Index");
             store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_StateAttributeValue_Index");
@@ -2652,29 +2653,29 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_OutputStratumTransitionState_Index");
             store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_OutputTransitionAttribute_Index");
 
-            UpdateProvider.CreateIndex(store, "stsim__InitialConditionsNonSpatialDistribution", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__StateAttributeValue", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__Transition", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__TransitionAttributeTarget", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__TransitionAttributeValue", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__TransitionMultiplierValue", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__TransitionTarget", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__DistributionValue", new[] { "ScenarioID" });
-            UpdateProvider.CreateIndex(store, "stsim__OutputStateAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateAttributeTypeID", "AgeClass" });
-            UpdateProvider.CreateIndex(store, "stsim__OutputStratum", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID" });
-            UpdateProvider.CreateIndex(store, "stsim__OutputStratumState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateClassID", "StateLabelXID", "StateLabelYID", "AgeClass" });
-            UpdateProvider.CreateIndex(store, "stsim__OutputStratumTransition", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionGroupID", "AgeClass" });
-            UpdateProvider.CreateIndex(store, "stsim__OutputStratumTransitionState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionTypeID", "StateClassID", "EndStateClassID" });
-            UpdateProvider.CreateIndex(store, "stsim__OutputTransitionAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass" });                   
+            UpdateProvider.CreateIndex(store, "stsim_InitialConditionsNonSpatialDistribution", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_StateAttributeValue", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_Transition", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_TransitionAttributeTarget", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_TransitionAttributeValue", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_TransitionMultiplierValue", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_TransitionTarget", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_DistributionValue", new[] { "ScenarioID" });
+            UpdateProvider.CreateIndex(store, "stsim_OutputStateAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateAttributeTypeID", "AgeClass" });
+            UpdateProvider.CreateIndex(store, "stsim_OutputStratum", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID" });
+            UpdateProvider.CreateIndex(store, "stsim_OutputStratumState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateClassID", "StateLabelXID", "StateLabelYID", "AgeClass" });
+            UpdateProvider.CreateIndex(store, "stsim_OutputStratumTransition", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionGroupID", "AgeClass" });
+            UpdateProvider.CreateIndex(store, "stsim_OutputStratumTransitionState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionTypeID", "StateClassID", "EndStateClassID" });
+            UpdateProvider.CreateIndex(store, "stsim_OutputTransitionAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass" });                   
 
-            if (store.TableExists("stime__Chart"))
+            if (store.TableExists("corestime_Chart"))
             {
-                store.ExecuteNonQuery("UPDATE stime__Chart SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim__')");
+                store.ExecuteNonQuery("UPDATE corestime_Chart SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
 
-            if (store.TableExists("stime__Map"))
+            if (store.TableExists("corestime_Map"))
             {
-                store.ExecuteNonQuery("UPDATE stime__Map SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim__')");
+                store.ExecuteNonQuery("UPDATE corestime_Map SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
         }
     }

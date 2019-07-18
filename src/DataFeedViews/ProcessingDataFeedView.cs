@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
         {
             base.LoadDataFeed(dataFeed);
 
-            this.SetCheckBoxBinding(this.CheckBoxSplitSecStrat, Strings.DATASHEET_PROCESSING_SPLIT_BY_SS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxSplitSecStrat, Strings.DATASHEET_MULTI_PROCESSING_SPLIT_BY_SS_COLUMN_NAME);
             this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
         }
 

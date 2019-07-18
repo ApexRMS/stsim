@@ -119,7 +119,7 @@ namespace SyncroSim.STSim
                     }
 
                     int numIterations = Convert.ToInt32(store.ExecuteScalar(
-                        "SELECT maximumIteration - minimumIteration + 1 FROM stsim__RunControl where scenarioId=" + MergeScenarioId), 
+                        "SELECT maximumIteration - minimumIteration + 1 FROM stsim_RunControl where scenarioId=" + MergeScenarioId), 
                         CultureInfo.InvariantCulture);
 
                     Debug.Assert(j.JobId > 0);
@@ -205,14 +205,14 @@ namespace SyncroSim.STSim
             using (DataStore store = this.Library.CreateDataStore())
             {
                 string query = string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT * FROM stsim__OutputSpatialAverageTransitionProbability WHERE ScenarioId={0}", this.ResultScenario.Id);
+                    "SELECT * FROM stsim_OutputSpatialAverageTransitionProbability WHERE ScenarioId={0}", this.ResultScenario.Id);
 
                 DataTable dt = store.CreateDataTableFromQuery(query, "Merge");
 
                 int ttlCnt = dt.Rows.Count;
 
                 query = string.Format(CultureInfo.InvariantCulture,
-                    "SELECT scenarioId,iteration,timestep, filename, band,transitionGroupId FROM stsim__OutputSpatialAverageTransitionProbability WHERE ScenarioId={0} group by iteration, timestep,band,transitionGroupId", 
+                    "SELECT scenarioId,iteration,timestep, filename, band,transitionGroupId FROM stsim_OutputSpatialAverageTransitionProbability WHERE ScenarioId={0} group by iteration, timestep,band,transitionGroupId", 
                     this.ResultScenario.Id);
 
                 dt = store.CreateDataTableFromQuery(query, "Merge");
@@ -220,7 +220,7 @@ namespace SyncroSim.STSim
                 {
                     // We've go dupes do lets blow away the old records and create new single copies
                     query = string.Format(CultureInfo.InvariantCulture,
-                        "delete from stsim__OutputSpatialAverageTransitionProbability where ScenarioId={0}", this.ResultScenario.Id);
+                        "delete from stsim_OutputSpatialAverageTransitionProbability where ScenarioId={0}", this.ResultScenario.Id);
                     store.ExecuteNonQuery(query);
 
                     foreach (DataRow row in dt.Rows)
@@ -228,7 +228,7 @@ namespace SyncroSim.STSim
                         var band = Convert.IsDBNull(row[4]) ? "null" : row[4];
 
                         query = string.Format(CultureInfo.InvariantCulture,
-                            "insert into stsim__OutputSpatialAverageTransitionProbability (ScenarioId,iteration,timestep,filename,band,transitionGroupId) values ({0},{1},{2},'{3}',{4},{5})",
+                            "insert into stsim_OutputSpatialAverageTransitionProbability (ScenarioId,iteration,timestep,filename,band,transitionGroupId) values ({0},{1},{2},'{3}',{4},{5})",
                             row[0], row[1], row[2], row[3], band, row[5]);
 
                         store.ExecuteNonQuery(query);

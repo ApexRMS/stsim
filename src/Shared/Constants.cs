@@ -71,15 +71,15 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "tgap";
 
         //Spatial Output Datasheets
-        public const string DATASHEET_OUTPUT_SPATIAL_STRATUM = "stsim__OutputSpatialStratum";
-        public const string DATASHEET_OUTPUT_SPATIAL_STATE_CLASS = "stsim__OutputSpatialState";
-        public const string DATASHEET_OUTPUT_SPATIAL_AGE = "stsim__OutputSpatialAge";
-        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION = "stsim__OutputSpatialTransition";
-        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT = "stsim__OutputSpatialTransitionEvent";
-        public const string DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE = "stsim__OutputSpatialStateAttribute";
-        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "stsim__OutputSpatialTransitionAttribute";
-        public const string DATASHEET_OUTPUT_SPATIAL_TST = "stsim__OutputSpatialTST";
-        public const string DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY = "stsim__OutputSpatialAverageTransitionProbability";
+        public const string DATASHEET_OUTPUT_SPATIAL_STRATUM = "stsim_OutputSpatialStratum";
+        public const string DATASHEET_OUTPUT_SPATIAL_STATE_CLASS = "stsim_OutputSpatialState";
+        public const string DATASHEET_OUTPUT_SPATIAL_AGE = "stsim_OutputSpatialAge";
+        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION = "stsim_OutputSpatialTransition";
+        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT = "stsim_OutputSpatialTransitionEvent";
+        public const string DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialStateAttribute";
+        public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
+        public const string DATASHEET_OUTPUT_SPATIAL_TST = "stsim_OutputSpatialTST";
+        public const string DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY = "stsim_OutputSpatialAverageTransitionProbability";
 
         //Spatial Output Datasheet Common Column Names
         public const string DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename";

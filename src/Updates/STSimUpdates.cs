@@ -2668,14 +2668,14 @@ namespace SyncroSim.STSim
             UpdateProvider.CreateIndex(store, "stsim_OutputStratumTransitionState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionTypeID", "StateClassID", "EndStateClassID" });
             UpdateProvider.CreateIndex(store, "stsim_OutputTransitionAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass" });                   
 
-            if (store.TableExists("corestime_Chart"))
+            if (store.TableExists("corestime_Charts"))
             {
-                store.ExecuteNonQuery("UPDATE corestime_Chart SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
+                store.ExecuteNonQuery("UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
 
-            if (store.TableExists("corestime_Map"))
+            if (store.TableExists("corestime_Maps"))
             {
-                store.ExecuteNonQuery("UPDATE corestime_Map SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
+                store.ExecuteNonQuery("UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
         }
     }

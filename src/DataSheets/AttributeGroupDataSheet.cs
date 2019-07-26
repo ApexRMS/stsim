@@ -29,6 +29,8 @@ namespace SyncroSim.STSim
 
             dssa.EndModifyRows();
             dsta.EndModifyRows();
+
+            base.DeleteRows(rows);
         }
 
         private static void FixupChildReferences(DataSheet dataSheet, int groupId)

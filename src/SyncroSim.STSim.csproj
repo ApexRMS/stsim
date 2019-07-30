@@ -606,9 +606,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="package.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.cs</LastGenOutput>
@@ -635,6 +632,7 @@
     <Content Include="Images\Plus16x16.png" />
     <Content Include="Images\Previous16x16.png" />
     <Content Include="Images\Search16x16.png" />
+    <Content Include="package.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

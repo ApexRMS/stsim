@@ -88,27 +88,27 @@
   <ItemGroup>
     <Reference Include="SyncroSim.Common">
       <HintPath>..\..\ssimbin\SyncroSim.Common.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SyncroSim.Common.Forms">
       <HintPath>..\..\ssimbin\SyncroSim.Common.Forms.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SyncroSim.Core">
       <HintPath>..\..\ssimbin\SyncroSim.Core.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SyncroSim.Core.Forms">
       <HintPath>..\..\ssimbin\SyncroSim.Core.Forms.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SyncroSim.StochasticTime">
       <HintPath>..\..\ssimbin\SyncroSim.StochasticTime.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SyncroSim.StochasticTime.Forms">
       <HintPath>..\..\ssimbin\SyncroSim.StochasticTime.Forms.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

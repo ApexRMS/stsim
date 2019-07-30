@@ -83,14 +83,14 @@ namespace SyncroSim.STSim
             }
 
             DataTable dt = this.GetData();
-            Dictionary<string, bool> d = this.CreateExistingNamesDictionary(dt);
+            Dictionary<string, bool> d = CreateExistingNamesDictionary(dt);
 
             this.m_AllowRowChangeEvents = false;
 
             if (e.Column.ColumnName == Strings.DATASHEET_NAME_COLUMN_NAME)
             {
                 if (e.Row[Strings.DATASHEET_NAME_COLUMN_NAME] != DBNull.Value && 
-                    Convert.ToString(e.Row[Strings.DATASHEET_NAME_COLUMN_NAME]) != TEMP_NAME_VALUE)
+                    Convert.ToString(e.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture) != TEMP_NAME_VALUE)
                 {
                     e.Row[Strings.DATASHEET_IS_AUTO_NAME_COLUMN_NAME] = Booleans.BoolToInt(false);
                 } 
@@ -105,7 +105,7 @@ namespace SyncroSim.STSim
                 {
                     string slxname = this.GetSlxName(e.Row);
                     string slyname = this.GetSlyName(e.Row);
-                    string CurrentName = Convert.ToString(e.Row[Strings.DATASHEET_NAME_COLUMN_NAME]);
+                    string CurrentName = Convert.ToString(e.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
                     string ProposedName = slxname + ":" + slyname;
 
                     if (CurrentName != ProposedName)
@@ -125,7 +125,7 @@ namespace SyncroSim.STSim
             this.m_AllowRowChangeEvents = false;
 
             DataTable dt = this.GetData();
-            Dictionary<string, bool> d = this.CreateExistingNamesDictionary(dt);
+            Dictionary<string, bool> d = CreateExistingNamesDictionary(dt);
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -157,7 +157,7 @@ namespace SyncroSim.STSim
             this.ValidateSlxSly(proposedData);
             EnsureIsAutoNameColumn(proposedData);
 
-            Dictionary<string, bool> d = this.CreateExistingNamesDictionary(proposedData);
+            Dictionary<string, bool> d = CreateExistingNamesDictionary(proposedData);
 
             foreach (DataRow dr in proposedData.Rows)
             {
@@ -181,7 +181,7 @@ namespace SyncroSim.STSim
         private void OnSLXSLYChanged(object sender, EventArgs e)
         {
             DataTable dt = this.GetData();
-            Dictionary<string, bool> d = this.CreateExistingNamesDictionary(dt);
+            Dictionary<string, bool> d = CreateExistingNamesDictionary(dt);
             this.m_AllowRowChangeEvents = false;
 
             foreach (DataRow dr in dt.Rows)
@@ -197,7 +197,7 @@ namespace SyncroSim.STSim
                 {
                     string slxname = this.GetSlxName(dr);
                     string slyname = this.GetSlyName(dr);
-                    string CurrentName = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME]);
+                    string CurrentName = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                     string CurrentNamePart1 = CurrentName;
                     string CurrentNamePart2 = null;
@@ -314,7 +314,7 @@ namespace SyncroSim.STSim
             return slyname;
         }
 
-        private Dictionary<string, bool> CreateExistingNamesDictionary(DataTable dt)
+        private static Dictionary<string, bool> CreateExistingNamesDictionary(DataTable dt)
         {
             Dictionary<string, bool> d = new Dictionary<string, bool>();
 

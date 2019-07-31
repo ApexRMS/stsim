@@ -181,13 +181,10 @@ namespace SyncroSim.STSim
             this.m_ChosenStateLabelX = (BaseValueDisplayListItem)this.ComboBoxStateLabelX.Items[this.ComboBoxStateLabelX.SelectedIndex];
             this.m_ChosenStateLabelY = (BaseValueDisplayListItem)this.ComboBoxStateLabelY.Items[this.ComboBoxStateLabelY.SelectedIndex];
 
-            if (!this.m_EditMode)
+            if (this.StateClassInDiagram(this.m_ChosenStateLabelX.Value, this.m_ChosenStateLabelY.Value))
             {
-                if (this.StateClassInDiagram(this.m_ChosenStateLabelX.Value, this.m_ChosenStateLabelY.Value))
-                {
-                    FormsUtilities.ErrorMessageBox(MessageStrings.ERROR_DIAGRAM_STATE_CLASS_EXISTS);
-                    return;
-                }
+                FormsUtilities.ErrorMessageBox(MessageStrings.ERROR_DIAGRAM_STATE_CLASS_EXISTS);
+                return;
             }
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

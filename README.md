@@ -11,7 +11,7 @@ See the [Properties](<http://docs.stsim.net/reference/properties.html>) page for
 <span style="font-size:12pt"> See the [Publications](<http://docs.stsim.net/publications.html>) page for ST-Sim related publications</span>
 
 ## Acknowledgements
-The ongoing development of the software has been generously supported by several agencies, including:
+The ongoing development of ST-Sim has been generously supported by several agencies, including:
 
 <span style="font-size:12pt; padding-left:10px;">[The Nature Conservancy](<https://www.nature.org/en-us/>)</span>
 
@@ -21,7 +21,7 @@ The ongoing development of the software has been generously supported by several
 
 <span style="font-size:12pt; padding-left:10px;">[The LANDFIRE Project](<https://www.landfire.gov/>)</span>
 
-<span style="font-size:12pt">As a result, all software is available as a free download.</span>
+<span style="font-size:12pt">As a result, ST-Sim is available as a free download.</span>
 
 
 

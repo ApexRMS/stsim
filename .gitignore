@@ -12,3 +12,4 @@ x64/
 *.ssim
 *.db
 *.opendb
+*.TMP

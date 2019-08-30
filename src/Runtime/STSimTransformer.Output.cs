@@ -605,7 +605,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void OnRasterTransitionOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
         {
-            if (!this.IsRasterTransitionTimestep(timestep))
+            if (!this.IsRasterTransitionTimestep(timestep) && !this.m_CreateRasterAATPOutput)
             {
                 return;
             }
@@ -620,7 +620,7 @@ namespace SyncroSim.STSim
                 rastOP.IntCells = transitionedPixels;
 
                 //Dont bother if there haven't been any transitions
-                if (transitionedPixels.Distinct().Count() > 1)
+                if ((transitionedPixels.Distinct().Count() > 1) && this.IsRasterTransitionTimestep(timestep))
                 {
                     Spatial.WriteRasterData(
                         rastOP, 
@@ -632,12 +632,15 @@ namespace SyncroSim.STSim
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
                 
-                //Transition Summary Rasters
-                RecordAnnualAvgTransitionProbabilityOutput(
+                //AATP Rasters
+                if(this.m_CreateRasterAATPOutput)
+                {
+                    RecordAnnualAvgTransitionProbabilityOutput(
                     this.MaximumIteration - this.MinimumIteration + 1, 
                     timestep, 
                     transitionGroupId,
                     transitionedPixels);
+                }
             }
         }
 

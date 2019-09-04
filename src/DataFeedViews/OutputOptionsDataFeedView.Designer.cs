@@ -130,7 +130,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterTransitionEvents.Name = "CheckBoxRasterTransitionEvents";
             this.CheckBoxRasterTransitionEvents.Size = new System.Drawing.Size(139, 17);
             this.CheckBoxRasterTransitionEvents.TabIndex = 24;
-            this.CheckBoxRasterTransitionEvents.Text = "Transition events every:";
+            this.CheckBoxRasterTransitionEvents.Text = "Transition events every";
             this.CheckBoxRasterTransitionEvents.UseVisualStyleBackColor = true;
             // 
             // LabelRasterTransitionEventTimesteps

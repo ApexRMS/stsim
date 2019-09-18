@@ -780,9 +780,6 @@
                 <column name="TransitionMultiplierTypeID" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
                 <column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
               </columns>
-              <validations>
-                <validation validationType="Unique" columns="Iteration|Timestep|TransitionGroupID|TransitionMultiplierTypeID"/>
-              </validations>
             </datasheet>
           </datasheets>
         </datafeed>
@@ -798,9 +795,6 @@
                 <column name="TransitionMultiplierTypeID" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
                 <column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
               </columns>
-              <validations>
-                <validation validationType="Unique" columns="Iteration|Timestep|TransitionGroupID|TransitionMultiplierTypeID"/>
-              </validations>
             </datasheet>
           </datasheets>
         </datafeed>

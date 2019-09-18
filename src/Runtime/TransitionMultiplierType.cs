@@ -122,7 +122,9 @@ namespace SyncroSim.STSim
             if (this.m_TransitionSpatialMultipliers.Count > 0)
             {
                 Debug.Assert(this.m_TransitionSpatialMultiplierMap == null);
-                this.m_TransitionSpatialMultiplierMap = new TransitionSpatialMultiplierMap(this.m_TransitionSpatialMultipliers);
+
+                this.m_TransitionSpatialMultiplierMap = new TransitionSpatialMultiplierMap(
+                    this.m_Scenario, this.m_TransitionSpatialMultipliers);
             }
         }
 
@@ -133,7 +135,7 @@ namespace SyncroSim.STSim
                 Debug.Assert(this.m_TransitionSpatialInitiationMultiplierMap == null);
 
                 this.m_TransitionSpatialInitiationMultiplierMap = new TransitionSpatialInitiationMultiplierMap(
-                    this.m_TransitionSpatialInitiationMultipliers);
+                    this.m_Scenario, this.m_TransitionSpatialInitiationMultipliers);
             }
         }
     }

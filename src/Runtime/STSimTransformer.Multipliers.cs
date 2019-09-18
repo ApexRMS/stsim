@@ -147,7 +147,7 @@ namespace SyncroSim.STSim
                 {
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {
-                        TransitionSpatialMultiplier tsmr = tmt.TransitionSpatialMultiplierMap.GetMultiplierRaster(
+                        TransitionSpatialMultiplier tsmr = tmt.TransitionSpatialMultiplierMap.GetMultiplier(
                             tg.TransitionGroupId, iteration, timestep);
 
                         if (tsmr != null)
@@ -193,7 +193,7 @@ namespace SyncroSim.STSim
             {
                 if (tmt.TransitionSpatialInitiationMultiplierMap != null)
                 {
-                    TransitionSpatialInitiationMultiplier tsmr = tmt.TransitionSpatialInitiationMultiplierMap.GetMultiplierRaster(
+                    TransitionSpatialInitiationMultiplier tsmr = tmt.TransitionSpatialInitiationMultiplierMap.GetMultiplier(
                         transitionGroupId, iteration, timestep);
 
                     if (tsmr != null)

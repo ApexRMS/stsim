@@ -1,46 +1,44 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
-using SyncroSim.Common;
+using System;
+using SyncroSim.Core;
+using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionSpatialMultiplierMap
+    internal class TransitionSpatialMultiplierMap : STSimMapBase1<TransitionSpatialMultiplier>
     {
-        private MultiLevelKeyMap1<SortedKeyMap2<TransitionSpatialMultiplier>> m_Map = 
-            new MultiLevelKeyMap1<SortedKeyMap2<TransitionSpatialMultiplier>>();
-
-        public TransitionSpatialMultiplierMap(TransitionSpatialMultiplierCollection transitionSpatialMultipliers)
+        public TransitionSpatialMultiplierMap(Scenario scenario, TransitionSpatialMultiplierCollection collection) : base(scenario)
         {
-            foreach (TransitionSpatialMultiplier m in transitionSpatialMultipliers)
+            foreach (TransitionSpatialMultiplier Item in collection)
             {
-                this.AddMultiplierRaster(m);
+                this.TryAddItem(Item);
             }
         }
 
-        public TransitionSpatialMultiplier GetMultiplierRaster(int transitionGroupId, int iteration, int timestep)
+        public TransitionSpatialMultiplier GetMultiplier(int transitionGroupId, int iteration, int timestep)
         {
-            SortedKeyMap2<TransitionSpatialMultiplier> m = this.m_Map.GetItem(transitionGroupId);
-
-            if (m == null)
-            {
-                return null;
-            }
-
-            return m.GetItem(iteration, timestep);
+            return base.GetItem(transitionGroupId, iteration, timestep);
         }
 
-        private void AddMultiplierRaster(TransitionSpatialMultiplier multiplier)
+        private void TryAddItem(TransitionSpatialMultiplier item)
         {
-            SortedKeyMap2<TransitionSpatialMultiplier> m = this.m_Map.GetItemExact(multiplier.TransitionGroupId);
-
-            if (m == null)
+            try
             {
-                m = new SortedKeyMap2<TransitionSpatialMultiplier>(SearchMode.ExactPrev);
-                this.m_Map.AddItem(multiplier.TransitionGroupId, m);
+                this.AddItem(item.TransitionGroupId, item.Iteration, item.Timestep, item);
+            }
+            catch (STSimMapDuplicateItemException)
+            {
+                string template = 
+                    "A duplicate transition spatial multiplier was detected: More information:" 
+                    + Environment.NewLine
+                    + "Transition Group={0}, Iteration={1}, Timestep={2}";
+
+                ExceptionUtils.ThrowArgumentException(template, this.GetTransitionGroupName(item.TransitionGroupId), STSimMapBase.FormatValue(item.Iteration), STSimMapBase.FormatValue(item.Timestep));
             }
 
-            m.AddItem(multiplier.Iteration, multiplier.Timestep, multiplier);
+            Debug.Assert(this.HasItems);
         }
     }
 }

@@ -1,46 +1,44 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
-using SyncroSim.Common;
+using System;
+using SyncroSim.Core;
+using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionSpatialInitiationMultiplierMap
+    internal class TransitionSpatialInitiationMultiplierMap : STSimMapBase1<TransitionSpatialInitiationMultiplier>
     {
-        private MultiLevelKeyMap1<SortedKeyMap2<TransitionSpatialInitiationMultiplier>> m_Map = 
-            new MultiLevelKeyMap1<SortedKeyMap2<TransitionSpatialInitiationMultiplier>>();
-
-        public TransitionSpatialInitiationMultiplierMap(TransitionSpatialInitiationMultiplierCollection transitionSpatialInitiationMultipliers)
+        public TransitionSpatialInitiationMultiplierMap(Scenario scenario, TransitionSpatialInitiationMultiplierCollection collection) : base(scenario)
         {
-            foreach (TransitionSpatialInitiationMultiplier m in transitionSpatialInitiationMultipliers)
+            foreach (TransitionSpatialInitiationMultiplier Item in collection)
             {
-                this.AddMultiplierRaster(m);
+                this.TryAddItem(Item);
             }
         }
 
-        public TransitionSpatialInitiationMultiplier GetMultiplierRaster(int transitionGroupId, int iteration, int timestep)
+        public TransitionSpatialInitiationMultiplier GetMultiplier(int transitionGroupId, int iteration, int timestep)
         {
-            SortedKeyMap2<TransitionSpatialInitiationMultiplier> m = this.m_Map.GetItem(transitionGroupId);
-
-            if (m == null)
-            {
-                return null;
-            }
-
-            return m.GetItem(iteration, timestep);
+            return base.GetItem(transitionGroupId, iteration, timestep);
         }
 
-        private void AddMultiplierRaster(TransitionSpatialInitiationMultiplier multiplier)
+        private void TryAddItem(TransitionSpatialInitiationMultiplier item)
         {
-            SortedKeyMap2<TransitionSpatialInitiationMultiplier> m = this.m_Map.GetItemExact(multiplier.TransitionGroupId);
-
-            if (m == null)
+            try
             {
-                m = new SortedKeyMap2<TransitionSpatialInitiationMultiplier>(SearchMode.ExactPrev);
-                this.m_Map.AddItem(multiplier.TransitionGroupId, m);
+                this.AddItem(item.TransitionGroupId, item.Iteration, item.Timestep, item);
+            }
+            catch (STSimMapDuplicateItemException)
+            {
+                string template =
+                    "A duplicate transition spatial initiation multiplier was detected: More information:"
+                    + Environment.NewLine
+                    + "Transition Group={0}, Iteration={1}, Timestep={2}";
+
+                ExceptionUtils.ThrowArgumentException(template, this.GetTransitionGroupName(item.TransitionGroupId), STSimMapBase.FormatValue(item.Iteration), STSimMapBase.FormatValue(item.Timestep));
             }
 
-            m.AddItem(multiplier.Iteration, multiplier.Timestep, multiplier);
+            Debug.Assert(this.HasItems);
         }
     }
 }

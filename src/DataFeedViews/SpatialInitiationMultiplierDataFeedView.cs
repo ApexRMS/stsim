@@ -2,7 +2,6 @@
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.IO;
-using System.Drawing;
 using System.Windows.Forms;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
@@ -33,7 +32,6 @@ namespace SyncroSim.STSim
             this.m_MultipliersView = (this.Session.CreateMultiRowDataFeedView(this.Scenario, this.ControllingScenario));
             this.m_MultipliersDataGrid = ((MultiRowDataFeedView)this.m_MultipliersView).GridControl;
             this.PanelMultipliersGrid.Controls.Add(this.m_MultipliersView);
-            this.ConfigureContextMenu();
         }
 
         public override void EnableView(bool enable)
@@ -71,7 +69,6 @@ namespace SyncroSim.STSim
                 BrowseColumn.MinimumWidth = 40;
 
                 this.m_MultipliersDataGrid.Columns.Add(BrowseColumn);
-
                 this.m_ColumnsInitialized = true;
             }
         }
@@ -173,29 +170,6 @@ namespace SyncroSim.STSim
 
                 this.m_MultipliersDataGrid.CurrentCell = this.m_MultipliersDataGrid.Rows[Row].Cells[Col];
             }
-        }
-
-        private void ConfigureContextMenu()
-        {
-            for (int i = this.m_MultipliersView.Commands.Count - 1; i >= 0; i--)
-            {
-                Command c = this.m_MultipliersView.Commands[i];
-
-                if (c.Name != "ssim_delete" && c.Name != "ssim_delete_all" && c.Name != "ssim_import" && c.Name != "ssim_export_all")
-                {
-                    if (!c.IsSeparator)
-                    {
-                        this.m_MultipliersView.Commands.RemoveAt(i);
-                    }
-                }
-
-                if (c.Name == "ssim_export_all")
-                {
-                    c.DisplayName = "Export...";
-                }
-            }
-
-            this.m_MultipliersView.RefreshContextMenuStrip();
         }
     }
 }

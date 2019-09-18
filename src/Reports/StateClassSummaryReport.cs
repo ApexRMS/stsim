@@ -18,11 +18,13 @@ namespace SyncroSim.STSim
 {
     internal class StateClassSummaryReport : ExportTransformer
     {
-        private bool m_SecondaryStrataExist;
         private Dictionary<int, ScenarioData> m_ScenarioData;
         private MultiLevelKeyMap4<StratumAmount> m_PrimaryStratumAmountMap;
-        private MultiLevelKeyMap5<StratumAmount> m_SecondaryStratumAmountMap;
+        private MultiLevelKeyMap4<StratumAmount> m_SecondaryStratumAmountMap;
+        private MultiLevelKeyMap4<StratumAmount> m_TertiaryStratumAmountMap;
         private bool m_MultiplePrimaryStrataExist;
+        private bool m_SecondaryStrataExist;
+        private bool m_TertiaryStrataExist;
 
         private const string CSV_INTEGER_FORMAT = "F0";
         private const string CSV_DOUBLE_FORMAT = "F4";
@@ -46,9 +48,11 @@ namespace SyncroSim.STSim
 
                 this.FillPrimaryStratumAmountMap(store);
                 this.FillSecondaryStratumAmountMap(store);
+                this.FillTertiaryStratumAmountMap(store);
 
                 this.m_MultiplePrimaryStrataExist = this.MultiplePrimaryStrataExist();
-                this.m_SecondaryStrataExist = this.AnySeconaryStrataExist();
+                this.m_SecondaryStrataExist = this.AnySecondaryStrataExist();
+                this.m_TertiaryStrataExist = this.AnyTertiaryStrataExist();
             }
 
             if (exportType == ExportType.ExcelFile)
@@ -85,7 +89,8 @@ namespace SyncroSim.STSim
 
             string AmountTitle = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
             string Propn2Title = string.Format(CultureInfo.InvariantCulture, "Proportion of {0}", PrimaryStratumLabel);
-            string Propn3Title = string.Format(CultureInfo.InvariantCulture, "Proportion of {0}/{1}", PrimaryStratumLabel, SecondaryStratumLabel);
+            string Propn3Title = string.Format(CultureInfo.InvariantCulture, "Proportion of {0}", SecondaryStratumLabel);
+            string Propn4Title = string.Format(CultureInfo.InvariantCulture, "Proportion of {0}", TertiaryStratumLabel);
 
             c.Add(new ExportColumn("ScenarioID", "Scenario ID"));
             c.Add(new ExportColumn("ScenarioName", "Scenario"));
@@ -120,6 +125,13 @@ namespace SyncroSim.STSim
                 c["Proportion3"].DecimalPlaces = 4;
             }
 
+            if (this.m_TertiaryStrataExist)
+            {
+                c.Add(new ExportColumn("Proportion4", Propn4Title));
+                c["Proportion4"].Alignment = ColumnAlignment.Right;
+                c["Proportion4"].DecimalPlaces = 4;
+            }
+
             return c;
         }
 
@@ -130,7 +142,6 @@ namespace SyncroSim.STSim
             string ReportQuery = CreateReportQuery(false);
             DataTable ReportData = this.GetDataTableForReport(ReportQuery);
             DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-
             TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref AmountLabelUnits);
             string WorksheetName = string.Format(CultureInfo.InvariantCulture, "{0} by State Class", AmountLabel);
 
@@ -149,7 +160,8 @@ namespace SyncroSim.STSim
         private void CreateCSVReport(string fileName, DataStore store)
         {
             string Propn2Title = "ProportionOfStratumID";
-            string Propn3Title = "ProportionOfStratumIDOverSecondaryStratumID";
+            string Propn3Title = "ProportionOfSecondaryStratumID";
+            string Propn4Title = "ProportionOfTertiaryStratumID";
 
             using (StreamWriter sw = new StreamWriter(fileName, false))
             {
@@ -175,6 +187,12 @@ namespace SyncroSim.STSim
                 {
                     sw.Write(",");
                     sw.Write(CSVFormatString(Propn3Title));
+                }
+
+                if (this.m_TertiaryStrataExist)
+                {
+                    sw.Write(",");
+                    sw.Write(CSVFormatString(Propn4Title));
                 }
 
                 using (DbCommand cmd = store.CreateCommand())
@@ -315,7 +333,24 @@ namespace SyncroSim.STSim
                             {
                                 sw.Write(",");
 
-                                StratumAmount sa = this.m_SecondaryStratumAmountMap.GetItemExact(ScenarioId, StratumId, SecondaryStratumId, Iteration, Timestep);
+                                StratumAmount sa = this.m_SecondaryStratumAmountMap.GetItemExact(ScenarioId, SecondaryStratumId, Iteration, Timestep);
+
+                                if (sa == null || sa.Amount == 0.0)
+                                {
+                                    sw.Write("");
+                                }
+                                else
+                                {
+                                    sw.Write(CSVFormatDouble(Amount / sa.Amount));
+                                }
+                            }
+
+                            //Proportion 4
+                            if (this.m_TertiaryStrataExist)
+                            {
+                                sw.Write(",");
+
+                                StratumAmount sa = this.m_TertiaryStratumAmountMap.GetItemExact(ScenarioId, TertiaryStratumId, Iteration, Timestep);
 
                                 if (sa == null || sa.Amount == 0.0)
                                 {
@@ -390,6 +425,7 @@ namespace SyncroSim.STSim
                 dt.Columns.Add(new DataColumn("Proportion1", typeof(double)));
                 dt.Columns.Add(new DataColumn("Proportion2", typeof(double)));
                 dt.Columns.Add(new DataColumn("Proportion3", typeof(double)));
+                dt.Columns.Add(new DataColumn("Proportion4", typeof(double)));
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -398,6 +434,7 @@ namespace SyncroSim.STSim
                     dr["Proportion1"] = DBNull.Value;
                     dr["Proportion2"] = DBNull.Value;
                     dr["Proportion3"] = DBNull.Value;
+                    dr["Proportion4"] = DBNull.Value;
 
                     if (this.m_ScenarioData[sid].TotalAmount == 0.0)
                     {
@@ -432,7 +469,6 @@ namespace SyncroSim.STSim
                     {
                         sa = this.m_SecondaryStratumAmountMap.GetItemExact(
                             Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
-                            Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture), 
                             Convert.ToInt32(dr["SecondaryStratumID"], CultureInfo.InvariantCulture), 
                             Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
                             Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture));
@@ -447,6 +483,29 @@ namespace SyncroSim.STSim
                             else
                             {
                                 dr["Proportion3"] = Convert.ToDouble(
+                                    dr["Amount"], CultureInfo.InvariantCulture) / sa.Amount;
+                            }
+                        }
+                    }
+
+                    if (dr["TertiaryStratumID"] != DBNull.Value)
+                    {
+                        sa = this.m_TertiaryStratumAmountMap.GetItemExact(
+                            Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["TertiaryStratumID"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
+                            Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture));
+
+                        if (sa != null)
+                        {
+                            if (sa.Amount == 0.0)
+                            {
+                                Debug.Assert(false);
+                                dr["Proportion4"] = DBNull.Value;
+                            }
+                            else
+                            {
+                                dr["Proportion4"] = Convert.ToDouble(
                                     dr["Amount"], CultureInfo.InvariantCulture) / sa.Amount;
                             }
                         }
@@ -541,6 +600,23 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Determines if there are any tertiary strata for the specified scenario Id
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="scenarioId"></param>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        private static bool HasTertiaryStrata(DataStore store, int scenarioId)
+        {
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT DISTINCT TertiaryStratumID FROM stsim_OutputStratumState WHERE ScenarioID={0} AND TertiaryStratumID IS NOT NULL", 
+                scenarioId);
+
+            DataTable dt = store.CreateDataTableFromQuery(query, "DistinctTertiaryStrata");
+            return (dt.Rows.Count > 0);
+        }
+
+        /// <summary>
         /// Determines if multiple primary strata exist across all result scenarios
         /// </summary>
         /// <returns></returns>
@@ -573,11 +649,29 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <returns></returns>
         /// <remarks></remarks>
-        private bool AnySeconaryStrataExist()
+        private bool AnySecondaryStrataExist()
         {
             foreach (ScenarioData sd in this.m_ScenarioData.Values)
             {
                 if (sd.HasSecondaryStrata)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines if any tertiary strata exist
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        private bool AnyTertiaryStrataExist()
+        {
+            foreach (ScenarioData sd in this.m_ScenarioData.Values)
+            {
+                if (sd.HasTertiaryStrata)
                 {
                     return true;
                 }
@@ -603,6 +697,7 @@ namespace SyncroSim.STSim
 
                     FillPrimaryStrata(store, s.Id, sd);
                     sd.HasSecondaryStrata = HasSecondaryStrata(store, s.Id);
+                    sd.HasTertiaryStrata = HasTertiaryStrata(store, s.Id);
 
                     this.m_ScenarioData.Add(s.Id, sd);
                 }
@@ -639,9 +734,9 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void FillSecondaryStratumAmountMap(DataStore store)
         {
-            this.m_SecondaryStratumAmountMap = new MultiLevelKeyMap5<StratumAmount>();
-            string query = string.Format(CultureInfo.InvariantCulture, "SELECT ScenarioID, Iteration, Timestep, StratumID, SecondaryStratumID, Amount " + "FROM stsim_OutputStratum " + "WHERE ScenarioID IN ({0}) AND SecondaryStratumID IS NOT NULL", CreateIntegerFilter(this.m_ScenarioData.Keys));
-            DataTable dt = store.CreateDataTableFromQuery(query, "PrimaryStratumAmounts");
+            this.m_SecondaryStratumAmountMap = new MultiLevelKeyMap4<StratumAmount>();
+            string query = string.Format(CultureInfo.InvariantCulture, "SELECT ScenarioID, Iteration, Timestep, SecondaryStratumID, Amount " + "FROM stsim_OutputStratum " + "WHERE ScenarioID IN ({0}) AND SecondaryStratumID IS NOT NULL " + "GROUP BY ScenarioID, Iteration, Timestep, SecondaryStratumID", CreateIntegerFilter(this.m_ScenarioData.Keys));
+            DataTable dt = store.CreateDataTableFromQuery(query, "SecondaryStratumAmounts");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -649,9 +744,31 @@ namespace SyncroSim.STSim
 
                 this.m_SecondaryStratumAmountMap.AddItem(
                     Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture), 
-                    Convert.ToInt32(dr["StratumID"], CultureInfo.InvariantCulture), 
                     Convert.ToInt32(dr["SecondaryStratumID"], CultureInfo.InvariantCulture), 
                     Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture), 
+                    Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture), sa);
+            }
+        }
+
+        /// <summary>
+        /// Fills the tertiary stratum amount map
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks></remarks>
+        private void FillTertiaryStratumAmountMap(DataStore store)
+        {
+            this.m_TertiaryStratumAmountMap = new MultiLevelKeyMap4<StratumAmount>();
+            string query = string.Format(CultureInfo.InvariantCulture, "SELECT ScenarioID, Iteration, Timestep, TertiaryStratumID, Amount " + "FROM stsim_OutputStratum " + "WHERE ScenarioID IN ({0}) AND TertiaryStratumID IS NOT NULL " + "GROUP BY ScenarioID, Iteration, Timestep, TertiaryStratumID", CreateIntegerFilter(this.m_ScenarioData.Keys));
+            DataTable dt = store.CreateDataTableFromQuery(query, "TertiaryStratumAmounts");
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                StratumAmount sa = new StratumAmount(Convert.ToDouble(dr["Amount"], CultureInfo.InvariantCulture));
+
+                this.m_TertiaryStratumAmountMap.AddItem(
+                    Convert.ToInt32(dr["ScenarioID"], CultureInfo.InvariantCulture),
+                    Convert.ToInt32(dr["TertiaryStratumID"], CultureInfo.InvariantCulture),
+                    Convert.ToInt32(dr["Iteration"], CultureInfo.InvariantCulture),
                     Convert.ToInt32(dr["Timestep"], CultureInfo.InvariantCulture), sa);
             }
         }
@@ -748,6 +865,7 @@ namespace SyncroSim.STSim
         public double m_TotalAmount;
         public List<int> m_PrimaryStrata = new List<int>();
         public bool m_HasSecondaryStrata;
+        public bool m_HasTertiaryStrata;
 
         public ScenarioData(double totalAmount)
         {
@@ -779,6 +897,18 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_HasSecondaryStrata = value;
+            }
+        }
+
+        public bool HasTertiaryStrata
+        {
+            get
+            {
+                return this.m_HasTertiaryStrata;
+            }
+            set
+            {
+                this.m_HasTertiaryStrata = value;
             }
         }
     }

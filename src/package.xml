@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.8" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.9" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -211,12 +211,8 @@
                 <column name="AgeGroupID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
                 <column name="MaximumAge" displayName="Maximum Age" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" allowDbNull="False"/>
-                <column name="ID" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="Color" dataType="String" isOptional="True" isReadOnly="True"/>
               </columns>
-              <validations>
-                <validation validationType="UniqueOrNull" columns="ID"/>
-              </validations>
             </datasheet>
           </datasheets>
         </datafeed>
@@ -578,7 +574,12 @@
                 <column name="StateAttributeTypeID" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
-                <column name="Value" displayName="Value" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" allowDbNull="False"/>
+                <column name="Value" displayName="Value" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
+                <column name="DistributionType" displayName="Value Distribution" dataType="Integer" validationType="Datasheet" formula1="corestime_DistributionType" isOptional="True"/>
+                <column name="DistributionFrequencyID" displayName="Value Sampling Frequency" dataType="Integer" validationType="List" formula1="0:Always|1:Iteration Only|2:Iteration and Timestep" isOptional="True"/>
+                <column name="DistributionSD" displayName="Value SD" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
+                <column name="DistributionMin" displayName="Value Min" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
+                <column name="DistributionMax" displayName="Value Max" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
               </columns>
               <validations>
                 <validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
@@ -619,7 +620,12 @@
                 <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
-                <column name="Value" displayName="Value" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" allowDbNull="False"/>
+                <column name="Value" displayName="Value" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
+                <column name="DistributionType" displayName="Value Distribution" dataType="Integer" validationType="Datasheet" formula1="corestime_DistributionType" isOptional="True"/>
+                <column name="DistributionFrequencyID" displayName="Value Sampling Frequency" dataType="Integer" validationType="List" formula1="0:Always|1:Iteration Only|2:Iteration and Timestep" isOptional="True"/>
+                <column name="DistributionSD" displayName="Value SD" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
+                <column name="DistributionMin" displayName="Value Min" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
+                <column name="DistributionMax" displayName="Value Max" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
               </columns>
               <validations>
                 <validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
@@ -1367,8 +1373,8 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="103"
-    minPackageVersion="3.2.4"
+    schemaVersion="104"
+    minPackageVersion="3.2.9"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

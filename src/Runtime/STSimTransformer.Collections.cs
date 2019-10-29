@@ -901,7 +901,12 @@ namespace SyncroSim.STSim
                 int? StateClassId = null;
                 int? AgeMin = null;
                 int? AgeMax = null;
-                double Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double? Value = null;
+                int? DistributionTypeId = null;
+                DistributionFrequency? DistributionFrequency = null;
+                double? DistributionSD = null;
+                double? DistributionMin = null;
+                double? DistributionMax = null;
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
@@ -943,6 +948,36 @@ namespace SyncroSim.STSim
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
+                if (dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME] != DBNull.Value)
+                {
+                    Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionFrequency = (DistributionFrequency)(long)dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME];
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
                 if (!StratumId.HasValue && !StateClassId.HasValue)
                 {
                     if (!StratumOrStateClassWarningIssued)
@@ -952,11 +987,39 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                StateAttributeValue attr = new StateAttributeValue(
-                    StateAttributeTypeId, StratumId, SecondaryStratumId, TertiaryStratumId, Iteration, Timestep, 
-                    StateClassId, AgeMin, AgeMax, Value);
+                try
+                {
+                    StateAttributeValue Item = new StateAttributeValue(
+                        StateAttributeTypeId,
+                        StratumId,
+                        SecondaryStratumId,
+                        TertiaryStratumId,
+                        Iteration,
+                        Timestep,
+                        StateClassId,
+                        AgeMin,
+                        AgeMax,
+                        Value,
+                        DistributionTypeId,
+                        DistributionFrequency,
+                        DistributionSD,
+                        DistributionMin,
+                        DistributionMax);
 
-                this.m_StateAttributeValues.Add(attr);
+                    Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
+
+                    if (!Item.IsDisabled)
+                    {
+                        this.m_DistributionProvider.Validate(
+                            Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
+                    }
+
+                    this.m_StateAttributeValues.Add(Item);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException(ds.DisplayName + " -> " + ex.Message);
+                }         
             }
         }
 
@@ -981,7 +1044,12 @@ namespace SyncroSim.STSim
                 int? StateClassId = null;
                 int? AgeMin = null;
                 int? AgeMax = null;
-                double Value = Convert.ToDouble(dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double? Value = null;
+                int? DistributionTypeId = null;
+                DistributionFrequency? DistributionFrequency = null;
+                double? DistributionSD = null;
+                double? DistributionMin = null;
+                double? DistributionMax = null;
 
                 if (dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
@@ -1023,11 +1091,69 @@ namespace SyncroSim.STSim
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
-                TransitionAttributeValue attr = new TransitionAttributeValue(
-                    TransitionAttributeTypeId, StratumId, SecondaryStratumId, TertiaryStratumId, Iteration, Timestep, 
-                    TransitionGroupId, StateClassId, AgeMin, AgeMax, Value);
+                if (dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME] != DBNull.Value)
+                {
+                    Value = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
 
-                this.m_TransitionAttributeValues.Add(attr);
+                if (dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionTypeId = Convert.ToInt32(dr[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionFrequency = (DistributionFrequency)(long)dr[Strings.DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME];
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionSD = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONSD_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionMin = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    DistributionMax = Convert.ToDouble(dr[Strings.DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                try
+                {
+                    TransitionAttributeValue Item = new TransitionAttributeValue(
+                        TransitionAttributeTypeId,
+                        StratumId,
+                        SecondaryStratumId,
+                        TertiaryStratumId,
+                        Iteration, Timestep,
+                        TransitionGroupId,
+                        StateClassId,
+                        AgeMin,
+                        AgeMax,
+                        Value,
+                        DistributionTypeId,
+                        DistributionFrequency,
+                        DistributionSD,
+                        DistributionMin,
+                        DistributionMax);
+
+                    Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
+
+                    if (!Item.IsDisabled)
+                    {
+                        this.m_DistributionProvider.Validate(
+                            Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
+                    }
+
+                    this.m_TransitionAttributeValues.Add(Item);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException(ds.DisplayName + " -> " + ex.Message);
+                }              
             }
         }
 

@@ -28,12 +28,50 @@ namespace SyncroSim.STSim
             this.m_DistributionProvider.InitializeExternalVariableValues();
             this.m_DistributionProvider.STSimInitializeDistributionValues();
 
+            this.InitializeStateAttributeValueDistributionValues();
+            this.InitializeTransitionAttributeValueDistributionValues();
             this.InitializeTransitionTargetDistributionValues();
             this.InitializeTransitionAttributeTargetDistributionValues();
             this.InitializeTransitionMultiplierDistributionValues();
             this.InitializeTransitionDirectionMultiplierDistributionValues();
             this.InitializeTransitionSlopeMultiplierDistributionValues();
             this.InitializeTransitionAdjacencyMultiplierDistributionValues();
+        }
+
+        private void InitializeStateAttributeValueDistributionValues()
+        {
+            try
+            {
+                foreach (StateAttributeValue t in this.m_StateAttributeValues)
+                {
+                    if (!t.IsDisabled)
+                    {
+                        t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("State Attribute Values" + " -> " + ex.Message);
+            }
+        }
+
+        private void InitializeTransitionAttributeValueDistributionValues()
+        {
+            try
+            {
+                foreach (TransitionAttributeValue t in this.m_TransitionAttributeValues)
+                {
+                    if (!t.IsDisabled)
+                    {
+                        t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Transition Attribute Values" + " -> " + ex.Message);
+            }
         }
 
         private void InitializeTransitionTargetDistributionValues()
@@ -167,6 +205,54 @@ namespace SyncroSim.STSim
             catch (Exception ex)
             {
                 throw new ArgumentException("Distribution Values" + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Resamples State Attribute values
+        /// </summary>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <param name="frequency"></param>
+        private void ResampleStateAttributeValues(int iteration, int timestep, DistributionFrequency frequency)
+        {
+            try
+            {
+                foreach (StateAttributeValue t in this.m_StateAttributeValues)
+                {
+                    if (!t.IsDisabled)
+                    {
+                        t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("State Attribute Values" + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Resamples Transition Attribute values
+        /// </summary>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <param name="frequency"></param>
+        private void ResampleTransitionAttributeValues(int iteration, int timestep, DistributionFrequency frequency)
+        {
+            try
+            {
+                foreach (TransitionAttributeValue t in this.m_TransitionAttributeValues)
+                {
+                    if (!t.IsDisabled)
+                    {
+                        t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Transition Attribute Values" + " -> " + ex.Message);
             }
         }
 

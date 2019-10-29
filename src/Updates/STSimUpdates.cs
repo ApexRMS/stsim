@@ -400,6 +400,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000103(store);   
             }
+
+            if (currentSchemaVersion < 104)
+            {
+                STSIM0000104(store);   
+            }
         }
 
         /// <summary>
@@ -2676,6 +2681,46 @@ namespace SyncroSim.STSim
             if (store.TableExists("corestime_Maps"))
             {
                 store.ExecuteNonQuery("UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000104
+        /// </summary>
+        /// This update:
+        /// 1.  Removes stsim_AgeGroup.ID
+        /// 2.  Adds distribution columns to the following tables:
+        ///     a. StateAttributeValue
+        ///     b. TransitionAttributeValue
+        /// <param name="store"></param>
+        private static void STSIM0000104(DataStore store)
+        {
+            if (store.TableExists("stsim_AgeGroup"))
+            {
+                //Note that AgeGroupID is AUTOINCREMENT because this table cannot be a validation source.
+
+                store.ExecuteNonQuery("ALTER TABLE stsim_AgeGroup RENAME TO TEMP_TABLE");
+                store.ExecuteNonQuery("CREATE TABLE stsim_AgeGroup(AgeGroupID INTEGER PRIMARY KEY AUTOINCREMENT, ProjectID INTEGER, MaximumAge INTEGER, Color TEXT)");
+                store.ExecuteNonQuery("INSERT INTO stsim_AgeGroup(ProjectID, MaximumAge, Color) SELECT ProjectID, MaximumAge, Color FROM TEMP_TABLE");
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+            }
+
+            if (store.TableExists("stsim_StateAttributeValue"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_StateAttributeValue ADD COLUMN DistributionType INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_StateAttributeValue ADD COLUMN DistributionFrequencyID INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_StateAttributeValue ADD COLUMN DistributionSD DOUBLE");
+                store.ExecuteNonQuery("ALTER TABLE stsim_StateAttributeValue ADD COLUMN DistributionMin DOUBLE");
+                store.ExecuteNonQuery("ALTER TABLE stsim_StateAttributeValue ADD COLUMN DistributionMax DOUBLE");
+            }
+
+            if (store.TableExists("stsim_TransitionAttributeValue"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionType INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionFrequencyID INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionSD DOUBLE");
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionMin DOUBLE");
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionMax DOUBLE");
             }
         }
     }

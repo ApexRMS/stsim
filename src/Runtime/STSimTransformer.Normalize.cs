@@ -2,13 +2,13 @@
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Linq;
 using System.Data;
 using System.Drawing;
+using System.Diagnostics;
 using System.Globalization;
 using SyncroSim.Core;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace SyncroSim.STSim
 {
@@ -562,12 +562,44 @@ namespace SyncroSim.STSim
             {
                 STSimDistributionBaseExpander Expander = new STSimDistributionBaseExpander(this.m_DistributionProvider);
 
+                this.ExpandStateAttributeValues(Expander);
+                this.ExpandTransitionAttributeValues(Expander);
                 this.ExpandTransitionTargets(Expander);
-                this.ExpandTransitionMultipliers(Expander);
                 this.ExpandTransitionAttributeTargets(Expander);
+                this.ExpandTransitionMultipliers(Expander);
                 this.ExpandTransitionDirectionMultipliers(Expander);
                 this.ExpandTransitionSlopeMultipliers(Expander);
                 this.ExpandTransitionAdjacencyMultipliers(Expander);
+            }
+        }
+
+        private void ExpandStateAttributeValues(STSimDistributionBaseExpander expander)
+        {
+            if (this.m_StateAttributeValues.Count > 0)
+            {
+                IEnumerable<STSimDistributionBase> NewItems = expander.Expand(this.m_StateAttributeValues);
+
+                this.m_StateAttributeValues.Clear();
+
+                foreach (StateAttributeValue t in NewItems)
+                {
+                    this.m_StateAttributeValues.Add(t);
+                }
+            }
+        }
+
+        private void ExpandTransitionAttributeValues(STSimDistributionBaseExpander expander)
+        {
+            if (this.m_TransitionAttributeValues.Count > 0)
+            {
+                IEnumerable<STSimDistributionBase> NewItems = expander.Expand(this.m_TransitionAttributeValues);
+
+                this.m_TransitionAttributeValues.Clear();
+
+                foreach (TransitionAttributeValue t in NewItems)
+                {
+                    this.m_TransitionAttributeValues.Add(t);
+                }
             }
         }
 
@@ -586,21 +618,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void ExpandTransitionMultipliers(STSimDistributionBaseExpander expander)
-        {
-            if (this.m_TransitionMultiplierValues.Count > 0)
-            {
-                IEnumerable<STSimDistributionBase> NewItems = expander.Expand(this.m_TransitionMultiplierValues);
-
-                this.m_TransitionMultiplierValues.Clear();
-
-                foreach (TransitionMultiplierValue t in NewItems)
-                {
-                    this.m_TransitionMultiplierValues.Add(t);
-                }
-            }
-        }
-
         private void ExpandTransitionAttributeTargets(STSimDistributionBaseExpander expander)
         {
             if (this.m_TransitionAttributeTargets.Count > 0)
@@ -612,6 +629,21 @@ namespace SyncroSim.STSim
                 foreach (TransitionAttributeTarget t in NewItems)
                 {
                     this.m_TransitionAttributeTargets.Add(t);
+                }
+            }
+        }
+
+        private void ExpandTransitionMultipliers(STSimDistributionBaseExpander expander)
+        {
+            if (this.m_TransitionMultiplierValues.Count > 0)
+            {
+                IEnumerable<STSimDistributionBase> NewItems = expander.Expand(this.m_TransitionMultiplierValues);
+
+                this.m_TransitionMultiplierValues.Clear();
+
+                foreach (TransitionMultiplierValue t in NewItems)
+                {
+                    this.m_TransitionMultiplierValues.Add(t);
                 }
             }
         }

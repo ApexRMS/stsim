@@ -52,7 +52,7 @@ namespace SyncroSim.STSim
                 this.AddItem(item.AttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep, l);
             }
 
-            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.Value);
+            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.CurrentValue);
 
             if (!this.m_TypeGroupMap.ContainsKey(item.TransitionGroupId))
             {

@@ -337,6 +337,8 @@ namespace SyncroSim.STSim
         {
             this.ResampleExternalVariableValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
             this.ResampleDistributionValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
+            this.ResampleStateAttributeValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
+            this.ResampleTransitionAttributeValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
             this.ResampleTransitionTargetValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
             this.ResampleTransitionAttributeTargetValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
             this.ResampleTransitionMultiplierValues(iteration, this.MinimumTimestep, DistributionFrequency.Iteration);
@@ -349,6 +351,8 @@ namespace SyncroSim.STSim
         {
             this.ResampleExternalVariableValues(iteration, timestep, DistributionFrequency.Timestep);
             this.ResampleDistributionValues(iteration, timestep, DistributionFrequency.Timestep);
+            this.ResampleStateAttributeValues(iteration, timestep, DistributionFrequency.Timestep);
+            this.ResampleTransitionAttributeValues(iteration, timestep, DistributionFrequency.Timestep);
             this.ResampleTransitionTargetValues(iteration, timestep, DistributionFrequency.Timestep);
             this.ResampleTransitionAttributeTargetValues(iteration, timestep, DistributionFrequency.Timestep);
             this.ResampleTransitionMultiplierValues(iteration, timestep, DistributionFrequency.Timestep);

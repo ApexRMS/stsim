@@ -69,7 +69,7 @@ namespace SyncroSim.STSim
                     item.StateClassId, item.Iteration, item.Timestep, l);
             }
 
-            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.Value);
+            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.CurrentValue);
             Debug.Assert(this.HasItems);
         }
     }

@@ -345,18 +345,18 @@ namespace SyncroSim.STSim
                 {
                     AgesColl.Add(attr);
 
-                    if (!this.m_StateAttributeTypeIdsAges.ContainsKey(attr.AttributeTypeId))
+                    if (!this.m_StateAttributeTypeIdsAges.ContainsKey(attr.StateAttributeTypeId))
                     {
-                        this.m_StateAttributeTypeIdsAges.Add(attr.AttributeTypeId, true);
+                        this.m_StateAttributeTypeIdsAges.Add(attr.StateAttributeTypeId, true);
                     }
                 }
                 else
                 {
                     NoAgesColl.Add(attr);
 
-                    if (!this.m_StateAttributeTypeIdsNoAges.ContainsKey(attr.AttributeTypeId))
+                    if (!this.m_StateAttributeTypeIdsNoAges.ContainsKey(attr.StateAttributeTypeId))
                     {
-                        this.m_StateAttributeTypeIdsNoAges.Add(attr.AttributeTypeId, true);
+                        this.m_StateAttributeTypeIdsNoAges.Add(attr.StateAttributeTypeId, true);
                     }
                 }
             }
@@ -380,9 +380,9 @@ namespace SyncroSim.STSim
 
             foreach (TransitionAttributeValue attr in this.m_TransitionAttributeValues)
             {
-                if (!this.m_TransitionAttributeTypeIds.ContainsKey(attr.AttributeTypeId))
+                if (!this.m_TransitionAttributeTypeIds.ContainsKey(attr.TransitionAttributeTypeId))
                 {
-                    this.m_TransitionAttributeTypeIds.Add(attr.AttributeTypeId, true);
+                    this.m_TransitionAttributeTypeIds.Add(attr.TransitionAttributeTypeId, true);
                 }
             }
 

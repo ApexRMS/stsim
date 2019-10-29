@@ -43,13 +43,12 @@ namespace SyncroSim.STSim
 
         private void AddAttributeValue(TransitionAttributeValue item)
         {
-            List<AttributeValueRecord> l = this.GetItemExact(item.AttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep);
+            List<AttributeValueRecord> l = this.GetItemExact(item.TransitionAttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep);
 
             if (l == null)
             {
                 l = new List<AttributeValueRecord>();
-
-                this.AddItem(item.AttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep, l);
+                this.AddItem(item.TransitionAttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep, l);
             }
 
             AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.CurrentValue);
@@ -61,9 +60,9 @@ namespace SyncroSim.STSim
 
             Dictionary<int, bool> d = TypeGroupMap[item.TransitionGroupId];
 
-            if (!d.ContainsKey(item.AttributeTypeId))
+            if (!d.ContainsKey(item.TransitionAttributeTypeId))
             {
-                d.Add(item.AttributeTypeId, true);
+                d.Add(item.TransitionAttributeTypeId, true);
             }
 
             Debug.Assert(this.HasItems);

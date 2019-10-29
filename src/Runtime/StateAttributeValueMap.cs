@@ -11,7 +11,6 @@ namespace SyncroSim.STSim
     {
         internal StateAttributeValueMap(Scenario scenario, StateAttributeValueCollection items) : base(scenario)
         {
-
             foreach (StateAttributeValue item in items)
             {
                 this.AddAttributeValue(item);
@@ -57,7 +56,7 @@ namespace SyncroSim.STSim
         private void AddAttributeValue(StateAttributeValue item)
         {
             List<AttributeValueRecord> l = this.GetItemExact(
-                item.AttributeTypeId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
+                item.StateAttributeTypeId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
                 item.StateClassId, item.Iteration, item.Timestep);
 
             if (l == null)
@@ -65,7 +64,7 @@ namespace SyncroSim.STSim
                 l = new List<AttributeValueRecord>();
 
                 this.AddItem(
-                    item.AttributeTypeId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
+                    item.StateAttributeTypeId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
                     item.StateClassId, item.Iteration, item.Timestep, l);
             }
 

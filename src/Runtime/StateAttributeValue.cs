@@ -5,8 +5,13 @@ using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
-    internal class StateAttributeValue : AttributeValueBase
+    internal class StateAttributeValue : STSimDistributionBase
     {
+        private int m_StateAttributeTypeId;
+        private int? m_StateClassId;
+        private int? m_MinimumAge;
+        private int? m_MaximumAge;
+
         public StateAttributeValue(
             int stateAttributeTypeId, 
             int? stratumId, 
@@ -18,23 +23,57 @@ namespace SyncroSim.STSim
             int? minimumAge, 
             int? maximumAge, 
             double? value,
-            int? distributionTypeId, 
+            int? distributionTypeId,
             DistributionFrequency? distributionFrequency,
-            double? distributionSD, 
-            double? distributionMin, 
+            double? distributionSD,
+            double? distributionMin,
             double? distributionMax) : base(
-                stateAttributeTypeId, 
-                iteration, timestep, stratumId, secondaryStratumId, tertiaryStratumId, 
-                stateClassId, minimumAge, maximumAge,
-                value, 
+                iteration, timestep, stratumId, secondaryStratumId, tertiaryStratumId,
+                value,
                 distributionTypeId, distributionFrequency, distributionSD, distributionMin, distributionMax)
         {
+            this.m_StateAttributeTypeId = stateAttributeTypeId;
+            this.m_StateClassId = stateClassId;
+            this.m_MinimumAge = minimumAge;
+            this.m_MaximumAge = maximumAge;
+        }
+
+        public int StateAttributeTypeId
+        {
+            get
+            {
+                return this.m_StateAttributeTypeId;
+            }
+        }
+
+        public int? StateClassId
+        {
+            get
+            {
+                return this.m_StateClassId;
+            }
+        }
+
+        public int? MinimumAge
+        {
+            get
+            {
+                return this.m_MinimumAge;
+            }
+        }
+
+        public int? MaximumAge
+        {
+            get
+            {
+                return this.m_MaximumAge;
+            }
         }
 
         public override STSimDistributionBase Clone()
         {
             return new StateAttributeValue(
-                this.AttributeTypeId,
+                this.StateAttributeTypeId,
                 this.StratumId,
                 this.SecondaryStratumId,
                 this.TertiaryStratumId,

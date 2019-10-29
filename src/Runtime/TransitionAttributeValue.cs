@@ -5,9 +5,13 @@ using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionAttributeValue : AttributeValueBase
+    internal class TransitionAttributeValue : STSimDistributionBase
     {
+        private int m_TransitionAttributeTypeId;
         private int m_TransitionGroupId;
+        private int? m_StateClassId;
+        private int? m_MinimumAge;
+        private int? m_MaximumAge;
 
         public TransitionAttributeValue(
             int transitionAttributeTypeId, 
@@ -26,13 +30,23 @@ namespace SyncroSim.STSim
             double? distributionSD,
             double? distributionMin,
             double? distributionMax) : base(
-                transitionAttributeTypeId,
                 iteration, timestep, stratumId, secondaryStratumId, tertiaryStratumId,
-                stateClassId, minimumAge, maximumAge,
                 value,
                 distributionTypeId, distributionFrequency, distributionSD, distributionMin, distributionMax)
         {
+            this.m_TransitionAttributeTypeId = transitionAttributeTypeId;
             this.m_TransitionGroupId = transitionGroupId;
+            this.m_StateClassId = stateClassId;
+            this.m_MinimumAge = minimumAge;
+            this.m_MaximumAge = maximumAge;
+        }
+
+        public int TransitionAttributeTypeId
+        {
+            get
+            {
+                return this.m_TransitionAttributeTypeId;
+            }
         }
 
         public int TransitionGroupId
@@ -43,10 +57,34 @@ namespace SyncroSim.STSim
             }
         }
 
+        public int? StateClassId
+        {
+            get
+            {
+                return this.m_StateClassId;
+            }
+        }
+
+        public int? MinimumAge
+        {
+            get
+            {
+                return this.m_MinimumAge;
+            }
+        }
+
+        public int? MaximumAge
+        {
+            get
+            {
+                return this.m_MaximumAge;
+            }
+        }
+
         public override STSimDistributionBase Clone()
         {
             return new TransitionAttributeValue(
-                this.AttributeTypeId,
+                this.TransitionAttributeTypeId,
                 this.StratumId,
                 this.SecondaryStratumId,
                 this.TertiaryStratumId,

@@ -365,8 +365,11 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_StateAttributeValueMapNoAges == null);
             Debug.Assert(AgesColl.Count + NoAgesColl.Count == this.m_StateAttributeValues.Count);
 
-            this.m_StateAttributeValueMapAges = new StateAttributeValueMap(this.ResultScenario, AgesColl);
-            this.m_StateAttributeValueMapNoAges = new StateAttributeValueMap(this.ResultScenario, NoAgesColl);
+            this.m_StateAttributeValueMapAges = new StateAttributeValueMap(
+                this.ResultScenario, this.DistributionProvider, AgesColl);
+
+            this.m_StateAttributeValueMapNoAges = new StateAttributeValueMap(
+                this.ResultScenario, this.DistributionProvider, NoAgesColl);
         }
 
         /// <summary>
@@ -387,7 +390,9 @@ namespace SyncroSim.STSim
             }
 
             Debug.Assert(this.m_TransitionAttributeValueMap == null);
-            this.m_TransitionAttributeValueMap = new TransitionAttributeValueMap(this.ResultScenario, this.m_TransitionAttributeValues);
+
+            this.m_TransitionAttributeValueMap = new TransitionAttributeValueMap(
+                this.ResultScenario, this.DistributionProvider, this.m_TransitionAttributeValues);
         }
 
         /// <summary>

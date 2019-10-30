@@ -9,8 +9,15 @@ namespace SyncroSim.STSim
 {
     internal class StateAttributeValueMap : STSimMapBase5<List<AttributeValueRecord>>
     {
-        internal StateAttributeValueMap(Scenario scenario, StateAttributeValueCollection items) : base(scenario)
+        private STSimDistributionProvider m_DistributionProvider;
+
+        internal StateAttributeValueMap(
+            Scenario scenario, 
+            STSimDistributionProvider provider,
+            StateAttributeValueCollection items) : base(scenario)
         {
+            this.m_DistributionProvider = provider;
+
             foreach (StateAttributeValue item in items)
             {
                 this.AddAttributeValue(item);
@@ -27,7 +34,8 @@ namespace SyncroSim.STSim
 
             if (cm != null)
             {
-                return AttributeValueRecord.GetAttributeRecordValueNoAge(cm);
+                return AttributeValueRecord.GetAttributeRecordValueNoAge(
+                    cm, iteration, timestep, this.m_DistributionProvider);
             }
             else
             {
@@ -45,7 +53,8 @@ namespace SyncroSim.STSim
 
             if (cm != null)
             {
-                return AttributeValueRecord.GetAttributeRecordValueByAge(cm, age);
+                return AttributeValueRecord.GetAttributeRecordValueByAge(cm,
+                    iteration, timestep, this.m_DistributionProvider, age);
             }
             else
             {
@@ -68,7 +77,7 @@ namespace SyncroSim.STSim
                     item.StateClassId, item.Iteration, item.Timestep, l);
             }
 
-            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.CurrentValue);
+            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item);
             Debug.Assert(this.HasItems);
         }
     }

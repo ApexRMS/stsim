@@ -9,10 +9,18 @@ namespace SyncroSim.STSim
 {
     internal class TransitionAttributeValueMap : STSimMapBase6<List<AttributeValueRecord>>
     {
-        private Dictionary<int, Dictionary<int, bool>> m_TypeGroupMap = new Dictionary<int, Dictionary<int, bool>>();
+        private STSimDistributionProvider m_DistributionProvider;
 
-        public TransitionAttributeValueMap(Scenario scenario, TransitionAttributeValueCollection transitionAttributes) : base(scenario)
+        private Dictionary<int, Dictionary<int, bool>> m_TypeGroupMap = 
+            new Dictionary<int, Dictionary<int, bool>>();
+
+        public TransitionAttributeValueMap(
+            Scenario scenario, 
+            STSimDistributionProvider provider,
+            TransitionAttributeValueCollection transitionAttributes) : base(scenario)
         {
+            this.m_DistributionProvider = provider;
+
             foreach (TransitionAttributeValue ta in transitionAttributes)
             {
                 this.AddAttributeValue(ta);
@@ -27,13 +35,20 @@ namespace SyncroSim.STSim
             }
         }
 
-        public double? GetAttributeValue(int transitionAttributeTypeId, int transitionGroupId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep, int age)
+        public double? GetAttributeValue(
+            int transitionAttributeTypeId, int transitionGroupId, 
+            int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
+            int stateClassId, int iteration, int timestep, int age)
         {
-            List<AttributeValueRecord> cm = this.GetItem(transitionAttributeTypeId, transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep);
+            List<AttributeValueRecord> cm = this.GetItem(
+                transitionAttributeTypeId, transitionGroupId, 
+                stratumId, secondaryStratumId, tertiaryStratumId, 
+                stateClassId, iteration, timestep);
 
             if (cm != null)
             {
-                return AttributeValueRecord.GetAttributeRecordValueByAge(cm, age);
+                return AttributeValueRecord.GetAttributeRecordValueByAge(
+                    cm, iteration, timestep, this.m_DistributionProvider, age);
             }
             else
             {
@@ -43,15 +58,22 @@ namespace SyncroSim.STSim
 
         private void AddAttributeValue(TransitionAttributeValue item)
         {
-            List<AttributeValueRecord> l = this.GetItemExact(item.TransitionAttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep);
+            List<AttributeValueRecord> l = this.GetItemExact(
+                item.TransitionAttributeTypeId, item.TransitionGroupId, 
+                item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
+                item.StateClassId, item.Iteration, item.Timestep);
 
             if (l == null)
             {
                 l = new List<AttributeValueRecord>();
-                this.AddItem(item.TransitionAttributeTypeId, item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, item.StateClassId, item.Iteration, item.Timestep, l);
+
+                this.AddItem(
+                    item.TransitionAttributeTypeId, item.TransitionGroupId, 
+                    item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
+                    item.StateClassId, item.Iteration, item.Timestep, l);
             }
 
-            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item.CurrentValue);
+            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item);
 
             if (!this.m_TypeGroupMap.ContainsKey(item.TransitionGroupId))
             {

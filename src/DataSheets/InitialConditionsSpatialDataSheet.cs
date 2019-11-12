@@ -66,11 +66,11 @@ namespace SyncroSim.STSim
             }
         }
 
-        protected override void BeforeImportData(DataTable data)
+        protected override void BeforeImportData(DataTable proposedData, string importFileName)
         {
-            base.BeforeImportData(data);
+            base.BeforeImportData(proposedData, importFileName);
 
-            if (data.Rows.Count == 0)
+            if (proposedData.Rows.Count == 0)
             {
                 return;
             }
@@ -87,7 +87,7 @@ namespace SyncroSim.STSim
 
             if (ThisData.DefaultView.Count == 0)
             {
-                FirstRaster = this.LoadRaster(data.Rows[0], Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(proposedData.Rows[0], Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
             }
             else
             {
@@ -98,7 +98,7 @@ namespace SyncroSim.STSim
             {
                 ValidatingRasters?.Invoke(this, new EventArgs());
 
-                foreach (DataRow dr in data.Rows)
+                foreach (DataRow dr in proposedData.Rows)
                 {
                     if (dr.RowState != DataRowState.Deleted)
                     {

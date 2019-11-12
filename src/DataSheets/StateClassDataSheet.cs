@@ -150,9 +150,9 @@ namespace SyncroSim.STSim
             this.m_AllowRowChangeEvents = true;
         }
 
-        protected override void BeforeImportData(DataTable proposedData)
+        protected override void BeforeImportData(DataTable proposedData, string importFileName)
         {
-            base.BeforeImportData(proposedData);
+            base.BeforeImportData(proposedData, importFileName);
 
             this.ValidateSlxSly(proposedData);
             EnsureIsAutoNameColumn(proposedData);

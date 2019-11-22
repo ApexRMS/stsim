@@ -943,9 +943,9 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="Multiprocessing" displayName="ST-Sim Multiprocessing" dataScope="Scenario">
+        <datafeed name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" dataScope="Scenario">
           <datasheets>
-            <datasheet name="Multiprocessing" displayName="ST-Sim Multiprocessing" isSingleRow="True">
+            <datasheet name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" isSingleRow="True">
               <columns>
                 <column name="ProcessingID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -1352,8 +1352,10 @@
         </group>
         <item name="DistributionValue"/>
         <item name="corestime_ExternalVariableValue"/>
-        <item name="Multiprocessing"/>
-        <item name="corestime_Multiprocessing"/>
+        <group name="Multiprocessing">
+          <item name="Multiprocessing"/>
+          <item name="corestime_Multiprocessing"/>
+        </group>
         <item name="corestime_External" displayName="External Program"/>
       </group>
     </layout>

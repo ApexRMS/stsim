@@ -159,7 +159,7 @@ namespace SyncroSim.STSim
                             if (this.m_TransitionSpatialMultiplierRasters.ContainsKey(tsmr.FileName))
                             {
                                 StochasticTimeRaster rastMult = this.m_TransitionSpatialMultiplierRasters[tsmr.FileName];
-                                double spatialMult = rastMult.DblCells[cellId];
+                                double spatialMult = rastMult.GetDoubleValue(cellId);
 
                                 //Test for NODATA_VALUE
 
@@ -205,7 +205,7 @@ namespace SyncroSim.STSim
                         if (this.m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(tsmr.FileName))
                         {
                             StochasticTimeRaster rastMult = this.m_TransitionSpatialInitiationMultiplierRasters[tsmr.FileName];
-                            double spatialMult = rastMult.DblCells[cellId];
+                            double spatialMult = rastMult.GetDoubleValue(cellId);
 
                             //Test for NODATA_VALUE
 

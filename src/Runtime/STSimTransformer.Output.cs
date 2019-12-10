@@ -617,7 +617,7 @@ namespace SyncroSim.STSim
 
                 //Set up a raster as input to the Raster output function
                 StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                rastOP.IntCells = transitionedPixels;
+                rastOP.SetIntValues( transitionedPixels);
 
                 //Dont bother if there haven't been any transitions
                 if ((transitionedPixels.Distinct().Count() > 1) && this.IsRasterTransitionTimestep(timestep))
@@ -666,7 +666,7 @@ namespace SyncroSim.STSim
 
                 //Set up a raster as input to the Raster output function
                 StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                rastOP.IntCells = transitionedPixels;
+                rastOP.SetIntValues(transitionedPixels);
 
                 //Dont bother if there haven't been any transitions
                 if (transitionedPixels.Distinct().Count() > 1)
@@ -698,7 +698,7 @@ namespace SyncroSim.STSim
                 {
                     //Set up a raster as input to the Raster output function
                     StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    rastOP.DblCells = RasterTransitionAttrValues[AttributeId];
+                    rastOP.SetDoubleValues( RasterTransitionAttrValues[AttributeId]);
 
                     Spatial.WriteRasterData(
                         rastOP, 
@@ -1387,19 +1387,19 @@ namespace SyncroSim.STSim
                 // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
                 {
-                    rastOutput.IntCells[c.CellId] = c.StateClassId;
+                    rastOutput.SetIntValue(c.CellId, c.StateClassId);
                 }
 
                 // We need to remap the State Class values back to the original Raster values ( PK - > ID)
                 DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
 
                 //DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
-                rastOutput.IntCells = Spatial.RemapRasterCells(
-                    rastOutput.IntCells, 
+                rastOutput.SetIntValues( Spatial.RemapRasterCells(
+                    rastOutput.GetIntValuesCopy(), 
                     dsRemap, 
                     Strings.DATASHEET_MAPID_COLUMN_NAME, 
                     false, 
-                    Spatial.DefaultNoDataValue);
+                    Spatial.DefaultNoDataValue));
 
                 Spatial.WriteRasterData(
                     rastOutput,
@@ -1431,7 +1431,7 @@ namespace SyncroSim.STSim
                 // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
                 {
-                    rastOutput.IntCells[c.CellId] = c.Age;
+                    rastOutput.SetIntValue(c.CellId, c.Age);
                 }
 
                 Spatial.WriteRasterData(
@@ -1470,15 +1470,13 @@ namespace SyncroSim.STSim
                             // Make sure the TstValues contains our TransitionGroupId
                             if (cell.TstValues.Contains(tg.TransitionGroupId))
                             {
-                                rastOutput.IntCells[cell.CellId] = cell.TstValues[tg.TransitionGroupId].TstValue;
+                                rastOutput.SetIntValue(cell.CellId, cell.TstValues[tg.TransitionGroupId].TstValue);
                             }
                         }
                     }
 
                     // If no values other than NODATAValue in rastOutput, then supress output for this timestep
-                    var distinctVals = rastOutput.IntCells.Distinct();
-
-                    if (distinctVals.Count() > 1 || (distinctVals.Count() == 1 && distinctVals.First() != Spatial.DefaultNoDataValue))
+                    if (rastOutput.GetNumberValidCells() > 0)
                     {
                         Spatial.WriteRasterData(
                             rastOutput,
@@ -1512,7 +1510,7 @@ namespace SyncroSim.STSim
                 foreach (Cell c in this.Cells)
                 {
                     // Fetch the raster data from the Cells collection
-                    rastOutput.IntCells[c.CellId] = c.StratumId;
+                    rastOutput.SetIntValue(c.CellId, c.StratumId);
                 }
 
                 // We need to remap the Stratum values back to the original Raster values ( PK - > ID)
@@ -1520,12 +1518,12 @@ namespace SyncroSim.STSim
 
                 //DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
 
-                rastOutput.IntCells = Spatial.RemapRasterCells(
-                    rastOutput.IntCells, 
+                rastOutput.SetIntValues(Spatial.RemapRasterCells(
+                    rastOutput.GetIntValuesCopy(), 
                     dsRemap, 
                     Strings.DATASHEET_MAPID_COLUMN_NAME, 
                     false, 
-                    Spatial.DefaultNoDataValue);
+                    Spatial.DefaultNoDataValue));
 
                 Spatial.WriteRasterData(
                     rastOutput,
@@ -1558,18 +1556,15 @@ namespace SyncroSim.STSim
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
                 {
-                    rastOutput.InitDblCells();
 
                     foreach (Cell c in this.Cells)
                     {
                         double? AttrValue = this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
                             AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep);
 
-                        //If no value, then use NO_DATA (initialized above), otherwise AttrValue
-
                         if (AttrValue != null)
                         {
-                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+                            rastOutput.SetDoubleValue(c.CellId, Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture));
                         }
                     }
 
@@ -1585,18 +1580,15 @@ namespace SyncroSim.STSim
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsAges.Keys)
                 {
-                    rastOutput.InitDblCells();
 
                     foreach (Cell c in this.Cells)
                     {
                         double? AttrValue = this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
                             AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep, c.Age);
 
-                        //If no value, then use NO_DATA, otherwise AttrValue
-
                         if (AttrValue != null)
                         {
-                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+                            rastOutput.SetDoubleValue(c.CellId, Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture));
                         }
                     }
 
@@ -1667,6 +1659,7 @@ namespace SyncroSim.STSim
 
                     if (stateAttributeValueMap != null)
                     {
+                        //TODO: TKR This might benefit from memory compression save as other rasters
                         stateAttrVals = new double[this.m_InputRasters.NumberCells];
 
                         for (var i = 0; i < this.m_InputRasters.NumberCells; i++)
@@ -1711,6 +1704,7 @@ namespace SyncroSim.STSim
                         double attrValueTotal = 0;
                         int attrValueCnt = 0;
 
+                        //TODO: TKR This might benefit from memory compression save as other rasters
                         stateAttrAvgs = new double[this.m_InputRasters.NumberCells];
 
                         for (int i = 0; i < this.m_InputRasters.NumberCells; i++)
@@ -1802,7 +1796,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    rastAatp.DblCells = aatp;
+                    rastAatp.SetDoubleValues( aatp);
 
                     Spatial.WriteRasterData(
                         rastAatp, 

@@ -72,77 +72,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int[] PrimaryStratumCells
-        {
-            get
-            {
-                return this.m_PrimaryStratumRaster.IntCells;
-            }
-            set
-            {
-                this.m_PrimaryStratumRaster.IntCells = value;
-            }
-        }
-
-        public int[] SecondaryStratumCells
-        {
-            get
-            {
-                return this.m_SecondaryStratumRaster.IntCells;
-            }
-            set
-            {
-                this.m_SecondaryStratumRaster.IntCells = value;
-            }
-        }
-
-        public int[] TertiaryStratumCells
-        {
-            get
-            {
-                return this.m_TertiaryStratumRaster.IntCells;
-            }
-            set
-            {
-                this.m_TertiaryStratumRaster.IntCells = value;
-            }
-        }
-
-        public int[] SClassCells
-        {
-            get
-            {
-                return this.m_StateClassRaster.IntCells;
-            }
-            set
-            {
-                this.m_StateClassRaster.IntCells = value;
-            }
-        }
-
-        public int[] AgeCells
-        {
-            get
-            {
-                return this.m_AgeRaster.IntCells;
-            }
-            set
-            {
-                this.m_AgeRaster.IntCells = value;
-            }
-        }
-
-        public double[] DemCells
-        {
-            get
-            {
-                return this.m_DEMRaster.DblCells;
-            }
-            set
-            {
-                this.m_DEMRaster.DblCells = value;
-            }
-        }
 
         public string Projection
         {
@@ -353,15 +282,6 @@ namespace SyncroSim.STSim
                 this.m_NoDataValue,
                 false, 
                 Spatial.UndefinedRasterBand);
-
-            if (dataType == RasterDataType.DTInteger)
-            {
-                rast.InitIntCells();
-            }
-            else
-            {
-                rast.InitDblCells();
-            }
 
             return rast;
         }

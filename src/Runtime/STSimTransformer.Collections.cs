@@ -87,7 +87,7 @@ namespace SyncroSim.STSim
                 if (this.IsSpatial)
                 {
                     //Only create a Cell in the Collection if Stratum or StateClass <>0, to conserve memory.
-                    if (this.m_InputRasters.SClassCells[CellId] == 0 || this.m_InputRasters.PrimaryStratumCells[CellId] == 0)
+                    if (this.m_InputRasters.StateClassRaster.GetIntValue(CellId) == 0 || this.m_InputRasters.PrimaryStratumRaster.GetIntValue(CellId) == 0)
                     {
                         continue;
                     }

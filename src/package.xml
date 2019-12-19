@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.12" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.13" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -1376,7 +1376,7 @@
   </layouts>
   <updateProvider
     schemaVersion="105"
-    minPackageVersion="3.2.12"
+    minPackageVersion="3.2.13"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

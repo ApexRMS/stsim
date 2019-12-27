@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Collections.Generic;
+using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
@@ -24,7 +25,7 @@ namespace SyncroSim.STSim
         private TransitionPatchPrioritizationMap m_TransitionPatchPrioritizationMap;
         private TransitionSizePrioritizationMap m_TransitionSizePrioritizationMap;
         private Dictionary<int, bool> m_TransitionAttributeTypeIds;
-        private Dictionary<int, double[]> m_TransitionAdjacencyStateAttributeValueMap = new Dictionary<int, double[]>();
+        private Dictionary<int, RasterDoubles> m_TransitionAdjacencyStateAttributeValueMap = new Dictionary<int, RasterDoubles>();
         private TransitionPathwayAutoCorrelationMap m_TransitionPathwayAutoCorrelationMap;
 
         private TstRandomizeMap m_TstRandomizeMap;
@@ -35,7 +36,7 @@ namespace SyncroSim.STSim
         private InitialConditionsSpatialMap m_InitialConditionsSpatialMap;
         private Dictionary<int, bool> m_StateAttributeTypeIdsAges;
         private Dictionary<int, bool> m_StateAttributeTypeIdsNoAges;
-        private Dictionary<int, Dictionary<int, double[]>> m_AnnualAvgTransitionProbMap = new Dictionary<int, Dictionary<int, double[]>>();
+        private Dictionary<int, Dictionary<int, RasterDoubles>> m_AnnualAvgTransitionProbMap = new Dictionary<int, Dictionary<int, RasterDoubles>>();
         private IntervalMeanTimestepMap m_IntervalMeanTimestepMap;
         private ProportionAccumulatorMap m_ProportionAccumulatorMap;
 

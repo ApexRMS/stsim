@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Common;
 using SyncroSim.StochasticTime;
+using SyncroSim.STSim.Shared;
 
 namespace SyncroSim.STSim
 {
@@ -1613,7 +1614,7 @@ namespace SyncroSim.STSim
         /// At the Landscape Update Frequency specified above generate a raster of the state attribute in question 
         /// and then do a moving window analysis of the raster such that for each cell the average value of the state 
         /// attribute within it’s neighborhood radius is calculated. Create an in memory raster array of the moving 
-        /// window analysis results. Hold on to this raster in memory (as a single dimensional arrary) which can be accessed when needed.
+        /// window analysis results. Hold on to this raster in memory (as a single dimensional array) which can be accessed when needed.
         /// </remarks>
         private void ProcessTransitionAdjacencyStateAttribute(int iteration, int timestep)
         {
@@ -1704,7 +1705,6 @@ namespace SyncroSim.STSim
                         double attrValueTotal = 0;
                         int attrValueCnt = 0;
 
-                        //TODO: TKR This might benefit from memory compression save as other rasters
                         stateAttrAvgs = new double[this.m_InputRasters.NumberCells];
 
                         for (int i = 0; i < this.m_InputRasters.NumberCells; i++)
@@ -1746,7 +1746,10 @@ namespace SyncroSim.STSim
                         // Remove the old value array from the map, to be replaced with new array
                         this.m_TransitionAdjacencyStateAttributeValueMap.Remove(setting.TransitionGroupId);
 
-                        this.m_TransitionAdjacencyStateAttributeValueMap.Add(setting.TransitionGroupId, stateAttrAvgs);
+                        //DEVNOTE: We've switched from double[] to RasterDouble to benefit from memory compression
+                        RasterDoubles vals = new RasterDoubles(this.m_InputRasters.NumberCells);
+                        vals.SetValues(stateAttrAvgs);
+                        this.m_TransitionAdjacencyStateAttributeValueMap.Add(setting.TransitionGroupId, vals);
                     }
                 }
             }
@@ -1771,32 +1774,23 @@ namespace SyncroSim.STSim
 
             foreach (int tgId in this.m_AnnualAvgTransitionProbMap.Keys)
             {
-                Dictionary<int, double[]> dictAatp = this.m_AnnualAvgTransitionProbMap[tgId];
+                Dictionary<int, RasterDoubles> dictAatp = this.m_AnnualAvgTransitionProbMap[tgId];
 
                 // Now lets loop thru the timestep arrays in the dictAatp
                 foreach (int timestep in dictAatp.Keys)
                 {
-                    double[] aatp = dictAatp[timestep];
                     StochasticTimeRaster rastAatp = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    rastAatp.SetDoubleValues(dictAatp[timestep].GetValuesCopy());
 
-                    //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
-                    var aatpDistinct = aatp.Distinct();
-
-                    if (aatpDistinct.Count() == 1)
+                    //Don't bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
+                    if (rastAatp.GetNumberValidCells() == 0)
                     {
-                        Debug.Print("Skipping Annual Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                        Debug.Print(
+                            "Skipping Annual Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.",
+                            tgId, timestep);
                         continue;
-                    }
-                    else if (aatpDistinct.Count() == 2)
-                    {
-                        if (aatpDistinct.ElementAt(0) <= 0 && aatpDistinct.ElementAt(1) <= 0)
-                        {
-                            Debug.Print("Skipping Annual Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
-                            continue;
-                        }
-                    }
 
-                    rastAatp.SetDoubleValues( aatp);
+                    }
 
                     Spatial.WriteRasterData(
                         rastAatp, 
@@ -1849,9 +1843,9 @@ namespace SyncroSim.STSim
                 Debug.Assert(false, "Where the heck is the Transition Group in the m_AnnualAvgTransitionProbMap member ?");
             }
 
-            Dictionary<int, double[]> dictTgAATP = this.m_AnnualAvgTransitionProbMap[transitionGroupId];
+            Dictionary<int, RasterDoubles> dictTgAATP = this.m_AnnualAvgTransitionProbMap[transitionGroupId];
 
-            // We should now have a Dictionary of timestep-keyed Double arrays
+            // We should now have a Dictionary of timestep-keyed RasterDouble objects
             // See if the specified timestep is a multiple of user timestep specified, or last timestep
             int timestepKey = 0;
 
@@ -1871,7 +1865,7 @@ namespace SyncroSim.STSim
             }
 
             // We should be able to find a dictionary
-            double[] aatp = null;
+            RasterDoubles aatp = null;
 
             if (dictTgAATP.ContainsKey(timestepKey))
             {
@@ -1889,7 +1883,6 @@ namespace SyncroSim.STSim
                 //Test for > 0 ( and not equal to DEFAULT_NO_DATA_VALUE either )
                 if (cellArray[i] > 0)
                 {
-                    Debug.Assert(aatp[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
 
                     // Now lets do the probability calculation
                     //The value to increment by is 1/(tsf*N) 
@@ -1899,11 +1892,13 @@ namespace SyncroSim.STSim
 
                     if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_RasterAATPTimesteps) != 0))
                     {
-                        aatp[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_RasterAATPTimesteps * numIterations);
+                        Double val = aatp.GetValue(i);
+                        aatp.SetValue(i, val += 1 / (double)((timestepKey - this.TimestepZero) % this.m_RasterAATPTimesteps * numIterations));
                     }
                     else
                     {
-                        aatp[i] += 1 / (double)(this.m_RasterAATPTimesteps * numIterations);
+                        Double val = aatp.GetValue(i);
+                        aatp.SetValue(i, val += 1 / (double)(this.m_RasterAATPTimesteps * numIterations));
                     }
                 }
             }

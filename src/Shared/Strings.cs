@@ -391,9 +391,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME = "stsim_OutputTransitionAttribute";
 
         //Charting Variables
-        public const string STATE_CLASS_AMOUNT_VARIABLE_NAME = "STSimStateClassNormalVariable";
-        public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "STSimStateClassProportionVariable";
-        public const string TRANSITION_AMOUNT_VARIABLE_NAME = "STSimTransitionNormalVariable";
-        public const string TRANSITION_PROPORTION_VARIABLE_NAME = "STSimTransitionProportionVariable";
+        public const string STATE_CLASS_AMOUNT_VARIABLE_NAME = "stsim_StateClassNormalVariable";
+        public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportionVariable";
+        public const string TRANSITION_AMOUNT_VARIABLE_NAME = "stsim_TransitionNormalVariable";
+        public const string TRANSITION_PROPORTION_VARIABLE_NAME = "stsim_TransitionProportionVariable";
     }
 }

@@ -15,16 +15,16 @@ namespace SyncroSim.STSim
 {
     internal class STSimChartProvider : ChartProvider
     {
-        private const string DENSITY_GROUP_NAME = "stsim_density_group";
+        private const string DENSITY_GROUP_NAME = "stsim_DensityGroup";
 
         public override void RefreshCriteria(SyncroSimLayout layout, Project project)
         {
             using (DataStore store = project.Library.CreateDataStore())
             {
-                SyncroSimLayoutItem g0 = new SyncroSimLayoutItem("StateClassGroup", "State Classes", true);
-                SyncroSimLayoutItem g1 = new SyncroSimLayoutItem("TransitionGroup", "Transitions", true);
-                SyncroSimLayoutItem g2 = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
-                SyncroSimLayoutItem g3 = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
+                SyncroSimLayoutItem g0 = new SyncroSimLayoutItem("stsim_StateClassVariableGroup", "State Classes", true);
+                SyncroSimLayoutItem g1 = new SyncroSimLayoutItem("stsim_TransitionVariableGroup", "Transitions", true);
+                SyncroSimLayoutItem g2 = new SyncroSimLayoutItem("stsim_StateAttributeVariableGroup", "State Attributes", true);
+                SyncroSimLayoutItem g3 = new SyncroSimLayoutItem("stsim_TransitionAttributeVariableGroup", "Transition Attributes", true);
 
                 DataSheet AttrGroupDataSheet = project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
                 DataView AttrGroupView = CreateChartAttributeGroupsView(project, store);
@@ -169,10 +169,10 @@ namespace SyncroSim.STSim
                 string[] s = descriptor.VariableName.Split('-');
 
                 Debug.Assert(s.Count() == 2);
-                Debug.Assert(s[0] == "attrnormal" || s[0] == "attrdensity");
+                Debug.Assert(s[0] == "stsim_AttrNormal" || s[0] == "stsim_AttrDensity");
 
                 int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);
-                bool IsDensity = (s[0] == "attrdensity");
+                bool IsDensity = (s[0] == "stsim_AttrDensity");
                 string ColumnName = null;
 
                 if (descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME)
@@ -325,7 +325,7 @@ namespace SyncroSim.STSim
                     //Normal Attribute
                     //----------------
 
-                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "attrnormal-{0}", AttrId);
+                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "stsim_AttrNormal-{0}", AttrId);
                     string DisplayNameNormal = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)
@@ -351,7 +351,7 @@ namespace SyncroSim.STSim
                     //Density Attribute
                     //-----------------
 
-                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "attrdensity-{0}", AttrId);
+                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "stsim_AttrDensity-{0}", AttrId);
                     string DisplayNameDensity = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)
@@ -404,7 +404,7 @@ namespace SyncroSim.STSim
                     //Normal Attribute
                     //----------------
 
-                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "attrnormal-{0}", AttrId);
+                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "stsim_AttrNormal-{0}", AttrId);
                     string DisplayNameNormal = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)
@@ -430,7 +430,7 @@ namespace SyncroSim.STSim
                     //Density Attribute
                     //-----------------
 
-                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "attrdensity-{0}", AttrId);
+                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "stsim_AttrDensity-{0}", AttrId);
                     string DisplayNameDensity = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)

@@ -629,7 +629,7 @@ namespace SyncroSim.STSim
                         iteration, 
                         timestep, 
                         transitionGroupId, 
-                        Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, 
+                        Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
                 
@@ -678,7 +678,7 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         transitionGroupId,
-                        Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX,
+                        Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_FILEPREFIX_PREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }               
             }
@@ -707,7 +707,7 @@ namespace SyncroSim.STSim
                         iteration, 
                         timestep, 
                         AttributeId,
-                        Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, 
+                        Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1408,7 +1408,7 @@ namespace SyncroSim.STSim
                     iteration,
                     timestep,
                     null,
-                    Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME,
+                    Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1441,7 +1441,7 @@ namespace SyncroSim.STSim
                     iteration, 
                     timestep,
                      null,                     
-                    Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, 
+                    Constants.SPATIAL_MAP_AGE_FILEPREFIX_NAME, 
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1485,7 +1485,7 @@ namespace SyncroSim.STSim
                             iteration,
                             timestep,
                             tg.TransitionGroupId,
-                            Constants.SPATIAL_MAP_TST_VARIABLE_NAME, 
+                            Constants.SPATIAL_MAP_TST_FILEPREFIX_NAME, 
                             Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                     }
                 }
@@ -1532,7 +1532,7 @@ namespace SyncroSim.STSim
                     iteration,
                     timestep,
                     null,
-                    Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME,
+                    Constants.SPATIAL_MAP_STRATUM_FILEPREFIX_NAME,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1575,7 +1575,7 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         AttributeTypeId,
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX,
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
 
@@ -1599,7 +1599,7 @@ namespace SyncroSim.STSim
                         iteration, 
                         timestep, 
                         AttributeTypeId, 
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, 
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1798,7 +1798,7 @@ namespace SyncroSim.STSim
                         0, 
                         timestep, 
                         tgId, 
-                        Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, 
+                        Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }

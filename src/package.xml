@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.10" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.13" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -24,9 +24,9 @@
       classAssembly="SyncroSim.STSim"
       configurationSheet="RunControl">
       <datafeeds>
-        <datafeed name="Stratum" displayName="Strata" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel">
+        <datafeed name="Stratum" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel">
           <datasheets>
-            <datasheet name="Stratum" displayName="Strata" valueMember="StratumID" displayMember="Name" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel">
+            <datasheet name="Stratum" valueMember="StratumID" displayMember="Name" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel">
               <columns>
                 <column name="StratumID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
@@ -269,9 +269,9 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="Terminology" displayName="Terminology" dataScope="Project">
+        <datafeed name="Terminology" dataScope="Project">
           <datasheets>
-            <datasheet name="Terminology" displayName="Terminology" isSingleRow="True">
+            <datasheet name="Terminology" isSingleRow="True">
               <columns>
                 <column name="TerminologyID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
@@ -943,9 +943,9 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="Multiprocessing" displayName="ST-Sim Multiprocessing" dataScope="Scenario">
+        <datafeed name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" dataScope="Scenario">
           <datasheets>
-            <datasheet name="Multiprocessing" displayName="ST-Sim Multiprocessing" isSingleRow="True">
+            <datasheet name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" isSingleRow="True">
               <columns>
                 <column name="ProcessingID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -1316,7 +1316,7 @@
     <layout name="coreforms_ScenarioDatafeeds">
       <item name="RunControl"/>
       <item name="Transition" displayName="Transition Pathways"/>
-      <group name="Initial Conditions">
+      <group name="InitialConditions" displayName="Initial Conditions">
         <item name="InitialConditionsNonSpatial" displayName="Non Spatial"/>
         <item name="InitialConditionsSpatial" displayName="Spatial"/>
       </group>
@@ -1324,8 +1324,8 @@
       <item name="OutputOptions"/>
       <group name="Advanced">
         <item name="TransitionMultiplierValue" displayName="Transitions - Multipliers"/>
-        <group name="Transitions - Spatial">
-          <group name="Transition Size">
+        <group name="TransitionsSpatialGroup" displayName="Transitions - Spatial">
+          <group name="TransitionSizeGroup" displayName="Transition Size">
             <item name="TransitionSizeDistribution"/>
             <item name="TransitionSizePrioritization"/>
           </group>
@@ -1340,7 +1340,7 @@
         </group>
         <item name="TransitionOrder" displayName="Transitions - Order"/>
         <item name="TransitionTargetPrioritization" displayName="Transitions - Target Prioritization"/>
-        <group name="Time Since Transition">
+        <group name="TSTGroup" displayName="Time Since Transition">
           <item name="TimeSinceTransitionGroup"/>
           <item name="TimeSinceTransitionRandomize"/>
         </group>
@@ -1352,8 +1352,10 @@
         </group>
         <item name="DistributionValue"/>
         <item name="corestime_ExternalVariableValue"/>
-        <item name="Multiprocessing"/>
-        <item name="corestime_Multiprocessing"/>
+        <group name="Multiprocessing">
+          <item name="Multiprocessing"/>
+          <item name="corestime_Multiprocessing"/>
+        </group>
         <item name="corestime_External" displayName="External Program"/>
       </group>
     </layout>
@@ -1373,8 +1375,8 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="104"
-    minPackageVersion="3.2.9"
+    schemaVersion="105"
+    minPackageVersion="3.2.13"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

@@ -405,6 +405,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000104(store);   
             }
+
+            if (currentSchemaVersion < 105)
+            {
+                STSIM0000105(store);   
+            }
         }
 
         /// <summary>
@@ -2722,6 +2727,44 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionMin DOUBLE");
                 store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue ADD COLUMN DistributionMax DOUBLE");
             }
+        }
+
+        /// <summary>
+        /// STSIM0000105
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update will apply namespace prefixes to chart and map criteria.
+        /// </remarks>
+        private static void STSIM0000105(DataStore store)
+        {
+            if (store.TableExists("corestime_Charts"))
+            {
+                store.ExecuteNonQuery("UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'StateClassGroup', 'stsim_StateClassVariableGroup')");
+                store.ExecuteNonQuery("UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'TransitionGroup-disagg', 'stsim_TransitionVariableGroup-disagg')");
+                store.ExecuteNonQuery("UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'TransitionGroup-include', 'stsim_TransitionVariableGroup-include')");
+                store.ExecuteNonQuery("UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'StateAttributeGroup', 'stsim_StateAttributeVariableGroup')");
+                store.ExecuteNonQuery("UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'TransitionAttributeGroup', 'stsim_TransitionAttributeVariableGroup')");
+            }
+
+            UpdateProvider.RenameChartVariable(store, "STSimStateClassNormalVariable", "stsim_StateClassNormalVariable");
+            UpdateProvider.RenameChartVariable(store, "STSimStateClassProportionVariable", "stsim_StateClassProportionVariable");
+            UpdateProvider.RenameChartVariable(store, "STSimTransitionNormalVariable", "stsim_TransitionNormalVariable");
+            UpdateProvider.RenameChartVariable(store, "STSimTransitionProportionVariable", "stsim_TransitionProportionVariable");
+            UpdateProvider.RenameChartVariable(store, "attrnormal", "stsim_AttrNormal");
+            UpdateProvider.RenameChartVariable(store, "attrdensity", "stsim_AttrDensity");
+
+            UpdateProvider.RenameMapVariable(store, "str", "stsim_str");
+            UpdateProvider.RenameMapVariable(store, "secstr", "stsim_secstr");
+            UpdateProvider.RenameMapVariable(store, "terstr", "stsim_terstr");
+            UpdateProvider.RenameMapVariable(store, "sc", "stsim_sc");
+            UpdateProvider.RenameMapVariable(store, "tg", "stsim_tg");
+            UpdateProvider.RenameMapVariable(store, "age", "stsim_age");
+            UpdateProvider.RenameMapVariable(store, "tst", "stsim_tst");
+            UpdateProvider.RenameMapVariable(store, "sa", "stsim_sa");
+            UpdateProvider.RenameMapVariable(store, "ta", "stsim_ta");
+            UpdateProvider.RenameMapVariable(store, "tge", "stsim_tge");
+            UpdateProvider.RenameMapVariable(store, "tgap", "stsim_tgap");
         }
     }
 }

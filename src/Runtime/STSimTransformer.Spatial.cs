@@ -2457,7 +2457,7 @@ namespace SyncroSim.STSim
                 "It{0}-Ts{1}-{2}",
                 iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME);
+                Constants.SPATIAL_MAP_STRATUM_FILEPREFIX_NAME);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2470,7 +2470,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture, "It{0}-Ts{1}-{2}",
                 iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME);
+                Constants.SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX_NAME);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2483,7 +2483,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture,
                 "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME);
+                Constants.SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX_NAME);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2496,7 +2496,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture,
                 "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME);
+                Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2510,7 +2510,7 @@ namespace SyncroSim.STSim
                 "It{0}-Ts{1}-{2}.tif",
                 iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_AGE_VARIABLE_NAME);
+                Constants.SPATIAL_MAP_AGE_FILEPREFIX_NAME);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);

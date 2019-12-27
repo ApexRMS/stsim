@@ -49,26 +49,39 @@ namespace SyncroSim.STSim
         public static Color PROBABILISTIC_TRANSITION_LINE_COLOR = Color.CornflowerBlue;
 
         //Spatial
-        public const string SPATIAL_MAP_EXPORT_STATE_CLASS_VARIABLE_NAME = "SClass";
-        public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME = "sc";
         public const string SPATIAL_MAP_EXPORT_STRATUM_VARIABLE_NAME = "Stratum";
-        public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "str";
-        public const string SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME = "secstr";
-        public const string SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME = "terstr";
-        public const string SPATIAL_MAP_EXPORT_AGE_VARIABLE_NAME = "Age";
-        public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "age";
+        public const string SPATIAL_MAP_EXPORT_STATE_CLASS_VARIABLE_NAME = "SClass";
         public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_VARIABLE_PREFIX = "Tg";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "tg";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "Tge";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "tge";
+        public const string SPATIAL_MAP_EXPORT_AGE_VARIABLE_NAME = "Age";
         public const string SPATIAL_MAP_EXPORT_TST_VARIABLE_NAME = "Tst";
-        public const string SPATIAL_MAP_TST_VARIABLE_NAME = "tst";
         public const string SPATIAL_MAP_EXPORT_STATE_ATTRIBUTE_VARIABLE_PREFIX = "Sa";
-        public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "sa";
         public const string SPATIAL_MAP_EXPORT_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "Ta";
-        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "ta";
+        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "Tge";
         public const string SPATIAL_MAP_EXPORT_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "Tgap";
-        public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "tgap";
+
+        public const string SPATIAL_MAP_STRATUM_FILEPREFIX_NAME = "str";
+        public const string SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX_NAME = "secstr";
+        public const string SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX_NAME = "terstr";
+        public const string SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME = "sc";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX_PREFIX = "tg";
+        public const string SPATIAL_MAP_AGE_FILEPREFIX_NAME = "age";
+        public const string SPATIAL_MAP_TST_FILEPREFIX_NAME = "tst";
+        public const string SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX = "sa";
+        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX = "ta";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_FILEPREFIX_PREFIX = "tge";
+        public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX = "tgap";
+
+        public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";
+        public const string SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME = "stsim_secstr";
+        public const string SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME = "stsim_terstr";
+        public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME = "stsim_sc";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
+        public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "stsim_age";
+        public const string SPATIAL_MAP_TST_VARIABLE_NAME = "stsim_tst";
+        public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
+        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
+        public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
 
         //Spatial Output Datasheets
         public const string DATASHEET_OUTPUT_SPATIAL_STRATUM = "stsim_OutputSpatialStratum";

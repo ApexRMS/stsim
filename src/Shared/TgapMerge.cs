@@ -82,7 +82,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_rasterMerge.DataType == RasterDataType.DTDouble);
             StochasticTimeRaster OutRast = new StochasticTimeRaster(mergedRasterOutputFilename, this.m_rasterMerge);
 
-            OutRast.SetDoubleValues(this.m_rasterMerge.GetDoubleValuesCopy());
+            OutRast.DblCells = this.m_rasterMerge.DblCells;
             OutRast.Save(compressionType);
 
             Debug.Print("Saved Merged TGAP file to '" + mergedRasterOutputFilename + "'");

@@ -144,7 +144,7 @@ namespace SyncroSim.STSim
                 DataRow FirstRow = ThisData.DefaultView[0].Row;
                 StochasticTimeRaster FirstRast = this.LoadRaster(FirstRow, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
 
-                if (FirstRast.GetNumberValidCells() == 0)
+                if (FirstRast.IntCells == null)
                 {
                     FirstRast.LoadData();
                 }

@@ -87,7 +87,7 @@ namespace SyncroSim.STSim
                 if (this.IsSpatial)
                 {
                     //Only create a Cell in the Collection if Stratum or StateClass <>0, to conserve memory.
-                    if (this.m_InputRasters.StateClassRaster.GetIntValue(CellId) == 0 || this.m_InputRasters.PrimaryStratumRaster.GetIntValue(CellId) == 0)
+                    if (this.m_InputRasters.SClassCells[CellId] == 0 || this.m_InputRasters.PrimaryStratumCells[CellId] == 0)
                     {
                         continue;
                     }
@@ -1803,17 +1803,7 @@ namespace SyncroSim.STSim
                     TransitionSpatialMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName);
 
                 string tsmFilename = Spatial.GetSpatialInputFileName(ds, FileName, false);
-
-                Stopwatch sw = Stopwatch.StartNew();
-                StochasticTimeRaster rastTSM = LoadMaskedInputRaster(tsmFilename, RasterDataType.DTDouble);
-                sw.Stop();
-
-                //DEVNOTE: Debug Message
-                String msg1 = string.Format(CultureInfo.InvariantCulture, "Loaded TSM raster file {0}. Number of valid cells:{1}, Mem:{2:N0}, # of msec:{3}",
-                tsmFilename, rastTSM.GetNumberValidCells(), Process.GetCurrentProcess().PrivateMemorySize64,sw.ElapsedMilliseconds);
-//                RecordStatus(StatusType.Information, msg1);
-
-
+                StochasticTimeRaster rastTSM = new StochasticTimeRaster(tsmFilename, RasterDataType.DTDouble);
                 string compareMsg = "";
 
                 //Compare the TSM raster metadata to that of the Initial Condition raster files
@@ -1836,7 +1826,7 @@ namespace SyncroSim.STSim
                     this.m_TransitionSpatialMultipliers.Add(Multiplier);
 
                     //We only want to store a single copy of each unique TSM raster file to conserve memory
-                    // DEVNOTE: This check could go higher up so we dont have to waste time opening the raster file
+
                     if (!m_TransitionSpatialMultiplierRasters.ContainsKey(FileName))
                     {
                         this.m_TransitionSpatialMultiplierRasters.Add(FileName, rastTSM);
@@ -1885,14 +1875,7 @@ namespace SyncroSim.STSim
                     TransitionSpatialInitiationMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName);
 
                 string tsimFilename = Spatial.GetSpatialInputFileName(ds, FileName, false);
-                Stopwatch sw = Stopwatch.StartNew();
-                StochasticTimeRaster rastTSIM = LoadMaskedInputRaster(tsimFilename, RasterDataType.DTDouble);
-                sw.Stop();
-                //DEVNOTE: Debug Message
-                String msg1 = string.Format(CultureInfo.InvariantCulture, "Loaded TSIM raster file {0}. Number of valid cells:{1}, Mem:{2:N0}, # of msec:{3}",
-                    tsimFilename, rastTSIM.GetNumberValidCells(), Process.GetCurrentProcess().PrivateMemorySize64, sw.ElapsedMilliseconds);
-//                RecordStatus(StatusType.Information, msg1);
-
+                StochasticTimeRaster rastTSIM = new StochasticTimeRaster(tsimFilename, RasterDataType.DTDouble);
                 string cmpMsg = "";
 
                 //Compare the TSIM raster metadata to that of the Initial Condition raster files
@@ -1914,7 +1897,7 @@ namespace SyncroSim.STSim
                     this.m_TransitionSpatialInitiationMultipliers.Add(Multiplier);
 
                     //We only want to store a single copy of each unique TSIM raster file to conserve memory
-                    // DEVNOTE: This check could go higher up so we dont have to waste time opening the raster file
+
                     if (!m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(FileName))
                     {
                         this.m_TransitionSpatialInitiationMultiplierRasters.Add(FileName, rastTSIM);

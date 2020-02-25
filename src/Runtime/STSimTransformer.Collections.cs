@@ -82,6 +82,8 @@ namespace SyncroSim.STSim
             //and add a TST for each one.  (We don't allocate the TSTCollection unless there are groups since there
             //can be a large number of cells)
 
+            int CollIndex = 0;
+
             for (int CellId = 0; CellId < numCells; CellId++)
             {
                 if (this.IsSpatial)
@@ -93,7 +95,8 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                Cell SimulationCell = new Cell(CellId);
+                Cell SimulationCell = new Cell(CellId, CollIndex);
+                CollIndex++;
 
                 if (dict.Count > 0)
                 {
@@ -1829,6 +1832,7 @@ namespace SyncroSim.STSim
 
                     if (!m_TransitionSpatialMultiplierRasters.ContainsKey(FileName))
                     {
+                        this.CompressRasterForCellCollection(rastTSM);
                         this.m_TransitionSpatialMultiplierRasters.Add(FileName, rastTSM);
                     }
                 }
@@ -1900,6 +1904,7 @@ namespace SyncroSim.STSim
 
                     if (!m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(FileName))
                     {
+                        this.CompressRasterForCellCollection(rastTSIM);
                         this.m_TransitionSpatialInitiationMultiplierRasters.Add(FileName, rastTSIM);
                     }
                 }

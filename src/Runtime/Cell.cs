@@ -16,6 +16,7 @@ namespace SyncroSim.STSim
     public class Cell
     {
         private int m_CellId;
+        private int m_CollectionIndex;
         private int m_StratumId;
         private int? m_SecondaryStratumId;
         private int? m_TertiaryStratumId;
@@ -28,21 +29,40 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="cellID">The ID for this cell</param>
+        /// <param name="cellId">The ID for this cell.</param>
+        /// <param name="rasterIndex">The collection index for this cell.</param>
         /// <remarks></remarks>
-        public Cell(int cellId)
+        public Cell(int cellId, int rasterIndex)
         {
             this.m_CellId = cellId;
+            this.m_CollectionIndex = rasterIndex;
         }
 
         /// <summary>
         /// Unique integer Id for the cell
         /// </summary>
+        /// <remarks>
+        /// If the model is run spatially, this ID is also the index into the raster used to generate the cell.
+        /// </remarks>
         public int CellId
         {
             get
             {
                 return this.m_CellId;
+            }
+        }
+
+        /// <summary>
+        /// Gets this cell's index in the cell collection.
+        /// </summary>
+        /// <remarks>
+        /// This value can be used to index into rasters that have been compressed to match the cell collection.
+        /// </remarks>
+        public int CollectionIndex
+        {
+            get
+            {
+                return this.m_CollectionIndex;
             }
         }
 

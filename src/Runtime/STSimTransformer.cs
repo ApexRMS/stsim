@@ -177,6 +177,36 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Compresses the specified raster to match the cell collection
+        /// </summary>
+        /// <param name="raster"></param>
+        public void CompressRasterForCellCollection(StochasticTimeRaster raster)
+        {
+            if (raster.DataType == RasterDataType.DTInteger)
+            {
+                int[] arr = new int[this.Cells.Count];
+
+                foreach (Cell c in this.Cells)
+                {
+                    arr[c.CollectionIndex] = raster.IntCells[c.CellId];
+                }
+
+                raster.IntCells = arr;
+            }
+            else
+            {
+                double[] arr = new double[this.Cells.Count];
+
+                foreach (Cell c in this.Cells)
+                {
+                    arr[c.CollectionIndex] = raster.DblCells[c.CellId];
+                }
+
+                raster.DblCells = arr;
+            }
+        }
+
+        /// <summary>
         /// Overrides Configure
         /// </summary>
         /// <remarks></remarks>
@@ -670,7 +700,7 @@ namespace SyncroSim.STSim
 
                     if (this.IsSpatial)
                     {
-                        multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
+                        multiplier *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
                         foreach (TransitionGroup tg in tt.TransitionGroups)
                         {
@@ -931,7 +961,7 @@ namespace SyncroSim.STSim
 
                     if (this.m_IsSpatial)
                     {
-                        multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
+                        multiplier *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
                         foreach (TransitionGroup tg in tt.TransitionGroups)
                         {
@@ -969,7 +999,7 @@ namespace SyncroSim.STSim
 
                 if (this.m_IsSpatial)
                 {
-                    multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
+                    multiplier *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {

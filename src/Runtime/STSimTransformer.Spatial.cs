@@ -761,7 +761,7 @@ namespace SyncroSim.STSim
 
                     //Include Initiation Multiplier in the calculation of cell probability once expected area has been calculated
 
-                    CellProbability *= this.GetTransitionSpatialInitiationMultiplier(SimulationCell.CellId, transitionGroupId, iteration, timestep);
+                    CellProbability *= this.GetTransitionSpatialInitiationMultiplier(SimulationCell, transitionGroupId, iteration, timestep);
 
                     if (CellProbability > MaxCellProbability)
                     {
@@ -805,7 +805,7 @@ namespace SyncroSim.STSim
                 SimulationCell = initiationCells.Values.ElementAt(Rand2);
 
                 CellProbability = this.SpatialCalculateCellProbability(SimulationCell, transitionGroupId, iteration, timestep);
-                CellProbability *= this.GetTransitionSpatialInitiationMultiplier(SimulationCell.CellId, transitionGroupId, iteration, timestep);
+                CellProbability *= this.GetTransitionSpatialInitiationMultiplier(SimulationCell, transitionGroupId, iteration, timestep);
                 CellProbability = CellProbability / maxCellProbability;
 
                 //Increase probability of selection as the number of cells checked increases
@@ -1240,7 +1240,7 @@ namespace SyncroSim.STSim
 
             for (int CellId = 0; CellId < numCells; CellId++)
             {
-                cells.Add(new Cell(CellId));
+                cells.Add(new Cell(CellId, CellId));
             }
 
             foreach (var iteration in lstIterations)
@@ -1320,7 +1320,7 @@ namespace SyncroSim.STSim
 
                 for (int CellId = 0; CellId < numCells; CellId++)
                 {
-                    cells.Add(new Cell(CellId));
+                    cells.Add(new Cell(CellId, CellId));
                 }
 
                 foreach (Cell c in cells)
@@ -1498,7 +1498,7 @@ namespace SyncroSim.STSim
                 CellCollection cells = new CellCollection();
                 for (int CellId = 0; CellId < primary_stratum_cells.Count(); CellId++)
                 {
-                    Cell c = new Cell(CellId);
+                    Cell c = new Cell(CellId, CellId);
                     c.StratumId = primary_stratum_cells[CellId];
 
                     if (StateClassDefined)
@@ -2001,7 +2001,7 @@ namespace SyncroSim.STSim
                    
                     if (this.IsSpatial)
                     {
-                        multiplier *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
+                        multiplier *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
                         TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
 

@@ -122,7 +122,7 @@ namespace SyncroSim.STSim
             return Product;
         }
 
-        private double GetTransitionSpatialMultiplier(int cellId, int transitionTypeId, int iteration, int timestep)
+        private double GetTransitionSpatialMultiplier(Cell cell, int transitionTypeId, int iteration, int timestep)
         {
             if (this.m_TransitionSpatialMultipliers.Count == 0)
             {
@@ -159,7 +159,7 @@ namespace SyncroSim.STSim
                             if (this.m_TransitionSpatialMultiplierRasters.ContainsKey(tsmr.FileName))
                             {
                                 StochasticTimeRaster rastMult = this.m_TransitionSpatialMultiplierRasters[tsmr.FileName];
-                                double spatialMult = rastMult.DblCells[cellId];
+                                double spatialMult = rastMult.DblCells[cell.CollectionIndex];
 
                                 //Test for NODATA_VALUE
 
@@ -178,7 +178,7 @@ namespace SyncroSim.STSim
             return Product;
         }
 
-        private double GetTransitionSpatialInitiationMultiplier(int cellId, int transitionGroupId, int iteration, int timestep)
+        private double GetTransitionSpatialInitiationMultiplier(Cell cell, int transitionGroupId, int iteration, int timestep)
         {
             if (this.m_TransitionSpatialInitiationMultipliers.Count == 0)
             {
@@ -205,7 +205,7 @@ namespace SyncroSim.STSim
                         if (this.m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(tsmr.FileName))
                         {
                             StochasticTimeRaster rastMult = this.m_TransitionSpatialInitiationMultiplierRasters[tsmr.FileName];
-                            double spatialMult = rastMult.DblCells[cellId];
+                            double spatialMult = rastMult.DblCells[cell.CollectionIndex];
 
                             //Test for NODATA_VALUE
 
@@ -482,7 +482,7 @@ namespace SyncroSim.STSim
 
                         if (this.IsSpatial)
                         {
-                            TransMult *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
+                            TransMult *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
                             foreach (TransitionGroup tg in tt.TransitionGroups)
                             {
@@ -652,7 +652,7 @@ namespace SyncroSim.STSim
 
                     if (this.IsSpatial)
                     {
-                        TransMult *= this.GetTransitionSpatialMultiplier(simulationCell.CellId, tr.TransitionTypeId, iteration, timestep);
+                        TransMult *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
                         foreach (TransitionGroup tg in ttype.TransitionGroups)
                         {

@@ -615,13 +615,17 @@ namespace SyncroSim.STSim
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
 
-                //Set up a raster as input to the Raster output function
-                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                rastOP.IntCells = transitionedPixels;
-
                 //Dont bother if there haven't been any transitions
                 if ((transitionedPixels.Distinct().Count() > 1) && this.IsRasterTransitionTimestep(timestep))
                 {
+                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                    int[] arr = rastOP.IntCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = transitionedPixels[c.CollectionIndex];
+                    }
+
                     Spatial.WriteRasterData(
                         rastOP, 
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
@@ -664,13 +668,17 @@ namespace SyncroSim.STSim
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
 
-                //Set up a raster as input to the Raster output function
-                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                rastOP.IntCells = transitionedPixels;
-
                 //Dont bother if there haven't been any transitions
                 if (transitionedPixels.Distinct().Count() > 1)
                 {
+                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                    int[] arr = rastOP.IntCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = transitionedPixels[c.CollectionIndex];
+                    }
+
                     Spatial.WriteRasterData(
                         rastOP,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
@@ -698,7 +706,13 @@ namespace SyncroSim.STSim
                 {
                     //Set up a raster as input to the Raster output function
                     StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    rastOP.DblCells = RasterTransitionAttrValues[AttributeId];
+                    double[] NewValues = RasterTransitionAttrValues[AttributeId];
+                    double[] arr = rastOP.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = NewValues[c.CollectionIndex];
+                    }
 
                     Spatial.WriteRasterData(
                         rastOP, 
@@ -951,13 +965,13 @@ namespace SyncroSim.STSim
                         if (this.IsSpatial & this.IsRasterTransitionAttributeTimestep(timestep))
                         {
                             double[] arr = rasterTransitionAttrValues[AttributeTypeId];
-                            if (arr[simulationCell.CellId] == Spatial.DefaultNoDataValue)
+                            if (arr[simulationCell.CollectionIndex] == Spatial.DefaultNoDataValue)
                             {
-                                arr[simulationCell.CellId] = AttrValue.Value;
+                                arr[simulationCell.CollectionIndex] = AttrValue.Value;
                             }
                             else
                             {
-                                arr[simulationCell.CellId] += AttrValue.Value;
+                                arr[simulationCell.CollectionIndex] += AttrValue.Value;
                             }
                         }
 
@@ -1783,7 +1797,6 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dictAatp.Keys)
                 {
                     double[] aatp = dictAatp[timestep];
-                    StochasticTimeRaster rastAatp = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
 
                     //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
                     var aatpDistinct = aatp.Distinct();
@@ -1802,7 +1815,13 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    rastAatp.DblCells = aatp;
+                    StochasticTimeRaster rastAatp = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = rastAatp.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = aatp[c.CollectionIndex];
+                    }
 
                     Spatial.WriteRasterData(
                         rastAatp, 
@@ -1888,9 +1907,9 @@ namespace SyncroSim.STSim
                 Debug.Assert(false, "Where the heck is the Timestep keyed array in the m_AnnualAvgTransitionProbMap member.");
             }
 
-            foreach (SyncroSim.STSim.Cell cell in this.Cells)
+            foreach (Cell cell in this.Cells)
             {
-                int i = cell.CellId;
+                int i = cell.CollectionIndex;
 
                 //Test for > 0 ( and not equal to DEFAULT_NO_DATA_VALUE either )
                 if (cellArray[i] > 0)

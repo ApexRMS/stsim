@@ -262,7 +262,7 @@ namespace SyncroSim.STSim
 
             if (TransTypeMapId.HasValue)
             {
-                transitionedPixels[cell.CellId] = TransTypeMapId.Value;
+                transitionedPixels[cell.CollectionIndex] = TransTypeMapId.Value;
             }
         }
 
@@ -282,7 +282,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            transitionedPixels[cell.CellId] = eventId;
+            transitionedPixels[cell.CollectionIndex] = eventId;
         }
 
         /// <summary>
@@ -312,9 +312,9 @@ namespace SyncroSim.STSim
 
                 if (this.m_CreateRasterTransitionOutput || this.m_CreateRasterAATPOutput)
                 {
-                    transitionPixel = new int[this.m_InputRasters.NumberCells];
+                    transitionPixel = new int[this.Cells.Count];
                     // initialize to DEFAULT_NO_DATA_VLAUE
-                    for (var i = 0; i < this.m_InputRasters.NumberCells; i++)
+                    for (var i = 0; i < this.Cells.Count; i++)
                     {
                         transitionPixel[i] = Spatial.DefaultNoDataValue;
                     }
@@ -343,11 +343,11 @@ namespace SyncroSim.STSim
                 foreach (int id in this.m_TransitionAttributeTypeIds.Keys)
                 {
                     Debug.Assert(this.m_TransitionAttributeTypes.Contains(id));
-                    double[] arr = new double[this.m_InputRasters.NumberCells];
+                    double[] arr = new double[this.Cells.Count];
 
                     //Initialize array to ApexRaster.DEFAULT_NO_DATA_VALUE
 
-                    for (int i = 0; i < this.m_InputRasters.NumberCells; i++)
+                    for (int i = 0; i < this.Cells.Count; i++)
                     {
                         arr[i] = Spatial.DefaultNoDataValue;
                     }
@@ -2384,19 +2384,12 @@ namespace SyncroSim.STSim
                     if ((timestep == this.MaximumTimestep) || ((timestep - this.TimestepZero) % this.m_RasterAATPTimesteps) == 0)
                     {
                         double[] aatp = null;
-                        aatp = new double[this.m_InputRasters.NumberCells];
+                        aatp = new double[this.Cells.Count];
 
                         // Initialize cells values
-                        for (var i = 0; i < this.m_InputRasters.NumberCells; i++)
+                        for (var i = 0; i < this.Cells.Count; i++)
                         {
-                            if (!this.Cells.Contains(i))
-                            {
-                                aatp[i] = Spatial.DefaultNoDataValue;
-                            }
-                            else
-                            {
-                                aatp[i] = 0;
-                            }
+                            aatp[i] = 0;
                         }
 
                         dicTgAATP.Add(timestep, aatp);

@@ -1270,7 +1270,10 @@
     <layout name="coreforms_LibraryDatafeeds">
       <item name="core_SysFolder"/>
       <item name="core_Backup"/>
-      <item name="core_Multiprocessing"/>
+      <group name="Multiprocessing">
+        <item name="core_Multiprocessing" displayName="General"/>
+        <item name="core_ProcessorGroup"/>
+      </group>
       <item name="corestime_Options" displayName="Spatial"/>
       <group name="Options">
         <item name="core_Options" displayName="General"/>

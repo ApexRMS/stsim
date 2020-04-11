@@ -44,7 +44,7 @@ namespace SyncroSim.STSim
 
         private double STSimInternalSample(int distributionTypeId, double? distributionMean, double? distributionSD, double? distributionMinimum, double? distributionMaximum, int iteration, int timestep, int? stratumId, int? secondaryStratumId)
         {
-            if (distributionTypeId == this.BetaDistributionTypeId || distributionTypeId == this.NormalDistributionTypeId || distributionTypeId == this.UniformDistributionTypeId || distributionTypeId == this.UniformIntegerDistributionTypeId)
+            if (this.IsKnownDistributionTypeId(distributionTypeId))
             {
                 return base.Sample(distributionTypeId, distributionMean, distributionSD, distributionMinimum, distributionMaximum, iteration, timestep);
             }

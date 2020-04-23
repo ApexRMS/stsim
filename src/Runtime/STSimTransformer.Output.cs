@@ -1658,66 +1658,76 @@ namespace SyncroSim.STSim
                     IEnumerable<CellOffset> listNeighbors = InputRasters.GetCellNeighborOffsetsForRadius(setting.NeighborhoodRadius);
 
                     // Create one cell array per Transition Adjacency Settings record, indexes by TGId
-                    double[] stateAttrVals = null;
-                    double[] stateAttrAvgs = null;
+                    double[] CellValues = null;
+                    double[] CellAverageValues = null;
 
-                    int stateAttributeTypeId = setting.StateAttributeTypeId;
                     StateAttributeValueMap stateAttributeValueMap = null;
                     var IsNoAges = false;
 
-                    // Extract State Attribute values from StateAttributeValueMaps ( just do it once, to enhance performance)
-                    // check whether StateAttributeTypeId is in m_StateAttributeTypeIdsNoAges or m_StateAttributeTypeIdsAges. 
+                    if (!setting.StateClassId.HasValue)
+                    {   
+                        // Extract State Attribute values from StateAttributeValueMaps ( just do it once, to enhance performance)
+                        // check whether StateAttributeTypeId is in m_StateAttributeTypeIdsNoAges or m_StateAttributeTypeIdsAges. 
 
-                    if (this.m_StateAttributeTypeIdsNoAges.Keys.Contains(stateAttributeTypeId))
-                    {
-                        stateAttributeValueMap = this.m_StateAttributeValueMapNoAges;
-                        IsNoAges = true;
+                        if (this.m_StateAttributeTypeIdsNoAges.Keys.Contains(setting.StateAttributeTypeId.Value))
+                        {
+                            stateAttributeValueMap = this.m_StateAttributeValueMapNoAges;
+                            IsNoAges = true;
+                        }
+
+                        if (this.m_StateAttributeTypeIdsAges.Keys.Contains(setting.StateAttributeTypeId.Value))
+                        {
+                            stateAttributeValueMap = this.m_StateAttributeValueMapAges;
+                        }
                     }
 
-                    if (this.m_StateAttributeTypeIdsAges.Keys.Contains(stateAttributeTypeId))
+                    if (stateAttributeValueMap != null || setting.StateClassId.HasValue)
                     {
-                        stateAttributeValueMap = this.m_StateAttributeValueMapAges;
-                    }
-
-                    if (stateAttributeValueMap != null)
-                    {
-                        stateAttrVals = new double[this.m_InputRasters.NumberCells];
+                        CellValues = new double[this.m_InputRasters.NumberCells];
 
                         for (var i = 0; i < this.m_InputRasters.NumberCells; i++)
                         {
-                            stateAttrVals[i] = Spatial.DefaultNoDataValue;
+                            CellValues[i] = Spatial.DefaultNoDataValue;
                         }
 
                         // Loop thru raster and pull out the State Attribute Value for each cell
                         foreach (Cell cell in this.Cells)
                         {
                             // Pull out the values 1st, before doing the neighbor averaging, to get our repeated cost if GetValue.
-                            double? attrValue = null;
+                            double? CellValue = null;
 
-                            if (IsNoAges)
+                            if (!setting.StateClassId.HasValue)
                             {
-                                attrValue = stateAttributeValueMap.GetAttributeValueNoAge(
-                                    stateAttributeTypeId, 
-                                    cell.StratumId, 
-                                    cell.SecondaryStratumId, 
-                                    cell.TertiaryStratumId, 
-                                    cell.StateClassId, 
-                                    iteration, timestep);
+                                if (IsNoAges)
+                                {
+                                    CellValue = stateAttributeValueMap.GetAttributeValueNoAge(
+                                        setting.StateAttributeTypeId.Value,
+                                        cell.StratumId, cell.SecondaryStratumId, cell.TertiaryStratumId, 
+                                        cell.StateClassId, iteration, timestep);
+                                }
+                                else
+                                {
+                                    CellValue = stateAttributeValueMap.GetAttributeValueByAge(
+                                        setting.StateAttributeTypeId.Value,
+                                        cell.StratumId, cell.SecondaryStratumId, cell.TertiaryStratumId,
+                                        cell.StateClassId, iteration, timestep, cell.Age);
+                                }
                             }
                             else
                             {
-                                attrValue = stateAttributeValueMap.GetAttributeValueByAge(
-                                    stateAttributeTypeId, 
-                                    cell.StratumId, 
-                                    cell.SecondaryStratumId, 
-                                    cell.TertiaryStratumId, 
-                                    cell.StateClassId, 
-                                    iteration, timestep, cell.Age);
+                                if (cell.StateClassId == setting.StateClassId.Value)
+                                {
+                                    CellValue = 1.0;
+                                }
+                                else
+                                {
+                                    CellValue = 0.0;
+                                }
                             }
 
-                            if (attrValue != null)
+                            if (CellValue != null)
                             {
-                                stateAttrVals[cell.CellId] = Convert.ToDouble(attrValue, CultureInfo.InvariantCulture);
+                                CellValues[cell.CellId] = Convert.ToDouble(CellValue, CultureInfo.InvariantCulture);
                             }
                         }
 
@@ -1725,7 +1735,7 @@ namespace SyncroSim.STSim
                         double attrValueTotal = 0;
                         int attrValueCnt = 0;
 
-                        stateAttrAvgs = new double[this.m_InputRasters.NumberCells];
+                        CellAverageValues = new double[this.m_InputRasters.NumberCells];
 
                         for (int i = 0; i < this.m_InputRasters.NumberCells; i++)
                         {
@@ -1738,10 +1748,13 @@ namespace SyncroSim.STSim
                             foreach (CellOffset offset in listNeighbors)
                             {
                                 // Convert the relative neighbor into absolute neighbor.
-                                int neighborCellId = this.m_InputRasters.GetCellIdByOffset(cellRow, cellColumn, offset.Row, offset.Column);
+
+                                int neighborCellId = this.m_InputRasters.GetCellIdByOffset(
+                                    cellRow, cellColumn, offset.Row, offset.Column);
+
                                 if (neighborCellId != -1)
                                 {
-                                    double attrValue = stateAttrVals[neighborCellId];
+                                    double attrValue = CellValues[neighborCellId];
 
                                     // If NO_DATA, don't include in the averaging
                                     if (!attrValue.Equals(Spatial.DefaultNoDataValue))
@@ -1755,18 +1768,17 @@ namespace SyncroSim.STSim
                             if (attrValueCnt > 0)
                             {
                                 //Use count of possible neighbors, not actual neghbors (attrValueCnt).
-                                stateAttrAvgs[i] = attrValueTotal / listNeighbors.Count();
+                                CellAverageValues[i] = attrValueTotal / listNeighbors.Count();
                             }
                             else
                             {
-                                stateAttrAvgs[i] = Spatial.DefaultNoDataValue;
+                                CellAverageValues[i] = Spatial.DefaultNoDataValue;
                             }
                         }
 
                         // Remove the old value array from the map, to be replaced with new array
                         this.m_TransitionAdjacencyStateAttributeValueMap.Remove(setting.TransitionGroupId);
-
-                        this.m_TransitionAdjacencyStateAttributeValueMap.Add(setting.TransitionGroupId, stateAttrAvgs);
+                        this.m_TransitionAdjacencyStateAttributeValueMap.Add(setting.TransitionGroupId, CellAverageValues);
                     }
                 }
             }

@@ -6,16 +6,27 @@ namespace SyncroSim.STSim
     internal class TransitionAdjacencySetting
     {
         private int m_TransitionGroupId;
-        private int m_StateAttributeTypeId;
+        private int? m_StateClassId;
+        private int? m_StateAttributeTypeId;
         private double m_NeighborhoodRadius;
-        private int m_UpdateFrequency;
+        private int m_UpdateFrequency = 1;
 
-        public TransitionAdjacencySetting(int transitionGroupId, int stateAttributeTypeId, double neighborhoodRadius, int updateFrequency)
+        public TransitionAdjacencySetting(
+            int transitionGroupId, 
+            int? stateClassId,
+            int? stateAttributeTypeId, 
+            double neighborhoodRadius, 
+            int? updateFrequency)
         {
             this.m_TransitionGroupId = transitionGroupId;
+            this.m_StateClassId = stateClassId;
             this.m_StateAttributeTypeId = stateAttributeTypeId;
             this.m_NeighborhoodRadius = neighborhoodRadius;
-            this.m_UpdateFrequency = updateFrequency;
+
+            if (updateFrequency.HasValue)
+            {
+                this.m_UpdateFrequency = updateFrequency.Value;
+            }
         }
 
         public int TransitionGroupId
@@ -26,7 +37,15 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int StateAttributeTypeId
+        public int? StateClassId
+        {
+            get
+            {
+                return this.m_StateClassId;
+            }
+        }
+
+        public int? StateAttributeTypeId
         {
             get
             {

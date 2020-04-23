@@ -2375,6 +2375,32 @@ namespace SyncroSim.STSim
 
         private bool ADJ_MULT_SETTINGS_FILLED;
 
+        private double GetCellSizeSafe()
+        {
+            DataRow SpatialICPropsRow = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+
+            if (SpatialICPropsRow == null || SpatialICPropsRow[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] == DBNull.Value)
+            {
+                DataRow NonSpatialICRow = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_NAME).GetDataRow();
+                double TotalAmount = Convert.ToDouble(NonSpatialICRow[Strings.DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME]);
+                int NumCells = Convert.ToInt32(NonSpatialICRow[Strings.DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME]);
+
+                return (TotalAmount / NumCells);
+            }
+            else
+            {
+                return Convert.ToDouble(SpatialICPropsRow[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
+            }
+        }
+
+        private double GetDefaultNeighborhoodRadius()
+        {
+            double CellSize = this.GetCellSizeSafe();
+            double Radius = Math.Sqrt(2 * (Math.Pow(CellSize, 2)));
+
+            return Math.Ceiling(Radius);
+        }
+
         /// <summary>
         /// Fills the Transition Adjacency Setting Collection
         /// </summary>
@@ -2387,12 +2413,28 @@ namespace SyncroSim.STSim
             foreach (DataRow dr in ds.GetData().Rows)
             {
                 int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                double NeighborhoodRadius = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_NR_COLUMN_NAME], CultureInfo.InvariantCulture);
-                int UpdateFrequency = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int? StateClassId = DataTableUtilities.GetNullableInt(dr, Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME);
+                int? StateAttributeTypeId = DataTableUtilities.GetNullableInt(dr, Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME);
+                double? NeighborhoodRadius = DataTableUtilities.GetNullableDouble(dr, Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_NBR_COLUMN_NAME);
+                int? UpdateFrequency = DataTableUtilities.GetNullableInt(dr, Strings.DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME);
+
+                if (!NeighborhoodRadius.HasValue)
+                {
+                    NeighborhoodRadius = this.GetDefaultNeighborhoodRadius();
+                }
+
+                if (!StateClassId.HasValue && !StateAttributeTypeId.HasValue)
+                {
+                    throw new ArgumentException("Transition attribute settings: you must specify either a state class or a state attribute.");
+                }
 
                 this.m_TransitionAdjacencySettings.Add(
-                    new TransitionAdjacencySetting(TransitionGroupId, StateAttributeTypeId, NeighborhoodRadius, UpdateFrequency));
+                    new TransitionAdjacencySetting(
+                        TransitionGroupId, 
+                        StateClassId,
+                        StateAttributeTypeId, 
+                        NeighborhoodRadius.Value, 
+                        UpdateFrequency));
             }
 
             this.ADJ_MULT_SETTINGS_FILLED = true;
@@ -2409,6 +2451,7 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.m_TransitionAdjacencyMultipliers.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_NAME);
+            const double EightDivNine = 8.0 / 9.0;
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
@@ -2418,7 +2461,7 @@ namespace SyncroSim.STSim
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                double AttributeValue = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_ATTRIBUTE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
+                double AttributeValue = EightDivNine;
                 double? MultiplierAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -2449,6 +2492,11 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
                 {
                     TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_ATTRIBUTE_VALUE_COLUMN_NAME] != DBNull.Value)
+                {
+                    AttributeValue = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_ATTRIBUTE_VALUE_COLUMN_NAME]);
                 }
 
                 if (dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] != DBNull.Value)

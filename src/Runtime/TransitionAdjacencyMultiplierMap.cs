@@ -18,18 +18,38 @@ namespace SyncroSim.STSim
     internal class TransitionAdjacencyMultiplierMap : STSimMapBase4<TransitionAdjacencyMultiplierMapEntry>
     {
         private STSimDistributionProvider m_DistributionProvider;
+        private List<TransitionAdjacencyMultiplierMapEntry> m_AllEntries = new List<TransitionAdjacencyMultiplierMapEntry>();
 
         public TransitionAdjacencyMultiplierMap(
             Scenario scenario, 
             TransitionAdjacencyMultiplierCollection multipliers,
-            STSimDistributionProvider distributionProvider) : base(scenario)
+            STSimDistributionProvider distributionProvider, 
+            int minimumIteration, 
+            int minimumTimestep) : base(scenario)
         {
-
             this.m_DistributionProvider = distributionProvider;
 
             foreach (TransitionAdjacencyMultiplier Item in multipliers)
             {
                 this.AddMultiplier(Item);
+            }
+
+            foreach (TransitionAdjacencyMultiplierMapEntry e in this.m_AllEntries)
+            {
+                if (e.Items.Count == 1)
+                {
+                    TransitionAdjacencyMultiplier t1 = e.Items.First().Value;
+
+                    TransitionAdjacencyMultiplier t2 =  new TransitionAdjacencyMultiplier(
+                        t1.TransitionGroupId, t1.Iteration, t1.Timestep, t1.StratumId, t1.SecondaryStratumId, t1.TertiaryStratumId,
+                        0.0, 0.0, t1.DistributionTypeId, t1.DistributionFrequency, t1.DistributionSD,
+                        t1.DistributionMin, t1.DistributionMax);
+
+                    t2.Initialize(minimumIteration, minimumTimestep, this.m_DistributionProvider);
+
+                    e.Map.Add(0.0, t2);
+                    e.Items.Add(0.0, t2);
+                }
             }
         }
 
@@ -138,6 +158,8 @@ namespace SyncroSim.STSim
 
                 this.AddItem(item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, 
                     item.TertiaryStratumId, item.Iteration, item.Timestep, e);
+
+                this.m_AllEntries.Add(e);
             }
 
             if (!e.Map.ContainsKey(item.AttributeValue))

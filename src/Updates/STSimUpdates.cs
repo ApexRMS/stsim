@@ -410,6 +410,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000105(store);   
             }
+
+            if (currentSchemaVersion < 106)
+            {
+                STSIM0000106(store);   
+            }
         }
 
         /// <summary>
@@ -2763,6 +2768,38 @@ namespace SyncroSim.STSim
             UpdateProvider.RenameMapVariable(store, "ta", "stsim_ta");
             UpdateProvider.RenameMapVariable(store, "tge", "stsim_tge");
             UpdateProvider.RenameMapVariable(store, "tgap", "stsim_tgap");
+        }
+
+        /// <summary>
+        /// STSIM0000106
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update adds "StateClassID" and "Neighbordhood" fields to the 
+        /// stsim_TransitionAdjacencySetting table.
+        /// </remarks>
+        private static void STSIM0000106(DataStore store)
+        {
+            if (store.TableExists("stsim_TransitionAdjacencySetting"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAdjacencySetting RENAME TO TEMP_TABLE");
+
+                store.ExecuteNonQuery(@"CREATE TABLE stsim_TransitionAdjacencySetting(
+                    TransitionAdjacencySettingID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID                   INTEGER,
+                    TransitionGroupID            INTEGER,
+                    StateClassID                 INTEGER,
+                    StateAttributeTypeID         INTEGER,
+                    NeighborhoodRadius           DOUBLE,
+                    UpdateFrequency              INTEGER
+                )");
+
+                store.ExecuteNonQuery(@"INSERT INTO 
+                    stsim_TransitionAdjacencySetting(ScenarioID, TransitionGroupID, StateAttributeTypeID, NeighborhoodRadius, UpdateFrequency) 
+                    SELECT ScenarioID, TransitionGroupID, StateAttributeTypeID, NeighborhoodRadius, UpdateFrequency FROM TEMP_TABLE");
+
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+            }
         }
     }
 }

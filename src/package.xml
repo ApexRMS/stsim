@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.16" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.17" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -870,9 +870,10 @@
                 <column name="TransitionAdjacencySettingID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="StateAttributeTypeID" displayName="State Attribute Type" dataType="Integer" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
-                <column name="NeighborhoodRadius" displayName="Neighborhood Radius (m)" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" allowDbNull="False"/>
-                <column name="UpdateFrequency" displayName="Update Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" allowDbNull="False"/>
+                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" isOptional="True" initOptionalVisible="True"/>
+                <column name="StateAttributeTypeID" displayName="State Attribute Type" dataType="Integer" validationType="Datasheet" formula1="StateAttributeType" isOptional="True"/>
+                <column name="NeighborhoodRadius" displayName="Neighborhood Radius (m)" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
+                <column name="UpdateFrequency" displayName="Update Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" isOptional="True"/>
               </columns>
             </datasheet>
             <datasheet name="TransitionAdjacencyMultiplier" displayName="Transition Adjacency Multipliers">
@@ -885,7 +886,7 @@
                 <column name="SecondaryStratumID" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
                 <column name="TertiaryStratumID" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="AttributeValue" dataType="Double" displayName="Attribute Value" validationType="Decimal" allowDbNull="False"/>
+                <column name="AttributeValue" dataType="Double" displayName="Neighbor Value" validationType="Decimal" isOptional="True"/>
                 <column name="Amount" dataType="Double" displayName="Multiplier" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
                 <column name="DistributionType" displayName="Multiplier Distribution" dataType="Integer" validationType="Datasheet" formula1="corestime_DistributionType" isOptional="True"/>
                 <column name="DistributionFrequencyID" displayName="Multiplier Sampling Frequency" dataType="Integer" validationType="List" formula1="0:Always|1:Iteration Only|2:Iteration and Timestep" isOptional="True"/>
@@ -1378,8 +1379,8 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="105"
-    minPackageVersion="3.2.13"
+    schemaVersion="106"
+    minPackageVersion="3.2.17"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

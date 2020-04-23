@@ -269,13 +269,16 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplier";
         public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME = "Slope";
 
+        //Transition Adjacency Setting
+
+        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NAME = "stsim_TransitionAdjacencySetting";
+        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NBR_COLUMN_NAME = "NeighborhoodRadius";
+        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME = "UpdateFrequency";
+
         //Transition Adjacency Multiplier
         public const string DATAFEED_TRANSITION_ADJACENCY_MULTIPLIER_NAME = "stsim_TransitionAdjacencyMultiplierDataFeed";
         public const string DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_NAME = "stsim_TransitionAdjacencyMultiplier";
-        public const string DATASHEET_TRANSITION_ADJACENCY_ATTRIBUTE_VALUE_COLUMN_NAME = "AttributeValue";
-        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NAME = "stsim_TransitionAdjacencySetting";
-        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_NR_COLUMN_NAME = "NeighborhoodRadius";
-        public const string DATASHEET_TRANSITION_ADJACENCY_SETTING_UF_COLUMN_NAME = "UpdateFrequency";
+        public const string DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_ATTRIBUTE_VALUE_COLUMN_NAME = "AttributeValue";
 
         //Transition Patch Prioritization
         public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_NAME = "stsim_TransitionPatchPrioritization";

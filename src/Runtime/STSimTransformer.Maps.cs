@@ -69,7 +69,7 @@ namespace SyncroSim.STSim
 
             //Create the transition adjacency multiplier map
             Debug.Assert(this.m_TransitionAdjacencyMultiplierMap == null);
-            this.m_TransitionAdjacencyMultiplierMap = new TransitionAdjacencyMultiplierMap(this.ResultScenario, this.m_TransitionAdjacencyMultipliers, this.m_DistributionProvider);
+            this.m_TransitionAdjacencyMultiplierMap = new TransitionAdjacencyMultiplierMap(this.ResultScenario, this.m_TransitionAdjacencyMultipliers, this.m_DistributionProvider, this.MinimumIteration, this.MinimumTimestep);
 
             //Create the transition order map
             Debug.Assert(this.m_TransitionOrderMap == null);

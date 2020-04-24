@@ -2373,7 +2373,8 @@ namespace SyncroSim.STSim
             }
         }
 
-        private bool ADJ_MULT_SETTINGS_FILLED;
+        private bool TRANSITION_ADJACENCY_SETTINGS_FILLED;
+        private bool TRANSITION_ADJACENCY_MULTIPLIERS_FILLED;
 
         private double GetCellSizeSafe()
         {
@@ -2425,7 +2426,9 @@ namespace SyncroSim.STSim
 
                 if (!StateClassId.HasValue && !StateAttributeTypeId.HasValue)
                 {
-                    throw new ArgumentException("Transition attribute settings: you must specify either a state class or a state attribute.");
+                    throw new ArgumentException(
+                        "Transition adjacency settings: you must specify either a " + 
+                        "adjacent state class or an adjacent state attribute type.");
                 }
 
                 this.m_TransitionAdjacencySettings.Add(
@@ -2437,7 +2440,7 @@ namespace SyncroSim.STSim
                         UpdateFrequency));
             }
 
-            this.ADJ_MULT_SETTINGS_FILLED = true;
+            this.TRANSITION_ADJACENCY_SETTINGS_FILLED = true;
         }
 
         /// <summary>
@@ -2451,7 +2454,6 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.m_TransitionAdjacencyMultipliers.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_ADJACENCY_MULTIPLIER_NAME);
-            const double EightDivNine = 8.0 / 9.0;
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
@@ -2461,7 +2463,7 @@ namespace SyncroSim.STSim
                 int? StratumId = null;
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
-                double AttributeValue = EightDivNine;
+                double AttributeValue = Constants.EIGHT_DIV_NINE;
                 double? MultiplierAmount = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -2546,64 +2548,108 @@ namespace SyncroSim.STSim
                 }
             }
 
-            if (this.AdjacencyMultiplierGroupsIdentical())
+            //The initial collection has been filled
+
+            this.TRANSITION_ADJACENCY_MULTIPLIERS_FILLED = true;
+
+            //Add default records for any transition groups that appear in settings
+            //but not in multiplier values.
+
+            this.AddRecordsForMissingTransitionGroups(ds);
+
+            //Warn if transition groups still not identical - specifically, if a transition
+            //group appears in the multiplier values but not in settings.
+
+            if (!this.AdjacencyMultiplierGroupsIdentical())
             {
-                this.RecordStatus(
-                    StatusType.Warning, 
-                    "Transition adjacency settings and multipliers do not have identical transition groups.  Some multipliers may not be applied.");
+                this.RecordStatus(StatusType.Warning, 
+                    "Transition adjacency settings and multipliers do not have identical transition groups.  " + 
+                    "Some multipliers may not be applied.");
             }
         }
 
-        /// <summary>
-        /// Warns the user if the transition groups are not identical between transition adjacency settings and multipliers
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private bool AdjacencyMultiplierGroupsIdentical()
+        private Dictionary<int, TransitionAdjacencySetting> CreateAdjacencySettingDictionaryByTGID()
         {
-            Debug.Assert(ADJ_MULT_SETTINGS_FILLED == true);
-
-            Dictionary<int, bool> d1 = new Dictionary<int, bool>();
-            Dictionary<int, bool> d2 = new Dictionary<int, bool>();
-
-            foreach (TransitionAdjacencyMultiplier m in this.m_TransitionAdjacencyMultipliers)
-            {
-                if (!d1.ContainsKey(m.TransitionGroupId))
-                {
-                    d1.Add(m.TransitionGroupId, true);
-                }
-            }
+            Debug.Assert(TRANSITION_ADJACENCY_SETTINGS_FILLED == true);
+            Dictionary<int, TransitionAdjacencySetting> d = new Dictionary<int, TransitionAdjacencySetting>();
 
             foreach (TransitionAdjacencySetting s in this.m_TransitionAdjacencySettings)
             {
-                if (!d2.ContainsKey(s.TransitionGroupId))
+                if (!d.ContainsKey(s.TransitionGroupId))
                 {
-                    d2.Add(s.TransitionGroupId, true);
+                    d.Add(s.TransitionGroupId, s);
                 }
             }
 
-            if (d1.Count != d2.Count)
-            {
-                return true;
-            }
+            return d;
+        }
 
-            foreach (int tg in d1.Keys)
+        private Dictionary<int, TransitionAdjacencyMultiplier> CreateAdjacencyMultiplierDictionaryByTGID()
+        {
+            Debug.Assert(TRANSITION_ADJACENCY_MULTIPLIERS_FILLED == true);
+            Dictionary<int, TransitionAdjacencyMultiplier> d = new Dictionary<int, TransitionAdjacencyMultiplier>();
+
+            foreach (TransitionAdjacencyMultiplier m in this.m_TransitionAdjacencyMultipliers)
             {
-                if (!d2.ContainsKey(tg))
+                if (!d.ContainsKey(m.TransitionGroupId))
                 {
-                    return true;
+                    d.Add(m.TransitionGroupId, m);
                 }
             }
 
-            foreach (int tg in d2.Keys)
+            return d;
+        }
+
+        private bool AdjacencyMultiplierGroupsIdentical()
+        {
+            Dictionary<int, TransitionAdjacencySetting> Settings = this.CreateAdjacencySettingDictionaryByTGID();
+            Dictionary<int, TransitionAdjacencyMultiplier> Multipliers = this.CreateAdjacencyMultiplierDictionaryByTGID();
+
+            if (Settings.Count != Multipliers.Count)
             {
-                if (!d1.ContainsKey(tg))
+                return false;
+            }
+
+            foreach (int tg in Settings.Keys)
+            {
+                if (!Multipliers.ContainsKey(tg))
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            foreach (int tg in Multipliers.Keys)
+            {
+                if (!Settings.ContainsKey(tg))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void AddRecordsForMissingTransitionGroups(DataSheet ds)
+        {
+            DataTable dt = ds.GetData();
+            Dictionary<int, TransitionAdjacencySetting> Settings = this.CreateAdjacencySettingDictionaryByTGID();
+            Dictionary<int, TransitionAdjacencyMultiplier> Multipliers = this.CreateAdjacencyMultiplierDictionaryByTGID();
+
+            foreach (int tg in Settings.Keys)
+            {
+                if (!Multipliers.ContainsKey(tg))
+                {
+                    DataRow dr = dt.NewRow();
+                    dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = tg;
+                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = 1.0;
+                    dt.Rows.Add(dr);
+
+                    this.m_TransitionAdjacencyMultipliers.Add(
+                        new TransitionAdjacencyMultiplier(
+                            tg, null, null, null, null, null, Constants.EIGHT_DIV_NINE, 1.0,
+                            null, null, null, null, null));
+                }
+            }
         }
 
         /// <summary>

@@ -870,8 +870,8 @@
                 <column name="TransitionAdjacencySettingID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" isOptional="True" initOptionalVisible="True"/>
-                <column name="StateAttributeTypeID" displayName="State Attribute Type" dataType="Integer" validationType="Datasheet" formula1="StateAttributeType" isOptional="True"/>
+                <column name="StateClassID" dataType="Integer" displayName="Adjacent State Class" validationType="Datasheet" formula1="StateClass" isOptional="True" initOptionalVisible="True"/>
+                <column name="StateAttributeTypeID" displayName="Adjacent State Attribute Type" dataType="Integer" validationType="Datasheet" formula1="StateAttributeType" isOptional="True"/>
                 <column name="NeighborhoodRadius" displayName="Neighborhood Radius (m)" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
                 <column name="UpdateFrequency" displayName="Update Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" isOptional="True"/>
               </columns>

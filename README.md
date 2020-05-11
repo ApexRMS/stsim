@@ -1,6 +1,6 @@
 # stsim
 
-ST-Sim is a [SyncroSim](http://www.syncrosim.com) Package that lets you develop and run spatially-explicit, stochastic [state-and-transition simulation models](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12597) of landscape change.  Both ST-Sim and SyncroSim have been designed and developed by [ApexRMS](http://www.apexrms.com).
+ST-Sim is an open-source [SyncroSim](http://www.syncrosim.com) Package that lets you develop and run spatially-explicit, stochastic [state-and-transition simulation models](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12597) of landscape change.  Both ST-Sim and SyncroSim have been designed and developed by [ApexRMS](http://www.apexrms.com).
 &nbsp;
 
 * See the [Getting Started](<http://docs.stsim.net/getting_started/overview.html>) page to get up and running quickly.

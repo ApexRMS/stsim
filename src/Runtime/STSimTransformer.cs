@@ -35,6 +35,10 @@ namespace SyncroSim.STSim
         public event EventHandler<SpatialTransitionEventArgs> ApplyingSpatialTransitions;
         public event EventHandler<MultiplierEventArgs> ApplyingTransitionMultipliers;
         public event EventHandler<MultiplierEventArgs> ApplyingSpatialMultipliers;
+        public event EventHandler<EventArgs> BeginModelRun;
+        public event EventHandler<EventArgs> ModelRunComplete;
+        public event EventHandler<EventArgs> BeginNormalSpatialMerge;
+        public event EventHandler<EventArgs> NormalSpatialMergeComplete;
 
         /// <summary>
         /// Gets whether this should be a spatial run
@@ -138,6 +142,26 @@ namespace SyncroSim.STSim
             {
                 return this.m_DistributionProvider;
             }
+        }
+
+        public ParallelJobConfig STSimLoadConfigurationFile()
+        {
+            return this.LoadConfigurationFile();
+        }
+
+        public int STSimGetJobIdFromFolder(string folderName)
+        {
+            return ParallelTransformer.GetJobIdFromFolder(folderName);
+        }
+
+        public int STSimGetMergeScenarioId(DataStore store)
+        {
+            return ParallelTransformer.GetMergeScenarioId(store);
+        }
+
+        public string STSimGetJobOutputScenarioFolderName(string libraryFileName, int scenarioId, bool create)
+        {
+            return ParallelTransformer.GetJobOutputScenarioFolderName(libraryFileName, scenarioId, create);
         }
 
         public double? GetAttributeValueNoAge(
@@ -338,12 +362,18 @@ namespace SyncroSim.STSim
 
         private void InternalTransform()
         {
+            BeginModelRun?.Invoke(this, new EventArgs());
+
+            //Run the main loop
+
             base.RunStochasticLoop();
 
             //We process AATP output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
             this.ProcessRasterAATPOutput();
+
+            ModelRunComplete?.Invoke(this, new EventArgs());
         }
 
         public override void PostProcess()

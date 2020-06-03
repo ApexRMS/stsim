@@ -25,6 +25,8 @@ namespace SyncroSim.STSim
             }
             else
             {
+                BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
+
                 //Merges the external Spatial TGAP files
                 ProcessAverageTransitionProbabilityFiles();
 
@@ -33,6 +35,8 @@ namespace SyncroSim.STSim
 
                 //Merges the datasheet records for Spatial TGAP files
                 ProcessAverageTransitionProbabilityDatasheet();
+
+                NormalSpatialMergeComplete?.Invoke(this, new EventArgs());
             }
         }
 

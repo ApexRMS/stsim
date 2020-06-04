@@ -82,7 +82,10 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
         public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
-        public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
+        public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_avgsc";
+        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";
+        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgta";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
 
         //Spatial Output Datasheets
         public const string DATASHEET_OUTPUT_SPATIAL_STRATUM = "stsim_OutputSpatialStratum";

@@ -40,8 +40,8 @@ namespace SyncroSim.STSim
             {
                 SyncroSimLayoutItem BasicGroup = new SyncroSimLayoutItem("BasicGroup", "Basic", true);
                 SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
-                SyncroSimLayoutItem StateAttrGroup = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
-                SyncroSimLayoutItem TransitionAttrGroup = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
+                SyncroSimLayoutItem StateAttributeGroup = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
+                SyncroSimLayoutItem TransitionAttributeGroup = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
                 SyncroSimLayoutItem TransitionEventGroup = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
                 SyncroSimLayoutItem AvgStateClassGroup = new SyncroSimLayoutItem("AvgStateClassGroup", "Average State Classes", true);
                 SyncroSimLayoutItem AvgStateAttributeGroup = new SyncroSimLayoutItem("AvgStateAttributeGroup", "Average State Attributes", true);
@@ -54,19 +54,50 @@ namespace SyncroSim.STSim
                 AddCategoricalVariables(project, BasicGroup);
 
                 //Transitions
-                AddMapTransitionGroupVariables(project, TransitionsGroup.Items, "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
+                AddMapTransitionGroupVariables(
+                    project, TransitionsGroup.Items, 
+                    "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", 
+                    Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
                 //State Attributes
-                AddMapStateAttributes(StateAttrGroup.Items, project, store, AttrGroupView);
+                AddMapStateAttributes(
+                    project, StateAttributeGroup.Items, 
+                    "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
+                    Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, store, AttrGroupView);
 
                 //Transition Attributes
-                AddMapTransitionAttributes(TransitionAttrGroup.Items, project, store, AttrGroupView);
+                AddMapTransitionAttributes(
+                    project, TransitionAttributeGroup.Items, 
+                    "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID", 
+                    Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, store, AttrGroupView);
 
                 //Transition Events
-                AddMapTransitionGroupVariables(project, TransitionEventGroup.Items, "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(
+                    project, TransitionEventGroup.Items, 
+                    "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", 
+                    Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
+
+                //Average State Classes
+
+
+
+                //Average State Attributes
+                AddMapStateAttributes(
+                    project, AvgStateAttributeGroup.Items,
+                    "stsim_OutputSpatialAverageStateAttribute", "Filename", "StateAttributeTypeID",
+                    Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX, store, AttrGroupView);
+
+                //Average Transition Attributes
+                AddMapTransitionAttributes(
+                    project, AvgTransitionAttributeGroup.Items,
+                    "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeID",
+                    Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, store, AttrGroupView);
 
                 //Average Transition Probability
-                AddMapTransitionGroupVariables(project, AvgTransitionProbabilityGroup.Items, "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(
+                    project, AvgTransitionProbabilityGroup.Items, 
+                    "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", 
+                    Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
                 layout.Items.Add(BasicGroup);
 
@@ -75,14 +106,14 @@ namespace SyncroSim.STSim
                     layout.Items.Add(TransitionsGroup);
                 }
 
-                if (StateAttrGroup.Items.Count > 0)
+                if (StateAttributeGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(StateAttrGroup);
+                    layout.Items.Add(StateAttributeGroup);
                 }
 
-                if (TransitionAttrGroup.Items.Count > 0)
+                if (TransitionAttributeGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(TransitionAttrGroup);
+                    layout.Items.Add(TransitionAttributeGroup);
                 }
 
                 if (TransitionEventGroup.Items.Count > 0)
@@ -116,7 +147,11 @@ namespace SyncroSim.STSim
         {
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
 
-            DataView View = new DataView(ds.GetData(store), null, ds.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
+            DataView View = new DataView(
+                ds.GetData(store), 
+                null, 
+                ds.ValidationTable.DisplayMember, 
+                DataViewRowState.CurrentRows);
 
             return View;
         }
@@ -150,7 +185,15 @@ namespace SyncroSim.STSim
             g0.Items.Add(i3);
         }
 
-        private static void AddMapTransitionGroupVariables(Project project, SyncroSimLayoutItemCollection items, string dataSheetName, string fileColumnName, string filterColumnName, string extendedIdentifier, string prefix, string colorMapSource)
+        private static void AddMapTransitionGroupVariables(
+            Project project, 
+            SyncroSimLayoutItemCollection items, 
+            string dataSheetName, 
+            string fileColumnName, 
+            string filterColumnName, 
+            string extendedIdentifier, 
+            string filePrefix, 
+            string colorMapSource)
         {
             Dictionary<int, TransitionGroup> PrimaryGroups = GetPrimaryTransitionGroups(project);
             List<TransitionGroup> PrimaryGroupList = new List<TransitionGroup>();
@@ -167,7 +210,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionGroup g in PrimaryGroupList)
             {
-                string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, g.TransitionGroupId);
+                string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", filePrefix, g.TransitionGroupId);
                 SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, g.DisplayName, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
@@ -178,6 +221,181 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
 
                 items.Add(Item);
+            }
+        }
+
+        private static void AddMapStateAttributes(
+            Project project, 
+            SyncroSimLayoutItemCollection items,
+            string dataSheetName,
+            string fileColumnName,
+            string filterColumnName,
+            string filePrefix,
+            DataStore store, 
+            DataView attrGroupsView)
+        {
+            DataSheet StateAttrsDataSheet = project.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME);
+
+            AddMapNonGroupedAttributes(
+                store, items, StateAttrsDataSheet, 
+                dataSheetName, fileColumnName, filterColumnName,
+                filePrefix, null);
+
+            Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
+            List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
+
+            foreach (DataRowView drv in attrGroupsView)
+            {
+                string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                SyncroSimLayoutItem Group = new SyncroSimLayoutItem(GroupName, GroupName, true);
+
+                GroupsDict.Add(GroupName, Group);
+                GroupsList.Add(Group);
+            }
+
+            AddMapGroupedAttributes(
+                store, GroupsDict, StateAttrsDataSheet,
+                dataSheetName, fileColumnName, filterColumnName,
+                filePrefix, null);
+
+            foreach (SyncroSimLayoutItem g in GroupsList)
+            {
+                if (g.Items.Count > 0)
+                {
+                    items.Add(g);
+                }
+            }
+        }
+
+        private static void AddMapTransitionAttributes(
+            Project project, 
+            SyncroSimLayoutItemCollection items,
+            string dataSheetName,
+            string fileColumnName,
+            string filterColumnName,
+            string filePrefix,
+            DataStore store, 
+            DataView attrGroupsView)
+        {
+            DataSheet TransitionAttrsDataSheet = project.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME);
+
+            AddMapNonGroupedAttributes(
+                store, items, TransitionAttrsDataSheet, 
+                dataSheetName, fileColumnName, filterColumnName,
+                filePrefix, null);
+
+            Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
+            List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
+
+            foreach (DataRowView drv in attrGroupsView)
+            {
+                string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                SyncroSimLayoutItem Group = new SyncroSimLayoutItem(GroupName, GroupName, true);
+
+                GroupsDict.Add(GroupName, Group);
+                GroupsList.Add(Group);
+            }
+
+            AddMapGroupedAttributes(
+                store, GroupsDict, TransitionAttrsDataSheet,
+                dataSheetName, fileColumnName, filterColumnName,
+                filePrefix, null);
+
+            foreach (SyncroSimLayoutItem g in GroupsList)
+            {
+                if (g.Items.Count > 0)
+                {
+                    items.Add(g);
+                }
+            }
+        }
+
+        private static void AddMapNonGroupedAttributes(
+            DataStore store, 
+            SyncroSimLayoutItemCollection items, 
+            DataSheet attrsDataSheet, 
+            string dataSheetName, 
+            string fileColumnName, 
+            string filterColumnName, 
+            string prefix, 
+            string colorMapSource)
+        {
+            DataTable Table = attrsDataSheet.GetData(store);
+            DataView View = new DataView(Table, null, attrsDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
+            Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
+
+            foreach (DataRowView drv in View)
+            {
+                if (drv.Row[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME] == DBNull.Value)
+                {
+                    int AttrId = Convert.ToInt32(drv.Row[attrsDataSheet.ValueMember], CultureInfo.InvariantCulture);
+                    string AttrName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, AttrId);
+                    string DisplayName = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
+
+                    if (drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME] != DBNull.Value)
+                    {
+                        DisplayName = string.Format(CultureInfo.InvariantCulture, 
+                            "{0} ({1})", 
+                            DisplayName, 
+                            Convert.ToString(drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture));
+                    }
+
+                    SyncroSimLayoutItem Item = new SyncroSimLayoutItem(AttrName, DisplayName, false);
+
+                    Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
+                    Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
+                    Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
+                    Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
+                    Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
+
+                    items.Add(Item);
+                }
+            }
+        }
+
+        private static void AddMapGroupedAttributes(
+            DataStore store, 
+            Dictionary<string, SyncroSimLayoutItem> groupsDict, 
+            DataSheet attrsDataSheet, 
+            string dataSheetName, 
+            string fileColumnName, 
+            string filterColumnName, 
+            string prefix, 
+            string colorMapSource)
+        {
+            DataTable Table = attrsDataSheet.GetData(store);
+            DataView View = new DataView(Table, null, attrsDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
+            DataSheet GroupsDataSheet = attrsDataSheet.Project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
+            Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
+
+            foreach (DataRowView drv in View)
+            {
+                if (drv.Row[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    int GroupId = Convert.ToInt32(drv.Row[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    string GroupName = GroupsDataSheet.ValidationTable.GetDisplayName(GroupId);
+                    int AttrId = Convert.ToInt32(drv.Row[attrsDataSheet.ValueMember], CultureInfo.InvariantCulture);
+                    string AttrName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, AttrId);
+                    string DisplayName = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
+
+                    if (drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME] != DBNull.Value)
+                    {
+                        DisplayName = string.Format(CultureInfo.InvariantCulture, 
+                            "{0} ({1})", 
+                            DisplayName, 
+                            Convert.ToString(drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture));
+                    }
+
+                    SyncroSimLayoutItem Item = new SyncroSimLayoutItem(AttrName, DisplayName, false);
+
+                    Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
+                    Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
+                    Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
+                    Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
+                    Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
+
+                    groupsDict[GroupName].Items.Add(Item);
+                }
             }
         }
 
@@ -249,7 +467,7 @@ namespace SyncroSim.STSim
                     int TransitionTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                     string DisplayName = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
 
-                    types.Add(new TransitionType(TransitionTypeId, DisplayName, 0));                    
+                    types.Add(new TransitionType(TransitionTypeId, DisplayName, 0));
                 }
             }
 
@@ -292,150 +510,6 @@ namespace SyncroSim.STSim
 
             return groups;
         }
-
-        private static void AddMapStateAttributes(SyncroSimLayoutItemCollection items, Project project, DataStore store, DataView attrGroupsView)
-        {
-            DataSheet StateAttrsDataSheet = project.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME);
-
-            AddMapNonGroupedAttributes(
-                store, items, StateAttrsDataSheet, 
-                "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID",
-                Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, null);
-
-            Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
-            List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
-
-            foreach (DataRowView drv in attrGroupsView)
-            {
-                string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
-                SyncroSimLayoutItem Group = new SyncroSimLayoutItem(GroupName, GroupName, true);
-
-                GroupsDict.Add(GroupName, Group);
-                GroupsList.Add(Group);
-            }
-
-            AddMapGroupedAttributes(
-                store, GroupsDict, StateAttrsDataSheet, 
-                "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
-                Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, null);
-
-            foreach (SyncroSimLayoutItem g in GroupsList)
-            {
-                if (g.Items.Count > 0)
-                {
-                    items.Add(g);
-                }
-            }
-        }
-
-        private static void AddMapTransitionAttributes(SyncroSimLayoutItemCollection items, Project project, DataStore store, DataView attrGroupsView)
-        {
-            DataSheet TransitionAttrsDataSheet = project.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME);
-
-            AddMapNonGroupedAttributes(
-                store, items, TransitionAttrsDataSheet, 
-                "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID", 
-                Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, null);
-
-            Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
-            List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
-
-            foreach (DataRowView drv in attrGroupsView)
-            {
-                string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
-                SyncroSimLayoutItem Group = new SyncroSimLayoutItem(GroupName, GroupName, true);
-
-                GroupsDict.Add(GroupName, Group);
-                GroupsList.Add(Group);
-            }
-
-            AddMapGroupedAttributes(
-                store, GroupsDict, TransitionAttrsDataSheet, 
-                "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID",
-                Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, null);
-
-            foreach (SyncroSimLayoutItem g in GroupsList)
-            {
-                if (g.Items.Count > 0)
-                {
-                    items.Add(g);
-                }
-            }
-        }
-
-        private static void AddMapNonGroupedAttributes(DataStore store, SyncroSimLayoutItemCollection items, DataSheet attrsDataSheet, string dataSheetName, string fileColumnName, string filterColumnName, string prefix, string colorMapSource)
-        {
-            DataTable Table = attrsDataSheet.GetData(store);
-            DataView View = new DataView(Table, null, attrsDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
-            Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
-
-            foreach (DataRowView drv in View)
-            {
-                if (drv.Row[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME] == DBNull.Value)
-                {
-                    int AttrId = Convert.ToInt32(drv.Row[attrsDataSheet.ValueMember], CultureInfo.InvariantCulture);
-                    string AttrName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, AttrId);
-                    string DisplayName = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
-
-                    if (drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME] != DBNull.Value)
-                    {
-                        DisplayName = string.Format(CultureInfo.InvariantCulture, 
-                            "{0} ({1})", 
-                            DisplayName, 
-                            Convert.ToString(drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture));
-                    }
-
-                    SyncroSimLayoutItem Item = new SyncroSimLayoutItem(AttrName, DisplayName, false);
-
-                    Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
-                    Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
-                    Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
-                    Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
-                    Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
-
-                    items.Add(Item);
-                }
-            }
-        }
-
-        private static void AddMapGroupedAttributes(DataStore store, Dictionary<string, SyncroSimLayoutItem> groupsDict, DataSheet attrsDataSheet, string dataSheetName, string fileColumnName, string filterColumnName, string prefix, string colorMapSource)
-        {
-            DataTable Table = attrsDataSheet.GetData(store);
-            DataView View = new DataView(Table, null, attrsDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
-            DataSheet GroupsDataSheet = attrsDataSheet.Project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
-            Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
-
-            foreach (DataRowView drv in View)
-            {
-                if (drv.Row[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME] != DBNull.Value)
-                {
-                    int GroupId = Convert.ToInt32(drv.Row[Strings.DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                    string GroupName = GroupsDataSheet.ValidationTable.GetDisplayName(GroupId);
-                    int AttrId = Convert.ToInt32(drv.Row[attrsDataSheet.ValueMember], CultureInfo.InvariantCulture);
-                    string AttrName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", prefix, AttrId);
-                    string DisplayName = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
-
-                    if (drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME] != DBNull.Value)
-                    {
-                        DisplayName = string.Format(CultureInfo.InvariantCulture, 
-                            "{0} ({1})", 
-                            DisplayName, 
-                            Convert.ToString(drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture));
-                    }
-
-                    SyncroSimLayoutItem Item = new SyncroSimLayoutItem(AttrName, DisplayName, false);
-
-                    Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
-                    Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
-                    Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
-                    Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
-                    Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
-
-                    groupsDict[GroupName].Items.Add(Item);
-                }
-            }
-        }
-
 
         /// <summary>
         /// Create the raster color maps for the specific project. The color maps are QGis compatible, and are use when

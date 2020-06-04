@@ -347,10 +347,20 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME = "RasterOutputSATimesteps";
         public const string DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME = "RasterOutputTA";
         public const string DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "RasterOutputTATimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME = "RasterOutputAATP";
-        public const string DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME = "RasterOutputAATPTimesteps";
         public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME = "RasterOutputTransitionEvents";
         public const string DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME = "RasterOutputTransitionEventTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME = "AvgRasterOutputSC";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCAcrossTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SA_COLUMN_NAME = "AvgRasterOutputSA";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSATimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SA_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSAAcrossTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TA_COLUMN_NAME = "AvgRasterOutputTA";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputTATimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TA_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputTAAcrossTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME = "RasterOutputAATP";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME = "RasterOutputAATPTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TP_ACROSS_TIMESTEPS_COLUMN_NAME = "RasterOutputAATPAcrossTimesteps";
 
         //Distribution Type Data Feed
         public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "corestime_DistributionType";

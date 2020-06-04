@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.17" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.18" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -481,10 +481,20 @@
                 <column name="RasterOutputSATimesteps" displayName="Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputTA" dataType="Boolean" displayName="Raster TA"/>
                 <column name="RasterOutputTATimesteps" displayName="Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="RasterOutputAATP" dataType="Boolean" displayName="Raster AATP"/>
-                <column name="RasterOutputAATPTimesteps" displayName="Raster AATP Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputTransitionEvents" dataType="Boolean" displayName="Raster Transition Events"/>
                 <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSC" displayName="Avg. Raster SC" dataType="Boolean"/>
+                <column name="AvgRasterOutputSCTimesteps" displayName="Avg. Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSCAcrossTimesteps" dataType="Boolean"/>           
+                <column name="AvgRasterOutputSA" displayName="Avg. Raster SA" dataType="Boolean"/>
+                <column name="AvgRasterOutputSATimesteps" displayName="Avg. Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSAAcrossTimesteps" dataType="Boolean"/>               
+                <column name="AvgRasterOutputTA" dataType="Boolean" displayName="Avg. Raster TA"/>
+                <column name="AvgRasterOutputTATimesteps" displayName="Avg. Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputTAAcrossTimesteps" dataType="Boolean"/>                          
+                <column name="RasterOutputAATP" dataType="Boolean" displayName="Avg. Raster AATP"/>
+                <column name="RasterOutputAATPTimesteps" displayName="Avg. Raster AATP Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="RasterOutputAATPAcrossTimesteps" dataType="Boolean"/>                                     
               </columns>
             </datasheet>
           </datasheets>
@@ -1379,7 +1389,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="106"
+    schemaVersion="107"
     minPackageVersion="3.2.17"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

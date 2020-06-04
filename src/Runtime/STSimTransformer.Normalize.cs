@@ -100,8 +100,8 @@ namespace SyncroSim.STSim
                 {
                     DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_SC_COLUMN_NAME, Booleans.BoolToInt(true));
                     DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, MaxTimestep);
-                    DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME, Booleans.BoolToInt(true));
-                    DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME, MaxTimestep);
+                    DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME, Booleans.BoolToInt(true));
+                    DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME, MaxTimestep);
                 }
 
                 this.RecordStatus(StatusType.Information, MessageStrings.STATUS_NO_OUTPUT_OPTIONS_WARNIING);
@@ -120,7 +120,7 @@ namespace SyncroSim.STSim
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Raster stratum", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Raster state attributes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Raster transition attributes", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME, "Raster average annual transition probability", MaxTimestep);
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME, "Raster average annual transition probability", MaxTimestep);
 
             this.ValidateStateAttributes(droo);
             this.ValidateTransitionAttributes(droo);
@@ -322,7 +322,7 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_OO_RASTER_OUTPUT_ST_COLUMN_NAME] != DBNull.Value || 
                 dr[Strings.DATASHEET_OO_RASTER_OUTPUT_SA_COLUMN_NAME] != DBNull.Value || 
                 dr[Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME] != DBNull.Value)
+                dr[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME] != DBNull.Value)
             {
                 return true;
             }

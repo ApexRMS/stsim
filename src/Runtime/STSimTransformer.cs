@@ -368,10 +368,10 @@ namespace SyncroSim.STSim
 
             base.RunStochasticLoop();
 
-            //We process AATP output after the rest of the model has completed because
+            //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
-            this.ProcessRasterAATPOutput();
+            this.ProcessRasterAvgTransitionProbabilityOutput();
 
             ModelRunComplete?.Invoke(this, new EventArgs());
         }

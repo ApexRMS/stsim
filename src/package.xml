@@ -492,8 +492,8 @@
                 <column name="AvgRasterOutputTA" dataType="Boolean" displayName="Avg. Raster TA"/>
                 <column name="AvgRasterOutputTATimesteps" displayName="Avg. Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="AvgRasterOutputTAAcrossTimesteps" dataType="Boolean"/>                          
-                <column name="RasterOutputAATP" dataType="Boolean" displayName="Avg. Raster AATP"/>
-                <column name="RasterOutputAATPTimesteps" displayName="Avg. Raster AATP Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="RasterOutputAATP" dataType="Boolean" displayName="Avg. Raster Transition Probability"/>
+                <column name="RasterOutputAATPTimesteps" displayName="Avg. Raster Transition Probability" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputAATPAcrossTimesteps" dataType="Boolean"/>                                     
               </columns>
             </datasheet>
@@ -1187,6 +1187,48 @@
             </datasheet>
           </datasheets>
         </datafeed>
+        <datafeed name="OutputSpatialAverageStateClass" displayName="Output Average Spatial State Class" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialAverageStateClass" displayName="Output Average Spatial State Class" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
+                <column name="Filename" displayName="Average Spatial State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateClassID" filenameCode="avgsc" />
+                <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="OutputSpatialAverageStateAttribute" displayName="Output Average Spatial State Attribute" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialAverageStateAttribute" displayName="Output Average State Attribute" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="StateAttributeTypeID" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
+                <column name="Filename" displayName="Average Spatial State Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeID" filenameCode="avgsa" />
+                <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="OutputSpatialAverageTransitionAttribute" displayName="Output Average Spatial Transition Attribute" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialAverageTransitionAttribute" displayName="Output Average Spatial Transition Attribute" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
+                <column name="Filename" displayName="Average Spatial Transition Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeID" filenameCode="avgta" />
+                <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
         <datafeed name="OutputSpatialAverageTransitionProbability" displayName="Output Spatial Average Transition Probability" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialAverageTransitionProbability" displayName="Spatial Average Transition Probability" spatialMultiProcessing="True">
@@ -1227,10 +1269,16 @@
     </transformer>
     <transformer name="TransitionAttributeRasterMap" displayName="Transition Attributes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialTransitionAttribute" column="Filename" isFolderExport="True">
     </transformer>
-    <transformer name="AATPRasterMap" displayName="Average Annual Transition Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename" isFolderExport="True">
-    </transformer>
     <transformer name="TransitionEventRasterMap" displayName="Transition Events" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialTransitionEvent" column="Filename" isFolderExport="True">
-    </transformer>
+    </transformer>    
+    <transformer name="AverageStateClassRasterMap" displayName="Average State Classes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageStateClass" column="Filename" isFolderExport="True">
+    </transformer>    
+    <transformer name="AverageStateAttributeRasterMap" displayName="Average State Attributes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageStateAttribute" column="Filename" isFolderExport="True">
+    </transformer>      
+    <transformer name="AverageTransitionAttributeRasterMap" displayName="Average Transition Attributes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTransitionAttribute" column="Filename" isFolderExport="True">
+    </transformer>       
+    <transformer name="AverageTransitionProbabilityRasterMap" displayName="Average Transition Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename" isFolderExport="True">
+    </transformer>    
   </transformers>
   <views>
     <view name="RunControlDatafeedView" target="RunControl" className="SyncroSim.STSim.RunControlDataFeedView" classAssembly="SyncroSim.STSim"/>
@@ -1273,8 +1321,11 @@
           <item name="StratumRasterMap"/>
           <item name="StateAttributeRasterMap"/>
           <item name="TransitionAttributeRasterMap"/>
-          <item name="AATPRasterMap"/>
-          <item name="TransitionEventRasterMap"/>
+          <item name="TransitionEventRasterMap"/>  
+          <item name="AverageStateClassRasterMap"/>  
+          <item name="AverageStateAttributeRasterMap"/>           
+          <item name="AverageTransitionAttributeRasterMap"/>           
+          <item name="AverageTransitionProbabilityRasterMap"/>
         </group>
       </group>
     </layout>

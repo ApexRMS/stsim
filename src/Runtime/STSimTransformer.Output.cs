@@ -49,10 +49,20 @@ namespace SyncroSim.STSim
         private int m_RasterStateAttributeOutputTimesteps;
         private bool m_CreateRasterTransitionAttributeOutput;
         private int m_RasterTransitionAttributeOutputTimesteps;
-        private bool m_CreateRasterAATPOutput;
-        private int m_RasterAATPTimesteps;
         private bool m_CreateRasterTransitionEventOutput;
         private int m_RasterTransitionEventTimesteps;
+        private bool m_CreateAvgRasterStateClassOutput;
+        private int m_AvgRasterStateClassTimesteps;
+        private bool m_AvgRasterStateClassAcrossTimesteps;
+        private bool m_CreateAvgRasterStateAttributeOutput;
+        private int m_AvgRasterStateAttributeTimesteps;
+        private bool m_AvgRasterStateAttributeAcrossTimesteps;
+        private bool m_CreateAvgRasterTransitionAttributeOutput;
+        private int m_AvgRasterTransitionAttributeTimesteps;
+        private bool m_AvgRasterTransitionAttributeAcrossTimesteps;
+        private bool m_CreateAvgRasterTransitionProbOutput;
+        private int m_AvgRasterTransitionProbTimesteps;
+        private bool m_AvgRasterTransitionProbAcrossTimesteps;
 
         //Output Collections
         private OutputStratumStateCollection m_SummaryStratumStateResults = new OutputStratumStateCollection();
@@ -605,7 +615,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void OnRasterTransitionOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
         {
-            if (!this.IsRasterTransitionTimestep(timestep) && !this.m_CreateRasterAATPOutput)
+            if (!this.IsRasterTransitionTimestep(timestep) && !this.m_CreateAvgRasterTransitionProbOutput)
             {
                 return;
             }
@@ -636,10 +646,10 @@ namespace SyncroSim.STSim
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
                 
-                //AATP Rasters
-                if(this.m_CreateRasterAATPOutput)
+                //Average Transition Probability Rasters
+                if(this.m_CreateAvgRasterTransitionProbOutput)
                 {
-                    RecordAnnualAvgTransitionProbabilityOutput(
+                    RecordAvgTransitionProbabilityOutput(
                     this.MaximumIteration - this.MinimumIteration + 1, 
                     timestep, 
                     transitionGroupId,
@@ -1785,10 +1795,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Process the Annual Average Transition Probabilities to raster file output.
+        /// Process the Average Transition Probabilities to raster file output.
         /// </summary>
         /// <remarks></remarks>
-        private void ProcessRasterAATPOutput()
+        private void ProcessRasterAvgTransitionProbabilityOutput()
         {
             if (!this.IsSpatial)
             {
@@ -1796,47 +1806,47 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (!this.m_CreateRasterAATPOutput)
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
             {
                 return;
             }
 
-            foreach (int tgId in this.m_AnnualAvgTransitionProbMap.Keys)
+            foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
             {
-                Dictionary<int, double[]> dictAatp = this.m_AnnualAvgTransitionProbMap[tgId];
+                Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
 
-                // Now lets loop thru the timestep arrays in the dictAatp
-                foreach (int timestep in dictAatp.Keys)
+                // Now lets loop thru the timestep arrays in the dict
+                foreach (int timestep in dict.Keys)
                 {
-                    double[] aatp = dictAatp[timestep];
+                    double[] Values = dict[timestep];
 
                     //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
-                    var aatpDistinct = aatp.Distinct();
+                    var DistVals = Values.Distinct();
 
-                    if (aatpDistinct.Count() == 1)
+                    if (DistVals.Count() == 1)
                     {
-                        Debug.Print("Skipping Annual Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                        Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
                         continue;
                     }
-                    else if (aatpDistinct.Count() == 2)
+                    else if (DistVals.Count() == 2)
                     {
-                        if (aatpDistinct.ElementAt(0) <= 0 && aatpDistinct.ElementAt(1) <= 0)
+                        if (DistVals.ElementAt(0) <= 0 && DistVals.ElementAt(1) <= 0)
                         {
-                            Debug.Print("Skipping Annual Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                            Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
                             continue;
                         }
                     }
 
-                    StochasticTimeRaster rastAatp = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    double[] arr = rastAatp.DblCells;
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
                     {
-                        arr[c.CellId] = aatp[c.CollectionIndex];
+                        arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
                     Spatial.WriteRasterData(
-                        rastAatp, 
+                        RastOutput, 
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY), 
                         0, 
                         timestep, 
@@ -1848,14 +1858,14 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Record the Annual Average Transition Probability output.
+        /// Record the Average Transition Probability output.
         /// </summary>
         /// <param name="numIterations">The number of interactions the model will run</param>
         /// <param name="timestep">The current timestep</param>
         /// <param name="transitionGroupId">The Transition Group Id</param>
         /// <param name="cellArray">A cell array containing transition pixels for the specified Transition Group</param>
         /// <remarks></remarks>
-        private void RecordAnnualAvgTransitionProbabilityOutput(int numIterations, int timestep, int transitionGroupId, int[] cellArray)
+        private void RecordAvgTransitionProbabilityOutput(int numIterations, int timestep, int transitionGroupId, int[] cellArray)
         {
             if (!this.IsSpatial)
             {
@@ -1863,7 +1873,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (!this.m_CreateRasterAATPOutput)
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
             {
                 return;
             }
@@ -1881,12 +1891,12 @@ namespace SyncroSim.STSim
             }
 
             // See if the Dictionary for this Transition Group exists. If not, init routine screwed up.
-            if (!this.m_AnnualAvgTransitionProbMap.ContainsKey(transitionGroupId))
+            if (!this.m_AvgTransitionProbMap.ContainsKey(transitionGroupId))
             {
                 Debug.Assert(false, "Where the heck is the Transition Group in the m_AnnualAvgTransitionProbMap member ?");
             }
 
-            Dictionary<int, double[]> dictTgAATP = this.m_AnnualAvgTransitionProbMap[transitionGroupId];
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
 
             // We should now have a Dictionary of timestep-keyed Double arrays
             // See if the specified timestep is a multiple of user timestep specified, or last timestep
@@ -1899,7 +1909,7 @@ namespace SyncroSim.STSim
             else
             {
                 //We're looking for the the raster whose timestep key is the first one that is >= to the current timestep
-                timestepKey = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(timestep - this.TimestepZero) / this.m_RasterAATPTimesteps) * this.m_RasterAATPTimesteps) + this.TimestepZero;
+                timestepKey = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(timestep - this.TimestepZero) / this.m_AvgRasterTransitionProbTimesteps) * this.m_AvgRasterTransitionProbTimesteps) + this.TimestepZero;
 
                 if (timestepKey > this.MaximumTimestep)
                 {
@@ -1908,11 +1918,11 @@ namespace SyncroSim.STSim
             }
 
             // We should be able to find a dictionary
-            double[] aatp = null;
+            double[] Values = null;
 
-            if (dictTgAATP.ContainsKey(timestepKey))
+            if (dict.ContainsKey(timestepKey))
             {
-                aatp = dictTgAATP[timestepKey];
+                Values = dict[timestepKey];
             }
             else
             {
@@ -1926,7 +1936,7 @@ namespace SyncroSim.STSim
                 //Test for > 0 ( and not equal to DEFAULT_NO_DATA_VALUE either )
                 if (cellArray[i] > 0)
                 {
-                    Debug.Assert(aatp[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
+                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
 
                     // Now lets do the probability calculation
                     //The value to increment by is 1/(tsf*N) 
@@ -1934,13 +1944,13 @@ namespace SyncroSim.STSim
                     //N is the number of iterations.
                     // Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, and freq of 5, would give bins 1-5, and 6-8.
 
-                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_RasterAATPTimesteps) != 0))
+                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) != 0))
                     {
-                        aatp[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_RasterAATPTimesteps * numIterations);
+                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps * numIterations);
                     }
                     else
                     {
-                        aatp[i] += 1 / (double)(this.m_RasterAATPTimesteps * numIterations);
+                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbTimesteps * numIterations);
                     }
                 }
             }

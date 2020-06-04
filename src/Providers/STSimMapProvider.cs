@@ -38,58 +38,76 @@ namespace SyncroSim.STSim
         {
             using (DataStore store = project.Library.CreateDataStore())
             {
-                SyncroSimLayoutItem g0 = new SyncroSimLayoutItem("BasicGroup", "Basic", true);
-                SyncroSimLayoutItem g1 = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
-                SyncroSimLayoutItem g2 = new SyncroSimLayoutItem("AATPGroup", "Average Annual Probability", true);
-                SyncroSimLayoutItem g3 = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
-                SyncroSimLayoutItem g4 = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
-                SyncroSimLayoutItem g5 = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
+                SyncroSimLayoutItem BasicGroup = new SyncroSimLayoutItem("BasicGroup", "Basic", true);
+                SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
+                SyncroSimLayoutItem StateAttrGroup = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
+                SyncroSimLayoutItem TransitionAttrGroup = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
+                SyncroSimLayoutItem TransitionEventGroup = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
+                SyncroSimLayoutItem AvgStateClassGroup = new SyncroSimLayoutItem("AvgStateClassGroup", "Average State Classes", true);
+                SyncroSimLayoutItem AvgStateAttributeGroup = new SyncroSimLayoutItem("AvgStateAttributeGroup", "Average State Attributes", true);
+                SyncroSimLayoutItem AvgTransitionAttributeGroup = new SyncroSimLayoutItem("AvgTransitionAttributeGroup", "Average Transition Attributes", true);
+                SyncroSimLayoutItem AvgTransitionProbabilityGroup = new SyncroSimLayoutItem("AvgTransitionProbabilityGroup", "Average Transition Probability", true);
 
                 DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
 
                 //Categorical
-                AddCategoricalVariables(project, g0);
+                AddCategoricalVariables(project, BasicGroup);
 
                 //Transitions
-                AddMapTransitionGroupVariables(project, g1.Items, "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
-
-                //Average Annual Transition Probability
-                AddMapTransitionGroupVariables(project, g2.Items, "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(project, TransitionsGroup.Items, "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
                 //State Attributes
-                AddMapStateAttributes(g3.Items, project, store, AttrGroupView);
+                AddMapStateAttributes(StateAttrGroup.Items, project, store, AttrGroupView);
 
                 //Transition Attributes
-                AddMapTransitionAttributes(g4.Items, project, store, AttrGroupView);
+                AddMapTransitionAttributes(TransitionAttrGroup.Items, project, store, AttrGroupView);
 
                 //Transition Events
-                AddMapTransitionGroupVariables(project, g5.Items, "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
+                AddMapTransitionGroupVariables(project, TransitionEventGroup.Items, "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
-                layout.Items.Add(g0);
+                //Average Transition Probability
+                AddMapTransitionGroupVariables(project, AvgTransitionProbabilityGroup.Items, "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
-                if (g1.Items.Count > 0)
+                layout.Items.Add(BasicGroup);
+
+                if (TransitionsGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g1);
+                    layout.Items.Add(TransitionsGroup);
                 }
 
-                if (g2.Items.Count > 0)
+                if (StateAttrGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g2);
+                    layout.Items.Add(StateAttrGroup);
                 }
 
-                if (g3.Items.Count > 0)
+                if (TransitionAttrGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g3);
+                    layout.Items.Add(TransitionAttrGroup);
                 }
 
-                if (g4.Items.Count > 0)
+                if (TransitionEventGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g4);
+                    layout.Items.Add(TransitionEventGroup);
                 }
 
-                if (g5.Items.Count > 0)
+                if (AvgStateClassGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g5);
+                    layout.Items.Add(AvgStateClassGroup);
+                }
+
+                if (AvgStateAttributeGroup.Items.Count > 0)
+                {
+                    layout.Items.Add(AvgStateAttributeGroup);
+                }
+
+                if (AvgTransitionAttributeGroup.Items.Count > 0)
+                {
+                    layout.Items.Add(AvgTransitionAttributeGroup);
+                }
+
+                if (AvgTransitionProbabilityGroup.Items.Count > 0)
+                {
+                    layout.Items.Add(AvgTransitionProbabilityGroup);
                 }
             }
         }

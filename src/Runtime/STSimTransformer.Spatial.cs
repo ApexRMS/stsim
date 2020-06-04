@@ -252,7 +252,7 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
 
-            if (!(this.m_CreateRasterTransitionOutput || this.m_CreateRasterAATPOutput))
+            if (!(this.m_CreateRasterTransitionOutput || this.m_CreateAvgRasterTransitionProbOutput))
             {
                 return;
             }
@@ -310,7 +310,7 @@ namespace SyncroSim.STSim
 
                 int[] transitionPixel = null;
 
-                if (this.m_CreateRasterTransitionOutput || this.m_CreateRasterAATPOutput)
+                if (this.m_CreateRasterTransitionOutput || this.m_CreateAvgRasterTransitionProbOutput)
                 {
                     transitionPixel = new int[this.Cells.Count];
                     // initialize to DEFAULT_NO_DATA_VLAUE
@@ -2359,7 +2359,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.MinimumTimestep > 0);
 
-            if (!this.m_CreateRasterAATPOutput)
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
             {
                 return;
             }
@@ -2373,30 +2373,30 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                Dictionary<int, double[]> dicTgAATP = new Dictionary<int, double[]>();
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 // Loop thru timesteps
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
                 {
                     // Create a dictionary for this transtion group
-                    // Create a aatp array object on Maximum Timestep and intervals of user spec'd freq.
+                    // Create an array object on Maximum Timestep and intervals of user spec'd freq.
 
-                    if ((timestep == this.MaximumTimestep) || ((timestep - this.TimestepZero) % this.m_RasterAATPTimesteps) == 0)
+                    if ((timestep == this.MaximumTimestep) || ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
                     {
-                        double[] aatp = null;
-                        aatp = new double[this.Cells.Count];
+                        double[] Values = null;
+                        Values = new double[this.Cells.Count];
 
                         // Initialize cells values
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
-                            aatp[i] = 0;
+                            Values[i] = 0;
                         }
 
-                        dicTgAATP.Add(timestep, aatp);
+                        dict.Add(timestep, Values);
                     }
                 }
 
-                this.m_AnnualAvgTransitionProbMap.Add(tg.TransitionGroupId, dicTgAATP);
+                this.m_AvgTransitionProbMap.Add(tg.TransitionGroupId, dict);
             }
         }
 

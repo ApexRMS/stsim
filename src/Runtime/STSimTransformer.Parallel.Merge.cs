@@ -14,7 +14,7 @@ namespace SyncroSim.STSim
     public partial class STSimTransformer
     {
         /// <summary>
-        /// Overrides merge so we can process AATP files
+        /// Overrides merge so we can process averaged spatial files
         /// </summary>
         /// <remarks></remarks>
         public override void Merge()
@@ -160,7 +160,7 @@ namespace SyncroSim.STSim
                 using (DataStore store = Session.CreateDataStore(new DataStoreConnection(Strings.SQLITE_DATASTORE_NAME, j.Library)))
                 {
                     int MergeScenarioId = ParallelTransformer.GetMergeScenarioId(store);
-                    string OutputFolderName = GetAATPSpatialOutputFolder(j.Library, MergeScenarioId);
+                    string OutputFolderName = GetTransitionProbSpatialOutputFolder(j.Library, MergeScenarioId);
 
                     if (!Directory.Exists(OutputFolderName))
                     {
@@ -186,13 +186,13 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Gets the Average Annuanl Transition Probability Spatial output folder for the specified file and scenario Id
+        /// Gets the Average Transition Probability Spatial output folder for the specified file and scenario Id
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="scenarioId"></param>
         /// <returns></returns>
         /// <remarks></remarks>
-        private static string GetAATPSpatialOutputFolder(string fileName, int scenarioId)
+        private static string GetTransitionProbSpatialOutputFolder(string fileName, int scenarioId)
         {
             return Path.Combine(
                 GetJobOutputScenarioFolderName(fileName, scenarioId, false), 

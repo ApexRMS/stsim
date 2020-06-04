@@ -55,8 +55,8 @@ namespace SyncroSim.STSim
             this.SetTextBoxBinding(this.TextBoxRasterSATimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxRasterTA, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxRasterTATimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxRasterTE, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxRasterTETimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxRasterTE, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxRasterTETimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxAvgRasterSC, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxAvgRasterSCTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxAvgRasterSCAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME);

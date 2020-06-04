@@ -120,7 +120,12 @@ namespace SyncroSim.STSim
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Raster stratum", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Raster state attributes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Raster transition attributes", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME, "Raster average annual transition probability", MaxTimestep);
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME, "Raster transition events", MaxTimestep);
+
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, "Average raster state classes", MaxTimestep);
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Average Raster state attributes", MaxTimestep);
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Average Raster transition attributes", MaxTimestep);
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME, "Average Raster transition probability", MaxTimestep);
 
             this.ValidateStateAttributes(droo);
             this.ValidateTransitionAttributes(droo);

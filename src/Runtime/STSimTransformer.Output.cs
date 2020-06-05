@@ -34,7 +34,6 @@ namespace SyncroSim.STSim
         private bool m_SummaryTransitionAttributeOutputAges;
         private bool m_SummaryOmitSecondaryStrata;
         private bool m_SummaryOmitTertiaryStrata;
-
         private bool m_CreateRasterStateClassOutput;
         private int m_RasterStateClassOutputTimesteps;
         private bool m_CreateRasterTransitionOutput;
@@ -410,7 +409,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if ((this.IsSummaryStateClassTimestep(timestep)) || (this.m_StateAttributeTypeIdsNoAges.Count > 0 & this.IsSummaryStateAttributeTimestep(timestep)))
+            if ((this.IsSummaryStateClassTimestep(timestep)) || 
+                (this.m_StateAttributeTypeIdsNoAges.Count > 0 & this.IsSummaryStateAttributeTimestep(timestep)))
             {
                 int AgeKey = this.m_AgeReportingHelperSC.GetKey(simulationCell.Age);
 
@@ -448,7 +448,8 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Called to record transition class summary output for the specified simulation cell, iteration, and timestep
+        /// Called to record transition class summary output for the specified simulation cell, 
+        /// iteration, and timestep
         /// </summary>
         /// <param name="simulationCell">The simulation cell</param>
         /// <param name="currentTransition">The current transition</param>
@@ -456,7 +457,12 @@ namespace SyncroSim.STSim
         /// <param name="timestep">The current timestep</param>
         /// <param name="eventId">The current event Id</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void OnSummaryTransitionOutput(Cell simulationCell, Transition currentTransition, int iteration, int timestep, Nullable<int> eventId)
+        private void OnSummaryTransitionOutput(
+            Cell simulationCell, 
+            Transition currentTransition, 
+            int iteration, 
+            int timestep, 
+            Nullable<int> eventId)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
             {
@@ -474,14 +480,20 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Called to record transition by state class summary output for the specified simulation cell, iteration, and timestep
+        /// Called to record transition by state class summary output for the specified 
+        /// simulation cell, iteration, and timestep
         /// </summary>
         /// <param name="simulationCell">The simulation cell</param>
         /// <param name="currentTransition">The current transition</param>
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
-        /// <remarks>This function aggregates by stratum, state class source, state class destination, and transition</remarks>
-        private void OnSummaryTransitionByStateClassOutput(Cell simulationCell, Transition currentTransition, int iteration, int timestep)
+        /// <remarks>This function aggregates by stratum, state class source, 
+        /// state class destination, and transition</remarks>
+        private void OnSummaryTransitionByStateClassOutput(
+            Cell simulationCell, 
+            Transition currentTransition, 
+            int iteration, 
+            int timestep)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
             {
@@ -613,7 +625,10 @@ namespace SyncroSim.STSim
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
-        private void OnRasterTransitionOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
+        private void OnRasterTransitionOutput(
+            int iteration, 
+            int timestep, 
+            Dictionary<int, int[]> dictTransitionedPixels)
         {
             if (!this.IsRasterTransitionTimestep(timestep))
             {
@@ -656,7 +671,10 @@ namespace SyncroSim.STSim
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
-        private void OnRasterTransitionProabilityOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
+        private void OnRasterTransitionProbabilityOutput(
+            int iteration, 
+            int timestep, 
+            Dictionary<int, int[]> dictTransitionedPixels)
         {
             if (!this.m_CreateAvgRasterTransitionProbOutput)
             {
@@ -682,7 +700,10 @@ namespace SyncroSim.STSim
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
-        private void OnRasterTransitionEventOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
+        private void OnRasterTransitionEventOutput(
+            int iteration, 
+            int timestep, 
+            Dictionary<int, int[]> dictTransitionedPixels)
         {
             if (!this.IsRasterTransitionEventTimestep(timestep))
             {
@@ -724,7 +745,10 @@ namespace SyncroSim.STSim
         /// <param name="iteration"></param>
         /// <param name="timestep"></param>
         /// <remarks></remarks>
-        private void OnRasterTransitionAttributeOutput(Dictionary<int, double[]> RasterTransitionAttrValues, int iteration, int timestep)
+        private void OnRasterTransitionAttributeOutput(
+            Dictionary<int, double[]> RasterTransitionAttrValues, 
+            int iteration, 
+            int timestep)
         {
             if (this.IsRasterTransitionAttributeTimestep(timestep))
             {
@@ -1097,7 +1121,8 @@ namespace SyncroSim.STSim
                 {
                     foreach (int? TertiaryStratumId in TertiaryStratumIds)
                     {
-                        object o = this.m_ProportionAccumulatorMap.GetValue(PrimaryStratum.StratumId, SecondaryStratumId, TertiaryStratumId);
+                        object o = this.m_ProportionAccumulatorMap.GetValue(
+                            PrimaryStratum.StratumId, SecondaryStratumId, TertiaryStratumId);
 
                         if (o != null)
                         {
@@ -1362,50 +1387,6 @@ namespace SyncroSim.STSim
             }
 
             this.m_SummaryTransitionAttributeResults.Clear();
-        }
-
-        /// <summary>
-        /// Creates a dictionary of all secondary stratum ids in the current state class summary output
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private Dictionary<int, bool> CreateSecondaryStratumDictionary()
-        {
-            Dictionary<int, bool> d = new Dictionary<int, bool>();
-
-            foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
-            {
-                int k = LookupKeyUtils.GetOutputCollectionKey(r.SecondaryStratumId);
-
-                if (!d.ContainsKey(k))
-                {
-                    d.Add(k, true);
-                }
-            }
-
-            return d;
-        }
-
-        /// <summary>
-        /// Creates a dictionary of all tertiary stratum ids in the current state class summary output
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private Dictionary<int, bool> CreateTertiaryStratumDictionary()
-        {
-            Dictionary<int, bool> d = new Dictionary<int, bool>();
-
-            foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
-            {
-                int k = LookupKeyUtils.GetOutputCollectionKey(r.TertiaryStratumId);
-
-                if (!d.ContainsKey(k))
-                {
-                    d.Add(k, true);
-                }
-            }
-
-            return d;
         }
 
         /// <summary>
@@ -1873,6 +1854,13 @@ namespace SyncroSim.STSim
             }
         }
 
+        /// <summary>
+        /// Record the Average Transition Probability output.
+        /// </summary>
+        /// <param name="timestep">The current timestep</param>
+        /// <param name="transitionGroupId">The Transition Group Id</param>
+        /// <param name="cellArray">A cell array containing transition pixels for the specified Transition Group</param>
+        /// <remarks></remarks>
         private void RecordAvgTransitionProbabilityOutput(int timestep, int transitionGroupId, int[] cellArray)
         {
             //Dont bother if there haven't been any transitions this timestep
@@ -1922,13 +1910,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Record the Average Transition Probability output.
-        /// </summary>
-        /// <param name="timestep">The current timestep</param>
-        /// <param name="transitionGroupId">The Transition Group Id</param>
-        /// <param name="cellArray">A cell array containing transition pixels for the specified Transition Group</param>
-        /// <remarks></remarks>
         private void RecordAvgTransitionProbabilityOutputAcrossTimesteps(int timestep, int transitionGroupId, int[] cellArray)
         {
             Debug.Assert(this.IsSpatial);
@@ -1964,7 +1945,11 @@ namespace SyncroSim.STSim
             }
         }
 
-        private bool IsTransitionAttributeTargetExceded(Cell simulationCell, Transition tr, int iteration, int timestep)
+        private bool IsTransitionAttributeTargetExceded(
+            Cell simulationCell, 
+            Transition tr, 
+            int iteration, 
+            int timestep)
         {
             if (!this.m_TransitionAttributeValueMap.HasItems)
             {
@@ -2024,6 +2009,40 @@ namespace SyncroSim.STSim
             }
 
             return timestepKey;
+        }
+
+        private Dictionary<int, bool> CreateSecondaryStratumDictionary()
+        {
+            Dictionary<int, bool> d = new Dictionary<int, bool>();
+
+            foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
+            {
+                int k = LookupKeyUtils.GetOutputCollectionKey(r.SecondaryStratumId);
+
+                if (!d.ContainsKey(k))
+                {
+                    d.Add(k, true);
+                }
+            }
+
+            return d;
+        }
+
+        private Dictionary<int, bool> CreateTertiaryStratumDictionary()
+        {
+            Dictionary<int, bool> d = new Dictionary<int, bool>();
+
+            foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
+            {
+                int k = LookupKeyUtils.GetOutputCollectionKey(r.TertiaryStratumId);
+
+                if (!d.ContainsKey(k))
+                {
+                    d.Add(k, true);
+                }
+            }
+
+            return d;
         }
     }
 }

@@ -521,7 +521,7 @@ namespace SyncroSim.STSim
                 this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels, dictTransitionedEventPixels);
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
                 this.OnRasterTransitionOutput(iteration, timestep, dictTransitionedPixels);               
-                this.OnRasterTransitionProabilityOutput(iteration, timestep, dictTransitionedPixels);
+                this.OnRasterTransitionProbabilityOutput(iteration, timestep, dictTransitionedPixels);
                 this.OnRasterTransitionEventOutput(iteration, timestep, dictTransitionedEventPixels);
 
                 foreach (Cell simulationCell in this.m_Cells)

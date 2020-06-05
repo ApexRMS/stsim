@@ -732,7 +732,7 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         transitionGroupId,
-                        Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX_PREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }               
             }
@@ -1848,7 +1848,7 @@ namespace SyncroSim.STSim
                         0, 
                         timestep, 
                         tgId, 
-                        Constants.SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX, 
+                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }

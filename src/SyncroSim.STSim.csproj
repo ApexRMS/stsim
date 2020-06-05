@@ -176,6 +176,7 @@
     <Compile Include="Runtime\PatchPrioritization.cs" />
     <Compile Include="Runtime\PatchPrioritizationCollection.cs" />
     <Compile Include="Runtime\ProportionAccumulatorMap.cs" />
+    <Compile Include="Runtime\RasterMerger.cs" />
     <Compile Include="Runtime\StateAttributeValue.cs" />
     <Compile Include="Runtime\StateAttributeValueCollection.cs" />
     <Compile Include="Runtime\StateAttributeValueMap.cs" />
@@ -479,7 +480,6 @@
     <Compile Include="Shared\SizeClassHelper.cs" />
     <Compile Include="Shared\Strings.cs" />
     <Compile Include="Shared\TerminologyUtilities.cs" />
-    <Compile Include="Shared\TgapMerge.cs" />
     <Compile Include="Shared\TransitionFilterCriteria.cs" />
     <Compile Include="Shared\ValidationTableUtilities.cs" />
     <Compile Include="Statistics\STSimDistributionBase.cs" />

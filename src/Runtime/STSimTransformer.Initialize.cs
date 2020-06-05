@@ -104,6 +104,10 @@ namespace SyncroSim.STSim
 
             this.m_TimestepZero = this.MinimumTimestep;
             this.MinimumTimestep = this.MinimumTimestep + 1;
+
+            this.m_TotalIterations = (
+                this.MaximumIteration -
+                this.MinimumIteration + 1);
         }
 
         /// <summary>

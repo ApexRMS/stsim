@@ -606,7 +606,7 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Record transition type changes for the specified Transition Group.
+        /// Record transition changes for the specified transitioned pixels.
         /// </summary>
         /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
         /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
@@ -615,7 +615,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void OnRasterTransitionOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
         {
-            if (!this.IsRasterTransitionTimestep(timestep) && !this.m_CreateAvgRasterTransitionProbOutput)
+            if (!this.IsRasterTransitionTimestep(timestep))
             {
                 return;
             }
@@ -644,17 +644,34 @@ namespace SyncroSim.STSim
                         transitionGroupId, 
                         Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX_PREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
-                
-                //Average Transition Probability Rasters
-                if(this.m_CreateAvgRasterTransitionProbOutput)
-                {
-                    RecordAvgTransitionProbabilityOutput(
-                    this.MaximumIteration - this.MinimumIteration + 1, 
-                    timestep, 
+                }               
+            }
+        }
+
+        /// <summary>
+        /// Record transition probability changes for the specified transitioned pixels.
+        /// </summary>
+        /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
+        /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
+        /// <param name="iteration">The current iteration</param>
+        /// <param name="timestep">The current timestep</param>
+        /// <remarks></remarks>
+        private void OnRasterTransitionProabilityOutput(int iteration, int timestep, Dictionary<int, int[]> dictTransitionedPixels)
+        {
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            {
+                return;
+            }
+
+            foreach (int transitionGroupId in dictTransitionedPixels.Keys)
+            {
+                int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                RecordAvgTransitionProbabilityOutput(
+                    this.m_TotalIterations,
+                    timestep,
                     transitionGroupId,
                     transitionedPixels);
-                }
             }
         }
 

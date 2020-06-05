@@ -24,6 +24,7 @@ namespace SyncroSim.STSim
         private AgeHelper m_AgeReportingHelperTA;
         private SizeClassHelper m_SizeClassHelper;
         private double m_AmountPerCell;
+        private int m_TotalIterations;
         private int m_TimestepZero;
         private bool m_IsSpatial;
 
@@ -520,6 +521,7 @@ namespace SyncroSim.STSim
                 this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels, dictTransitionedEventPixels);
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
                 this.OnRasterTransitionOutput(iteration, timestep, dictTransitionedPixels);
+                this.OnRasterTransitionProabilityOutput(iteration, timestep, dictTransitionedEventPixels);
                 this.OnRasterTransitionEventOutput(iteration, timestep, dictTransitionedEventPixels);
 
                 foreach (Cell simulationCell in this.m_Cells)

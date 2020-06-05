@@ -35,9 +35,10 @@ namespace SyncroSim.STSim
         private InitialConditionsSpatialMap m_InitialConditionsSpatialMap;
         private Dictionary<int, bool> m_StateAttributeTypeIdsAges;
         private Dictionary<int, bool> m_StateAttributeTypeIdsNoAges;
-        private Dictionary<int, Dictionary<int, double[]>> m_AvgTransitionProbMap = new Dictionary<int, Dictionary<int, double[]>>();
         private IntervalMeanTimestepMap m_IntervalMeanTimestepMap;
         private ProportionAccumulatorMap m_ProportionAccumulatorMap;
+
+        private Dictionary<int, Dictionary<int, double[]>> m_AvgTransitionProbMap = new Dictionary<int, Dictionary<int, double[]>>();
 
         private void InitializeCollectionMaps()
         {

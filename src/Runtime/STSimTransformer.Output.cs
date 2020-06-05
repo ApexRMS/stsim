@@ -668,7 +668,6 @@ namespace SyncroSim.STSim
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
 
                 RecordAvgTransitionProbabilityOutput(
-                    this.m_TotalIterations,
                     timestep,
                     transitionGroupId,
                     transitionedPixels);
@@ -1874,100 +1873,92 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Record the Average Transition Probability output.
-        /// </summary>
-        /// <param name="numIterations">The number of interactions the model will run</param>
-        /// <param name="timestep">The current timestep</param>
-        /// <param name="transitionGroupId">The Transition Group Id</param>
-        /// <param name="cellArray">A cell array containing transition pixels for the specified Transition Group</param>
-        /// <remarks></remarks>
-        private void RecordAvgTransitionProbabilityOutput(int numIterations, int timestep, int transitionGroupId, int[] cellArray)
+        private void RecordAvgTransitionProbabilityOutput(int timestep, int transitionGroupId, int[] cellArray)
         {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
-            {
-                return;
-            }
-
             //Dont bother if there haven't been any transitions this timestep
             var distArray = cellArray.Distinct();
+
             if (distArray.Count() == 1)
             {
                 var el0 = distArray.ElementAt(0);
+
                 if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
                 {
-                    //  Debug.Print("Found all 0's or NO_DATA_VALUES")
                     return;
                 }
             }
 
-            // See if the Dictionary for this Transition Group exists. If not, init routine screwed up.
-            if (!this.m_AvgTransitionProbMap.ContainsKey(transitionGroupId))
+            if (this.m_AvgRasterTransitionProbAcrossTimesteps)
             {
-                Debug.Assert(false, "Where the heck is the Transition Group in the m_AnnualAvgTransitionProbMap member ?");
-            }
-
-            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
-
-            // We should now have a Dictionary of timestep-keyed Double arrays
-            // See if the specified timestep is a multiple of user timestep specified, or last timestep
-            int timestepKey = 0;
-
-            if (timestep == this.MaximumTimestep)
-            {
-                timestepKey = this.MaximumTimestep;
+                this.RecordAvgTransitionProbabilityOutputAcrossTimesteps(timestep, transitionGroupId, cellArray);
             }
             else
             {
-                //We're looking for the the raster whose timestep key is the first one that is >= to the current timestep
-                timestepKey = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(timestep - this.TimestepZero) / this.m_AvgRasterTransitionProbTimesteps) * this.m_AvgRasterTransitionProbTimesteps) + this.TimestepZero;
-
-                if (timestepKey > this.MaximumTimestep)
+                if ((timestep == this.MaximumTimestep) || ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
                 {
-                    timestepKey = this.MaximumTimestep;
+                    this.RecordAvgTransitionProbabilityOutputNormalMethod(timestep, transitionGroupId, cellArray);
                 }
             }
+        }
 
-            // We should be able to find a dictionary
-            double[] Values = null;
+        private void RecordAvgTransitionProbabilityOutputNormalMethod(int timestep, int transitionGroupId, int[] cellArray)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
+            Debug.Assert(!this.m_AvgRasterTransitionProbAcrossTimesteps);
 
-            if (dict.ContainsKey(timestepKey))
-            {
-                Values = dict[timestepKey];
-            }
-            else
-            {
-                Debug.Assert(false, "Where the heck is the Timestep keyed array in the m_AnnualAvgTransitionProbMap member.");
-            }
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
+            double[] Values = dict[timestep];
 
             foreach (Cell cell in this.Cells)
             {
                 int i = cell.CollectionIndex;
 
-                //Test for > 0 ( and not equal to DEFAULT_NO_DATA_VALUE either )
+                if (cellArray[i] > 0)
+                {
+                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
+                    Values[i] += 1 / (double) this.m_TotalIterations;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Record the Average Transition Probability output.
+        /// </summary>
+        /// <param name="timestep">The current timestep</param>
+        /// <param name="transitionGroupId">The Transition Group Id</param>
+        /// <param name="cellArray">A cell array containing transition pixels for the specified Transition Group</param>
+        /// <remarks></remarks>
+        private void RecordAvgTransitionProbabilityOutputAcrossTimesteps(int timestep, int transitionGroupId, int[] cellArray)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
+            Debug.Assert(this.m_AvgRasterTransitionProbAcrossTimesteps);
+
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
+            int timestepKey = this.GetTimestepKeyForAverage(timestep, this.m_AvgRasterTransitionProbTimesteps);
+            double[] Values = dict[timestepKey];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+
                 if (cellArray[i] > 0)
                 {
                     Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
 
-                    // Now lets do the probability calculation
-                    //The value to increment by is 1/(tsf*N) 
-                    //where tsf is the timestep frequency 
-                    //N is the number of iterations.
-                    // Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, and freq of 5, would give bins 1-5, and 6-8.
+                    //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
+                    //where tsf is the timestep frequency N is the number of iterations.
+                    //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                    //and freq of 5, would give bins 1-5, and 6-8.
 
                     if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) != 0))
                     {
-                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps * numIterations);
+                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps * this.m_TotalIterations);
                     }
                     else
                     {
-                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbTimesteps * numIterations);
+                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbTimesteps * this.m_TotalIterations);
                     }
                 }
             }
@@ -2008,6 +1999,31 @@ namespace SyncroSim.STSim
             }
 
             return false;
+        }
+
+        private int GetTimestepKeyForAverage(int currentTimestep, int everyNthTimestep)
+        {
+            int timestepKey = 0;
+
+            if (currentTimestep == this.MaximumTimestep)
+            {
+                timestepKey = this.MaximumTimestep;
+            }
+            else
+            {
+                //We're looking for the the timestep which is the first one that is >= to the current timestep
+
+                timestepKey = Convert.ToInt32(Math.Ceiling(
+                    Convert.ToDouble(currentTimestep - this.TimestepZero) / everyNthTimestep) * everyNthTimestep) +
+                        this.TimestepZero;
+
+                if (timestepKey > this.MaximumTimestep)
+                {
+                    timestepKey = this.MaximumTimestep;
+                }
+            }
+
+            return timestepKey;
         }
     }
 }

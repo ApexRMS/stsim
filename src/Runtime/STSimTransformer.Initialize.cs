@@ -44,6 +44,9 @@ namespace SyncroSim.STSim
             this.InitializeShufflableTransitionGroups();
             this.InitializeTransitionTargetPrioritizations();
             this.InitializeTransitionAttributeTargetPrioritizations();
+            this.InitializeAvgStateAttributeMaps();
+            this.InitializeAvgTransitionAttributeMaps();
+            this.InitializeAvgTransitionProbMaps();
 
             if (this.IsSpatial)
             {
@@ -270,6 +273,7 @@ namespace SyncroSim.STSim
             this.FillTypesForTransitionGroups();
             this.FillGroupsForTransitionTypes();
             this.FillTransitionMultiplierTypeCollection();
+            this.FillStateAttributeTypeCollection();
             this.FillTransitionAttributeTypeCollection();
             this.FillDeterministicTransitionsCollection();
             this.FillProbabilisticTransitionsCollection();

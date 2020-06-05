@@ -24,6 +24,7 @@ namespace SyncroSim.STSim
         private TransitionGroupCollection m_TransitionSimulationGroups = new TransitionGroupCollection();
         private List<TransitionGroup> m_ShufflableTransitionGroups = new List<TransitionGroup>();
         private List<TransitionGroup> m_TransitionSpreadGroups = new List<TransitionGroup>();
+        private StateAttributeTypeCollection m_StateAttributeTypes = new StateAttributeTypeCollection();
         private TransitionAttributeTypeCollection m_TransitionAttributeTypes = new TransitionAttributeTypeCollection();
         private TransitionMultiplierTypeCollection m_TransitionMultiplierTypes = new TransitionMultiplierTypeCollection();
         private PatchPrioritizationCollection m_PatchPrioritizations = new PatchPrioritizationCollection();
@@ -502,6 +503,22 @@ namespace SyncroSim.STSim
 
                 this.m_TransitionMultiplierTypes.Add(new TransitionMultiplierType
                     (TransitionMultiplierTypeId, this.ResultScenario, this.m_DistributionProvider));
+            }
+        }
+
+        /// <summary>
+        /// Fills the State Attribute Type collection
+        /// </summary>
+        /// <remarks></remarks>
+        private void FillStateAttributeTypeCollection()
+        {
+            Debug.Assert(this.m_StateAttributeTypes.Count == 0);
+            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int StateAttributeTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                this.m_StateAttributeTypes.Add(new StateAttributeType(StateAttributeTypeId));
             }
         }
 

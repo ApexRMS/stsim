@@ -177,6 +177,8 @@
     <Compile Include="Runtime\PatchPrioritizationCollection.cs" />
     <Compile Include="Runtime\ProportionAccumulatorMap.cs" />
     <Compile Include="Runtime\RasterMerger.cs" />
+    <Compile Include="Runtime\StateAttributeType.cs" />
+    <Compile Include="Runtime\StateAttributeTypeCollection.cs" />
     <Compile Include="Runtime\StateAttributeValue.cs" />
     <Compile Include="Runtime\StateAttributeValueCollection.cs" />
     <Compile Include="Runtime\StateAttributeValueMap.cs" />

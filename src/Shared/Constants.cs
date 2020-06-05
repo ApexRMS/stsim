@@ -102,9 +102,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TST = "stsim_OutputSpatialTST";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS = "stsim_OutputSpatialAverageStateClass";
-        public const string DATASHEET_OUTPUT_AVG_STATE_ATTRIBUTE = "stsim_OutputSpatialAverageStateAttribute";
-        public const string DATASHEET_OUTPUT_AVG_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
-        public const string DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY = "stsim_OutputSpatialAverageTransitionProbability";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialAverageStateAttribute";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY = "stsim_OutputSpatialAverageTransitionProbability";
 
         //Spatial Output Datasheet Common Column Names
         public const string DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename";

@@ -14,7 +14,7 @@ namespace SyncroSim.STSim
     public partial class STSimTransformer
     {
         /// <summary>
-        /// Overrides merge so we can process averaged spatial files
+        /// Overrides merge so we can process averaged spatial data
         /// </summary>
         /// <remarks></remarks>
         public override void Merge()
@@ -28,29 +28,61 @@ namespace SyncroSim.STSim
                 BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
 
                 //Merge spatial averaging rasters
+                ProcessAverageStateAttributeRasters();
+                ProcessAverageTransitionAttributeRasters();
                 ProcessAverageTransitionProbabilityRasters();
 
                 //Do the normal merge
                 base.Merge();
 
                 //Merge spatial averaging datasheets
+                ProcessAverageStateAttributeDatasheet();            
+                ProcessAverageTransitionAttributeDatasheet();
                 ProcessAverageTransitionProbabilityDatasheet();
 
                 NormalSpatialMergeComplete?.Invoke(this, new EventArgs());
             }
         }
 
+        private void ProcessAverageStateAttributeRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE,
+                Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX_PREFIX + "*.tif");
+        }
+
+        private void ProcessAverageTransitionAttributeRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE,
+                Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX + "*.tif");
+        }
+
         private void ProcessAverageTransitionProbabilityRasters()
         {
             this.ProcessAveragedOutputFiles(
-                Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY,
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
                 Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX + "*.tif");
+        }
+
+        private void ProcessAverageStateAttributeDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE,
+                Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageTransitionAttributeDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE,
+                Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME);
         }
 
         private void ProcessAverageTransitionProbabilityDatasheet()
         {
             this.ProcessAveragedValueDatasheet(
-                Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY,
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
                 Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME);
         }
 

@@ -38,6 +38,8 @@ namespace SyncroSim.STSim
         private IntervalMeanTimestepMap m_IntervalMeanTimestepMap;
         private ProportionAccumulatorMap m_ProportionAccumulatorMap;
 
+        private Dictionary<int, Dictionary<int, double[]>> m_AvgStateAttrMap = new Dictionary<int, Dictionary<int, double[]>>();
+        private Dictionary<int, Dictionary<int, double[]>> m_AvgTransitionAttrMap = new Dictionary<int, Dictionary<int, double[]>>();
         private Dictionary<int, Dictionary<int, double[]>> m_AvgTransitionProbMap = new Dictionary<int, Dictionary<int, double[]>>();
 
         private void InitializeCollectionMaps()

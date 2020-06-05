@@ -1024,8 +1024,8 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                this.OnSummaryTransitionOutput(CurrentRecord.Cell, Transition, iteration, timestep, transitionEventId);
-                this.OnSummaryTransitionByStateClassOutput(CurrentRecord.Cell, Transition, iteration, timestep);
+                this.RecordSummaryTransitionOutput(CurrentRecord.Cell, Transition, iteration, timestep, transitionEventId);
+                this.RecordSummaryTransitionByStateClassOutput(CurrentRecord.Cell, Transition, iteration, timestep);
 
                 this.ChangeCellForProbabilisticTransition(CurrentRecord.Cell, Transition, iteration, timestep, rasterTransitionAttrValues);
 
@@ -2113,8 +2113,8 @@ namespace SyncroSim.STSim
                 this.m_Strata[c.StratumId].Cells.Add(c.CellId, c);
                 this.m_ProportionAccumulatorMap.AddOrIncrement(c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId);
 
-                this.OnSummaryStateClassOutput(c, iteration, this.m_TimestepZero);
-                this.OnSummaryStateAttributeOutput(c, iteration, this.m_TimestepZero);
+                this.RecordSummaryStateClassOutput(c, iteration, this.m_TimestepZero);
+                this.RecordSummaryStateAttributeOutput(c, iteration, this.m_TimestepZero);
 
                 CellInitialized?.Invoke(this, new CellEventArgs(c, iteration, this.m_TimestepZero));
             }
@@ -2351,10 +2351,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the Annual Average Transition Probability Maps
+        /// Initializes the Average Transition Probability Maps
         /// </summary>
         /// <remarks></remarks>
-        private void InitializeAnnualAvgTransitionProbMaps()
+        private void InitializeAvgTransitionProbMaps()
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.MinimumTimestep > 0);
@@ -2364,10 +2364,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            // Loop thru transition groups. 
             foreach (TransitionGroup tg in this.m_TransitionGroups)
             {
-                //Make sure Primary
                 if (tg.PrimaryTransitionTypes.Count == 0)
                 {
                     continue;
@@ -2375,18 +2373,14 @@ namespace SyncroSim.STSim
 
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
-                // Loop thru timesteps
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
                 {
-                    // Create a dictionary for this transtion group
-                    // Create an array object on Maximum Timestep and intervals of user spec'd freq.
-
-                    if ((timestep == this.MaximumTimestep) || ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
+                    if ((timestep == this.MaximumTimestep) || 
+                        ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
                     {
                         double[] Values = null;
                         Values = new double[this.Cells.Count];
 
-                        // Initialize cells values
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
                             Values[i] = 0;
@@ -2398,6 +2392,125 @@ namespace SyncroSim.STSim
 
                 this.m_AvgTransitionProbMap.Add(tg.TransitionGroupId, dict);
             }
+        }
+
+        /// <summary>
+        /// Initializes the Average State Attribute Map
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeAvgStateAttributeMaps()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterStateAttributeOutput)
+            {
+                return;
+            }
+ 
+            foreach (StateAttributeType sat in this.m_StateAttributeTypes)
+            {
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if ((timestep == this.MaximumTimestep) || 
+                        ((timestep - this.TimestepZero) % this.m_AvgRasterStateAttributeTimesteps) == 0)
+                    {
+                        double[] Values = null;
+                        Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgStateAttrMap.Add(sat.Id, dict);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the Average Transition Attribute Map
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeAvgTransitionAttributeMaps()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterTransitionAttributeOutput)
+            {
+                return;
+            }
+
+            foreach (TransitionAttributeType tat in this.m_TransitionAttributeTypes)
+            {
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if ((timestep == this.MaximumTimestep) ||
+                        ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionAttributeTimesteps) == 0)
+                    {
+                        double[] Values = null;
+                        Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgTransitionAttrMap.Add(tat.TransitionAttributeId, dict);
+            }
+        }
+
+        private bool IsTransitionAttributeTargetExceded(
+            Cell simulationCell,
+            Transition tr,
+            int iteration,
+            int timestep)
+        {
+            if (!this.m_TransitionAttributeValueMap.HasItems)
+            {
+                return false;
+            }
+
+            TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
+
+            foreach (int AttributeTypeId in this.m_TransitionAttributeTypeIds.Keys)
+            {
+                foreach (TransitionGroup tg in tt.TransitionGroups)
+                {
+                    double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
+                        AttributeTypeId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+
+                    if (AttrValue.HasValue)
+                    {
+                        TransitionAttributeTarget Target = this.m_TransitionAttributeTargetMap.GetAttributeTarget(
+                            AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                            simulationCell.TertiaryStratumId, iteration, timestep);
+
+                        if (Target != null && !Target.IsDisabled)
+                        {
+                            if (Target.TargetRemaining <= 0.0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static string CreatePrimaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)

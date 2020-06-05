@@ -65,8 +65,8 @@ namespace SyncroSim.STSim
         {
             this.m_ProportionAccumulatorMap.AddOrIncrement(c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId);
 
-            this.OnSummaryStateClassOutput(c, iteration, this.m_TimestepZero);
-            this.OnSummaryStateAttributeOutput(c, iteration, this.m_TimestepZero);
+            this.RecordSummaryStateClassOutput(c, iteration, this.m_TimestepZero);
+            this.RecordSummaryStateAttributeOutput(c, iteration, this.m_TimestepZero);
 
             CellInitialized?.Invoke(this, new CellEventArgs(c, iteration, this.m_TimestepZero));
         }

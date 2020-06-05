@@ -80,210 +80,6 @@ namespace SyncroSim.STSim
         private DataTable m_OutputTransitionAttributeTable;
 
         /// <summary>
-        /// Determines whether or not to do summary state class output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsSummaryStateClassTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_SummaryStateClassOutputTimesteps, this.m_CreateSummaryStateClassOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do summary transition output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsSummaryTransitionTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_SummaryTransitionOutputTimesteps, this.m_CreateSummaryTransitionOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do summary transition by state class output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsSummaryTransitionByStateClassTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_SummaryTransitionByStateClassOutputTimesteps, this.m_CreateSummaryTransitionByStateClassOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do summary state attribute output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsSummaryStateAttributeTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_SummaryStateAttributeOutputTimesteps, this.m_CreateSummaryStateAttributeOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do summary transition attribute output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsSummaryTransitionAttributeTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_SummaryTransitionAttributeOutputTimesteps, this.m_CreateSummaryTransitionAttributeOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do Raster Age output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterStateClassTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterStateClassOutputTimesteps, this.m_CreateRasterStateClassOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do Raster Transition output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterTransitionTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterTransitionOutputTimesteps, this.m_CreateRasterTransitionOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do Raster Transition Event output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterTransitionEventTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterTransitionEventTimesteps, this.m_CreateRasterTransitionEventOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do Raster Age output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterAgeTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterAgeOutputTimesteps, this.m_CreateRasterAgeOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do Raster Tst output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterTstTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterTstOutputTimesteps, this.m_CreateRasterTstOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do Raster Age output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterStratumTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterStratumOutputTimesteps, this.m_CreateRasterStratumOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do raster state attribute output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterStateAttributeTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterStateAttributeOutputTimesteps, this.m_CreateRasterStateAttributeOutput);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do  transition adjacency state attribute calculation for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the 
-        /// conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsTransitionAdjacencyStateAttributeTimestep(int timestep, int transitionGroupId)
-        {
-            TransitionAdjacencySetting setting = this.m_TransitionAdjacencySettingMap.GetItem(transitionGroupId);
-
-            if (setting == null)
-            {
-                return false;
-            }
-
-            return this.IsOutputTimestep(timestep, setting.UpdateFrequency, true);
-        }
-
-        /// <summary>
-        /// Determines whether or not to do raster transition attribute output for the specified timestep
-        /// </summary>
-        /// <param name="timestep">The timestep</param>
-        /// <returns>
-        /// True if the timestep is the first timestep, the last timestep, or the timestep is in the set specified by the user.  
-        /// False will be returned if the user has not specified that this type of output should be generated or if the conditions for True are not met.
-        /// </returns>
-        /// <remarks></remarks>
-        private bool IsRasterTransitionAttributeTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterTransitionAttributeOutputTimesteps, this.m_CreateRasterTransitionAttributeOutput);
-        }
-
-        /// <summary>
         /// Determines whether or not the specified timestep is an Output timestep
         /// </summary>
         /// <param name="timestep">The timestep to test</param>
@@ -315,7 +111,86 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        internal static int GetEventIdKey(int? value)
+        private bool IsSummaryStateClassTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryStateClassOutputTimesteps, this.m_CreateSummaryStateClassOutput);
+        }
+
+        private bool IsSummaryTransitionTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryTransitionOutputTimesteps, this.m_CreateSummaryTransitionOutput);
+        }
+
+        private bool IsSummaryTransitionByStateClassTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryTransitionByStateClassOutputTimesteps, this.m_CreateSummaryTransitionByStateClassOutput);
+        }
+
+        private bool IsSummaryStateAttributeTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryStateAttributeOutputTimesteps, this.m_CreateSummaryStateAttributeOutput);
+        }
+
+        private bool IsSummaryTransitionAttributeTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryTransitionAttributeOutputTimesteps, this.m_CreateSummaryTransitionAttributeOutput);
+        }
+
+        private bool IsRasterStateClassTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterStateClassOutputTimesteps, this.m_CreateRasterStateClassOutput);
+        }
+
+        private bool IsRasterTransitionTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterTransitionOutputTimesteps, this.m_CreateRasterTransitionOutput);
+        }
+
+        private bool IsRasterTransitionEventTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterTransitionEventTimesteps, this.m_CreateRasterTransitionEventOutput);
+        }
+
+        private bool IsRasterAgeTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterAgeOutputTimesteps, this.m_CreateRasterAgeOutput);
+        }
+
+        private bool IsRasterTstTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterTstOutputTimesteps, this.m_CreateRasterTstOutput);
+        }
+
+        private bool IsRasterStratumTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterStratumOutputTimesteps, this.m_CreateRasterStratumOutput);
+        }
+
+        private bool IsRasterStateAttributeTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterStateAttributeOutputTimesteps, this.m_CreateRasterStateAttributeOutput);
+        }
+
+        private bool IsTransitionAdjacencyStateAttributeTimestep(int timestep, int transitionGroupId)
+        {
+            TransitionAdjacencySetting setting = this.m_TransitionAdjacencySettingMap.GetItem(transitionGroupId);
+
+            if (setting == null)
+            {
+                return false;
+            }
+
+            return this.IsOutputTimestep(timestep, setting.UpdateFrequency, true);
+        }
+
+        private bool IsRasterTransitionAttributeTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterTransitionAttributeOutputTimesteps, this.m_CreateRasterTransitionAttributeOutput);
+        }
+
+        //Summary collection keys
+
+        internal static int GetKeyOrWildcardKey(int? value)
         {
             if (!value.HasValue)
             {
@@ -402,7 +277,7 @@ namespace SyncroSim.STSim
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and state class.</remarks>
-        private void OnSummaryStateClassOutput(Cell simulationCell, int iteration, int timestep)
+        private void RecordSummaryStateClassOutput(Cell simulationCell, int iteration, int timestep)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
             {
@@ -457,7 +332,7 @@ namespace SyncroSim.STSim
         /// <param name="timestep">The current timestep</param>
         /// <param name="eventId">The current event Id</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void OnSummaryTransitionOutput(
+        private void RecordSummaryTransitionOutput(
             Cell simulationCell, 
             Transition currentTransition, 
             int iteration, 
@@ -479,6 +354,112 @@ namespace SyncroSim.STSim
             }
         }
 
+        private void RecordTransitionOutputIntervalMeanMethod(
+            Cell simulationCell,
+            Transition currentTransition,
+            int iteration,
+            int timestep)
+        {
+            //Look up the output record using the aggregator timestep instead of the actual timestep.
+            int AggregatorTimestep = this.m_IntervalMeanTimestepMap.GetValue(timestep);
+            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+            int EventIdKey = 0;
+
+            foreach (TransitionGroup tg in tt.TransitionGroups)
+            {
+                int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
+
+                EightIntegerLookupKey key = new EightIntegerLookupKey(
+                    simulationCell.StratumId,
+                    GetSecondaryStratumIdKey(simulationCell),
+                    GetTertiaryStratumIdKey(simulationCell),
+                    iteration,
+                    AggregatorTimestep,
+                    tg.TransitionGroupId,
+                    AgeKey,
+                    EventIdKey);
+
+                if (this.m_SummaryStratumTransitionResults.Contains(key))
+                {
+                    OutputStratumTransition ost = this.m_SummaryStratumTransitionResults[key];
+                    ost.Amount += this.m_AmountPerCell;
+                }
+                else
+                {
+                    OutputStratumTransition ost = new OutputStratumTransition(
+                        simulationCell.StratumId,
+                        GetSecondaryStratumIdValue(simulationCell),
+                        GetTertiaryStratumIdValue(simulationCell),
+                        iteration,
+                        AggregatorTimestep,
+                        tg.TransitionGroupId,
+                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
+                        AgeKey,
+                        null,
+                        EventIdKey,
+                        this.m_AmountPerCell);
+
+                    this.m_SummaryStratumTransitionResults.Add(ost);
+                }
+            }
+        }
+
+        private void RecordTransitionOutputNormalMethod(
+            Cell simulationCell,
+            Transition currentTransition,
+            int iteration,
+            int timestep,
+            Nullable<int> eventId)
+        {
+            if (!this.IsSummaryTransitionTimestep(timestep))
+            {
+                return;
+            }
+
+            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+
+            foreach (TransitionGroup tg in tt.TransitionGroups)
+            {
+                int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
+                int EventIdKey = GetKeyOrWildcardKey(eventId);
+
+                EightIntegerLookupKey key = new EightIntegerLookupKey(
+                    simulationCell.StratumId,
+                    GetSecondaryStratumIdKey(simulationCell),
+                    GetTertiaryStratumIdKey(simulationCell),
+                    iteration,
+                    timestep,
+                    tg.TransitionGroupId,
+                    AgeKey,
+                    EventIdKey);
+
+                if (this.m_SummaryStratumTransitionResults.Contains(key))
+                {
+                    OutputStratumTransition ost = this.m_SummaryStratumTransitionResults[key];
+                    ost.Amount += this.m_AmountPerCell;
+                }
+                else
+                {
+                    OutputStratumTransition ost = new OutputStratumTransition(
+                        simulationCell.StratumId,
+                        GetSecondaryStratumIdValue(simulationCell),
+                        GetTertiaryStratumIdValue(simulationCell),
+                        iteration,
+                        timestep,
+                        tg.TransitionGroupId,
+                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
+                        AgeKey,
+                        eventId,
+                        EventIdKey,
+                        this.m_AmountPerCell);
+
+                    this.m_SummaryStratumTransitionResults.Add(ost);
+                }
+            }
+        }
+
         /// <summary>
         /// Called to record transition by state class summary output for the specified 
         /// simulation cell, iteration, and timestep
@@ -489,7 +470,7 @@ namespace SyncroSim.STSim
         /// <param name="timestep">The current timestep</param>
         /// <remarks>This function aggregates by stratum, state class source, 
         /// state class destination, and transition</remarks>
-        private void OnSummaryTransitionByStateClassOutput(
+        private void RecordSummaryTransitionByStateClassOutput(
             Cell simulationCell, 
             Transition currentTransition, 
             int iteration, 
@@ -543,13 +524,14 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Called to record attribute summary output for the specified simulation cell, iteration, and timestep
+        /// Called to record attribute summary output for the specified 
+        /// simulation cell, iteration, and timestep
         /// </summary>
         /// <param name="simulationCell">The simulation cell</param>
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks>This function aggregates by stratum, iteration, timestep, and attribute type Id.</remarks>
-        private void OnSummaryStateAttributeOutput(Cell simulationCell, int iteration, int timestep)
+        private void RecordSummaryStateAttributeOutput(Cell simulationCell, int iteration, int timestep)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
             {
@@ -618,14 +600,476 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Record transition changes for the specified transitioned pixels.
+        /// Record average transition probability data for the specified iteration and timestep.
         /// </summary>
         /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
         /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
-        private void OnRasterTransitionOutput(
+        private void RecordAvgRasterTransitionProbabilityData(
+            int iteration,
+            int timestep,
+            Dictionary<int, int[]> dictTransitionedPixels)
+        {
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            {
+                return;
+            }
+
+            foreach (int transitionGroupId in dictTransitionedPixels.Keys)
+            {
+                int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+                var distArray = transitionedPixels.Distinct();
+
+                if (distArray.Count() == 1)
+                {
+                    var el0 = distArray.ElementAt(0);
+
+                    if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
+                    {
+                        return;
+                    }
+                }
+
+                if (this.m_AvgRasterTransitionProbAcrossTimesteps)
+                {
+                    this.RecordAvgTransitionProbabilityOutputAcrossTimesteps(
+                        timestep, transitionGroupId, transitionedPixels);
+                }
+                else
+                {
+                    if ((timestep == this.MaximumTimestep) || 
+                        ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
+                    {
+                        this.RecordAvgTransitionProbabilityOutputNormalMethod(
+                            timestep, transitionGroupId, transitionedPixels);
+                    }
+                }
+            }
+        }
+
+        private void RecordAvgTransitionProbabilityOutputNormalMethod(
+            int timestep, 
+            int transitionGroupId, 
+            int[] transitionedPixels)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
+            Debug.Assert(!this.m_AvgRasterTransitionProbAcrossTimesteps);
+
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
+            double[] Values = dict[timestep];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+
+                if (transitionedPixels[i] > 0)
+                {
+                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
+                    Values[i] += 1 / (double)this.m_TotalIterations;
+                }
+            }
+        }
+
+        private void RecordAvgTransitionProbabilityOutputAcrossTimesteps(
+            int timestep, 
+            int transitionGroupId, 
+            int[] transitionedPixels)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
+            Debug.Assert(this.m_AvgRasterTransitionProbAcrossTimesteps);
+
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterTransitionProbTimesteps);
+            double[] Values = dict[timestepKey];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+
+                if (transitionedPixels[i] > 0)
+                {
+                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
+
+                    //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
+                    //where tsf is the timestep frequency N is the number of iterations.
+                    //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                    //and freq of 5, would give bins 1-5, and 6-8.
+
+                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) != 0))
+                    {
+                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps * this.m_TotalIterations);
+                    }
+                    else
+                    {
+                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbTimesteps * this.m_TotalIterations);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the stratum amount tabular data
+        /// </summary>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <remarks></remarks>
+        private void WriteStratumAmountTabularData(int iteration, int timestep)
+        {
+            if (!this.IsSummaryStateClassTimestep(timestep) && !this.IsSummaryTransitionTimestep(timestep))
+            {
+                return;
+            }
+
+            List<int?> SecondaryStratumIds = new List<int?>();
+            List<int?> TertiaryStratumIds = new List<int?>();
+
+            int? ssnull = null;
+            int? tsnull = null;
+
+            SecondaryStratumIds.Add(ssnull);
+            TertiaryStratumIds.Add(tsnull);
+
+            foreach (Stratum s in this.m_SecondaryStrata)
+            {
+                SecondaryStratumIds.Add(s.StratumId);
+            }
+
+            foreach (Stratum s in this.m_TertiaryStrata)
+            {
+                TertiaryStratumIds.Add(s.StratumId);
+            }
+
+            foreach (Stratum PrimaryStratum in this.m_Strata)
+            {
+                foreach (int? SecondaryStratumId in SecondaryStratumIds)
+                {
+                    foreach (int? TertiaryStratumId in TertiaryStratumIds)
+                    {
+                        object o = this.m_ProportionAccumulatorMap.GetValue(
+                            PrimaryStratum.StratumId, SecondaryStratumId, TertiaryStratumId);
+
+                        if (o != null)
+                        {
+                            DataRow dr = this.m_OutputStratumAmountTable.NewRow();
+
+                            dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
+                            dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
+                            dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = PrimaryStratum.StratumId;
+                            dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(SecondaryStratumId);
+                            dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(TertiaryStratumId);
+                            dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = Convert.ToDouble(o, CultureInfo.InvariantCulture);
+
+                            this.m_OutputStratumAmountTable.Rows.Add(dr);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the summary state class tabular data
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <remarks></remarks>
+        private void WriteSummaryStateClassTabularData(DataTable table, int iteration, int timestep)
+        {
+            if (this.m_CreateSummaryStateClassOutput)
+            {
+                if (this.m_SummaryStateClassZeroValues)
+                {
+                    Dictionary<int, bool> SSKeys = this.CreateSecondaryStratumDictionary();
+                    Dictionary<int, bool> TSKeys = this.CreateTertiaryStratumDictionary();
+
+                    Debug.Assert(!(SSKeys.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
+                    Debug.Assert(!(TSKeys.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
+
+                    foreach (int ss in SSKeys.Keys)
+                    {
+                        foreach (int ts in TSKeys.Keys)
+                        {
+                            foreach (DeterministicTransition dt in this.m_DeterministicTransitions)
+                            {
+                                SixIntegerLookupKey key = new SixIntegerLookupKey(
+                                    LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
+                                    ss, ts, iteration, timestep, dt.StateClassIdSource);
+
+                                if (!this.m_SummaryStratumStateResultsZeroValues.Contains(key))
+                                {
+                                    OutputStratumState oss = new OutputStratumState(
+                                        LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
+                                        ss, ts, iteration, timestep, dt.StateClassIdSource, dt.AgeMinimum, dt.AgeMaximum, 0, 0.0);
+
+                                    SevenIntegerLookupKey k2 = new SevenIntegerLookupKey(
+                                        LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
+                                        ss, ts, iteration, timestep, dt.StateClassIdSource, 0);
+
+                                    if (!this.m_SummaryStratumStateResults.Contains(k2))
+                                    {
+                                        this.m_SummaryStratumStateResults.Add(oss);
+                                    }
+
+                                    this.m_SummaryStratumStateResultsZeroValues.Add(oss);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
+                {
+                    if (this.IsSummaryStateClassTimestep(r.Timestep))
+                    {
+                        int slxid = this.m_StateClasses[r.StateClassId].StateLabelXID;
+                        int slyid = this.m_StateClasses[r.StateClassId].StateLabelYID;
+
+                        DataRow dr = table.NewRow();
+
+                        dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                        dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                        dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                        dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                        dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                        dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = r.StateClassId;
+                        dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME] = slxid;
+                        dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME] = slyid;
+                        dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
+                        dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
+                        dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
+                        dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                        table.Rows.Add(dr);
+                    }
+                }
+            }
+
+            this.m_SummaryStratumStateResults.Clear();
+            this.m_SummaryStratumStateResultsZeroValues.Clear();
+        }
+
+        /// <summary>
+        /// Writes the summary transition tabular data
+        /// </summary>
+        /// <param name="table"></param>
+        /// <remarks></remarks>
+        private void WriteSummaryTransitionTabularData(int timestep, DataTable table)
+        {
+            if (!this.IsSummaryTransitionTimestep(timestep))
+            {
+                return;
+            }
+
+            foreach (OutputStratumTransition r in this.m_SummaryStratumTransitionResults)
+            {
+                double AmountToReport = 0;
+
+                if (this.m_SummaryTransitionOutputAsIntervalMean)
+                {
+                    if (timestep == (this.m_TimestepZero + 1))
+                    {
+                        return;
+                    }
+
+                    double divisor = this.m_SummaryTransitionOutputTimesteps;
+
+                    if (r.Timestep == this.MaximumTimestep)
+                    {
+                        if ((r.Timestep % this.m_SummaryTransitionOutputTimesteps) != 0)
+                        {
+                            divisor = ((r.Timestep - this.m_TimestepZero) % this.m_SummaryTransitionOutputTimesteps);
+                        }
+                    }
+
+                    AmountToReport = r.Amount / divisor;
+                }
+                else
+                {
+                    AmountToReport = r.Amount;
+                }
+
+                DataRow dr = table.NewRow();
+
+                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = r.TransitionGroupId;
+                dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
+                dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
+                dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
+
+                if (r.EventId.HasValue)
+                {
+                    object SCValue = this.m_SizeClassHelper.GetSizeClassDatabaseValue(AmountToReport);
+                    dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = SCValue;
+
+                    if (SCValue != DBNull.Value)
+                    {
+                        Debug.Assert(r.EventId.HasValue);
+                        dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.EventId);
+                    }
+                }
+
+                table.Rows.Add(dr);
+            }
+
+            this.m_SummaryStratumTransitionResults.Clear();
+        }
+
+        /// <summary>
+        /// Writes the summary transition state class tabular data
+        /// </summary>
+        /// <param name="table"></param>
+        /// <remarks></remarks>
+        private void WriteSummaryTransitionStateTabularData(DataTable table)
+        {
+            if (this.m_CreateSummaryTransitionByStateClassOutput)
+            {
+                foreach (OutputStratumTransitionState r in this.m_SummaryStratumTransitionStateResults)
+                {
+                    DataRow dr = table.NewRow();
+
+                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                    dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                    dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                    dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                    dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME] = r.TransitionTypeId;
+                    dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = r.StateClassId;
+                    dr[Strings.DATASHEET_END_STATECLASS_ID_COLUMN_NAME] = r.EndStateClassId;
+                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                    table.Rows.Add(dr);
+                }
+            }
+
+            this.m_SummaryStratumTransitionStateResults.Clear();
+        }
+
+        /// <summary>
+        /// Writes the summary state attribute tabular data
+        /// </summary>
+        /// <param name="table"></param>
+        /// <remarks></remarks>
+        private void WriteSummaryStateAttributeTabularData(DataTable table)
+        {
+            if (this.m_CreateSummaryStateAttributeOutput)
+            {
+                foreach (OutputStateAttribute r in this.m_SummaryStateAttributeResults)
+                {
+                    DataRow dr = table.NewRow();
+
+                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                    dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                    dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                    dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                    dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME] = r.StateAttributeTypeId;
+                    dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
+                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
+                    dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
+                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                    table.Rows.Add(dr);
+                }
+            }
+
+            this.m_SummaryStateAttributeResults.Clear();
+        }
+
+        /// <summary>
+        /// Writes the summary transition attribute tabular data
+        /// </summary>
+        /// <param name="table"></param>
+        /// <remarks></remarks>
+        private void WriteSummaryTransitionAttributeTabularData(DataTable table)
+        {
+            if (this.m_CreateSummaryTransitionAttributeOutput)
+            {
+                foreach (OutputTransitionAttribute r in this.m_SummaryTransitionAttributeResults)
+                {
+                    DataRow dr = table.NewRow();
+
+                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                    dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                    dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                    dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                    dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME] = r.TransitionAttributeTypeId;
+                    dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
+                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
+                    dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
+                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                    table.Rows.Add(dr);
+                }
+            }
+
+            this.m_SummaryTransitionAttributeResults.Clear();
+        }
+
+        /// <summary>
+        /// Writes a state class raster for the specified iteration and timestep
+        /// </summary>
+        /// <remarks></remarks>
+        private void WriteStateClassRaster(int iteration, int timestep)
+        {
+            if (!this.IsSpatial)
+            {
+                Debug.Assert(!this.IsSpatial);
+                return;
+            }
+
+            if (this.IsRasterStateClassTimestep(timestep))
+            {
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+
+                // Fetch the raster data from the Cells collection
+                foreach (Cell c in this.Cells)
+                {
+                    rastOutput.IntCells[c.CellId] = c.StateClassId;
+                }
+
+                // We need to remap the State Class values back to the original Raster values ( PK - > ID)
+                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
+
+                //DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
+                rastOutput.IntCells = Spatial.RemapRasterCells(
+                    rastOutput.IntCells,
+                    dsRemap,
+                    Strings.DATASHEET_MAPID_COLUMN_NAME,
+                    false,
+                    Spatial.DefaultNoDataValue);
+
+                Spatial.WriteRasterData(
+                    rastOutput,
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_CLASS),
+                    iteration,
+                    timestep,
+                    null,
+                    Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME,
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+            }
+        }
+
+        /// <summary>
+        /// Writes transition group rasters for the specified iteration and timestep
+        /// </summary>
+        /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
+        /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
+        /// <param name="iteration">The current iteration</param>
+        /// <param name="timestep">The current timestep</param>
+        /// <remarks></remarks>
+        private void WriteTransitionGroupRasters(
             int iteration, 
             int timestep, 
             Dictionary<int, int[]> dictTransitionedPixels)
@@ -664,45 +1108,253 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Record transition probability changes for the specified transitioned pixels.
+        /// Creates a raster file as a snapshot of the current Cell Age values.
         /// </summary>
-        /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
-        /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
-        /// <param name="iteration">The current iteration</param>
-        /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
-        private void OnRasterTransitionProbabilityOutput(
-            int iteration, 
-            int timestep, 
-            Dictionary<int, int[]> dictTransitionedPixels)
+        private void WriteAgeRaster(int iteration, int timestep)
         {
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            if (!this.IsSpatial)
             {
+                Debug.Assert(!this.IsSpatial);
                 return;
             }
 
-            foreach (int transitionGroupId in dictTransitionedPixels.Keys)
+            if (this.IsRasterAgeTimestep(timestep))
             {
-                int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
-                RecordAvgTransitionProbabilityOutput(
+                // Fetch the raster data from the Cells collection
+                foreach (Cell c in this.Cells)
+                {
+                    rastOutput.IntCells[c.CellId] = c.Age;
+                }
+
+                Spatial.WriteRasterData(
+                    rastOutput,
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AGE),
+                    iteration,
                     timestep,
-                    transitionGroupId,
-                    transitionedPixels);
+                     null,
+                    Constants.SPATIAL_MAP_AGE_FILEPREFIX_NAME,
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
 
         /// <summary>
-        /// Record transition type changes for the specified Transition Group for event data.
+        /// Writes a raster for the TST of each transition group
+        /// </summary>
+        /// <remarks></remarks>
+        private void WriteTSTRasters(int iteration, int timestep)
+        {
+            if (!this.IsSpatial)
+            {
+                Debug.Assert(!this.IsSpatial);
+                return;
+            }
+
+            if (this.IsRasterTstTimestep(timestep))
+            {
+                foreach (TransitionGroup tg in this.m_TransitionGroups)
+                {
+                    StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+
+                    foreach (Cell cell in this.Cells)
+                    {
+                        if (cell.TstValues.Count != 0)
+                        {
+                            // Make sure the TstValues contains our TransitionGroupId
+                            if (cell.TstValues.Contains(tg.TransitionGroupId))
+                            {
+                                rastOutput.IntCells[cell.CellId] = cell.TstValues[tg.TransitionGroupId].TstValue;
+                            }
+                        }
+                    }
+
+                    // If no values other than NODATAValue in rastOutput, then supress output for this timestep
+                    var distinctVals = rastOutput.IntCells.Distinct();
+
+                    if (distinctVals.Count() > 1 || (distinctVals.Count() == 1 && distinctVals.First() != Spatial.DefaultNoDataValue))
+                    {
+                        Spatial.WriteRasterData(
+                            rastOutput,
+                            this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TST),
+                            iteration,
+                            timestep,
+                            tg.TransitionGroupId,
+                            Constants.SPATIAL_MAP_TST_FILEPREFIX_NAME,
+                            Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a raster file as a snapshot of the current Cell stratum values.
+        /// </summary>
+        /// <remarks></remarks>
+        private void WriteStratumRaster(int iteration, int timestep)
+        {
+            if (!this.IsSpatial)
+            {
+                Debug.Assert(!this.IsSpatial);
+                return;
+            }
+
+            if (this.IsRasterStratumTimestep(timestep))
+            {
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+
+                foreach (Cell c in this.Cells)
+                {
+                    // Fetch the raster data from the Cells collection
+                    rastOutput.IntCells[c.CellId] = c.StratumId;
+                }
+
+                // We need to remap the Stratum values back to the original Raster values ( PK - > ID)
+                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+
+                //DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
+
+                rastOutput.IntCells = Spatial.RemapRasterCells(
+                    rastOutput.IntCells,
+                    dsRemap,
+                    Strings.DATASHEET_MAPID_COLUMN_NAME,
+                    false,
+                    Spatial.DefaultNoDataValue);
+
+                Spatial.WriteRasterData(
+                    rastOutput,
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STRATUM),
+                    iteration,
+                    timestep,
+                    null,
+                    Constants.SPATIAL_MAP_STRATUM_FILEPREFIX_NAME,
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+            }
+        }
+
+        /// <summary>
+        /// Writes state attribute rasters
+        /// </summary>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <remarks></remarks>
+        private void WriteStateAttributeRasters(int iteration, int timestep)
+        {
+            if (!this.IsSpatial)
+            {
+                Debug.Assert(!this.IsSpatial);
+                return;
+            }
+
+            if (this.IsRasterStateAttributeTimestep(timestep))
+            {
+                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+
+                foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
+                {
+                    rastOutput.InitDblCells();
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        double? AttrValue = this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
+                            AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep);
+
+                        //If no value, then use NO_DATA (initialized above), otherwise AttrValue
+
+                        if (AttrValue != null)
+                        {
+                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+                        }
+                    }
+
+                    Spatial.WriteRasterData(
+                        rastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),
+                        iteration,
+                        timestep,
+                        AttributeTypeId,
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+
+                foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsAges.Keys)
+                {
+                    rastOutput.InitDblCells();
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        double? AttrValue = this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
+                            AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep, c.Age);
+
+                        //If no value, then use NO_DATA, otherwise AttrValue
+
+                        if (AttrValue != null)
+                        {
+                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+                        }
+                    }
+
+                    Spatial.WriteRasterData(
+                        rastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),
+                        iteration,
+                        timestep,
+                        AttributeTypeId,
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes transition attribute changes for the specified iteration and timestep.
+        /// </summary>
+        /// <param name="RasterTransitionAttrValues"></param>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <remarks></remarks>
+        private void WriteTransitionAttributeRasters(
+            Dictionary<int, double[]> RasterTransitionAttrValues,
+            int iteration,
+            int timestep)
+        {
+            if (this.IsRasterTransitionAttributeTimestep(timestep))
+            {
+                foreach (int AttributeId in RasterTransitionAttrValues.Keys)
+                {
+                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] NewValues = RasterTransitionAttrValues[AttributeId];
+                    double[] arr = rastOP.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = NewValues[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        rastOP,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE),
+                        iteration,
+                        timestep,
+                        AttributeId,
+                        Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes transition event rasters for the specified iteration and timestep
         /// </summary>
         /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types 
         /// which occured during the specified specified Interval / Timstep. Keyed by Transition Group Id.</param>
         /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
-        private void OnRasterTransitionEventOutput(
-            int iteration, 
-            int timestep, 
+        private void WriteTransitionEventRasters(
+            int iteration,
+            int timestep,
             Dictionary<int, int[]> dictTransitionedPixels)
         {
             if (!this.IsRasterTransitionEventTimestep(timestep))
@@ -734,168 +1386,86 @@ namespace SyncroSim.STSim
                         transitionGroupId,
                         Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX_PREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }               
+                }
             }
         }
 
         /// <summary>
-        /// Record transition attribute changes for the specified Transition Group.
+        /// Writes the Average State Attribute rasters.
         /// </summary>
-        /// <param name="RasterTransitionAttrValues"></param>
-        /// <param name="iteration"></param>
-        /// <param name="timestep"></param>
+        private void WriteAvgStateAttributeRasters()
+        {
+
+        }
+
+        /// <summary>
+        /// Writes the Average Transition Attribute rasters.
+        /// </summary>
+        private void WriteAvgTransitionAttributeRasters()
+        {
+
+        }
+
+        /// <summary>
+        /// Writes the Average Transition Probability rasters.
+        /// </summary>
         /// <remarks></remarks>
-        private void OnRasterTransitionAttributeOutput(
-            Dictionary<int, double[]> RasterTransitionAttrValues, 
-            int iteration, 
-            int timestep)
+        private void WriteAvgTransitionProbabiltyRasters()
         {
-            if (this.IsRasterTransitionAttributeTimestep(timestep))
+            if (!this.IsSpatial)
             {
-                foreach (int AttributeId in RasterTransitionAttrValues.Keys)
-                {
-                    //Set up a raster as input to the Raster output function
-                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    double[] NewValues = RasterTransitionAttrValues[AttributeId];
-                    double[] arr = rastOP.DblCells;
-
-                    foreach (Cell c in this.Cells)
-                    {
-                        arr[c.CellId] = NewValues[c.CollectionIndex];
-                    }
-
-                    Spatial.WriteRasterData(
-                        rastOP, 
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE), 
-                        iteration, 
-                        timestep, 
-                        AttributeId,
-                        Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX, 
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
+                Debug.Assert(!this.IsSpatial);
+                return;
             }
-        }
 
-        /// <summary>
-        /// Records summary transition output using the 'calculate as interval mean values' method
-        /// </summary>
-        /// <param name="simulationCell">The simulation cell</param>
-        /// <param name="currentTransition">The current transition</param>
-        /// <param name="iteration">The current iteration</param>
-        /// <param name="timestep">The current timestep</param>
-        /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void RecordTransitionOutputIntervalMeanMethod(
-            Cell simulationCell, 
-            Transition currentTransition, 
-            int iteration, 
-            int timestep)
-        {
-            //Look up the output record using the aggregator timestep instead of the actual timestep.
-            int AggregatorTimestep = this.m_IntervalMeanTimestepMap.GetValue(timestep);
-            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
-            int EventIdKey = 0;
-
-            foreach (TransitionGroup tg in tt.TransitionGroups)
-            {
-                int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
-
-                EightIntegerLookupKey key = new EightIntegerLookupKey(
-                    simulationCell.StratumId, 
-                    GetSecondaryStratumIdKey(simulationCell), 
-                    GetTertiaryStratumIdKey(simulationCell), 
-                    iteration, 
-                    AggregatorTimestep, 
-                    tg.TransitionGroupId, 
-                    AgeKey,
-                    EventIdKey);
-
-                if (this.m_SummaryStratumTransitionResults.Contains(key))
-                {
-                    OutputStratumTransition ost = this.m_SummaryStratumTransitionResults[key];
-                    ost.Amount += this.m_AmountPerCell;
-                }
-                else
-                {
-                    OutputStratumTransition ost = new OutputStratumTransition(
-                        simulationCell.StratumId, 
-                        GetSecondaryStratumIdValue(simulationCell), 
-                        GetTertiaryStratumIdValue(simulationCell), 
-                        iteration, 
-                        AggregatorTimestep, 
-                        tg.TransitionGroupId, 
-                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age), 
-                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age), 
-                        AgeKey, 
-                        null,
-                        EventIdKey,
-                        this.m_AmountPerCell);
-
-                    this.m_SummaryStratumTransitionResults.Add(ost);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Records summary transition output using the normal method
-        /// </summary>
-        /// <param name="simulationCell">The simulation cell</param>
-        /// <param name="currentTransition">The current transition</param>
-        /// <param name="iteration">The current iteration</param>
-        /// <param name="timestep">The current timestep</param>
-        /// <param name="eventId">The event Id</param>
-        /// <remarks>This function aggregates by stratum, iteration, timestep, and transition group.</remarks>
-        private void RecordTransitionOutputNormalMethod(
-            Cell simulationCell, 
-            Transition currentTransition, 
-            int iteration, 
-            int timestep, 
-            Nullable<int> eventId)
-        {
-            if (!this.IsSummaryTransitionTimestep(timestep))
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
             {
                 return;
             }
 
-            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
-
-            foreach (TransitionGroup tg in tt.TransitionGroups)
+            foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
             {
-                int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
-                int EventIdKey = GetEventIdKey(eventId);
+                Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
 
-                EightIntegerLookupKey key = new EightIntegerLookupKey(
-                    simulationCell.StratumId, 
-                    GetSecondaryStratumIdKey(simulationCell),
-                    GetTertiaryStratumIdKey(simulationCell),
-                    iteration, 
-                    timestep, 
-                    tg.TransitionGroupId, 
-                    AgeKey, 
-                    EventIdKey);
+                // Now lets loop thru the timestep arrays in the dict
+                foreach (int timestep in dict.Keys)
+                {
+                    double[] Values = dict[timestep];
 
-                if (this.m_SummaryStratumTransitionResults.Contains(key))
-                {
-                    OutputStratumTransition ost = this.m_SummaryStratumTransitionResults[key];
-                    ost.Amount += this.m_AmountPerCell;
-                }
-                else
-                {
-                    OutputStratumTransition ost = new OutputStratumTransition(
-                        simulationCell.StratumId,
-                        GetSecondaryStratumIdValue(simulationCell),
-                        GetTertiaryStratumIdValue(simulationCell),
-                        iteration,
+                    //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
+                    var DistVals = Values.Distinct();
+
+                    if (DistVals.Count() == 1)
+                    {
+                        Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                        continue;
+                    }
+                    else if (DistVals.Count() == 2)
+                    {
+                        if (DistVals.ElementAt(0) <= 0 && DistVals.ElementAt(1) <= 0)
+                        {
+                            Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                            continue;
+                        }
+                    }
+
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = Values[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        RastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY),
+                        0,
                         timestep,
-                        tg.TransitionGroupId,
-                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age),
-                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
-                        AgeKey,
-                        eventId,
-                        EventIdKey,
-                        this.m_AmountPerCell);
-
-                    this.m_SummaryStratumTransitionResults.Add(ost);
-                }               
+                        tgId,
+                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
             }
         }
 
@@ -1084,556 +1654,6 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Processes output stratum amounts
-        /// </summary>
-        /// <param name="iteration"></param>
-        /// <param name="timestep"></param>
-        /// <remarks></remarks>
-        private void ProcessOutputStratumAmounts(int iteration, int timestep)
-        {
-            if (!this.IsSummaryStateClassTimestep(timestep) && !this.IsSummaryTransitionTimestep(timestep))
-            {
-                return;
-            }
-
-            List<int?> SecondaryStratumIds = new List<int?>();
-            List<int?> TertiaryStratumIds = new List<int?>();
-
-            int? ssnull = null;
-            int? tsnull = null;
-
-            SecondaryStratumIds.Add(ssnull);
-            TertiaryStratumIds.Add(tsnull);
-
-            foreach (Stratum s in this.m_SecondaryStrata)
-            {
-                SecondaryStratumIds.Add(s.StratumId);
-            }
-
-            foreach (Stratum s in this.m_TertiaryStrata)
-            {
-                TertiaryStratumIds.Add(s.StratumId);
-            }
-
-            foreach (Stratum PrimaryStratum in this.m_Strata)
-            {
-                foreach (int? SecondaryStratumId in SecondaryStratumIds)
-                {
-                    foreach (int? TertiaryStratumId in TertiaryStratumIds)
-                    {
-                        object o = this.m_ProportionAccumulatorMap.GetValue(
-                            PrimaryStratum.StratumId, SecondaryStratumId, TertiaryStratumId);
-
-                        if (o != null)
-                        {
-                            DataRow dr = this.m_OutputStratumAmountTable.NewRow();
-
-                            dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
-                            dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
-                            dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = PrimaryStratum.StratumId;
-                            dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(SecondaryStratumId);
-                            dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(TertiaryStratumId);
-                            dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = Convert.ToDouble(o, CultureInfo.InvariantCulture);
-
-                            this.m_OutputStratumAmountTable.Rows.Add(dr);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Processes Summary Stratum State results
-        /// </summary>
-        /// <param name="table"></param>
-        /// <param name="iteration"></param>
-        /// <param name="timestep"></param>
-        /// <remarks></remarks>
-        private void ProcessSummaryStratumStateResults(DataTable table, int iteration, int timestep)
-        {
-            if (this.m_CreateSummaryStateClassOutput)
-            {
-                if (this.m_SummaryStateClassZeroValues)
-                {
-                    Dictionary<int, bool> SSKeys = this.CreateSecondaryStratumDictionary();
-                    Dictionary<int, bool> TSKeys = this.CreateTertiaryStratumDictionary();
-
-                    Debug.Assert(!(SSKeys.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
-                    Debug.Assert(!(TSKeys.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
-
-                    foreach (int ss in SSKeys.Keys)
-                    {
-                        foreach (int ts in TSKeys.Keys)
-                        {
-                            foreach (DeterministicTransition dt in this.m_DeterministicTransitions)
-                            {
-                                SixIntegerLookupKey key = new SixIntegerLookupKey(
-                                    LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource), 
-                                    ss, ts, iteration, timestep, dt.StateClassIdSource);
-
-                                if (!this.m_SummaryStratumStateResultsZeroValues.Contains(key))
-                                {
-                                    OutputStratumState oss = new OutputStratumState(
-                                        LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource), 
-                                        ss, ts, iteration, timestep, dt.StateClassIdSource, dt.AgeMinimum, dt.AgeMaximum, 0, 0.0);
-
-                                    SevenIntegerLookupKey k2 = new SevenIntegerLookupKey(
-                                        LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource), 
-                                        ss, ts, iteration, timestep, dt.StateClassIdSource, 0);
-
-                                    if (!this.m_SummaryStratumStateResults.Contains(k2))
-                                    {
-                                        this.m_SummaryStratumStateResults.Add(oss);
-                                    }
-
-                                    this.m_SummaryStratumStateResultsZeroValues.Add(oss);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
-                {
-                    if (this.IsSummaryStateClassTimestep(r.Timestep))
-                    {
-                        int slxid = this.m_StateClasses[r.StateClassId].StateLabelXID;
-                        int slyid = this.m_StateClasses[r.StateClassId].StateLabelYID;
-
-                        DataRow dr = table.NewRow();
-
-                        dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
-                        dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
-                        dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
-                        dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
-                        dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                        dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = r.StateClassId;
-                        dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME] = slxid;
-                        dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME] = slyid;
-                        dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
-                        dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
-                        dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
-                        dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
-
-                        table.Rows.Add(dr);
-                    }
-                }
-            }
-
-            this.m_SummaryStratumStateResults.Clear();
-            this.m_SummaryStratumStateResultsZeroValues.Clear();
-        }
-
-        /// <summary>
-        /// Processes Summary Stratum Transition results
-        /// </summary>
-        /// <param name="table"></param>
-        /// <remarks></remarks>
-        private void ProcessSummaryStratumTransitionResults(int timestep, DataTable table)
-        {
-            if (!this.IsSummaryTransitionTimestep(timestep))
-            {
-                return;
-            }
-
-            foreach (OutputStratumTransition r in this.m_SummaryStratumTransitionResults)
-            {
-                double AmountToReport = 0;
-
-                if (this.m_SummaryTransitionOutputAsIntervalMean)
-                {
-                    if (timestep == (this.m_TimestepZero + 1))
-                    {
-                        return;
-                    }
-
-                    double divisor = this.m_SummaryTransitionOutputTimesteps;
-
-                    if (r.Timestep == this.MaximumTimestep)
-                    {
-                        if ((r.Timestep % this.m_SummaryTransitionOutputTimesteps) != 0)
-                        {
-                            divisor = ((r.Timestep - this.m_TimestepZero) % this.m_SummaryTransitionOutputTimesteps);
-                        }
-                    }
-
-                    AmountToReport = r.Amount / divisor;
-                }
-                else
-                {
-                    AmountToReport = r.Amount;
-                }
-
-                DataRow dr = table.NewRow();
-
-                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
-                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
-                dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
-                dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
-                dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = r.TransitionGroupId;
-                dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
-                dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
-                dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
-                dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = DBNull.Value;
-                dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
-                dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
-
-                if (r.EventId.HasValue)
-                {
-                    object SCValue = this.m_SizeClassHelper.GetSizeClassDatabaseValue(AmountToReport);
-                    dr[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = SCValue;
-
-                    if (SCValue != DBNull.Value)
-                    {
-                        Debug.Assert(r.EventId.HasValue);
-                        dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.EventId);
-                    }                    
-                }
-
-                table.Rows.Add(dr);
-            }
-
-            this.m_SummaryStratumTransitionResults.Clear();
-        }
-
-        /// <summary>
-        /// Processes Summary Stratum Transition State results
-        /// </summary>
-        /// <param name="table"></param>
-        /// <remarks></remarks>
-        private void ProcessSummaryStratumTransitionStateResults(DataTable table)
-        {
-            if (this.m_CreateSummaryTransitionByStateClassOutput)
-            {
-                foreach (OutputStratumTransitionState r in this.m_SummaryStratumTransitionStateResults)
-                {
-                    DataRow dr = table.NewRow();
-
-                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
-                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
-                    dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
-                    dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
-                    dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                    dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME] = r.TransitionTypeId;
-                    dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = r.StateClassId;
-                    dr[Strings.DATASHEET_END_STATECLASS_ID_COLUMN_NAME] = r.EndStateClassId;
-                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
-
-                    table.Rows.Add(dr);
-                }
-            }
-
-            this.m_SummaryStratumTransitionStateResults.Clear();
-        }
-
-        /// <summary>
-        /// Processes Summary State Attribute results
-        /// </summary>
-        /// <param name="table"></param>
-        /// <remarks></remarks>
-        private void ProcessSummaryStateAttributeResults(DataTable table)
-        {
-            if (this.m_CreateSummaryStateAttributeOutput)
-            {
-                foreach (OutputStateAttribute r in this.m_SummaryStateAttributeResults)
-                {
-                    DataRow dr = table.NewRow();
-
-                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
-                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
-                    dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
-                    dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
-                    dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                    dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME] = r.StateAttributeTypeId;
-                    dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
-                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
-                    dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
-                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
-
-                    table.Rows.Add(dr);
-                }
-            }
-
-            this.m_SummaryStateAttributeResults.Clear();
-        }
-
-        /// <summary>
-        /// Processes Summary Transition Attribute results
-        /// </summary>
-        /// <param name="table"></param>
-        /// <remarks></remarks>
-        private void ProcessSummaryTransitionAttributeResults(DataTable table)
-        {
-            if (this.m_CreateSummaryTransitionAttributeOutput)
-            {
-                foreach (OutputTransitionAttribute r in this.m_SummaryTransitionAttributeResults)
-                {
-                    DataRow dr = table.NewRow();
-
-                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
-                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
-                    dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
-                    dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
-                    dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                    dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME] = r.TransitionAttributeTypeId;
-                    dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMin);
-                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
-                    dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
-                    dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
-
-                    table.Rows.Add(dr);
-                }
-            }
-
-            this.m_SummaryTransitionAttributeResults.Clear();
-        }
-
-        /// <summary>
-        /// Process the Raster State Class output. Create a raster file as a snapshot of the current Cell state class values.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessRasterStateClassOutput(int iteration, int timestep)
-        {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (this.IsRasterStateClassTimestep(timestep))
-            {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-
-                // Fetch the raster data from the Cells collection
-                foreach (Cell c in this.Cells)
-                {
-                    rastOutput.IntCells[c.CellId] = c.StateClassId;
-                }
-
-                // We need to remap the State Class values back to the original Raster values ( PK - > ID)
-                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
-
-                //DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
-                rastOutput.IntCells = Spatial.RemapRasterCells(
-                    rastOutput.IntCells, 
-                    dsRemap, 
-                    Strings.DATASHEET_MAPID_COLUMN_NAME, 
-                    false, 
-                    Spatial.DefaultNoDataValue);
-
-                Spatial.WriteRasterData(
-                    rastOutput,
-                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_CLASS),
-                    iteration,
-                    timestep,
-                    null,
-                    Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-            }
-        }
-
-        /// <summary>
-        /// Process the Raster Age output. Create a raster file as a snapshot of the current Cell Age values.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessRasterAgeOutput(int iteration, int timestep)
-        {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (this.IsRasterAgeTimestep(timestep))
-            {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-
-                // Fetch the raster data from the Cells collection
-                foreach (Cell c in this.Cells)
-                {
-                    rastOutput.IntCells[c.CellId] = c.Age;
-                }
-
-                Spatial.WriteRasterData(
-                    rastOutput, 
-                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AGE), 
-                    iteration, 
-                    timestep,
-                     null,                     
-                    Constants.SPATIAL_MAP_AGE_FILEPREFIX_NAME, 
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-            }
-        }
-
-        /// <summary>
-        /// Process the Raster TST output. Create a raster file as a snapshot of the current Cell Age values.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessRasterTSTOutput(int iteration, int timestep)
-        {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (this.IsRasterTstTimestep(timestep))
-            {     
-                foreach (TransitionGroup tg in this.m_TransitionGroups)
-                {
-                    StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-
-                    foreach (Cell cell in this.Cells)
-                    {
-                        if (cell.TstValues.Count != 0)
-                        {
-                            // Make sure the TstValues contains our TransitionGroupId
-                            if (cell.TstValues.Contains(tg.TransitionGroupId))
-                            {
-                                rastOutput.IntCells[cell.CellId] = cell.TstValues[tg.TransitionGroupId].TstValue;
-                            }
-                        }
-                    }
-
-                    // If no values other than NODATAValue in rastOutput, then supress output for this timestep
-                    var distinctVals = rastOutput.IntCells.Distinct();
-
-                    if (distinctVals.Count() > 1 || (distinctVals.Count() == 1 && distinctVals.First() != Spatial.DefaultNoDataValue))
-                    {
-                        Spatial.WriteRasterData(
-                            rastOutput,
-                            this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TST),
-                            iteration,
-                            timestep,
-                            tg.TransitionGroupId,
-                            Constants.SPATIAL_MAP_TST_FILEPREFIX_NAME, 
-                            Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Process the Raster Stratum output. Create a raster file as a snapshot of the current Cell stratum values.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessRasterStratumOutput(int iteration, int timestep)
-        {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (this.IsRasterStratumTimestep(timestep))
-            {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-
-                foreach (Cell c in this.Cells)
-                {
-                    // Fetch the raster data from the Cells collection
-                    rastOutput.IntCells[c.CellId] = c.StratumId;
-                }
-
-                // We need to remap the Stratum values back to the original Raster values ( PK - > ID)
-                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
-
-                //DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
-
-                rastOutput.IntCells = Spatial.RemapRasterCells(
-                    rastOutput.IntCells, 
-                    dsRemap, 
-                    Strings.DATASHEET_MAPID_COLUMN_NAME, 
-                    false, 
-                    Spatial.DefaultNoDataValue);
-
-                Spatial.WriteRasterData(
-                    rastOutput,
-                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STRATUM),
-                    iteration,
-                    timestep,
-                    null,
-                    Constants.SPATIAL_MAP_STRATUM_FILEPREFIX_NAME,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-            }
-        }
-
-        /// <summary>
-        /// Process Raster State Attribute Output
-        /// </summary>
-        /// <param name="iteration"></param>
-        /// <param name="timestep"></param>
-        /// <remarks></remarks>
-        private void ProcessRasterStateAttributeOutput(int iteration, int timestep)
-        {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (this.IsRasterStateAttributeTimestep(timestep))
-            {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-
-                foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
-                {
-                    rastOutput.InitDblCells();
-
-                    foreach (Cell c in this.Cells)
-                    {
-                        double? AttrValue = this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
-                            AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep);
-
-                        //If no value, then use NO_DATA (initialized above), otherwise AttrValue
-
-                        if (AttrValue != null)
-                        {
-                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-                        }
-                    }
-
-                    Spatial.WriteRasterData(
-                        rastOutput,
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),
-                        iteration,
-                        timestep,
-                        AttributeTypeId,
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
-
-                foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsAges.Keys)
-                {
-                    rastOutput.InitDblCells();
-
-                    foreach (Cell c in this.Cells)
-                    {
-                        double? AttrValue = this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
-                            AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep, c.Age);
-
-                        //If no value, then use NO_DATA, otherwise AttrValue
-
-                        if (AttrValue != null)
-                        {
-                            rastOutput.DblCells[c.CellId] = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-                        }
-                    }
-
-                    Spatial.WriteRasterData(
-                        rastOutput, 
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE), 
-                        iteration, 
-                        timestep, 
-                        AttributeTypeId, 
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX, 
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
-            }
-        }
-
-        /// <summary>
         /// Process Transition Adjacency State Attribute Output
         /// </summary>
         /// <param name="iteration"></param>
@@ -1642,9 +1662,10 @@ namespace SyncroSim.STSim
         /// At the Landscape Update Frequency specified above generate a raster of the state attribute in question 
         /// and then do a moving window analysis of the raster such that for each cell the average value of the state 
         /// attribute within it’s neighborhood radius is calculated. Create an in memory raster array of the moving 
-        /// window analysis results. Hold on to this raster in memory (as a single dimensional arrary) which can be accessed when needed.
+        /// window analysis results. Hold on to this raster in memory (as a single dimensional array) which can be 
+        /// accessed when needed.
         /// </remarks>
-        private void ProcessTransitionAdjacencyStateAttribute(int iteration, int timestep)
+        private void ProcessTransitionAdjacencyStateAttributeOutput(int iteration, int timestep)
         {
             if (!this.IsSpatial)
             {
@@ -1791,202 +1812,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Process the Average Transition Probabilities to raster file output.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessRasterAvgTransitionProbabilityOutput()
-        {
-            if (!this.IsSpatial)
-            {
-                Debug.Assert(!this.IsSpatial);
-                return;
-            }
-
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
-            {
-                return;
-            }
-
-            foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
-            {
-                Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
-
-                // Now lets loop thru the timestep arrays in the dict
-                foreach (int timestep in dict.Keys)
-                {
-                    double[] Values = dict[timestep];
-
-                    //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
-                    var DistVals = Values.Distinct();
-
-                    if (DistVals.Count() == 1)
-                    {
-                        Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
-                        continue;
-                    }
-                    else if (DistVals.Count() == 2)
-                    {
-                        if (DistVals.ElementAt(0) <= 0 && DistVals.ElementAt(1) <= 0)
-                        {
-                            Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
-                            continue;
-                        }
-                    }
-
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    double[] arr = RastOutput.DblCells;
-
-                    foreach (Cell c in this.Cells)
-                    {
-                        arr[c.CellId] = Values[c.CollectionIndex];
-                    }
-
-                    Spatial.WriteRasterData(
-                        RastOutput, 
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY), 
-                        0, 
-                        timestep, 
-                        tgId, 
-                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX, 
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Record the Average Transition Probability output.
-        /// </summary>
-        /// <param name="timestep">The current timestep</param>
-        /// <param name="transitionGroupId">The Transition Group Id</param>
-        /// <param name="cellArray">A cell array containing transition pixels for the specified Transition Group</param>
-        /// <remarks></remarks>
-        private void RecordAvgTransitionProbabilityOutput(int timestep, int transitionGroupId, int[] cellArray)
-        {
-            //Dont bother if there haven't been any transitions this timestep
-            var distArray = cellArray.Distinct();
-
-            if (distArray.Count() == 1)
-            {
-                var el0 = distArray.ElementAt(0);
-
-                if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
-                {
-                    return;
-                }
-            }
-
-            if (this.m_AvgRasterTransitionProbAcrossTimesteps)
-            {
-                this.RecordAvgTransitionProbabilityOutputAcrossTimesteps(timestep, transitionGroupId, cellArray);
-            }
-            else
-            {
-                if ((timestep == this.MaximumTimestep) || ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
-                {
-                    this.RecordAvgTransitionProbabilityOutputNormalMethod(timestep, transitionGroupId, cellArray);
-                }
-            }
-        }
-
-        private void RecordAvgTransitionProbabilityOutputNormalMethod(int timestep, int transitionGroupId, int[] cellArray)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
-            Debug.Assert(!this.m_AvgRasterTransitionProbAcrossTimesteps);
-
-            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
-            double[] Values = dict[timestep];
-
-            foreach (Cell cell in this.Cells)
-            {
-                int i = cell.CollectionIndex;
-
-                if (cellArray[i] > 0)
-                {
-                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
-                    Values[i] += 1 / (double) this.m_TotalIterations;
-                }
-            }
-        }
-
-        private void RecordAvgTransitionProbabilityOutputAcrossTimesteps(int timestep, int transitionGroupId, int[] cellArray)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
-            Debug.Assert(this.m_AvgRasterTransitionProbAcrossTimesteps);
-
-            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
-            int timestepKey = this.GetTimestepKeyForAverage(timestep, this.m_AvgRasterTransitionProbTimesteps);
-            double[] Values = dict[timestepKey];
-
-            foreach (Cell cell in this.Cells)
-            {
-                int i = cell.CollectionIndex;
-
-                if (cellArray[i] > 0)
-                {
-                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
-
-                    //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
-                    //where tsf is the timestep frequency N is the number of iterations.
-                    //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                    //and freq of 5, would give bins 1-5, and 6-8.
-
-                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) != 0))
-                    {
-                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps * this.m_TotalIterations);
-                    }
-                    else
-                    {
-                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbTimesteps * this.m_TotalIterations);
-                    }
-                }
-            }
-        }
-
-        private bool IsTransitionAttributeTargetExceded(
-            Cell simulationCell, 
-            Transition tr, 
-            int iteration, 
-            int timestep)
-        {
-            if (!this.m_TransitionAttributeValueMap.HasItems)
-            {
-                return false;
-            }
-
-            TransitionType tt = this.m_TransitionTypes[tr.TransitionTypeId];
-
-            foreach (int AttributeTypeId in this.m_TransitionAttributeTypeIds.Keys)
-            {
-                foreach (TransitionGroup tg in tt.TransitionGroups)
-                {
-                    double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
-                        AttributeTypeId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
-
-                    if (AttrValue.HasValue)
-                    {
-                        TransitionAttributeTarget Target = this.m_TransitionAttributeTargetMap.GetAttributeTarget(
-                            AttributeTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                            simulationCell.TertiaryStratumId, iteration, timestep);
-
-                        if (Target != null && !Target.IsDisabled)
-                        {
-                            if (Target.TargetRemaining <= 0.0)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private int GetTimestepKeyForAverage(int currentTimestep, int everyNthTimestep)
+        private int GetTimestepKeyForAcrossTimestepAverage(int currentTimestep, int everyNthTimestep)
         {
             int timestepKey = 0;
 

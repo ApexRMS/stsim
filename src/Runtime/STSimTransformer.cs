@@ -372,7 +372,9 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
-            this.ProcessRasterAvgTransitionProbabilityOutput();
+            this.WriteAvgStateAttributeRasters();
+            this.WriteAvgTransitionAttributeRasters();
+            this.WriteAvgTransitionProbabiltyRasters();
 
             ModelRunComplete?.Invoke(this, new EventArgs());
         }
@@ -434,26 +436,19 @@ namespace SyncroSim.STSim
                 this.InitializeRasterData(iteration);
                 this.InitializeCellsRaster(iteration);
                 this.ResetTransitionSpreadGroupCells();
-
-                //Only Init once, as the maps need to survive entire model run
-
-                if (iteration == this.MinimumIteration)
-                {
-                    this.InitializeAnnualAvgTransitionProbMaps();
-                }
             }
             else
             {
                 this.InitializeCellsNonRaster(iteration);
             }
 
-            this.ProcessOutputStratumAmounts(iteration, this.m_TimestepZero);
-            this.ProcessRasterStratumOutput(iteration, this.m_TimestepZero);
-            this.ProcessRasterStateClassOutput(iteration, this.m_TimestepZero);
-            this.ProcessRasterAgeOutput(iteration, this.m_TimestepZero);
-            this.ProcessRasterTSTOutput(iteration, this.m_TimestepZero);
-            this.ProcessRasterStateAttributeOutput(iteration, this.m_TimestepZero);
-            this.ProcessTransitionAdjacencyStateAttribute(iteration, this.m_TimestepZero);
+            this.WriteStratumAmountTabularData(iteration, this.m_TimestepZero);
+            this.WriteStratumRaster(iteration, this.m_TimestepZero);
+            this.WriteStateClassRaster(iteration, this.m_TimestepZero);
+            this.WriteAgeRaster(iteration, this.m_TimestepZero);
+            this.WriteTSTRasters(iteration, this.m_TimestepZero);
+            this.WriteStateAttributeRasters(iteration, this.m_TimestepZero);
+            this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, this.m_TimestepZero);
         }
 
         private void InternalOnTimestep(int iteration, int timestep)
@@ -463,18 +458,18 @@ namespace SyncroSim.STSim
             this.Simulate(iteration, timestep);
             this.GenerateStateClassAttributes();
 
-            this.ProcessOutputStratumAmounts(iteration, timestep);
-            this.ProcessSummaryStratumStateResults(this.m_OutputStratumStateTable, iteration, timestep);
-            this.ProcessSummaryStratumTransitionResults(timestep, this.m_OutputStratumTransitionTable);
-            this.ProcessSummaryStratumTransitionStateResults(this.m_OutputStratumTransitionStateTable);
-            this.ProcessSummaryStateAttributeResults(this.m_OutputStateAttributeTable);
-            this.ProcessSummaryTransitionAttributeResults(this.m_OutputTransitionAttributeTable);
-            this.ProcessRasterStratumOutput(iteration, timestep);
-            this.ProcessRasterStateClassOutput(iteration, timestep);
-            this.ProcessRasterAgeOutput(iteration, timestep);
-            this.ProcessRasterTSTOutput(iteration, timestep);
-            this.ProcessRasterStateAttributeOutput(iteration, timestep);
-            this.ProcessTransitionAdjacencyStateAttribute(iteration, timestep);
+            this.WriteStratumAmountTabularData(iteration, timestep);
+            this.WriteSummaryStateClassTabularData(this.m_OutputStratumStateTable, iteration, timestep);
+            this.WriteSummaryTransitionTabularData(timestep, this.m_OutputStratumTransitionTable);
+            this.WriteSummaryTransitionStateTabularData(this.m_OutputStratumTransitionStateTable);
+            this.WriteSummaryStateAttributeTabularData(this.m_OutputStateAttributeTable);
+            this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
+            this.WriteStratumRaster(iteration, timestep);
+            this.WriteStateClassRaster(iteration, timestep);
+            this.WriteAgeRaster(iteration, timestep);
+            this.WriteTSTRasters(iteration, timestep);
+            this.WriteStateAttributeRasters(iteration, timestep);
+            this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, timestep);
 
             Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);
         }
@@ -520,16 +515,16 @@ namespace SyncroSim.STSim
 
                 this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels, dictTransitionedEventPixels);
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
-                this.OnRasterTransitionOutput(iteration, timestep, dictTransitionedPixels);               
-                this.OnRasterTransitionProbabilityOutput(iteration, timestep, dictTransitionedPixels);
-                this.OnRasterTransitionEventOutput(iteration, timestep, dictTransitionedEventPixels);
+                this.WriteTransitionGroupRasters(iteration, timestep, dictTransitionedPixels);               
+                this.RecordAvgRasterTransitionProbabilityData(iteration, timestep, dictTransitionedPixels);
+                this.WriteTransitionEventRasters(iteration, timestep, dictTransitionedEventPixels);
 
                 foreach (Cell simulationCell in this.m_Cells)
                 {
                     this.ApplyDeterministicTransitions(simulationCell, iteration, timestep);
                 }
 
-                this.OnRasterTransitionAttributeOutput(RasterTransitionAttrValues, iteration, timestep);
+                this.WriteTransitionAttributeRasters(RasterTransitionAttrValues, iteration, timestep);
             }
             else
             {
@@ -611,8 +606,8 @@ namespace SyncroSim.STSim
             }
 
             //Record output here because Tst should not be incremented until after the output has been recorded.
-            this.OnSummaryStateClassOutput(simulationCell, iteration, timestep);
-            this.OnSummaryStateAttributeOutput(simulationCell, iteration, timestep);
+            this.RecordSummaryStateClassOutput(simulationCell, iteration, timestep);
+            this.RecordSummaryStateAttributeOutput(simulationCell, iteration, timestep);
 
             //If there are Tst values then increment them by one.
             if (simulationCell.TstValues.Count > 0)
@@ -756,8 +751,8 @@ namespace SyncroSim.STSim
             Cell simulationCell, Transition tr, int iteration, int timestep, 
             int[] transitionedPixels, Dictionary<int, double[]> rasterTransitionAttrValues)
         {
-            this.OnSummaryTransitionOutput(simulationCell, tr, iteration, timestep, null);
-            this.OnSummaryTransitionByStateClassOutput(simulationCell, tr, iteration, timestep);
+            this.RecordSummaryTransitionOutput(simulationCell, tr, iteration, timestep, null);
+            this.RecordSummaryTransitionByStateClassOutput(simulationCell, tr, iteration, timestep);
 
             this.ChangeCellForProbabilisticTransition(simulationCell, tr, iteration, timestep, rasterTransitionAttrValues);
             this.FillProbabilisticTransitionsForCell(simulationCell, iteration, timestep);

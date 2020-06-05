@@ -1322,15 +1322,14 @@
           <group name="Transitions">
             <item name="TransitionRasterMap"/>   
             <item name="TSTRasterMap"/>  
-            <item name="TransitionEventRasterMap"/>             
+            <item name="TransitionEventRasterMap"/> 
+            <item name="AverageTransitionProbabilityRasterMap"/>            
           </group>"
           <group name="Attributes">
             <item name="StateAttributeRasterMap"/>  
             <item name="TransitionAttributeRasterMap"/> 
-            <item name="AverageStateClassRasterMap"/>  
             <item name="AverageStateAttributeRasterMap"/>           
-            <item name="AverageTransitionAttributeRasterMap"/>           
-            <item name="AverageTransitionProbabilityRasterMap"/>            
+            <item name="AverageTransitionAttributeRasterMap"/>                     
           </group>
         </group>
       </group>

@@ -38,20 +38,24 @@ namespace SyncroSim.STSim
         {
             using (DataStore store = project.Library.CreateDataStore())
             {
-                SyncroSimLayoutItem BasicGroup = new SyncroSimLayoutItem("BasicGroup", "Basic", true);
+                DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
+
+                //Top level groups
+                SyncroSimLayoutItem StateVariablesTopLevelGroup = new SyncroSimLayoutItem("StateVariablesTopLevelGroup", "State Variables", true);
+                SyncroSimLayoutItem TransitionsTopLevelGroup = new SyncroSimLayoutItem("TransitionsTopLevelGroup", "Transitions", true);
+                SyncroSimLayoutItem AttributesTopLevelGroup = new SyncroSimLayoutItem("AttributesTopLevelGroup", "Attributes", true);
+
+                //Sub groups
                 SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
                 SyncroSimLayoutItem StateAttributeGroup = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
                 SyncroSimLayoutItem TransitionAttributeGroup = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
                 SyncroSimLayoutItem TransitionEventGroup = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
-                SyncroSimLayoutItem AvgStateClassGroup = new SyncroSimLayoutItem("AvgStateClassGroup", "Average State Classes", true);
                 SyncroSimLayoutItem AvgStateAttributeGroup = new SyncroSimLayoutItem("AvgStateAttributeGroup", "Average State Attributes", true);
                 SyncroSimLayoutItem AvgTransitionAttributeGroup = new SyncroSimLayoutItem("AvgTransitionAttributeGroup", "Average Transition Attributes", true);
                 SyncroSimLayoutItem AvgTransitionProbabilityGroup = new SyncroSimLayoutItem("AvgTransitionProbabilityGroup", "Average Transition Probability", true);
 
-                DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
-
-                //Categorical
-                AddCategoricalVariables(project, BasicGroup);
+                //State Variables
+                AddStateVariables(project, StateVariablesTopLevelGroup);
 
                 //Transitions
                 AddMapTransitionGroupVariables(
@@ -77,10 +81,6 @@ namespace SyncroSim.STSim
                     "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", 
                     Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
-                //Average State Classes
-
-
-
                 //Average State Attributes
                 AddMapStateAttributes(
                     project, AvgStateAttributeGroup.Items,
@@ -99,46 +99,55 @@ namespace SyncroSim.STSim
                     "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", 
                     Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
-                layout.Items.Add(BasicGroup);
+                //State Variables Top Level Group
+                layout.Items.Add(StateVariablesTopLevelGroup);
 
+                //Transitions Top Level Group
                 if (TransitionsGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(TransitionsGroup);
-                }
-
-                if (StateAttributeGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(StateAttributeGroup);
-                }
-
-                if (TransitionAttributeGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(TransitionAttributeGroup);
+                    TransitionsTopLevelGroup.Items.Add(TransitionsGroup);
                 }
 
                 if (TransitionEventGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(TransitionEventGroup);
-                }
-
-                if (AvgStateClassGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(AvgStateClassGroup);
-                }
-
-                if (AvgStateAttributeGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(AvgStateAttributeGroup);
-                }
-
-                if (AvgTransitionAttributeGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(AvgTransitionAttributeGroup);
+                    TransitionsTopLevelGroup.Items.Add(TransitionEventGroup);
                 }
 
                 if (AvgTransitionProbabilityGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(AvgTransitionProbabilityGroup);
+                    TransitionsTopLevelGroup.Items.Add(AvgTransitionProbabilityGroup);
+                }
+
+                if (TransitionsTopLevelGroup.Items.Count > 0)
+                {
+                    layout.Items.Add(TransitionsTopLevelGroup);
+                }
+
+                //Attributes Top Level Group
+
+                if (StateAttributeGroup.Items.Count > 0)
+                {
+                    AttributesTopLevelGroup.Items.Add(StateAttributeGroup);
+                }
+
+                if (TransitionAttributeGroup.Items.Count > 0)
+                {
+                    AttributesTopLevelGroup.Items.Add(TransitionAttributeGroup);
+                }
+
+                if (AvgStateAttributeGroup.Items.Count > 0)
+                {
+                    AttributesTopLevelGroup.Items.Add(AvgStateAttributeGroup);
+                }
+
+                if (AvgTransitionAttributeGroup.Items.Count > 0)
+                {
+                    AttributesTopLevelGroup.Items.Add(AvgTransitionAttributeGroup);
+                }
+
+                if (AttributesTopLevelGroup.Items.Count > 0)
+                {
+                    layout.Items.Add(AttributesTopLevelGroup);
                 }
             }
         }
@@ -156,7 +165,7 @@ namespace SyncroSim.STSim
             return View;
         }
 
-        private static void AddCategoricalVariables(Project project, SyncroSimLayoutItem g0)
+        private static void AddStateVariables(Project project, SyncroSimLayoutItem g0)
         {
             string psl = null;
             string ssl = null;

@@ -1314,18 +1314,24 @@
           <item name="coreforms_ScenarioDescriptionReport"/>
         </group>
         <group name="Maps">
-          <item name="StateClassRasterMap"/>
-          <item name="TransitionRasterMap"/>
-          <item name="AgeRasterMap"/>
-          <item name="TSTRasterMap"/>
-          <item name="StratumRasterMap"/>
-          <item name="StateAttributeRasterMap"/>
-          <item name="TransitionAttributeRasterMap"/>
-          <item name="TransitionEventRasterMap"/>  
-          <item name="AverageStateClassRasterMap"/>  
-          <item name="AverageStateAttributeRasterMap"/>           
-          <item name="AverageTransitionAttributeRasterMap"/>           
-          <item name="AverageTransitionProbabilityRasterMap"/>
+          <group name="StateVariables" displayName="State Variables">
+            <item name="StateClassRasterMap"/> 
+            <item name="AgeRasterMap"/>  
+            <item name="StratumRasterMap"/>            
+          </group>
+          <group name="Transitions">
+            <item name="TransitionRasterMap"/>   
+            <item name="TSTRasterMap"/>  
+            <item name="TransitionEventRasterMap"/>             
+          </group>"
+          <group name="Attributes">
+            <item name="StateAttributeRasterMap"/>  
+            <item name="TransitionAttributeRasterMap"/> 
+            <item name="AverageStateClassRasterMap"/>  
+            <item name="AverageStateAttributeRasterMap"/>           
+            <item name="AverageTransitionAttributeRasterMap"/>           
+            <item name="AverageTransitionProbabilityRasterMap"/>            
+          </group>
         </group>
       </group>
     </layout>

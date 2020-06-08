@@ -319,10 +319,6 @@ namespace SyncroSim.STSim
             this.ConfigureTimestepUnits();
             this.NormalizeRunControl();
             this.NormalizeOutputOptions();
-
-            // We need to normalize the Initial Conditions here, so that we can run in Multiprocessor mode 
-            // with the same Input config & raster files
-
             this.NormalizeMapIds();
             this.NormalizeInitialConditions();
 

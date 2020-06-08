@@ -485,7 +485,10 @@
                 <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="AvgRasterOutputSC" displayName="Avg. Raster SC" dataType="Boolean"/>
                 <column name="AvgRasterOutputSCTimesteps" displayName="Avg. Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputSCAcrossTimesteps" dataType="Boolean"/>           
+                <column name="AvgRasterOutputSCAcrossTimesteps" dataType="Boolean"/>  
+                <column name="AvgRasterOutputAge" displayName="Avg. Raster Age" dataType="Boolean"/>
+                <column name="AvgRasterOutputAgeTimesteps" displayName="Avg. Raster Age Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputAgeAcrossTimesteps" dataType="Boolean"/>                                               
                 <column name="AvgRasterOutputSA" displayName="Avg. Raster SA" dataType="Boolean"/>
                 <column name="AvgRasterOutputSATimesteps" displayName="Avg. Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="AvgRasterOutputSAAcrossTimesteps" dataType="Boolean"/>               

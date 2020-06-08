@@ -84,6 +84,10 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTRSC = new System.Windows.Forms.CheckBox();
             this.TextBoxSummaryTRTimesteps = new System.Windows.Forms.TextBox();
             this.GroupBoxAvgSpatialOutput = new System.Windows.Forms.GroupBox();
+            this.CheckBoxAvgRasterAgeAcrossTimesteps = new System.Windows.Forms.CheckBox();
+            this.CheckBoxAvgRasterAge = new System.Windows.Forms.CheckBox();
+            this.LabelAvgRasterAgeTimesteps = new System.Windows.Forms.Label();
+            this.TextBoxAvgRasterAgeTimesteps = new System.Windows.Forms.TextBox();
             this.CheckBoxAvgRasterTPAcrossTimesteps = new System.Windows.Forms.CheckBox();
             this.CheckBoxAvgRasterTAAcrossTimesteps = new System.Windows.Forms.CheckBox();
             this.CheckBoxAvgRasterSAAcrossTimesteps = new System.Windows.Forms.CheckBox();
@@ -128,7 +132,7 @@ namespace SyncroSim.STSim
             this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterSTTimesteps);
             this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterTRTimesteps);
             this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterSCTimesteps);
-            this.GroupBoxSpatialOutput.Location = new System.Drawing.Point(4, 238);
+            this.GroupBoxSpatialOutput.Location = new System.Drawing.Point(4, 236);
             this.GroupBoxSpatialOutput.Margin = new System.Windows.Forms.Padding(4);
             this.GroupBoxSpatialOutput.Name = "GroupBoxSpatialOutput";
             this.GroupBoxSpatialOutput.Padding = new System.Windows.Forms.Padding(4);
@@ -380,31 +384,31 @@ namespace SyncroSim.STSim
             // CheckBoxAvgRasterTP
             // 
             this.CheckBoxAvgRasterTP.AutoSize = true;
-            this.CheckBoxAvgRasterTP.Location = new System.Drawing.Point(15, 118);
+            this.CheckBoxAvgRasterTP.Location = new System.Drawing.Point(15, 147);
             this.CheckBoxAvgRasterTP.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTP.Name = "CheckBoxAvgRasterTP";
             this.CheckBoxAvgRasterTP.Size = new System.Drawing.Size(201, 21);
-            this.CheckBoxAvgRasterTP.TabIndex = 12;
+            this.CheckBoxAvgRasterTP.TabIndex = 17;
             this.CheckBoxAvgRasterTP.Text = "Transition probability every";
             this.CheckBoxAvgRasterTP.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterTPTimesteps
             // 
             this.LabelAvgRasterTPTimesteps.AutoSize = true;
-            this.LabelAvgRasterTPTimesteps.Location = new System.Drawing.Point(339, 118);
+            this.LabelAvgRasterTPTimesteps.Location = new System.Drawing.Point(339, 147);
             this.LabelAvgRasterTPTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterTPTimesteps.Name = "LabelAvgRasterTPTimesteps";
             this.LabelAvgRasterTPTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTPTimesteps.TabIndex = 14;
+            this.LabelAvgRasterTPTimesteps.TabIndex = 19;
             this.LabelAvgRasterTPTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterTPTimesteps
             // 
-            this.TextBoxAvgRasterTPTimesteps.Location = new System.Drawing.Point(262, 115);
+            this.TextBoxAvgRasterTPTimesteps.Location = new System.Drawing.Point(262, 144);
             this.TextBoxAvgRasterTPTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTPTimesteps.Name = "TextBoxAvgRasterTPTimesteps";
             this.TextBoxAvgRasterTPTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTPTimesteps.TabIndex = 13;
+            this.TextBoxAvgRasterTPTimesteps.TabIndex = 18;
             this.TextBoxAvgRasterTPTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // GroupBoxSummaryOutput
@@ -432,7 +436,7 @@ namespace SyncroSim.STSim
             this.GroupBoxSummaryOutput.Controls.Add(this.LabelSummaryTRTimesteps);
             this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTRSC);
             this.GroupBoxSummaryOutput.Controls.Add(this.TextBoxSummaryTRTimesteps);
-            this.GroupBoxSummaryOutput.Location = new System.Drawing.Point(4, 7);
+            this.GroupBoxSummaryOutput.Location = new System.Drawing.Point(4, 5);
             this.GroupBoxSummaryOutput.Margin = new System.Windows.Forms.Padding(4);
             this.GroupBoxSummaryOutput.Name = "GroupBoxSummaryOutput";
             this.GroupBoxSummaryOutput.Padding = new System.Windows.Forms.Padding(4);
@@ -681,6 +685,10 @@ namespace SyncroSim.STSim
             // 
             // GroupBoxAvgSpatialOutput
             // 
+            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterAgeAcrossTimesteps);
+            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterAge);
+            this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterAgeTimesteps);
+            this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterAgeTimesteps);
             this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterTPAcrossTimesteps);
             this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterTAAcrossTimesteps);
             this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterSAAcrossTimesteps);
@@ -697,44 +705,85 @@ namespace SyncroSim.STSim
             this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterSA);
             this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterSATimesteps);
             this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterSATimesteps);
-            this.GroupBoxAvgSpatialOutput.Location = new System.Drawing.Point(4, 394);
+            this.GroupBoxAvgSpatialOutput.Location = new System.Drawing.Point(4, 392);
             this.GroupBoxAvgSpatialOutput.Margin = new System.Windows.Forms.Padding(4);
             this.GroupBoxAvgSpatialOutput.Name = "GroupBoxAvgSpatialOutput";
-            this.GroupBoxAvgSpatialOutput.Size = new System.Drawing.Size(849, 159);
+            this.GroupBoxAvgSpatialOutput.Size = new System.Drawing.Size(849, 178);
             this.GroupBoxAvgSpatialOutput.TabIndex = 2;
             this.GroupBoxAvgSpatialOutput.TabStop = false;
             this.GroupBoxAvgSpatialOutput.Text = "Average spatial output";
             // 
+            // CheckBoxAvgRasterAgeAcrossTimesteps
+            // 
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.AutoSize = true;
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Location = new System.Drawing.Point(447, 60);
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Name = "CheckBoxAvgRasterAgeAcrossTimesteps";
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.TabIndex = 8;
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Text = "Average across preceeding timesteps";
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxAvgRasterAge
+            // 
+            this.CheckBoxAvgRasterAge.AutoSize = true;
+            this.CheckBoxAvgRasterAge.Location = new System.Drawing.Point(15, 60);
+            this.CheckBoxAvgRasterAge.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxAvgRasterAge.Name = "CheckBoxAvgRasterAge";
+            this.CheckBoxAvgRasterAge.Size = new System.Drawing.Size(101, 21);
+            this.CheckBoxAvgRasterAge.TabIndex = 5;
+            this.CheckBoxAvgRasterAge.Text = "Ages every";
+            this.CheckBoxAvgRasterAge.UseVisualStyleBackColor = true;
+            // 
+            // LabelAvgRasterAgeTimesteps
+            // 
+            this.LabelAvgRasterAgeTimesteps.AutoSize = true;
+            this.LabelAvgRasterAgeTimesteps.Location = new System.Drawing.Point(339, 60);
+            this.LabelAvgRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelAvgRasterAgeTimesteps.Name = "LabelAvgRasterAgeTimesteps";
+            this.LabelAvgRasterAgeTimesteps.Size = new System.Drawing.Size(68, 17);
+            this.LabelAvgRasterAgeTimesteps.TabIndex = 7;
+            this.LabelAvgRasterAgeTimesteps.Text = "timesteps";
+            // 
+            // TextBoxAvgRasterAgeTimesteps
+            // 
+            this.TextBoxAvgRasterAgeTimesteps.Location = new System.Drawing.Point(262, 57);
+            this.TextBoxAvgRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4);
+            this.TextBoxAvgRasterAgeTimesteps.Name = "TextBoxAvgRasterAgeTimesteps";
+            this.TextBoxAvgRasterAgeTimesteps.Size = new System.Drawing.Size(65, 22);
+            this.TextBoxAvgRasterAgeTimesteps.TabIndex = 6;
+            this.TextBoxAvgRasterAgeTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // CheckBoxAvgRasterTPAcrossTimesteps
             // 
             this.CheckBoxAvgRasterTPAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterTPAcrossTimesteps.Location = new System.Drawing.Point(447, 118);
+            this.CheckBoxAvgRasterTPAcrossTimesteps.Location = new System.Drawing.Point(447, 147);
             this.CheckBoxAvgRasterTPAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTPAcrossTimesteps.Name = "CheckBoxAvgRasterTPAcrossTimesteps";
             this.CheckBoxAvgRasterTPAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterTPAcrossTimesteps.TabIndex = 15;
+            this.CheckBoxAvgRasterTPAcrossTimesteps.TabIndex = 20;
             this.CheckBoxAvgRasterTPAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterTPAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterTAAcrossTimesteps
             // 
             this.CheckBoxAvgRasterTAAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterTAAcrossTimesteps.Location = new System.Drawing.Point(447, 89);
+            this.CheckBoxAvgRasterTAAcrossTimesteps.Location = new System.Drawing.Point(447, 118);
             this.CheckBoxAvgRasterTAAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTAAcrossTimesteps.Name = "CheckBoxAvgRasterTAAcrossTimesteps";
             this.CheckBoxAvgRasterTAAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterTAAcrossTimesteps.TabIndex = 11;
+            this.CheckBoxAvgRasterTAAcrossTimesteps.TabIndex = 16;
             this.CheckBoxAvgRasterTAAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterTAAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterSAAcrossTimesteps
             // 
             this.CheckBoxAvgRasterSAAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterSAAcrossTimesteps.Location = new System.Drawing.Point(447, 60);
+            this.CheckBoxAvgRasterSAAcrossTimesteps.Location = new System.Drawing.Point(447, 89);
             this.CheckBoxAvgRasterSAAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSAAcrossTimesteps.Name = "CheckBoxAvgRasterSAAcrossTimesteps";
             this.CheckBoxAvgRasterSAAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSAAcrossTimesteps.TabIndex = 7;
+            this.CheckBoxAvgRasterSAAcrossTimesteps.TabIndex = 12;
             this.CheckBoxAvgRasterSAAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSAAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -745,18 +794,18 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSCAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSCAcrossTimesteps.Name = "CheckBoxAvgRasterSCAcrossTimesteps";
             this.CheckBoxAvgRasterSCAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSCAcrossTimesteps.TabIndex = 3;
+            this.CheckBoxAvgRasterSCAcrossTimesteps.TabIndex = 4;
             this.CheckBoxAvgRasterSCAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSCAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterTA
             // 
             this.CheckBoxAvgRasterTA.AutoSize = true;
-            this.CheckBoxAvgRasterTA.Location = new System.Drawing.Point(15, 89);
+            this.CheckBoxAvgRasterTA.Location = new System.Drawing.Point(15, 118);
             this.CheckBoxAvgRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTA.Name = "CheckBoxAvgRasterTA";
             this.CheckBoxAvgRasterTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxAvgRasterTA.TabIndex = 8;
+            this.CheckBoxAvgRasterTA.TabIndex = 13;
             this.CheckBoxAvgRasterTA.Text = "Transition attributes every";
             this.CheckBoxAvgRasterTA.UseVisualStyleBackColor = true;
             // 
@@ -767,18 +816,18 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSC.Name = "CheckBoxAvgRasterSC";
             this.CheckBoxAvgRasterSC.Size = new System.Drawing.Size(153, 21);
-            this.CheckBoxAvgRasterSC.TabIndex = 0;
+            this.CheckBoxAvgRasterSC.TabIndex = 1;
             this.CheckBoxAvgRasterSC.Text = "State classes every";
             this.CheckBoxAvgRasterSC.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterTATimesteps
             // 
             this.LabelAvgRasterTATimesteps.AutoSize = true;
-            this.LabelAvgRasterTATimesteps.Location = new System.Drawing.Point(339, 89);
+            this.LabelAvgRasterTATimesteps.Location = new System.Drawing.Point(339, 118);
             this.LabelAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterTATimesteps.Name = "LabelAvgRasterTATimesteps";
             this.LabelAvgRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTATimesteps.TabIndex = 10;
+            this.LabelAvgRasterTATimesteps.TabIndex = 15;
             this.LabelAvgRasterTATimesteps.Text = "timesteps";
             // 
             // LabelAvgRasterSCTimesteps
@@ -788,16 +837,16 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSCTimesteps.Name = "LabelAvgRasterSCTimesteps";
             this.LabelAvgRasterSCTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSCTimesteps.TabIndex = 2;
+            this.LabelAvgRasterSCTimesteps.TabIndex = 3;
             this.LabelAvgRasterSCTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterTATimesteps
             // 
-            this.TextBoxAvgRasterTATimesteps.Location = new System.Drawing.Point(262, 86);
+            this.TextBoxAvgRasterTATimesteps.Location = new System.Drawing.Point(262, 115);
             this.TextBoxAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTATimesteps.Name = "TextBoxAvgRasterTATimesteps";
             this.TextBoxAvgRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTATimesteps.TabIndex = 9;
+            this.TextBoxAvgRasterTATimesteps.TabIndex = 14;
             this.TextBoxAvgRasterTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxAvgRasterSCTimesteps
@@ -806,37 +855,37 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSCTimesteps.Name = "TextBoxAvgRasterSCTimesteps";
             this.TextBoxAvgRasterSCTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSCTimesteps.TabIndex = 1;
+            this.TextBoxAvgRasterSCTimesteps.TabIndex = 2;
             this.TextBoxAvgRasterSCTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterSA
             // 
             this.CheckBoxAvgRasterSA.AutoSize = true;
-            this.CheckBoxAvgRasterSA.Location = new System.Drawing.Point(15, 60);
+            this.CheckBoxAvgRasterSA.Location = new System.Drawing.Point(15, 89);
             this.CheckBoxAvgRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSA.Name = "CheckBoxAvgRasterSA";
             this.CheckBoxAvgRasterSA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxAvgRasterSA.TabIndex = 4;
+            this.CheckBoxAvgRasterSA.TabIndex = 9;
             this.CheckBoxAvgRasterSA.Text = "State attributes every";
             this.CheckBoxAvgRasterSA.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterSATimesteps
             // 
             this.LabelAvgRasterSATimesteps.AutoSize = true;
-            this.LabelAvgRasterSATimesteps.Location = new System.Drawing.Point(339, 61);
+            this.LabelAvgRasterSATimesteps.Location = new System.Drawing.Point(339, 90);
             this.LabelAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSATimesteps.Name = "LabelAvgRasterSATimesteps";
             this.LabelAvgRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSATimesteps.TabIndex = 6;
+            this.LabelAvgRasterSATimesteps.TabIndex = 11;
             this.LabelAvgRasterSATimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterSATimesteps
             // 
-            this.TextBoxAvgRasterSATimesteps.Location = new System.Drawing.Point(262, 57);
+            this.TextBoxAvgRasterSATimesteps.Location = new System.Drawing.Point(262, 86);
             this.TextBoxAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSATimesteps.Name = "TextBoxAvgRasterSATimesteps";
             this.TextBoxAvgRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSATimesteps.TabIndex = 5;
+            this.TextBoxAvgRasterSATimesteps.TabIndex = 10;
             this.TextBoxAvgRasterSATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // OutputOptionsDataFeedView
@@ -848,7 +897,7 @@ namespace SyncroSim.STSim
             this.Controls.Add(this.GroupBoxSummaryOutput);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "OutputOptionsDataFeedView";
-            this.Size = new System.Drawing.Size(860, 562);
+            this.Size = new System.Drawing.Size(860, 574);
             this.GroupBoxSpatialOutput.ResumeLayout(false);
             this.GroupBoxSpatialOutput.PerformLayout();
             this.GroupBoxSummaryOutput.ResumeLayout(false);
@@ -924,5 +973,9 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterTPAcrossTimesteps;
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterTAAcrossTimesteps;
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterSAAcrossTimesteps;
+        internal System.Windows.Forms.CheckBox CheckBoxAvgRasterAgeAcrossTimesteps;
+        internal System.Windows.Forms.CheckBox CheckBoxAvgRasterAge;
+        internal System.Windows.Forms.Label LabelAvgRasterAgeTimesteps;
+        internal System.Windows.Forms.TextBox TextBoxAvgRasterAgeTimesteps;
     }
 }

@@ -509,18 +509,28 @@ namespace SyncroSim.STSim
 
                 ApplyingSpatialTransitions?.Invoke(this, new SpatialTransitionEventArgs(iteration, timestep));
 
+                //Spatial probabilistic transitions
                 this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels, dictTransitionedEventPixels);
+
+                //Transition spread
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
-                this.WriteTransitionGroupRasters(iteration, timestep, dictTransitionedPixels);               
-                this.RecordAvgRasterTransitionProbabilityData(iteration, timestep, dictTransitionedPixels);
+
+                //Write/record spatial probabilistic transitions
+                this.WriteTransitionGroupRasters(iteration, timestep, dictTransitionedPixels); 
+                this.RecordAvgRasterTransitionProbabilityData(iteration, timestep, dictTransitionedPixels); 
+                         
+                //Write transition event rasters                   
                 this.WriteTransitionEventRasters(iteration, timestep, dictTransitionedEventPixels);
 
+                //Apply deterministic transitions
                 foreach (Cell simulationCell in this.m_Cells)
                 {
                     this.ApplyDeterministicTransitions(simulationCell, iteration, timestep);
                 }
 
-                this.WriteTransitionAttributeRasters(RasterTransitionAttrValues, iteration, timestep);
+                //Write/record transition attributes
+                this.WriteTransitionAttributeRasters(iteration, timestep, RasterTransitionAttrValues);
+                this.RecordAvgRasterTransitionAttributeData(iteration, timestep, RasterTransitionAttrValues);
             }
             else
             {

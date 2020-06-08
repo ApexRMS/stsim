@@ -335,17 +335,15 @@ namespace SyncroSim.STSim
         private Dictionary<int, double[]> CreateRasterTransitionAttributeArrays(int timestep)
         {
             Debug.Assert(this.IsSpatial);
-
             Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
-            if (this.IsRasterTransitionAttributeTimestep(timestep))
+            if (this.IsRasterTransitionAttributeTimestep(timestep) || 
+                this.IsAvgRasterTransitionAttributeTimestep(timestep))
             {
                 foreach (int id in this.m_TransitionAttributeTypeIds.Keys)
                 {
                     Debug.Assert(this.m_TransitionAttributeTypes.Contains(id));
                     double[] arr = new double[this.Cells.Count];
-
-                    //Initialize array to ApexRaster.DEFAULT_NO_DATA_VALUE
 
                     for (int i = 0; i < this.Cells.Count; i++)
                     {
@@ -2351,50 +2349,6 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the Average Transition Probability Maps
-        /// </summary>
-        /// <remarks></remarks>
-        private void InitializeAvgTransitionProbMaps()
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.MinimumTimestep > 0);
-
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
-            {
-                return;
-            }
-
-            foreach (TransitionGroup tg in this.m_TransitionGroups)
-            {
-                if (tg.PrimaryTransitionTypes.Count == 0)
-                {
-                    continue;
-                }
-
-                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
-
-                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
-                {
-                    if ((timestep == this.MaximumTimestep) || 
-                        ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionProbTimesteps) == 0)
-                    {
-                        double[] Values = null;
-                        Values = new double[this.Cells.Count];
-
-                        for (var i = 0; i < this.Cells.Count; i++)
-                        {
-                            Values[i] = 0;
-                        }
-
-                        dict.Add(timestep, Values);
-                    }
-                }
-
-                this.m_AvgTransitionProbMap.Add(tg.TransitionGroupId, dict);
-            }
-        }
-
-        /// <summary>
         /// Initializes the Average State Attribute Map
         /// </summary>
         /// <remarks></remarks>
@@ -2414,15 +2368,14 @@ namespace SyncroSim.STSim
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
                 {
-                    if ((timestep == this.MaximumTimestep) || 
-                        ((timestep - this.TimestepZero) % this.m_AvgRasterStateAttributeTimesteps) == 0)
+                    if (this.IsAvgRasterStateAttributeTimestep(timestep))
                     {
                         double[] Values = null;
                         Values = new double[this.Cells.Count];
 
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
-                            Values[i] = 0;
+                            Values[i] = Spatial.DefaultNoDataValue;
                         }
 
                         dict.Add(timestep, Values);
@@ -2453,8 +2406,50 @@ namespace SyncroSim.STSim
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
                 {
-                    if ((timestep == this.MaximumTimestep) ||
-                        ((timestep - this.TimestepZero) % this.m_AvgRasterTransitionAttributeTimesteps) == 0)
+                    if (this.IsAvgRasterTransitionAttributeTimestep(timestep))
+                    {
+                        double[] Values = null;
+                        Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = Spatial.DefaultNoDataValue;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgTransitionAttrMap.Add(tat.TransitionAttributeId, dict);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the Average Transition Probability Maps
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeAvgTransitionProbMaps()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            {
+                return;
+            }
+
+            foreach (TransitionGroup tg in this.m_TransitionGroups)
+            {
+                if (tg.PrimaryTransitionTypes.Count == 0)
+                {
+                    continue;
+                }
+
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if (this.IsAvgRasterTransitionProbTimestep(timestep))
                     {
                         double[] Values = null;
                         Values = new double[this.Cells.Count];
@@ -2468,7 +2463,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                this.m_AvgTransitionAttrMap.Add(tat.TransitionAttributeId, dict);
+                this.m_AvgTransitionProbMap.Add(tg.TransitionGroupId, dict);
             }
         }
 

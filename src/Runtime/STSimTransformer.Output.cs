@@ -53,6 +53,9 @@ namespace SyncroSim.STSim
         private bool m_CreateAvgRasterStateClassOutput;
         private int m_AvgRasterStateClassTimesteps;
         private bool m_AvgRasterStateClassAcrossTimesteps;
+        private bool m_CreateAvgRasterAgeOutput;
+        private int m_AvgRasterAgeTimesteps;
+        private bool m_AvgRasterAgeAcrossTimesteps;
         private bool m_CreateAvgRasterStateAttributeOutput;
         private int m_AvgRasterStateAttributeTimesteps;
         private bool m_AvgRasterStateAttributeAcrossTimesteps;

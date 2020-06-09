@@ -591,7 +591,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (!this.IsSummaryStateAttributeTimestep(timestep))
+            if (!this.IsSummaryStateAttributeTimestep(timestep) && 
+                !this.IsAvgRasterStateAttributeTimestep(timestep))
             {
                 return;
             }
@@ -647,11 +648,11 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Records average age data for the specified iteration and timestep
+        /// Records average raster age data for the specified iteration and timestep
         /// </summary>
         /// <param name="iteration"></param>
         /// <param name="timestep"></param>
-        private void RecordAvgAgeData(int iteration, int timestep)
+        private void RecordAvgRasterAgeData(int iteration, int timestep)
         {
             if (!this.m_CreateAvgRasterAgeOutput)
             {
@@ -662,15 +663,15 @@ namespace SyncroSim.STSim
 
             if (this.m_AvgRasterAgeAcrossTimesteps)
             {
-                this.RecordAvgAgeOutputAcrossTimesteps(timestep);
+                this.RecordAvgRasterAgeOutputAcrossTimesteps(timestep);
             }
             else
             {
-                this.RecordAvgAgeOutputNormalMethod(timestep);
+                this.RecordAvgRasterAgeOutputNormalMethod(timestep);
             }
         }
 
-        private void RecordAvgAgeOutputNormalMethod(int timestep)
+        private void RecordAvgRasterAgeOutputNormalMethod(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
@@ -685,7 +686,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgAgeOutputAcrossTimesteps(int timestep)
+        private void RecordAvgRasterAgeOutputAcrossTimesteps(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
@@ -708,6 +709,170 @@ namespace SyncroSim.STSim
                 else
                 {
                     Values[i] += cell.Age / (double)(this.m_AvgRasterAgeOutputTimesteps * this.m_TotalIterations);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Record average state attribute data for the specified iteration and timestep.
+        /// </summary>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        private void RecordAvgRasterStateAttributeData(int iteration, int timestep)
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStateAttributeOutput)
+            {
+                return;
+            }
+
+            if (this.m_AvgRasterAgeAcrossTimesteps)
+            {
+                this.RecordAvgRasterStateAttributeOutputAcrossTimesteps(iteration, timestep);
+            }
+            else
+            {
+                this.RecordAvgRasterStateAttributeOutputNormalMethod(iteration, timestep);
+            }
+        }
+
+        private void RecordAvgRasterStateAttributeOutputNormalMethod(int iteration, int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterStateAttributeOutput);
+            Debug.Assert(!this.m_AvgRasterStateAttributeAcrossTimesteps);
+
+            foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
+                double[] Values = dict[timestep];
+
+                foreach (Cell c in this.Cells)
+                {
+                    double? AttrValue = this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
+                        AttributeTypeId, 
+                        c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, 
+                        c.StateClassId, iteration, timestep);
+
+                    if (AttrValue != null)
+                    {
+                        double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+
+                        if (!v.Equals(Spatial.DefaultNoDataValue))
+                        {
+                            Values[c.CollectionIndex] = v / this.m_TotalIterations;
+                        }
+                    }
+                }
+            }
+
+            foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsAges.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
+                double[] Values = dict[timestep];
+
+                foreach (Cell c in this.Cells)
+                {
+                    double? AttrValue = this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
+                        AttributeTypeId, 
+                        c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, 
+                        c.StateClassId, iteration, timestep, c.Age);
+
+                    if (AttrValue != null)
+                    {
+                        double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+
+                        if (!v.Equals(Spatial.DefaultNoDataValue))
+                        {
+                            Values[c.CollectionIndex] = v / this.m_TotalIterations;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RecordAvgRasterStateAttributeOutputAcrossTimesteps(int iteration, int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterAgeOutput);
+            Debug.Assert(this.m_AvgRasterAgeAcrossTimesteps);
+
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(
+                timestep, this.m_AvgRasterStateAttributeOutputTimesteps);
+
+            foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
+                double[] Values = dict[timestepKey];
+
+                foreach (Cell c in this.Cells)
+                {
+                    double? AttrValue = this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
+                        AttributeTypeId,
+                        c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId,
+                        c.StateClassId, iteration, timestep);
+
+                    if (AttrValue != null)
+                    {
+                        double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+
+                        if (!v.Equals(Spatial.DefaultNoDataValue))
+                        {
+                            int i = c.CollectionIndex;
+
+                            //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                            //and freq of 5, would give bins 1-5, and 6-8.
+
+                            if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
+                            {
+                                Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
+                            }
+                            else
+                            {
+                                Values[i] += v / (double)(this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsAges.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
+                double[] Values = dict[timestepKey];
+
+                foreach (Cell c in this.Cells)
+                {
+                    double? AttrValue = this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
+                        AttributeTypeId,
+                        c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId,
+                        c.StateClassId, iteration, timestep, c.Age);
+
+                    if (AttrValue != null)
+                    {
+                        double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
+
+                        if (!v.Equals(Spatial.DefaultNoDataValue))
+                        {
+                            int i = c.CollectionIndex;
+
+                            //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                            //and freq of 5, would give bins 1-5, and 6-8.
+
+                            if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
+                            {
+                                Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
+                            }
+                            else
+                            {
+                                Values[i] += v / (double)(this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -777,7 +942,7 @@ namespace SyncroSim.STSim
 
                 if (!v.Equals(Spatial.DefaultNoDataValue))
                 {
-                    Values[i] += v / (double)this.m_TotalIterations;
+                    Values[i] += v / this.m_TotalIterations;
                 }
             }
         }
@@ -881,7 +1046,7 @@ namespace SyncroSim.STSim
 
                 if (transitionedPixels[i] > 0)
                 {
-                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
+                    Debug.Assert(Values[i] >= 0.0);
                     Values[i] += 1 / (double)this.m_TotalIterations;
                 }
             }
@@ -906,7 +1071,7 @@ namespace SyncroSim.STSim
 
                 if (transitionedPixels[i] > 0)
                 {
-                    Debug.Assert(Values[i] >= 0.0, "We shouldn't get a DEFAULT_NO_DATA value here. Init routine Bad!");
+                    Debug.Assert(Values[i] >= 0.0);
 
                     //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
                     //where tsf is the timestep frequency N is the number of iterations.
@@ -1239,7 +1404,6 @@ namespace SyncroSim.STSim
         {
             if (!this.IsSpatial)
             {
-                Debug.Assert(!this.IsSpatial);
                 return;
             }
 
@@ -1361,7 +1525,6 @@ namespace SyncroSim.STSim
         {
             if (!this.IsSpatial)
             {
-                Debug.Assert(!this.IsSpatial);
                 return;
             }
 
@@ -1409,7 +1572,6 @@ namespace SyncroSim.STSim
         {
             if (!this.IsSpatial)
             {
-                Debug.Assert(!this.IsSpatial);
                 return;
             }
 
@@ -1456,7 +1618,6 @@ namespace SyncroSim.STSim
         {
             if (!this.IsSpatial)
             {
-                Debug.Assert(!this.IsSpatial);
                 return;
             }
 
@@ -1646,7 +1807,53 @@ namespace SyncroSim.STSim
         /// </summary>
         private void WriteAvgStateAttributeRasters()
         {
+            if (!this.IsSpatial)
+            {
+                return;
+            }
 
+            if (!this.m_CreateAvgRasterStateAttributeOutput)
+            {
+                return;
+            }
+
+            foreach (int AttrId in this.m_AvgStateAttrMap.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttrId];
+
+                foreach (int timestep in dict.Keys)
+                {
+                    double[] Values = dict[timestep];
+                    var DistVals = Values.Distinct();
+
+                    if (DistVals.Count() == 1)
+                    {
+                        var el0 = DistVals.ElementAt(0);
+
+                        if (el0.Equals(Spatial.DefaultNoDataValue))
+                        {
+                            continue;
+                        }
+                    }
+
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = Values[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        RastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE),
+                        0,
+                        timestep,
+                        AttrId,
+                        Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+            }
         }
 
         /// <summary>
@@ -1969,7 +2176,6 @@ namespace SyncroSim.STSim
         {
             if (!this.IsSpatial)
             {
-                Debug.Assert(!this.IsSpatial);
                 return;
             }
 

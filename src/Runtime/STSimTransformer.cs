@@ -180,28 +180,6 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Determines if the specified attribute type is an age attribute type
-        /// </summary>
-        /// <param name="stateAttributeTypeId"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public bool IsAgeAttributeType(int stateAttributeTypeId)
-        {
-            return this.m_StateAttributeTypeIdsAges.ContainsKey(stateAttributeTypeId);
-        }
-
-        /// <summary>
-        /// Determines if the specified attribute type is a no-age attribute type
-        /// </summary>
-        /// <param name="stateAttributeTypeId"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public bool IsNoAgeAttributeType(int stateAttributeTypeId)
-        {
-            return this.m_StateAttributeTypeIdsNoAges.ContainsKey(stateAttributeTypeId);
-        }
-
-        /// <summary>
         /// Compresses the specified raster to match the cell collection
         /// </summary>
         /// <param name="raster"></param>
@@ -470,7 +448,8 @@ namespace SyncroSim.STSim
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, timestep);
 
             //Record
-            this.RecordAvgAgeData(iteration, timestep);
+            this.RecordAvgRasterAgeData(iteration, timestep);
+            this.RecordAvgRasterStateAttributeData(iteration, timestep);
 
             Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);
         }

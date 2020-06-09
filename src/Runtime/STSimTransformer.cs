@@ -368,6 +368,7 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
+            this.WriteAvgAgeRasters();
             this.WriteAvgStateAttributeRasters();
             this.WriteAvgTransitionAttributeRasters();
             this.WriteAvgTransitionProbabiltyRasters();
@@ -454,6 +455,7 @@ namespace SyncroSim.STSim
             this.Simulate(iteration, timestep);
             this.GenerateStateClassAttributes();
 
+            //Write
             this.WriteStratumAmountTabularData(iteration, timestep);
             this.WriteSummaryStateClassTabularData(this.m_OutputStratumStateTable, iteration, timestep);
             this.WriteSummaryTransitionTabularData(timestep, this.m_OutputStratumTransitionTable);
@@ -466,6 +468,9 @@ namespace SyncroSim.STSim
             this.WriteTSTRasters(iteration, timestep);
             this.WriteStateAttributeRasters(iteration, timestep);
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, timestep);
+
+            //Record
+            this.RecordAvgAgeData(iteration, timestep);
 
             Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);
         }
@@ -509,17 +514,17 @@ namespace SyncroSim.STSim
 
                 ApplyingSpatialTransitions?.Invoke(this, new SpatialTransitionEventArgs(iteration, timestep));
 
-                //Spatial probabilistic transitions
+                //Apply spatial probabilistic transitions
                 this.ApplyProbabilisticTransitionsRaster(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels, dictTransitionedEventPixels);
 
-                //Transition spread
+                //Apply spatial transition spread
                 this.ApplyTransitionSpread(iteration, timestep, RasterTransitionAttrValues, dictTransitionedPixels);
 
-                //Write/record spatial probabilistic transitions
+                //Write/record spatial probabilistic transition data
                 this.WriteTransitionGroupRasters(iteration, timestep, dictTransitionedPixels); 
-                this.RecordAvgRasterTransitionProbabilityData(iteration, timestep, dictTransitionedPixels); 
+                this.RecordAvgRasterTransitionProbabilityData(timestep, dictTransitionedPixels); 
                          
-                //Write transition event rasters                   
+                //Write transition event data                   
                 this.WriteTransitionEventRasters(iteration, timestep, dictTransitionedEventPixels);
 
                 //Apply deterministic transitions
@@ -528,9 +533,9 @@ namespace SyncroSim.STSim
                     this.ApplyDeterministicTransitions(simulationCell, iteration, timestep);
                 }
 
-                //Write/record transition attributes
+                //Write/record transition attribute data
                 this.WriteTransitionAttributeRasters(iteration, timestep, RasterTransitionAttrValues);
-                this.RecordAvgRasterTransitionAttributeData(iteration, timestep, RasterTransitionAttrValues);
+                this.RecordAvgRasterTransitionAttributeData(timestep, RasterTransitionAttrValues);
             }
             else
             {

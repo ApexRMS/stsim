@@ -175,7 +175,8 @@ namespace SyncroSim.STSim
 
             SyncroSimLayoutItem i1 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", false);
             SyncroSimLayoutItem i2 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", false);
-            SyncroSimLayoutItem i3 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
+            SyncroSimLayoutItem i3 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average Age", false);
+            SyncroSimLayoutItem i4 = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
 
             i1.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             i1.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -185,13 +186,18 @@ namespace SyncroSim.STSim
             i2.Properties.Add(new MetaDataProperty("column", "Filename"));
             i2.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
-            i3.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
+            i3.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
             i3.Properties.Add(new MetaDataProperty("column", "Filename"));
-            i3.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
+            i3.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
+
+            i4.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
+            i4.Properties.Add(new MetaDataProperty("column", "Filename"));
+            i4.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
 
             g0.Items.Add(i1);
             g0.Items.Add(i2);
             g0.Items.Add(i3);
+            g0.Items.Add(i4);
         }
 
         private static void AddMapTransitionGroupVariables(

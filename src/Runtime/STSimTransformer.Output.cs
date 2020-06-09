@@ -215,6 +215,11 @@ namespace SyncroSim.STSim
 
         //Average spatial output
 
+        private bool IsAvgRasterAgeTimestep(int timestep)
+        {
+            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
+        }
+
         private bool IsAvgRasterStateAttributeTimestep(int timestep)
         {
             return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
@@ -642,14 +647,78 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Records average age data for the specified iteration and timestep
+        /// </summary>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        private void RecordAvgAgeData(int iteration, int timestep)
+        {
+            if (!this.m_CreateAvgRasterAgeOutput)
+            {
+                return;
+            }
+
+            //Check for all nodata
+
+            if (this.m_AvgRasterAgeAcrossTimesteps)
+            {
+                this.RecordAvgAgeOutputAcrossTimesteps(timestep);
+            }
+            else
+            {
+                this.RecordAvgAgeOutputNormalMethod(timestep);
+            }
+        }
+
+        private void RecordAvgAgeOutputNormalMethod(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterAgeOutput);
+            Debug.Assert(!this.m_AvgRasterAgeAcrossTimesteps);
+
+            double[] Values = this.m_AvgAgeMap[timestep];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+                Values[i] = cell.Age / (double)this.m_TotalIterations; 
+            }
+        }
+
+        private void RecordAvgAgeOutputAcrossTimesteps(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterAgeOutput);
+            Debug.Assert(this.m_AvgRasterAgeAcrossTimesteps);
+
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterAgeOutputTimesteps);
+            double[] Values = this.m_AvgAgeMap[timestepKey];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+
+                //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                //and freq of 5, would give bins 1-5, and 6-8.
+
+                if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterAgeOutputTimesteps) != 0))
+                {
+                    Values[i] += cell.Age / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterAgeOutputTimesteps * this.m_TotalIterations);
+                }
+                else
+                {
+                    Values[i] += cell.Age / (double)(this.m_AvgRasterAgeOutputTimesteps * this.m_TotalIterations);
+                }
+            }
+        }
+
+        /// <summary>
         /// Record average transition attribute data for the specified iteration and timestep.
         /// </summary>
-        /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <param name="rasterTransitionAttrValues">The transitioned attribute values</param>
         /// <remarks></remarks>
         private void RecordAvgRasterTransitionAttributeData(
-            int iteration,
             int timestep,
             Dictionary<int, double[]> rasterTransitionAttrValues)
         {
@@ -751,12 +820,10 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Record average transition probability data for the specified iteration and timestep.
         /// </summary>
-        /// <param name="iteration">The current iteration</param>
         /// <param name="timestep">The current timestep</param>
         /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types</param>
         /// <remarks></remarks>
         private void RecordAvgRasterTransitionProbabilityData(
-            int iteration,
             int timestep, 
             Dictionary<int, int[]> dictTransitionedPixels)
         {
@@ -1262,7 +1329,6 @@ namespace SyncroSim.STSim
         {
             if (!this.IsSpatial)
             {
-                Debug.Assert(!this.IsSpatial);
                 return;
             }
 
@@ -1533,6 +1599,45 @@ namespace SyncroSim.STSim
                         Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX_PREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Writes the average age rasters
+        /// </summary>
+        private void WriteAvgAgeRasters()
+        {
+            foreach (int timestep in this.m_AvgAgeMap.Keys)
+            {
+                double[] Values = this.m_AvgAgeMap[timestep];
+                var DistVals = Values.Distinct();
+
+                if (DistVals.Count() == 1)
+                {
+                    var el0 = DistVals.ElementAt(0);
+
+                    if (el0.Equals(Spatial.DefaultNoDataValue))
+                    {
+                        continue;
+                    }
+                }
+
+                StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                int[] arr = RastOutput.IntCells;
+
+                foreach (Cell c in this.Cells)
+                {
+                    arr[c.CellId] = (int) Values[c.CollectionIndex];
+                }
+
+                Spatial.WriteRasterData(
+                    RastOutput,
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE),
+                    0,
+                    timestep,
+                    null,
+                    Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX_PREFIX,
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
 

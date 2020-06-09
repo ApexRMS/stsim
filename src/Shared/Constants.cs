@@ -72,6 +72,7 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX = "ta";
         public const string SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX_PREFIX = "tge";
         public const string SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX_NAME = "avgsc";
+        public const string SPATIAL_MAP_AVG_AGE_FILEPREFIX_PREFIX = "avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX_PREFIX = "avgsa";
         public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX = "avgta";
         public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX = "tgap";
@@ -88,6 +89,7 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
         public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
         public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_avgsc";
+        public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";
         public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgta";
         public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
@@ -102,6 +104,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TST = "stsim_OutputSpatialTST";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS = "stsim_OutputSpatialAverageStateClass";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_AGE = "stsim_OutputSpatialAverageAge";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialAverageStateAttribute";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialAverageTransitionAttribute";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY = "stsim_OutputSpatialAverageTransitionProbability";

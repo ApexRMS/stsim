@@ -2349,6 +2349,35 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Initializes the average age map
+        /// </summary>
+        private void InitializeAvgAgeMap()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterAgeOutput)
+            {
+                return;
+            }
+
+            for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+            {
+                if (this.IsAvgRasterAgeTimestep(timestep))
+                {
+                    double[] Values = new double[this.Cells.Count];
+
+                    for (var i = 0; i < this.Cells.Count; i++)
+                    {
+                        Values[i] = Spatial.DefaultNoDataValue;
+                    }
+
+                    this.m_AvgAgeMap.Add(timestep, Values);
+                }
+            }
+        }
+
+        /// <summary>
         /// Initializes the Average State Attribute Map
         /// </summary>
         /// <remarks></remarks>
@@ -2370,8 +2399,7 @@ namespace SyncroSim.STSim
                 {
                     if (this.IsAvgRasterStateAttributeTimestep(timestep))
                     {
-                        double[] Values = null;
-                        Values = new double[this.Cells.Count];
+                        double[] Values = new double[this.Cells.Count];
 
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
@@ -2408,8 +2436,7 @@ namespace SyncroSim.STSim
                 {
                     if (this.IsAvgRasterTransitionAttributeTimestep(timestep))
                     {
-                        double[] Values = null;
-                        Values = new double[this.Cells.Count];
+                        double[] Values = new double[this.Cells.Count];
 
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
@@ -2451,8 +2478,7 @@ namespace SyncroSim.STSim
                 {
                     if (this.IsAvgRasterTransitionProbTimestep(timestep))
                     {
-                        double[] Values = null;
-                        Values = new double[this.Cells.Count];
+                        double[] Values = new double[this.Cells.Count];
 
                         for (var i = 0; i < this.Cells.Count; i++)
                         {

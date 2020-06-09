@@ -44,6 +44,7 @@ namespace SyncroSim.STSim
             this.InitializeShufflableTransitionGroups();
             this.InitializeTransitionTargetPrioritizations();
             this.InitializeTransitionAttributeTargetPrioritizations();
+            this.InitializeAvgAgeMap();
             this.InitializeAvgStateAttributeMaps();
             this.InitializeAvgTransitionAttributeMaps();
             this.InitializeAvgTransitionProbMaps();

@@ -28,6 +28,7 @@ namespace SyncroSim.STSim
                 BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
 
                 //Merge spatial averaging rasters
+                ProcessAverageAgeRasters();
                 ProcessAverageStateAttributeRasters();
                 ProcessAverageTransitionAttributeRasters();
                 ProcessAverageTransitionProbabilityRasters();
@@ -36,12 +37,20 @@ namespace SyncroSim.STSim
                 base.Merge();
 
                 //Merge spatial averaging datasheets
-                ProcessAverageStateAttributeDatasheet();            
+                ProcessAverageAgeDatasheet(); 
+                ProcessAverageStateAttributeDatasheet();       
                 ProcessAverageTransitionAttributeDatasheet();
                 ProcessAverageTransitionProbabilityDatasheet();
 
                 NormalSpatialMergeComplete?.Invoke(this, new EventArgs());
             }
+        }
+
+        private void ProcessAverageAgeRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE,
+                Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX_PREFIX + "*.tif");
         }
 
         private void ProcessAverageStateAttributeRasters()
@@ -63,6 +72,12 @@ namespace SyncroSim.STSim
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
                 Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX + "*.tif");
+        }
+
+        private void ProcessAverageAgeDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE);
         }
 
         private void ProcessAverageStateAttributeDatasheet()
@@ -205,6 +220,51 @@ namespace SyncroSim.STSim
             return dict;
         }
 
+        private void ProcessAveragedValueDatasheet(string datasheetName)
+        {
+            using (DataStore store = this.Library.CreateDataStore())
+            {
+                string query = string.Format(CultureInfo.InvariantCulture,
+                    "SELECT * FROM {0} WHERE ScenarioId={1}",
+                    datasheetName,
+                    this.ResultScenario.Id);
+
+                DataTable dt = store.CreateDataTableFromQuery(query, "Merge");
+                int OriginalCount = dt.Rows.Count;
+
+                query = string.Format(CultureInfo.InvariantCulture,
+                    "SELECT scenarioId,iteration,timestep,filename,band FROM {0} WHERE ScenarioId={1} group by iteration,timestep,band",
+                    datasheetName,
+                    this.ResultScenario.Id);
+
+                dt = store.CreateDataTableFromQuery(query, "Merge");
+
+                if (dt.Rows.Count < OriginalCount)
+                {
+                    // We've go dupes do lets blow away the old records and create new single copies
+
+                    query = string.Format(CultureInfo.InvariantCulture,
+                        "delete from {0} where ScenarioId={1}",
+                        datasheetName,
+                        this.ResultScenario.Id);
+
+                    store.ExecuteNonQuery(query);
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        var band = Convert.IsDBNull(row[4]) ? "null" : row[4];
+
+                        query = string.Format(CultureInfo.InvariantCulture,
+                            "insert into {0} (ScenarioId,iteration,timestep,filename,band) values ({1},{2},{3},'{4}',{5})",
+                            datasheetName,
+                            row[0], row[1], row[2], row[3], band);
+
+                        store.ExecuteNonQuery(query);
+                    }
+                }
+            }
+        }
+
         private void ProcessAveragedValueDatasheet(string datasheetName, string filterColumnName)
         {
             using (DataStore store = this.Library.CreateDataStore())
@@ -215,8 +275,7 @@ namespace SyncroSim.STSim
                     this.ResultScenario.Id);
 
                 DataTable dt = store.CreateDataTableFromQuery(query, "Merge");
-
-                int ttlCnt = dt.Rows.Count;
+                int OriginalCount = dt.Rows.Count;
 
                 query = string.Format(CultureInfo.InvariantCulture,
                     "SELECT scenarioId,iteration,timestep,filename,band,{0} FROM {1} WHERE ScenarioId={2} group by iteration,timestep,band,{3}",
@@ -226,7 +285,8 @@ namespace SyncroSim.STSim
                     filterColumnName);
 
                 dt = store.CreateDataTableFromQuery(query, "Merge");
-                if (dt.Rows.Count < ttlCnt)
+
+                if (dt.Rows.Count < OriginalCount)
                 {
                     // We've go dupes do lets blow away the old records and create new single copies
 

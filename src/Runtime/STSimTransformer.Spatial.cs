@@ -2349,9 +2349,45 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the average age map
+        /// Initializes the average raster state class map
         /// </summary>
-        private void InitializeAvgAgeMap()
+        private void InitializeAvgRasterStateClassMap()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterStateClassOutput)
+            {
+                return;
+            }
+
+            foreach (StateClass sc in this.m_StateClasses)
+            {
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if (this.IsAvgRasterStateClassTimestep(timestep))
+                    {
+                        double[] Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0.0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgStateClassMap.Add(sc.Id, dict);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the average raster age map
+        /// </summary>
+        private void InitializeAvgRasterAgeMap()
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.MinimumTimestep > 0);
@@ -2369,7 +2405,7 @@ namespace SyncroSim.STSim
 
                     for (var i = 0; i < this.Cells.Count; i++)
                     {
-                        Values[i] = Spatial.DefaultNoDataValue;
+                        Values[i] = 0.0;
                     }
 
                     this.m_AvgAgeMap.Add(timestep, Values);
@@ -2378,10 +2414,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the Average State Attribute Map
+        /// Initializes the Average Raster State Attribute Map
         /// </summary>
         /// <remarks></remarks>
-        private void InitializeAvgStateAttributeMaps()
+        private void InitializeAvgRasterStateAttributeMaps()
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.MinimumTimestep > 0);
@@ -2415,10 +2451,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the Average Transition Attribute Map
+        /// Initializes the Average Raster Transition Attribute Map
         /// </summary>
         /// <remarks></remarks>
-        private void InitializeAvgTransitionAttributeMaps()
+        private void InitializeAvgRasterTransitionAttributeMaps()
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.MinimumTimestep > 0);
@@ -2452,10 +2488,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the Average Transition Probability Maps
+        /// Initializes the Average Raster Transition Probability Maps
         /// </summary>
         /// <remarks></remarks>
-        private void InitializeAvgTransitionProbMaps()
+        private void InitializeAvgRasterTransitionProbMaps()
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.MinimumTimestep > 0);
@@ -2542,7 +2578,7 @@ namespace SyncroSim.STSim
                 "It{0}-Ts{1}-{2}",
                 iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_STRATUM_FILEPREFIX_NAME);
+                Constants.SPATIAL_MAP_STRATUM_FILEPREFIX);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2555,7 +2591,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture, "It{0}-Ts{1}-{2}",
                 iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX_NAME);
+                Constants.SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2568,7 +2604,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture,
                 "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX_NAME);
+                Constants.SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2581,7 +2617,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture,
                 "It{0}-Ts{1}-{2}", iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME);
+                Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);
@@ -2595,7 +2631,7 @@ namespace SyncroSim.STSim
                 "It{0}-Ts{1}-{2}.tif",
                 iteration.ToString("0000", CultureInfo.InvariantCulture),
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
-                Constants.SPATIAL_MAP_AGE_FILEPREFIX_NAME);
+                Constants.SPATIAL_MAP_AGE_FILEPREFIX);
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialInputFileNameUnique(ds, f, true);

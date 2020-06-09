@@ -61,21 +61,21 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_EXPORT_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "Tgap";
 
         //Spatial file prefixes
-        public const string SPATIAL_MAP_STRATUM_FILEPREFIX_NAME = "str";
-        public const string SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX_NAME = "secstr";
-        public const string SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX_NAME = "terstr";
-        public const string SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME = "sc";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX_PREFIX = "tg";
-        public const string SPATIAL_MAP_AGE_FILEPREFIX_NAME = "age";
-        public const string SPATIAL_MAP_TST_FILEPREFIX_NAME = "tst";
-        public const string SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX = "sa";
-        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX = "ta";
-        public const string SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX_PREFIX = "tge";
-        public const string SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX_NAME = "avgsc";
-        public const string SPATIAL_MAP_AVG_AGE_FILEPREFIX_PREFIX = "avgage";
-        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX_PREFIX = "avgsa";
-        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX = "avgta";
-        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX = "tgap";
+        public const string SPATIAL_MAP_STRATUM_FILEPREFIX = "str";
+        public const string SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX = "secstr";
+        public const string SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX = "terstr";
+        public const string SPATIAL_MAP_STATE_CLASS_FILEPREFIX = "sc";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX = "tg";
+        public const string SPATIAL_MAP_AGE_FILEPREFIX = "age";
+        public const string SPATIAL_MAP_TST_FILEPREFIX = "tst";
+        public const string SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX = "sa";
+        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX = "ta";
+        public const string SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX = "tge";
+        public const string SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX = "avgsc";
+        public const string SPATIAL_MAP_AVG_AGE_FILEPREFIX = "avgage";
+        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX = "avgsa";
+        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX = "avgta";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX = "tgap";
 
         //Spatial map variables
         public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";

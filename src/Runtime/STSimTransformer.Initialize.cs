@@ -44,13 +44,14 @@ namespace SyncroSim.STSim
             this.InitializeShufflableTransitionGroups();
             this.InitializeTransitionTargetPrioritizations();
             this.InitializeTransitionAttributeTargetPrioritizations();
-            this.InitializeAvgAgeMap();
-            this.InitializeAvgStateAttributeMaps();
-            this.InitializeAvgTransitionAttributeMaps();
-            this.InitializeAvgTransitionProbMaps();
 
             if (this.IsSpatial)
             {
+                this.InitializeAvgRasterStateClassMap();
+                this.InitializeAvgRasterAgeMap();
+                this.InitializeAvgRasterStateAttributeMaps();
+                this.InitializeAvgRasterTransitionAttributeMaps();
+                this.InitializeAvgRasterTransitionProbMaps();
                 this.InitializeTransitionSpreadGroups();
             }
 

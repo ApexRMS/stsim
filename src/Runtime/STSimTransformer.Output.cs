@@ -215,6 +215,11 @@ namespace SyncroSim.STSim
 
         //Average spatial output
 
+        private bool IsAvgRasterStateClassTimestep(int timestep)
+        {
+            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
+        }
+
         private bool IsAvgRasterAgeTimestep(int timestep)
         {
             return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
@@ -648,18 +653,109 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Records average raster age data for the specified iteration and timestep
+        /// Records average raster state class data for the specified timestep
         /// </summary>
-        /// <param name="iteration"></param>
         /// <param name="timestep"></param>
-        private void RecordAvgRasterAgeData(int iteration, int timestep)
+        private void RecordAvgRasterStateClassData(int timestep)
         {
-            if (!this.m_CreateAvgRasterAgeOutput)
+            if (!this.m_IsSpatial)
             {
                 return;
             }
 
-            //Check for all nodata
+            if (!this.m_CreateAvgRasterStateClassOutput)
+            {
+                return;
+            }
+
+            if (this.m_AvgRasterStateClassAcrossTimesteps)
+            {
+                this.RecordAvgRasterStateClassOutputAcrossTimesteps(timestep);
+            }
+            else
+            {
+                if (this.IsAvgRasterStateClassTimestep(timestep))
+                {
+                    this.RecordAvgRasterStateClassOutputNormalMethod(timestep);
+                }
+            }
+        }
+
+        private void RecordAvgRasterStateClassOutputNormalMethod(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterStateClassOutput);
+            Debug.Assert(!this.m_AvgRasterStateClassAcrossTimesteps);
+
+            foreach (StateClass sc in this.m_StateClasses)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateClassMap[sc.Id];
+                double[] Values = dict[timestep];
+
+                foreach (Cell c in this.Cells)
+                {
+                    if (c.StateClassId == sc.Id)
+                    {
+                        Debug.Assert(Values[c.CollectionIndex] >= 0.0);
+                        Values[c.CollectionIndex] += 1 / (double)this.m_TotalIterations;
+                    }
+                }
+            }
+        }
+
+        private void RecordAvgRasterStateClassOutputAcrossTimesteps(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterStateClassOutput);
+            Debug.Assert(this.m_AvgRasterStateClassAcrossTimesteps);
+
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterStateClassOutputTimesteps);
+
+            foreach (StateClass sc in this.m_StateClasses)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateClassMap[sc.Id];
+                double[] Values = dict[timestepKey];
+
+                foreach (Cell c in this.Cells)
+                {
+                    if (c.StateClassId == sc.Id)
+                    {
+                        int i = c.CollectionIndex;
+                        Debug.Assert(Values[i] >= 0.0);
+
+                        //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
+                        //where tsf is the timestep frequency N is the number of iterations.
+                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                        //and freq of 5, would give bins 1-5, and 6-8.
+
+                        if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateClassOutputTimesteps) != 0))
+                        {
+                            Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateClassOutputTimesteps * this.m_TotalIterations);
+                        }
+                        else
+                        {
+                            Values[i] += 1 / (double)(this.m_AvgRasterStateClassOutputTimesteps * this.m_TotalIterations);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Records average raster age data for the specified timestep
+        /// </summary>
+        /// <param name="timestep"></param>
+        private void RecordAvgRasterAgeData(int timestep)
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterAgeOutput)
+            {
+                return;
+            }
 
             if (this.m_AvgRasterAgeAcrossTimesteps)
             {
@@ -667,7 +763,10 @@ namespace SyncroSim.STSim
             }
             else
             {
-                this.RecordAvgRasterAgeOutputNormalMethod(timestep);
+                if (this.IsAvgRasterAgeTimestep(timestep))
+                {
+                    this.RecordAvgRasterAgeOutputNormalMethod(timestep);
+                }
             }
         }
 
@@ -681,8 +780,7 @@ namespace SyncroSim.STSim
 
             foreach (Cell cell in this.Cells)
             {
-                int i = cell.CollectionIndex;
-                Values[i] = cell.Age / (double)this.m_TotalIterations; 
+                Values[cell.CollectionIndex] = cell.Age / (double)this.m_TotalIterations; 
             }
         }
 
@@ -736,7 +834,10 @@ namespace SyncroSim.STSim
             }
             else
             {
-                this.RecordAvgRasterStateAttributeOutputNormalMethod(iteration, timestep);
+                if (this.IsAvgRasterStateAttributeTimestep(timestep))
+                {
+                    this.RecordAvgRasterStateAttributeOutputNormalMethod(iteration, timestep);
+                }
             }
         }
 
@@ -761,11 +862,7 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-
-                        if (!v.Equals(Spatial.DefaultNoDataValue))
-                        {
-                            Values[c.CollectionIndex] = v / this.m_TotalIterations;
-                        }
+                        Values[c.CollectionIndex] = v / this.m_TotalIterations;
                     }
                 }
             }
@@ -785,11 +882,7 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-
-                        if (!v.Equals(Spatial.DefaultNoDataValue))
-                        {
-                            Values[c.CollectionIndex] = v / this.m_TotalIterations;
-                        }
+                        Values[c.CollectionIndex] = v / this.m_TotalIterations;
                     }
                 }
             }
@@ -818,23 +911,19 @@ namespace SyncroSim.STSim
 
                     if (AttrValue != null)
                     {
+                        int i = c.CollectionIndex;
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
 
-                        if (!v.Equals(Spatial.DefaultNoDataValue))
+                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                        //and freq of 5, would give bins 1-5, and 6-8.
+
+                        if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
                         {
-                            int i = c.CollectionIndex;
-
-                            //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                            //and freq of 5, would give bins 1-5, and 6-8.
-
-                            if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
-                            {
-                                Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
-                            }
-                            else
-                            {
-                                Values[i] += v / (double)(this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
-                            }
+                            Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
+                        }
+                        else
+                        {
+                            Values[i] += v / (double)(this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
                         }
                     }
                 }
@@ -854,23 +943,19 @@ namespace SyncroSim.STSim
 
                     if (AttrValue != null)
                     {
+                        int i = c.CollectionIndex;
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
 
-                        if (!v.Equals(Spatial.DefaultNoDataValue))
+                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                        //and freq of 5, would give bins 1-5, and 6-8.
+
+                        if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
                         {
-                            int i = c.CollectionIndex;
-
-                            //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                            //and freq of 5, would give bins 1-5, and 6-8.
-
-                            if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
-                            {
-                                Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
-                            }
-                            else
-                            {
-                                Values[i] += v / (double)(this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
-                            }
+                            Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
+                        }
+                        else
+                        {
+                            Values[i] += v / (double)(this.m_AvgRasterStateAttributeOutputTimesteps * this.m_TotalIterations);
                         }
                     }
                 }
@@ -878,7 +963,7 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Record average transition attribute data for the specified iteration and timestep.
+        /// Record average transition attribute data for the specified timestep.
         /// </summary>
         /// <param name="timestep">The current timestep</param>
         /// <param name="rasterTransitionAttrValues">The transitioned attribute values</param>
@@ -983,7 +1068,7 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Record average transition probability data for the specified iteration and timestep.
+        /// Record average transition probability data for the specified timestep.
         /// </summary>
         /// <param name="timestep">The current timestep</param>
         /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types</param>
@@ -1411,16 +1496,14 @@ namespace SyncroSim.STSim
             {
                 StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
-                // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
                 {
                     rastOutput.IntCells[c.CellId] = c.StateClassId;
                 }
 
-                // We need to remap the State Class values back to the original Raster values ( PK - > ID)
+                //We need to remap the State Class values back to the original Raster values (PK -> ID)
                 DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
 
-                //DEVNOTE: Tom - for now use default NoDataValue for remap. Ideally, we would bring the source files NoDataValue thru.
                 rastOutput.IntCells = Spatial.RemapRasterCells(
                     rastOutput.IntCells,
                     dsRemap,
@@ -1434,7 +1517,7 @@ namespace SyncroSim.STSim
                     iteration,
                     timestep,
                     null,
-                    Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME,
+                    Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1479,7 +1562,7 @@ namespace SyncroSim.STSim
                         iteration, 
                         timestep, 
                         transitionGroupId, 
-                        Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX_PREFIX, 
+                        Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX, 
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }               
             }
@@ -1512,7 +1595,7 @@ namespace SyncroSim.STSim
                     iteration,
                     timestep,
                      null,
-                    Constants.SPATIAL_MAP_AGE_FILEPREFIX_NAME,
+                    Constants.SPATIAL_MAP_AGE_FILEPREFIX,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1557,7 +1640,7 @@ namespace SyncroSim.STSim
                             iteration,
                             timestep,
                             tg.TransitionGroupId,
-                            Constants.SPATIAL_MAP_TST_FILEPREFIX_NAME,
+                            Constants.SPATIAL_MAP_TST_FILEPREFIX,
                             Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                     }
                 }
@@ -1603,7 +1686,7 @@ namespace SyncroSim.STSim
                     iteration,
                     timestep,
                     null,
-                    Constants.SPATIAL_MAP_STRATUM_FILEPREFIX_NAME,
+                    Constants.SPATIAL_MAP_STRATUM_FILEPREFIX,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1648,7 +1731,7 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         AttributeTypeId,
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
 
@@ -1675,7 +1758,7 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         AttributeTypeId,
-                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1711,7 +1794,7 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         AttributeId,
-                        Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1757,7 +1840,61 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         transitionGroupId,
-                        Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the average state class rasters
+        /// </summary>
+        private void WriteAvgStateClassRasters()
+        {
+            if (!this.IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStateClassOutput)
+            {
+                return;
+            }
+
+            foreach (int StateClassId in this.m_AvgStateClassMap.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStateClassMap[StateClassId];
+
+                foreach (int timestep in dict.Keys)
+                {
+                    double[] Values = dict[timestep];
+                    var DistVals = Values.Distinct();
+
+                    if (DistVals.Count() == 1)
+                    {
+                        var el0 = DistVals.ElementAt(0);
+
+                        if (el0.Equals(0.0))
+                        {
+                            continue;
+                        }
+                    }
+
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = Values[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        RastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS),
+                        0,
+                        timestep,
+                        StateClassId,
+                        Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1771,24 +1908,13 @@ namespace SyncroSim.STSim
             foreach (int timestep in this.m_AvgAgeMap.Keys)
             {
                 double[] Values = this.m_AvgAgeMap[timestep];
-                var DistVals = Values.Distinct();
-
-                if (DistVals.Count() == 1)
-                {
-                    var el0 = DistVals.ElementAt(0);
-
-                    if (el0.Equals(Spatial.DefaultNoDataValue))
-                    {
-                        continue;
-                    }
-                }
-
                 StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
                 int[] arr = RastOutput.IntCells;
 
                 foreach (Cell c in this.Cells)
                 {
                     arr[c.CellId] = (int) Values[c.CollectionIndex];
+                    Debug.Assert(arr[c.CellId] != Spatial.DefaultNoDataValue);
                 }
 
                 Spatial.WriteRasterData(
@@ -1797,7 +1923,7 @@ namespace SyncroSim.STSim
                     0,
                     timestep,
                     null,
-                    Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX_PREFIX,
+                    Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
@@ -1850,7 +1976,7 @@ namespace SyncroSim.STSim
                         0,
                         timestep,
                         AttrId,
-                        Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1904,7 +2030,7 @@ namespace SyncroSim.STSim
                         0,
                         timestep,
                         AttrId,
-                        Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
@@ -1966,7 +2092,7 @@ namespace SyncroSim.STSim
                         0,
                         timestep,
                         tgId,
-                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX,
+                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }

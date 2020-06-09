@@ -346,6 +346,7 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
+            this.WriteAvgStateClassRasters();
             this.WriteAvgAgeRasters();
             this.WriteAvgStateAttributeRasters();
             this.WriteAvgTransitionAttributeRasters();
@@ -433,22 +434,27 @@ namespace SyncroSim.STSim
             this.Simulate(iteration, timestep);
             this.GenerateStateClassAttributes();
 
-            //Write
+            //Tabular data
             this.WriteStratumAmountTabularData(iteration, timestep);
             this.WriteSummaryStateClassTabularData(this.m_OutputStratumStateTable, iteration, timestep);
             this.WriteSummaryTransitionTabularData(timestep, this.m_OutputStratumTransitionTable);
             this.WriteSummaryTransitionStateTabularData(this.m_OutputStratumTransitionStateTable);
             this.WriteSummaryStateAttributeTabularData(this.m_OutputStateAttributeTable);
             this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
+
+            //Spatial data
             this.WriteStratumRaster(iteration, timestep);
             this.WriteStateClassRaster(iteration, timestep);
             this.WriteAgeRaster(iteration, timestep);
             this.WriteTSTRasters(iteration, timestep);
             this.WriteStateAttributeRasters(iteration, timestep);
+
+            //Other data
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, timestep);
 
-            //Record
-            this.RecordAvgRasterAgeData(iteration, timestep);
+            //Record averaging data
+            this.RecordAvgRasterStateClassData(timestep);
+            this.RecordAvgRasterAgeData(timestep);
             this.RecordAvgRasterStateAttributeData(iteration, timestep);
 
             Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);

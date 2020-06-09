@@ -28,6 +28,7 @@ namespace SyncroSim.STSim
                 BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
 
                 //Merge spatial averaging rasters
+                ProcessAverageStateClassRasters();
                 ProcessAverageAgeRasters();
                 ProcessAverageStateAttributeRasters();
                 ProcessAverageTransitionAttributeRasters();
@@ -37,6 +38,7 @@ namespace SyncroSim.STSim
                 base.Merge();
 
                 //Merge spatial averaging datasheets
+                ProcessAverageStateClassDatasheet(); 
                 ProcessAverageAgeDatasheet(); 
                 ProcessAverageStateAttributeDatasheet();       
                 ProcessAverageTransitionAttributeDatasheet();
@@ -46,32 +48,46 @@ namespace SyncroSim.STSim
             }
         }
 
+        private void ProcessAverageStateClassRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS,
+                Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX + "*.tif");
+        }
+
         private void ProcessAverageAgeRasters()
         {
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE,
-                Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX_PREFIX + "*.tif");
+                Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX + "*.tif");
         }
 
         private void ProcessAverageStateAttributeRasters()
         {
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE,
-                Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX_PREFIX + "*.tif");
+                Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX + "*.tif");
         }
 
         private void ProcessAverageTransitionAttributeRasters()
         {
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE,
-                Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX + "*.tif");
+                Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX + "*.tif");
         }
 
         private void ProcessAverageTransitionProbabilityRasters()
         {
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
-                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX + "*.tif");
+                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageStateClassDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS, 
+                Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX + "*.tif");
         }
 
         private void ProcessAverageAgeDatasheet()

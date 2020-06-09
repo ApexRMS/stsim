@@ -19,7 +19,7 @@ namespace SyncroSim.STSim
     {
         public override void CreateColorMaps(Project project)
         {
-            //STATECLASS Color Map and Legend Map
+            //State Class Color Map and Legend Map
             var LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME);
             CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, LegendColors);
 
@@ -96,7 +96,7 @@ namespace SyncroSim.STSim
                 //Average Transition Probability
                 AddMapTransitionGroupVariables(
                     project, AvgTransitionProbabilityGroup.Items, 
-                    "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Annual Prob. - All Iterations)", 
+                    "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", "(Avg. Prob. - All Iterations)", 
                     Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
                 //State Variables Top Level Group
@@ -188,6 +188,7 @@ namespace SyncroSim.STSim
 
             i3.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
             i3.Properties.Add(new MetaDataProperty("column", "Filename"));
+            i3.Properties.Add(new MetaDataProperty("extendedIdentifier", "(Avg. Prob. - All Iterations)"));
             i3.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
             i4.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));

@@ -1287,7 +1287,7 @@
     </transformer>
     <transformer name="TransitionEventRasterMap" displayName="Transition Events" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialTransitionEvent" column="Filename" isFolderExport="True">
     </transformer>    
-    <transformer name="AverageStateClassRasterMap" displayName="Average State Classes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageStateClass" column="Filename" isFolderExport="True">
+    <transformer name="AverageStateClassRasterMap" displayName="Average State Class Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageStateClass" column="Filename" isFolderExport="True">
     </transformer>
     <transformer name="AverageAgeRasterMap" displayName="Average Ages" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageAge" column="Filename" isFolderExport="True">
     </transformer>
@@ -1334,6 +1334,7 @@
         <group name="Maps">
           <group name="StateVariables" displayName="State Variables">
             <item name="StateClassRasterMap"/> 
+            <item name="AverageStateClassRasterMap"/>             
             <item name="AgeRasterMap"/>  
             <item name="AverageAgeRasterMap"/>             
             <item name="StratumRasterMap"/>            

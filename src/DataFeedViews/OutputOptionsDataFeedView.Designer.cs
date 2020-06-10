@@ -815,9 +815,9 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSC.Location = new System.Drawing.Point(15, 31);
             this.CheckBoxAvgRasterSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSC.Name = "CheckBoxAvgRasterSC";
-            this.CheckBoxAvgRasterSC.Size = new System.Drawing.Size(153, 21);
+            this.CheckBoxAvgRasterSC.Size = new System.Drawing.Size(207, 21);
             this.CheckBoxAvgRasterSC.TabIndex = 1;
-            this.CheckBoxAvgRasterSC.Text = "State classes every";
+            this.CheckBoxAvgRasterSC.Text = "State class probability every";
             this.CheckBoxAvgRasterSC.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterTATimesteps

@@ -196,8 +196,9 @@ namespace SyncroSim.STSim
                 int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int slyid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
 
-                this.m_StateClasses.Add(new StateClass(id, slxid, slyid));
+                this.m_StateClasses.Add(new StateClass(id, slxid, slyid, name));
             }
         }
 

@@ -85,9 +85,12 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
         public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "stsim_age";
         public const string SPATIAL_MAP_TST_VARIABLE_NAME = "stsim_tst";
+
+        public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_PREFIX = "stsim_sc";
         public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
         public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
+
         public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_avgsc";
         public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";

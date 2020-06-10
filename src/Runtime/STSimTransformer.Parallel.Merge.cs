@@ -87,7 +87,7 @@ namespace SyncroSim.STSim
         {
             this.ProcessAveragedValueDatasheet(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS, 
-                Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX + "*.tif");
+                Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME);
         }
 
         private void ProcessAverageAgeDatasheet()

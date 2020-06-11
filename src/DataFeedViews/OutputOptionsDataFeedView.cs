@@ -55,10 +55,26 @@ namespace SyncroSim.STSim
             this.SetTextBoxBinding(this.TextBoxRasterSATimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxRasterTA, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxRasterTATimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxRasterAATP, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxRasterAATPTimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_AATP_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxRasterTransitionEvents, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxRasterTranstionEventTimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_SIZE_CLASS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxRasterTE, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxRasterTETimesteps, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterST, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgRasterSTTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterSTAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterSC, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgRasterSCTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterSCAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterAge, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgRasterAgeTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterAgeAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterSA, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgRasterSATimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterSAAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterTA, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgRasterTATimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterTAAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterTP, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgRasterTPTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgRasterTPAcrossTimesteps, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_ACROSS_TIMESTEPS_COLUMN_NAME);
 
             this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
             this.AddStandardCommands();
@@ -112,8 +128,23 @@ namespace SyncroSim.STSim
             this.LabelRasterSTTimesteps.Text = NewTimestepsText;
             this.LabelRasterSATimesteps.Text = NewTimestepsText;
             this.LabelRasterTATimesteps.Text = NewTimestepsText;
-            this.LabelRasterAATPTimesteps.Text = NewTimestepsText;
-            this.LabelRasterTransitionEventTimesteps.Text = NewTimestepsText;
+            this.LabelRasterTETimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterSTTimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterSCTimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterAgeTimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterSATimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterTATimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterTPTimesteps.Text = NewTimestepsText;
+
+            string NewAverageAcrossText = string.Format(CultureInfo.CurrentCulture,
+                "Average across preceeding {0}s", NewTimestepsText);
+
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Text = NewAverageAcrossText;
+            this.CheckBoxAvgRasterSCAcrossTimesteps.Text = NewAverageAcrossText;
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Text = NewAverageAcrossText;
+            this.CheckBoxAvgRasterSAAcrossTimesteps.Text = NewAverageAcrossText;
+            this.CheckBoxAvgRasterTAAcrossTimesteps.Text = NewAverageAcrossText;
+            this.CheckBoxAvgRasterTPAcrossTimesteps.Text = NewAverageAcrossText;
         }
 
         private void EnableControls()
@@ -131,8 +162,13 @@ namespace SyncroSim.STSim
             this.TextBoxRasterSTTimesteps.Enabled = this.CheckBoxRasterST.Checked;
             this.TextBoxRasterSATimesteps.Enabled = this.CheckBoxRasterSA.Checked;
             this.TextBoxRasterTATimesteps.Enabled = this.CheckBoxRasterTA.Checked;
-            this.TextBoxRasterAATPTimesteps.Enabled = this.CheckBoxRasterAATP.Checked;
-            this.TextBoxRasterTranstionEventTimesteps.Enabled = this.CheckBoxRasterTransitionEvents.Checked;
+            this.TextBoxRasterTETimesteps.Enabled = this.CheckBoxRasterTE.Checked;
+            this.TextBoxAvgRasterSTTimesteps.Enabled = this.CheckBoxAvgRasterST.Checked;
+            this.TextBoxAvgRasterSCTimesteps.Enabled = this.CheckBoxAvgRasterSC.Checked;
+            this.TextBoxAvgRasterAgeTimesteps.Enabled = this.CheckBoxAvgRasterAge.Checked;
+            this.TextBoxAvgRasterSATimesteps.Enabled = this.CheckBoxAvgRasterSA.Checked;
+            this.TextBoxAvgRasterTATimesteps.Enabled = this.CheckBoxAvgRasterTA.Checked;
+            this.TextBoxAvgRasterTPTimesteps.Enabled = this.CheckBoxAvgRasterTP.Checked;
 
             //Timesteps labels
             this.LabelSummarySCTimesteps.Enabled = this.CheckBoxSummarySC.Checked;
@@ -147,16 +183,27 @@ namespace SyncroSim.STSim
             this.LabelRasterSTTimesteps.Enabled = this.CheckBoxRasterST.Checked;
             this.LabelRasterSATimesteps.Enabled = this.CheckBoxRasterSA.Checked;
             this.LabelRasterTATimesteps.Enabled = this.CheckBoxRasterTA.Checked;
-            this.LabelRasterAATPTimesteps.Enabled = this.CheckBoxRasterAATP.Checked;
-            this.LabelRasterTransitionEventTimesteps.Enabled = this.CheckBoxRasterTransitionEvents.Checked;
+            this.LabelRasterTETimesteps.Enabled = this.CheckBoxRasterTE.Checked;
+            this.LabelAvgRasterSTTimesteps.Enabled = this.CheckBoxAvgRasterST.Checked;
+            this.LabelAvgRasterSCTimesteps.Enabled = this.CheckBoxAvgRasterSC.Checked;
+            this.LabelAvgRasterAgeTimesteps.Enabled = this.CheckBoxAvgRasterAge.Checked;
+            this.LabelAvgRasterSATimesteps.Enabled = this.CheckBoxAvgRasterSA.Checked;
+            this.LabelAvgRasterTATimesteps.Enabled = this.CheckBoxAvgRasterTA.Checked;
+            this.LabelAvgRasterTPTimesteps.Enabled = this.CheckBoxAvgRasterTP.Checked;
 
-            //Checkboxes
+            //Secondary Checkboxes
             this.CheckBoxSummarySCZeroValues.Enabled = this.CheckBoxSummarySC.Checked;
             this.CheckBoxSummarySCAges.Enabled = this.CheckBoxSummarySC.Checked;
             this.CheckBoxSummaryTRCalcIntervalMean.Enabled = this.CheckBoxSummaryTR.Checked;
             this.CheckBoxSummaryTRAges.Enabled = this.CheckBoxSummaryTR.Checked;
             this.CheckBoxSummarySAAges.Enabled = this.CheckBoxSummarySA.Checked;
             this.CheckBoxSummaryTAAges.Enabled = this.CheckBoxSummaryTA.Checked;
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Enabled = this.CheckBoxAvgRasterST.Checked;
+            this.CheckBoxAvgRasterSCAcrossTimesteps.Enabled = this.CheckBoxAvgRasterSC.Checked;
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Enabled = this.CheckBoxAvgRasterAge.Checked;
+            this.CheckBoxAvgRasterSAAcrossTimesteps.Enabled = this.CheckBoxAvgRasterSA.Checked;
+            this.CheckBoxAvgRasterTAAcrossTimesteps.Enabled = this.CheckBoxAvgRasterTA.Checked;
+            this.CheckBoxAvgRasterTPAcrossTimesteps.Enabled = this.CheckBoxAvgRasterTP.Checked;
         }
 
         protected override void OnBoundCheckBoxChanged(CheckBox checkBox, string columnName)
@@ -180,8 +227,13 @@ namespace SyncroSim.STSim
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterST, this.TextBoxRasterSTTimesteps);
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterSA, this.TextBoxRasterSATimesteps);
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTA, this.TextBoxRasterTATimesteps);
-            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterAATP, this.TextBoxRasterAATPTimesteps);
-            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTransitionEvents, this.TextBoxRasterTranstionEventTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxRasterTE, this.TextBoxRasterTETimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxAvgRasterST, this.TextBoxAvgRasterSTTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxAvgRasterSC, this.TextBoxAvgRasterSCTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxAvgRasterAge, this.TextBoxAvgRasterAgeTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxAvgRasterSA, this.TextBoxAvgRasterSATimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxAvgRasterTA, this.TextBoxAvgRasterTATimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxAvgRasterTP, this.TextBoxAvgRasterTPTimesteps);
 
             this.m_SettingCheckBox = true;
             this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummarySC, this.CheckBoxSummarySCAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME);

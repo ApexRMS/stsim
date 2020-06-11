@@ -24,6 +24,7 @@ namespace SyncroSim.STSim
         private TransitionGroupCollection m_TransitionSimulationGroups = new TransitionGroupCollection();
         private List<TransitionGroup> m_ShufflableTransitionGroups = new List<TransitionGroup>();
         private List<TransitionGroup> m_TransitionSpreadGroups = new List<TransitionGroup>();
+        private StateAttributeTypeCollection m_StateAttributeTypes = new StateAttributeTypeCollection();
         private TransitionAttributeTypeCollection m_TransitionAttributeTypes = new TransitionAttributeTypeCollection();
         private TransitionMultiplierTypeCollection m_TransitionMultiplierTypes = new TransitionMultiplierTypeCollection();
         private PatchPrioritizationCollection m_PatchPrioritizations = new PatchPrioritizationCollection();
@@ -144,8 +145,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int StratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                this.m_Strata.Add(new Stratum(StratumId));
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                this.m_Strata.Add(new Stratum(id, name));
             }
         }
 
@@ -160,8 +162,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int SecondaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                this.m_SecondaryStrata.Add(new Stratum(SecondaryStratumId));
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                this.m_SecondaryStrata.Add(new Stratum(id, name));
             }
         }
 
@@ -176,8 +179,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TertiaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                this.m_TertiaryStrata.Add(new Stratum(TertiaryStratumId));
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                this.m_TertiaryStrata.Add(new Stratum(id, name));
             }
         }
 
@@ -195,8 +199,9 @@ namespace SyncroSim.STSim
                 int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int slyid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
 
-                this.m_StateClasses.Add(new StateClass(id, slxid, slyid));
+                this.m_StateClasses.Add(new StateClass(id, slxid, slyid, name));
             }
         }
 
@@ -502,6 +507,22 @@ namespace SyncroSim.STSim
 
                 this.m_TransitionMultiplierTypes.Add(new TransitionMultiplierType
                     (TransitionMultiplierTypeId, this.ResultScenario, this.m_DistributionProvider));
+            }
+        }
+
+        /// <summary>
+        /// Fills the State Attribute Type collection
+        /// </summary>
+        /// <remarks></remarks>
+        private void FillStateAttributeTypeCollection()
+        {
+            Debug.Assert(this.m_StateAttributeTypes.Count == 0);
+            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int StateAttributeTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                this.m_StateAttributeTypes.Add(new StateAttributeType(StateAttributeTypeId));
             }
         }
 

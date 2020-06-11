@@ -8,16 +8,19 @@ namespace SyncroSim.STSim
     internal class Stratum
     {
         private int m_StratumId;
+        private string m_DisplayName;
         private Dictionary<int, Cell> m_Cells = new Dictionary<int, Cell>();
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="stratumId">The Id of the stratum</param>
+        /// <param name="displayName">The display name for the stratum</param>
         /// <remarks></remarks>
-        public Stratum(int stratumId)
+        public Stratum(int stratumId, string displayName)
         {
             this.m_StratumId = stratumId;
+            this.m_DisplayName = displayName;
         }
 
         /// <summary>
@@ -31,6 +34,17 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_StratumId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the display name
+        /// </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return this.m_DisplayName;
             }
         }
 

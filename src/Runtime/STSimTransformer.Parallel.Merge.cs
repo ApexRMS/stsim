@@ -5,16 +5,16 @@ using System;
 using System.IO;
 using System.Data;
 using SyncroSim.Core;
+using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace SyncroSim.STSim
 {
     public partial class STSimTransformer
     {
         /// <summary>
-        /// Overrides merge so we can process AATP files
+        /// Overrides merge so we can process averaged spatial data
         /// </summary>
         /// <remarks></remarks>
         public override void Merge()
@@ -27,41 +27,123 @@ namespace SyncroSim.STSim
             {
                 BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
 
-                //Merges the external Spatial TGAP files
-                ProcessAverageTransitionProbabilityFiles();
+                //Merge spatial averaging rasters
+                ProcessAverageStratumRasters();
+                ProcessAverageStateClassRasters();
+                ProcessAverageAgeRasters();
+                ProcessAverageStateAttributeRasters();
+                ProcessAverageTransitionAttributeRasters();
+                ProcessAverageTransitionProbabilityRasters();
 
                 //Do the normal merge
                 base.Merge();
 
-                //Merges the datasheet records for Spatial TGAP files
+                //Merge spatial averaging datasheets
+                ProcessAverageStratumDatasheet();
+                ProcessAverageStateClassDatasheet(); 
+                ProcessAverageAgeDatasheet(); 
+                ProcessAverageStateAttributeDatasheet();       
+                ProcessAverageTransitionAttributeDatasheet();
                 ProcessAverageTransitionProbabilityDatasheet();
 
                 NormalSpatialMergeComplete?.Invoke(this, new EventArgs());
             }
         }
 
-        /// <summary>
-        /// Processes the Average Transition Probability Files. These raster files are a special case because there only one 
-        /// file per Transition Type per run, so when mulitprocessing we need to arithmetically combine these files together.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessAverageTransitionProbabilityFiles()
+        private void ProcessAverageStratumRasters()
         {
-            ParallelJobConfig config = LoadConfigurationFile();
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM,
+                Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX + "*.tif");
+        }
 
-            // Find the number of iterations per job
+        private void ProcessAverageStateClassRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS,
+                Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageAgeRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE,
+                Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageStateAttributeRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE,
+                Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageTransitionAttributeRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE,
+                Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageTransitionProbabilityRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
+                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageStratumDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM, 
+                Strings.DATASHEET_STRATUM_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageStateClassDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS, 
+                Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageAgeDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE);
+        }
+
+        private void ProcessAverageStateAttributeDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE,
+                Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageTransitionAttributeDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE,
+                Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageTransitionProbabilityDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
+                Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAveragedOutputFiles(string datasheetName, string fileSpec)
+        {
+            ParallelJobConfig config = this.STSimLoadConfigurationFile();
             Dictionary<int, int> dictJobIterations = CreateJobIterationsDictionary(config);
-
-            // Create Same Names Files Dictionary for tgap only for current strata
-            Dictionary<string, List<string>> dictFilenames = CreateSameNameTgapFilesDictionary(config);
+            Dictionary<string, List<string>> dictFilenames = CreateSameNameFilesDictionary(config, datasheetName, fileSpec);
 
             if (dictFilenames.Count == 0)
             {
                 return;
             }
 
-            // Calculate the total number of iterations across all jobs. DEVNOTE: Do it here instead of below based on files beaause we wont always
-            // have a file if not transitions.
             int ttlIterations = 0;
             foreach (var jobId in dictJobIterations.Keys)
             {
@@ -71,17 +153,16 @@ namespace SyncroSim.STSim
 
             foreach (string k in dictFilenames.Keys)
             {
-                TgapMerge m = new TgapMerge();
+                RasterMerger m = new RasterMerger();
                 foreach (string f in dictFilenames[k])
                 {
-                    int jobId = GetJobIdFromFolder(f);
+                    int jobId = this.STSimGetJobIdFromFolder(f);
                     int numIterations = dictJobIterations[jobId];
 
                     if (jobId != 0 || numIterations > 0)
                     {
                         m.Merge(f, numIterations);
 
-                        // Delete the file after we've merged it.
                         File.SetAttributes(f, FileAttributes.Normal);
                         File.Delete(f);
                     }
@@ -91,22 +172,14 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                // Divide the merged raster by the total number of iterations
                 m.Multiply(1 / (double)ttlIterations);
 
-                // Save the final merged tgap raster, giving it the same name/path as the 1st file in the dictionary for this Strata
                 string newFilename = dictFilenames[k][0];
                 m.Save(newFilename, StochasticTime.Spatial.GetGeoTiffCompressionType(this.Library));
             }
         }
 
-        /// <summary>
-        /// Create a dictionary of Job Iterations 
-        /// </summary>
-        /// <param name="config"></param>
-        /// <returns>A dictionary of number of iterations, keyed by job ID</returns>
-        /// <remarks></remarks>
-        private static Dictionary<int, int> CreateJobIterationsDictionary(ParallelJobConfig config)
+        private Dictionary<int, int> CreateJobIterationsDictionary(ParallelJobConfig config)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
 
@@ -114,8 +187,8 @@ namespace SyncroSim.STSim
             {
                 using (DataStore store = Session.CreateDataStore(new DataStoreConnection(Strings.SQLITE_DATASTORE_NAME, j.Library)))
                 {
-                    int MergeScenarioId = ParallelTransformer.GetMergeScenarioId(store);
-                    string OutputFolderName = GetJobOutputScenarioFolderName(j.Library, MergeScenarioId, false);
+                    int MergeScenarioId = this.STSimGetMergeScenarioId(store);
+                    string OutputFolderName = this.STSimGetJobOutputScenarioFolderName(j.Library, MergeScenarioId, false);
 
                     if (!Directory.Exists(OutputFolderName))
                     {
@@ -123,7 +196,7 @@ namespace SyncroSim.STSim
                     }
 
                     int numIterations = Convert.ToInt32(store.ExecuteScalar(
-                        "SELECT maximumIteration - minimumIteration + 1 FROM stsim_RunControl where scenarioId=" + MergeScenarioId), 
+                        "SELECT maximumIteration - minimumIteration + 1 FROM stsim_RunControl where scenarioId=" + MergeScenarioId),
                         CultureInfo.InvariantCulture);
 
                     Debug.Assert(j.JobId > 0);
@@ -142,16 +215,10 @@ namespace SyncroSim.STSim
             return dict;
         }
 
-        /// <summary>
-        /// Creates a dictionary of lists of same file names for TGAP ( Annual Avg Transition Probability) 
-        /// </summary>
-        /// <param name="config"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Each file of the same name needs to be arithmetically merged in the event of a iteration split.  
-        /// This function returns a dictionary of 'same name' files that need to be merged.
-        /// </remarks>
-        private static Dictionary<string, List<string>> CreateSameNameTgapFilesDictionary(ParallelJobConfig config)
+        private Dictionary<string, List<string>> CreateSameNameFilesDictionary(
+            ParallelJobConfig config,
+            string datasheetName,
+            string fileSpec)
         {
             Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
 
@@ -159,15 +226,15 @@ namespace SyncroSim.STSim
             {
                 using (DataStore store = Session.CreateDataStore(new DataStoreConnection(Strings.SQLITE_DATASTORE_NAME, j.Library)))
                 {
-                    int MergeScenarioId = ParallelTransformer.GetMergeScenarioId(store);
-                    string OutputFolderName = GetAATPSpatialOutputFolder(j.Library, MergeScenarioId);
+                    int MergeScenarioId = this.STSimGetMergeScenarioId(store);
+                    string OutputFolderName = this.GetOutputFolderName(j.Library, MergeScenarioId, datasheetName);
 
                     if (!Directory.Exists(OutputFolderName))
                     {
                         continue;
                     }
 
-                    foreach (string f in Directory.GetFiles(OutputFolderName, "tgap_*.tif"))
+                    foreach (string f in Directory.GetFiles(OutputFolderName, fileSpec))
                     {
                         string key = Path.GetFileName(f).ToUpperInvariant();
 
@@ -185,46 +252,34 @@ namespace SyncroSim.STSim
             return dict;
         }
 
-        /// <summary>
-        /// Gets the Average Annuanl Transition Probability Spatial output folder for the specified file and scenario Id
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="scenarioId"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private static string GetAATPSpatialOutputFolder(string fileName, int scenarioId)
-        {
-            return Path.Combine(
-                GetJobOutputScenarioFolderName(fileName, scenarioId, false), 
-                Constants.DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY);
-        }
-
-        /// <summary>
-        /// Processes the Average Transition Probability datasheet records. This datasheet is a special case because there is only one file per Transition Type per run, so when mulitprocessing
-        /// we remove the duplicate records created per job.
-        /// </summary>
-        /// <remarks></remarks>
-        private void ProcessAverageTransitionProbabilityDatasheet()
+        private void ProcessAveragedValueDatasheet(string datasheetName)
         {
             using (DataStore store = this.Library.CreateDataStore())
             {
-                string query = string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT * FROM stsim_OutputSpatialAverageTransitionProbability WHERE ScenarioId={0}", this.ResultScenario.Id);
+                string query = string.Format(CultureInfo.InvariantCulture,
+                    "SELECT * FROM {0} WHERE ScenarioId={1}",
+                    datasheetName,
+                    this.ResultScenario.Id);
 
                 DataTable dt = store.CreateDataTableFromQuery(query, "Merge");
-
-                int ttlCnt = dt.Rows.Count;
+                int OriginalCount = dt.Rows.Count;
 
                 query = string.Format(CultureInfo.InvariantCulture,
-                    "SELECT scenarioId,iteration,timestep, filename, band,transitionGroupId FROM stsim_OutputSpatialAverageTransitionProbability WHERE ScenarioId={0} group by iteration, timestep,band,transitionGroupId", 
+                    "SELECT scenarioId,iteration,timestep,filename,band FROM {0} WHERE ScenarioId={1} group by iteration,timestep,band",
+                    datasheetName,
                     this.ResultScenario.Id);
 
                 dt = store.CreateDataTableFromQuery(query, "Merge");
-                if (dt.Rows.Count < ttlCnt)
+
+                if (dt.Rows.Count < OriginalCount)
                 {
                     // We've go dupes do lets blow away the old records and create new single copies
+
                     query = string.Format(CultureInfo.InvariantCulture,
-                        "delete from stsim_OutputSpatialAverageTransitionProbability where ScenarioId={0}", this.ResultScenario.Id);
+                        "delete from {0} where ScenarioId={1}",
+                        datasheetName,
+                        this.ResultScenario.Id);
+
                     store.ExecuteNonQuery(query);
 
                     foreach (DataRow row in dt.Rows)
@@ -232,13 +287,69 @@ namespace SyncroSim.STSim
                         var band = Convert.IsDBNull(row[4]) ? "null" : row[4];
 
                         query = string.Format(CultureInfo.InvariantCulture,
-                            "insert into stsim_OutputSpatialAverageTransitionProbability (ScenarioId,iteration,timestep,filename,band,transitionGroupId) values ({0},{1},{2},'{3}',{4},{5})",
+                            "insert into {0} (ScenarioId,iteration,timestep,filename,band) values ({1},{2},{3},'{4}',{5})",
+                            datasheetName,
+                            row[0], row[1], row[2], row[3], band);
+
+                        store.ExecuteNonQuery(query);
+                    }
+                }
+            }
+        }
+
+        private void ProcessAveragedValueDatasheet(string datasheetName, string filterColumnName)
+        {
+            using (DataStore store = this.Library.CreateDataStore())
+            {
+                string query = string.Format(CultureInfo.InvariantCulture,
+                    "SELECT * FROM {0} WHERE ScenarioId={1}",
+                    datasheetName,
+                    this.ResultScenario.Id);
+
+                DataTable dt = store.CreateDataTableFromQuery(query, "Merge");
+                int OriginalCount = dt.Rows.Count;
+
+                query = string.Format(CultureInfo.InvariantCulture,
+                    "SELECT scenarioId,iteration,timestep,filename,band,{0} FROM {1} WHERE ScenarioId={2} group by iteration,timestep,band,{3}",
+                    filterColumnName,
+                    datasheetName,
+                    this.ResultScenario.Id,
+                    filterColumnName);
+
+                dt = store.CreateDataTableFromQuery(query, "Merge");
+
+                if (dt.Rows.Count < OriginalCount)
+                {
+                    // We've go dupes do lets blow away the old records and create new single copies
+
+                    query = string.Format(CultureInfo.InvariantCulture,
+                        "delete from {0} where ScenarioId={1}",
+                        datasheetName,
+                        this.ResultScenario.Id);
+
+                    store.ExecuteNonQuery(query);
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        var band = Convert.IsDBNull(row[4]) ? "null" : row[4];
+
+                        query = string.Format(CultureInfo.InvariantCulture,
+                            "insert into {0} (ScenarioId,iteration,timestep,filename,band,{1}) values ({2},{3},{4},'{5}',{6},{7})",
+                            datasheetName,
+                            filterColumnName,
                             row[0], row[1], row[2], row[3], band, row[5]);
 
                         store.ExecuteNonQuery(query);
                     }
                 }
             }
+        }
+
+        private string GetOutputFolderName(string fileName, int scenarioId, string datasheetName)
+        {
+            return Path.Combine(
+                this.STSimGetJobOutputScenarioFolderName(fileName, scenarioId, false),
+                datasheetName);
         }
     }
 }

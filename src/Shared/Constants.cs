@@ -49,40 +49,40 @@ namespace SyncroSim.STSim
         public static Color DETERMINISTIC_TRANSITION_LINE_COLOR = Color.Green;
         public static Color PROBABILISTIC_TRANSITION_LINE_COLOR = Color.CornflowerBlue;
 
-        //Spatial
-        public const string SPATIAL_MAP_EXPORT_STRATUM_VARIABLE_NAME = "Stratum";
-        public const string SPATIAL_MAP_EXPORT_STATE_CLASS_VARIABLE_NAME = "SClass";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_VARIABLE_PREFIX = "Tg";
-        public const string SPATIAL_MAP_EXPORT_AGE_VARIABLE_NAME = "Age";
-        public const string SPATIAL_MAP_EXPORT_TST_VARIABLE_NAME = "Tst";
-        public const string SPATIAL_MAP_EXPORT_STATE_ATTRIBUTE_VARIABLE_PREFIX = "Sa";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "Ta";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "Tge";
-        public const string SPATIAL_MAP_EXPORT_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "Tgap";
+        //Spatial file prefixes
+        public const string SPATIAL_MAP_STRATUM_FILEPREFIX = "str";
+        public const string SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX = "secstr";
+        public const string SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX = "terstr";
+        public const string SPATIAL_MAP_STATE_CLASS_FILEPREFIX = "sc";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX = "tg";
+        public const string SPATIAL_MAP_AGE_FILEPREFIX = "age";
+        public const string SPATIAL_MAP_TST_FILEPREFIX = "tst";
+        public const string SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX = "sa";
+        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX = "ta";
+        public const string SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX = "tge";
 
-        public const string SPATIAL_MAP_STRATUM_FILEPREFIX_NAME = "str";
-        public const string SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX_NAME = "secstr";
-        public const string SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX_NAME = "terstr";
-        public const string SPATIAL_MAP_STATE_CLASS_FILEPREFIX_NAME = "sc";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX_PREFIX = "tg";
-        public const string SPATIAL_MAP_AGE_FILEPREFIX_NAME = "age";
-        public const string SPATIAL_MAP_TST_FILEPREFIX_NAME = "tst";
-        public const string SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX_PREFIX = "sa";
-        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX_PREFIX = "ta";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_FILEPREFIX_PREFIX = "tge";
-        public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_FILEPREFIX_PREFIX = "tgap";
+        public const string SPATIAL_MAP_AVG_STRATUM_FILEPREFIX = "avgstr";
+        public const string SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX = "avgsc";
+        public const string SPATIAL_MAP_AVG_AGE_FILEPREFIX = "avgage";
+        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX = "avgsa";
+        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX = "avgta";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX = "tgap";
 
+        //Spatial map variables
         public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";
-        public const string SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME = "stsim_secstr";
-        public const string SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME = "stsim_terstr";
         public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME = "stsim_sc";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
         public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "stsim_age";
-        public const string SPATIAL_MAP_TST_VARIABLE_NAME = "stsim_tst";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
         public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
         public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
-        public const string SPATIAL_MAP_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
+
+        public const string SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME = "stsim_avgstr";
+        public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_avgsc";
+        public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_avgage";
+        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";
+        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgta";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
 
         //Spatial Output Datasheets
         public const string DATASHEET_OUTPUT_SPATIAL_STRATUM = "stsim_OutputSpatialStratum";
@@ -93,7 +93,13 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialStateAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TST = "stsim_OutputSpatialTST";
-        public const string DATASHEET_OUTPUT_SPATIAL_AVERAGE_TRANSITION_PROBABILITY = "stsim_OutputSpatialAverageTransitionProbability";
+
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM = "stsim_OutputSpatialAverageStratum";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS = "stsim_OutputSpatialAverageStateClass";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_AGE = "stsim_OutputSpatialAverageAge";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialAverageStateAttribute";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialAverageTransitionAttribute";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY = "stsim_OutputSpatialAverageTransitionProbability";
 
         //Spatial Output Datasheet Common Column Names
         public const string DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename";

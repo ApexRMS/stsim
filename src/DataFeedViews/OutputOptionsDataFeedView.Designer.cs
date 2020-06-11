@@ -116,7 +116,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterTE.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTE.Name = "CheckBoxRasterTE";
             this.CheckBoxRasterTE.Size = new System.Drawing.Size(178, 21);
-            this.CheckBoxRasterTE.TabIndex = 24;
+            this.CheckBoxRasterTE.TabIndex = 47;
             this.CheckBoxRasterTE.Text = "Transition events every";
             this.CheckBoxRasterTE.UseVisualStyleBackColor = true;
             // 
@@ -127,7 +127,7 @@ namespace SyncroSim.STSim
             this.LabelRasterTETimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTETimesteps.Name = "LabelRasterTETimesteps";
             this.LabelRasterTETimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTETimesteps.TabIndex = 26;
+            this.LabelRasterTETimesteps.TabIndex = 49;
             this.LabelRasterTETimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTETimesteps
@@ -136,7 +136,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterTETimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTETimesteps.Name = "TextBoxRasterTETimesteps";
             this.TextBoxRasterTETimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTETimesteps.TabIndex = 25;
+            this.TextBoxRasterTETimesteps.TabIndex = 48;
             this.TextBoxRasterTETimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterTA
@@ -146,7 +146,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTA.Name = "CheckBoxRasterTA";
             this.CheckBoxRasterTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxRasterTA.TabIndex = 18;
+            this.CheckBoxRasterTA.TabIndex = 41;
             this.CheckBoxRasterTA.Text = "Transition attributes every";
             this.CheckBoxRasterTA.UseVisualStyleBackColor = true;
             // 
@@ -157,7 +157,7 @@ namespace SyncroSim.STSim
             this.LabelRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTATimesteps.Name = "LabelRasterTATimesteps";
             this.LabelRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTATimesteps.TabIndex = 20;
+            this.LabelRasterTATimesteps.TabIndex = 43;
             this.LabelRasterTATimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTATimesteps
@@ -166,7 +166,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTATimesteps.Name = "TextBoxRasterTATimesteps";
             this.TextBoxRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTATimesteps.TabIndex = 19;
+            this.TextBoxRasterTATimesteps.TabIndex = 42;
             this.TextBoxRasterTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterSA
@@ -176,7 +176,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterSA.Name = "CheckBoxRasterSA";
             this.CheckBoxRasterSA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxRasterSA.TabIndex = 15;
+            this.CheckBoxRasterSA.TabIndex = 35;
             this.CheckBoxRasterSA.Text = "State attributes every";
             this.CheckBoxRasterSA.UseVisualStyleBackColor = true;
             // 
@@ -187,7 +187,7 @@ namespace SyncroSim.STSim
             this.LabelRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterSATimesteps.Name = "LabelRasterSATimesteps";
             this.LabelRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterSATimesteps.TabIndex = 17;
+            this.LabelRasterSATimesteps.TabIndex = 37;
             this.LabelRasterSATimesteps.Text = "timesteps";
             // 
             // TextBoxRasterSATimesteps
@@ -196,7 +196,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSATimesteps.Name = "TextBoxRasterSATimesteps";
             this.TextBoxRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterSATimesteps.TabIndex = 16;
+            this.TextBoxRasterSATimesteps.TabIndex = 36;
             this.TextBoxRasterSATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelRasterTSTTimesteps
@@ -206,7 +206,7 @@ namespace SyncroSim.STSim
             this.LabelRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTSTTimesteps.Name = "LabelRasterTSTTimesteps";
             this.LabelRasterTSTTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTSTTimesteps.TabIndex = 11;
+            this.LabelRasterTSTTimesteps.TabIndex = 46;
             this.LabelRasterTSTTimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTSTTimesteps
@@ -215,7 +215,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTSTTimesteps.Name = "TextBoxRasterTSTTimesteps";
             this.TextBoxRasterTSTTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTSTTimesteps.TabIndex = 10;
+            this.TextBoxRasterTSTTimesteps.TabIndex = 45;
             this.TextBoxRasterTSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterTST
@@ -225,7 +225,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterTST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTST.Name = "CheckBoxRasterTST";
             this.CheckBoxRasterTST.Size = new System.Drawing.Size(201, 21);
-            this.CheckBoxRasterTST.TabIndex = 9;
+            this.CheckBoxRasterTST.TabIndex = 44;
             this.CheckBoxRasterTST.Text = "Time-since-transition every";
             this.CheckBoxRasterTST.UseVisualStyleBackColor = true;
             // 
@@ -235,7 +235,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterAgeTimesteps.Name = "TextBoxRasterAgeTimesteps";
             this.TextBoxRasterAgeTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterAgeTimesteps.TabIndex = 7;
+            this.TextBoxRasterAgeTimesteps.TabIndex = 39;
             this.TextBoxRasterAgeTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterAge
@@ -245,7 +245,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterAge.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterAge.Name = "CheckBoxRasterAge";
             this.CheckBoxRasterAge.Size = new System.Drawing.Size(101, 21);
-            this.CheckBoxRasterAge.TabIndex = 6;
+            this.CheckBoxRasterAge.TabIndex = 38;
             this.CheckBoxRasterAge.Text = "Ages every";
             this.CheckBoxRasterAge.UseVisualStyleBackColor = true;
             // 
@@ -256,7 +256,7 @@ namespace SyncroSim.STSim
             this.LabelRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterAgeTimesteps.Name = "LabelRasterAgeTimesteps";
             this.LabelRasterAgeTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterAgeTimesteps.TabIndex = 8;
+            this.LabelRasterAgeTimesteps.TabIndex = 40;
             this.LabelRasterAgeTimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTRTimesteps
@@ -265,7 +265,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterTRTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTRTimesteps.Name = "TextBoxRasterTRTimesteps";
             this.TextBoxRasterTRTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTRTimesteps.TabIndex = 4;
+            this.TextBoxRasterTRTimesteps.TabIndex = 33;
             this.TextBoxRasterTRTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterST
@@ -275,7 +275,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterST.Name = "CheckBoxRasterST";
             this.CheckBoxRasterST.Size = new System.Drawing.Size(107, 21);
-            this.CheckBoxRasterST.TabIndex = 12;
+            this.CheckBoxRasterST.TabIndex = 29;
             this.CheckBoxRasterST.Text = "Strata every";
             this.CheckBoxRasterST.UseVisualStyleBackColor = true;
             // 
@@ -286,7 +286,7 @@ namespace SyncroSim.STSim
             this.LabelRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterSTTimesteps.Name = "LabelRasterSTTimesteps";
             this.LabelRasterSTTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterSTTimesteps.TabIndex = 14;
+            this.LabelRasterSTTimesteps.TabIndex = 31;
             this.LabelRasterSTTimesteps.Text = "timesteps";
             // 
             // CheckBoxRasterSC
@@ -296,7 +296,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterSC.Name = "CheckBoxRasterSC";
             this.CheckBoxRasterSC.Size = new System.Drawing.Size(153, 21);
-            this.CheckBoxRasterSC.TabIndex = 0;
+            this.CheckBoxRasterSC.TabIndex = 26;
             this.CheckBoxRasterSC.Text = "State classes every";
             this.CheckBoxRasterSC.UseVisualStyleBackColor = true;
             // 
@@ -307,7 +307,7 @@ namespace SyncroSim.STSim
             this.CheckBoxRasterTR.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTR.Name = "CheckBoxRasterTR";
             this.CheckBoxRasterTR.Size = new System.Drawing.Size(139, 21);
-            this.CheckBoxRasterTR.TabIndex = 3;
+            this.CheckBoxRasterTR.TabIndex = 32;
             this.CheckBoxRasterTR.Text = "Transitions every";
             this.CheckBoxRasterTR.UseVisualStyleBackColor = true;
             // 
@@ -317,7 +317,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSCTimesteps.Name = "TextBoxRasterSCTimesteps";
             this.TextBoxRasterSCTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterSCTimesteps.TabIndex = 1;
+            this.TextBoxRasterSCTimesteps.TabIndex = 27;
             this.TextBoxRasterSCTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxRasterSTTimesteps
@@ -326,7 +326,7 @@ namespace SyncroSim.STSim
             this.TextBoxRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSTTimesteps.Name = "TextBoxRasterSTTimesteps";
             this.TextBoxRasterSTTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterSTTimesteps.TabIndex = 13;
+            this.TextBoxRasterSTTimesteps.TabIndex = 30;
             this.TextBoxRasterSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelRasterTRTimesteps
@@ -336,7 +336,7 @@ namespace SyncroSim.STSim
             this.LabelRasterTRTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTRTimesteps.Name = "LabelRasterTRTimesteps";
             this.LabelRasterTRTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTRTimesteps.TabIndex = 5;
+            this.LabelRasterTRTimesteps.TabIndex = 34;
             this.LabelRasterTRTimesteps.Text = "timesteps";
             // 
             // LabelRasterSCTimesteps
@@ -346,7 +346,7 @@ namespace SyncroSim.STSim
             this.LabelRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterSCTimesteps.Name = "LabelRasterSCTimesteps";
             this.LabelRasterSCTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterSCTimesteps.TabIndex = 2;
+            this.LabelRasterSCTimesteps.TabIndex = 28;
             this.LabelRasterSCTimesteps.Text = "timesteps";
             // 
             // CheckBoxAvgRasterTP
@@ -356,7 +356,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterTP.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTP.Name = "CheckBoxAvgRasterTP";
             this.CheckBoxAvgRasterTP.Size = new System.Drawing.Size(201, 21);
-            this.CheckBoxAvgRasterTP.TabIndex = 20;
+            this.CheckBoxAvgRasterTP.TabIndex = 71;
             this.CheckBoxAvgRasterTP.Text = "Transition probability every";
             this.CheckBoxAvgRasterTP.UseVisualStyleBackColor = true;
             // 
@@ -367,7 +367,7 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterTPTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterTPTimesteps.Name = "LabelAvgRasterTPTimesteps";
             this.LabelAvgRasterTPTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTPTimesteps.TabIndex = 22;
+            this.LabelAvgRasterTPTimesteps.TabIndex = 73;
             this.LabelAvgRasterTPTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterTPTimesteps
@@ -376,7 +376,7 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterTPTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTPTimesteps.Name = "TextBoxAvgRasterTPTimesteps";
             this.TextBoxAvgRasterTPTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTPTimesteps.TabIndex = 21;
+            this.TextBoxAvgRasterTPTimesteps.TabIndex = 72;
             this.TextBoxAvgRasterTPTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxSummaryTAAges
@@ -386,7 +386,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTAAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTAAges.Name = "CheckBoxSummaryTAAges";
             this.CheckBoxSummaryTAAges.Size = new System.Drawing.Size(110, 21);
-            this.CheckBoxSummaryTAAges.TabIndex = 20;
+            this.CheckBoxSummaryTAAges.TabIndex = 22;
             this.CheckBoxSummaryTAAges.Text = "Include ages";
             this.CheckBoxSummaryTAAges.UseVisualStyleBackColor = true;
             // 
@@ -397,7 +397,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummarySAAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySAAges.Name = "CheckBoxSummarySAAges";
             this.CheckBoxSummarySAAges.Size = new System.Drawing.Size(110, 21);
-            this.CheckBoxSummarySAAges.TabIndex = 16;
+            this.CheckBoxSummarySAAges.TabIndex = 18;
             this.CheckBoxSummarySAAges.Text = "Include ages";
             this.CheckBoxSummarySAAges.UseVisualStyleBackColor = true;
             // 
@@ -408,7 +408,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTRAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTRAges.Name = "CheckBoxSummaryTRAges";
             this.CheckBoxSummaryTRAges.Size = new System.Drawing.Size(110, 21);
-            this.CheckBoxSummaryTRAges.TabIndex = 8;
+            this.CheckBoxSummaryTRAges.TabIndex = 10;
             this.CheckBoxSummaryTRAges.Text = "Include ages";
             this.CheckBoxSummaryTRAges.UseVisualStyleBackColor = true;
             // 
@@ -419,7 +419,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummarySCAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySCAges.Name = "CheckBoxSummarySCAges";
             this.CheckBoxSummarySCAges.Size = new System.Drawing.Size(110, 21);
-            this.CheckBoxSummarySCAges.TabIndex = 3;
+            this.CheckBoxSummarySCAges.TabIndex = 5;
             this.CheckBoxSummarySCAges.Text = "Include ages";
             this.CheckBoxSummarySCAges.UseVisualStyleBackColor = true;
             // 
@@ -430,7 +430,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryOmitTS.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryOmitTS.Name = "CheckBoxSummaryOmitTS";
             this.CheckBoxSummaryOmitTS.Size = new System.Drawing.Size(147, 21);
-            this.CheckBoxSummaryOmitTS.TabIndex = 22;
+            this.CheckBoxSummaryOmitTS.TabIndex = 24;
             this.CheckBoxSummaryOmitTS.Text = "Omit tertiary strata";
             this.CheckBoxSummaryOmitTS.UseVisualStyleBackColor = true;
             // 
@@ -441,7 +441,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryOmitSS.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryOmitSS.Name = "CheckBoxSummaryOmitSS";
             this.CheckBoxSummaryOmitSS.Size = new System.Drawing.Size(169, 21);
-            this.CheckBoxSummaryOmitSS.TabIndex = 21;
+            this.CheckBoxSummaryOmitSS.TabIndex = 23;
             this.CheckBoxSummaryOmitSS.Text = "Omit secondary strata";
             this.CheckBoxSummaryOmitSS.UseVisualStyleBackColor = true;
             // 
@@ -452,7 +452,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummarySCZeroValues.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySCZeroValues.Name = "CheckBoxSummarySCZeroValues";
             this.CheckBoxSummarySCZeroValues.Size = new System.Drawing.Size(152, 21);
-            this.CheckBoxSummarySCZeroValues.TabIndex = 4;
+            this.CheckBoxSummarySCZeroValues.TabIndex = 6;
             this.CheckBoxSummarySCZeroValues.Text = "Include zero values";
             this.CheckBoxSummarySCZeroValues.UseVisualStyleBackColor = true;
             // 
@@ -463,7 +463,7 @@ namespace SyncroSim.STSim
             this.LabelSummaryTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummaryTATimesteps.Name = "LabelSummaryTATimesteps";
             this.LabelSummaryTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelSummaryTATimesteps.TabIndex = 19;
+            this.LabelSummaryTATimesteps.TabIndex = 21;
             this.LabelSummaryTATimesteps.Text = "timesteps";
             // 
             // TextBoxSummaryTATimesteps
@@ -472,7 +472,7 @@ namespace SyncroSim.STSim
             this.TextBoxSummaryTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummaryTATimesteps.Name = "TextBoxSummaryTATimesteps";
             this.TextBoxSummaryTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxSummaryTATimesteps.TabIndex = 18;
+            this.TextBoxSummaryTATimesteps.TabIndex = 20;
             this.TextBoxSummaryTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxSummaryTA
@@ -482,7 +482,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTA.Name = "CheckBoxSummaryTA";
             this.CheckBoxSummaryTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxSummaryTA.TabIndex = 17;
+            this.CheckBoxSummaryTA.TabIndex = 19;
             this.CheckBoxSummaryTA.Text = "Transition attributes every";
             this.CheckBoxSummaryTA.UseVisualStyleBackColor = true;
             // 
@@ -493,7 +493,7 @@ namespace SyncroSim.STSim
             this.LabelSummarySATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummarySATimesteps.Name = "LabelSummarySATimesteps";
             this.LabelSummarySATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelSummarySATimesteps.TabIndex = 15;
+            this.LabelSummarySATimesteps.TabIndex = 17;
             this.LabelSummarySATimesteps.Text = "timesteps";
             // 
             // TextBoxSummarySATimesteps
@@ -502,7 +502,7 @@ namespace SyncroSim.STSim
             this.TextBoxSummarySATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummarySATimesteps.Name = "TextBoxSummarySATimesteps";
             this.TextBoxSummarySATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxSummarySATimesteps.TabIndex = 14;
+            this.TextBoxSummarySATimesteps.TabIndex = 16;
             this.TextBoxSummarySATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxSummaryTRCalcIntervalMean
@@ -512,7 +512,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTRCalcIntervalMean.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTRCalcIntervalMean.Name = "CheckBoxSummaryTRCalcIntervalMean";
             this.CheckBoxSummaryTRCalcIntervalMean.Size = new System.Drawing.Size(241, 21);
-            this.CheckBoxSummaryTRCalcIntervalMean.TabIndex = 9;
+            this.CheckBoxSummaryTRCalcIntervalMean.TabIndex = 11;
             this.CheckBoxSummaryTRCalcIntervalMean.Text = "Calculate as interval mean values";
             this.CheckBoxSummaryTRCalcIntervalMean.UseVisualStyleBackColor = true;
             // 
@@ -523,7 +523,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummarySA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySA.Name = "CheckBoxSummarySA";
             this.CheckBoxSummarySA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxSummarySA.TabIndex = 13;
+            this.CheckBoxSummarySA.TabIndex = 15;
             this.CheckBoxSummarySA.Text = "State attributes every";
             this.CheckBoxSummarySA.UseVisualStyleBackColor = true;
             // 
@@ -533,7 +533,7 @@ namespace SyncroSim.STSim
             this.TextBoxSummarySCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummarySCTimesteps.Name = "TextBoxSummarySCTimesteps";
             this.TextBoxSummarySCTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxSummarySCTimesteps.TabIndex = 1;
+            this.TextBoxSummarySCTimesteps.TabIndex = 3;
             this.TextBoxSummarySCTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelSummarySCTimesteps
@@ -543,7 +543,7 @@ namespace SyncroSim.STSim
             this.LabelSummarySCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummarySCTimesteps.Name = "LabelSummarySCTimesteps";
             this.LabelSummarySCTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelSummarySCTimesteps.TabIndex = 2;
+            this.LabelSummarySCTimesteps.TabIndex = 4;
             this.LabelSummarySCTimesteps.Text = "timesteps";
             // 
             // LabelSummaryTRSCTimesteps
@@ -553,7 +553,7 @@ namespace SyncroSim.STSim
             this.LabelSummaryTRSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummaryTRSCTimesteps.Name = "LabelSummaryTRSCTimesteps";
             this.LabelSummaryTRSCTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelSummaryTRSCTimesteps.TabIndex = 12;
+            this.LabelSummaryTRSCTimesteps.TabIndex = 14;
             this.LabelSummaryTRSCTimesteps.Text = "timesteps";
             // 
             // CheckBoxSummarySC
@@ -563,7 +563,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummarySC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySC.Name = "CheckBoxSummarySC";
             this.CheckBoxSummarySC.Size = new System.Drawing.Size(153, 21);
-            this.CheckBoxSummarySC.TabIndex = 0;
+            this.CheckBoxSummarySC.TabIndex = 2;
             this.CheckBoxSummarySC.Text = "State classes every";
             this.CheckBoxSummarySC.UseVisualStyleBackColor = true;
             // 
@@ -574,7 +574,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTR.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTR.Name = "CheckBoxSummaryTR";
             this.CheckBoxSummaryTR.Size = new System.Drawing.Size(139, 21);
-            this.CheckBoxSummaryTR.TabIndex = 5;
+            this.CheckBoxSummaryTR.TabIndex = 7;
             this.CheckBoxSummaryTR.Text = "Transitions every";
             this.CheckBoxSummaryTR.UseVisualStyleBackColor = true;
             // 
@@ -584,7 +584,7 @@ namespace SyncroSim.STSim
             this.TextBoxSummaryTRSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummaryTRSCTimesteps.Name = "TextBoxSummaryTRSCTimesteps";
             this.TextBoxSummaryTRSCTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxSummaryTRSCTimesteps.TabIndex = 11;
+            this.TextBoxSummaryTRSCTimesteps.TabIndex = 13;
             this.TextBoxSummaryTRSCTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelSummaryTRTimesteps
@@ -594,7 +594,7 @@ namespace SyncroSim.STSim
             this.LabelSummaryTRTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummaryTRTimesteps.Name = "LabelSummaryTRTimesteps";
             this.LabelSummaryTRTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelSummaryTRTimesteps.TabIndex = 7;
+            this.LabelSummaryTRTimesteps.TabIndex = 9;
             this.LabelSummaryTRTimesteps.Text = "timesteps";
             // 
             // CheckBoxSummaryTRSC
@@ -604,7 +604,7 @@ namespace SyncroSim.STSim
             this.CheckBoxSummaryTRSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTRSC.Name = "CheckBoxSummaryTRSC";
             this.CheckBoxSummaryTRSC.Size = new System.Drawing.Size(229, 21);
-            this.CheckBoxSummaryTRSC.TabIndex = 10;
+            this.CheckBoxSummaryTRSC.TabIndex = 12;
             this.CheckBoxSummaryTRSC.Text = "Transitions by state class every";
             this.CheckBoxSummaryTRSC.UseVisualStyleBackColor = true;
             // 
@@ -614,7 +614,7 @@ namespace SyncroSim.STSim
             this.TextBoxSummaryTRTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummaryTRTimesteps.Name = "TextBoxSummaryTRTimesteps";
             this.TextBoxSummaryTRTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxSummaryTRTimesteps.TabIndex = 6;
+            this.TextBoxSummaryTRTimesteps.TabIndex = 8;
             this.TextBoxSummaryTRTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterSTAcrossTimesteps
@@ -624,7 +624,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSTAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSTAcrossTimesteps.Name = "CheckBoxAvgRasterSTAcrossTimesteps";
             this.CheckBoxAvgRasterSTAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSTAcrossTimesteps.TabIndex = 11;
+            this.CheckBoxAvgRasterSTAcrossTimesteps.TabIndex = 62;
             this.CheckBoxAvgRasterSTAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSTAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -635,7 +635,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterST.Name = "CheckBoxAvgRasterST";
             this.CheckBoxAvgRasterST.Size = new System.Drawing.Size(187, 21);
-            this.CheckBoxAvgRasterST.TabIndex = 8;
+            this.CheckBoxAvgRasterST.TabIndex = 59;
             this.CheckBoxAvgRasterST.Text = "Stratum probability every";
             this.CheckBoxAvgRasterST.UseVisualStyleBackColor = true;
             // 
@@ -646,7 +646,7 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSTTimesteps.Name = "LabelAvgRasterSTTimesteps";
             this.LabelAvgRasterSTTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSTTimesteps.TabIndex = 10;
+            this.LabelAvgRasterSTTimesteps.TabIndex = 61;
             this.LabelAvgRasterSTTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterSTTimesteps
@@ -655,7 +655,7 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSTTimesteps.Name = "TextBoxAvgRasterSTTimesteps";
             this.TextBoxAvgRasterSTTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSTTimesteps.TabIndex = 9;
+            this.TextBoxAvgRasterSTTimesteps.TabIndex = 60;
             this.TextBoxAvgRasterSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterAgeAcrossTimesteps
@@ -665,7 +665,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Name = "CheckBoxAvgRasterAgeAcrossTimesteps";
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterAgeAcrossTimesteps.TabIndex = 7;
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.TabIndex = 58;
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterAgeAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -676,7 +676,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterAge.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterAge.Name = "CheckBoxAvgRasterAge";
             this.CheckBoxAvgRasterAge.Size = new System.Drawing.Size(101, 21);
-            this.CheckBoxAvgRasterAge.TabIndex = 4;
+            this.CheckBoxAvgRasterAge.TabIndex = 55;
             this.CheckBoxAvgRasterAge.Text = "Ages every";
             this.CheckBoxAvgRasterAge.UseVisualStyleBackColor = true;
             // 
@@ -687,7 +687,7 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterAgeTimesteps.Name = "LabelAvgRasterAgeTimesteps";
             this.LabelAvgRasterAgeTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterAgeTimesteps.TabIndex = 6;
+            this.LabelAvgRasterAgeTimesteps.TabIndex = 57;
             this.LabelAvgRasterAgeTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterAgeTimesteps
@@ -696,7 +696,7 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterAgeTimesteps.Name = "TextBoxAvgRasterAgeTimesteps";
             this.TextBoxAvgRasterAgeTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterAgeTimesteps.TabIndex = 5;
+            this.TextBoxAvgRasterAgeTimesteps.TabIndex = 56;
             this.TextBoxAvgRasterAgeTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterTPAcrossTimesteps
@@ -706,7 +706,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterTPAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTPAcrossTimesteps.Name = "CheckBoxAvgRasterTPAcrossTimesteps";
             this.CheckBoxAvgRasterTPAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterTPAcrossTimesteps.TabIndex = 20;
+            this.CheckBoxAvgRasterTPAcrossTimesteps.TabIndex = 74;
             this.CheckBoxAvgRasterTPAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterTPAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -717,7 +717,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterTAAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTAAcrossTimesteps.Name = "CheckBoxAvgRasterTAAcrossTimesteps";
             this.CheckBoxAvgRasterTAAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterTAAcrossTimesteps.TabIndex = 19;
+            this.CheckBoxAvgRasterTAAcrossTimesteps.TabIndex = 70;
             this.CheckBoxAvgRasterTAAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterTAAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -728,7 +728,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSAAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSAAcrossTimesteps.Name = "CheckBoxAvgRasterSAAcrossTimesteps";
             this.CheckBoxAvgRasterSAAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSAAcrossTimesteps.TabIndex = 15;
+            this.CheckBoxAvgRasterSAAcrossTimesteps.TabIndex = 66;
             this.CheckBoxAvgRasterSAAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSAAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -739,7 +739,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSCAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSCAcrossTimesteps.Name = "CheckBoxAvgRasterSCAcrossTimesteps";
             this.CheckBoxAvgRasterSCAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSCAcrossTimesteps.TabIndex = 3;
+            this.CheckBoxAvgRasterSCAcrossTimesteps.TabIndex = 54;
             this.CheckBoxAvgRasterSCAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSCAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
@@ -750,7 +750,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTA.Name = "CheckBoxAvgRasterTA";
             this.CheckBoxAvgRasterTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxAvgRasterTA.TabIndex = 16;
+            this.CheckBoxAvgRasterTA.TabIndex = 67;
             this.CheckBoxAvgRasterTA.Text = "Transition attributes every";
             this.CheckBoxAvgRasterTA.UseVisualStyleBackColor = true;
             // 
@@ -761,7 +761,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSC.Name = "CheckBoxAvgRasterSC";
             this.CheckBoxAvgRasterSC.Size = new System.Drawing.Size(207, 21);
-            this.CheckBoxAvgRasterSC.TabIndex = 0;
+            this.CheckBoxAvgRasterSC.TabIndex = 51;
             this.CheckBoxAvgRasterSC.Text = "State class probability every";
             this.CheckBoxAvgRasterSC.UseVisualStyleBackColor = true;
             // 
@@ -772,7 +772,7 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterTATimesteps.Name = "LabelAvgRasterTATimesteps";
             this.LabelAvgRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTATimesteps.TabIndex = 18;
+            this.LabelAvgRasterTATimesteps.TabIndex = 69;
             this.LabelAvgRasterTATimesteps.Text = "timesteps";
             // 
             // LabelAvgRasterSCTimesteps
@@ -782,7 +782,7 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSCTimesteps.Name = "LabelAvgRasterSCTimesteps";
             this.LabelAvgRasterSCTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSCTimesteps.TabIndex = 2;
+            this.LabelAvgRasterSCTimesteps.TabIndex = 53;
             this.LabelAvgRasterSCTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterTATimesteps
@@ -791,7 +791,7 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTATimesteps.Name = "TextBoxAvgRasterTATimesteps";
             this.TextBoxAvgRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTATimesteps.TabIndex = 17;
+            this.TextBoxAvgRasterTATimesteps.TabIndex = 68;
             this.TextBoxAvgRasterTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxAvgRasterSCTimesteps
@@ -800,7 +800,7 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSCTimesteps.Name = "TextBoxAvgRasterSCTimesteps";
             this.TextBoxAvgRasterSCTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSCTimesteps.TabIndex = 1;
+            this.TextBoxAvgRasterSCTimesteps.TabIndex = 52;
             this.TextBoxAvgRasterSCTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterSA
@@ -810,7 +810,7 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSA.Name = "CheckBoxAvgRasterSA";
             this.CheckBoxAvgRasterSA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxAvgRasterSA.TabIndex = 12;
+            this.CheckBoxAvgRasterSA.TabIndex = 63;
             this.CheckBoxAvgRasterSA.Text = "State attributes every";
             this.CheckBoxAvgRasterSA.UseVisualStyleBackColor = true;
             // 
@@ -821,7 +821,7 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSATimesteps.Name = "LabelAvgRasterSATimesteps";
             this.LabelAvgRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSATimesteps.TabIndex = 14;
+            this.LabelAvgRasterSATimesteps.TabIndex = 65;
             this.LabelAvgRasterSATimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterSATimesteps
@@ -830,7 +830,7 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSATimesteps.Name = "TextBoxAvgRasterSATimesteps";
             this.TextBoxAvgRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSATimesteps.TabIndex = 13;
+            this.TextBoxAvgRasterSATimesteps.TabIndex = 64;
             this.TextBoxAvgRasterSATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // panel1
@@ -913,7 +913,7 @@ namespace SyncroSim.STSim
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1826, 903);
-            this.panel1.TabIndex = 2;
+            this.panel1.TabIndex = 0;
             // 
             // LabelAvgSpatialTitle
             // 
@@ -922,7 +922,7 @@ namespace SyncroSim.STSim
             this.LabelAvgSpatialTitle.Location = new System.Drawing.Point(3, 350);
             this.LabelAvgSpatialTitle.Name = "LabelAvgSpatialTitle";
             this.LabelAvgSpatialTitle.Size = new System.Drawing.Size(172, 17);
-            this.LabelAvgSpatialTitle.TabIndex = 29;
+            this.LabelAvgSpatialTitle.TabIndex = 50;
             this.LabelAvgSpatialTitle.Text = "Average spatial output";
             // 
             // LabelSpatialTitle
@@ -932,7 +932,7 @@ namespace SyncroSim.STSim
             this.LabelSpatialTitle.Location = new System.Drawing.Point(5, 215);
             this.LabelSpatialTitle.Name = "LabelSpatialTitle";
             this.LabelSpatialTitle.Size = new System.Drawing.Size(109, 17);
-            this.LabelSpatialTitle.TabIndex = 28;
+            this.LabelSpatialTitle.TabIndex = 25;
             this.LabelSpatialTitle.Text = "Spatial output";
             // 
             // LabelTabularTitle
@@ -942,7 +942,7 @@ namespace SyncroSim.STSim
             this.LabelTabularTitle.Location = new System.Drawing.Point(4, 4);
             this.LabelTabularTitle.Name = "LabelTabularTitle";
             this.LabelTabularTitle.Size = new System.Drawing.Size(115, 17);
-            this.LabelTabularTitle.TabIndex = 27;
+            this.LabelTabularTitle.TabIndex = 1;
             this.LabelTabularTitle.Text = "Tabular output";
             // 
             // OutputOptionsDataFeedView

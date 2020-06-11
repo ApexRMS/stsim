@@ -349,6 +349,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "RasterOutputTATimesteps";
         public const string DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME = "RasterOutputTransitionEvents";
         public const string DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME = "RasterOutputTransitionEventTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_ST_COLUMN_NAME = "AvgRasterOutputST";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSTTimesteps";
+        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSTAcrossTimesteps";
         public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME = "AvgRasterOutputSC";
         public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCTimesteps";
         public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCAcrossTimesteps";

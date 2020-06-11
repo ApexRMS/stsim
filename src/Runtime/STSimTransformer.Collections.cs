@@ -145,8 +145,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int StratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                this.m_Strata.Add(new Stratum(StratumId));
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                this.m_Strata.Add(new Stratum(id, name));
             }
         }
 
@@ -161,8 +162,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int SecondaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                this.m_SecondaryStrata.Add(new Stratum(SecondaryStratumId));
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                this.m_SecondaryStrata.Add(new Stratum(id, name));
             }
         }
 
@@ -177,8 +179,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TertiaryStratumId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
-                this.m_TertiaryStrata.Add(new Stratum(TertiaryStratumId));
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+                this.m_TertiaryStrata.Add(new Stratum(id, name));
             }
         }
 

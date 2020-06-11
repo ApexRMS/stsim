@@ -28,6 +28,7 @@ namespace SyncroSim.STSim
                 BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
 
                 //Merge spatial averaging rasters
+                ProcessAverageStratumRasters();
                 ProcessAverageStateClassRasters();
                 ProcessAverageAgeRasters();
                 ProcessAverageStateAttributeRasters();
@@ -38,6 +39,7 @@ namespace SyncroSim.STSim
                 base.Merge();
 
                 //Merge spatial averaging datasheets
+                ProcessAverageStratumDatasheet();
                 ProcessAverageStateClassDatasheet(); 
                 ProcessAverageAgeDatasheet(); 
                 ProcessAverageStateAttributeDatasheet();       
@@ -46,6 +48,13 @@ namespace SyncroSim.STSim
 
                 NormalSpatialMergeComplete?.Invoke(this, new EventArgs());
             }
+        }
+
+        private void ProcessAverageStratumRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM,
+                Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX + "*.tif");
         }
 
         private void ProcessAverageStateClassRasters()
@@ -81,6 +90,13 @@ namespace SyncroSim.STSim
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
                 Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageStratumDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM, 
+                Strings.DATASHEET_STRATUM_ID_COLUMN_NAME);
         }
 
         private void ProcessAverageStateClassDatasheet()

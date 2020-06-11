@@ -122,6 +122,7 @@ namespace SyncroSim.STSim
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Raster transition attributes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME, Strings.DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME, "Raster transition events", MaxTimestep);
 
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Average raster strata", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, "Average raster state classes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME, "Average raster ages", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Average Raster state attributes", MaxTimestep);

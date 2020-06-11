@@ -31,7 +31,6 @@ namespace SyncroSim.STSim
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            this.GroupBoxSpatialOutput = new System.Windows.Forms.GroupBox();
             this.CheckBoxRasterTE = new System.Windows.Forms.CheckBox();
             this.LabelRasterTETimesteps = new System.Windows.Forms.Label();
             this.TextBoxRasterTETimesteps = new System.Windows.Forms.TextBox();
@@ -59,7 +58,6 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterTP = new System.Windows.Forms.CheckBox();
             this.LabelAvgRasterTPTimesteps = new System.Windows.Forms.Label();
             this.TextBoxAvgRasterTPTimesteps = new System.Windows.Forms.TextBox();
-            this.GroupBoxSummaryOutput = new System.Windows.Forms.GroupBox();
             this.CheckBoxSummaryTAAges = new System.Windows.Forms.CheckBox();
             this.CheckBoxSummarySAAges = new System.Windows.Forms.CheckBox();
             this.CheckBoxSummaryTRAges = new System.Windows.Forms.CheckBox();
@@ -83,7 +81,10 @@ namespace SyncroSim.STSim
             this.LabelSummaryTRTimesteps = new System.Windows.Forms.Label();
             this.CheckBoxSummaryTRSC = new System.Windows.Forms.CheckBox();
             this.TextBoxSummaryTRTimesteps = new System.Windows.Forms.TextBox();
-            this.GroupBoxAvgSpatialOutput = new System.Windows.Forms.GroupBox();
+            this.CheckBoxAvgRasterSTAcrossTimesteps = new System.Windows.Forms.CheckBox();
+            this.CheckBoxAvgRasterST = new System.Windows.Forms.CheckBox();
+            this.LabelAvgRasterSTTimesteps = new System.Windows.Forms.Label();
+            this.TextBoxAvgRasterSTTimesteps = new System.Windows.Forms.TextBox();
             this.CheckBoxAvgRasterAgeAcrossTimesteps = new System.Windows.Forms.CheckBox();
             this.CheckBoxAvgRasterAge = new System.Windows.Forms.CheckBox();
             this.LabelAvgRasterAgeTimesteps = new System.Windows.Forms.Label();
@@ -101,50 +102,17 @@ namespace SyncroSim.STSim
             this.CheckBoxAvgRasterSA = new System.Windows.Forms.CheckBox();
             this.LabelAvgRasterSATimesteps = new System.Windows.Forms.Label();
             this.TextBoxAvgRasterSATimesteps = new System.Windows.Forms.TextBox();
-            this.GroupBoxSpatialOutput.SuspendLayout();
-            this.GroupBoxSummaryOutput.SuspendLayout();
-            this.GroupBoxAvgSpatialOutput.SuspendLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.LabelAvgSpatialTitle = new System.Windows.Forms.Label();
+            this.LabelSpatialTitle = new System.Windows.Forms.Label();
+            this.LabelTabularTitle = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // GroupBoxSpatialOutput
-            // 
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterTE);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterTETimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterTETimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterTA);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterTATimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterTATimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterSA);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterSATimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterSATimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterTSTTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterTSTTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterTST);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterAgeTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterAge);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterAgeTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterTRTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterST);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterSTTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterSC);
-            this.GroupBoxSpatialOutput.Controls.Add(this.CheckBoxRasterTR);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterSCTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.TextBoxRasterSTTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterTRTimesteps);
-            this.GroupBoxSpatialOutput.Controls.Add(this.LabelRasterSCTimesteps);
-            this.GroupBoxSpatialOutput.Location = new System.Drawing.Point(4, 236);
-            this.GroupBoxSpatialOutput.Margin = new System.Windows.Forms.Padding(4);
-            this.GroupBoxSpatialOutput.Name = "GroupBoxSpatialOutput";
-            this.GroupBoxSpatialOutput.Padding = new System.Windows.Forms.Padding(4);
-            this.GroupBoxSpatialOutput.Size = new System.Drawing.Size(849, 146);
-            this.GroupBoxSpatialOutput.TabIndex = 1;
-            this.GroupBoxSpatialOutput.TabStop = false;
-            this.GroupBoxSpatialOutput.Text = "Spatial output";
             // 
             // CheckBoxRasterTE
             // 
             this.CheckBoxRasterTE.AutoSize = true;
-            this.CheckBoxRasterTE.Location = new System.Drawing.Point(447, 112);
+            this.CheckBoxRasterTE.Location = new System.Drawing.Point(451, 317);
             this.CheckBoxRasterTE.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTE.Name = "CheckBoxRasterTE";
             this.CheckBoxRasterTE.Size = new System.Drawing.Size(178, 21);
@@ -155,7 +123,7 @@ namespace SyncroSim.STSim
             // LabelRasterTETimesteps
             // 
             this.LabelRasterTETimesteps.AutoSize = true;
-            this.LabelRasterTETimesteps.Location = new System.Drawing.Point(733, 115);
+            this.LabelRasterTETimesteps.Location = new System.Drawing.Point(737, 319);
             this.LabelRasterTETimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTETimesteps.Name = "LabelRasterTETimesteps";
             this.LabelRasterTETimesteps.Size = new System.Drawing.Size(68, 17);
@@ -164,7 +132,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterTETimesteps
             // 
-            this.TextBoxRasterTETimesteps.Location = new System.Drawing.Point(656, 111);
+            this.TextBoxRasterTETimesteps.Location = new System.Drawing.Point(660, 316);
             this.TextBoxRasterTETimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTETimesteps.Name = "TextBoxRasterTETimesteps";
             this.TextBoxRasterTETimesteps.Size = new System.Drawing.Size(65, 22);
@@ -174,7 +142,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterTA
             // 
             this.CheckBoxRasterTA.AutoSize = true;
-            this.CheckBoxRasterTA.Location = new System.Drawing.Point(447, 83);
+            this.CheckBoxRasterTA.Location = new System.Drawing.Point(451, 291);
             this.CheckBoxRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTA.Name = "CheckBoxRasterTA";
             this.CheckBoxRasterTA.Size = new System.Drawing.Size(195, 21);
@@ -185,7 +153,7 @@ namespace SyncroSim.STSim
             // LabelRasterTATimesteps
             // 
             this.LabelRasterTATimesteps.AutoSize = true;
-            this.LabelRasterTATimesteps.Location = new System.Drawing.Point(733, 86);
+            this.LabelRasterTATimesteps.Location = new System.Drawing.Point(737, 293);
             this.LabelRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTATimesteps.Name = "LabelRasterTATimesteps";
             this.LabelRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
@@ -194,7 +162,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterTATimesteps
             // 
-            this.TextBoxRasterTATimesteps.Location = new System.Drawing.Point(656, 82);
+            this.TextBoxRasterTATimesteps.Location = new System.Drawing.Point(660, 289);
             this.TextBoxRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTATimesteps.Name = "TextBoxRasterTATimesteps";
             this.TextBoxRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
@@ -204,7 +172,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterSA
             // 
             this.CheckBoxRasterSA.AutoSize = true;
-            this.CheckBoxRasterSA.Location = new System.Drawing.Point(447, 55);
+            this.CheckBoxRasterSA.Location = new System.Drawing.Point(451, 265);
             this.CheckBoxRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterSA.Name = "CheckBoxRasterSA";
             this.CheckBoxRasterSA.Size = new System.Drawing.Size(165, 21);
@@ -215,7 +183,7 @@ namespace SyncroSim.STSim
             // LabelRasterSATimesteps
             // 
             this.LabelRasterSATimesteps.AutoSize = true;
-            this.LabelRasterSATimesteps.Location = new System.Drawing.Point(733, 58);
+            this.LabelRasterSATimesteps.Location = new System.Drawing.Point(737, 267);
             this.LabelRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterSATimesteps.Name = "LabelRasterSATimesteps";
             this.LabelRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
@@ -224,7 +192,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterSATimesteps
             // 
-            this.TextBoxRasterSATimesteps.Location = new System.Drawing.Point(656, 54);
+            this.TextBoxRasterSATimesteps.Location = new System.Drawing.Point(660, 262);
             this.TextBoxRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSATimesteps.Name = "TextBoxRasterSATimesteps";
             this.TextBoxRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
@@ -234,7 +202,7 @@ namespace SyncroSim.STSim
             // LabelRasterTSTTimesteps
             // 
             this.LabelRasterTSTTimesteps.AutoSize = true;
-            this.LabelRasterTSTTimesteps.Location = new System.Drawing.Point(339, 113);
+            this.LabelRasterTSTTimesteps.Location = new System.Drawing.Point(343, 319);
             this.LabelRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTSTTimesteps.Name = "LabelRasterTSTTimesteps";
             this.LabelRasterTSTTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -243,7 +211,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterTSTTimesteps
             // 
-            this.TextBoxRasterTSTTimesteps.Location = new System.Drawing.Point(262, 110);
+            this.TextBoxRasterTSTTimesteps.Location = new System.Drawing.Point(266, 316);
             this.TextBoxRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTSTTimesteps.Name = "TextBoxRasterTSTTimesteps";
             this.TextBoxRasterTSTTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -253,7 +221,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterTST
             // 
             this.CheckBoxRasterTST.AutoSize = true;
-            this.CheckBoxRasterTST.Location = new System.Drawing.Point(15, 113);
+            this.CheckBoxRasterTST.Location = new System.Drawing.Point(19, 317);
             this.CheckBoxRasterTST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTST.Name = "CheckBoxRasterTST";
             this.CheckBoxRasterTST.Size = new System.Drawing.Size(201, 21);
@@ -263,7 +231,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterAgeTimesteps
             // 
-            this.TextBoxRasterAgeTimesteps.Location = new System.Drawing.Point(262, 81);
+            this.TextBoxRasterAgeTimesteps.Location = new System.Drawing.Point(266, 289);
             this.TextBoxRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterAgeTimesteps.Name = "TextBoxRasterAgeTimesteps";
             this.TextBoxRasterAgeTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -273,7 +241,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterAge
             // 
             this.CheckBoxRasterAge.AutoSize = true;
-            this.CheckBoxRasterAge.Location = new System.Drawing.Point(15, 85);
+            this.CheckBoxRasterAge.Location = new System.Drawing.Point(19, 291);
             this.CheckBoxRasterAge.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterAge.Name = "CheckBoxRasterAge";
             this.CheckBoxRasterAge.Size = new System.Drawing.Size(101, 21);
@@ -284,7 +252,7 @@ namespace SyncroSim.STSim
             // LabelRasterAgeTimesteps
             // 
             this.LabelRasterAgeTimesteps.AutoSize = true;
-            this.LabelRasterAgeTimesteps.Location = new System.Drawing.Point(339, 85);
+            this.LabelRasterAgeTimesteps.Location = new System.Drawing.Point(343, 292);
             this.LabelRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterAgeTimesteps.Name = "LabelRasterAgeTimesteps";
             this.LabelRasterAgeTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -293,7 +261,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterTRTimesteps
             // 
-            this.TextBoxRasterTRTimesteps.Location = new System.Drawing.Point(262, 53);
+            this.TextBoxRasterTRTimesteps.Location = new System.Drawing.Point(266, 262);
             this.TextBoxRasterTRTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTRTimesteps.Name = "TextBoxRasterTRTimesteps";
             this.TextBoxRasterTRTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -303,7 +271,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterST
             // 
             this.CheckBoxRasterST.AutoSize = true;
-            this.CheckBoxRasterST.Location = new System.Drawing.Point(447, 27);
+            this.CheckBoxRasterST.Location = new System.Drawing.Point(451, 239);
             this.CheckBoxRasterST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterST.Name = "CheckBoxRasterST";
             this.CheckBoxRasterST.Size = new System.Drawing.Size(107, 21);
@@ -314,7 +282,7 @@ namespace SyncroSim.STSim
             // LabelRasterSTTimesteps
             // 
             this.LabelRasterSTTimesteps.AutoSize = true;
-            this.LabelRasterSTTimesteps.Location = new System.Drawing.Point(733, 30);
+            this.LabelRasterSTTimesteps.Location = new System.Drawing.Point(737, 241);
             this.LabelRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterSTTimesteps.Name = "LabelRasterSTTimesteps";
             this.LabelRasterSTTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -324,7 +292,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterSC
             // 
             this.CheckBoxRasterSC.AutoSize = true;
-            this.CheckBoxRasterSC.Location = new System.Drawing.Point(15, 28);
+            this.CheckBoxRasterSC.Location = new System.Drawing.Point(19, 239);
             this.CheckBoxRasterSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterSC.Name = "CheckBoxRasterSC";
             this.CheckBoxRasterSC.Size = new System.Drawing.Size(153, 21);
@@ -335,7 +303,7 @@ namespace SyncroSim.STSim
             // CheckBoxRasterTR
             // 
             this.CheckBoxRasterTR.AutoSize = true;
-            this.CheckBoxRasterTR.Location = new System.Drawing.Point(15, 57);
+            this.CheckBoxRasterTR.Location = new System.Drawing.Point(19, 265);
             this.CheckBoxRasterTR.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTR.Name = "CheckBoxRasterTR";
             this.CheckBoxRasterTR.Size = new System.Drawing.Size(139, 21);
@@ -345,7 +313,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterSCTimesteps
             // 
-            this.TextBoxRasterSCTimesteps.Location = new System.Drawing.Point(262, 25);
+            this.TextBoxRasterSCTimesteps.Location = new System.Drawing.Point(266, 235);
             this.TextBoxRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSCTimesteps.Name = "TextBoxRasterSCTimesteps";
             this.TextBoxRasterSCTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -354,7 +322,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterSTTimesteps
             // 
-            this.TextBoxRasterSTTimesteps.Location = new System.Drawing.Point(656, 26);
+            this.TextBoxRasterSTTimesteps.Location = new System.Drawing.Point(660, 235);
             this.TextBoxRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSTTimesteps.Name = "TextBoxRasterSTTimesteps";
             this.TextBoxRasterSTTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -364,7 +332,7 @@ namespace SyncroSim.STSim
             // LabelRasterTRTimesteps
             // 
             this.LabelRasterTRTimesteps.AutoSize = true;
-            this.LabelRasterTRTimesteps.Location = new System.Drawing.Point(339, 57);
+            this.LabelRasterTRTimesteps.Location = new System.Drawing.Point(343, 266);
             this.LabelRasterTRTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterTRTimesteps.Name = "LabelRasterTRTimesteps";
             this.LabelRasterTRTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -374,7 +342,7 @@ namespace SyncroSim.STSim
             // LabelRasterSCTimesteps
             // 
             this.LabelRasterSCTimesteps.AutoSize = true;
-            this.LabelRasterSCTimesteps.Location = new System.Drawing.Point(339, 28);
+            this.LabelRasterSCTimesteps.Location = new System.Drawing.Point(343, 239);
             this.LabelRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelRasterSCTimesteps.Name = "LabelRasterSCTimesteps";
             this.LabelRasterSCTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -384,71 +352,37 @@ namespace SyncroSim.STSim
             // CheckBoxAvgRasterTP
             // 
             this.CheckBoxAvgRasterTP.AutoSize = true;
-            this.CheckBoxAvgRasterTP.Location = new System.Drawing.Point(15, 147);
+            this.CheckBoxAvgRasterTP.Location = new System.Drawing.Point(18, 510);
             this.CheckBoxAvgRasterTP.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTP.Name = "CheckBoxAvgRasterTP";
             this.CheckBoxAvgRasterTP.Size = new System.Drawing.Size(201, 21);
-            this.CheckBoxAvgRasterTP.TabIndex = 17;
+            this.CheckBoxAvgRasterTP.TabIndex = 20;
             this.CheckBoxAvgRasterTP.Text = "Transition probability every";
             this.CheckBoxAvgRasterTP.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterTPTimesteps
             // 
             this.LabelAvgRasterTPTimesteps.AutoSize = true;
-            this.LabelAvgRasterTPTimesteps.Location = new System.Drawing.Point(339, 147);
+            this.LabelAvgRasterTPTimesteps.Location = new System.Drawing.Point(342, 512);
             this.LabelAvgRasterTPTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterTPTimesteps.Name = "LabelAvgRasterTPTimesteps";
             this.LabelAvgRasterTPTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTPTimesteps.TabIndex = 19;
+            this.LabelAvgRasterTPTimesteps.TabIndex = 22;
             this.LabelAvgRasterTPTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterTPTimesteps
             // 
-            this.TextBoxAvgRasterTPTimesteps.Location = new System.Drawing.Point(262, 144);
+            this.TextBoxAvgRasterTPTimesteps.Location = new System.Drawing.Point(265, 507);
             this.TextBoxAvgRasterTPTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTPTimesteps.Name = "TextBoxAvgRasterTPTimesteps";
             this.TextBoxAvgRasterTPTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTPTimesteps.TabIndex = 18;
+            this.TextBoxAvgRasterTPTimesteps.TabIndex = 21;
             this.TextBoxAvgRasterTPTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // GroupBoxSummaryOutput
-            // 
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTAAges);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummarySAAges);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTRAges);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummarySCAges);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryOmitTS);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryOmitSS);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummarySCZeroValues);
-            this.GroupBoxSummaryOutput.Controls.Add(this.LabelSummaryTATimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.TextBoxSummaryTATimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTA);
-            this.GroupBoxSummaryOutput.Controls.Add(this.LabelSummarySATimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.TextBoxSummarySATimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTRCalcIntervalMean);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummarySA);
-            this.GroupBoxSummaryOutput.Controls.Add(this.TextBoxSummarySCTimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.LabelSummarySCTimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.LabelSummaryTRSCTimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummarySC);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTR);
-            this.GroupBoxSummaryOutput.Controls.Add(this.TextBoxSummaryTRSCTimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.LabelSummaryTRTimesteps);
-            this.GroupBoxSummaryOutput.Controls.Add(this.CheckBoxSummaryTRSC);
-            this.GroupBoxSummaryOutput.Controls.Add(this.TextBoxSummaryTRTimesteps);
-            this.GroupBoxSummaryOutput.Location = new System.Drawing.Point(4, 5);
-            this.GroupBoxSummaryOutput.Margin = new System.Windows.Forms.Padding(4);
-            this.GroupBoxSummaryOutput.Name = "GroupBoxSummaryOutput";
-            this.GroupBoxSummaryOutput.Padding = new System.Windows.Forms.Padding(4);
-            this.GroupBoxSummaryOutput.Size = new System.Drawing.Size(849, 223);
-            this.GroupBoxSummaryOutput.TabIndex = 0;
-            this.GroupBoxSummaryOutput.TabStop = false;
-            this.GroupBoxSummaryOutput.Text = "Tabular output";
             // 
             // CheckBoxSummaryTAAges
             // 
             this.CheckBoxSummaryTAAges.AutoSize = true;
-            this.CheckBoxSummaryTAAges.Location = new System.Drawing.Point(447, 139);
+            this.CheckBoxSummaryTAAges.Location = new System.Drawing.Point(451, 135);
             this.CheckBoxSummaryTAAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTAAges.Name = "CheckBoxSummaryTAAges";
             this.CheckBoxSummaryTAAges.Size = new System.Drawing.Size(110, 21);
@@ -459,7 +393,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummarySAAges
             // 
             this.CheckBoxSummarySAAges.AutoSize = true;
-            this.CheckBoxSummarySAAges.Location = new System.Drawing.Point(447, 112);
+            this.CheckBoxSummarySAAges.Location = new System.Drawing.Point(451, 109);
             this.CheckBoxSummarySAAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySAAges.Name = "CheckBoxSummarySAAges";
             this.CheckBoxSummarySAAges.Size = new System.Drawing.Size(110, 21);
@@ -470,7 +404,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryTRAges
             // 
             this.CheckBoxSummaryTRAges.AutoSize = true;
-            this.CheckBoxSummaryTRAges.Location = new System.Drawing.Point(447, 54);
+            this.CheckBoxSummaryTRAges.Location = new System.Drawing.Point(451, 53);
             this.CheckBoxSummaryTRAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTRAges.Name = "CheckBoxSummaryTRAges";
             this.CheckBoxSummaryTRAges.Size = new System.Drawing.Size(110, 21);
@@ -481,7 +415,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummarySCAges
             // 
             this.CheckBoxSummarySCAges.AutoSize = true;
-            this.CheckBoxSummarySCAges.Location = new System.Drawing.Point(447, 27);
+            this.CheckBoxSummarySCAges.Location = new System.Drawing.Point(451, 27);
             this.CheckBoxSummarySCAges.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySCAges.Name = "CheckBoxSummarySCAges";
             this.CheckBoxSummarySCAges.Size = new System.Drawing.Size(110, 21);
@@ -492,7 +426,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryOmitTS
             // 
             this.CheckBoxSummaryOmitTS.AutoSize = true;
-            this.CheckBoxSummaryOmitTS.Location = new System.Drawing.Point(15, 190);
+            this.CheckBoxSummaryOmitTS.Location = new System.Drawing.Point(19, 183);
             this.CheckBoxSummaryOmitTS.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryOmitTS.Name = "CheckBoxSummaryOmitTS";
             this.CheckBoxSummaryOmitTS.Size = new System.Drawing.Size(147, 21);
@@ -503,7 +437,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryOmitSS
             // 
             this.CheckBoxSummaryOmitSS.AutoSize = true;
-            this.CheckBoxSummaryOmitSS.Location = new System.Drawing.Point(15, 162);
+            this.CheckBoxSummaryOmitSS.Location = new System.Drawing.Point(19, 157);
             this.CheckBoxSummaryOmitSS.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryOmitSS.Name = "CheckBoxSummaryOmitSS";
             this.CheckBoxSummaryOmitSS.Size = new System.Drawing.Size(169, 21);
@@ -514,7 +448,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummarySCZeroValues
             // 
             this.CheckBoxSummarySCZeroValues.AutoSize = true;
-            this.CheckBoxSummarySCZeroValues.Location = new System.Drawing.Point(599, 27);
+            this.CheckBoxSummarySCZeroValues.Location = new System.Drawing.Point(603, 27);
             this.CheckBoxSummarySCZeroValues.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySCZeroValues.Name = "CheckBoxSummarySCZeroValues";
             this.CheckBoxSummarySCZeroValues.Size = new System.Drawing.Size(152, 21);
@@ -525,7 +459,7 @@ namespace SyncroSim.STSim
             // LabelSummaryTATimesteps
             // 
             this.LabelSummaryTATimesteps.AutoSize = true;
-            this.LabelSummaryTATimesteps.Location = new System.Drawing.Point(336, 140);
+            this.LabelSummaryTATimesteps.Location = new System.Drawing.Point(340, 135);
             this.LabelSummaryTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummaryTATimesteps.Name = "LabelSummaryTATimesteps";
             this.LabelSummaryTATimesteps.Size = new System.Drawing.Size(68, 17);
@@ -534,7 +468,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxSummaryTATimesteps
             // 
-            this.TextBoxSummaryTATimesteps.Location = new System.Drawing.Point(262, 137);
+            this.TextBoxSummaryTATimesteps.Location = new System.Drawing.Point(266, 132);
             this.TextBoxSummaryTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummaryTATimesteps.Name = "TextBoxSummaryTATimesteps";
             this.TextBoxSummaryTATimesteps.Size = new System.Drawing.Size(65, 22);
@@ -544,7 +478,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryTA
             // 
             this.CheckBoxSummaryTA.AutoSize = true;
-            this.CheckBoxSummaryTA.Location = new System.Drawing.Point(15, 135);
+            this.CheckBoxSummaryTA.Location = new System.Drawing.Point(19, 131);
             this.CheckBoxSummaryTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTA.Name = "CheckBoxSummaryTA";
             this.CheckBoxSummaryTA.Size = new System.Drawing.Size(195, 21);
@@ -555,7 +489,7 @@ namespace SyncroSim.STSim
             // LabelSummarySATimesteps
             // 
             this.LabelSummarySATimesteps.AutoSize = true;
-            this.LabelSummarySATimesteps.Location = new System.Drawing.Point(336, 112);
+            this.LabelSummarySATimesteps.Location = new System.Drawing.Point(340, 108);
             this.LabelSummarySATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummarySATimesteps.Name = "LabelSummarySATimesteps";
             this.LabelSummarySATimesteps.Size = new System.Drawing.Size(68, 17);
@@ -564,7 +498,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxSummarySATimesteps
             // 
-            this.TextBoxSummarySATimesteps.Location = new System.Drawing.Point(262, 108);
+            this.TextBoxSummarySATimesteps.Location = new System.Drawing.Point(266, 104);
             this.TextBoxSummarySATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummarySATimesteps.Name = "TextBoxSummarySATimesteps";
             this.TextBoxSummarySATimesteps.Size = new System.Drawing.Size(65, 22);
@@ -574,7 +508,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryTRCalcIntervalMean
             // 
             this.CheckBoxSummaryTRCalcIntervalMean.AutoSize = true;
-            this.CheckBoxSummaryTRCalcIntervalMean.Location = new System.Drawing.Point(599, 54);
+            this.CheckBoxSummaryTRCalcIntervalMean.Location = new System.Drawing.Point(603, 53);
             this.CheckBoxSummaryTRCalcIntervalMean.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTRCalcIntervalMean.Name = "CheckBoxSummaryTRCalcIntervalMean";
             this.CheckBoxSummaryTRCalcIntervalMean.Size = new System.Drawing.Size(241, 21);
@@ -585,7 +519,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummarySA
             // 
             this.CheckBoxSummarySA.AutoSize = true;
-            this.CheckBoxSummarySA.Location = new System.Drawing.Point(15, 108);
+            this.CheckBoxSummarySA.Location = new System.Drawing.Point(19, 105);
             this.CheckBoxSummarySA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySA.Name = "CheckBoxSummarySA";
             this.CheckBoxSummarySA.Size = new System.Drawing.Size(165, 21);
@@ -595,7 +529,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxSummarySCTimesteps
             // 
-            this.TextBoxSummarySCTimesteps.Location = new System.Drawing.Point(262, 23);
+            this.TextBoxSummarySCTimesteps.Location = new System.Drawing.Point(266, 23);
             this.TextBoxSummarySCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummarySCTimesteps.Name = "TextBoxSummarySCTimesteps";
             this.TextBoxSummarySCTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -605,7 +539,7 @@ namespace SyncroSim.STSim
             // LabelSummarySCTimesteps
             // 
             this.LabelSummarySCTimesteps.AutoSize = true;
-            this.LabelSummarySCTimesteps.Location = new System.Drawing.Point(336, 27);
+            this.LabelSummarySCTimesteps.Location = new System.Drawing.Point(340, 27);
             this.LabelSummarySCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummarySCTimesteps.Name = "LabelSummarySCTimesteps";
             this.LabelSummarySCTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -615,7 +549,7 @@ namespace SyncroSim.STSim
             // LabelSummaryTRSCTimesteps
             // 
             this.LabelSummaryTRSCTimesteps.AutoSize = true;
-            this.LabelSummaryTRSCTimesteps.Location = new System.Drawing.Point(336, 84);
+            this.LabelSummaryTRSCTimesteps.Location = new System.Drawing.Point(340, 81);
             this.LabelSummaryTRSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummaryTRSCTimesteps.Name = "LabelSummaryTRSCTimesteps";
             this.LabelSummaryTRSCTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -625,7 +559,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummarySC
             // 
             this.CheckBoxSummarySC.AutoSize = true;
-            this.CheckBoxSummarySC.Location = new System.Drawing.Point(15, 27);
+            this.CheckBoxSummarySC.Location = new System.Drawing.Point(19, 27);
             this.CheckBoxSummarySC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummarySC.Name = "CheckBoxSummarySC";
             this.CheckBoxSummarySC.Size = new System.Drawing.Size(153, 21);
@@ -636,7 +570,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryTR
             // 
             this.CheckBoxSummaryTR.AutoSize = true;
-            this.CheckBoxSummaryTR.Location = new System.Drawing.Point(15, 54);
+            this.CheckBoxSummaryTR.Location = new System.Drawing.Point(19, 53);
             this.CheckBoxSummaryTR.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTR.Name = "CheckBoxSummaryTR";
             this.CheckBoxSummaryTR.Size = new System.Drawing.Size(139, 21);
@@ -646,7 +580,7 @@ namespace SyncroSim.STSim
             // 
             // TextBoxSummaryTRSCTimesteps
             // 
-            this.TextBoxSummaryTRSCTimesteps.Location = new System.Drawing.Point(262, 80);
+            this.TextBoxSummaryTRSCTimesteps.Location = new System.Drawing.Point(266, 77);
             this.TextBoxSummaryTRSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummaryTRSCTimesteps.Name = "TextBoxSummaryTRSCTimesteps";
             this.TextBoxSummaryTRSCTimesteps.Size = new System.Drawing.Size(65, 22);
@@ -656,7 +590,7 @@ namespace SyncroSim.STSim
             // LabelSummaryTRTimesteps
             // 
             this.LabelSummaryTRTimesteps.AutoSize = true;
-            this.LabelSummaryTRTimesteps.Location = new System.Drawing.Point(336, 55);
+            this.LabelSummaryTRTimesteps.Location = new System.Drawing.Point(340, 55);
             this.LabelSummaryTRTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelSummaryTRTimesteps.Name = "LabelSummaryTRTimesteps";
             this.LabelSummaryTRTimesteps.Size = new System.Drawing.Size(68, 17);
@@ -666,7 +600,7 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryTRSC
             // 
             this.CheckBoxSummaryTRSC.AutoSize = true;
-            this.CheckBoxSummaryTRSC.Location = new System.Drawing.Point(15, 81);
+            this.CheckBoxSummaryTRSC.Location = new System.Drawing.Point(19, 79);
             this.CheckBoxSummaryTRSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryTRSC.Name = "CheckBoxSummaryTRSC";
             this.CheckBoxSummaryTRSC.Size = new System.Drawing.Size(229, 21);
@@ -676,88 +610,99 @@ namespace SyncroSim.STSim
             // 
             // TextBoxSummaryTRTimesteps
             // 
-            this.TextBoxSummaryTRTimesteps.Location = new System.Drawing.Point(262, 52);
+            this.TextBoxSummaryTRTimesteps.Location = new System.Drawing.Point(266, 50);
             this.TextBoxSummaryTRTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxSummaryTRTimesteps.Name = "TextBoxSummaryTRTimesteps";
             this.TextBoxSummaryTRTimesteps.Size = new System.Drawing.Size(65, 22);
             this.TextBoxSummaryTRTimesteps.TabIndex = 6;
             this.TextBoxSummaryTRTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // GroupBoxAvgSpatialOutput
+            // CheckBoxAvgRasterSTAcrossTimesteps
             // 
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterAgeAcrossTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterAge);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterAgeTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterAgeTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterTPAcrossTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterTAAcrossTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterSAAcrossTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterSCAcrossTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterTP);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterTPTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterTPTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterTA);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterSC);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterTATimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterSCTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterTATimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterSCTimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.CheckBoxAvgRasterSA);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.LabelAvgRasterSATimesteps);
-            this.GroupBoxAvgSpatialOutput.Controls.Add(this.TextBoxAvgRasterSATimesteps);
-            this.GroupBoxAvgSpatialOutput.Location = new System.Drawing.Point(4, 392);
-            this.GroupBoxAvgSpatialOutput.Margin = new System.Windows.Forms.Padding(4);
-            this.GroupBoxAvgSpatialOutput.Name = "GroupBoxAvgSpatialOutput";
-            this.GroupBoxAvgSpatialOutput.Size = new System.Drawing.Size(849, 178);
-            this.GroupBoxAvgSpatialOutput.TabIndex = 2;
-            this.GroupBoxAvgSpatialOutput.TabStop = false;
-            this.GroupBoxAvgSpatialOutput.Text = "Average spatial output";
+            this.CheckBoxAvgRasterSTAcrossTimesteps.AutoSize = true;
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Location = new System.Drawing.Point(450, 429);
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Name = "CheckBoxAvgRasterSTAcrossTimesteps";
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
+            this.CheckBoxAvgRasterSTAcrossTimesteps.TabIndex = 11;
+            this.CheckBoxAvgRasterSTAcrossTimesteps.Text = "Average across preceeding timesteps";
+            this.CheckBoxAvgRasterSTAcrossTimesteps.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxAvgRasterST
+            // 
+            this.CheckBoxAvgRasterST.AutoSize = true;
+            this.CheckBoxAvgRasterST.Location = new System.Drawing.Point(18, 430);
+            this.CheckBoxAvgRasterST.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxAvgRasterST.Name = "CheckBoxAvgRasterST";
+            this.CheckBoxAvgRasterST.Size = new System.Drawing.Size(187, 21);
+            this.CheckBoxAvgRasterST.TabIndex = 8;
+            this.CheckBoxAvgRasterST.Text = "Stratum probability every";
+            this.CheckBoxAvgRasterST.UseVisualStyleBackColor = true;
+            // 
+            // LabelAvgRasterSTTimesteps
+            // 
+            this.LabelAvgRasterSTTimesteps.AutoSize = true;
+            this.LabelAvgRasterSTTimesteps.Location = new System.Drawing.Point(342, 429);
+            this.LabelAvgRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelAvgRasterSTTimesteps.Name = "LabelAvgRasterSTTimesteps";
+            this.LabelAvgRasterSTTimesteps.Size = new System.Drawing.Size(68, 17);
+            this.LabelAvgRasterSTTimesteps.TabIndex = 10;
+            this.LabelAvgRasterSTTimesteps.Text = "timesteps";
+            // 
+            // TextBoxAvgRasterSTTimesteps
+            // 
+            this.TextBoxAvgRasterSTTimesteps.Location = new System.Drawing.Point(265, 426);
+            this.TextBoxAvgRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
+            this.TextBoxAvgRasterSTTimesteps.Name = "TextBoxAvgRasterSTTimesteps";
+            this.TextBoxAvgRasterSTTimesteps.Size = new System.Drawing.Size(65, 22);
+            this.TextBoxAvgRasterSTTimesteps.TabIndex = 9;
+            this.TextBoxAvgRasterSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterAgeAcrossTimesteps
             // 
             this.CheckBoxAvgRasterAgeAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterAgeAcrossTimesteps.Location = new System.Drawing.Point(447, 60);
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.Location = new System.Drawing.Point(450, 402);
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Name = "CheckBoxAvgRasterAgeAcrossTimesteps";
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterAgeAcrossTimesteps.TabIndex = 8;
+            this.CheckBoxAvgRasterAgeAcrossTimesteps.TabIndex = 7;
             this.CheckBoxAvgRasterAgeAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterAgeAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterAge
             // 
             this.CheckBoxAvgRasterAge.AutoSize = true;
-            this.CheckBoxAvgRasterAge.Location = new System.Drawing.Point(15, 60);
+            this.CheckBoxAvgRasterAge.Location = new System.Drawing.Point(18, 403);
             this.CheckBoxAvgRasterAge.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterAge.Name = "CheckBoxAvgRasterAge";
             this.CheckBoxAvgRasterAge.Size = new System.Drawing.Size(101, 21);
-            this.CheckBoxAvgRasterAge.TabIndex = 5;
+            this.CheckBoxAvgRasterAge.TabIndex = 4;
             this.CheckBoxAvgRasterAge.Text = "Ages every";
             this.CheckBoxAvgRasterAge.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterAgeTimesteps
             // 
             this.LabelAvgRasterAgeTimesteps.AutoSize = true;
-            this.LabelAvgRasterAgeTimesteps.Location = new System.Drawing.Point(339, 60);
+            this.LabelAvgRasterAgeTimesteps.Location = new System.Drawing.Point(342, 402);
             this.LabelAvgRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterAgeTimesteps.Name = "LabelAvgRasterAgeTimesteps";
             this.LabelAvgRasterAgeTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterAgeTimesteps.TabIndex = 7;
+            this.LabelAvgRasterAgeTimesteps.TabIndex = 6;
             this.LabelAvgRasterAgeTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterAgeTimesteps
             // 
-            this.TextBoxAvgRasterAgeTimesteps.Location = new System.Drawing.Point(262, 57);
+            this.TextBoxAvgRasterAgeTimesteps.Location = new System.Drawing.Point(265, 399);
             this.TextBoxAvgRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterAgeTimesteps.Name = "TextBoxAvgRasterAgeTimesteps";
             this.TextBoxAvgRasterAgeTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterAgeTimesteps.TabIndex = 6;
+            this.TextBoxAvgRasterAgeTimesteps.TabIndex = 5;
             this.TextBoxAvgRasterAgeTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterTPAcrossTimesteps
             // 
             this.CheckBoxAvgRasterTPAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterTPAcrossTimesteps.Location = new System.Drawing.Point(447, 147);
+            this.CheckBoxAvgRasterTPAcrossTimesteps.Location = new System.Drawing.Point(450, 510);
             this.CheckBoxAvgRasterTPAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTPAcrossTimesteps.Name = "CheckBoxAvgRasterTPAcrossTimesteps";
             this.CheckBoxAvgRasterTPAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
@@ -768,146 +713,251 @@ namespace SyncroSim.STSim
             // CheckBoxAvgRasterTAAcrossTimesteps
             // 
             this.CheckBoxAvgRasterTAAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterTAAcrossTimesteps.Location = new System.Drawing.Point(447, 118);
+            this.CheckBoxAvgRasterTAAcrossTimesteps.Location = new System.Drawing.Point(450, 483);
             this.CheckBoxAvgRasterTAAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTAAcrossTimesteps.Name = "CheckBoxAvgRasterTAAcrossTimesteps";
             this.CheckBoxAvgRasterTAAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterTAAcrossTimesteps.TabIndex = 16;
+            this.CheckBoxAvgRasterTAAcrossTimesteps.TabIndex = 19;
             this.CheckBoxAvgRasterTAAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterTAAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterSAAcrossTimesteps
             // 
             this.CheckBoxAvgRasterSAAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterSAAcrossTimesteps.Location = new System.Drawing.Point(447, 89);
+            this.CheckBoxAvgRasterSAAcrossTimesteps.Location = new System.Drawing.Point(450, 456);
             this.CheckBoxAvgRasterSAAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSAAcrossTimesteps.Name = "CheckBoxAvgRasterSAAcrossTimesteps";
             this.CheckBoxAvgRasterSAAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSAAcrossTimesteps.TabIndex = 12;
+            this.CheckBoxAvgRasterSAAcrossTimesteps.TabIndex = 15;
             this.CheckBoxAvgRasterSAAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSAAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterSCAcrossTimesteps
             // 
             this.CheckBoxAvgRasterSCAcrossTimesteps.AutoSize = true;
-            this.CheckBoxAvgRasterSCAcrossTimesteps.Location = new System.Drawing.Point(447, 31);
+            this.CheckBoxAvgRasterSCAcrossTimesteps.Location = new System.Drawing.Point(450, 375);
             this.CheckBoxAvgRasterSCAcrossTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSCAcrossTimesteps.Name = "CheckBoxAvgRasterSCAcrossTimesteps";
             this.CheckBoxAvgRasterSCAcrossTimesteps.Size = new System.Drawing.Size(268, 21);
-            this.CheckBoxAvgRasterSCAcrossTimesteps.TabIndex = 4;
+            this.CheckBoxAvgRasterSCAcrossTimesteps.TabIndex = 3;
             this.CheckBoxAvgRasterSCAcrossTimesteps.Text = "Average across preceeding timesteps";
             this.CheckBoxAvgRasterSCAcrossTimesteps.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterTA
             // 
             this.CheckBoxAvgRasterTA.AutoSize = true;
-            this.CheckBoxAvgRasterTA.Location = new System.Drawing.Point(15, 118);
+            this.CheckBoxAvgRasterTA.Location = new System.Drawing.Point(18, 483);
             this.CheckBoxAvgRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTA.Name = "CheckBoxAvgRasterTA";
             this.CheckBoxAvgRasterTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxAvgRasterTA.TabIndex = 13;
+            this.CheckBoxAvgRasterTA.TabIndex = 16;
             this.CheckBoxAvgRasterTA.Text = "Transition attributes every";
             this.CheckBoxAvgRasterTA.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterSC
             // 
             this.CheckBoxAvgRasterSC.AutoSize = true;
-            this.CheckBoxAvgRasterSC.Location = new System.Drawing.Point(15, 31);
+            this.CheckBoxAvgRasterSC.Location = new System.Drawing.Point(18, 375);
             this.CheckBoxAvgRasterSC.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSC.Name = "CheckBoxAvgRasterSC";
             this.CheckBoxAvgRasterSC.Size = new System.Drawing.Size(207, 21);
-            this.CheckBoxAvgRasterSC.TabIndex = 1;
+            this.CheckBoxAvgRasterSC.TabIndex = 0;
             this.CheckBoxAvgRasterSC.Text = "State class probability every";
             this.CheckBoxAvgRasterSC.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterTATimesteps
             // 
             this.LabelAvgRasterTATimesteps.AutoSize = true;
-            this.LabelAvgRasterTATimesteps.Location = new System.Drawing.Point(339, 118);
+            this.LabelAvgRasterTATimesteps.Location = new System.Drawing.Point(342, 484);
             this.LabelAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterTATimesteps.Name = "LabelAvgRasterTATimesteps";
             this.LabelAvgRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTATimesteps.TabIndex = 15;
+            this.LabelAvgRasterTATimesteps.TabIndex = 18;
             this.LabelAvgRasterTATimesteps.Text = "timesteps";
             // 
             // LabelAvgRasterSCTimesteps
             // 
             this.LabelAvgRasterSCTimesteps.AutoSize = true;
-            this.LabelAvgRasterSCTimesteps.Location = new System.Drawing.Point(339, 31);
+            this.LabelAvgRasterSCTimesteps.Location = new System.Drawing.Point(342, 375);
             this.LabelAvgRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSCTimesteps.Name = "LabelAvgRasterSCTimesteps";
             this.LabelAvgRasterSCTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSCTimesteps.TabIndex = 3;
+            this.LabelAvgRasterSCTimesteps.TabIndex = 2;
             this.LabelAvgRasterSCTimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterTATimesteps
             // 
-            this.TextBoxAvgRasterTATimesteps.Location = new System.Drawing.Point(262, 115);
+            this.TextBoxAvgRasterTATimesteps.Location = new System.Drawing.Point(265, 480);
             this.TextBoxAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTATimesteps.Name = "TextBoxAvgRasterTATimesteps";
             this.TextBoxAvgRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTATimesteps.TabIndex = 14;
+            this.TextBoxAvgRasterTATimesteps.TabIndex = 17;
             this.TextBoxAvgRasterTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxAvgRasterSCTimesteps
             // 
-            this.TextBoxAvgRasterSCTimesteps.Location = new System.Drawing.Point(262, 28);
+            this.TextBoxAvgRasterSCTimesteps.Location = new System.Drawing.Point(265, 371);
             this.TextBoxAvgRasterSCTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSCTimesteps.Name = "TextBoxAvgRasterSCTimesteps";
             this.TextBoxAvgRasterSCTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSCTimesteps.TabIndex = 2;
+            this.TextBoxAvgRasterSCTimesteps.TabIndex = 1;
             this.TextBoxAvgRasterSCTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxAvgRasterSA
             // 
             this.CheckBoxAvgRasterSA.AutoSize = true;
-            this.CheckBoxAvgRasterSA.Location = new System.Drawing.Point(15, 89);
+            this.CheckBoxAvgRasterSA.Location = new System.Drawing.Point(18, 456);
             this.CheckBoxAvgRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSA.Name = "CheckBoxAvgRasterSA";
             this.CheckBoxAvgRasterSA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxAvgRasterSA.TabIndex = 9;
+            this.CheckBoxAvgRasterSA.TabIndex = 12;
             this.CheckBoxAvgRasterSA.Text = "State attributes every";
             this.CheckBoxAvgRasterSA.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterSATimesteps
             // 
             this.LabelAvgRasterSATimesteps.AutoSize = true;
-            this.LabelAvgRasterSATimesteps.Location = new System.Drawing.Point(339, 90);
+            this.LabelAvgRasterSATimesteps.Location = new System.Drawing.Point(342, 457);
             this.LabelAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelAvgRasterSATimesteps.Name = "LabelAvgRasterSATimesteps";
             this.LabelAvgRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSATimesteps.TabIndex = 11;
+            this.LabelAvgRasterSATimesteps.TabIndex = 14;
             this.LabelAvgRasterSATimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterSATimesteps
             // 
-            this.TextBoxAvgRasterSATimesteps.Location = new System.Drawing.Point(262, 86);
+            this.TextBoxAvgRasterSATimesteps.Location = new System.Drawing.Point(265, 453);
             this.TextBoxAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSATimesteps.Name = "TextBoxAvgRasterSATimesteps";
             this.TextBoxAvgRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSATimesteps.TabIndex = 10;
+            this.TextBoxAvgRasterSATimesteps.TabIndex = 13;
             this.TextBoxAvgRasterSATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.LabelAvgSpatialTitle);
+            this.panel1.Controls.Add(this.LabelSpatialTitle);
+            this.panel1.Controls.Add(this.LabelTabularTitle);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterSTAcrossTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxRasterTE);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterST);
+            this.panel1.Controls.Add(this.CheckBoxSummaryTAAges);
+            this.panel1.Controls.Add(this.LabelAvgRasterSTTimesteps);
+            this.panel1.Controls.Add(this.LabelRasterTETimesteps);
+            this.panel1.Controls.Add(this.TextBoxAvgRasterSTTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummarySC);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterAgeAcrossTimesteps);
+            this.panel1.Controls.Add(this.TextBoxRasterTETimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterAge);
+            this.panel1.Controls.Add(this.CheckBoxSummarySAAges);
+            this.panel1.Controls.Add(this.LabelAvgRasterAgeTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxRasterTA);
+            this.panel1.Controls.Add(this.TextBoxAvgRasterAgeTimesteps);
+            this.panel1.Controls.Add(this.TextBoxSummaryTRTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterTPAcrossTimesteps);
+            this.panel1.Controls.Add(this.LabelRasterTATimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterTAAcrossTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummaryTRAges);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterSAAcrossTimesteps);
+            this.panel1.Controls.Add(this.TextBoxRasterTATimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterSCAcrossTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummaryTRSC);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterTP);
+            this.panel1.Controls.Add(this.CheckBoxRasterSA);
+            this.panel1.Controls.Add(this.TextBoxAvgRasterTPTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummarySCAges);
+            this.panel1.Controls.Add(this.LabelAvgRasterTPTimesteps);
+            this.panel1.Controls.Add(this.LabelRasterSATimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterTA);
+            this.panel1.Controls.Add(this.LabelSummaryTRTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterSC);
+            this.panel1.Controls.Add(this.LabelAvgRasterTATimesteps);
+            this.panel1.Controls.Add(this.TextBoxRasterSATimesteps);
+            this.panel1.Controls.Add(this.LabelAvgRasterSCTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummaryOmitTS);
+            this.panel1.Controls.Add(this.TextBoxAvgRasterTATimesteps);
+            this.panel1.Controls.Add(this.LabelRasterTSTTimesteps);
+            this.panel1.Controls.Add(this.TextBoxAvgRasterSCTimesteps);
+            this.panel1.Controls.Add(this.TextBoxSummaryTRSCTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxAvgRasterSA);
+            this.panel1.Controls.Add(this.TextBoxRasterTSTTimesteps);
+            this.panel1.Controls.Add(this.LabelAvgRasterSATimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummaryOmitSS);
+            this.panel1.Controls.Add(this.TextBoxAvgRasterSATimesteps);
+            this.panel1.Controls.Add(this.CheckBoxRasterTST);
+            this.panel1.Controls.Add(this.CheckBoxSummaryTR);
+            this.panel1.Controls.Add(this.TextBoxRasterAgeTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummarySCZeroValues);
+            this.panel1.Controls.Add(this.CheckBoxRasterAge);
+            this.panel1.Controls.Add(this.LabelSummaryTRSCTimesteps);
+            this.panel1.Controls.Add(this.LabelRasterAgeTimesteps);
+            this.panel1.Controls.Add(this.LabelSummaryTATimesteps);
+            this.panel1.Controls.Add(this.TextBoxRasterTRTimesteps);
+            this.panel1.Controls.Add(this.LabelSummarySCTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxRasterST);
+            this.panel1.Controls.Add(this.TextBoxSummaryTATimesteps);
+            this.panel1.Controls.Add(this.LabelRasterSTTimesteps);
+            this.panel1.Controls.Add(this.TextBoxSummarySCTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxRasterSC);
+            this.panel1.Controls.Add(this.CheckBoxRasterTR);
+            this.panel1.Controls.Add(this.CheckBoxSummaryTA);
+            this.panel1.Controls.Add(this.TextBoxRasterSCTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummarySA);
+            this.panel1.Controls.Add(this.TextBoxRasterSTTimesteps);
+            this.panel1.Controls.Add(this.LabelSummarySATimesteps);
+            this.panel1.Controls.Add(this.LabelRasterTRTimesteps);
+            this.panel1.Controls.Add(this.CheckBoxSummaryTRCalcIntervalMean);
+            this.panel1.Controls.Add(this.LabelRasterSCTimesteps);
+            this.panel1.Controls.Add(this.TextBoxSummarySATimesteps);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1826, 903);
+            this.panel1.TabIndex = 2;
+            // 
+            // LabelAvgSpatialTitle
+            // 
+            this.LabelAvgSpatialTitle.AutoSize = true;
+            this.LabelAvgSpatialTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelAvgSpatialTitle.Location = new System.Drawing.Point(3, 350);
+            this.LabelAvgSpatialTitle.Name = "LabelAvgSpatialTitle";
+            this.LabelAvgSpatialTitle.Size = new System.Drawing.Size(172, 17);
+            this.LabelAvgSpatialTitle.TabIndex = 29;
+            this.LabelAvgSpatialTitle.Text = "Average spatial output";
+            // 
+            // LabelSpatialTitle
+            // 
+            this.LabelSpatialTitle.AutoSize = true;
+            this.LabelSpatialTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelSpatialTitle.Location = new System.Drawing.Point(5, 215);
+            this.LabelSpatialTitle.Name = "LabelSpatialTitle";
+            this.LabelSpatialTitle.Size = new System.Drawing.Size(109, 17);
+            this.LabelSpatialTitle.TabIndex = 28;
+            this.LabelSpatialTitle.Text = "Spatial output";
+            // 
+            // LabelTabularTitle
+            // 
+            this.LabelTabularTitle.AutoSize = true;
+            this.LabelTabularTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelTabularTitle.Location = new System.Drawing.Point(4, 4);
+            this.LabelTabularTitle.Name = "LabelTabularTitle";
+            this.LabelTabularTitle.Size = new System.Drawing.Size(115, 17);
+            this.LabelTabularTitle.TabIndex = 27;
+            this.LabelTabularTitle.Text = "Tabular output";
             // 
             // OutputOptionsDataFeedView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.GroupBoxAvgSpatialOutput);
-            this.Controls.Add(this.GroupBoxSpatialOutput);
-            this.Controls.Add(this.GroupBoxSummaryOutput);
+            this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "OutputOptionsDataFeedView";
-            this.Size = new System.Drawing.Size(860, 574);
-            this.GroupBoxSpatialOutput.ResumeLayout(false);
-            this.GroupBoxSpatialOutput.PerformLayout();
-            this.GroupBoxSummaryOutput.ResumeLayout(false);
-            this.GroupBoxSummaryOutput.PerformLayout();
-            this.GroupBoxAvgSpatialOutput.ResumeLayout(false);
-            this.GroupBoxAvgSpatialOutput.PerformLayout();
+            this.Size = new System.Drawing.Size(1826, 903);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
-        internal System.Windows.Forms.GroupBox GroupBoxSpatialOutput;
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterTP;
         internal System.Windows.Forms.Label LabelAvgRasterTPTimesteps;
         internal System.Windows.Forms.TextBox TextBoxAvgRasterTPTimesteps;
@@ -932,7 +982,6 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.TextBox TextBoxRasterSTTimesteps;
         internal System.Windows.Forms.Label LabelRasterTRTimesteps;
         internal System.Windows.Forms.Label LabelRasterSCTimesteps;
-        internal System.Windows.Forms.GroupBox GroupBoxSummaryOutput;
         internal System.Windows.Forms.CheckBox CheckBoxSummarySCZeroValues;
         internal System.Windows.Forms.Label LabelSummaryTATimesteps;
         internal System.Windows.Forms.TextBox TextBoxSummaryTATimesteps;
@@ -959,7 +1008,6 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.CheckBox CheckBoxRasterTE;
         internal System.Windows.Forms.Label LabelRasterTETimesteps;
         internal System.Windows.Forms.TextBox TextBoxRasterTETimesteps;
-        private System.Windows.Forms.GroupBox GroupBoxAvgSpatialOutput;
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterTA;
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterSC;
         internal System.Windows.Forms.Label LabelAvgRasterTATimesteps;
@@ -977,5 +1025,13 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.CheckBox CheckBoxAvgRasterAge;
         internal System.Windows.Forms.Label LabelAvgRasterAgeTimesteps;
         internal System.Windows.Forms.TextBox TextBoxAvgRasterAgeTimesteps;
+        internal System.Windows.Forms.CheckBox CheckBoxAvgRasterSTAcrossTimesteps;
+        internal System.Windows.Forms.CheckBox CheckBoxAvgRasterST;
+        internal System.Windows.Forms.Label LabelAvgRasterSTTimesteps;
+        internal System.Windows.Forms.TextBox TextBoxAvgRasterSTTimesteps;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label LabelAvgSpatialTitle;
+        private System.Windows.Forms.Label LabelSpatialTitle;
+        private System.Windows.Forms.Label LabelTabularTitle;
     }
 }

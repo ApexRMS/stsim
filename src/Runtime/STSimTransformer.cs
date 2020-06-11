@@ -346,6 +346,7 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
+            this.WriteAvgStratumRasters();
             this.WriteAvgStateClassRasters();
             this.WriteAvgAgeRasters();
             this.WriteAvgStateAttributeRasters();
@@ -453,6 +454,7 @@ namespace SyncroSim.STSim
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, timestep);
 
             //Record averaging data
+            this.RecordAvgRasterStratumData(timestep);
             this.RecordAvgRasterStateClassData(timestep);
             this.RecordAvgRasterAgeData(timestep);
             this.RecordAvgRasterStateAttributeData(iteration, timestep);

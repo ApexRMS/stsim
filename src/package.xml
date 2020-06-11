@@ -482,7 +482,10 @@
                 <column name="RasterOutputTA" dataType="Boolean" displayName="Raster TA"/>
                 <column name="RasterOutputTATimesteps" displayName="Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputTransitionEvents" dataType="Boolean" displayName="Raster Transition Events"/>
-                <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                
+                <column name="AvgRasterOutputST" displayName="Avg. Raster ST" dataType="Boolean"/>
+                <column name="AvgRasterOutputSTTimesteps" displayName="Avg. Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSTAcrossTimesteps" dataType="Boolean"/>                                                  
                 <column name="AvgRasterOutputSC" displayName="Avg. Raster SC" dataType="Boolean"/>
                 <column name="AvgRasterOutputSCTimesteps" displayName="Avg. Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="AvgRasterOutputSCAcrossTimesteps" dataType="Boolean"/>  
@@ -1190,6 +1193,20 @@
             </datasheet>
           </datasheets>
         </datafeed>
+        <datafeed name="OutputSpatialAverageStratum" displayName="Spatial Average Primary Stratum" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialAverageStratum" displayName="Spatial Average Primary Stratum" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="StratumID" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
+                <column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StratumID" filenameCode="avgstr"/>
+                <column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
         <datafeed name="OutputSpatialAverageStateClass" displayName="Output Average Spatial State Class" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialAverageStateClass" displayName="Output Average Spatial State Class" spatialMultiProcessing="True">
@@ -1287,6 +1304,8 @@
     </transformer>
     <transformer name="TransitionEventRasterMap" displayName="Transition Events" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialTransitionEvent" column="Filename" isFolderExport="True">
     </transformer>    
+    <transformer name="AverageStratumRasterMap" className="SyncroSim.STSim.AvgStratumExportTransformer" classAssembly="SyncroSim.STSim" dataSheet="OutputSpatialAverageStratum" column="Filename" isFolderExport="True">
+    </transformer>    
     <transformer name="AverageStateClassRasterMap" displayName="Average State Class Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageStateClass" column="Filename" isFolderExport="True">
     </transformer>
     <transformer name="AverageAgeRasterMap" displayName="Average Ages" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageAge" column="Filename" isFolderExport="True">
@@ -1337,7 +1356,8 @@
             <item name="AverageStateClassRasterMap"/>             
             <item name="AgeRasterMap"/>  
             <item name="AverageAgeRasterMap"/>             
-            <item name="StratumRasterMap"/>            
+            <item name="StratumRasterMap"/>  
+            <item name="AverageStratumRasterMap"/>             
           </group>
           <group name="Transitions">
             <item name="TransitionRasterMap"/>   

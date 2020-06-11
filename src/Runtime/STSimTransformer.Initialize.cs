@@ -47,6 +47,7 @@ namespace SyncroSim.STSim
 
             if (this.IsSpatial)
             {
+                this.InitializeAvgRasterStratumMap();
                 this.InitializeAvgRasterStateClassMap();
                 this.InitializeAvgRasterAgeMap();
                 this.InitializeAvgRasterStateAttributeMaps();
@@ -213,6 +214,9 @@ namespace SyncroSim.STSim
                 this.m_RasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
                 this.m_CreateRasterTransitionEventOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME]);
                 this.m_RasterTransitionEventOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME]);
+                this.m_CreateAvgRasterStratumOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_COLUMN_NAME]);
+                this.m_AvgRasterStratumOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+                this.m_AvgRasterStratumAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME]);
                 this.m_CreateAvgRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME]);
                 this.m_AvgRasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
                 this.m_AvgRasterStateClassAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME]);

@@ -2349,6 +2349,42 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Initializes the average raster stratum map
+        /// </summary>
+        private void InitializeAvgRasterStratumMap()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterStratumOutput)
+            {
+                return;
+            }
+
+            foreach (Stratum st in this.m_Strata)
+            {
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if (this.IsAvgRasterStratumTimestep(timestep))
+                    {
+                        double[] Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0.0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgStratumMap.Add(st.StratumId, dict);
+            }
+        }
+
+        /// <summary>
         /// Initializes the average raster state class map
         /// </summary>
         private void InitializeAvgRasterStateClassMap()

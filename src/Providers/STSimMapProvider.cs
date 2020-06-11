@@ -176,22 +176,23 @@ namespace SyncroSim.STSim
             DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
-            SyncroSimLayoutItem SCItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", false);
-            SyncroSimLayoutItem AvgSCItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME, "Average State Class", true);
+            SyncroSimLayoutItem StateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", false);
+            SyncroSimLayoutItem AvgStateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME, "Avg. State Class Prob.", true);
             SyncroSimLayoutItem AgeItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", false);
             SyncroSimLayoutItem AvgAgeItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average Age", false);
-            SyncroSimLayoutItem STItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
+            SyncroSimLayoutItem StratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
+            SyncroSimLayoutItem AvgStratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME, "Avg. " + psl + " Prob.", true);
 
             //State Class
-            SCItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
-            SCItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            SCItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
+            StateClassItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
+            StateClassItem.Properties.Add(new MetaDataProperty("column", "Filename"));
+            StateClassItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
 
-            stateVariableGroup.Items.Add(SCItem);
+            stateVariableGroup.Items.Add(StateClassItem);
 
             //Average State Class
-            AddAvgMapStateClassVariables(project, AvgSCItem.Items);
-            stateVariableGroup.Items.Add(AvgSCItem);
+            AddAvgMapStateClassVariables(project, AvgStateClassItem.Items);
+            stateVariableGroup.Items.Add(AvgStateClassItem);
 
             //Age
             AgeItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
@@ -209,11 +210,43 @@ namespace SyncroSim.STSim
             stateVariableGroup.Items.Add(AvgAgeItem);
 
             //Stratum
-            STItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
-            STItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            STItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
+            StratumItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
+            StratumItem.Properties.Add(new MetaDataProperty("column", "Filename"));
+            StratumItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
 
-            stateVariableGroup.Items.Add(STItem);
+            stateVariableGroup.Items.Add(StratumItem);
+
+            //Average Stratum
+            AddAvgMapStratumVariables(project, AvgStratumItem.Items);
+            stateVariableGroup.Items.Add(AvgStratumItem);
+        }
+
+        private static void AddAvgMapStratumVariables(
+            Project project,
+            SyncroSimLayoutItemCollection items)
+        {
+            List<Stratum> Strata = GetStrata(project);
+            string FilePrefix = Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX;
+
+            Strata.Sort((Stratum st1, Stratum st2) =>
+            {
+                return string.Compare(st1.DisplayName, st2.DisplayName, StringComparison.CurrentCulture);
+            });
+
+            foreach (Stratum st in Strata)
+            {
+                string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", FilePrefix, st.StratumId);
+                SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, st.DisplayName, false);
+
+                Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStratum"));
+                Item.Properties.Add(new MetaDataProperty("column", "Filename"));
+                Item.Properties.Add(new MetaDataProperty("filter", "StratumID"));
+                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
+                Item.Properties.Add(new MetaDataProperty("itemId", st.StratumId.ToString(CultureInfo.InvariantCulture)));
+                Item.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
+
+                items.Add(Item);
+            }
         }
 
         private static void AddAvgMapStateClassVariables(
@@ -466,6 +499,22 @@ namespace SyncroSim.STSim
                     groupsDict[GroupName].Items.Add(Item);
                 }
             }
+        }
+
+        private static List<Stratum> GetStrata(Project project)
+        {
+            List<Stratum> Strata = new List<Stratum>();
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+                Strata.Add(new Stratum(id, name));
+            }
+
+            return Strata;
         }
 
         private static List<StateClass> GetStateClasses(Project project)

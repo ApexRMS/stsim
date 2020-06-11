@@ -49,17 +49,6 @@ namespace SyncroSim.STSim
         public static Color DETERMINISTIC_TRANSITION_LINE_COLOR = Color.Green;
         public static Color PROBABILISTIC_TRANSITION_LINE_COLOR = Color.CornflowerBlue;
 
-        //Spatial map export variables
-        public const string SPATIAL_MAP_EXPORT_STRATUM_VARIABLE_NAME = "Stratum";
-        public const string SPATIAL_MAP_EXPORT_STATE_CLASS_VARIABLE_NAME = "SClass";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_VARIABLE_PREFIX = "Tg";
-        public const string SPATIAL_MAP_EXPORT_AGE_VARIABLE_NAME = "Age";
-        public const string SPATIAL_MAP_EXPORT_TST_VARIABLE_NAME = "Tst";
-        public const string SPATIAL_MAP_EXPORT_STATE_ATTRIBUTE_VARIABLE_PREFIX = "Sa";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "Ta";
-        public const string SPATIAL_MAP_EXPORT_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "Tge";
-        public const string SPATIAL_MAP_EXPORT_AVG_ANNUAL_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "Tgap";
-
         //Spatial file prefixes
         public const string SPATIAL_MAP_STRATUM_FILEPREFIX = "str";
         public const string SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX = "secstr";
@@ -71,6 +60,8 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX = "sa";
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX = "ta";
         public const string SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX = "tge";
+
+        public const string SPATIAL_MAP_AVG_STRATUM_FILEPREFIX = "avgstr";
         public const string SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX = "avgsc";
         public const string SPATIAL_MAP_AVG_AGE_FILEPREFIX = "avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX = "avgsa";
@@ -79,18 +70,14 @@ namespace SyncroSim.STSim
 
         //Spatial map variables
         public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";
-        public const string SPATIAL_MAP_SECONDARY_STRATUM_VARIABLE_NAME = "stsim_secstr";
-        public const string SPATIAL_MAP_TERTIARY_STRATUM_VARIABLE_NAME = "stsim_terstr";
         public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME = "stsim_sc";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
         public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "stsim_age";
-        public const string SPATIAL_MAP_TST_VARIABLE_NAME = "stsim_tst";
-
-        public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_PREFIX = "stsim_sc";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
         public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
         public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
 
+        public const string SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME = "stsim_avgstr";
         public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_avgsc";
         public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";
@@ -106,6 +93,8 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialStateAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE = "stsim_OutputSpatialTransitionAttribute";
         public const string DATASHEET_OUTPUT_SPATIAL_TST = "stsim_OutputSpatialTST";
+
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM = "stsim_OutputSpatialAverageStratum";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS = "stsim_OutputSpatialAverageStateClass";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_AGE = "stsim_OutputSpatialAverageAge";
         public const string DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE = "stsim_OutputSpatialAverageStateAttribute";

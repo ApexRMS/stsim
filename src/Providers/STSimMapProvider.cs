@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
     internal class STSimMapProvider : MapProvider
     {
         static string AVG_ALL_ITER = "(Average for all Iterations)";
-        static string AVG_PROB_ALL_ITER = "(Avg. Prob. for all Iterations)";
+        static string AVG_PROB_ALL_ITER = "(Probability for all Iterations)";
 
         public override void CreateColorMaps(Project project)
         {
@@ -55,7 +55,7 @@ namespace SyncroSim.STSim
                 SyncroSimLayoutItem TransitionEventGroup = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
                 SyncroSimLayoutItem AvgStateAttributeGroup = new SyncroSimLayoutItem("AvgStateAttributeGroup", "Average State Attributes", true);
                 SyncroSimLayoutItem AvgTransitionAttributeGroup = new SyncroSimLayoutItem("AvgTransitionAttributeGroup", "Average Transition Attributes", true);
-                SyncroSimLayoutItem AvgTransitionProbabilityGroup = new SyncroSimLayoutItem("AvgTransitionProbabilityGroup", "Average Transition Probability", true);
+                SyncroSimLayoutItem AvgTransitionProbabilityGroup = new SyncroSimLayoutItem("AvgTransitionProbabilityGroup", "Transition Probability", true);
 
                 //State Variables
                 AddStateVariables(project, StateVariablesTopLevelGroup);
@@ -96,7 +96,7 @@ namespace SyncroSim.STSim
                     "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeID",
                     Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, AVG_ALL_ITER, store, AttrGroupView);
 
-                //Average Transition Probability
+                //Transition Probability
                 AddMapTransitionGroupVariables(
                     project, AvgTransitionProbabilityGroup.Items, 
                     "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER, 
@@ -177,11 +177,11 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
             SyncroSimLayoutItem StateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", false);
-            SyncroSimLayoutItem AvgStateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME, "Avg. State Class Prob.", true);
+            SyncroSimLayoutItem AvgStateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME, "State Class Probability", true);
             SyncroSimLayoutItem AgeItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", false);
             SyncroSimLayoutItem AvgAgeItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average Age", false);
             SyncroSimLayoutItem StratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
-            SyncroSimLayoutItem AvgStratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME, "Avg. " + psl + " Prob.", true);
+            SyncroSimLayoutItem AvgStratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME, psl + " Probability", true);
 
             //State Class
             StateClassItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
@@ -190,7 +190,7 @@ namespace SyncroSim.STSim
 
             stateVariableGroup.Items.Add(StateClassItem);
 
-            //Average State Class
+            //State Class Probability
             AddAvgMapStateClassVariables(project, AvgStateClassItem.Items);
             stateVariableGroup.Items.Add(AvgStateClassItem);
 
@@ -216,7 +216,7 @@ namespace SyncroSim.STSim
 
             stateVariableGroup.Items.Add(StratumItem);
 
-            //Average Stratum
+            //Stratum Probability
             AddAvgMapStratumVariables(project, AvgStratumItem.Items);
             stateVariableGroup.Items.Add(AvgStratumItem);
         }

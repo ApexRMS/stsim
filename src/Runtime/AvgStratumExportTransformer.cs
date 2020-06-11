@@ -26,7 +26,7 @@ namespace SyncroSim.STSim
                 CultureInfo.InvariantCulture);
 
             this.DisplayName = string.Format(CultureInfo.InvariantCulture,
-                "Average {0} Probability", t);
+                "{0} Probability", t);
         }
     }
 }

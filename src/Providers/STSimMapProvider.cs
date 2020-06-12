@@ -37,122 +37,135 @@ namespace SyncroSim.STSim
             CreateAgeColorMap(project);
         }
 
-        public override void RefreshCriteria(SyncroSimLayout layout, Project project)
+        private void AddStateClassCriteria(SyncroSimLayout layout, Project project)
         {
-            using (DataStore store = project.Library.CreateDataStore())
-            {
-                DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
+            SyncroSimLayoutItem StateClassesGroup = new SyncroSimLayoutItem("StateClassesGroup", "State Classes", true);
+            SyncroSimLayoutItem StateClassIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
+            SyncroSimLayoutItem StateClassAvgGroup = new SyncroSimLayoutItem("StateClassAvgGroup", "Average", true);
 
-                //Top level groups
-                SyncroSimLayoutItem StateVariablesTopLevelGroup = new SyncroSimLayoutItem("StateVariablesTopLevelGroup", "State Variables", true);
-                SyncroSimLayoutItem TransitionsTopLevelGroup = new SyncroSimLayoutItem("TransitionsTopLevelGroup", "Transitions", true);
-                SyncroSimLayoutItem AttributesTopLevelGroup = new SyncroSimLayoutItem("AttributesTopLevelGroup", "Attributes", true);
+            StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
+            StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
+            StateClassIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
 
-                //Sub groups
-                SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
-                SyncroSimLayoutItem StateAttributeGroup = new SyncroSimLayoutItem("StateAttributeGroup", "State Attributes", true);
-                SyncroSimLayoutItem TransitionAttributeGroup = new SyncroSimLayoutItem("TransitionAttributeGroup", "Transition Attributes", true);
-                SyncroSimLayoutItem TransitionEventGroup = new SyncroSimLayoutItem("TransitionEventGroup", "Transition Events", true);
-                SyncroSimLayoutItem AvgStateAttributeGroup = new SyncroSimLayoutItem("AvgStateAttributeGroup", "Average State Attributes", true);
-                SyncroSimLayoutItem AvgTransitionAttributeGroup = new SyncroSimLayoutItem("AvgTransitionAttributeGroup", "Average Transition Attributes", true);
-                SyncroSimLayoutItem AvgTransitionProbabilityGroup = new SyncroSimLayoutItem("AvgTransitionProbabilityGroup", "Transition Probability", true);
+            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items);
 
-                //State Variables
-                AddStateVariables(project, StateVariablesTopLevelGroup);
+            StateClassesGroup.Items.Add(StateClassIterationItem);
+            StateClassesGroup.Items.Add(StateClassAvgGroup);
+            layout.Items.Add(StateClassesGroup);
+        }
 
-                //Transitions
-                AddMapTransitionGroupVariables(
-                    project, TransitionsGroup.Items, 
-                    "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)", 
-                    Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
+        private void AddAgeCriteria(SyncroSimLayout layout)
+        {
+            SyncroSimLayoutItem AgesGroup = new SyncroSimLayoutItem("AgesGroup", "Ages", true);
+            SyncroSimLayoutItem AgesIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Iteration", false);
+            SyncroSimLayoutItem AgesAvgGroup = new SyncroSimLayoutItem("AgesAvgGroup", "Average", false);
 
-                //State Attributes
-                AddMapStateAttributes(
-                    project, StateAttributeGroup.Items, 
-                    "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
-                    Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, null, store, AttrGroupView);
+            AgesIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
+            AgesIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
+            AgesIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
-                //Transition Attributes
-                AddMapTransitionAttributes(
-                    project, TransitionAttributeGroup.Items, 
-                    "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID", 
-                    Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, null, store, AttrGroupView);
+            AgesAvgGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
+            AgesAvgGroup.Properties.Add(new MetaDataProperty("column", "Filename"));
+            AgesAvgGroup.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_ALL_ITER));
+            AgesAvgGroup.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
-                //Transition Events
-                AddMapTransitionGroupVariables(
-                    project, TransitionEventGroup.Items, 
-                    "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)", 
-                    Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
+            AgesGroup.Items.Add(AgesIterationItem);
+            AgesGroup.Items.Add(AgesAvgGroup);
+            layout.Items.Add(AgesGroup);
+        }
 
-                //Average State Attributes
-                AddMapStateAttributes(
-                    project, AvgStateAttributeGroup.Items,
-                    "stsim_OutputSpatialAverageStateAttribute", "Filename", "StateAttributeTypeID",
-                    Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX, AVG_ALL_ITER, store, AttrGroupView);
+        private void AddStratumCriteria(SyncroSimLayout layout, Project project)
+        {
+            string psl = null;
+            string ssl = null;
+            string tsl = null;
+            DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
+            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
-                //Average Transition Attributes
-                AddMapTransitionAttributes(
-                    project, AvgTransitionAttributeGroup.Items,
-                    "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeID",
-                    Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, AVG_ALL_ITER, store, AttrGroupView);
+            SyncroSimLayoutItem StratumGroup = new SyncroSimLayoutItem("StratumGroup", psl, true);
+            SyncroSimLayoutItem StratumIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, "Iteration", false);
+            SyncroSimLayoutItem StratumAvgGroup = new SyncroSimLayoutItem("StratumAvgGroup", "Average", true);
 
-                //Transition Probability
-                AddMapTransitionGroupVariables(
-                    project, AvgTransitionProbabilityGroup.Items, 
-                    "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER, 
-                    Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+            StratumIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
+            StratumIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
+            StratumIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
 
-                //State Variables Top Level Group
-                layout.Items.Add(StateVariablesTopLevelGroup);
+            AddAvgMapStratumVariables(project, StratumAvgGroup.Items);
 
-                //Transitions Top Level Group
-                if (TransitionsGroup.Items.Count > 0)
-                {
-                    TransitionsTopLevelGroup.Items.Add(TransitionsGroup);
-                }
+            StratumGroup.Items.Add(StratumIterationItem);
+            StratumGroup.Items.Add(StratumAvgGroup);
+            layout.Items.Add(StratumGroup);
+        }
 
-                if (TransitionEventGroup.Items.Count > 0)
-                {
-                    TransitionsTopLevelGroup.Items.Add(TransitionEventGroup);
-                }
+        private void AddTransitionCriteria(SyncroSimLayout layout, Project project)
+        {
+            SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
+            SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("TransitionsIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("TransitionsIterationsEventsGroup", "Iteration - Events", true);
+            SyncroSimLayoutItem TransitionsAvgGroup = new SyncroSimLayoutItem("TransitionsAvgGroup", "Average", true);
 
-                if (AvgTransitionProbabilityGroup.Items.Count > 0)
-                {
-                    TransitionsTopLevelGroup.Items.Add(AvgTransitionProbabilityGroup);
-                }
+            AddMapTransitionGroupVariables(
+                project, TransitionsIterationGroup.Items,
+                "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Transitions)",
+                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
-                if (TransitionsTopLevelGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(TransitionsTopLevelGroup);
-                }
+            AddMapTransitionGroupVariables(
+                project, TransitionsIterationEventsGroup.Items,
+                "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)",
+                Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
-                //Attributes Top Level Group
+            AddMapTransitionGroupVariables(
+                project, TransitionsAvgGroup.Items,
+                "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER,
+                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
 
-                if (StateAttributeGroup.Items.Count > 0)
-                {
-                    AttributesTopLevelGroup.Items.Add(StateAttributeGroup);
-                }
+            if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
+            if (TransitionsIterationEventsGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroup); }
+            if (TransitionsAvgGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgGroup); }
+            if (TransitionsGroup.Items.Count > 0) { layout.Items.Add(TransitionsGroup); }
+        }
 
-                if (TransitionAttributeGroup.Items.Count > 0)
-                {
-                    AttributesTopLevelGroup.Items.Add(TransitionAttributeGroup);
-                }
+        private void AddStateAttributeCriteria(SyncroSimLayout layout, Project project, DataStore store, DataView attrGroupView)
+        {
+            SyncroSimLayoutItem StateAttributesGroup = new SyncroSimLayoutItem("StateAttributesGroup", "State Attributes", true);
+            SyncroSimLayoutItem StateAttributesIterationGroup = new SyncroSimLayoutItem("StateAttributesIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem StateAttributesAvgGroup = new SyncroSimLayoutItem("StateAttributesAvgGroup", "Average", true);
 
-                if (AvgStateAttributeGroup.Items.Count > 0)
-                {
-                    AttributesTopLevelGroup.Items.Add(AvgStateAttributeGroup);
-                }
+            AddMapStateAttributes(
+                project, StateAttributesIterationGroup.Items, 
+                "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
+                Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX, null, store, attrGroupView);
 
-                if (AvgTransitionAttributeGroup.Items.Count > 0)
-                {
-                    AttributesTopLevelGroup.Items.Add(AvgTransitionAttributeGroup);
-                }
+            //Average State Attributes
+            AddMapStateAttributes(
+                project, StateAttributesAvgGroup.Items,
+                "stsim_OutputSpatialAverageStateAttribute", "Filename", "StateAttributeTypeID",
+                Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX, AVG_ALL_ITER, store, attrGroupView);
 
-                if (AttributesTopLevelGroup.Items.Count > 0)
-                {
-                    layout.Items.Add(AttributesTopLevelGroup);
-                }
-            }
+            if (StateAttributesIterationGroup.Items.Count > 0) { StateAttributesGroup.Items.Add(StateAttributesIterationGroup); }
+            if (StateAttributesAvgGroup.Items.Count > 0) { StateAttributesGroup.Items.Add(StateAttributesAvgGroup); }
+            if (StateAttributesGroup.Items.Count > 0) { layout.Items.Add(StateAttributesGroup); }
+        }
+
+        private void AddTransitionAttributeCriteria(SyncroSimLayout layout, Project project, DataStore store, DataView attrGroupView)
+        {
+            SyncroSimLayoutItem TransitionAttributesGroup = new SyncroSimLayoutItem("TransitionAttributesGroup", "Transition Attributes", true);
+            SyncroSimLayoutItem TransitionAttributesIterationGroup = new SyncroSimLayoutItem("TransitionAttributesIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem TransitionAttributesAvgGroup = new SyncroSimLayoutItem("TransitionAttributesAvgGroup", "Average", true);
+
+            AddMapTransitionAttributes(
+                project, TransitionAttributesIterationGroup.Items,
+                "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID",
+                Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, null, store, attrGroupView);
+
+            AddMapTransitionAttributes(
+                project, TransitionAttributesAvgGroup.Items,
+                "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeID",
+                Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX, AVG_ALL_ITER, store, attrGroupView);
+
+            if (TransitionAttributesIterationGroup.Items.Count > 0) { TransitionAttributesGroup.Items.Add(TransitionAttributesIterationGroup); }
+            if (TransitionAttributesAvgGroup.Items.Count > 0) { TransitionAttributesGroup.Items.Add(TransitionAttributesAvgGroup); }
+            if (TransitionAttributesGroup.Items.Count > 0) { layout.Items.Add(TransitionAttributesGroup); }
         }
 
         private static DataView CreateMapAttributeGroupsView(Project project, DataStore store)
@@ -166,59 +179,6 @@ namespace SyncroSim.STSim
                 DataViewRowState.CurrentRows);
 
             return View;
-        }
-
-        private static void AddStateVariables(Project project, SyncroSimLayoutItem stateVariableGroup)
-        {
-            string psl = null;
-            string ssl = null;
-            string tsl = null;
-            DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
-
-            SyncroSimLayoutItem StateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "State Class", false);
-            SyncroSimLayoutItem AvgStateClassItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME, "State Class Probability", true);
-            SyncroSimLayoutItem AgeItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Age", false);
-            SyncroSimLayoutItem AvgAgeItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average Age", false);
-            SyncroSimLayoutItem StratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, psl, false);
-            SyncroSimLayoutItem AvgStratumItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME, psl + " Probability", true);
-
-            //State Class
-            StateClassItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
-            StateClassItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            StateClassItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
-
-            stateVariableGroup.Items.Add(StateClassItem);
-
-            //State Class Probability
-            AddAvgMapStateClassVariables(project, AvgStateClassItem.Items);
-            stateVariableGroup.Items.Add(AvgStateClassItem);
-
-            //Age
-            AgeItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
-            AgeItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            AgeItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
-
-            stateVariableGroup.Items.Add(AgeItem);
-
-            //Average Age
-            AvgAgeItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
-            AvgAgeItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            AvgAgeItem.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_ALL_ITER));
-            AvgAgeItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
-
-            stateVariableGroup.Items.Add(AvgAgeItem);
-
-            //Stratum
-            StratumItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
-            StratumItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            StratumItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
-
-            stateVariableGroup.Items.Add(StratumItem);
-
-            //Stratum Probability
-            AddAvgMapStratumVariables(project, AvgStratumItem.Items);
-            stateVariableGroup.Items.Add(AvgStratumItem);
         }
 
         private static void AddAvgMapStratumVariables(

@@ -877,7 +877,7 @@ namespace SyncroSim.STSim
 
             foreach (Cell cell in this.Cells)
             {
-                Values[cell.CollectionIndex] = cell.Age / (double)this.m_TotalIterations; 
+                Values[cell.CollectionIndex] += cell.Age / (double)this.m_TotalIterations; 
             }
         }
 
@@ -959,7 +959,7 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-                        Values[c.CollectionIndex] = v / this.m_TotalIterations;
+                        Values[c.CollectionIndex] += v / this.m_TotalIterations;
                     }
                 }
             }
@@ -979,7 +979,7 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-                        Values[c.CollectionIndex] = v / this.m_TotalIterations;
+                        Values[c.CollectionIndex] += v / this.m_TotalIterations;
                     }
                 }
             }

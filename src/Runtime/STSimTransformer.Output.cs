@@ -958,8 +958,15 @@ namespace SyncroSim.STSim
 
                     if (AttrValue != null)
                     {
+                        int i = c.CollectionIndex;
+
+                        if (Values[i] == Spatial.DefaultNoDataValue)
+                        {
+                            Values[i] = 0.0;
+                        }
+
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-                        Values[c.CollectionIndex] += v / this.m_TotalIterations;
+                        Values[i] += v / this.m_TotalIterations;
                     }
                 }
             }
@@ -978,8 +985,15 @@ namespace SyncroSim.STSim
 
                     if (AttrValue != null)
                     {
+                        int i = c.CollectionIndex;
+
+                        if (Values[i] == Spatial.DefaultNoDataValue)
+                        {
+                            Values[i] = 0.0;
+                        }
+
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-                        Values[c.CollectionIndex] += v / this.m_TotalIterations;
+                        Values[i] += v / this.m_TotalIterations;
                     }
                 }
             }
@@ -1009,6 +1023,12 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         int i = c.CollectionIndex;
+
+                        if (Values[i] == Spatial.DefaultNoDataValue)
+                        {
+                            Values[i] = 0.0;
+                        }
+
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
 
                         //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
@@ -1041,6 +1061,12 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         int i = c.CollectionIndex;
+
+                        if (Values[i] == Spatial.DefaultNoDataValue)
+                        {
+                            Values[i] = 0.0;
+                        }
+
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
 
                         //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 

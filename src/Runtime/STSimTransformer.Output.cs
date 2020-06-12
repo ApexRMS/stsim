@@ -2059,12 +2059,12 @@ namespace SyncroSim.STSim
             foreach (int timestep in this.m_AvgAgeMap.Keys)
             {
                 double[] Values = this.m_AvgAgeMap[timestep];
-                StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                int[] arr = RastOutput.IntCells;
+                StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                double[] arr = RastOutput.DblCells;
 
                 foreach (Cell c in this.Cells)
                 {
-                    arr[c.CellId] = (int) Values[c.CollectionIndex];
+                    arr[c.CellId] = Values[c.CollectionIndex];
                     Debug.Assert(arr[c.CellId] != Spatial.DefaultNoDataValue);
                 }
 

@@ -177,10 +177,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes output options
+        /// Initializes tabular output options
         /// </summary>
         /// <remarks></remarks>
-        private void InitializeOutputOptions()
+        private void InitializeTabularOutputOptions()
         {
             Func<object, int> SafeInt = (object o) =>
             {
@@ -194,45 +194,7 @@ namespace SyncroSim.STSim
                 }
             };
 
-            DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_NAME).GetDataRow();
-
-            if (this.IsSpatial)
-            {
-                this.m_CreateRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SC_COLUMN_NAME]);
-                this.m_RasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterTransitionOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TR_COLUMN_NAME]);
-                this.m_RasterTransitionOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterAgeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_AGE_COLUMN_NAME]);
-                this.m_RasterAgeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterTstOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TST_COLUMN_NAME]);
-                this.m_RasterTstOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterStratumOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_ST_COLUMN_NAME]);
-                this.m_RasterStratumOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterStateAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SA_COLUMN_NAME]);
-                this.m_RasterStateAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterTransitionAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME]);
-                this.m_RasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateRasterTransitionEventOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME]);
-                this.m_RasterTransitionEventOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateAvgRasterStratumOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_COLUMN_NAME]);
-                this.m_AvgRasterStratumOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
-                this.m_AvgRasterStratumAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateAvgRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME]);
-                this.m_AvgRasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
-                this.m_AvgRasterStateClassAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateAvgRasterAgeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME]);
-                this.m_AvgRasterAgeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME]);
-                this.m_AvgRasterAgeAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_ACROSS_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateAvgRasterStateAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_COLUMN_NAME]);
-                this.m_AvgRasterStateAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME]);
-                this.m_AvgRasterStateAttributeAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_SA_ACROSS_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateAvgRasterTransitionAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_COLUMN_NAME]);
-                this.m_AvgRasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
-                this.m_AvgRasterTransitionAttributeAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TA_ACROSS_TIMESTEPS_COLUMN_NAME]);
-                this.m_CreateAvgRasterTransitionProbOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME]);
-                this.m_AvgRasterTransitionProbOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME]);
-                this.m_AvgRasterTransitionProbAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_RASTER_OUTPUT_TP_ACROSS_TIMESTEPS_COLUMN_NAME]);
-            }
+            DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_TABULAR_NAME).GetDataRow();
 
             this.m_CreateSummaryStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME]);
             this.m_SummaryStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
@@ -263,6 +225,94 @@ namespace SyncroSim.STSim
                         "Transition Summary Output won't include size information if Interval Mean selected.");
                 }
             }
+        }
+
+        /// <summary>
+        /// Initializes spatial output options
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeSpatialOutputOptions()
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            Func<object, int> SafeInt = (object o) =>
+            {
+                if (o == DBNull.Value)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Convert.ToInt32(o, CultureInfo.InvariantCulture);
+                }
+            };
+
+            DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_NAME).GetDataRow();
+
+            this.m_CreateRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME]);
+            this.m_RasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterTransitionOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_COLUMN_NAME]);
+            this.m_RasterTransitionOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterAgeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_COLUMN_NAME]);
+            this.m_RasterAgeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterTstOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_COLUMN_NAME]);
+            this.m_RasterTstOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterStratumOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_COLUMN_NAME]);
+            this.m_RasterStratumOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterStateAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME]);
+            this.m_RasterStateAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterTransitionAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME]);
+            this.m_RasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateRasterTransitionEventOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_COLUMN_NAME]);
+            this.m_RasterTransitionEventOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME]);
+        }
+
+        /// <summary>
+        /// Initializes spatial average output options
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeSpatialAverageOutputOptions()
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            Func<object, int> SafeInt = (object o) =>
+            {
+                if (o == DBNull.Value)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Convert.ToInt32(o, CultureInfo.InvariantCulture);
+                }
+            };
+
+            DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_AVERAGE_NAME).GetDataRow();
+
+            this.m_CreateAvgRasterStratumOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_COLUMN_NAME]);
+            this.m_AvgRasterStratumTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgRasterStratumCumulative = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_CUMULATIVE_COLUMN_NAME]);
+            this.m_CreateAvgRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_COLUMN_NAME]);
+            this.m_AvgRasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgRasterStateClassCumulative = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_CUMULATIVE_COLUMN_NAME]);
+            this.m_CreateAvgRasterAgeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME]);
+            this.m_AvgRasterAgeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgRasterAgeCumulative = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_CUMULATIVE_COLUMN_NAME]);
+            this.m_CreateAvgRasterStateAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_COLUMN_NAME]);
+            this.m_AvgRasterStateAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgRasterStateAttributeCumulative = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_CUMULATIVE_COLUMN_NAME]);
+            this.m_CreateAvgRasterTransitionAttributeOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_COLUMN_NAME]);
+            this.m_AvgRasterTransitionAttributeOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgRasterTransitionAttributeCumulative = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_CUMULATIVE_COLUMN_NAME]);
+            this.m_CreateAvgRasterTransitionProbOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_COLUMN_NAME]);
+            this.m_AvgRasterTransitionProbOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgRasterTransitionProbCumulative = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_CUMULATIVE_COLUMN_NAME]);
         }
 
         /// <summary>

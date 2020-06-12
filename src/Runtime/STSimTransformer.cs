@@ -296,7 +296,9 @@ namespace SyncroSim.STSim
             this.ConfigureIsSpatialRunFlag();
             this.ConfigureTimestepUnits();
             this.NormalizeRunControl();
-            this.NormalizeOutputOptions();
+            this.NormalizeTabularOutputOptions();
+            this.NormalizeSpatialOutputOptions();
+            this.NormalizeSpatialAverageOutputOptions();
             this.NormalizeMapIds();
             this.NormalizeInitialConditions();
 
@@ -324,7 +326,9 @@ namespace SyncroSim.STSim
                 this.FillInitialConditionsDistributionCollectionAndMap();
             }
 
-            this.InitializeOutputOptions();
+            this.InitializeTabularOutputOptions();
+            this.InitializeSpatialOutputOptions();
+            this.InitializeSpatialAverageOutputOptions();
             this.InitializeDistributionProvider();
             this.InitializeAgeReportingHelpers();
             this.InitializeSizeClassHelper();

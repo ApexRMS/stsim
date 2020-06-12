@@ -66,7 +66,7 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AVG_AGE_FILEPREFIX = "avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX = "avgsa";
         public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX = "avgta";
-        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX = "tgap";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX = "tp";
 
         //Spatial map variables
         public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";
@@ -82,7 +82,7 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_avgage";
         public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";
         public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgta";
-        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tgap";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_tp";
 
         //Spatial Output Datasheets
         public const string DATASHEET_OUTPUT_SPATIAL_STRATUM = "stsim_OutputSpatialStratum";

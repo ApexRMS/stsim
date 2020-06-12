@@ -137,6 +137,18 @@
     <Compile Include="Console\STSimConsole.ListReports.cs" />
     <Compile Include="Console\STSimConsole.SpatialSplit.cs" />
     <Compile Include="Console\STSimConsole.cs" />
+    <Compile Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.Designer.cs">
+      <DependentUpon>OutputOptionsSpatialAverageDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.Designer.cs">
+      <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -545,6 +557,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.resx">
+      <DependentUpon>OutputOptionsSpatialAverageDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\OutputOptionsSpatialDataFeedView.resx">
+      <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\OutputOptionsDataFeedView.resx">
       <DependentUpon>OutputOptionsDataFeedView.cs</DependentUpon>

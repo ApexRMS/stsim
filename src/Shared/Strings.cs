@@ -314,7 +314,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME = "TertiaryStratumLabel";
 
         //Output Options
-        public const string DATASHEET_OO_NAME = "stsim_OutputOptions";
+        public const string DATASHEET_OO_TABULAR_NAME = "stsim_OutputOptions";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME = "SummaryOutputSC";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "SummaryOutputSCTimesteps";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME = "SummaryOutputSCAges";
@@ -333,40 +333,46 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME = "SummaryOutputTAAges";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME = "SummaryOutputOmitSS";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME = "SummaryOutputOmitTS";
-        public const string DATASHEET_OO_RASTER_OUTPUT_SC_COLUMN_NAME = "RasterOutputSC";
-        public const string DATASHEET_OO_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "RasterOutputSCTimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TR_COLUMN_NAME = "RasterOutputTR";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME = "RasterOutputTRTimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_AGE_COLUMN_NAME = "RasterOutputAge";
-        public const string DATASHEET_OO_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME = "RasterOutputAgeTimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TST_COLUMN_NAME = "RasterOutputTST";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME = "RasterOutputTSTTimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_ST_COLUMN_NAME = "RasterOutputST";
-        public const string DATASHEET_OO_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "RasterOutputSTTimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_SA_COLUMN_NAME = "RasterOutputSA";
-        public const string DATASHEET_OO_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME = "RasterOutputSATimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TA_COLUMN_NAME = "RasterOutputTA";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "RasterOutputTATimesteps";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TE_COLUMN_NAME = "RasterOutputTransitionEvents";
-        public const string DATASHEET_OO_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME = "RasterOutputTransitionEventTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_ST_COLUMN_NAME = "AvgRasterOutputST";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSTTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSTAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_COLUMN_NAME = "AvgRasterOutputSC";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SC_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME = "AvgRasterOutputAge";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputAgeTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_AGE_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputAgeAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SA_COLUMN_NAME = "AvgRasterOutputSA";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSATimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_SA_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSAAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TA_COLUMN_NAME = "AvgRasterOutputTA";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputTATimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TA_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputTAAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TP_COLUMN_NAME = "RasterOutputAATP";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME = "RasterOutputAATPTimesteps";
-        public const string DATASHEET_OO_AVG_RASTER_OUTPUT_TP_ACROSS_TIMESTEPS_COLUMN_NAME = "RasterOutputAATPAcrossTimesteps";
+
+        //Output Options Spatial
+        public const string DATASHEET_OO_SPATIAL_NAME = "stsim_OutputOptionsSpatial";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME = "RasterOutputSC";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "RasterOutputSCTimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_COLUMN_NAME = "RasterOutputTR";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME = "RasterOutputTRTimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_COLUMN_NAME = "RasterOutputAge";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME = "RasterOutputAgeTimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_COLUMN_NAME = "RasterOutputTST";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME = "RasterOutputTSTTimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_COLUMN_NAME = "RasterOutputST";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "RasterOutputSTTimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME = "RasterOutputSA";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME = "RasterOutputSATimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME = "RasterOutputTA";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "RasterOutputTATimesteps";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_COLUMN_NAME = "RasterOutputTransitionEvents";
+        public const string DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME = "RasterOutputTransitionEventTimesteps";
+
+        //Output Options Spatial Average
+        public const string DATASHEET_OO_SPATIAL_AVERAGE_NAME = "stsim_OutputOptionsSpatialAverage";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_COLUMN_NAME = "AvgRasterOutputST";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSTTimesteps";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputSTCumulative";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_COLUMN_NAME = "AvgRasterOutputSC";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSCTimesteps";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputSCCumulative";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME = "AvgRasterOutputAge";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputAgeTimesteps";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputAgeCumulative";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_COLUMN_NAME = "AvgRasterOutputSA";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputSATimesteps";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputSACumulative";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_COLUMN_NAME = "AvgRasterOutputTA";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputTATimesteps";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputTACumulative";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_COLUMN_NAME = "AvgRasterOutputTP";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME = "AvgRasterOutputTPTimesteps";
+        public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputTPCumulative";
 
         //Distribution Type Data Feed
         public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "corestime_DistributionType";

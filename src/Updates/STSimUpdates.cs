@@ -2807,13 +2807,35 @@ namespace SyncroSim.STSim
             }
         }
 
+        /// <summary>
+        /// STSIM0000107
+        /// </summary>
+        /// <remarks>
+        /// This update will separate the tabular, spatial, and spatial averaging options
+        /// into their own tables.  However, the tabular options will still be in the table
+        /// stsim_OutputOptions to avoid breaking various add-ons that depend on this table.
+        /// </remarks>
+        /// <param name="store"></param>
         private static void STSIM0000107(DataStore store)
         {
             if (store.TableExists("stsim_OutputOptions"))
             {
+                //Keep a copy of the original
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions RENAME TO TEMP_TABLE");
 
-                store.ExecuteNonQuery(@"CREATE TABLE stsim_OutputOptions ( 
+                //Migrate data
+                MigrateTabularOutputOptions(store);
+                MigrateSpatialOutputOptions(store);
+                MigrateSpatialAveragingOutputOptions(store);
+
+                //Drop old table
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+            }
+        }
+
+        private static void MigrateTabularOutputOptions(DataStore store)
+        {
+            store.ExecuteNonQuery(@"CREATE TABLE stsim_OutputOptions ( 
                     OutputOptionsID                      INTEGER PRIMARY KEY AUTOINCREMENT,
                     ScenarioID                           INTEGER,
                     SummaryOutputSC                      INTEGER,
@@ -2833,43 +2855,9 @@ namespace SyncroSim.STSim
                     SummaryOutputTATimesteps             INTEGER,
                     SummaryOutputTAAges                  INTEGER,
                     SummaryOutputOmitSS                  INTEGER,
-                    SummaryOutputOmitTS                  INTEGER,
-                    RasterOutputSC                       INTEGER,
-                    RasterOutputSCTimesteps              INTEGER,
-                    RasterOutputTR                       INTEGER,
-                    RasterOutputTRTimesteps              INTEGER,
-                    RasterOutputAge                      INTEGER,
-                    RasterOutputAgeTimesteps             INTEGER,
-                    RasterOutputTST                      INTEGER,
-                    RasterOutputTSTTimesteps             INTEGER,
-                    RasterOutputST                       INTEGER,
-                    RasterOutputSTTimesteps              INTEGER,
-                    RasterOutputSA                       INTEGER,
-                    RasterOutputSATimesteps              INTEGER,
-                    RasterOutputTA                       INTEGER,
-                    RasterOutputTATimesteps              INTEGER,
-                    RasterOutputTransitionEvents         INTEGER,
-                    RasterOutputTransitionEventTimesteps INTEGER,
-                    AvgRasterOutputST                    INTEGER,
-                    AvgRasterOutputSTTimesteps           INTEGER,
-                    AvgRasterOutputSTAcrossTimesteps     INTEGER,
-                    AvgRasterOutputSC                    INTEGER,
-                    AvgRasterOutputSCTimesteps           INTEGER,
-                    AvgRasterOutputSCAcrossTimesteps     INTEGER,
-                    AvgRasterOutputAge                   INTEGER,
-                    AvgRasterOutputAgeTimesteps          INTEGER,
-                    AvgRasterOutputAgeAcrossTimesteps    INTEGER,
-                    RasterOutputAATP                     INTEGER,
-                    RasterOutputAATPTimesteps            INTEGER,
-                    RasterOutputAATPAcrossTimesteps      INTEGER,
-                    AvgRasterOutputSA                    INTEGER,
-                    AvgRasterOutputSATimesteps           INTEGER,
-                    AvgRasterOutputSAAcrossTimesteps     INTEGER,
-                    AvgRasterOutputTA                    INTEGER,
-                    AvgRasterOutputTATimesteps           INTEGER,
-                    AvgRasterOutputTAAcrossTimesteps     INTEGER)");
+                    SummaryOutputOmitTS                  INTEGER)");
 
-                store.ExecuteNonQuery(@"INSERT INTO stsim_OutputOptions(
+            store.ExecuteNonQuery(@"INSERT INTO stsim_OutputOptions(
                     ScenarioID                           ,
                     SummaryOutputSC                      ,
                     SummaryOutputSCTimesteps             ,
@@ -2888,25 +2876,7 @@ namespace SyncroSim.STSim
                     SummaryOutputTATimesteps             ,
                     SummaryOutputTAAges                  ,
                     SummaryOutputOmitSS                  ,
-                    SummaryOutputOmitTS                  ,
-                    RasterOutputSC                       ,
-                    RasterOutputSCTimesteps              ,
-                    RasterOutputTR                       ,
-                    RasterOutputTRTimesteps              ,
-                    RasterOutputAge                      ,
-                    RasterOutputAgeTimesteps             ,
-                    RasterOutputTST                      ,
-                    RasterOutputTSTTimesteps             ,
-                    RasterOutputST                       ,
-                    RasterOutputSTTimesteps              ,
-                    RasterOutputSA                       ,
-                    RasterOutputSATimesteps              ,
-                    RasterOutputTA                       ,
-                    RasterOutputTATimesteps              ,
-                    RasterOutputAATP                     ,
-                    RasterOutputAATPTimesteps            ,
-                    RasterOutputTransitionEvents         ,
-                    RasterOutputTransitionEventTimesteps) 
+                    SummaryOutputOmitTS) 
                     SELECT 
                     ScenarioID                           ,
                     SummaryOutputSC                      ,
@@ -2926,7 +2896,34 @@ namespace SyncroSim.STSim
                     SummaryOutputTATimesteps             ,
                     SummaryOutputTAAges                  ,
                     SummaryOutputOmitSS                  ,
-                    SummaryOutputOmitTS                  ,
+                    SummaryOutputOmitTS
+                    FROM TEMP_TABLE");
+        }
+
+        private static void MigrateSpatialOutputOptions(DataStore store)
+        {
+            store.ExecuteNonQuery(@"CREATE TABLE stsim_OutputOptionsSpatial ( 
+                    OutputOptionsSpatialID               INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID                           INTEGER,
+                    RasterOutputSC                       INTEGER,
+                    RasterOutputSCTimesteps              INTEGER,
+                    RasterOutputTR                       INTEGER,
+                    RasterOutputTRTimesteps              INTEGER,
+                    RasterOutputAge                      INTEGER,
+                    RasterOutputAgeTimesteps             INTEGER,
+                    RasterOutputTST                      INTEGER,
+                    RasterOutputTSTTimesteps             INTEGER,
+                    RasterOutputST                       INTEGER,
+                    RasterOutputSTTimesteps              INTEGER,
+                    RasterOutputSA                       INTEGER,
+                    RasterOutputSATimesteps              INTEGER,
+                    RasterOutputTA                       INTEGER,
+                    RasterOutputTATimesteps              INTEGER,
+                    RasterOutputTransitionEvents         INTEGER,
+                    RasterOutputTransitionEventTimesteps INTEGER)");
+
+            store.ExecuteNonQuery(@"INSERT INTO stsim_OutputOptionsSpatial(
+                    ScenarioID                           ,
                     RasterOutputSC                       ,
                     RasterOutputSCTimesteps              ,
                     RasterOutputTR                       ,
@@ -2941,14 +2938,62 @@ namespace SyncroSim.STSim
                     RasterOutputSATimesteps              ,
                     RasterOutputTA                       ,
                     RasterOutputTATimesteps              ,
-                    RasterOutputAATP                     ,
-                    RasterOutputAATPTimesteps            ,
+                    RasterOutputTransitionEvents         ,
+                    RasterOutputTransitionEventTimesteps) 
+                    SELECT 
+                    ScenarioID                           ,
+                    RasterOutputSC                       ,
+                    RasterOutputSCTimesteps              ,
+                    RasterOutputTR                       ,
+                    RasterOutputTRTimesteps              ,
+                    RasterOutputAge                      ,
+                    RasterOutputAgeTimesteps             ,
+                    RasterOutputTST                      ,
+                    RasterOutputTSTTimesteps             ,
+                    RasterOutputST                       ,
+                    RasterOutputSTTimesteps              ,
+                    RasterOutputSA                       ,
+                    RasterOutputSATimesteps              ,
+                    RasterOutputTA                       ,
+                    RasterOutputTATimesteps              ,
                     RasterOutputTransitionEvents         ,
                     RasterOutputTransitionEventTimesteps 
                     FROM TEMP_TABLE");
+        }
 
-                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
-            }
+        private static void MigrateSpatialAveragingOutputOptions(DataStore store)
+        {
+            store.ExecuteNonQuery(@"CREATE TABLE stsim_OutputOptionsSpatialAverage ( 
+                    OutputOptionsSpatialAverageID        INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID                           INTEGER,
+                    AvgRasterOutputST                    INTEGER,
+                    AvgRasterOutputSTTimesteps           INTEGER,
+                    AvgRasterOutputSTCumulative          INTEGER,
+                    AvgRasterOutputSC                    INTEGER,
+                    AvgRasterOutputSCTimesteps           INTEGER,
+                    AvgRasterOutputSCCumulative          INTEGER,
+                    AvgRasterOutputAge                   INTEGER,
+                    AvgRasterOutputAgeTimesteps          INTEGER,
+                    AvgRasterOutputAgeCumulative         INTEGER,
+                    AvgRasterOutputTP                    INTEGER,
+                    AvgRasterOutputTPTimesteps           INTEGER,
+                    AvgRasterOutputTPCumulative          INTEGER,
+                    AvgRasterOutputSA                    INTEGER,
+                    AvgRasterOutputSATimesteps           INTEGER,
+                    AvgRasterOutputSACumulative          INTEGER,
+                    AvgRasterOutputTA                    INTEGER,
+                    AvgRasterOutputTATimesteps           INTEGER,
+                    AvgRasterOutputTACumulative          INTEGER)");
+
+            store.ExecuteNonQuery(@"INSERT INTO stsim_OutputOptionsSpatialAverage(
+                    ScenarioID                           ,
+                    AvgRasterOutputTP                    ,
+                    AvgRasterOutputTPTimesteps) 
+                    SELECT 
+                    ScenarioID                           ,
+                    RasterOutputAATP                     ,
+                    RasterOutputAATPTimesteps 
+                    FROM TEMP_TABLE");
         }
     }
 }

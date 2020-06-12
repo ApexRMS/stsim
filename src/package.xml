@@ -443,6 +443,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
+
         <datafeed name="OutputOptions" displayName="Output Options" dataScope="Scenario">
           <datasheets>
             <datasheet name="OutputOptions" displayName="Output Options" isSingleRow="True">
@@ -467,6 +468,16 @@
                 <column name="SummaryOutputTAAges" displayName="Summary TA Ages" dataType="Boolean"/>
                 <column name="SummaryOutputOmitSS" dataType="Boolean" displayName="Summary Omit SS"/>
                 <column name="SummaryOutputOmitTS" dataType="Boolean" displayName="Summary Omit TS"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="OutputOptionsSpatial" displayName="Output Options Spatial" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="OutputOptionsSpatial" displayName="Output Options Spatial" isSingleRow="True">
+              <columns>
+                <column name="OutputOptionsSpatialID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
                 <column name="RasterOutputSC" displayName="Raster SC" dataType="Boolean"/>
                 <column name="RasterOutputSCTimesteps" displayName="Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputTR" dataType="Boolean" displayName="Raster TR"/>
@@ -482,29 +493,39 @@
                 <column name="RasterOutputTA" dataType="Boolean" displayName="Raster TA"/>
                 <column name="RasterOutputTATimesteps" displayName="Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputTransitionEvents" dataType="Boolean" displayName="Raster Transition Events"/>
-                <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                
-                <column name="AvgRasterOutputST" displayName="Avg. Raster ST" dataType="Boolean"/>
-                <column name="AvgRasterOutputSTTimesteps" displayName="Avg. Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputSTAcrossTimesteps" dataType="Boolean"/>                                                  
-                <column name="AvgRasterOutputSC" displayName="Avg. Raster SC" dataType="Boolean"/>
-                <column name="AvgRasterOutputSCTimesteps" displayName="Avg. Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputSCAcrossTimesteps" dataType="Boolean"/>  
-                <column name="AvgRasterOutputAge" displayName="Avg. Raster Age" dataType="Boolean"/>
-                <column name="AvgRasterOutputAgeTimesteps" displayName="Avg. Raster Age Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputAgeAcrossTimesteps" dataType="Boolean"/>                                               
-                <column name="AvgRasterOutputSA" displayName="Avg. Raster SA" dataType="Boolean"/>
-                <column name="AvgRasterOutputSATimesteps" displayName="Avg. Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputSAAcrossTimesteps" dataType="Boolean"/>               
-                <column name="AvgRasterOutputTA" dataType="Boolean" displayName="Avg. Raster TA"/>
-                <column name="AvgRasterOutputTATimesteps" displayName="Avg. Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputTAAcrossTimesteps" dataType="Boolean"/>                          
-                <column name="RasterOutputAATP" dataType="Boolean" displayName="Avg. Raster Transition Probability"/>
-                <column name="RasterOutputAATPTimesteps" displayName="Avg. Raster Transition Probability" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="RasterOutputAATPAcrossTimesteps" dataType="Boolean"/>                                     
+                <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
               </columns>
             </datasheet>
           </datasheets>
         </datafeed>
+        <datafeed name="OutputOptionsSpatialAverage" displayName="Output Options Spatial Averages" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="OutputOptionsSpatialAverage" displayName="Output Options Spatial Averages" isSingleRow="True">
+              <columns>
+                <column name="OutputOptionsSpatialAverageID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="AvgRasterOutputST" displayName="Avg. Raster ST" dataType="Boolean"/>
+                <column name="AvgRasterOutputSTTimesteps" displayName="Avg. Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSTCumulative" displayName="Avg.Raster ST Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputSC" displayName="Avg. Raster SC" dataType="Boolean"/>
+                <column name="AvgRasterOutputSCTimesteps" displayName="Avg. Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSCCumulative" displayName="Avg.Raster SC Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputAge" displayName="Avg. Raster Age" dataType="Boolean"/>
+                <column name="AvgRasterOutputAgeTimesteps" displayName="Avg. Raster Age Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputAgeCumulative" displayName="Avg.Raster Age Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputSA" displayName="Avg. Raster SA" dataType="Boolean"/>
+                <column name="AvgRasterOutputSATimesteps" displayName="Avg. Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSACumulative" displayName="Avg.Raster SA Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputTA" dataType="Boolean" displayName="Avg. Raster TA"/>
+                <column name="AvgRasterOutputTATimesteps" displayName="Avg. Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputTACumulative" displayName="Avg. Raster TA Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputTP" dataType="Boolean" displayName="Avg. Raster TP"/>
+                <column name="AvgRasterOutputTPTimesteps" displayName="Avg. Raster TP Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputTPCumulative" displayName="Avg.Raster TP Cumulative" dataType="Boolean"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>                           
         <datafeed name="TransitionTarget" displayName="Transition Targets" dataScope="Scenario">
           <datasheets>
             <datasheet name="TransitionTarget" displayName="Transition Targets" className="SyncroSim.STSim.TransitionTargetDataSheet" classAssembly="SyncroSim.STSim">
@@ -1270,7 +1291,7 @@
                 <column name="Iteration" dataType="Integer" format="d"/>
                 <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="Filename" displayName="Transition Probability Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tgap" />
+                <column name="Filename" displayName="Transition Probability Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tp" />
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
@@ -1330,6 +1351,8 @@
     <view name="InitialConditionsNonSpatialDatafeedView" target="InitialConditionsNonSpatial" className="SyncroSim.STSim.InitialConditionsNonSpatialDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="InitialConditionsSpatialDatafeedView" target="InitialConditionsSpatial" className="SyncroSim.STSim.InitialConditionsSpatialDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="OutputOptionsDatafeedView" target="OutputOptions" className="SyncroSim.STSim.OutputOptionsDataFeedView" classAssembly="SyncroSim.STSim"/>
+    <view name="OutputOptionsSpatialDatafeedView" target="OutputOptionsSpatial" className="SyncroSim.STSim.OutputOptionsSpatialDataFeedView" classAssembly="SyncroSim.STSim"/>
+    <view name="OutputOptionsSpatialAverageDatafeedView" target="OutputOptionsSpatialAverage" className="SyncroSim.STSim.OutputOptionsSpatialAverageDataFeedView" classAssembly="SyncroSim.STSim"/>  
     <view name="TransitionspatialMultiplierDatafeedView" target="TransitionSpatialMultiplier" className="SyncroSim.STSim.SpatialMultiplierDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="TransitionSpatialInitiationMultiplierDatafeedView" target="TransitionSpatialInitiationMultiplier" className="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="TransitionSlopeMultiplierDatafeedView" target="TransitionSlopeMultiplier" className="SyncroSim.STSim.SlopeMultiplierDataFeedView" classAssembly="SyncroSim.STSim"/>
@@ -1431,7 +1454,11 @@
         <item name="InitialConditionsSpatial" displayName="Spatial"/>
       </group>
       <item name="TransitionTarget"/>
-      <item name="OutputOptions"/>
+      <group name="OutputOptions" displayName="Output Options">
+        <item name="OutputOptions" displayName="Tabular"/> 
+        <item name="OutputOptionsSpatial" displayName="Spatial"/>         
+        <item name="OutputOptionsSpatialAverage" displayName="Spatial Average"/>         
+      </group>
       <group name="Advanced">
         <item name="TransitionMultiplierValue" displayName="Transitions - Multipliers"/>
         <group name="TransitionsSpatialGroup" displayName="Transitions - Spatial">
@@ -1486,7 +1513,7 @@
   </layouts>
   <updateProvider
     schemaVersion="107"
-    minPackageVersion="3.2.17"
+    minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

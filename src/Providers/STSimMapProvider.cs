@@ -37,11 +37,26 @@ namespace SyncroSim.STSim
             CreateAgeColorMap(project);
         }
 
+        public override void RefreshCriteria(SyncroSimLayout layout, Project project)
+        {
+            using (DataStore store = project.Library.CreateDataStore())
+            {
+                DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
+
+                this.AddStateClassCriteria(layout, project);
+                this.AddAgeCriteria(layout);
+                this.AddStratumCriteria(layout, project);
+                this.AddTransitionCriteria(layout, project);
+                this.AddStateAttributeCriteria(layout, project, store, AttrGroupView);
+                this.AddTransitionAttributeCriteria(layout, project, store, AttrGroupView);
+            }
+        }
+
         private void AddStateClassCriteria(SyncroSimLayout layout, Project project)
         {
-            SyncroSimLayoutItem StateClassesGroup = new SyncroSimLayoutItem("StateClassesGroup", "State Classes", true);
+            SyncroSimLayoutItem StateClassesGroup = new SyncroSimLayoutItem("stsim_StateClassesGroup", "State Classes", true);
             SyncroSimLayoutItem StateClassIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem StateClassAvgGroup = new SyncroSimLayoutItem("StateClassAvgGroup", "Average", true);
+            SyncroSimLayoutItem StateClassAvgGroup = new SyncroSimLayoutItem("stsim_StateClassAvgGroup", "Average", true);
 
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -56,9 +71,9 @@ namespace SyncroSim.STSim
 
         private void AddAgeCriteria(SyncroSimLayout layout)
         {
-            SyncroSimLayoutItem AgesGroup = new SyncroSimLayoutItem("AgesGroup", "Ages", true);
+            SyncroSimLayoutItem AgesGroup = new SyncroSimLayoutItem("stsim_AgesGroup", "Ages", true);
             SyncroSimLayoutItem AgesIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem AgesAvgGroup = new SyncroSimLayoutItem("AgesAvgGroup", "Average", false);
+            SyncroSimLayoutItem AgesAvgGroup = new SyncroSimLayoutItem("stsim_AgesAvgGroup", "Average", false);
 
             AgesIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
             AgesIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -82,9 +97,9 @@ namespace SyncroSim.STSim
             DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
-            SyncroSimLayoutItem StratumGroup = new SyncroSimLayoutItem("StratumGroup", psl, true);
+            SyncroSimLayoutItem StratumGroup = new SyncroSimLayoutItem("stsim_StratumGroup", psl, true);
             SyncroSimLayoutItem StratumIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem StratumAvgGroup = new SyncroSimLayoutItem("StratumAvgGroup", "Average", true);
+            SyncroSimLayoutItem StratumAvgGroup = new SyncroSimLayoutItem("stsim_StratumAvgGroup", "Average", true);
 
             StratumIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -99,10 +114,10 @@ namespace SyncroSim.STSim
 
         private void AddTransitionCriteria(SyncroSimLayout layout, Project project)
         {
-            SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("TransitionsGroup", "Transitions", true);
-            SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("TransitionsIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("TransitionsIterationsEventsGroup", "Iteration - Events", true);
-            SyncroSimLayoutItem TransitionsAvgGroup = new SyncroSimLayoutItem("TransitionsAvgGroup", "Average", true);
+            SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("stsim_TransitionsGroup", "Transitions", true);
+            SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
+            SyncroSimLayoutItem TransitionsAvgGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Average", true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
@@ -127,9 +142,9 @@ namespace SyncroSim.STSim
 
         private void AddStateAttributeCriteria(SyncroSimLayout layout, Project project, DataStore store, DataView attrGroupView)
         {
-            SyncroSimLayoutItem StateAttributesGroup = new SyncroSimLayoutItem("StateAttributesGroup", "State Attributes", true);
-            SyncroSimLayoutItem StateAttributesIterationGroup = new SyncroSimLayoutItem("StateAttributesIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem StateAttributesAvgGroup = new SyncroSimLayoutItem("StateAttributesAvgGroup", "Average", true);
+            SyncroSimLayoutItem StateAttributesGroup = new SyncroSimLayoutItem("stsim_StateAttributesGroup", "State Attributes", true);
+            SyncroSimLayoutItem StateAttributesIterationGroup = new SyncroSimLayoutItem("stsim_StateAttributesIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem StateAttributesAvgGroup = new SyncroSimLayoutItem("stsim_StateAttributesAvgGroup", "Average", true);
 
             AddMapStateAttributes(
                 project, StateAttributesIterationGroup.Items, 
@@ -149,9 +164,9 @@ namespace SyncroSim.STSim
 
         private void AddTransitionAttributeCriteria(SyncroSimLayout layout, Project project, DataStore store, DataView attrGroupView)
         {
-            SyncroSimLayoutItem TransitionAttributesGroup = new SyncroSimLayoutItem("TransitionAttributesGroup", "Transition Attributes", true);
-            SyncroSimLayoutItem TransitionAttributesIterationGroup = new SyncroSimLayoutItem("TransitionAttributesIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem TransitionAttributesAvgGroup = new SyncroSimLayoutItem("TransitionAttributesAvgGroup", "Average", true);
+            SyncroSimLayoutItem TransitionAttributesGroup = new SyncroSimLayoutItem("stsim_TransitionAttributesGroup", "Transition Attributes", true);
+            SyncroSimLayoutItem TransitionAttributesIterationGroup = new SyncroSimLayoutItem("stsim_TransitionAttributesIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem TransitionAttributesAvgGroup = new SyncroSimLayoutItem("stsim_TransitionAttributesAvgGroup", "Average", true);
 
             AddMapTransitionAttributes(
                 project, TransitionAttributesIterationGroup.Items,

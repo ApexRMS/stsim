@@ -70,7 +70,10 @@ namespace SyncroSim.STSim
         /// <param name="amountLabel"></param>
         /// <param name="amountUnits"></param>
         /// <remarks></remarks>
-        public static void GetAmountLabelTerminology(DataSheet terminologyDataSheet, ref string amountLabel, ref TerminologyUnit amountUnits)
+        public static void GetAmountLabelTerminology(
+            DataSheet terminologyDataSheet, 
+            ref string amountLabel, 
+            ref TerminologyUnit amountUnits)
         {
             DataRow dr = terminologyDataSheet.GetDataRow();
 
@@ -81,12 +84,17 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_TERMINOLOGY_AMOUNT_LABEL_COLUMN_NAME] != DBNull.Value)
                 {
-                    amountLabel = Convert.ToString(dr[Strings.DATASHEET_TERMINOLOGY_AMOUNT_LABEL_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    amountLabel = Convert.ToString(
+                        dr[Strings.DATASHEET_TERMINOLOGY_AMOUNT_LABEL_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERMINOLOGY_AMOUNT_UNITS_COLUMN_NAME] != DBNull.Value)
                 {
-                    int value = Convert.ToInt32(dr[Strings.DATASHEET_TERMINOLOGY_AMOUNT_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int value = Convert.ToInt32(
+                        dr[Strings.DATASHEET_TERMINOLOGY_AMOUNT_UNITS_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
+
                     amountUnits = (TerminologyUnit)value;
                 }
             }
@@ -100,7 +108,10 @@ namespace SyncroSim.STSim
         /// <param name="slxlabel"></param>
         /// <param name="slylabel"></param>
         /// <remarks></remarks>
-        public static void GetStateLabelTerminology(DataSheet terminologyDataSheet, ref string slxlabel, ref string slylabel)
+        public static void GetStateLabelTerminology(
+            DataSheet terminologyDataSheet, 
+            ref string slxlabel, 
+            ref string slylabel)
         {
             DataRow dr = terminologyDataSheet.GetDataRow();
 
@@ -111,12 +122,16 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_TERMINOLOGY_STATELABELX_COLUMN_NAME] != DBNull.Value)
                 {
-                    slxlabel = Convert.ToString(dr[Strings.DATASHEET_TERMINOLOGY_STATELABELX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    slxlabel = Convert.ToString(
+                        dr[Strings.DATASHEET_TERMINOLOGY_STATELABELX_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERMINOLOGY_STATELABELY_COLUMN_NAME] != DBNull.Value)
                 {
-                    slylabel = Convert.ToString(dr[Strings.DATASHEET_TERMINOLOGY_STATELABELY_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    slylabel = Convert.ToString(
+                        dr[Strings.DATASHEET_TERMINOLOGY_STATELABELY_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -146,17 +161,23 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_TERMINOLOGY_PRIMARY_STRATUM_LABEL_COLUMN_NAME] != DBNull.Value)
                 {
-                    primaryStratumLabel = Convert.ToString(dr[Strings.DATASHEET_TERMINOLOGY_PRIMARY_STRATUM_LABEL_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    primaryStratumLabel = Convert.ToString(
+                        dr[Strings.DATASHEET_TERMINOLOGY_PRIMARY_STRATUM_LABEL_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME] != DBNull.Value)
                 {
-                    secondaryStratumLabel = Convert.ToString(dr[Strings.DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    secondaryStratumLabel = Convert.ToString(
+                        dr[Strings.DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME] != DBNull.Value)
                 {
-                    tertiaryStratumLabel = Convert.ToString(dr[Strings.DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    tertiaryStratumLabel = Convert.ToString(
+                        dr[Strings.DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
                 }
             }
         }

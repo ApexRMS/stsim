@@ -1361,7 +1361,7 @@
     <view name="MultiProcessingDatafeedView" target="Multiprocessing" className="SyncroSim.STSim.ProcessingDataFeedView" classAssembly="SyncroSim.STSim"/>
   </views>
   <layouts>
-    <layout name="coreforms_ResultTransformers">
+    <layout name="coreforms_ResultTransformers" className="SyncroSim.STSim.STSimResultsProvider" classAssembly="SyncroSim.STSim">>
       <item name="corestime_ChartTransformer"/>
       <item name="corestime_MapTransformer"/>
       <group name="Export">

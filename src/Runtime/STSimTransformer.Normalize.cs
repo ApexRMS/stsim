@@ -369,8 +369,8 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_COLUMN_NAME] != DBNull.Value || 
                 dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_COLUMN_NAME] != DBNull.Value || 
                 dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_COLUMN_NAME] != DBNull.Value)
+                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME] != DBNull.Value ||
+                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_COLUMN_NAME] != DBNull.Value)
             {
                 return true;
             }

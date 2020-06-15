@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.18" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.19" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -581,6 +581,11 @@
                 <column name="SecondaryStratumID" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
                 <column name="TertiaryStratumID" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel"/>
                 <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" isOptional="True"/>
+                <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="TSTGroupID" dataType="Integer" displayName="TST Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTMin" displayName="TST Min" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="TSTMax" displayName="TST Max" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
                 <column name="TransitionMultiplierTypeID" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
                 <column name="Amount" displayName="Multiplier" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
@@ -1522,7 +1527,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="107"
+    schemaVersion="108"
     minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

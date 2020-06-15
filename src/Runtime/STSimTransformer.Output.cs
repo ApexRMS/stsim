@@ -1154,6 +1154,11 @@ namespace SyncroSim.STSim
 
                 if (!v.Equals(Spatial.DefaultNoDataValue))
                 {
+                    if (Values[i] == Spatial.DefaultNoDataValue)
+                    {
+                        Values[i] = 0.0;
+                    }
+
                     Values[i] += v / this.m_TotalIterations;
                 }
             }
@@ -1181,6 +1186,11 @@ namespace SyncroSim.STSim
                 {
                     //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
                     //and freq of 5, would give bins 1-5, and 6-8.
+
+                    if (Values[i] == Spatial.DefaultNoDataValue)
+                    {
+                        Values[i] = 0.0;
+                    }
 
                     if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionAttributeOutputTimesteps) != 0))
                     {

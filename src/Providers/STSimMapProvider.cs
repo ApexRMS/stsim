@@ -116,8 +116,9 @@ namespace SyncroSim.STSim
         {
             SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("stsim_TransitionsGroup", "Transitions", true);
             SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
+            SyncroSimLayoutItem TransitionsAvgTPGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Average", true);
             SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
-            SyncroSimLayoutItem TransitionsAvgGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Average", true);
+            SyncroSimLayoutItem TransitionsAvgTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgTSTGroup", "Average - Time-Since-Transition", true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
@@ -125,18 +126,24 @@ namespace SyncroSim.STSim
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
             AddMapTransitionGroupVariables(
+                project, TransitionsAvgTPGroup.Items,
+                "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER,
+                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+
+            AddMapTransitionGroupVariables(
                 project, TransitionsIterationEventsGroup.Items,
                 "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
             AddMapTransitionGroupVariables(
-                project, TransitionsAvgGroup.Items,
-                "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER,
-                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+                project, TransitionsAvgTSTGroup.Items,
+                "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupID", "(Time-Since-Transition)",
+                Constants.SPATIAL_MAP_AVG_TST_VARIABLE_PREFIX, null);
 
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
+            if (TransitionsAvgTPGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroup); }
             if (TransitionsIterationEventsGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroup); }
-            if (TransitionsAvgGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgGroup); }
+            if (TransitionsAvgTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTSTGroup); }
             if (TransitionsGroup.Items.Count > 0) { layout.Items.Add(TransitionsGroup); }
         }
 

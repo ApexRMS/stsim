@@ -480,20 +480,20 @@
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="RasterOutputSC" displayName="Raster SC" dataType="Boolean"/>
                 <column name="RasterOutputSCTimesteps" displayName="Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="RasterOutputTR" dataType="Boolean" displayName="Raster TR"/>
-                <column name="RasterOutputTRTimesteps" displayName="Raster TR Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputAge" displayName="Raster Age" dataType="Boolean"/>
                 <column name="RasterOutputAgeTimesteps" displayName="Raster Age Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="RasterOutputTST" dataType="Boolean" displayName="Raster TST"/>
-                <column name="RasterOutputTSTTimesteps" displayName="Raster TST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="RasterOutputST" dataType="Boolean" displayName="Raster ST"/>
-                <column name="RasterOutputSTTimesteps" displayName="Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="RasterOutputSA" displayName="Raster SA" dataType="Boolean"/>
-                <column name="RasterOutputSATimesteps" displayName="Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="RasterOutputTA" dataType="Boolean" displayName="Raster TA"/>
-                <column name="RasterOutputTATimesteps" displayName="Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="RasterOutputSTTimesteps" displayName="Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                               
+                <column name="RasterOutputTR" dataType="Boolean" displayName="Raster TR"/>
+                <column name="RasterOutputTRTimesteps" displayName="Raster TR Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                                               
                 <column name="RasterOutputTransitionEvents" dataType="Boolean" displayName="Raster Transition Events"/>
-                <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="RasterOutputTransitionEventTimesteps" displayName="Raster Transition Event Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                
+                <column name="RasterOutputTST" dataType="Boolean" displayName="Raster TST"/>
+                <column name="RasterOutputTSTTimesteps" displayName="Raster TST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>   
+                <column name="RasterOutputSA" displayName="Raster SA" dataType="Boolean"/>
+                <column name="RasterOutputSATimesteps" displayName="Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>             
+                <column name="RasterOutputTA" dataType="Boolean" displayName="Raster TA"/>
+                <column name="RasterOutputTATimesteps" displayName="Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                          
               </columns>
             </datasheet>
           </datasheets>
@@ -504,24 +504,27 @@
               <columns>
                 <column name="OutputOptionsSpatialAverageID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
-                <column name="AvgRasterOutputST" displayName="Avg. Raster ST" dataType="Boolean"/>
-                <column name="AvgRasterOutputSTTimesteps" displayName="Avg. Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputSTCumulative" displayName="Avg.Raster ST Cumulative" dataType="Boolean"/>
                 <column name="AvgRasterOutputSC" displayName="Avg. Raster SC" dataType="Boolean"/>
                 <column name="AvgRasterOutputSCTimesteps" displayName="Avg. Raster SC Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="AvgRasterOutputSCCumulative" displayName="Avg.Raster SC Cumulative" dataType="Boolean"/>
                 <column name="AvgRasterOutputAge" displayName="Avg. Raster Age" dataType="Boolean"/>
                 <column name="AvgRasterOutputAgeTimesteps" displayName="Avg. Raster Age Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputAgeCumulative" displayName="Avg.Raster Age Cumulative" dataType="Boolean"/>
-                <column name="AvgRasterOutputSA" displayName="Avg. Raster SA" dataType="Boolean"/>
-                <column name="AvgRasterOutputSATimesteps" displayName="Avg. Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputSACumulative" displayName="Avg.Raster SA Cumulative" dataType="Boolean"/>
-                <column name="AvgRasterOutputTA" dataType="Boolean" displayName="Avg. Raster TA"/>
-                <column name="AvgRasterOutputTATimesteps" displayName="Avg. Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="AvgRasterOutputTACumulative" displayName="Avg. Raster TA Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputAgeCumulative" displayName="Avg.Raster Age Cumulative" dataType="Boolean"/>                                             
+                <column name="AvgRasterOutputST" displayName="Avg. Raster ST" dataType="Boolean"/>
+                <column name="AvgRasterOutputSTTimesteps" displayName="Avg. Raster ST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSTCumulative" displayName="Avg.Raster ST Cumulative" dataType="Boolean"/>                
+                <column name="AvgRasterOutputTST" displayName="Avg. Raster TST" dataType="Boolean"/>
+                <column name="AvgRasterOutputTSTTimesteps" displayName="Avg. Raster TST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputTSTCumulative" displayName="Avg.Raster TST Cumulative" dataType="Boolean"/>                               
                 <column name="AvgRasterOutputTP" dataType="Boolean" displayName="Avg. Raster TP"/>
                 <column name="AvgRasterOutputTPTimesteps" displayName="Avg. Raster TP Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
                 <column name="AvgRasterOutputTPCumulative" displayName="Avg.Raster TP Cumulative" dataType="Boolean"/>
+                <column name="AvgRasterOutputSA" displayName="Avg. Raster SA" dataType="Boolean"/>
+                <column name="AvgRasterOutputSATimesteps" displayName="Avg. Raster SA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputSACumulative" displayName="Avg.Raster SA Cumulative" dataType="Boolean"/>               
+                <column name="AvgRasterOutputTA" dataType="Boolean" displayName="Avg. Raster TA"/>
+                <column name="AvgRasterOutputTATimesteps" displayName="Avg. Raster TA Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="AvgRasterOutputTACumulative" displayName="Avg. Raster TA Cumulative" dataType="Boolean"/>                
               </columns>
             </datasheet>
           </datasheets>
@@ -992,21 +995,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="OutputStratumAmount" displayName="Output Stratum Amount" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="OutputStratum" displayName="Stratum Amount" spatialMultiProcessing="True" sumColumnNames="Amount">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                <column name="StratumID" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-                <column name="SecondaryStratumID" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-                <column name="TertiaryStratumID" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-                <column name="Amount" dataType="Double"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
         <datafeed name="OutputStratumState" displayName="Output Stratum State" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="OutputStratumState" displayName="Stratum State" spatialMultiProcessing="True" sumColumnNames="Amount">
@@ -1023,6 +1011,21 @@
                 <column name="AgeMin" displayName="Age Min" dataType="Integer"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer"/>
                 <column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
+                <column name="Amount" dataType="Double"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>        
+        <datafeed name="OutputStratumAmount" displayName="Output Stratum Amount" dataScope="Scenario" isOutput="True">
+          <datasheets>
+            <datasheet name="OutputStratum" displayName="Stratum Amount" spatialMultiProcessing="True" sumColumnNames="Amount">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
+                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
+                <column name="Timestep" dataType="Integer" isCompositeIndex="True" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="StratumID" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
+                <column name="SecondaryStratumID" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
+                <column name="TertiaryStratumID" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
                 <column name="Amount" dataType="Double"/>
               </columns>
             </datasheet>
@@ -1105,19 +1108,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="OutputSpatialStratum" displayName="Output Spatial Stratum" dataScope="Scenario" isOutput="True" >
-          <datasheets>
-            <datasheet name="OutputSpatialStratum" displayName="Spatial Primary Stratum" spatialMultiProcessing="True">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" />
-                <column name="Iteration" dataType="Integer" format="d"/>
-                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                <column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="str"/>
-                <column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
         <datafeed name="OutputSpatialState" displayName="Output Spatial State" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialState" displayName="Spatial State" spatialMultiProcessing="True">
@@ -1130,7 +1120,7 @@
               </columns>
             </datasheet>
           </datasheets>
-        </datafeed>
+        </datafeed>  
         <datafeed name="OutputSpatialAge" displayName="Output Spatial Age" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialAge" displayName="Spatial Age" spatialMultiProcessing="True">
@@ -1140,6 +1130,19 @@
                 <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
                 <column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="age"/>
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>        
+        <datafeed name="OutputSpatialStratum" displayName="Output Spatial Stratum" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialStratum" displayName="Spatial Primary Stratum" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="str"/>
+                <column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
           </datasheets>
@@ -1167,6 +1170,20 @@
                 <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
                 <column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tg"/>
+                <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="OutputSpatialTST" displayName="Output Spatial TST" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialTST" displayName="Spatial TST" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+                <column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tst"/>
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
@@ -1200,20 +1217,33 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="OutputSpatialTST" displayName="Output Spatial TST" dataScope="Scenario" isOutput="True" >
+        <datafeed name="OutputSpatialAverageStateClass" displayName="Output State Class Probability" dataScope="Scenario" isOutput="True" >
           <datasheets>
-            <datasheet name="OutputSpatialTST" displayName="Spatial TST" spatialMultiProcessing="True">
+            <datasheet name="OutputSpatialAverageStateClass" displayName="Output State Class Probability" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" />
                 <column name="Iteration" dataType="Integer" format="d"/>
-                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tst"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
+                <column name="Filename" displayName="State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateClassID" filenameCode="avgsc" />
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
           </datasheets>
-        </datafeed>
+        </datafeed>     
+        <datafeed name="OutputSpatialAverageAge" displayName="Output Average Age" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputSpatialAverageAge" displayName="Output Average Age" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" />
+                <column name="Iteration" dataType="Integer" format="d"/>
+                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="avgage" />
+                <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>        
         <datafeed name="OutputSpatialAverageStratum" displayName="Output Stratum Probability" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialAverageStratum" displayName="Output Stratum Probability" spatialMultiProcessing="True">
@@ -1228,33 +1258,34 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="OutputSpatialAverageStateClass" displayName="Output State Class Probability" dataScope="Scenario" isOutput="True" >
+        <datafeed name="OutputSpatialAverageTransitionProbability" displayName="Output Transition Probability" dataScope="Scenario" isOutput="True" >
           <datasheets>
-            <datasheet name="OutputSpatialAverageStateClass" displayName="Output State Class Probability" spatialMultiProcessing="True">
+            <datasheet name="OutputSpatialAverageTransitionProbability" displayName="Output Transition Probability" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" />
                 <column name="Iteration" dataType="Integer" format="d"/>
-                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
-                <column name="Filename" displayName="State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateClassID" filenameCode="avgsc" />
+                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+                <column name="Filename" displayName="Transition Probability Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="avgtp" />
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
           </datasheets>
-        </datafeed>      
-        <datafeed name="OutputSpatialAverageAge" displayName="Output Average Age" dataScope="Scenario" isOutput="True" >
+        </datafeed>
+        <datafeed name="OutputSpatialAverageTST" displayName="Output Average TST" dataScope="Scenario" isOutput="True" >
           <datasheets>
-            <datasheet name="OutputSpatialAverageAge" displayName="Output Average Age" spatialMultiProcessing="True">
+            <datasheet name="OutputSpatialAverageTST" displayName="Output Average TST" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" />
                 <column name="Iteration" dataType="Integer" format="d"/>
-                <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                <column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="avgage" />
+                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+                <column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="avgtst"/>
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
           </datasheets>
-        </datafeed>              
+        </datafeed>
         <datafeed name="OutputSpatialAverageStateAttribute" displayName="Output Average State Attribute" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialAverageStateAttribute" displayName="Output Average State Attribute" spatialMultiProcessing="True">
@@ -1278,20 +1309,6 @@
                 <column name="Timestep" dataType="Integer" displayNameSource="stsim_Terminology" displayNameColumn="TimestepUnits" format="d"/>
                 <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
                 <column name="Filename" displayName="Average Transition Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeID" filenameCode="avgta" />
-                <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="OutputSpatialAverageTransitionProbability" displayName="Output Transition Probability" dataScope="Scenario" isOutput="True" >
-          <datasheets>
-            <datasheet name="OutputSpatialAverageTransitionProbability" displayName="Output Transition Probability" spatialMultiProcessing="True">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" />
-                <column name="Iteration" dataType="Integer" format="d"/>
-                <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
-                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="Filename" displayName="Transition Probability Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tp" />
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>
@@ -1337,6 +1354,8 @@
     </transformer>       
     <transformer name="AverageTransitionProbabilityRasterMap" displayName="Transition Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename" isFolderExport="True">
     </transformer>    
+    <transformer name="AverageTSTRasterMap" displayName="Average Time-Since-Transition" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTST" column="Filename" isFolderExport="True">
+    </transformer>      
   </transformers>
   <views>
     <view name="RunControlDatafeedView" target="RunControl" className="SyncroSim.STSim.RunControlDataFeedView" classAssembly="SyncroSim.STSim"/>
@@ -1391,10 +1410,11 @@
             <item name="AverageStratumRasterMap" displayName="Average"/>              
           </group>
           <group name="Transitions">
-            <item name="TransitionRasterMap" displayName="Iteration"/>   
+            <item name="TransitionRasterMap" displayName="Iteration"/> 
+            <item name="AverageTransitionProbabilityRasterMap" displayName="Average"/>             
+            <item name="TransitionEventRasterMap" displayName="Iteration - Events"/>             
             <item name="TSTRasterMap"/>  
-            <item name="TransitionEventRasterMap" displayName="Iteration - Events"/> 
-            <item name="AverageTransitionProbabilityRasterMap" displayName="Average"/>            
+            <item name="AverageTSTRasterMap"/>       
           </group>"
           <group name="StateAttributes" displayName="State Attributes">
             <item name="StateAttributeRasterMap" displayName="Iteration"/>  

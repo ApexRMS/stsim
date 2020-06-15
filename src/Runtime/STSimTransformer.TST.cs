@@ -1,12 +1,43 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
+using System;
+using System.Data;
 using System.Diagnostics;
+using System.Globalization;
+using System.Collections.Generic;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
     public partial class STSimTransformer
     {
+        private List<int> GetTSTTransitionGroupIds()
+        {
+            List<int> Groups = new List<int>();
+            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
+            Dictionary<int, bool> dict = new Dictionary<int, bool>();
+
+            foreach (DataRow dr in dstst.GetData().Rows)
+            {
+                int id = Convert.ToInt32(
+                    dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], 
+                    CultureInfo.InvariantCulture);
+
+                if (!dict.ContainsKey(id))
+                {
+                    dict.Add(id, true);
+                }
+            }
+
+            foreach (int id in dict.Keys)
+            {
+                 Groups.Add(id);
+            }
+
+            return Groups;
+        }
+
         /// <summary>
         /// Initializes the specified cell's Tst values
         /// </summary>

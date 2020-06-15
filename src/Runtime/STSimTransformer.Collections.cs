@@ -64,21 +64,8 @@ namespace SyncroSim.STSim
         private void FillCellCollection(int numCells)
         {
             Debug.Assert(numCells > 0);
-            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
-
-            //Create a unique list of transition groups from those found in the Time Since Transition Groups property
-            Dictionary<int, bool> dict = new Dictionary<int, bool>();
-
-            foreach (DataRow dr in dstst.GetData().Rows)
-            {
-                int id = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-
-                if (!dict.ContainsKey(id))
-                {
-                    dict.Add(id, true);
-                }
-            }
-
+            List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
+ 
             //Create all the cells.  If there are Time Since Transition Groups then create the cell's TSTCollection
             //and add a TST for each one.  (We don't allocate the TSTCollection unless there are groups since there
             //can be a large number of cells)
@@ -99,11 +86,11 @@ namespace SyncroSim.STSim
                 Cell SimulationCell = new Cell(CellId, CollIndex);
                 CollIndex++;
 
-                if (dict.Count > 0)
+                if (TSTGroupIds.Count > 0)
                 {
-                    foreach (int tg in dict.Keys)
+                    foreach (int tgid in TSTGroupIds)
                     {
-                        SimulationCell.TstValues.Add(new Tst(tg));
+                        SimulationCell.TstValues.Add(new Tst(tgid));
                     }
                 }
 

@@ -28,34 +28,32 @@ namespace SyncroSim.STSim
                 BeginNormalSpatialMerge?.Invoke(this, new EventArgs());
 
                 //Merge spatial averaging rasters
-                ProcessAverageStratumRasters();
+
                 ProcessAverageStateClassRasters();
                 ProcessAverageAgeRasters();
+                ProcessAverageStratumRasters();
+                ProcessAverageTransitionProbabilityRasters();
+                ProcessAverageTSTRasters();
                 ProcessAverageStateAttributeRasters();
                 ProcessAverageTransitionAttributeRasters();
-                ProcessAverageTransitionProbabilityRasters();
 
                 //Do the normal merge
                 base.Merge();
 
                 //Merge spatial averaging datasheets
-                ProcessAverageStratumDatasheet();
                 ProcessAverageStateClassDatasheet(); 
                 ProcessAverageAgeDatasheet(); 
+                ProcessAverageStratumDatasheet();
+                ProcessAverageTransitionProbabilityDatasheet();
+                ProcessAverageTSTDatasheet();
                 ProcessAverageStateAttributeDatasheet();       
                 ProcessAverageTransitionAttributeDatasheet();
-                ProcessAverageTransitionProbabilityDatasheet();
 
                 NormalSpatialMergeComplete?.Invoke(this, new EventArgs());
             }
         }
 
-        private void ProcessAverageStratumRasters()
-        {
-            this.ProcessAveragedOutputFiles(
-                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM,
-                Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX + "*.tif");
-        }
+        //Rasters
 
         private void ProcessAverageStateClassRasters()
         {
@@ -69,6 +67,27 @@ namespace SyncroSim.STSim
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE,
                 Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageStratumRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM,
+                Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageTransitionProbabilityRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
+                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX + "*.tif");
+        }
+
+        private void ProcessAverageTSTRasters()
+        {
+            this.ProcessAveragedOutputFiles(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TST,
+                Constants.SPATIAL_MAP_AVG_TST_FILEPREFIX + "*.tif");
         }
 
         private void ProcessAverageStateAttributeRasters()
@@ -85,19 +104,7 @@ namespace SyncroSim.STSim
                 Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX + "*.tif");
         }
 
-        private void ProcessAverageTransitionProbabilityRasters()
-        {
-            this.ProcessAveragedOutputFiles(
-                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
-                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX + "*.tif");
-        }
-
-        private void ProcessAverageStratumDatasheet()
-        {
-            this.ProcessAveragedValueDatasheet(
-                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM, 
-                Strings.DATASHEET_STRATUM_ID_COLUMN_NAME);
-        }
+        //Datasheets
 
         private void ProcessAverageStateClassDatasheet()
         {
@@ -112,6 +119,27 @@ namespace SyncroSim.STSim
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE);
         }
 
+        private void ProcessAverageStratumDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM, 
+                Strings.DATASHEET_STRATUM_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageTransitionProbabilityDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
+                Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME);
+        }
+
+        private void ProcessAverageTSTDatasheet()
+        {
+            this.ProcessAveragedValueDatasheet(
+                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TST,
+                Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME);
+        }
+
         private void ProcessAverageStateAttributeDatasheet()
         {
             this.ProcessAveragedValueDatasheet(
@@ -124,13 +152,6 @@ namespace SyncroSim.STSim
             this.ProcessAveragedValueDatasheet(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE,
                 Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME);
-        }
-
-        private void ProcessAverageTransitionProbabilityDatasheet()
-        {
-            this.ProcessAveragedValueDatasheet(
-                Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY,
-                Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME);
         }
 
         private void ProcessAveragedOutputFiles(string datasheetName, string fileSpec)

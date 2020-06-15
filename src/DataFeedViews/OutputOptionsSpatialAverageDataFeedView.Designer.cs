@@ -57,6 +57,10 @@ namespace SyncroSim.STSim
             this.TextBoxAvgRasterSATimesteps = new System.Windows.Forms.TextBox();
             this.PanelMain = new System.Windows.Forms.Panel();
             this.TableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.CheckBoxAvgRasterTST = new System.Windows.Forms.CheckBox();
+            this.TextBoxAvgRasterTSTTimesteps = new System.Windows.Forms.TextBox();
+            this.LabelAvgRasterTSTTimesteps = new System.Windows.Forms.Label();
+            this.CheckBoxAvgRasterTSTCumulative = new System.Windows.Forms.CheckBox();
             this.PanelMain.SuspendLayout();
             this.TableLayoutPanelMain.SuspendLayout();
             this.SuspendLayout();
@@ -187,22 +191,22 @@ namespace SyncroSim.STSim
             // CheckBoxAvgRasterTACumulative
             // 
             this.CheckBoxAvgRasterTACumulative.AutoSize = true;
-            this.CheckBoxAvgRasterTACumulative.Location = new System.Drawing.Point(461, 154);
+            this.CheckBoxAvgRasterTACumulative.Location = new System.Drawing.Point(461, 184);
             this.CheckBoxAvgRasterTACumulative.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTACumulative.Name = "CheckBoxAvgRasterTACumulative";
             this.CheckBoxAvgRasterTACumulative.Size = new System.Drawing.Size(99, 21);
-            this.CheckBoxAvgRasterTACumulative.TabIndex = 23;
+            this.CheckBoxAvgRasterTACumulative.TabIndex = 27;
             this.CheckBoxAvgRasterTACumulative.Text = "Cumulative";
             this.CheckBoxAvgRasterTACumulative.UseVisualStyleBackColor = true;
             // 
             // CheckBoxAvgRasterSACumulative
             // 
             this.CheckBoxAvgRasterSACumulative.AutoSize = true;
-            this.CheckBoxAvgRasterSACumulative.Location = new System.Drawing.Point(461, 124);
+            this.CheckBoxAvgRasterSACumulative.Location = new System.Drawing.Point(461, 154);
             this.CheckBoxAvgRasterSACumulative.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSACumulative.Name = "CheckBoxAvgRasterSACumulative";
             this.CheckBoxAvgRasterSACumulative.Size = new System.Drawing.Size(99, 21);
-            this.CheckBoxAvgRasterSACumulative.TabIndex = 19;
+            this.CheckBoxAvgRasterSACumulative.TabIndex = 23;
             this.CheckBoxAvgRasterSACumulative.Text = "Cumulative";
             this.CheckBoxAvgRasterSACumulative.UseVisualStyleBackColor = true;
             // 
@@ -220,11 +224,11 @@ namespace SyncroSim.STSim
             // CheckBoxAvgRasterTA
             // 
             this.CheckBoxAvgRasterTA.AutoSize = true;
-            this.CheckBoxAvgRasterTA.Location = new System.Drawing.Point(4, 154);
+            this.CheckBoxAvgRasterTA.Location = new System.Drawing.Point(4, 184);
             this.CheckBoxAvgRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterTA.Name = "CheckBoxAvgRasterTA";
             this.CheckBoxAvgRasterTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxAvgRasterTA.TabIndex = 20;
+            this.CheckBoxAvgRasterTA.TabIndex = 24;
             this.CheckBoxAvgRasterTA.Text = "Transition attributes every";
             this.CheckBoxAvgRasterTA.UseVisualStyleBackColor = true;
             // 
@@ -242,11 +246,11 @@ namespace SyncroSim.STSim
             // LabelAvgRasterTATimesteps
             // 
             this.LabelAvgRasterTATimesteps.AutoSize = true;
-            this.LabelAvgRasterTATimesteps.Location = new System.Drawing.Point(334, 156);
+            this.LabelAvgRasterTATimesteps.Location = new System.Drawing.Point(334, 186);
             this.LabelAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelAvgRasterTATimesteps.Name = "LabelAvgRasterTATimesteps";
             this.LabelAvgRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterTATimesteps.TabIndex = 22;
+            this.LabelAvgRasterTATimesteps.TabIndex = 26;
             this.LabelAvgRasterTATimesteps.Text = "timesteps";
             // 
             // LabelAvgRasterSCTimesteps
@@ -261,11 +265,11 @@ namespace SyncroSim.STSim
             // 
             // TextBoxAvgRasterTATimesteps
             // 
-            this.TextBoxAvgRasterTATimesteps.Location = new System.Drawing.Point(247, 154);
+            this.TextBoxAvgRasterTATimesteps.Location = new System.Drawing.Point(247, 184);
             this.TextBoxAvgRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterTATimesteps.Name = "TextBoxAvgRasterTATimesteps";
             this.TextBoxAvgRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterTATimesteps.TabIndex = 21;
+            this.TextBoxAvgRasterTATimesteps.TabIndex = 25;
             this.TextBoxAvgRasterTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxAvgRasterSCTimesteps
@@ -280,31 +284,31 @@ namespace SyncroSim.STSim
             // CheckBoxAvgRasterSA
             // 
             this.CheckBoxAvgRasterSA.AutoSize = true;
-            this.CheckBoxAvgRasterSA.Location = new System.Drawing.Point(4, 124);
+            this.CheckBoxAvgRasterSA.Location = new System.Drawing.Point(4, 154);
             this.CheckBoxAvgRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxAvgRasterSA.Name = "CheckBoxAvgRasterSA";
             this.CheckBoxAvgRasterSA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxAvgRasterSA.TabIndex = 16;
+            this.CheckBoxAvgRasterSA.TabIndex = 20;
             this.CheckBoxAvgRasterSA.Text = "State attributes every";
             this.CheckBoxAvgRasterSA.UseVisualStyleBackColor = true;
             // 
             // LabelAvgRasterSATimesteps
             // 
             this.LabelAvgRasterSATimesteps.AutoSize = true;
-            this.LabelAvgRasterSATimesteps.Location = new System.Drawing.Point(334, 126);
+            this.LabelAvgRasterSATimesteps.Location = new System.Drawing.Point(334, 156);
             this.LabelAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelAvgRasterSATimesteps.Name = "LabelAvgRasterSATimesteps";
             this.LabelAvgRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelAvgRasterSATimesteps.TabIndex = 18;
+            this.LabelAvgRasterSATimesteps.TabIndex = 22;
             this.LabelAvgRasterSATimesteps.Text = "timesteps";
             // 
             // TextBoxAvgRasterSATimesteps
             // 
-            this.TextBoxAvgRasterSATimesteps.Location = new System.Drawing.Point(247, 124);
+            this.TextBoxAvgRasterSATimesteps.Location = new System.Drawing.Point(247, 154);
             this.TextBoxAvgRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxAvgRasterSATimesteps.Name = "TextBoxAvgRasterSATimesteps";
             this.TextBoxAvgRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxAvgRasterSATimesteps.TabIndex = 17;
+            this.TextBoxAvgRasterSATimesteps.TabIndex = 21;
             this.TextBoxAvgRasterSATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // PanelMain
@@ -323,43 +327,89 @@ namespace SyncroSim.STSim
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 243F));
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
-            this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTACumulative, 3, 5);
+            this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1329F));
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSC, 0, 0);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterAge, 0, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterST, 0, 2);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSTCumulative, 3, 2);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterSTTimesteps, 1, 2);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTP, 0, 3);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterAgeTimesteps, 1, 1);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTA, 0, 5);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSA, 0, 4);
             this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterSTTimesteps, 2, 2);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSACumulative, 3, 4);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterSCTimesteps, 1, 0);
             this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterAgeTimesteps, 2, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTPCumulative, 3, 3);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterTPTimesteps, 1, 3);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterAgeCumulative, 3, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSCCumulative, 3, 0);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterTATimesteps, 2, 5);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterTATimesteps, 1, 5);
             this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterSCTimesteps, 2, 0);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterSATimesteps, 1, 4);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterSATimesteps, 2, 4);
             this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterTPTimesteps, 2, 3);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTA, 0, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterTATimesteps, 1, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterTATimesteps, 2, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTACumulative, 3, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSA, 0, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterSATimesteps, 1, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterSATimesteps, 2, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterSACumulative, 3, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTP, 0, 3);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTST, 0, 4);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxAvgRasterTSTTimesteps, 1, 4);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelAvgRasterTSTTimesteps, 2, 4);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxAvgRasterTSTCumulative, 3, 4);
             this.TableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.TableLayoutPanelMain.Location = new System.Drawing.Point(20, 20);
             this.TableLayoutPanelMain.Name = "TableLayoutPanelMain";
-            this.TableLayoutPanelMain.RowCount = 6;
+            this.TableLayoutPanelMain.RowCount = 7;
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.TableLayoutPanelMain.Size = new System.Drawing.Size(1786, 182);
+            this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.TableLayoutPanelMain.Size = new System.Drawing.Size(1786, 214);
             this.TableLayoutPanelMain.TabIndex = 24;
+            // 
+            // CheckBoxAvgRasterTST
+            // 
+            this.CheckBoxAvgRasterTST.AutoSize = true;
+            this.CheckBoxAvgRasterTST.Location = new System.Drawing.Point(4, 124);
+            this.CheckBoxAvgRasterTST.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxAvgRasterTST.Name = "CheckBoxAvgRasterTST";
+            this.CheckBoxAvgRasterTST.Size = new System.Drawing.Size(201, 21);
+            this.CheckBoxAvgRasterTST.TabIndex = 16;
+            this.CheckBoxAvgRasterTST.Text = "Time-since-transition every";
+            this.CheckBoxAvgRasterTST.UseVisualStyleBackColor = true;
+            // 
+            // TextBoxAvgRasterTSTTimesteps
+            // 
+            this.TextBoxAvgRasterTSTTimesteps.Location = new System.Drawing.Point(247, 124);
+            this.TextBoxAvgRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
+            this.TextBoxAvgRasterTSTTimesteps.Name = "TextBoxAvgRasterTSTTimesteps";
+            this.TextBoxAvgRasterTSTTimesteps.Size = new System.Drawing.Size(65, 22);
+            this.TextBoxAvgRasterTSTTimesteps.TabIndex = 17;
+            this.TextBoxAvgRasterTSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // LabelAvgRasterTSTTimesteps
+            // 
+            this.LabelAvgRasterTSTTimesteps.AutoSize = true;
+            this.LabelAvgRasterTSTTimesteps.Location = new System.Drawing.Point(334, 126);
+            this.LabelAvgRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
+            this.LabelAvgRasterTSTTimesteps.Name = "LabelAvgRasterTSTTimesteps";
+            this.LabelAvgRasterTSTTimesteps.Size = new System.Drawing.Size(68, 17);
+            this.LabelAvgRasterTSTTimesteps.TabIndex = 18;
+            this.LabelAvgRasterTSTTimesteps.Text = "timesteps";
+            // 
+            // CheckBoxAvgRasterTSTCumulative
+            // 
+            this.CheckBoxAvgRasterTSTCumulative.AutoSize = true;
+            this.CheckBoxAvgRasterTSTCumulative.Location = new System.Drawing.Point(461, 124);
+            this.CheckBoxAvgRasterTSTCumulative.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxAvgRasterTSTCumulative.Name = "CheckBoxAvgRasterTSTCumulative";
+            this.CheckBoxAvgRasterTSTCumulative.Size = new System.Drawing.Size(99, 21);
+            this.CheckBoxAvgRasterTSTCumulative.TabIndex = 19;
+            this.CheckBoxAvgRasterTSTCumulative.Text = "Cumulative";
+            this.CheckBoxAvgRasterTSTCumulative.UseVisualStyleBackColor = true;
             // 
             // OutputOptionsSpatialAverageDataFeedView
             // 
@@ -401,5 +451,9 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.TextBox TextBoxAvgRasterSTTimesteps;
         private System.Windows.Forms.Panel PanelMain;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMain;
+        internal System.Windows.Forms.CheckBox CheckBoxAvgRasterTST;
+        internal System.Windows.Forms.TextBox TextBoxAvgRasterTSTTimesteps;
+        internal System.Windows.Forms.Label LabelAvgRasterTSTTimesteps;
+        internal System.Windows.Forms.CheckBox CheckBoxAvgRasterTSTCumulative;
     }
 }

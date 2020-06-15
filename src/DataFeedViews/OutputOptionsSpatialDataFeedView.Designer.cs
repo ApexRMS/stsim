@@ -64,181 +64,181 @@ namespace SyncroSim.STSim
             // CheckBoxRasterTE
             // 
             this.CheckBoxRasterTE.AutoSize = true;
-            this.CheckBoxRasterTE.Location = new System.Drawing.Point(4, 214);
+            this.CheckBoxRasterTE.Location = new System.Drawing.Point(4, 124);
             this.CheckBoxRasterTE.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTE.Name = "CheckBoxRasterTE";
             this.CheckBoxRasterTE.Size = new System.Drawing.Size(178, 21);
-            this.CheckBoxRasterTE.TabIndex = 21;
+            this.CheckBoxRasterTE.TabIndex = 12;
             this.CheckBoxRasterTE.Text = "Transition events every";
             this.CheckBoxRasterTE.UseVisualStyleBackColor = true;
             // 
             // LabelRasterTETimesteps
             // 
             this.LabelRasterTETimesteps.AutoSize = true;
-            this.LabelRasterTETimesteps.Location = new System.Drawing.Point(330, 216);
+            this.LabelRasterTETimesteps.Location = new System.Drawing.Point(330, 126);
             this.LabelRasterTETimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterTETimesteps.Name = "LabelRasterTETimesteps";
             this.LabelRasterTETimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTETimesteps.TabIndex = 23;
+            this.LabelRasterTETimesteps.TabIndex = 14;
             this.LabelRasterTETimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTETimesteps
             // 
-            this.TextBoxRasterTETimesteps.Location = new System.Drawing.Point(225, 214);
+            this.TextBoxRasterTETimesteps.Location = new System.Drawing.Point(225, 124);
             this.TextBoxRasterTETimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTETimesteps.Name = "TextBoxRasterTETimesteps";
             this.TextBoxRasterTETimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTETimesteps.TabIndex = 22;
+            this.TextBoxRasterTETimesteps.TabIndex = 13;
             this.TextBoxRasterTETimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterTA
             // 
             this.CheckBoxRasterTA.AutoSize = true;
-            this.CheckBoxRasterTA.Location = new System.Drawing.Point(4, 184);
+            this.CheckBoxRasterTA.Location = new System.Drawing.Point(4, 214);
             this.CheckBoxRasterTA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTA.Name = "CheckBoxRasterTA";
             this.CheckBoxRasterTA.Size = new System.Drawing.Size(195, 21);
-            this.CheckBoxRasterTA.TabIndex = 18;
+            this.CheckBoxRasterTA.TabIndex = 21;
             this.CheckBoxRasterTA.Text = "Transition attributes every";
             this.CheckBoxRasterTA.UseVisualStyleBackColor = true;
             // 
             // LabelRasterTATimesteps
             // 
             this.LabelRasterTATimesteps.AutoSize = true;
-            this.LabelRasterTATimesteps.Location = new System.Drawing.Point(330, 186);
+            this.LabelRasterTATimesteps.Location = new System.Drawing.Point(330, 216);
             this.LabelRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterTATimesteps.Name = "LabelRasterTATimesteps";
             this.LabelRasterTATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTATimesteps.TabIndex = 20;
+            this.LabelRasterTATimesteps.TabIndex = 23;
             this.LabelRasterTATimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTATimesteps
             // 
-            this.TextBoxRasterTATimesteps.Location = new System.Drawing.Point(225, 184);
+            this.TextBoxRasterTATimesteps.Location = new System.Drawing.Point(225, 214);
             this.TextBoxRasterTATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTATimesteps.Name = "TextBoxRasterTATimesteps";
             this.TextBoxRasterTATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTATimesteps.TabIndex = 19;
+            this.TextBoxRasterTATimesteps.TabIndex = 22;
             this.TextBoxRasterTATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterSA
             // 
             this.CheckBoxRasterSA.AutoSize = true;
-            this.CheckBoxRasterSA.Location = new System.Drawing.Point(4, 154);
+            this.CheckBoxRasterSA.Location = new System.Drawing.Point(4, 184);
             this.CheckBoxRasterSA.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterSA.Name = "CheckBoxRasterSA";
             this.CheckBoxRasterSA.Size = new System.Drawing.Size(165, 21);
-            this.CheckBoxRasterSA.TabIndex = 15;
+            this.CheckBoxRasterSA.TabIndex = 18;
             this.CheckBoxRasterSA.Text = "State attributes every";
             this.CheckBoxRasterSA.UseVisualStyleBackColor = true;
             // 
             // LabelRasterSATimesteps
             // 
             this.LabelRasterSATimesteps.AutoSize = true;
-            this.LabelRasterSATimesteps.Location = new System.Drawing.Point(330, 156);
+            this.LabelRasterSATimesteps.Location = new System.Drawing.Point(330, 186);
             this.LabelRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterSATimesteps.Name = "LabelRasterSATimesteps";
             this.LabelRasterSATimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterSATimesteps.TabIndex = 17;
+            this.LabelRasterSATimesteps.TabIndex = 20;
             this.LabelRasterSATimesteps.Text = "timesteps";
             // 
             // TextBoxRasterSATimesteps
             // 
-            this.TextBoxRasterSATimesteps.Location = new System.Drawing.Point(225, 154);
+            this.TextBoxRasterSATimesteps.Location = new System.Drawing.Point(225, 184);
             this.TextBoxRasterSATimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSATimesteps.Name = "TextBoxRasterSATimesteps";
             this.TextBoxRasterSATimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterSATimesteps.TabIndex = 16;
+            this.TextBoxRasterSATimesteps.TabIndex = 19;
             this.TextBoxRasterSATimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelRasterTSTTimesteps
             // 
             this.LabelRasterTSTTimesteps.AutoSize = true;
-            this.LabelRasterTSTTimesteps.Location = new System.Drawing.Point(330, 96);
+            this.LabelRasterTSTTimesteps.Location = new System.Drawing.Point(330, 156);
             this.LabelRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterTSTTimesteps.Name = "LabelRasterTSTTimesteps";
             this.LabelRasterTSTTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTSTTimesteps.TabIndex = 11;
+            this.LabelRasterTSTTimesteps.TabIndex = 17;
             this.LabelRasterTSTTimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTSTTimesteps
             // 
-            this.TextBoxRasterTSTTimesteps.Location = new System.Drawing.Point(225, 94);
+            this.TextBoxRasterTSTTimesteps.Location = new System.Drawing.Point(225, 154);
             this.TextBoxRasterTSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTSTTimesteps.Name = "TextBoxRasterTSTTimesteps";
             this.TextBoxRasterTSTTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTSTTimesteps.TabIndex = 10;
+            this.TextBoxRasterTSTTimesteps.TabIndex = 16;
             this.TextBoxRasterTSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterTST
             // 
             this.CheckBoxRasterTST.AutoSize = true;
-            this.CheckBoxRasterTST.Location = new System.Drawing.Point(4, 94);
+            this.CheckBoxRasterTST.Location = new System.Drawing.Point(4, 154);
             this.CheckBoxRasterTST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTST.Name = "CheckBoxRasterTST";
             this.CheckBoxRasterTST.Size = new System.Drawing.Size(201, 21);
-            this.CheckBoxRasterTST.TabIndex = 9;
+            this.CheckBoxRasterTST.TabIndex = 15;
             this.CheckBoxRasterTST.Text = "Time-since-transition every";
             this.CheckBoxRasterTST.UseVisualStyleBackColor = true;
             // 
             // TextBoxRasterAgeTimesteps
             // 
-            this.TextBoxRasterAgeTimesteps.Location = new System.Drawing.Point(225, 64);
+            this.TextBoxRasterAgeTimesteps.Location = new System.Drawing.Point(225, 34);
             this.TextBoxRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterAgeTimesteps.Name = "TextBoxRasterAgeTimesteps";
             this.TextBoxRasterAgeTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterAgeTimesteps.TabIndex = 7;
+            this.TextBoxRasterAgeTimesteps.TabIndex = 4;
             this.TextBoxRasterAgeTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterAge
             // 
             this.CheckBoxRasterAge.AutoSize = true;
-            this.CheckBoxRasterAge.Location = new System.Drawing.Point(4, 64);
+            this.CheckBoxRasterAge.Location = new System.Drawing.Point(4, 34);
             this.CheckBoxRasterAge.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterAge.Name = "CheckBoxRasterAge";
             this.CheckBoxRasterAge.Size = new System.Drawing.Size(101, 21);
-            this.CheckBoxRasterAge.TabIndex = 6;
+            this.CheckBoxRasterAge.TabIndex = 3;
             this.CheckBoxRasterAge.Text = "Ages every";
             this.CheckBoxRasterAge.UseVisualStyleBackColor = true;
             // 
             // LabelRasterAgeTimesteps
             // 
             this.LabelRasterAgeTimesteps.AutoSize = true;
-            this.LabelRasterAgeTimesteps.Location = new System.Drawing.Point(330, 66);
+            this.LabelRasterAgeTimesteps.Location = new System.Drawing.Point(330, 36);
             this.LabelRasterAgeTimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterAgeTimesteps.Name = "LabelRasterAgeTimesteps";
             this.LabelRasterAgeTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterAgeTimesteps.TabIndex = 8;
+            this.LabelRasterAgeTimesteps.TabIndex = 5;
             this.LabelRasterAgeTimesteps.Text = "timesteps";
             // 
             // TextBoxRasterTRTimesteps
             // 
-            this.TextBoxRasterTRTimesteps.Location = new System.Drawing.Point(225, 34);
+            this.TextBoxRasterTRTimesteps.Location = new System.Drawing.Point(225, 94);
             this.TextBoxRasterTRTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterTRTimesteps.Name = "TextBoxRasterTRTimesteps";
             this.TextBoxRasterTRTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterTRTimesteps.TabIndex = 4;
+            this.TextBoxRasterTRTimesteps.TabIndex = 10;
             this.TextBoxRasterTRTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxRasterST
             // 
             this.CheckBoxRasterST.AutoSize = true;
-            this.CheckBoxRasterST.Location = new System.Drawing.Point(4, 124);
+            this.CheckBoxRasterST.Location = new System.Drawing.Point(4, 64);
             this.CheckBoxRasterST.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterST.Name = "CheckBoxRasterST";
             this.CheckBoxRasterST.Size = new System.Drawing.Size(107, 21);
-            this.CheckBoxRasterST.TabIndex = 12;
+            this.CheckBoxRasterST.TabIndex = 6;
             this.CheckBoxRasterST.Text = "Strata every";
             this.CheckBoxRasterST.UseVisualStyleBackColor = true;
             // 
             // LabelRasterSTTimesteps
             // 
             this.LabelRasterSTTimesteps.AutoSize = true;
-            this.LabelRasterSTTimesteps.Location = new System.Drawing.Point(330, 126);
+            this.LabelRasterSTTimesteps.Location = new System.Drawing.Point(330, 66);
             this.LabelRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterSTTimesteps.Name = "LabelRasterSTTimesteps";
             this.LabelRasterSTTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterSTTimesteps.TabIndex = 14;
+            this.LabelRasterSTTimesteps.TabIndex = 8;
             this.LabelRasterSTTimesteps.Text = "timesteps";
             // 
             // CheckBoxRasterSC
@@ -255,11 +255,11 @@ namespace SyncroSim.STSim
             // CheckBoxRasterTR
             // 
             this.CheckBoxRasterTR.AutoSize = true;
-            this.CheckBoxRasterTR.Location = new System.Drawing.Point(4, 34);
+            this.CheckBoxRasterTR.Location = new System.Drawing.Point(4, 94);
             this.CheckBoxRasterTR.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxRasterTR.Name = "CheckBoxRasterTR";
             this.CheckBoxRasterTR.Size = new System.Drawing.Size(139, 21);
-            this.CheckBoxRasterTR.TabIndex = 3;
+            this.CheckBoxRasterTR.TabIndex = 9;
             this.CheckBoxRasterTR.Text = "Transitions every";
             this.CheckBoxRasterTR.UseVisualStyleBackColor = true;
             // 
@@ -274,21 +274,21 @@ namespace SyncroSim.STSim
             // 
             // TextBoxRasterSTTimesteps
             // 
-            this.TextBoxRasterSTTimesteps.Location = new System.Drawing.Point(225, 124);
+            this.TextBoxRasterSTTimesteps.Location = new System.Drawing.Point(225, 64);
             this.TextBoxRasterSTTimesteps.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxRasterSTTimesteps.Name = "TextBoxRasterSTTimesteps";
             this.TextBoxRasterSTTimesteps.Size = new System.Drawing.Size(65, 22);
-            this.TextBoxRasterSTTimesteps.TabIndex = 13;
+            this.TextBoxRasterSTTimesteps.TabIndex = 7;
             this.TextBoxRasterSTTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelRasterTRTimesteps
             // 
             this.LabelRasterTRTimesteps.AutoSize = true;
-            this.LabelRasterTRTimesteps.Location = new System.Drawing.Point(330, 36);
+            this.LabelRasterTRTimesteps.Location = new System.Drawing.Point(330, 96);
             this.LabelRasterTRTimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.LabelRasterTRTimesteps.Name = "LabelRasterTRTimesteps";
             this.LabelRasterTRTimesteps.Size = new System.Drawing.Size(68, 17);
-            this.LabelRasterTRTimesteps.TabIndex = 5;
+            this.LabelRasterTRTimesteps.TabIndex = 11;
             this.LabelRasterTRTimesteps.Text = "timesteps";
             // 
             // LabelRasterSCTimesteps
@@ -317,30 +317,30 @@ namespace SyncroSim.STSim
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 221F));
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1500F));
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTE, 0, 7);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTE, 0, 4);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTETimesteps, 2, 4);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTETimesteps, 1, 4);
             this.TableLayoutPanelMain.Controls.Add(this.LabelRasterSCTimesteps, 2, 0);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTRTimesteps, 2, 1);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterAgeTimesteps, 2, 2);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTSTTimesteps, 2, 3);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterSATimesteps, 2, 5);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTATimesteps, 2, 6);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterSTTimesteps, 2, 4);
-            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTETimesteps, 2, 7);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTA, 0, 6);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTETimesteps, 1, 7);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTATimesteps, 1, 6);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterSATimesteps, 1, 5);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterAgeTimesteps, 1, 2);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTRTimesteps, 1, 1);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterSCTimesteps, 1, 0);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTSTTimesteps, 1, 3);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterSA, 0, 5);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterST, 0, 4);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTST, 0, 3);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterAge, 0, 2);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTR, 0, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterSC, 0, 0);
-            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterSTTimesteps, 1, 4);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTA, 0, 7);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTATimesteps, 1, 7);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTATimesteps, 2, 7);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterSA, 0, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterSATimesteps, 1, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterSATimesteps, 2, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTST, 0, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTSTTimesteps, 1, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTSTTimesteps, 2, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterAge, 0, 1);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterAgeTimesteps, 1, 1);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterAgeTimesteps, 2, 1);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterSTTimesteps, 2, 2);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterSTTimesteps, 1, 2);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterST, 0, 2);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxRasterTR, 0, 3);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxRasterTRTimesteps, 1, 3);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelRasterTRTimesteps, 2, 3);
             this.TableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.TableLayoutPanelMain.Location = new System.Drawing.Point(20, 20);
             this.TableLayoutPanelMain.Name = "TableLayoutPanelMain";

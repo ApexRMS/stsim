@@ -2349,42 +2349,6 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Initializes the average raster stratum map
-        /// </summary>
-        private void InitializeAvgRasterStratumMap()
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.MinimumTimestep > 0);
-
-            if (!this.m_CreateAvgRasterStratumOutput)
-            {
-                return;
-            }
-
-            foreach (Stratum st in this.m_Strata)
-            {
-                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
-
-                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
-                {
-                    if (this.IsAvgRasterStratumTimestep(timestep))
-                    {
-                        double[] Values = new double[this.Cells.Count];
-
-                        for (var i = 0; i < this.Cells.Count; i++)
-                        {
-                            Values[i] = 0.0;
-                        }
-
-                        dict.Add(timestep, Values);
-                    }
-                }
-
-                this.m_AvgStratumMap.Add(st.StratumId, dict);
-            }
-        }
-
-        /// <summary>
         /// Initializes the average raster state class map
         /// </summary>
         private void InitializeAvgRasterStateClassMap()
@@ -2446,6 +2410,128 @@ namespace SyncroSim.STSim
 
                     this.m_AvgAgeMap.Add(timestep, Values);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Initializes the average raster stratum map
+        /// </summary>
+        private void InitializeAvgRasterStratumMap()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterStratumOutput)
+            {
+                return;
+            }
+
+            foreach (Stratum st in this.m_Strata)
+            {
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if (this.IsAvgRasterStratumTimestep(timestep))
+                    {
+                        double[] Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0.0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgStratumMap.Add(st.StratumId, dict);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the Average Raster Transition Probability Maps
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeAvgRasterTransitionProbMaps()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            {
+                return;
+            }
+
+            foreach (TransitionGroup tg in this.m_TransitionGroups)
+            {
+                if (tg.PrimaryTransitionTypes.Count == 0)
+                {
+                    continue;
+                }
+
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if (this.IsAvgRasterTransitionProbTimestep(timestep))
+                    {
+                        double[] Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgTransitionProbMap.Add(tg.TransitionGroupId, dict);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the Average TST Maps
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeAvgRasterTSTMaps()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.MinimumTimestep > 0);
+
+            if (!this.m_CreateAvgRasterTSTOutput)
+            {
+                return;
+            }
+
+            List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
+
+            if (TSTGroupIds.Count == 0)
+            {
+                return;
+            }
+
+            foreach (int tgid in TSTGroupIds)
+            {
+                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
+
+                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
+                {
+                    if (this.IsAvgRasterTSTTimestep(timestep))
+                    {
+                        double[] Values = new double[this.Cells.Count];
+
+                        for (var i = 0; i < this.Cells.Count; i++)
+                        {
+                            Values[i] = 0.0;
+                        }
+
+                        dict.Add(timestep, Values);
+                    }
+                }
+
+                this.m_AvgTSTMap.Add(tgid, dict);
             }
         }
 
@@ -2520,48 +2606,6 @@ namespace SyncroSim.STSim
                 }
 
                 this.m_AvgTransitionAttrMap.Add(tat.TransitionAttributeId, dict);
-            }
-        }
-
-        /// <summary>
-        /// Initializes the Average Raster Transition Probability Maps
-        /// </summary>
-        /// <remarks></remarks>
-        private void InitializeAvgRasterTransitionProbMaps()
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.MinimumTimestep > 0);
-
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
-            {
-                return;
-            }
-
-            foreach (TransitionGroup tg in this.m_TransitionGroups)
-            {
-                if (tg.PrimaryTransitionTypes.Count == 0)
-                {
-                    continue;
-                }
-
-                Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
-
-                for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
-                {
-                    if (this.IsAvgRasterTransitionProbTimestep(timestep))
-                    {
-                        double[] Values = new double[this.Cells.Count];
-
-                        for (var i = 0; i < this.Cells.Count; i++)
-                        {
-                            Values[i] = 0;
-                        }
-
-                        dict.Add(timestep, Values);
-                    }
-                }
-
-                this.m_AvgTransitionProbMap.Add(tg.TransitionGroupId, dict);
             }
         }
 

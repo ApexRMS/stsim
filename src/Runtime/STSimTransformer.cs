@@ -350,12 +350,13 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
-            this.WriteAvgStratumRasters();
             this.WriteAvgStateClassRasters();
             this.WriteAvgAgeRasters();
+            this.WriteAvgStratumRasters();
+            this.WriteAvgTransitionProbabiltyRasters();
+            this.WriteAvgTSTRasters();
             this.WriteAvgStateAttributeRasters();
             this.WriteAvgTransitionAttributeRasters();
-            this.WriteAvgTransitionProbabiltyRasters();
 
             ModelRunComplete?.Invoke(this, new EventArgs());
         }
@@ -448,9 +449,9 @@ namespace SyncroSim.STSim
             this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
 
             //Spatial data
-            this.WriteStratumRaster(iteration, timestep);
             this.WriteStateClassRaster(iteration, timestep);
             this.WriteAgeRaster(iteration, timestep);
+            this.WriteStratumRaster(iteration, timestep);
             this.WriteTSTRasters(iteration, timestep);
             this.WriteStateAttributeRasters(iteration, timestep);
 
@@ -458,9 +459,10 @@ namespace SyncroSim.STSim
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, timestep);
 
             //Record averaging data
-            this.RecordAvgRasterStratumData(timestep);
             this.RecordAvgRasterStateClassData(timestep);
             this.RecordAvgRasterAgeData(timestep);
+            this.RecordAvgRasterStratumData(timestep);
+            this.RecordAvgRasterTSTData(timestep);
             this.RecordAvgRasterStateAttributeData(iteration, timestep);
 
             Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);

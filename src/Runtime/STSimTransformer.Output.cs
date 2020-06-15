@@ -20,58 +20,80 @@ namespace SyncroSim.STSim
         private int m_SummaryStateClassOutputTimesteps;
         private bool m_SummaryStateClassOutputAges;
         private bool m_SummaryStateClassZeroValues;
+
+        private int m_SummaryTransitionAttributeOutputTimesteps;
+        private bool m_SummaryTransitionAttributeOutputAges;
+
         private bool m_CreateSummaryTransitionOutput;
         private int m_SummaryTransitionOutputTimesteps;
         private bool m_SummaryTransitionOutputAges;
         private bool m_SummaryTransitionOutputAsIntervalMean;
+
         private bool m_CreateSummaryTransitionByStateClassOutput;
         private int m_SummaryTransitionByStateClassOutputTimesteps;
+
         private bool m_CreateSummaryStateAttributeOutput;
         private int m_SummaryStateAttributeOutputTimesteps;
+
         private bool m_SummaryStateAttributeOutputAges;
         private bool m_CreateSummaryTransitionAttributeOutput;
-        private int m_SummaryTransitionAttributeOutputTimesteps;
-        private bool m_SummaryTransitionAttributeOutputAges;
+
         private bool m_SummaryOmitSecondaryStrata;
         private bool m_SummaryOmitTertiaryStrata;
 
         //Spatial Output Options
         private bool m_CreateRasterStateClassOutput;
         private int m_RasterStateClassOutputTimesteps;
-        private bool m_CreateRasterTransitionOutput;
-        private int m_RasterTransitionOutputTimesteps;
+
         private bool m_CreateRasterAgeOutput;
         private int m_RasterAgeOutputTimesteps;
+
         private bool m_CreateRasterStratumOutput;
         private int m_RasterStratumOutputTimesteps;
-        private bool m_CreateRasterTstOutput;
-        private int m_RasterTstOutputTimesteps;
-        private bool m_CreateRasterStateAttributeOutput;
-        private int m_RasterStateAttributeOutputTimesteps;
-        private bool m_CreateRasterTransitionAttributeOutput;
-        private int m_RasterTransitionAttributeOutputTimesteps;
+
+        private bool m_CreateRasterTransitionOutput;
+        private int m_RasterTransitionOutputTimesteps;
+
         private bool m_CreateRasterTransitionEventOutput;
         private int m_RasterTransitionEventOutputTimesteps;
 
+        private bool m_CreateRasterTstOutput;
+        private int m_RasterTstOutputTimesteps;
+
+        private bool m_CreateRasterStateAttributeOutput;
+        private int m_RasterStateAttributeOutputTimesteps;
+
+        private bool m_CreateRasterTransitionAttributeOutput;
+        private int m_RasterTransitionAttributeOutputTimesteps;
+
         //Spatial Average Output Options
-        private bool m_CreateAvgRasterStratumOutput;
-        private int m_AvgRasterStratumTimesteps;
-        private bool m_AvgRasterStratumCumulative;
         private bool m_CreateAvgRasterStateClassOutput;
         private int m_AvgRasterStateClassOutputTimesteps;
         private bool m_AvgRasterStateClassCumulative;
+
         private bool m_CreateAvgRasterAgeOutput;
         private int m_AvgRasterAgeOutputTimesteps;
         private bool m_AvgRasterAgeCumulative;
-        private bool m_CreateAvgRasterStateAttributeOutput;
-        private int m_AvgRasterStateAttributeOutputTimesteps;
-        private bool m_AvgRasterStateAttributeCumulative;
-        private bool m_CreateAvgRasterTransitionAttributeOutput;
-        private int m_AvgRasterTransitionAttributeOutputTimesteps;
-        private bool m_AvgRasterTransitionAttributeCumulative;
+
+        private bool m_CreateAvgRasterStratumOutput;
+        private int m_AvgRasterStratumOutputTimesteps;
+        private bool m_AvgRasterStratumCumulative;
+
         private bool m_CreateAvgRasterTransitionProbOutput;
         private int m_AvgRasterTransitionProbOutputTimesteps;
         private bool m_AvgRasterTransitionProbCumulative;
+
+        private bool m_CreateAvgRasterTSTOutput;
+        private int m_AvgRasterTSTOutputTimesteps;
+        private bool m_AvgRasterTSTCumulative;
+
+        private bool m_CreateAvgRasterStateAttributeOutput;
+        private int m_AvgRasterStateAttributeOutputTimesteps;
+        private bool m_AvgRasterStateAttributeCumulative;
+
+        private bool m_CreateAvgRasterTransitionAttributeOutput;
+        private int m_AvgRasterTransitionAttributeOutputTimesteps;
+        private bool m_AvgRasterTransitionAttributeCumulative;
 
         //Output Collections
         private OutputStratumStateCollection m_SummaryStratumStateResults = new OutputStratumStateCollection();
@@ -173,6 +195,16 @@ namespace SyncroSim.STSim
             return this.IsOutputTimestep(timestep, this.m_RasterStateClassOutputTimesteps, this.m_CreateRasterStateClassOutput);
         }
 
+        private bool IsRasterAgeTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterAgeOutputTimesteps, this.m_CreateRasterAgeOutput);
+        }
+
+        private bool IsRasterStratumTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_RasterStratumOutputTimesteps, this.m_CreateRasterStratumOutput);
+        }
+
         private bool IsRasterTransitionTimestep(int timestep)
         {
             return this.IsOutputTimestep(timestep, this.m_RasterTransitionOutputTimesteps, this.m_CreateRasterTransitionOutput);
@@ -183,19 +215,9 @@ namespace SyncroSim.STSim
             return this.IsOutputTimestep(timestep, this.m_RasterTransitionEventOutputTimesteps, this.m_CreateRasterTransitionEventOutput);
         }
 
-        private bool IsRasterAgeTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterAgeOutputTimesteps, this.m_CreateRasterAgeOutput);
-        }
-
         private bool IsRasterTstTimestep(int timestep)
         {
             return this.IsOutputTimestep(timestep, this.m_RasterTstOutputTimesteps, this.m_CreateRasterTstOutput);
-        }
-
-        private bool IsRasterStratumTimestep(int timestep)
-        {
-            return this.IsOutputTimestep(timestep, this.m_RasterStratumOutputTimesteps, this.m_CreateRasterStratumOutput);
         }
 
         private bool IsRasterStateAttributeTimestep(int timestep)
@@ -222,11 +244,6 @@ namespace SyncroSim.STSim
 
         //Average spatial output
 
-        private bool IsAvgRasterStratumTimestep(int timestep)
-        {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStratumTimesteps, this.m_CreateAvgRasterStratumOutput);
-        }
-
         private bool IsAvgRasterStateClassTimestep(int timestep)
         {
             return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
@@ -237,6 +254,21 @@ namespace SyncroSim.STSim
             return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
         }
 
+        private bool IsAvgRasterStratumTimestep(int timestep)
+        {
+            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
+        }
+
+        private bool IsAvgRasterTransitionProbTimestep(int timestep)
+        {
+            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
+        }
+
+        private bool IsAvgRasterTSTTimestep(int timestep)
+        {
+            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
+        }
+
         private bool IsAvgRasterStateAttributeTimestep(int timestep)
         {
             return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
@@ -245,11 +277,6 @@ namespace SyncroSim.STSim
         private bool IsAvgRasterTransitionAttributeTimestep(int timestep)
         {
             return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
-        }
-
-        private bool IsAvgRasterTransitionProbTimestep(int timestep)
-        {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
         }
 
         //Summary collection keys
@@ -665,95 +692,6 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Records average raster stratum data for the specified timestep
-        /// </summary>
-        /// <param name="timestep"></param>
-        private void RecordAvgRasterStratumData(int timestep)
-        {
-            if (!this.m_IsSpatial)
-            {
-                return;
-            }
-
-            if (!this.m_CreateAvgRasterStratumOutput)
-            {
-                return;
-            }
-
-            if (this.m_AvgRasterStratumCumulative)
-            {
-                this.RecordAvgRasterStratumOutputCumulative(timestep);
-            }
-            else
-            {
-                if (this.IsAvgRasterStratumTimestep(timestep))
-                {
-                    this.RecordAvgRasterStratumOutputNormalMethod(timestep);
-                }
-            }
-        }
-
-        private void RecordAvgRasterStratumOutputNormalMethod(int timestep)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterStratumOutput);
-            Debug.Assert(!this.m_AvgRasterStratumCumulative);
-
-            foreach (Stratum st in this.m_Strata)
-            {
-                Dictionary<int, double[]> dict = this.m_AvgStratumMap[st.StratumId];
-                double[] Values = dict[timestep];
-
-                foreach (Cell c in this.Cells)
-                {
-                    if (c.StratumId == st.StratumId)
-                    {
-                        Debug.Assert(Values[c.CollectionIndex] >= 0.0);
-                        Values[c.CollectionIndex] += 1 / (double)this.m_TotalIterations;
-                    }
-                }
-            }
-        }
-
-        private void RecordAvgRasterStratumOutputCumulative(int timestep)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterStratumOutput);
-            Debug.Assert(this.m_AvgRasterStratumCumulative);
-
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterStratumTimesteps);
-
-            foreach (Stratum st in this.m_Strata)
-            {
-                Dictionary<int, double[]> dict = this.m_AvgStratumMap[st.StratumId];
-                double[] Values = dict[timestepKey];
-
-                foreach (Cell c in this.Cells)
-                {
-                    if (c.StratumId == st.StratumId)
-                    {
-                        int i = c.CollectionIndex;
-                        Debug.Assert(Values[i] >= 0.0);
-
-                        //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
-                        //where tsf is the timestep frequency N is the number of iterations.
-                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                        //and freq of 5, would give bins 1-5, and 6-8.
-
-                        if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStratumTimesteps) != 0))
-                        {
-                            Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStratumTimesteps * this.m_TotalIterations);
-                        }
-                        else
-                        {
-                            Values[i] += 1 / (double)(this.m_AvgRasterStratumTimesteps * this.m_TotalIterations);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Records average raster state class data for the specified timestep
         /// </summary>
         /// <param name="timestep"></param>
@@ -908,6 +846,289 @@ namespace SyncroSim.STSim
                 else
                 {
                     Values[i] += cell.Age / (double)(this.m_AvgRasterAgeOutputTimesteps * this.m_TotalIterations);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Records average raster stratum data for the specified timestep
+        /// </summary>
+        /// <param name="timestep"></param>
+        private void RecordAvgRasterStratumData(int timestep)
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStratumOutput)
+            {
+                return;
+            }
+
+            if (this.m_AvgRasterStratumCumulative)
+            {
+                this.RecordAvgRasterStratumOutputCumulative(timestep);
+            }
+            else
+            {
+                if (this.IsAvgRasterStratumTimestep(timestep))
+                {
+                    this.RecordAvgRasterStratumOutputNormalMethod(timestep);
+                }
+            }
+        }
+
+        private void RecordAvgRasterStratumOutputNormalMethod(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterStratumOutput);
+            Debug.Assert(!this.m_AvgRasterStratumCumulative);
+
+            foreach (Stratum st in this.m_Strata)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStratumMap[st.StratumId];
+                double[] Values = dict[timestep];
+
+                foreach (Cell c in this.Cells)
+                {
+                    if (c.StratumId == st.StratumId)
+                    {
+                        Debug.Assert(Values[c.CollectionIndex] >= 0.0);
+                        Values[c.CollectionIndex] += 1 / (double)this.m_TotalIterations;
+                    }
+                }
+            }
+        }
+
+        private void RecordAvgRasterStratumOutputCumulative(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterStratumOutput);
+            Debug.Assert(this.m_AvgRasterStratumCumulative);
+
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterStratumOutputTimesteps);
+
+            foreach (Stratum st in this.m_Strata)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStratumMap[st.StratumId];
+                double[] Values = dict[timestepKey];
+
+                foreach (Cell c in this.Cells)
+                {
+                    if (c.StratumId == st.StratumId)
+                    {
+                        int i = c.CollectionIndex;
+                        Debug.Assert(Values[i] >= 0.0);
+
+                        //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
+                        //where tsf is the timestep frequency N is the number of iterations.
+                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                        //and freq of 5, would give bins 1-5, and 6-8.
+
+                        if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStratumOutputTimesteps) != 0))
+                        {
+                            Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterStratumOutputTimesteps * this.m_TotalIterations);
+                        }
+                        else
+                        {
+                            Values[i] += 1 / (double)(this.m_AvgRasterStratumOutputTimesteps * this.m_TotalIterations);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Record average transition probability data for the specified timestep.
+        /// </summary>
+        /// <param name="timestep">The current timestep</param>
+        /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types</param>
+        /// <remarks></remarks>
+        private void RecordAvgRasterTransitionProbabilityData(
+            int timestep,
+            Dictionary<int, int[]> dictTransitionedPixels)
+        {
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            {
+                return;
+            }
+
+            foreach (int transitionGroupId in dictTransitionedPixels.Keys)
+            {
+                int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+                var distArray = transitionedPixels.Distinct();
+
+                if (distArray.Count() == 1)
+                {
+                    var el0 = distArray.ElementAt(0);
+
+                    if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
+                    {
+                        continue;
+                    }
+                }
+
+                if (this.m_AvgRasterTransitionProbCumulative)
+                {
+                    this.RecordAvgTransitionProbabilityOutputCumulative(
+                        timestep, transitionGroupId, transitionedPixels);
+                }
+                else
+                {
+                    if (this.IsAvgRasterTransitionProbTimestep(timestep))
+                    {
+                        this.RecordAvgTransitionProbabilityOutputNormalMethod(
+                            timestep, transitionGroupId, transitionedPixels);
+                    }
+                }
+            }
+        }
+
+        private void RecordAvgTransitionProbabilityOutputNormalMethod(
+            int timestep,
+            int transitionGroupId,
+            int[] transitionedPixels)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
+            Debug.Assert(!this.m_AvgRasterTransitionProbCumulative);
+
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
+            double[] Values = dict[timestep];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+
+                if (transitionedPixels[i] > 0)
+                {
+                    Debug.Assert(Values[i] >= 0.0);
+                    Values[i] += 1 / (double)this.m_TotalIterations;
+                }
+            }
+        }
+
+        private void RecordAvgTransitionProbabilityOutputCumulative(
+            int timestep,
+            int transitionGroupId,
+            int[] transitionedPixels)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
+            Debug.Assert(this.m_AvgRasterTransitionProbCumulative);
+
+            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps);
+            double[] Values = dict[timestepKey];
+
+            foreach (Cell cell in this.Cells)
+            {
+                int i = cell.CollectionIndex;
+
+                if (transitionedPixels[i] > 0)
+                {
+                    Debug.Assert(Values[i] >= 0.0);
+
+                    //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
+                    //where tsf is the timestep frequency N is the number of iterations.
+                    //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
+                    //and freq of 5, would give bins 1-5, and 6-8.
+
+                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbOutputTimesteps) != 0))
+                    {
+                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbOutputTimesteps * this.m_TotalIterations);
+                    }
+                    else
+                    {
+                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbOutputTimesteps * this.m_TotalIterations);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Record average TST data for the specified timestep.
+        /// </summary>
+        /// <param name="timestep">The current timestep</param>
+        /// <remarks></remarks>
+        private void RecordAvgRasterTSTData(int timestep)
+        {
+            if (!this.m_CreateAvgRasterTSTOutput)
+            {
+                return;
+            }
+
+            List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
+
+            if (TSTGroupIds.Count == 0)
+            {
+                return;
+            }
+
+            if (this.m_AvgRasterTSTCumulative)
+            {
+                this.RecordAvgTSTOutputCumulative(timestep, TSTGroupIds);
+            }
+            else
+            {
+                if (this.IsAvgRasterTSTTimestep(timestep))
+                {
+                    this.RecordAvgTSTOutputNormalMethod(timestep, TSTGroupIds);
+                }
+            }
+        }
+
+        private void RecordAvgTSTOutputNormalMethod(int timestep, List<int> tstGroupIds)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTSTOutput);
+            Debug.Assert(!this.m_AvgRasterTSTCumulative);
+            Debug.Assert(tstGroupIds.Count > 0);
+
+            foreach (int tgid in tstGroupIds)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
+                double[] Values = dict[timestep];
+
+                foreach (Cell c in this.Cells)
+                {
+                    int i = c.CollectionIndex;
+                    Tst tst = c.TstValues[tgid];
+
+                    Values[i] += tst.TstValue / (double)this.m_TotalIterations;
+                }
+            }
+        }
+
+        private void RecordAvgTSTOutputCumulative(int timestep, List<int> tstGroupIds)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTSTOutput);
+            Debug.Assert(this.m_AvgRasterTSTCumulative);
+            Debug.Assert(tstGroupIds.Count > 0);
+
+            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(
+                timestep, this.m_AvgRasterTSTOutputTimesteps);
+
+            foreach (int tgid in tstGroupIds)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
+                double[] Values = dict[timestepKey];
+
+                foreach (Cell c in this.Cells)
+                {
+                    int i = c.CollectionIndex;
+                    Tst tst = c.TstValues[tgid];
+
+                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTSTOutputTimesteps) != 0))
+                    {
+                        Values[i] += tst.TstValue / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTSTOutputTimesteps * this.m_TotalIterations);
+                    }
+                    else
+                    {
+                        Values[i] += tst.TstValue / (double)(this.m_AvgRasterTSTOutputTimesteps * this.m_TotalIterations);
+                    }
                 }
             }
         }
@@ -1199,114 +1420,6 @@ namespace SyncroSim.STSim
                     else
                     {
                         Values[i] += v / (double)(this.m_AvgRasterTransitionAttributeOutputTimesteps * this.m_TotalIterations);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Record average transition probability data for the specified timestep.
-        /// </summary>
-        /// <param name="timestep">The current timestep</param>
-        /// <param name="dictTransitionedPixels">A dictionary of arrays of Transition Types</param>
-        /// <remarks></remarks>
-        private void RecordAvgRasterTransitionProbabilityData(
-            int timestep, 
-            Dictionary<int, int[]> dictTransitionedPixels)
-        {
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
-            {
-                return;
-            }
-
-            foreach (int transitionGroupId in dictTransitionedPixels.Keys)
-            {
-                int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
-                var distArray = transitionedPixels.Distinct();
-
-                if (distArray.Count() == 1)
-                {
-                    var el0 = distArray.ElementAt(0);
-
-                    if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
-                    {
-                        continue;
-                    }
-                }
-
-                if (this.m_AvgRasterTransitionProbCumulative)
-                {
-                    this.RecordAvgTransitionProbabilityOutputCumulative(
-                        timestep, transitionGroupId, transitionedPixels);
-                }
-                else
-                {
-                    if (this.IsAvgRasterTransitionProbTimestep(timestep))
-                    {
-                        this.RecordAvgTransitionProbabilityOutputNormalMethod(
-                            timestep, transitionGroupId, transitionedPixels);
-                    }
-                }
-            }
-        }
-
-        private void RecordAvgTransitionProbabilityOutputNormalMethod(
-            int timestep, 
-            int transitionGroupId, 
-            int[] transitionedPixels)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
-            Debug.Assert(!this.m_AvgRasterTransitionProbCumulative);
-
-            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
-            double[] Values = dict[timestep];
-
-            foreach (Cell cell in this.Cells)
-            {
-                int i = cell.CollectionIndex;
-
-                if (transitionedPixels[i] > 0)
-                {
-                    Debug.Assert(Values[i] >= 0.0);
-                    Values[i] += 1 / (double)this.m_TotalIterations;
-                }
-            }
-        }
-
-        private void RecordAvgTransitionProbabilityOutputCumulative(
-            int timestep, 
-            int transitionGroupId, 
-            int[] transitionedPixels)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterTransitionProbOutput);
-            Debug.Assert(this.m_AvgRasterTransitionProbCumulative);
-
-            Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps);
-            double[] Values = dict[timestepKey];
-
-            foreach (Cell cell in this.Cells)
-            {
-                int i = cell.CollectionIndex;
-
-                if (transitionedPixels[i] > 0)
-                {
-                    Debug.Assert(Values[i] >= 0.0);
-
-                    //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
-                    //where tsf is the timestep frequency N is the number of iterations.
-                    //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                    //and freq of 5, would give bins 1-5, and 6-8.
-
-                    if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbOutputTimesteps) != 0))
-                    {
-                        Values[i] += 1 / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionProbOutputTimesteps * this.m_TotalIterations);
-                    }
-                    else
-                    {
-                        Values[i] += 1 / (double)(this.m_AvgRasterTransitionProbOutputTimesteps * this.m_TotalIterations);
                     }
                 }
             }
@@ -1984,60 +2097,6 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Writes the average stratum rasters
-        /// </summary>
-        private void WriteAvgStratumRasters()
-        {
-            if (!this.IsSpatial)
-            {
-                return;
-            }
-
-            if (!this.m_CreateAvgRasterStratumOutput)
-            {
-                return;
-            }
-
-            foreach (int StratumId in this.m_AvgStratumMap.Keys)
-            {
-                Dictionary<int, double[]> dict = this.m_AvgStratumMap[StratumId];
-
-                foreach (int timestep in dict.Keys)
-                {
-                    double[] Values = dict[timestep];
-                    var DistVals = Values.Distinct();
-
-                    if (DistVals.Count() == 1)
-                    {
-                        var el0 = DistVals.ElementAt(0);
-
-                        if (el0.Equals(0.0))
-                        {
-                            continue;
-                        }
-                    }
-
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    double[] arr = RastOutput.DblCells;
-
-                    foreach (Cell c in this.Cells)
-                    {
-                        arr[c.CellId] = Values[c.CollectionIndex];
-                    }
-
-                    Spatial.WriteRasterData(
-                        RastOutput,
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM),
-                        0,
-                        timestep,
-                        StratumId,
-                        Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the average state class rasters
         /// </summary>
         private void WriteAvgStateClassRasters()
@@ -2116,6 +2175,164 @@ namespace SyncroSim.STSim
                     null,
                     Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+            }
+        }
+
+        /// <summary>
+        /// Writes the average stratum rasters
+        /// </summary>
+        private void WriteAvgStratumRasters()
+        {
+            if (!this.IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStratumOutput)
+            {
+                return;
+            }
+
+            foreach (int StratumId in this.m_AvgStratumMap.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgStratumMap[StratumId];
+
+                foreach (int timestep in dict.Keys)
+                {
+                    double[] Values = dict[timestep];
+                    var DistVals = Values.Distinct();
+
+                    if (DistVals.Count() == 1)
+                    {
+                        var el0 = DistVals.ElementAt(0);
+
+                        if (el0.Equals(0.0))
+                        {
+                            continue;
+                        }
+                    }
+
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = Values[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        RastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM),
+                        0,
+                        timestep,
+                        StratumId,
+                        Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the Average Transition Probability rasters.
+        /// </summary>
+        /// <remarks></remarks>
+        private void WriteAvgTransitionProbabiltyRasters()
+        {
+            if (!this.IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterTransitionProbOutput)
+            {
+                return;
+            }
+
+            foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
+
+                // Now lets loop thru the timestep arrays in the dict
+                foreach (int timestep in dict.Keys)
+                {
+                    double[] Values = dict[timestep];
+
+                    //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
+                    var DistVals = Values.Distinct();
+
+                    if (DistVals.Count() == 1)
+                    {
+                        Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                        continue;
+                    }
+                    else if (DistVals.Count() == 2)
+                    {
+                        if (DistVals.ElementAt(0) <= 0 && DistVals.ElementAt(1) <= 0)
+                        {
+                            Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
+                            continue;
+                        }
+                    }
+
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = Values[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        RastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY),
+                        0,
+                        timestep,
+                        tgId,
+                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the Average TST rasters.
+        /// </summary>
+        private void WriteAvgTSTRasters()
+        {
+            if (!this.IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterTSTOutput)
+            {
+                return;
+            }
+
+            foreach (int TransitionGroupId in this.m_AvgTSTMap.Keys)
+            {
+                Dictionary<int, double[]> dict = this.m_AvgTSTMap[TransitionGroupId];
+
+                foreach (int timestep in dict.Keys)
+                {
+                    double[] Values = dict[timestep];
+                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    double[] arr = RastOutput.DblCells;
+
+                    foreach (Cell c in this.Cells)
+                    {
+                        arr[c.CellId] = Values[c.CollectionIndex];
+                    }
+
+                    Spatial.WriteRasterData(
+                        RastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TST),
+                        0,
+                        timestep,
+                        TransitionGroupId,
+                        Constants.SPATIAL_MAP_AVG_TST_FILEPREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                }
             }
         }
 
@@ -2222,68 +2439,6 @@ namespace SyncroSim.STSim
                         timestep,
                         AttrId,
                         Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Writes the Average Transition Probability rasters.
-        /// </summary>
-        /// <remarks></remarks>
-        private void WriteAvgTransitionProbabiltyRasters()
-        {
-            if (!this.IsSpatial)
-            {
-                return;
-            }
-
-            if (!this.m_CreateAvgRasterTransitionProbOutput)
-            {
-                return;
-            }
-
-            foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
-            {
-                Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
-
-                // Now lets loop thru the timestep arrays in the dict
-                foreach (int timestep in dict.Keys)
-                {
-                    double[] Values = dict[timestep];
-
-                    //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
-                    var DistVals = Values.Distinct();
-
-                    if (DistVals.Count() == 1)
-                    {
-                        Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
-                        continue;
-                    }
-                    else if (DistVals.Count() == 2)
-                    {
-                        if (DistVals.ElementAt(0) <= 0 && DistVals.ElementAt(1) <= 0)
-                        {
-                            Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
-                            continue;
-                        }
-                    }
-
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
-                    double[] arr = RastOutput.DblCells;
-
-                    foreach (Cell c in this.Cells)
-                    {
-                        arr[c.CellId] = Values[c.CollectionIndex];
-                    }
-
-                    Spatial.WriteRasterData(
-                        RastOutput,
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY),
-                        0,
-                        timestep,
-                        tgId,
-                        Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX,
                         Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }

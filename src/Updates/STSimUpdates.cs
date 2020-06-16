@@ -420,6 +420,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000107(store);   
             }
+
+            if (currentSchemaVersion < 108)
+            {
+                STSIM0000108(store);   
+            }
         }
 
         /// <summary>
@@ -2997,6 +3002,85 @@ namespace SyncroSim.STSim
                     RasterOutputAATP                     ,
                     RasterOutputAATPTimesteps 
                     FROM TEMP_TABLE");
+        }
+
+        /// <summary>
+        /// STSIM0000108
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update adds AgeMin, AgeMax, TSTGroup, TSTMin, and TSTMax columns to 
+        /// the stsim_TransitionMultiplierValue table.
+        /// </remarks>
+        private static void STSIM0000108(DataStore store)
+        {
+            if (store.TableExists("stsim_TransitionMultiplierValue"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionMultiplierValue RENAME TO TEMP_TABLE");
+
+                store.ExecuteNonQuery(@"CREATE TABLE stsim_TransitionMultiplierValue(
+                    TransitionMultiplierValueID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID                  INTEGER,
+                    Iteration                   INTEGER,
+                    Timestep                    INTEGER,
+                    StratumID                   INTEGER,
+                    SecondaryStratumID          INTEGER,
+                    TertiaryStratumID           INTEGER,
+                    StateClassID                INTEGER,
+                    AgeMin                      INTEGER,
+                    AgeMax                      INTEGER,
+                    TSTGroupID                  INTEGER,
+                    TSTMin                      INTEGER,
+                    TSTMax                      INTEGER,
+                    TransitionGroupID           INTEGER,
+                    TransitionMultiplierTypeID  INTEGER,
+                    Amount                      DOUBLE,
+                    DistributionType            INTEGER,
+                    DistributionFrequencyID     INTEGER,
+                    DistributionSD              DOUBLE,
+                    DistributionMin             DOUBLE,
+                    DistributionMax             DOUBLE
+                )");
+
+                store.ExecuteNonQuery(@"INSERT INTO stsim_TransitionMultiplierValue(
+                    ScenarioID                  ,
+                    Iteration                   ,
+                    Timestep                    ,
+                    StratumID                   ,
+                    SecondaryStratumID          ,
+                    TertiaryStratumID           ,
+                    StateClassID                ,
+                    TransitionGroupID           ,
+                    TransitionMultiplierTypeID  ,
+                    Amount                      ,
+                    DistributionType            ,
+                    DistributionFrequencyID     ,
+                    DistributionSD              ,
+                    DistributionMin             ,
+                    DistributionMax             )
+                    SELECT
+                    ScenarioID                  ,
+                    Iteration                   ,
+                    Timestep                    ,
+                    StratumID                   ,
+                    SecondaryStratumID          ,
+                    TertiaryStratumID           ,
+                    StateClassID                ,
+                    TransitionGroupID           ,
+                    TransitionMultiplierTypeID  ,
+                    Amount                      ,
+                    DistributionType            ,
+                    DistributionFrequencyID     ,
+                    DistributionSD              ,
+                    DistributionMin             ,
+                    DistributionMax             
+                    FROM TEMP_TABLE");
+
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+
+                store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_TransitionMultiplierValue_Index");
+                UpdateProvider.CreateIndex(store, "stsim_TransitionMultiplierValue", new[] { "ScenarioID" });
+            }
         }
     }
 }

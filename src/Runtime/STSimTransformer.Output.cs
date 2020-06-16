@@ -246,17 +246,17 @@ namespace SyncroSim.STSim
 
         private bool IsAvgRasterStateClassTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
         }
 
         private bool IsAvgRasterAgeTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
         }
 
         private bool IsAvgRasterStratumTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
         }
 
         private bool IsAvgRasterTransitionProbTimestep(int timestep)
@@ -266,12 +266,12 @@ namespace SyncroSim.STSim
 
         private bool IsAvgRasterTSTTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
         }
 
         private bool IsAvgRasterStateAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
         }
 
         private bool IsAvgRasterTransitionAttributeTimestep(int timestep)

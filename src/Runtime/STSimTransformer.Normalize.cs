@@ -103,9 +103,6 @@ namespace SyncroSim.STSim
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_TIMESTEPS_COLUMN_NAME, "Summary transitions by state class", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Summary state attributes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Summary transition attributes", MaxTimestep);
-
-            this.ValidateStateAttributes(droo);
-            this.ValidateTransitionAttributes(droo);
         }
 
         /// <summary>
@@ -377,48 +374,6 @@ namespace SyncroSim.STSim
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Validates the state attribute output option selection
-        /// </summary>
-        /// <param name="dr">The output options data row</param>
-        /// <remarks>
-        /// If state attributes exist but the option to output them is not enabled, log a warning.
-        /// </remarks>
-        private void ValidateStateAttributes(DataRow dr)
-        {
-            if (dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME] == DBNull.Value && 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME] == DBNull.Value)
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_NAME);
-
-                if (ds.GetData().Rows.Count > 0)
-                {
-                    this.RecordStatus(StatusType.Information, MessageStrings.STATUS_STATE_ATTRIBUTE_VALUES_EXIST_WARNING);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Validates the transition attribute output option selection
-        /// </summary>
-        /// <param name="dr">The output options data row</param>
-        /// <remarks>
-        /// If transition attributes exist but the option to output them is not enabled, log a warning.
-        /// </remarks>
-        private void ValidateTransitionAttributes(DataRow dr)
-        {
-            if (dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME] == DBNull.Value && 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME] == DBNull.Value)
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME);
-
-                if (ds.GetData().Rows.Count > 0)
-                {
-                    this.RecordStatus(StatusType.Information, MessageStrings.STATUS_TRANSITION_ATTRIBUTE_VALUES_EXIST_WARNING);
-                }
-            }
         }
 
         /// <summary>

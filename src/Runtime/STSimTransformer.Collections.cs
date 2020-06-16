@@ -1682,6 +1682,11 @@ namespace SyncroSim.STSim
                 int? SecondaryStratumId = null;
                 int? TertiaryStratumId = null;
                 int? StateClassId = null;
+                int AgeMin = 0;
+                int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int TSTMin = 0;
+                int TSTMax = int.MaxValue;
                 int? TransitionMultiplierTypeId = null;
                 double? MultiplierAmount = null;
                 int? DistributionTypeId = null;
@@ -1718,6 +1723,31 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
                 {
                     StateClassId = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    AgeMin = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME] != DBNull.Value)
@@ -1758,9 +1788,25 @@ namespace SyncroSim.STSim
                 try
                 {
                     TransitionMultiplierValue Item = new TransitionMultiplierValue(
-                        TransitionGroupId, Iteration, Timestep, StratumId, SecondaryStratumId, TertiaryStratumId, StateClassId, 
-                        TransitionMultiplierTypeId, MultiplierAmount, DistributionTypeId, DistributionFrequency, 
-                        DistributionSD, DistributionMin, DistributionMax);
+                        TransitionGroupId,
+                        Iteration,
+                        Timestep,
+                        StratumId,
+                        SecondaryStratumId,
+                        TertiaryStratumId,
+                        StateClassId,
+                        AgeMin,
+                        AgeMax,
+                        TSTGroupId,
+                        TSTMin,
+                        TSTMax,
+                        TransitionMultiplierTypeId,
+                        MultiplierAmount,
+                        DistributionTypeId,
+                        DistributionFrequency,
+                        DistributionSD,
+                        DistributionMin,
+                        DistributionMax);
 
                     this.m_DistributionProvider.Validate(
                         Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);

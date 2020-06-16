@@ -237,6 +237,9 @@ namespace SyncroSim.STSim
 
         //Transition multiplier value
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME = "stsim_TransitionMultiplierValue";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME = "TSTGroupID";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MIN_COLUMN_NAME = "TSTMin";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MAX_COLUMN_NAME = "TSTMax";
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeID";
 
         //Transition spatial multiplier

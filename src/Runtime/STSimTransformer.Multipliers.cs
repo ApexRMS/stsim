@@ -103,23 +103,58 @@ namespace SyncroSim.STSim
                 {
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {
-                        TransitionMultiplierValue v = tmt.TransitionMultiplierValueMap.GetTransitionMultiplier(
+                        List<TransitionMultiplierValue> Multipliers = tmt.TransitionMultiplierValueMap.GetTransitionMultipliers(
                             tg.TransitionGroupId, 
                             simulationCell.StratumId, 
                             simulationCell.SecondaryStratumId, 
                             simulationCell.TertiaryStratumId,
                             simulationCell.StateClassId, 
-                            iteration, timestep);
+                            iteration, 
+                            timestep);
 
-                        if (v != null)
+                        if (Multipliers != null)
                         {
-                            Product *= v.CurrentValue.Value;
+                            TransitionMultiplierValue v = GetMultiplierCheckAgesAndTST(Multipliers, simulationCell);
+
+                            if (v != null)
+                            {
+                                v.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+                                Product *= v.CurrentValue.Value;
+                            }                            
                         }
                     }
                 }
             }
 
             return Product;
+        }
+
+        private static TransitionMultiplierValue GetMultiplierCheckAgesAndTST(
+            List<TransitionMultiplierValue> multipliers, 
+            Cell simulationCell)
+        {
+            foreach (TransitionMultiplierValue v in multipliers)
+            {
+                if (simulationCell.Age >= v.AgeMin && simulationCell.Age <= v.AgeMax)
+                {
+                    if (!v.TSTGroupId.HasValue)
+                    {
+                        return v;
+                    }
+
+                    if (simulationCell.TstValues.Contains(v.TSTGroupId.Value))
+                    {
+                        Tst tst = simulationCell.TstValues[v.TSTGroupId.Value];
+
+                        if (tst.TstValue >= v.TSTMin && tst.TstValue <= v.TSTMax)
+                        {
+                            return v;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         private double GetTransitionSpatialMultiplier(Cell cell, int transitionTypeId, int iteration, int timestep)

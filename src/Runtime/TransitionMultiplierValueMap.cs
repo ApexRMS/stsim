@@ -1,15 +1,16 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
-using System;
 using SyncroSim.Core;
 using SyncroSim.StochasticTime;
+using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionMultiplierValueMap : STSimMapBase5<TransitionMultiplierValue>
+    internal class TransitionMultiplierValueMap : STSimMapBase5<List<TransitionMultiplierValue>>
     {
         private STSimDistributionProvider m_DistributionProvider;
+        private List<List<TransitionMultiplierValue>> m_AllLists = new List<List<TransitionMultiplierValue>>();
 
         public TransitionMultiplierValueMap(
             Scenario scenario, 
@@ -20,39 +21,66 @@ namespace SyncroSim.STSim
 
             foreach (TransitionMultiplierValue item in multipliers)
             {
-                this.TryAddMultiplier(item);
+                this.AddMultiplier(item);
+            }
+
+            foreach (List<TransitionMultiplierValue> l in this.m_AllLists)
+            {
+                l.Sort((TransitionMultiplierValue tm1, TransitionMultiplierValue tm2) =>
+                {
+                    int cmp = tm1.AgeMin.CompareTo(tm2.AgeMin);
+
+                    if (cmp != 0)
+                    {
+                        return cmp;
+                    }
+
+                    cmp = tm1.AgeMax.CompareTo(tm2.AgeMax);
+
+                    if (cmp != 0)
+                    {
+                        return cmp;
+                    }
+
+                    cmp = tm1.TSTMin.CompareTo(tm2.TSTMin);
+
+                    if (cmp != 0)
+                    {
+                        return cmp;
+                    }
+
+                    return tm1.TSTMax.CompareTo(tm2.TSTMax);                   
+                });
             }
         }
 
-        public TransitionMultiplierValue GetTransitionMultiplier(
+        public List<TransitionMultiplierValue> GetTransitionMultipliers(
             int transitionGroupId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
             int stateClassId, int iteration, int timestep)
         {
-            TransitionMultiplierValue v = this.GetItem(
+            return this.GetItem(
                 transitionGroupId, stratumId, secondaryStratumId, tertiaryStratumId, 
                 stateClassId, iteration, timestep);
-
-            if (v != null)
-            {
-                v.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
-            }
-
-            return v;
         }
 
-        private void TryAddMultiplier(TransitionMultiplierValue item)
+        private void AddMultiplier(TransitionMultiplierValue item)
         {
-            try
+            List<TransitionMultiplierValue> Multipliers = this.GetItemExact(
+                item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
+                item.StateClassId, item.Iteration, item.Timestep);
+
+            if (Multipliers == null)
             {
-                base.AddItem(
-                    item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
-                    item.StateClassId, item.Iteration, item.Timestep, item);
+                Multipliers = new List<TransitionMultiplierValue>();
+
+                this.AddItem(item.TransitionGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
+                    item.StateClassId, item.Iteration, item.Timestep, Multipliers);
+
+                this.m_AllLists.Add(Multipliers);
             }
-            catch (STSimMapDuplicateItemException)
-            {
-                string template = "A duplicate transition multiplier value was detected: More information:" + Environment.NewLine + "Transition Group={0}, {1}={2}, {3}={4}, {5}={6}, State Class={7}, Iteration={8}, Timestep={9}." + Environment.NewLine + "NOTE: A user defined distribution can result in additional transition multiplier values when the model is run.";
-                ExceptionUtils.ThrowArgumentException(template, this.GetTransitionGroupName(item.TransitionGroupId), this.PrimaryStratumLabel, this.GetStratumName(item.StratumId), this.SecondaryStratumLabel, this.GetSecondaryStratumName(item.SecondaryStratumId), this.TertiaryStratumLabel, this.GetTertiaryStratumName(item.TertiaryStratumId), this.GetStateClassName(item.StateClassId), STSimMapBase.FormatValue(item.Iteration), STSimMapBase.FormatValue(item.Timestep));
-            }
+
+            Multipliers.Add(item);
+            base.SetHasItems();
         }
     }
 }

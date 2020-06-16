@@ -1794,27 +1794,34 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+                var distArray = transitionedPixels.Distinct();
 
-                //Dont bother if there haven't been any transitions
-                if ((transitionedPixels.Distinct().Count() > 1) && this.IsRasterTransitionTimestep(timestep))
+                if (distArray.Count() == 1)
                 {
-                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                    int[] arr = rastOP.IntCells;
+                    var el0 = distArray.ElementAt(0);
 
-                    foreach (Cell c in this.Cells)
+                    if (el0.Equals(Spatial.DefaultNoDataValue))
                     {
-                        arr[c.CellId] = transitionedPixels[c.CollectionIndex];
+                        continue;
                     }
+                }
 
-                    Spatial.WriteRasterData(
-                        rastOP, 
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
-                        iteration, 
-                        timestep, 
-                        transitionGroupId, 
-                        Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX, 
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
-                }               
+                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                int[] arr = rastOP.IntCells;
+
+                foreach (Cell c in this.Cells)
+                {
+                    arr[c.CellId] = transitionedPixels[c.CollectionIndex];
+                }
+
+                Spatial.WriteRasterData(
+                    rastOP, 
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
+                    iteration, 
+                    timestep, 
+                    transitionGroupId, 
+                    Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX, 
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);            
             }
         }
 
@@ -1880,19 +1887,26 @@ namespace SyncroSim.STSim
                     }
 
                     // If no values other than NODATAValue in rastOutput, then supress output for this timestep
-                    var distinctVals = rastOutput.IntCells.Distinct();
+                    var distArray = rastOutput.IntCells.Distinct();
 
-                    if (distinctVals.Count() > 1 || (distinctVals.Count() == 1 && distinctVals.First() != Spatial.DefaultNoDataValue))
+                    if (distArray.Count() == 1)
                     {
-                        Spatial.WriteRasterData(
-                            rastOutput,
-                            this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TST),
-                            iteration,
-                            timestep,
-                            tg.TransitionGroupId,
-                            Constants.SPATIAL_MAP_TST_FILEPREFIX,
-                            Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        var el0 = distArray.ElementAt(0);
+
+                        if (el0.Equals(Spatial.DefaultNoDataValue))
+                        {
+                            continue;
+                        }
                     }
+
+                    Spatial.WriteRasterData(
+                        rastOutput,
+                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TST),
+                        iteration,
+                        timestep,
+                        tg.TransitionGroupId,
+                        Constants.SPATIAL_MAP_TST_FILEPREFIX,
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
             }
         }
@@ -2072,27 +2086,34 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+                var distArray = transitionedPixels.Distinct();
 
-                //Dont bother if there haven't been any transitions
-                if (transitionedPixels.Distinct().Count() > 1)
+                if (distArray.Count() == 1)
                 {
-                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
-                    int[] arr = rastOP.IntCells;
+                    var el0 = distArray.ElementAt(0);
 
-                    foreach (Cell c in this.Cells)
+                    if (el0.Equals(Spatial.DefaultNoDataValue))
                     {
-                        arr[c.CellId] = transitionedPixels[c.CollectionIndex];
+                        continue;
                     }
-
-                    Spatial.WriteRasterData(
-                        rastOP,
-                        this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
-                        iteration,
-                        timestep,
-                        transitionGroupId,
-                        Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
                 }
+
+                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                int[] arr = rastOP.IntCells;
+
+                foreach (Cell c in this.Cells)
+                {
+                    arr[c.CellId] = transitionedPixels[c.CollectionIndex];
+                }
+
+                Spatial.WriteRasterData(
+                    rastOP,
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
+                    iteration,
+                    timestep,
+                    transitionGroupId,
+                    Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX,
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
             }
         }
 

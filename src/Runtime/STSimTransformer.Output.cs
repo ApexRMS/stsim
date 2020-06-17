@@ -1314,8 +1314,8 @@ namespace SyncroSim.STSim
         private void RecordAvgRasterStateAttributeDataCumulative(int iteration, int timestep)
         {
             Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterAgeOutput);
-            Debug.Assert(this.m_AvgRasterAgeCumulative);
+            Debug.Assert(this.m_CreateAvgRasterStateAttributeOutput);
+            Debug.Assert(this.m_AvgRasterStateAttributeCumulative);
 
             int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(
                 timestep, this.m_AvgRasterStateAttributeOutputTimesteps);

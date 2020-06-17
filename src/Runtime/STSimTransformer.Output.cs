@@ -143,24 +143,6 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        public bool IsOutputTimestepAverage(int timestep, int frequency, bool shouldCreateOutput)
-        {
-            if (shouldCreateOutput)
-            {
-                if (timestep == this.MaximumTimestep)
-                {
-                    return true;
-                }
-
-                if (((timestep - this.m_TimestepZero) % frequency) == 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         //Summary output
 
         private bool IsSummaryStateClassTimestep(int timestep)
@@ -246,37 +228,37 @@ namespace SyncroSim.STSim
 
         private bool IsAvgRasterStateClassTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
         }
 
         private bool IsAvgRasterAgeTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
         }
 
         private bool IsAvgRasterStratumTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
         }
 
         private bool IsAvgRasterTransitionProbTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
         }
 
         private bool IsAvgRasterTSTTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
         }
 
         private bool IsAvgRasterStateAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
         }
 
         private bool IsAvgRasterTransitionAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
+            return this.IsOutputTimestep(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
         }
 
         //Summary collection keys
@@ -2354,6 +2336,11 @@ namespace SyncroSim.STSim
                 // Now lets loop thru the timestep arrays in the dict
                 foreach (int timestep in dict.Keys)
                 {
+                    if (timestep == this.MinimumTimestep)
+                    {
+                        continue;
+                    }
+
                     double[] Values = dict[timestep];
 
                     //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
@@ -2510,6 +2497,11 @@ namespace SyncroSim.STSim
 
                 foreach (int timestep in dict.Keys)
                 {
+                    if (timestep == this.MinimumTimestep)
+                    {
+                        continue;
+                    }
+
                     double[] Values = dict[timestep];
                     var DistVals = Values.Distinct();
 

@@ -56,7 +56,7 @@ namespace SyncroSim.STSim
         {
             SyncroSimLayoutItem StateClassesGroup = new SyncroSimLayoutItem("stsim_StateClassesGroup", "State Classes", true);
             SyncroSimLayoutItem StateClassIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem StateClassAvgGroup = new SyncroSimLayoutItem("stsim_StateClassAvgGroup", "Average", true);
+            SyncroSimLayoutItem StateClassAvgGroup = new SyncroSimLayoutItem("stsim_StateClassAvgGroup", "Probability", true);
 
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -97,7 +97,7 @@ namespace SyncroSim.STSim
 
             SyncroSimLayoutItem StratumGroup = new SyncroSimLayoutItem("stsim_StratumGroup", psl, true);
             SyncroSimLayoutItem StratumIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem StratumAvgGroup = new SyncroSimLayoutItem("stsim_StratumAvgGroup", "Average", true);
+            SyncroSimLayoutItem StratumAvgGroup = new SyncroSimLayoutItem("stsim_StratumAvgGroup", "Probability", true);
 
             StratumIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -114,7 +114,7 @@ namespace SyncroSim.STSim
         {
             SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("stsim_TransitionsGroup", "Transitions", true);
             SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem TransitionsAvgTPGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Average", true);
+            SyncroSimLayoutItem TransitionsAvgTPGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Probability", true);
             SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
             SyncroSimLayoutItem TransitionsTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsTSTGroup", "Time-Since-Transition", true);
             SyncroSimLayoutItem TransitionsAvgTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgTSTGroup", "Time-Since-Transition - Average", true);

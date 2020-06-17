@@ -748,7 +748,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_CreateAvgRasterStateClassOutput);
             Debug.Assert(this.m_AvgRasterStateClassCumulative);
 
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterStateClassOutputTimesteps);
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(timestep, this.m_AvgRasterStateClassOutputTimesteps);
 
             foreach (StateClass sc in this.m_StateClasses)
             {
@@ -842,7 +842,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
             Debug.Assert(this.m_AvgRasterAgeCumulative);
 
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterAgeOutputTimesteps);
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(timestep, this.m_AvgRasterAgeOutputTimesteps);
             double[] Values = this.m_AvgAgeMap[timestepKey];
 
             foreach (Cell cell in this.Cells)
@@ -935,7 +935,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_CreateAvgRasterStratumOutput);
             Debug.Assert(this.m_AvgRasterStratumCumulative);
 
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterStratumOutputTimesteps);
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(timestep, this.m_AvgRasterStratumOutputTimesteps);
 
             foreach (Stratum st in this.m_Strata)
             {
@@ -1042,7 +1042,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_AvgRasterTransitionProbCumulative);
 
             Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[transitionGroupId];
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps);
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps);
             double[] Values = dict[timestepKey];
 
             foreach (Cell cell in this.Cells)
@@ -1159,7 +1159,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(
                 timestep, this.m_AvgRasterTSTOutputTimesteps);
 
             foreach (int tgid in TSTGroupIds)
@@ -1299,7 +1299,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_CreateAvgRasterStateAttributeOutput);
             Debug.Assert(this.m_AvgRasterStateAttributeCumulative);
 
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(
                 timestep, this.m_AvgRasterStateAttributeOutputTimesteps);
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
@@ -1458,7 +1458,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_AvgRasterTransitionAttributeCumulative);
 
             Dictionary<int, double[]> dict = this.m_AvgTransitionAttrMap[transitionAttributeTypeId];
-            int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps);
+            int timestepKey = this.GetTimestepKeyForCumulativeAverage(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps);
             double[] Values = dict[timestepKey];
 
             foreach (Cell cell in this.Cells)
@@ -2336,7 +2336,7 @@ namespace SyncroSim.STSim
                 // Now lets loop thru the timestep arrays in the dict
                 foreach (int timestep in dict.Keys)
                 {
-                    if (timestep == this.MinimumTimestep)
+                    if (timestep == this.TimestepZero)
                     {
                         continue;
                     }
@@ -2497,7 +2497,7 @@ namespace SyncroSim.STSim
 
                 foreach (int timestep in dict.Keys)
                 {
-                    if (timestep == this.MinimumTimestep)
+                    if (timestep == this.TimestepZero)
                     {
                         continue;
                     }
@@ -2881,11 +2881,11 @@ namespace SyncroSim.STSim
             }
         }
 
-        private int GetTimestepKeyForAcrossTimestepAverage(int currentTimestep, int everyNthTimestep)
+        private int GetTimestepKeyForCumulativeAverage(int timestep, int frequency)
         {
             int timestepKey = 0;
 
-            if (currentTimestep == this.MaximumTimestep)
+            if (timestep == this.MaximumTimestep)
             {
                 timestepKey = this.MaximumTimestep;
             }
@@ -2894,7 +2894,7 @@ namespace SyncroSim.STSim
                 //We're looking for the the timestep which is the first one that is >= to the current timestep
 
                 timestepKey = Convert.ToInt32(Math.Ceiling(
-                    Convert.ToDouble(currentTimestep - this.TimestepZero) / everyNthTimestep) * everyNthTimestep) +
+                    Convert.ToDouble(timestep - this.TimestepZero) / frequency) * frequency) +
                         this.TimestepZero;
 
                 if (timestepKey > this.MaximumTimestep)

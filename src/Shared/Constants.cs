@@ -75,6 +75,7 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";
         public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
         public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
+        public const string SPATIAL_MAP_TST_VARIABLE_PREFIX = "stsim_tst";
         public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
         public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
 

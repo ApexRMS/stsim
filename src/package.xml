@@ -1361,7 +1361,7 @@
     </transformer>       
     <transformer name="AverageTransitionProbabilityRasterMap" displayName="Transition Probability" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename" isFolderExport="True">
     </transformer>    
-    <transformer name="AverageTSTRasterMap" displayName="Average Time-Since-Transition" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTST" column="Filename" isFolderExport="True">
+    <transformer name="AverageTSTRasterMap" displayName="Time-Since-Transition - Average" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialAverageTST" column="Filename" isFolderExport="True">
     </transformer>      
   </transformers>
   <views>

@@ -118,7 +118,8 @@ namespace SyncroSim.STSim
             SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
             SyncroSimLayoutItem TransitionsAvgTPGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Average", true);
             SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
-            SyncroSimLayoutItem TransitionsAvgTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgTSTGroup", "Average - Time-Since-Transition", true);
+            SyncroSimLayoutItem TransitionsTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsTSTGroup", "Time-Since-Transition", true);
+            SyncroSimLayoutItem TransitionsAvgTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgTSTGroup", "Time-Since-Transition - Average", true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
@@ -136,13 +137,19 @@ namespace SyncroSim.STSim
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
 
             AddMapTransitionGroupVariables(
+                project, TransitionsTSTGroup.Items,
+                "stsim_OutputSpatialTST", "Filename", "TransitionGroupID", "(Time-Since-Transition)",
+                Constants.SPATIAL_MAP_TST_VARIABLE_PREFIX, null);
+
+            AddMapTransitionGroupVariables(
                 project, TransitionsAvgTSTGroup.Items,
-                "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupID", "(Time-Since-Transition)",
+                "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupID", "(Time-Since-Transition - Average)",
                 Constants.SPATIAL_MAP_AVG_TST_VARIABLE_PREFIX, null);
 
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
             if (TransitionsAvgTPGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroup); }
             if (TransitionsIterationEventsGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroup); }
+            if (TransitionsTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsTSTGroup); }
             if (TransitionsAvgTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTSTGroup); }
             if (TransitionsGroup.Items.Count > 0) { layout.Items.Add(TransitionsGroup); }
         }

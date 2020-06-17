@@ -739,7 +739,10 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStateClassOutput);
-            Debug.Assert(!this.m_AvgRasterStateClassCumulative);
+
+#if DEBUG
+            if (timestep != this.m_TimestepZero) { Debug.Assert(!this.m_AvgRasterStateClassCumulative); }
+#endif
 
             foreach (StateClass sc in this.m_StateClasses)
             {
@@ -838,7 +841,10 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
-            Debug.Assert(!this.m_AvgRasterAgeCumulative);
+
+#if DEBUG
+            if (timestep != this.m_TimestepZero) { Debug.Assert(!this.m_AvgRasterAgeCumulative); }
+#endif
 
             double[] Values = this.m_AvgAgeMap[timestep];
 
@@ -920,7 +926,10 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStratumOutput);
-            Debug.Assert(!this.m_AvgRasterStratumCumulative);
+
+#if DEBUG
+            if (timestep != this.m_TimestepZero) { Debug.Assert(!this.m_AvgRasterStratumCumulative); }
+#endif
 
             foreach (Stratum st in this.m_Strata)
             {
@@ -1128,7 +1137,10 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterTSTOutput);
-            Debug.Assert(!this.m_AvgRasterTSTCumulative);
+
+#if DEBUG
+            if (timestep != this.m_TimestepZero) { Debug.Assert(!this.m_AvgRasterTSTCumulative); }
+#endif
 
             List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
 
@@ -1239,7 +1251,10 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStateAttributeOutput);
-            Debug.Assert(!this.m_AvgRasterStateAttributeCumulative);
+
+#if DEBUG
+            if (timestep != this.m_TimestepZero) { Debug.Assert(!this.m_AvgRasterStateAttributeCumulative); }
+#endif
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIdsNoAges.Keys)
             {

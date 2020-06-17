@@ -431,6 +431,12 @@ namespace SyncroSim.STSim
             this.WriteTSTRasters(iteration, this.m_TimestepZero);
             this.WriteStateAttributeRasters(iteration, this.m_TimestepZero);
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, this.m_TimestepZero);
+
+            this.RecordAvgRasterStateClassDataTimestepZero();
+            this.RecordAvgRasterAgeDataTimestepZero();
+            this.RecordAvgRasterStratumDataTimestepZero();
+            this.RecordAvgRasterTSTDataTimestepZero();
+            this.RecordAvgRasterStateAttributeDataTimestepZero(iteration);
         }
 
         private void InternalOnTimestep(int iteration, int timestep)

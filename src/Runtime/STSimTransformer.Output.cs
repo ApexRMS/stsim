@@ -143,7 +143,7 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        public bool IsOutputTimestepSkipMinimum(int timestep, int frequency, bool shouldCreateOutput)
+        public bool IsOutputTimestepAverage(int timestep, int frequency, bool shouldCreateOutput)
         {
             if (shouldCreateOutput)
             {
@@ -246,37 +246,37 @@ namespace SyncroSim.STSim
 
         private bool IsAvgRasterStateClassTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
         }
 
         private bool IsAvgRasterAgeTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
         }
 
         private bool IsAvgRasterStratumTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
         }
 
         private bool IsAvgRasterTransitionProbTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
         }
 
         private bool IsAvgRasterTSTTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
         }
 
         private bool IsAvgRasterStateAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
         }
 
         private bool IsAvgRasterTransitionAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestepSkipMinimum(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
         }
 
         //Summary collection keys
@@ -709,18 +709,33 @@ namespace SyncroSim.STSim
 
             if (this.m_AvgRasterStateClassCumulative)
             {
-                this.RecordAvgRasterStateClassOutputCumulative(timestep);
+                this.RecordAvgRasterStateClassDataCumulative(timestep);
             }
             else
             {
                 if (this.IsAvgRasterStateClassTimestep(timestep))
                 {
-                    this.RecordAvgRasterStateClassOutputNormalMethod(timestep);
+                    this.RecordAvgRasterStateClassDataNormalMethod(timestep);
                 }
             }
         }
 
-        private void RecordAvgRasterStateClassOutputNormalMethod(int timestep)
+        private void RecordAvgRasterStateClassDataTimestepZero()
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStateClassOutput)
+            {
+                return;
+            }
+
+            this.RecordAvgRasterStateClassDataNormalMethod(this.m_TimestepZero);
+        }
+
+        private void RecordAvgRasterStateClassDataNormalMethod(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStateClassOutput);
@@ -742,7 +757,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgRasterStateClassOutputCumulative(int timestep)
+        private void RecordAvgRasterStateClassDataCumulative(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStateClassOutput);
@@ -761,11 +776,6 @@ namespace SyncroSim.STSim
                     {
                         int i = c.CollectionIndex;
                         Debug.Assert(Values[i] >= 0.0);
-
-                        //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
-                        //where tsf is the timestep frequency N is the number of iterations.
-                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                        //and freq of 5, would give bins 1-5, and 6-8.
 
                         if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateClassOutputTimesteps) != 0))
                         {
@@ -798,18 +808,33 @@ namespace SyncroSim.STSim
 
             if (this.m_AvgRasterAgeCumulative)
             {
-                this.RecordAvgRasterAgeOutputCumulative(timestep);
+                this.RecordAvgRasterAgeDataCumulative(timestep);
             }
             else
             {
                 if (this.IsAvgRasterAgeTimestep(timestep))
                 {
-                    this.RecordAvgRasterAgeOutputNormalMethod(timestep);
+                    this.RecordAvgRasterAgeDataNormalMethod(timestep);
                 }
             }
         }
 
-        private void RecordAvgRasterAgeOutputNormalMethod(int timestep)
+        private void RecordAvgRasterAgeDataTimestepZero()
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterAgeOutput)
+            {
+                return;
+            }
+
+            this.RecordAvgRasterAgeDataNormalMethod(this.m_TimestepZero);
+        }
+
+        private void RecordAvgRasterAgeDataNormalMethod(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
@@ -823,7 +848,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgRasterAgeOutputCumulative(int timestep)
+        private void RecordAvgRasterAgeDataCumulative(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
@@ -835,9 +860,6 @@ namespace SyncroSim.STSim
             foreach (Cell cell in this.Cells)
             {
                 int i = cell.CollectionIndex;
-
-                //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                //and freq of 5, would give bins 1-5, and 6-8.
 
                 if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterAgeOutputTimesteps) != 0))
                 {
@@ -868,18 +890,33 @@ namespace SyncroSim.STSim
 
             if (this.m_AvgRasterStratumCumulative)
             {
-                this.RecordAvgRasterStratumOutputCumulative(timestep);
+                this.RecordAvgRasterStratumDataCumulative(timestep);
             }
             else
             {
                 if (this.IsAvgRasterStratumTimestep(timestep))
                 {
-                    this.RecordAvgRasterStratumOutputNormalMethod(timestep);
+                    this.RecordAvgRasterStratumDataNormalMethod(timestep);
                 }
             }
         }
 
-        private void RecordAvgRasterStratumOutputNormalMethod(int timestep)
+        private void RecordAvgRasterStratumDataTimestepZero()
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStratumOutput)
+            {
+                return;
+            }
+
+            this.RecordAvgRasterStratumDataNormalMethod(this.m_TimestepZero);
+        }
+
+        private void RecordAvgRasterStratumDataNormalMethod(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStratumOutput);
@@ -901,7 +938,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgRasterStratumOutputCumulative(int timestep)
+        private void RecordAvgRasterStratumDataCumulative(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStratumOutput);
@@ -920,11 +957,6 @@ namespace SyncroSim.STSim
                     {
                         int i = c.CollectionIndex;
                         Debug.Assert(Values[i] >= 0.0);
-
-                        //Now lets do the probability calculation.  The value to increment by is 1/(tsf*N) 
-                        //where tsf is the timestep frequency N is the number of iterations.
-                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                        //and freq of 5, would give bins 1-5, and 6-8.
 
                         if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStratumOutputTimesteps) != 0))
                         {
@@ -971,21 +1003,21 @@ namespace SyncroSim.STSim
 
                 if (this.m_AvgRasterTransitionProbCumulative)
                 {
-                    this.RecordAvgTransitionProbabilityOutputCumulative(
+                    this.RecordAvgTransitionProbabilityDataCumulative(
                         timestep, transitionGroupId, transitionedPixels);
                 }
                 else
                 {
                     if (this.IsAvgRasterTransitionProbTimestep(timestep))
                     {
-                        this.RecordAvgTransitionProbabilityOutputNormalMethod(
+                        this.RecordAvgTransitionProbabilityDataNormalMethod(
                             timestep, transitionGroupId, transitionedPixels);
                     }
                 }
             }
         }
 
-        private void RecordAvgTransitionProbabilityOutputNormalMethod(
+        private void RecordAvgTransitionProbabilityDataNormalMethod(
             int timestep,
             int transitionGroupId,
             int[] transitionedPixels)
@@ -1009,7 +1041,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgTransitionProbabilityOutputCumulative(
+        private void RecordAvgTransitionProbabilityDataCumulative(
             int timestep,
             int transitionGroupId,
             int[] transitionedPixels)
@@ -1054,10 +1086,49 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void RecordAvgRasterTSTData(int timestep)
         {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
             if (!this.m_CreateAvgRasterTSTOutput)
             {
                 return;
             }
+
+            if (this.m_AvgRasterTSTCumulative)
+            {
+                this.RecordAvgRasterTSTDataCumulative(timestep);
+            }
+            else
+            {
+                if (this.IsAvgRasterTSTTimestep(timestep))
+                {
+                    this.RecordAvgRasterTSTDataNormalMethod(timestep);
+                }
+            }
+        }
+
+        private void RecordAvgRasterTSTDataTimestepZero()
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterTSTOutput)
+            {
+                return;
+            }
+
+            this.RecordAvgRasterTSTDataNormalMethod(this.m_TimestepZero);
+        }
+
+        private void RecordAvgRasterTSTDataNormalMethod(int timestep)
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_CreateAvgRasterTSTOutput);
+            Debug.Assert(!this.m_AvgRasterTSTCumulative);
 
             List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
 
@@ -1066,27 +1137,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (this.m_AvgRasterTSTCumulative)
-            {
-                this.RecordAvgTSTOutputCumulative(timestep, TSTGroupIds);
-            }
-            else
-            {
-                if (this.IsAvgRasterTSTTimestep(timestep))
-                {
-                    this.RecordAvgTSTOutputNormalMethod(timestep, TSTGroupIds);
-                }
-            }
-        }
-
-        private void RecordAvgTSTOutputNormalMethod(int timestep, List<int> tstGroupIds)
-        {
-            Debug.Assert(this.IsSpatial);
-            Debug.Assert(this.m_CreateAvgRasterTSTOutput);
-            Debug.Assert(!this.m_AvgRasterTSTCumulative);
-            Debug.Assert(tstGroupIds.Count > 0);
-
-            foreach (int tgid in tstGroupIds)
+            foreach (int tgid in TSTGroupIds)
             {
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
                 double[] Values = dict[timestep];
@@ -1101,17 +1152,23 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgTSTOutputCumulative(int timestep, List<int> tstGroupIds)
+        private void RecordAvgRasterTSTDataCumulative(int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterTSTOutput);
             Debug.Assert(this.m_AvgRasterTSTCumulative);
-            Debug.Assert(tstGroupIds.Count > 0);
+
+            List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
+
+            if (TSTGroupIds.Count == 0)
+            {
+                return;
+            }
 
             int timestepKey = this.GetTimestepKeyForAcrossTimestepAverage(
                 timestep, this.m_AvgRasterTSTOutputTimesteps);
 
-            foreach (int tgid in tstGroupIds)
+            foreach (int tgid in TSTGroupIds)
             {
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
                 double[] Values = dict[timestepKey];
@@ -1150,20 +1207,35 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (this.m_AvgRasterAgeCumulative)
+            if (this.m_AvgRasterStateAttributeCumulative)
             {
-                this.RecordAvgRasterStateAttributeOutputCumulative(iteration, timestep);
+                this.RecordAvgRasterStateAttributeDataCumulative(iteration, timestep);
             }
             else
             {
                 if (this.IsAvgRasterStateAttributeTimestep(timestep))
                 {
-                    this.RecordAvgRasterStateAttributeOutputNormalMethod(iteration, timestep);
+                    this.RecordAvgRasterStateAttributeDataNormalMethod(iteration, timestep);
                 }
             }
         }
 
-        private void RecordAvgRasterStateAttributeOutputNormalMethod(int iteration, int timestep)
+        private void RecordAvgRasterStateAttributeDataTimestepZero(int iteration)
+        {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
+            if (!this.m_CreateAvgRasterStateAttributeOutput)
+            {
+                return;
+            }
+
+            this.RecordAvgRasterStateAttributeDataNormalMethod(iteration, this.m_TimestepZero);
+        }
+
+        private void RecordAvgRasterStateAttributeDataNormalMethod(int iteration, int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterStateAttributeOutput);
@@ -1224,7 +1296,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void RecordAvgRasterStateAttributeOutputCumulative(int iteration, int timestep)
+        private void RecordAvgRasterStateAttributeDataCumulative(int iteration, int timestep)
         {
             Debug.Assert(this.IsSpatial);
             Debug.Assert(this.m_CreateAvgRasterAgeOutput);
@@ -1255,9 +1327,6 @@ namespace SyncroSim.STSim
                         }
 
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-
-                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                        //and freq of 5, would give bins 1-5, and 6-8.
 
                         if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
                         {
@@ -1293,9 +1362,6 @@ namespace SyncroSim.STSim
                         }
 
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
-
-                        //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                        //and freq of 5, would give bins 1-5, and 6-8.
 
                         if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
                         {
@@ -1405,9 +1471,6 @@ namespace SyncroSim.STSim
 
                 if (!v.Equals(Spatial.DefaultNoDataValue))
                 {
-                    //Accomodate last bin, where not multiple of frequency. For instance MaxTS of 8, 
-                    //and freq of 5, would give bins 1-5, and 6-8.
-
                     if (Values[i] == Spatial.DefaultNoDataValue)
                     {
                         Values[i] = 0.0;

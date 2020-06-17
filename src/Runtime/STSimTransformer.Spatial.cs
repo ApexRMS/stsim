@@ -2380,6 +2380,18 @@ namespace SyncroSim.STSim
                     }
                 }
 
+                if (!dict.ContainsKey(this.TimestepZero))
+                {
+                    double[] Values = new double[this.Cells.Count];
+
+                    for (var i = 0; i < this.Cells.Count; i++)
+                    {
+                        Values[i] = 0.0;
+                    }
+
+                    dict.Add(this.TimestepZero, Values);
+                }
+
                 this.m_AvgStateClassMap.Add(sc.Id, dict);
             }
         }
@@ -2410,6 +2422,18 @@ namespace SyncroSim.STSim
 
                     this.m_AvgAgeMap.Add(timestep, Values);
                 }
+            }
+
+            if (!this.m_AvgAgeMap.ContainsKey(this.TimestepZero))
+            {
+                double[] Values = new double[this.Cells.Count];
+
+                for (var i = 0; i < this.Cells.Count; i++)
+                {
+                    Values[i] = 0.0;
+                }
+
+                this.m_AvgAgeMap.Add(this.TimestepZero, Values);
             }
         }
 
@@ -2443,6 +2467,18 @@ namespace SyncroSim.STSim
 
                         dict.Add(timestep, Values);
                     }
+                }
+
+                if (!dict.ContainsKey(this.TimestepZero))
+                {
+                    double[] Values = new double[this.Cells.Count];
+
+                    for (var i = 0; i < this.Cells.Count; i++)
+                    {
+                        Values[i] = 0.0;
+                    }
+
+                    dict.Add(this.TimestepZero, Values);
                 }
 
                 this.m_AvgStratumMap.Add(st.StratumId, dict);
@@ -2531,6 +2567,18 @@ namespace SyncroSim.STSim
                     }
                 }
 
+                if (!dict.ContainsKey(this.TimestepZero))
+                {
+                    double[] Values = new double[this.Cells.Count];
+
+                    for (var i = 0; i < this.Cells.Count; i++)
+                    {
+                        Values[i] = 0.0;
+                    }
+
+                    dict.Add(this.TimestepZero, Values);
+                }
+
                 this.m_AvgTSTMap.Add(tgid, dict);
             }
         }
@@ -2566,6 +2614,18 @@ namespace SyncroSim.STSim
 
                         dict.Add(timestep, Values);
                     }
+                }
+
+                if (!dict.ContainsKey(this.TimestepZero))
+                {
+                    double[] Values = new double[this.Cells.Count];
+
+                    for (var i = 0; i < this.Cells.Count; i++)
+                    {
+                        Values[i] = Spatial.DefaultNoDataValue;
+                    }
+
+                    dict.Add(this.TimestepZero, Values);
                 }
 
                 this.m_AvgStateAttrMap.Add(sat.Id, dict);

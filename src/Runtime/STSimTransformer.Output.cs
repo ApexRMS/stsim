@@ -143,11 +143,29 @@ namespace SyncroSim.STSim
             return false;
         }
 
+        public bool IsOutputTimestepAverage(int timestep, int frequency, bool shouldCreateOutput)
+        {
+            if (shouldCreateOutput)
+            {
+                if (timestep == this.MaximumTimestep)
+                {
+                    return true;
+                }
+
+                if (((timestep - this.m_TimestepZero) % frequency) == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         //Summary output
 
         private bool IsSummaryStateClassTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_SummaryStateClassOutputTimesteps, this.m_CreateSummaryStateClassOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_SummaryStateClassOutputTimesteps, this.m_CreateSummaryStateClassOutput);
         }
 
         private bool IsSummaryTransitionTimestep(int timestep)
@@ -228,37 +246,37 @@ namespace SyncroSim.STSim
 
         private bool IsAvgRasterStateClassTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStateClassOutputTimesteps, this.m_CreateAvgRasterStateClassOutput);
         }
 
         private bool IsAvgRasterAgeTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterAgeOutputTimesteps, this.m_CreateAvgRasterAgeOutput);
         }
 
         private bool IsAvgRasterStratumTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStratumOutputTimesteps, this.m_CreateAvgRasterStratumOutput);
         }
 
         private bool IsAvgRasterTransitionProbTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTransitionProbOutputTimesteps, this.m_CreateAvgRasterTransitionProbOutput);
         }
 
         private bool IsAvgRasterTSTTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTSTOutputTimesteps, this.m_CreateAvgRasterTSTOutput);
         }
 
         private bool IsAvgRasterStateAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterStateAttributeOutputTimesteps, this.m_CreateAvgRasterStateAttributeOutput);
         }
 
         private bool IsAvgRasterTransitionAttributeTimestep(int timestep)
         {
-            return this.IsOutputTimestep(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
+            return this.IsOutputTimestepAverage(timestep, this.m_AvgRasterTransitionAttributeOutputTimesteps, this.m_CreateAvgRasterTransitionAttributeOutput);
         }
 
         //Summary collection keys
@@ -2342,20 +2360,14 @@ namespace SyncroSim.STSim
                     }
 
                     double[] Values = dict[timestep];
-
-                    //Dont bother writing out any array thats all DEFAULT_NO_DATA_VALUEs or 0's
                     var DistVals = Values.Distinct();
 
                     if (DistVals.Count() == 1)
                     {
-                        Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
-                        continue;
-                    }
-                    else if (DistVals.Count() == 2)
-                    {
-                        if (DistVals.ElementAt(0) <= 0 && DistVals.ElementAt(1) <= 0)
+                        var el0 = DistVals.ElementAt(0);
+
+                        if (el0.Equals(Spatial.DefaultNoDataValue))
                         {
-                            Debug.Print("Skipping Average Transition Probabilities output for TG {0} / Timestep {1} as no non-DEFAULT_NO_DATA_VALUE values found.", tgId, timestep);
                             continue;
                         }
                     }

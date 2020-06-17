@@ -77,12 +77,10 @@ namespace SyncroSim.STSim
 
             AgesIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
             AgesIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
-            AgesIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
             AgesAvgGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
             AgesAvgGroup.Properties.Add(new MetaDataProperty("column", "Filename"));
             AgesAvgGroup.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_ALL_ITER));
-            AgesAvgGroup.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
 
             AgesGroup.Items.Add(AgesIterationItem);
             AgesGroup.Items.Add(AgesAvgGroup);

@@ -37,13 +37,16 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in dstmv.GetData().Rows)
             {
-                int id = Convert.ToInt32(
-                    dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME], 
-                    CultureInfo.InvariantCulture);
-
-                if (!dict.ContainsKey(id))
+                if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME] != DBNull.Value)
                 {
-                    dict.Add(id, true);
+                    int id = Convert.ToInt32(
+                        dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture);
+
+                    if (!dict.ContainsKey(id))
+                    {
+                        dict.Add(id, true);
+                    }
                 }
             }
 

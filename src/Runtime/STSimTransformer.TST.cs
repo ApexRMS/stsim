@@ -15,13 +15,30 @@ namespace SyncroSim.STSim
         private List<int> GetTSTTransitionGroupIds()
         {
             List<int> Groups = new List<int>();
-            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
             Dictionary<int, bool> dict = new Dictionary<int, bool>();
+
+            //From the TST Group datafeed
+            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
 
             foreach (DataRow dr in dstst.GetData().Rows)
             {
                 int id = Convert.ToInt32(
                     dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], 
+                    CultureInfo.InvariantCulture);
+
+                if (!dict.ContainsKey(id))
+                {
+                    dict.Add(id, true);
+                }
+            }
+
+            //From the Transition Multiplier Value datafeed
+            DataSheet dstmv = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME);
+
+            foreach (DataRow dr in dstmv.GetData().Rows)
+            {
+                int id = Convert.ToInt32(
+                    dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME], 
                     CultureInfo.InvariantCulture);
 
                 if (!dict.ContainsKey(id))

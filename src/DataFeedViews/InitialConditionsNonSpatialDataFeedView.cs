@@ -38,12 +38,6 @@ namespace SyncroSim.STSim
             v.LoadDataFeed(dataFeed, Strings.DATASHEET_NSIC_DISTRIBUTION_NAME);
 
             this.RefreshBoundControls();
-
-            if (this.CheckBoxCalcFromDist.Checked)
-            {
-                this.SetNumCellsFromDistribution();
-            }
-
             this.CalculateCellSize();
         }
 
@@ -136,7 +130,6 @@ namespace SyncroSim.STSim
         private void SetNumCellsFromDistribution()
         {
             Debug.Assert(this.CheckBoxCalcFromDist.Checked);
-
             int NumCells = this.CalculateNumCellsFromDistribution();
 
             if (NumCells > 0)

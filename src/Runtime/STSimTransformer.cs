@@ -622,8 +622,6 @@ namespace SyncroSim.STSim
             //If there are Tst values then increment them by one.
             if (simulationCell.TstValues.Count > 0)
             {
-                Debug.Assert(this.m_TstTransitionGroupMap.HasItems);
-
                 foreach (Tst t in simulationCell.TstValues)
                 {
                     t.TstValue += 1;

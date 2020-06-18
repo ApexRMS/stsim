@@ -67,8 +67,6 @@ namespace SyncroSim.STSim
         {
             if (simulationCell.TstValues.Count > 0)
             {
-                Debug.Assert(this.m_TstTransitionGroupMap.HasItems);
-
                 //If there is a randomize value for this cell's stratum, then use that value to initialize
                 //every Tst in the TstValues list.  If there is no value for this cell's stratum then set the
                 //initial value to zero.
@@ -146,7 +144,6 @@ namespace SyncroSim.STSim
         {
             if (simulationCell.TstValues.Count == 0)
             {
-                Debug.Assert(!this.m_TstTransitionGroupMap.HasItems);
                 return;
             }
 

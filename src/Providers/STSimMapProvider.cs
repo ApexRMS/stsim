@@ -230,7 +230,6 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("filter", "StratumID"));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
                 Item.Properties.Add(new MetaDataProperty("itemId", st.StratumId.ToString(CultureInfo.InvariantCulture)));
-                Item.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
 
                 items.Add(Item);
             }
@@ -258,7 +257,6 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("filter", "StateClassID"));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
                 Item.Properties.Add(new MetaDataProperty("itemId", sc.Id.ToString(CultureInfo.InvariantCulture)));
-                Item.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
 
                 items.Add(Item);
             }

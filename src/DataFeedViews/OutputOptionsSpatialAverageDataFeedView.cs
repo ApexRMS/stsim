@@ -93,9 +93,10 @@ namespace SyncroSim.STSim
             this.LabelAvgRasterSTTimesteps.Text = NewTimestepsText;
             this.LabelAvgRasterSCTimesteps.Text = NewTimestepsText;
             this.LabelAvgRasterAgeTimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterTPTimesteps.Text = NewTimestepsText;
+            this.LabelAvgRasterTSTTimesteps.Text = NewTimestepsText;
             this.LabelAvgRasterSATimesteps.Text = NewTimestepsText;
             this.LabelAvgRasterTATimesteps.Text = NewTimestepsText;
-            this.LabelAvgRasterTPTimesteps.Text = NewTimestepsText;
         }
 
         private void EnableControls()

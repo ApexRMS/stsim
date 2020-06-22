@@ -1004,7 +1004,7 @@ namespace SyncroSim.STSim
                 {
                     var el0 = distArray.ElementAt(0);
 
-                    if (el0.Equals(0.0) || el0.Equals(Spatial.DefaultNoDataValue))
+                    if (el0.Equals(Spatial.DefaultNoDataValue))
                     {
                         continue;
                     }
@@ -2217,18 +2217,6 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    var DistVals = Values.Distinct();
-
-                    if (DistVals.Count() == 1)
-                    {
-                        var el0 = DistVals.ElementAt(0);
-
-                        if (el0.Equals(0.0))
-                        {
-                            continue;
-                        }
-                    }
-
                     StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
@@ -2299,18 +2287,6 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    var DistVals = Values.Distinct();
-
-                    if (DistVals.Count() == 1)
-                    {
-                        var el0 = DistVals.ElementAt(0);
-
-                        if (el0.Equals(0.0))
-                        {
-                            continue;
-                        }
-                    }
-
                     StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 

@@ -310,7 +310,9 @@ namespace SyncroSim.STSim
 
                 int[] transitionPixel = null;
 
-                if (this.m_CreateRasterTransitionOutput || this.m_CreateAvgRasterTransitionProbOutput)
+                if (this.m_CreateRasterTransitionOutput || 
+                    this.m_CreateAvgRasterTransitionProbOutput || 
+                    this.m_CreateRasterTransitionEventOutput)
                 {
                     transitionPixel = new int[this.Cells.Count];
                     // initialize to DEFAULT_NO_DATA_VLAUE

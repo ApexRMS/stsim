@@ -315,10 +315,10 @@ namespace SyncroSim.STSim
                     this.m_CreateRasterTransitionEventOutput)
                 {
                     transitionPixel = new int[this.Cells.Count];
-                    // initialize to DEFAULT_NO_DATA_VLAUE
+
                     for (var i = 0; i < this.Cells.Count; i++)
                     {
-                        transitionPixel[i] = Spatial.DefaultNoDataValue;
+                        transitionPixel[i] = 0;
                     }
                 }
 
@@ -349,7 +349,7 @@ namespace SyncroSim.STSim
 
                     for (int i = 0; i < this.Cells.Count; i++)
                     {
-                        arr[i] = Spatial.DefaultNoDataValue;
+                        arr[i] = 0.0;
                     }
 
                     dict.Add(id, arr);
@@ -2611,7 +2611,7 @@ namespace SyncroSim.STSim
 
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
-                            Values[i] = Spatial.DefaultNoDataValue;
+                            Values[i] = 0.0;
                         }
 
                         dict.Add(timestep, Values);
@@ -2624,7 +2624,7 @@ namespace SyncroSim.STSim
 
                     for (var i = 0; i < this.Cells.Count; i++)
                     {
-                        Values[i] = Spatial.DefaultNoDataValue;
+                        Values[i] = 0.0;
                     }
 
                     dict.Add(this.TimestepZero, Values);
@@ -2660,7 +2660,7 @@ namespace SyncroSim.STSim
 
                         for (var i = 0; i < this.Cells.Count; i++)
                         {
-                            Values[i] = Spatial.DefaultNoDataValue;
+                            Values[i] = 0.0;
                         }
 
                         dict.Add(timestep, Values);

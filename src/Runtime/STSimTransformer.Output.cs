@@ -1271,12 +1271,6 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         int i = c.CollectionIndex;
-
-                        if (Values[i] == Spatial.DefaultNoDataValue)
-                        {
-                            Values[i] = 0.0;
-                        }
-
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
                         Values[i] += v / this.m_TotalIterations;
                     }
@@ -1298,12 +1292,6 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         int i = c.CollectionIndex;
-
-                        if (Values[i] == Spatial.DefaultNoDataValue)
-                        {
-                            Values[i] = 0.0;
-                        }
-
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
                         Values[i] += v / this.m_TotalIterations;
                     }
@@ -1335,12 +1323,6 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         int i = c.CollectionIndex;
-
-                        if (Values[i] == Spatial.DefaultNoDataValue)
-                        {
-                            Values[i] = 0.0;
-                        }
-
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
 
                         if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
@@ -1370,12 +1352,6 @@ namespace SyncroSim.STSim
                     if (AttrValue != null)
                     {
                         int i = c.CollectionIndex;
-
-                        if (Values[i] == Spatial.DefaultNoDataValue)
-                        {
-                            Values[i] = 0.0;
-                        }
-
                         double v = Convert.ToDouble(AttrValue, CultureInfo.InvariantCulture);
 
                         if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterStateAttributeOutputTimesteps) != 0))
@@ -1456,11 +1432,6 @@ namespace SyncroSim.STSim
 
                 if (!v.Equals(Spatial.DefaultNoDataValue))
                 {
-                    if (Values[i] == Spatial.DefaultNoDataValue)
-                    {
-                        Values[i] = 0.0;
-                    }
-
                     Values[i] += v / this.m_TotalIterations;
                 }
             }
@@ -1486,11 +1457,6 @@ namespace SyncroSim.STSim
 
                 if (!v.Equals(Spatial.DefaultNoDataValue))
                 {
-                    if (Values[i] == Spatial.DefaultNoDataValue)
-                    {
-                        Values[i] = 0.0;
-                    }
-
                     if ((timestepKey == this.MaximumTimestep) && (((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionAttributeOutputTimesteps) != 0))
                     {
                         Values[i] += v / (double)((timestepKey - this.TimestepZero) % this.m_AvgRasterTransitionAttributeOutputTimesteps * this.m_TotalIterations);
@@ -2012,8 +1978,6 @@ namespace SyncroSim.STSim
 
                 // We need to remap the Stratum values back to the original Raster values ( PK - > ID)
                 DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
-
-                //DEVNOTE: Tom - for now use default NoDataValue during remap. Ideally, we would bring the source files NoDataValue thru.
 
                 rastOutput.IntCells = Spatial.RemapRasterCells(
                     rastOutput.IntCells,

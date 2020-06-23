@@ -882,6 +882,7 @@ namespace SyncroSim.STSim
             StreamWriter fileWriter = System.IO.File.CreateText(colorMapFilename);
             fileWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "# Syncrosim Generated Transition Group ({0}) Color Map (QGIS-compatible) Export File,,,,,", tgName));
             fileWriter.WriteLine("INTERPOLATION:EXACT");
+            bool NoOccurrenceValueSeen = false;
 
             for (var i = 0; i < sortedTT.Count; i++)
             {
@@ -898,7 +899,17 @@ namespace SyncroSim.STSim
                     //  21001,168,0,87,255,UNDET:<5% Inv
 
                     fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", aryIdColor[0], aryIdColor[2], aryIdColor[3], aryIdColor[4], aryIdColor[1], lbl);
+
+                    if (Convert.ToInt32(aryIdColor[0]) == 0)
+                    {
+                        NoOccurrenceValueSeen = true;
+                    }
                 }
+            }
+
+            if (!NoOccurrenceValueSeen)
+            {
+                fileWriter.WriteLine("0,232,232,232,255,No Occurrence");
             }
 
             fileWriter.Close();

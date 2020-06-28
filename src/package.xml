@@ -1480,6 +1480,7 @@
         <item name="corestime_DistributionType"/>
         <item name="corestime_ExternalVariableType"/>
         <item name="SizeClass"/>
+        <item name="core_AutoGenTag"/>
       </group>
       <item name="Terminology"/>
     </layout>
@@ -1531,6 +1532,7 @@
           <item name="corestime_Multiprocessing"/>
         </group>
         <item name="corestime_External" displayName="External Program"/>
+        <item name="core_AutoGenTagValue"/>
       </group>
     </layout>
     <layout name="coreforms_ScenarioDatafeedsLite">

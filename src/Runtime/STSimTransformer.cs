@@ -431,6 +431,7 @@ namespace SyncroSim.STSim
             this.WriteTSTRasters(iteration, this.m_TimestepZero);
             this.WriteStateAttributeRasters(iteration, this.m_TimestepZero);
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, this.m_TimestepZero);
+            this.WriteExternalVariableValueTabularData(iteration, this.m_TimestepZero, this.m_OutputExternalVariableValueTable);
 
             this.RecordAvgRasterStateClassDataTimestepZero();
             this.RecordAvgRasterAgeDataTimestepZero();
@@ -453,6 +454,7 @@ namespace SyncroSim.STSim
             this.WriteSummaryTransitionStateTabularData(this.m_OutputStratumTransitionStateTable);
             this.WriteSummaryStateAttributeTabularData(this.m_OutputStateAttributeTable);
             this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
+            this.WriteExternalVariableValueTabularData(iteration, timestep, this.m_OutputExternalVariableValueTable);
 
             //Spatial data
             this.WriteStateClassRaster(iteration, timestep);

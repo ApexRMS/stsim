@@ -21,10 +21,11 @@ namespace SyncroSim.STSim
         {
             using (DataStore store = project.Library.CreateDataStore())
             {
-                SyncroSimLayoutItem g0 = new SyncroSimLayoutItem("stsim_StateClassVariableGroup", "State Classes", true);
-                SyncroSimLayoutItem g1 = new SyncroSimLayoutItem("stsim_TransitionVariableGroup", "Transitions", true);
-                SyncroSimLayoutItem g2 = new SyncroSimLayoutItem("stsim_StateAttributeVariableGroup", "State Attributes", true);
-                SyncroSimLayoutItem g3 = new SyncroSimLayoutItem("stsim_TransitionAttributeVariableGroup", "Transition Attributes", true);
+                SyncroSimLayoutItem StateClassGroup = new SyncroSimLayoutItem("stsim_StateClassGroup", "State Classes", true);
+                SyncroSimLayoutItem TransitionGroup = new SyncroSimLayoutItem("stsim_TransitionGroup", "Transitions", true);
+                SyncroSimLayoutItem StateAttributeGroup = new SyncroSimLayoutItem("stsim_StateAttributeGroup", "State Attributes", true);
+                SyncroSimLayoutItem TransitionAttributeGroup = new SyncroSimLayoutItem("stsim_TransitionAttributeGroup", "Transition Attributes", true);
+                SyncroSimLayoutItem ExternalVariableGroup = new SyncroSimLayoutItem("stsim_ExternalVariableGroup", "External Variables", true);
 
                 DataSheet AttrGroupDataSheet = project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
                 DataView AttrGroupView = CreateChartAttributeGroupsView(project, store);
@@ -38,44 +39,50 @@ namespace SyncroSim.STSim
                     TransitionAttrDataSheet.ValidationTable.DisplayMember, 
                     DataViewRowState.CurrentRows);
 
-                g0.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
-                g0.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
+                StateClassGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
+                StateClassGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
 
-                g1.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
-                g1.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
+                TransitionGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
+                TransitionGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
 
-                g2.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStateAttribute"));
-                g2.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
+                StateAttributeGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStateAttribute"));
+                StateAttributeGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
 
-                g3.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTransitionAttribute"));
-                g3.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
+                TransitionAttributeGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTransitionAttribute"));
+                TransitionAttributeGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
 
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, project);
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, project);
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, project);
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, project);
 
-                AddChartStateClassVariables(g0.Items, project);
-                AddChartTransitionVariables(g1.Items, project);
+                AddChartStateClassVariables(StateClassGroup.Items, project);
+                AddChartTransitionVariables(TransitionGroup.Items, project);
+                AddChartExternalVariables(ExternalVariableGroup.Items, project);
 
                 AddChartAttributeVariables(
-                    g2.Items, AttrGroupView, AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, 
+                    StateAttributeGroup.Items, AttrGroupView, AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, 
                     Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, false);
 
-                AddChartAttributeVariables(g3.Items, AttrGroupView, AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, 
+                AddChartAttributeVariables(TransitionAttributeGroup.Items, AttrGroupView, AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, 
                     Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, true);
 
-                layout.Items.Add(g0);
-                layout.Items.Add(g1);
+                layout.Items.Add(StateClassGroup);
+                layout.Items.Add(TransitionGroup);
 
-                if (g2.Items.Count > 0)
+                if (StateAttributeGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g2);
+                    layout.Items.Add(StateAttributeGroup);
                 }
 
-                if (g3.Items.Count > 0)
+                if (TransitionAttributeGroup.Items.Count > 0)
                 {
-                    layout.Items.Add(g3);
+                    layout.Items.Add(TransitionAttributeGroup);
+                }
+
+                if (ExternalVariableGroup.Items.Count > 0)
+                {
+                    layout.Items.Add(ExternalVariableGroup);
                 }
             }
         }
@@ -187,20 +194,13 @@ namespace SyncroSim.STSim
                 return ChartingUtilities.CreateRawAttributeChartData(
                     dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
             }
+            else if (descriptor.DatasheetName == Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME)
+            {
+                return ChartingUtilities.CreateRawExternalVariableData(
+                    dataSheet.Scenario, descriptor, store);
+            }
 
             return null;
-        }
-
-        public override string GetCacheTag(ChartDescriptor descriptor)
-        {
-            if (ChartingUtilities.HasAgeReference(descriptor))
-            {
-                return Constants.AGE_QUERY_CACHE_TAG;
-            }
-            else
-            {
-                return null;
-            }
         }
 
         private static void AddChartStateClassVariables(SyncroSimLayoutItemCollection items, Project project)
@@ -258,6 +258,25 @@ namespace SyncroSim.STSim
 
             items.Add(Normal);
             items.Add(Proportion);
+        }
+
+        private static void AddChartExternalVariables(SyncroSimLayoutItemCollection items, Project project)
+        {
+            DataSheet ds = project.GetDataSheet(Strings.CORESTIME_EXTERNAL_VAR_TYPE_DATASHEET_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int Id = Convert.ToInt32(dr[ds.ValueMember], CultureInfo.InvariantCulture);
+                string Name = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
+                string VarName = string.Format(CultureInfo.InvariantCulture, "stsim_ExternalVariable-{0}", Id);
+                SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, Name, false);
+
+                Item.Properties.Add(new MetaDataProperty("dataSheet", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME));
+                Item.Properties.Add(new MetaDataProperty("column", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME));
+                Item.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+                items.Add(Item);
+            }         
         }
 
         private static void AddChartAttributeVariables(SyncroSimLayoutItemCollection items, DataView attrGroupView, DataSheet attrGroupDataSheet, DataView attrView, DataSheet attrDataSheet, string outputTableName, string attributeTypeColumnName, bool skipTimestepZero)
@@ -459,7 +478,6 @@ namespace SyncroSim.STSim
         private static DataView CreateChartAttributeGroupsView(Project project, DataStore store)
         {
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
-
             DataView View = new DataView(ds.GetData(store), null, ds.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
 
             return View;

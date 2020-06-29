@@ -312,6 +312,24 @@ namespace SyncroSim.STSim
             return dt;
         }
 
+        public static DataTable CreateRawExternalVariableData(
+            Scenario scenario,
+            ChartDescriptor descriptor,
+            DataStore store)
+        {
+            string tag = GetChartCacheTag(descriptor);
+            string query = CreateRawExternalVariableDataQuery(scenario, descriptor);
+            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
+
+            if (dt == null)
+            {
+                dt = store.CreateDataTableFromQuery(query, "RawData");
+                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
+            }
+
+            return dt;
+        }
+
         public static Dictionary<string, double> CreateAmountDictionary(Scenario scenario, ChartDescriptor descriptor, DataStore store)
         {
             string tag = GetChartCacheTag(descriptor);
@@ -427,6 +445,27 @@ namespace SyncroSim.STSim
             string query = string.Format(CultureInfo.InvariantCulture, 
                 "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM {0} WHERE ({1}) GROUP BY Iteration, Timestep", 
                 tableName, WhereClause);
+
+            return query;
+        }
+
+        private static string CreateRawExternalVariableDataQuery(Core.Scenario scenario, ChartDescriptor descriptor)
+        {
+            string[] s = descriptor.VariableName.Split('-');
+            Debug.Assert(s.Count() == 2 && s[0] == "stsim_ExternalVariable");
+            int ExtVarTypeId = int.Parse(s[1], CultureInfo.InvariantCulture);
+
+            string ScenarioClause = string.Format(CultureInfo.InvariantCulture,
+                "([{0}]={1})",
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+
+            string WhereClause = string.Format(CultureInfo.InvariantCulture,
+                "{0} AND ([{1}]={2})",
+                ScenarioClause, Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME, ExtVarTypeId);
+
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT Iteration, Timestep, Value AS SumOfAmount FROM {0} WHERE ({1}) ORDER BY Iteration, Timestep",
+                Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME, WhereClause);
 
             return query;
         }

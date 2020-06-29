@@ -110,6 +110,7 @@ namespace SyncroSim.STSim
         private DataTable m_OutputStratumTransitionStateTable;
         private DataTable m_OutputStateAttributeTable;
         private DataTable m_OutputTransitionAttributeTable;
+        private DataTable m_OutputExternalVariableValueTable;
 
         /// <summary>
         /// Determines whether or not the specified timestep is an Output timestep
@@ -1773,6 +1774,21 @@ namespace SyncroSim.STSim
             }
 
             this.m_SummaryTransitionAttributeResults.Clear();
+        }
+
+        private void WriteExternalVariableValueTabularData(int iteration, int timestep, DataTable table)
+        {
+            foreach (ExternalVariableValue ExtVar in this.m_DistributionProvider.ExternalVariableValues)
+            {
+                DataRow dr = table.NewRow();
+
+                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
+                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
+                dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME] = ExtVar.VariableTypeId;
+                dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME] = ExtVar.CurrentValue;
+
+                table.Rows.Add(dr);
+            }
         }
 
         /// <summary>

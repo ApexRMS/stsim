@@ -1115,6 +1115,19 @@
             </datasheet>
           </datasheets>
         </datafeed>
+        <datafeed name="OutputExternalVariableValue" displayName="Output External Variable Value" dataScope="Scenario" isOutput="True" >
+          <datasheets>
+            <datasheet name="OutputExternalVariableValue" displayName="Output External Variable Value">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
+                <column name="Iteration" dataType="Integer" isCompositeIndex="True"/>
+                <column name="Timestep" dataType="Integer" isCompositeIndex="True"/>
+                <column name="ExternalVariableTypeID" dataType="Integer" displayName="External Variable" validationType="Datasheet" formula1="corestime_ExternalVariableType" isCompositeIndex="True"/>
+                <column name="Value" dataType="Double" displayName="Value" validationType="Decimal"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
         <datafeed name="OutputSpatialState" displayName="Output Spatial State" dataScope="Scenario" isOutput="True" >
           <datasheets>
             <datasheet name="OutputSpatialState" displayName="Spatial State" spatialMultiProcessing="True">

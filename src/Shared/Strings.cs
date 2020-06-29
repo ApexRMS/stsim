@@ -421,6 +421,13 @@ namespace SyncroSim.STSim
         //OutputTransitionAttribute
         public const string DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME = "stsim_OutputTransitionAttribute";
 
+        //Output External Variable Value Data Feed
+        public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME = "stsim_OutputExternalVariableValue";
+        public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeID";
+        public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME = "Value";
+
+        public const string CORESTIME_EXTERNAL_VAR_TYPE_DATASHEET_NAME = "corestime_ExternalVariableType";
+
         //Charting Variables
         public const string STATE_CLASS_AMOUNT_VARIABLE_NAME = "stsim_StateClassNormalVariable";
         public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportionVariable";

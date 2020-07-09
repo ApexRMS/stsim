@@ -22,7 +22,7 @@ namespace SyncroSim.STSim
             using (DataStore store = project.Library.CreateDataStore())
             {
                 SyncroSimLayoutItem StateClassGroup = new SyncroSimLayoutItem("stsim_StateClassVariableGroup", "State Classes", true);
-                SyncroSimLayoutItem TransitionGroup = new SyncroSimLayoutItem("stsim_TransitionVariableGroup", "", true);
+                SyncroSimLayoutItem TransitionGroup = new SyncroSimLayoutItem("stsim_TransitionVariableGroup", "Transitions", true);
                 SyncroSimLayoutItem StateAttributeGroup = new SyncroSimLayoutItem("stsim_StateAttributeVariableGroup", "State Attributes", true);
                 SyncroSimLayoutItem TransitionAttributeGroup = new SyncroSimLayoutItem("stsim_TransitionAttributeVariableGroup", "Transition Attributes", true);
                 SyncroSimLayoutItem ExternalVariableGroup = new SyncroSimLayoutItem("stsim_ExternalVariableGroup", "External Variables", true);

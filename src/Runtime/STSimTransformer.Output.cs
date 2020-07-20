@@ -1562,7 +1562,7 @@ namespace SyncroSim.STSim
                                 {
                                     OutputStratumState oss = new OutputStratumState(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
-                                        ss, ts, iteration, timestep, dt.StateClassIdSource, dt.AgeMinimum, dt.AgeMaximum, 0, 0.0);
+                                        ss, ts, iteration, timestep, dt.StateClassIdSource, 0, 0, 0, 0.0);
 
                                     SevenIntegerLookupKey k2 = new SevenIntegerLookupKey(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),

@@ -110,7 +110,9 @@ namespace SyncroSim.STSim
 
             foreach (DataRowView drv in dv)
             {
-                int value = Convert.ToInt32(drv[Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int value = Convert.ToInt32(drv[
+                    Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME], 
+                    CultureInfo.InvariantCulture);
 
                 if (!dict.ContainsKey(value))
                 {
@@ -121,7 +123,7 @@ namespace SyncroSim.STSim
 
             lst.Sort((AgeDescriptor ad1, AgeDescriptor ad2) =>
             {
-                     return ad1.MinimumAge.CompareTo(ad2.MinimumAge);
+                return ad1.MinimumAge.CompareTo(ad2.MinimumAge);
             });
 
             int Prev = 0;
@@ -137,7 +139,6 @@ namespace SyncroSim.STSim
             lst.Add(new AgeDescriptor(Prev, null));
 
 #if DEBUG
-
             Debug.Assert(lst.Count > 0);
 
             foreach (AgeDescriptor ad in lst)
@@ -147,7 +148,6 @@ namespace SyncroSim.STSim
                     Debug.Assert(ad.MinimumAge <= ad.MaximumAge.Value);
                 }
             }
-
 #endif
 
             lst[lst.Count - 1].MaximumAge = null;

@@ -2,6 +2,7 @@
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
@@ -20,12 +21,14 @@ namespace SyncroSim.STSim
             {
                 if (frequency <= 0)
                 {
-                    ExceptionUtils.ThrowArgumentException("The age reporting frequency must be greater than zero.");
+                    ExceptionUtils.ThrowArgumentException(
+                        "The age reporting frequency must be greater than zero.");
                 }
 
                 if (maximum < frequency)
                 {
-                    ExceptionUtils.ThrowArgumentException("The maximum age cannot be less than the age reporting frequency.");
+                    ExceptionUtils.ThrowArgumentException(
+                        "The maximum age cannot be less than the age reporting frequency.");
                 }
             }
 
@@ -143,11 +146,33 @@ namespace SyncroSim.STSim
     {
         private int m_MinimumAge;
         private int? m_MaximumAge;
+        private string m_DisplayName;
 
         public AgeDescriptor(int minimumAge, int? maximumAge)
         {
             this.m_MinimumAge = minimumAge;
             this.m_MaximumAge = maximumAge;
+
+            this.UpdateDisplayName();
+        }
+
+        public override string ToString()
+        {
+            return this.m_DisplayName;
+        }
+
+        private void UpdateDisplayName()
+        {
+            if (this.m_MaximumAge.HasValue)
+            {
+                this.m_DisplayName = string.Format(CultureInfo.InvariantCulture,
+                    "{0}-{1}", this.m_MinimumAge, this.m_MaximumAge);
+            }
+            else
+            {
+                this.m_DisplayName = string.Format(CultureInfo.InvariantCulture,
+                    "{0}-{1}", this.m_MinimumAge, "NULL");
+            }
         }
 
         public int MinimumAge
@@ -159,6 +184,7 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_MinimumAge = value;
+                this.UpdateDisplayName();
             }
         }
 
@@ -171,6 +197,7 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_MaximumAge = value;
+                this.UpdateDisplayName();
             }
         }
     }

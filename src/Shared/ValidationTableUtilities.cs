@@ -37,7 +37,7 @@ namespace SyncroSim.STSim
             {
                 if (AddZeroRecord)
                 {
-                    dt.Rows.Add(new object[] { 0, "0" });
+
                 }
 
                 foreach (AgeDescriptor d in e)
@@ -63,6 +63,8 @@ namespace SyncroSim.STSim
 
                     dt.Rows.Add(new object[] {Value, Display});
                 }
+
+                dt.Rows.Add(new object[] { Constants.INCLUDE_DATA_NULL_ID, "(unclassified)" });
             }
 
             return new ValidationTable(dt, Strings.VALUE_MEMBER_COLUMN_NAME, Strings.DISPLAY_MEMBER_COLUMN_NAME, SortOrder.None);

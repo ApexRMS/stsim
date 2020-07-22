@@ -89,7 +89,7 @@ namespace SyncroSim.STSim
 
         public override DataTable GetData(DataStore store, ChartDescriptor descriptor, DataSheet dataSheet)
         {
-            if (AgeUtilities.HasAgeClassUpdateTag(dataSheet.Project))
+            if (ChartingUtilities.HasAgeClassUpdateTag(dataSheet.Project))
             {
                 WinFormSession sess = (WinFormSession) dataSheet.Session;
 
@@ -97,7 +97,7 @@ namespace SyncroSim.STSim
                 dataSheet.Library.Save(store);
                 sess.SetStatusMessageWithEvents(string.Empty);
 
-                Debug.Assert(!AgeUtilities.HasAgeClassUpdateTag(dataSheet.Project));
+                Debug.Assert(!ChartingUtilities.HasAgeClassUpdateTag(dataSheet.Project));
             }
 
             if (

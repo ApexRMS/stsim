@@ -80,7 +80,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (!AgeUtilities.HasAgeClassUpdateTag(this.Project))
+            if (!ChartingUtilities.HasAgeClassUpdateTag(this.Project))
             {
                 if (MessageBox.Show(MessageStrings.PROMPT_AGE_GROUP_CHANGE, "Age Group", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 {

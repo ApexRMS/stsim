@@ -24,11 +24,11 @@ namespace SyncroSim.STSim
             dt.Columns.Add(new DataColumn(Strings.VALUE_MEMBER_COLUMN_NAME, typeof(long)));
             dt.Columns.Add(new DataColumn(Strings.DISPLAY_MEMBER_COLUMN_NAME, typeof(string)));
 
-            IEnumerable<AgeDescriptor> e = AgeUtilities.GetAgeGroupDescriptors(project);
+            IEnumerable<AgeDescriptor> e = ChartingUtilities.GetAgeGroupDescriptors(project);
 
             if (e == null)
             {
-                e = AgeUtilities.GetAgeTypeDescriptors(project);
+                e = ChartingUtilities.GetAgeTypeDescriptors(project);
             }
 
             if (e != null)

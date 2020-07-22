@@ -35,7 +35,7 @@ namespace SyncroSim.STSim
                 return true;
             }
 
-            if (!AgeUtilities.HasAgeClassUpdateTag(this.Project))
+            if (!ChartingUtilities.HasAgeClassUpdateTag(this.Project))
             {
                 if (MessageBox.Show(MessageStrings.PROMPT_AGE_TYPE_CHANGE, "Age Type", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 {

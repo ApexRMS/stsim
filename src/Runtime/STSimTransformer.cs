@@ -371,7 +371,7 @@ namespace SyncroSim.STSim
             {
                 using (DataStore store = this.Library.CreateDataStore())
                 {
-                    AgeUtilities.UpdateAgeClassWork(store, this.ResultScenario);
+                    ChartingUtilities.UpdateAgeClassWork(store, this.ResultScenario);
                 }
 
                 scope.Complete();

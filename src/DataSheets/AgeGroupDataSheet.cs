@@ -11,8 +11,8 @@ namespace SyncroSim.STSim
         {
             base.Save(store);
 
-            AgeUtilities.UpdateAgeClassIfRequired(store, this.Project);
-            AgeUtilities.ClearAgeClassUpdateTag(this.Project);
+            ChartingUtilities.UpdateAgeClassIfRequired(store, this.Project);
+            ChartingUtilities.ClearAgeClassUpdateTag(this.Project);
         }
 
         public override string GetDeleteRowsConfirmation()
@@ -30,19 +30,19 @@ namespace SyncroSim.STSim
         protected override void OnRowsAdded(object sender, DataSheetRowEventArgs e)
         {
             base.OnRowsAdded(sender, e);
-            AgeUtilities.SetAgeClassUpdateTag(this.Project);
+            ChartingUtilities.SetAgeClassUpdateTag(this.Project);
         }
 
         protected override void OnRowsDeleted(object sender, DataSheetRowEventArgs e)
         {
             base.OnRowsDeleted(sender, e);
-            AgeUtilities.SetAgeClassUpdateTag(this.Project);
+            ChartingUtilities.SetAgeClassUpdateTag(this.Project);
         }
 
         protected override void OnRowsModified(object sender, DataSheetRowEventArgs e)
         {
             base.OnRowsModified(sender, e);
-            AgeUtilities.SetAgeClassUpdateTag(this.Project);
+            ChartingUtilities.SetAgeClassUpdateTag(this.Project);
         }
     }
 }

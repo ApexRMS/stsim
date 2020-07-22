@@ -76,13 +76,17 @@ namespace SyncroSim.STSim
             }
             else
             {
-                if (age > this.m_Maximum)
+                if (age == 0)
                 {
-                    return ((this.m_Maximum / this.m_Frequency) * this.m_Frequency);
+                    return 0;
+                }
+                else if (age > this.m_Maximum)
+                {
+                    return this.m_Maximum;
                 }
                 else
                 {
-                    return ((age / this.m_Frequency) * this.m_Frequency);
+                    return ((age-1) / this.m_Frequency) * this.m_Frequency + 1;
                 }
             }
         }
@@ -101,14 +105,21 @@ namespace SyncroSim.STSim
             }
             else
             {
-                int? a = this.GetAgeMinimum(age) + (this.m_Frequency - 1);
-
-                if (a.Value >= this.m_Maximum)
+                if (age == 0)
                 {
-                    a = null;
+                    return 0;
                 }
+                else
+                {
+                    int? a = this.GetAgeMinimum(age) + (this.m_Frequency - 1);
 
-                return a;
+                    if (a.Value >= this.m_Maximum)
+                    {
+                        a = null;
+                    }
+
+                    return a;
+                }
             }
         }
 

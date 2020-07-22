@@ -473,7 +473,6 @@
     <Compile Include="Reports\TransitionStateSummaryReport.cs" />
     <Compile Include="Reports\TransitionSummaryReport.cs" />
     <Compile Include="Shared\AgeHelper.cs" />
-    <Compile Include="Shared\AgeUtilities.cs" />
     <Compile Include="Shared\BaseValueDisplayListItem.cs" />
     <Compile Include="Shared\ChartingUtilities.cs" />
     <Compile Include="Shared\ColorColumns.cs" />

@@ -25,14 +25,21 @@ namespace SyncroSim.STSim
             dt.Columns.Add(new DataColumn(Strings.DISPLAY_MEMBER_COLUMN_NAME, typeof(string)));
 
             IEnumerable<AgeDescriptor> e = ChartingUtilities.GetAgeGroupDescriptors(project);
+            bool AddZeroRecord = false;
 
             if (e == null)
             {
                 e = ChartingUtilities.GetAgeTypeDescriptors(project);
+                AddZeroRecord = true;
             }
 
             if (e != null)
             {
+                if (AddZeroRecord)
+                {
+                    dt.Rows.Add(new object[] { 0, "0" });
+                }
+
                 foreach (AgeDescriptor d in e)
                 {
                     long Value = Convert.ToInt64(d.MinimumAge);

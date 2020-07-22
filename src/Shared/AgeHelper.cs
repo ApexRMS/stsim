@@ -130,16 +130,17 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         public IEnumerable<AgeDescriptor> GetAges()
         {
-            int v = 0;
             List<AgeDescriptor> lst = new List<AgeDescriptor>();
 
-            while (v <= this.m_Maximum)
+            int MinBin = 1;
+
+            while (MinBin <= this.m_Maximum)
             {
-                int min = this.GetAgeMinimum(v).Value;
-                int? max = this.GetAgeMaximum(v);
+                int min = this.GetAgeMinimum(MinBin).Value;
+                int? max = this.GetAgeMaximum(MinBin);
 
                 lst.Add(new AgeDescriptor(min, max));
-                v += this.m_Frequency;
+                MinBin += this.m_Frequency;
             }
 
             Debug.Assert(lst.Count > 0);

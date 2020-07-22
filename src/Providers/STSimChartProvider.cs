@@ -87,59 +87,9 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Prepares the charting data before the data is actually queried
-        /// </summary>
-        /// <param name="store"></param>
-        /// <param name="descriptors"></param>
-        /// <param name="statusEntries"></param>
-        /// <param name="project"></param>
-        /// <remarks>
-        /// If a request is being made for age data we have to update the age class 
-        /// </remarks>
-        public override void GetStatus(
-            DataStore store, 
-            ChartDescriptorCollection descriptors, 
-            StochasticTimeStatusCollection statusEntries, 
-            Project project)
-        {
-            if (!ChartingUtilities.HasAgeReference(descriptors))
-            {
-                return;
-            }
-
-            List<string> Sheets = new List<string>();
-
-            foreach (ChartDescriptor d in descriptors)
-            {
-                if (d.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
-                    d.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME ||
-                    d.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
-                    d.DatasheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
-                {
-                    if (!Sheets.Contains(d.DatasheetName))
-                    {
-                        Sheets.Add(d.DatasheetName);
-                    }
-                }
-            }
-
-            foreach (Scenario s in project.Results)
-            {
-                if (s.IsActive)
-                {
-                    foreach (string n in Sheets)
-                    {
-                        DataSheet ds = s.GetDataSheet(n);
-                        ChartingUtilities.FillAgeRelatedStatusEntries(store, ds, statusEntries);
-                    }
-                }
-            }
-        }
-
         public override DataTable GetData(DataStore store, ChartDescriptor descriptor, DataSheet dataSheet)
         {
-            if (AgeUtilities.HasAgeClassUpdateTag(dataSheet.Project))
+            if (ChartingUtilities.HasAgeClassUpdateTag(dataSheet.Project))
             {
                 WinFormSession sess = (WinFormSession) dataSheet.Session;
 
@@ -147,7 +97,7 @@ namespace SyncroSim.STSim
                 dataSheet.Library.Save(store);
                 sess.SetStatusMessageWithEvents(string.Empty);
 
-                Debug.Assert(!AgeUtilities.HasAgeClassUpdateTag(dataSheet.Project));
+                Debug.Assert(!ChartingUtilities.HasAgeClassUpdateTag(dataSheet.Project));
             }
 
             if (

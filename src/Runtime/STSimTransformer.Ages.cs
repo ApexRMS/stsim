@@ -175,7 +175,9 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME] == DBNull.Value)
                 {
-                    this.RecordStatus(StatusType.Warning, "Age reporting freqency set without age reporting maximum.  Not reporting ages.");
+                    this.RecordStatus(StatusType.Warning, 
+                        "Age reporting freqency set without age reporting maximum.  Not reporting ages.");
+
                     return;
                 }
             }
@@ -184,7 +186,9 @@ namespace SyncroSim.STSim
             {
                 if (dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME] == DBNull.Value)
                 {
-                    this.RecordStatus(StatusType.Warning, "Age reporting maximum set without age reporting frequency.  Not reporting ages.");
+                    this.RecordStatus(StatusType.Warning, 
+                        "Age reporting maximum set without age reporting frequency.  Not reporting ages.");
+
                     return;
                 }
             }
@@ -194,7 +198,9 @@ namespace SyncroSim.STSim
 
             if (m < f)
             {
-                this.RecordStatus(StatusType.Warning, "Age reporting maximum is less than age reporting frequency.  Not reporting ages.");
+                this.RecordStatus(StatusType.Warning, 
+                    "Age reporting maximum is less than age reporting frequency.  Not reporting ages.");
+
                 return;
             }
 
@@ -204,7 +210,8 @@ namespace SyncroSim.STSim
 
             if (this.m_SummaryStateAttributeOutputAges && !this.m_SummaryStateClassOutputAges)
             {
-                this.RecordStatus(StatusType.Warning, "Age reporting for State Attributes requires age reporting for State Classes.  Not generating ages for State Attributes.");
+                this.RecordStatus(StatusType.Warning, 
+                    "Age reporting for State Attributes requires age reporting for State Classes.  Not generating ages for State Attributes.");
             }
 
             //Only enable an age helper if that type of output is enabled

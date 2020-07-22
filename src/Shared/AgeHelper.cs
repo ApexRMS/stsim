@@ -2,6 +2,7 @@
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
@@ -20,12 +21,14 @@ namespace SyncroSim.STSim
             {
                 if (frequency <= 0)
                 {
-                    ExceptionUtils.ThrowArgumentException("The age reporting frequency must be greater than zero.");
+                    ExceptionUtils.ThrowArgumentException(
+                        "The age reporting frequency must be greater than zero.");
                 }
 
                 if (maximum < frequency)
                 {
-                    ExceptionUtils.ThrowArgumentException("The maximum age cannot be less than the age reporting frequency.");
+                    ExceptionUtils.ThrowArgumentException(
+                        "The maximum age cannot be less than the age reporting frequency.");
                 }
             }
 
@@ -73,13 +76,17 @@ namespace SyncroSim.STSim
             }
             else
             {
-                if (age > this.m_Maximum)
+                if (age == 0)
                 {
-                    return ((this.m_Maximum / this.m_Frequency) * this.m_Frequency);
+                    return 0;
+                }
+                else if (age > this.m_Maximum)
+                {
+                    return this.m_Maximum;
                 }
                 else
                 {
-                    return ((age / this.m_Frequency) * this.m_Frequency);
+                    return ((age-1) / this.m_Frequency) * this.m_Frequency + 1;
                 }
             }
         }
@@ -98,14 +105,21 @@ namespace SyncroSim.STSim
             }
             else
             {
-                int? a = this.GetAgeMinimum(age) + (this.m_Frequency - 1);
-
-                if (a.Value >= this.m_Maximum)
+                if (age == 0)
                 {
-                    a = null;
+                    return 0;
                 }
+                else
+                {
+                    int? a = this.GetAgeMinimum(age) + (this.m_Frequency - 1);
 
-                return a;
+                    if (a.Value >= this.m_Maximum)
+                    {
+                        a = null;
+                    }
+
+                    return a;
+                }
             }
         }
 
@@ -116,16 +130,17 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         public IEnumerable<AgeDescriptor> GetAges()
         {
-            int v = 0;
             List<AgeDescriptor> lst = new List<AgeDescriptor>();
 
-            while (v <= this.m_Maximum)
+            int MinBin = 1;
+
+            while (MinBin <= this.m_Maximum)
             {
-                int min = this.GetAgeMinimum(v).Value;
-                int? max = this.GetAgeMaximum(v);
+                int min = this.GetAgeMinimum(MinBin).Value;
+                int? max = this.GetAgeMaximum(MinBin);
 
                 lst.Add(new AgeDescriptor(min, max));
-                v += this.m_Frequency;
+                MinBin += this.m_Frequency;
             }
 
             Debug.Assert(lst.Count > 0);
@@ -143,11 +158,33 @@ namespace SyncroSim.STSim
     {
         private int m_MinimumAge;
         private int? m_MaximumAge;
+        private string m_DisplayName;
 
         public AgeDescriptor(int minimumAge, int? maximumAge)
         {
             this.m_MinimumAge = minimumAge;
             this.m_MaximumAge = maximumAge;
+
+            this.UpdateDisplayName();
+        }
+
+        public override string ToString()
+        {
+            return this.m_DisplayName;
+        }
+
+        private void UpdateDisplayName()
+        {
+            if (this.m_MaximumAge.HasValue)
+            {
+                this.m_DisplayName = string.Format(CultureInfo.InvariantCulture,
+                    "{0}-{1}", this.m_MinimumAge, this.m_MaximumAge);
+            }
+            else
+            {
+                this.m_DisplayName = string.Format(CultureInfo.InvariantCulture,
+                    "{0}-{1}", this.m_MinimumAge, "NULL");
+            }
         }
 
         public int MinimumAge
@@ -159,6 +196,7 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_MinimumAge = value;
+                this.UpdateDisplayName();
             }
         }
 
@@ -171,6 +209,7 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_MaximumAge = value;
+                this.UpdateDisplayName();
             }
         }
     }

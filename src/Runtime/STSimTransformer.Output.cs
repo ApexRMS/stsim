@@ -21,9 +21,6 @@ namespace SyncroSim.STSim
         private bool m_SummaryStateClassOutputAges;
         private bool m_SummaryStateClassZeroValues;
 
-        private int m_SummaryTransitionAttributeOutputTimesteps;
-        private bool m_SummaryTransitionAttributeOutputAges;
-
         private bool m_CreateSummaryTransitionOutput;
         private int m_SummaryTransitionOutputTimesteps;
         private bool m_SummaryTransitionOutputAges;
@@ -34,9 +31,14 @@ namespace SyncroSim.STSim
 
         private bool m_CreateSummaryStateAttributeOutput;
         private int m_SummaryStateAttributeOutputTimesteps;
-
         private bool m_SummaryStateAttributeOutputAges;
+
         private bool m_CreateSummaryTransitionAttributeOutput;
+        private int m_SummaryTransitionAttributeOutputTimesteps;
+        private bool m_SummaryTransitionAttributeOutputAges;
+
+        private bool m_CreateSummaryExternalVariableOutput;
+        private int m_SummaryExternalVariableOutputTimesteps;
 
         private bool m_SummaryOmitSecondaryStrata;
         private bool m_SummaryOmitTertiaryStrata;
@@ -187,6 +189,11 @@ namespace SyncroSim.STSim
         private bool IsSummaryTransitionAttributeTimestep(int timestep)
         {
             return this.IsOutputTimestep(timestep, this.m_SummaryTransitionAttributeOutputTimesteps, this.m_CreateSummaryTransitionAttributeOutput);
+        }
+
+        private bool IsSummaryExternalVariableTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryExternalVariableOutputTimesteps, this.m_CreateSummaryExternalVariableOutput);
         }
 
         //Spatial output
@@ -1778,16 +1785,24 @@ namespace SyncroSim.STSim
 
         private void WriteExternalVariableValueTabularData(int iteration, int timestep, DataTable table)
         {
+            if (!this.IsSummaryExternalVariableTimestep(timestep))
+            {
+                return;
+            }
+
             foreach (ExternalVariableValue ExtVar in this.m_DistributionProvider.ExternalVariableValues)
             {
-                DataRow dr = table.NewRow();
+                if (!ExtVar.Timestep.HasValue || ExtVar.Timestep == timestep)
+                {
+                    DataRow dr = table.NewRow();
 
-                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
-                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
-                dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME] = ExtVar.VariableTypeId;
-                dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME] = ExtVar.CurrentValue;
+                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
+                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
+                    dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME] = ExtVar.VariableTypeId;
+                    dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME] = ExtVar.CurrentValue;
 
-                table.Rows.Add(dr);
+                    table.Rows.Add(dr);                    
+                }
             }
         }
 

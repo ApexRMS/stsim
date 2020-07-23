@@ -425,6 +425,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000108(store);   
             }
+
+            if (currentSchemaVersion < 109)
+            {
+                STSIM0000109(store);   
+            }
         }
 
         /// <summary>
@@ -3080,6 +3085,22 @@ namespace SyncroSim.STSim
 
                 store.ExecuteNonQuery("DROP INDEX IF EXISTS STSim_TransitionMultiplierValue_Index");
                 UpdateProvider.CreateIndex(store, "stsim_TransitionMultiplierValue", new[] { "ScenarioID" });
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000109
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update adds a SummaryOutputExternalVariables column to the stsim_OutputOptions table
+        /// </remarks>
+        private static void STSIM0000109(DataStore store)
+        {
+            if (store.TableExists("stsim_OutputOptions"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputEV INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputEVTimesteps INTEGER");
             }
         }
     }

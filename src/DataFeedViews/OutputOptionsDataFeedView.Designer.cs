@@ -56,6 +56,9 @@ namespace SyncroSim.STSim
             this.TextBoxSummaryTRTimesteps = new System.Windows.Forms.TextBox();
             this.PanelMain = new System.Windows.Forms.Panel();
             this.TableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.CheckBoxSummaryEV = new System.Windows.Forms.CheckBox();
+            this.LabelSummaryEVTimesteps = new System.Windows.Forms.Label();
+            this.TextBoxSummaryEVTimesteps = new System.Windows.Forms.TextBox();
             this.PanelMain.SuspendLayout();
             this.TableLayoutPanelMain.SuspendLayout();
             this.SuspendLayout();
@@ -107,22 +110,22 @@ namespace SyncroSim.STSim
             // CheckBoxSummaryOmitTS
             // 
             this.CheckBoxSummaryOmitTS.AutoSize = true;
-            this.CheckBoxSummaryOmitTS.Location = new System.Drawing.Point(4, 214);
+            this.CheckBoxSummaryOmitTS.Location = new System.Drawing.Point(4, 244);
             this.CheckBoxSummaryOmitTS.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryOmitTS.Name = "CheckBoxSummaryOmitTS";
             this.CheckBoxSummaryOmitTS.Size = new System.Drawing.Size(147, 21);
-            this.CheckBoxSummaryOmitTS.TabIndex = 22;
+            this.CheckBoxSummaryOmitTS.TabIndex = 25;
             this.CheckBoxSummaryOmitTS.Text = "Omit tertiary strata";
             this.CheckBoxSummaryOmitTS.UseVisualStyleBackColor = true;
             // 
             // CheckBoxSummaryOmitSS
             // 
             this.CheckBoxSummaryOmitSS.AutoSize = true;
-            this.CheckBoxSummaryOmitSS.Location = new System.Drawing.Point(4, 184);
+            this.CheckBoxSummaryOmitSS.Location = new System.Drawing.Point(4, 214);
             this.CheckBoxSummaryOmitSS.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBoxSummaryOmitSS.Name = "CheckBoxSummaryOmitSS";
             this.CheckBoxSummaryOmitSS.Size = new System.Drawing.Size(169, 21);
-            this.CheckBoxSummaryOmitSS.TabIndex = 21;
+            this.CheckBoxSummaryOmitSS.TabIndex = 24;
             this.CheckBoxSummaryOmitSS.Text = "Omit secondary strata";
             this.CheckBoxSummaryOmitSS.UseVisualStyleBackColor = true;
             // 
@@ -316,14 +319,14 @@ namespace SyncroSim.STSim
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
             this.TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1234F));
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryOmitTS, 0, 7);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryOmitTS, 0, 8);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryTRCalcIntervalMean, 4, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummarySCZeroValues, 4, 0);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummarySCAges, 3, 0);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryTRAges, 3, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummarySAAges, 3, 3);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryTAAges, 3, 4);
-            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryOmitSS, 0, 6);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryOmitSS, 0, 7);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummarySC, 0, 0);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxSummaryTRTimesteps, 1, 1);
             this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryTA, 0, 4);
@@ -339,10 +342,13 @@ namespace SyncroSim.STSim
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxSummaryTATimesteps, 1, 4);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxSummarySCTimesteps, 1, 0);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxSummarySATimesteps, 1, 3);
+            this.TableLayoutPanelMain.Controls.Add(this.CheckBoxSummaryEV, 0, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.LabelSummaryEVTimesteps, 2, 5);
+            this.TableLayoutPanelMain.Controls.Add(this.TextBoxSummaryEVTimesteps, 1, 5);
             this.TableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.TableLayoutPanelMain.Location = new System.Drawing.Point(20, 20);
             this.TableLayoutPanelMain.Name = "TableLayoutPanelMain";
-            this.TableLayoutPanelMain.RowCount = 8;
+            this.TableLayoutPanelMain.RowCount = 9;
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -351,8 +357,39 @@ namespace SyncroSim.STSim
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.TableLayoutPanelMain.Size = new System.Drawing.Size(1786, 243);
+            this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.TableLayoutPanelMain.Size = new System.Drawing.Size(1786, 281);
             this.TableLayoutPanelMain.TabIndex = 23;
+            // 
+            // CheckBoxSummaryEV
+            // 
+            this.CheckBoxSummaryEV.AutoSize = true;
+            this.CheckBoxSummaryEV.Location = new System.Drawing.Point(4, 154);
+            this.CheckBoxSummaryEV.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckBoxSummaryEV.Name = "CheckBoxSummaryEV";
+            this.CheckBoxSummaryEV.Size = new System.Drawing.Size(181, 21);
+            this.CheckBoxSummaryEV.TabIndex = 21;
+            this.CheckBoxSummaryEV.Text = "External variables every";
+            this.CheckBoxSummaryEV.UseVisualStyleBackColor = true;
+            // 
+            // LabelSummaryEVTimesteps
+            // 
+            this.LabelSummaryEVTimesteps.AutoSize = true;
+            this.LabelSummaryEVTimesteps.Location = new System.Drawing.Point(314, 156);
+            this.LabelSummaryEVTimesteps.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
+            this.LabelSummaryEVTimesteps.Name = "LabelSummaryEVTimesteps";
+            this.LabelSummaryEVTimesteps.Size = new System.Drawing.Size(68, 17);
+            this.LabelSummaryEVTimesteps.TabIndex = 23;
+            this.LabelSummaryEVTimesteps.Text = "timesteps";
+            // 
+            // TextBoxSummaryEVTimesteps
+            // 
+            this.TextBoxSummaryEVTimesteps.Location = new System.Drawing.Point(235, 154);
+            this.TextBoxSummaryEVTimesteps.Margin = new System.Windows.Forms.Padding(4);
+            this.TextBoxSummaryEVTimesteps.Name = "TextBoxSummaryEVTimesteps";
+            this.TextBoxSummaryEVTimesteps.Size = new System.Drawing.Size(65, 22);
+            this.TextBoxSummaryEVTimesteps.TabIndex = 22;
+            this.TextBoxSummaryEVTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // OutputOptionsDataFeedView
             // 
@@ -393,5 +430,8 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.CheckBox CheckBoxSummarySCAges;
         private System.Windows.Forms.Panel PanelMain;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMain;
+        internal System.Windows.Forms.CheckBox CheckBoxSummaryEV;
+        internal System.Windows.Forms.Label LabelSummaryEVTimesteps;
+        internal System.Windows.Forms.TextBox TextBoxSummaryEVTimesteps;
     }
 }

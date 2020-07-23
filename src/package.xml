@@ -468,6 +468,8 @@
                 <column name="SummaryOutputTAAges" displayName="Summary TA Ages" dataType="Boolean"/>
                 <column name="SummaryOutputOmitSS" dataType="Boolean" displayName="Summary Omit SS"/>
                 <column name="SummaryOutputOmitTS" dataType="Boolean" displayName="Summary Omit TS"/>
+                <column name="SummaryOutputEV" dataType="Boolean" displayName="Summary EV"/>    
+                <column name="SummaryOutputEVTimesteps" displayName="Summary EV Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>              
               </columns>
             </datasheet>
           </datasheets>
@@ -1564,7 +1566,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="108"
+    schemaVersion="109"
     minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

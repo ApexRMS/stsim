@@ -1792,17 +1792,24 @@ namespace SyncroSim.STSim
 
             foreach (ExternalVariableValue ExtVar in this.m_DistributionProvider.ExternalVariableValues)
             {
-                if (!ExtVar.Timestep.HasValue || ExtVar.Timestep == timestep)
+                if (ExtVar.Iteration.HasValue && ExtVar.Iteration.Value != iteration)
                 {
-                    DataRow dr = table.NewRow();
-
-                    dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
-                    dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
-                    dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME] = ExtVar.VariableTypeId;
-                    dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME] = ExtVar.CurrentValue;
-
-                    table.Rows.Add(dr);                    
+                    continue;
                 }
+
+                if (ExtVar.Timestep.HasValue && ExtVar.Timestep.Value != timestep)
+                {
+                    continue;
+                }
+
+                DataRow dr = table.NewRow();
+
+                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = iteration;
+                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
+                dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME] = ExtVar.VariableTypeId;
+                dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME] = ExtVar.CurrentValue;
+
+                table.Rows.Add(dr);                    
             }
         }
 

@@ -430,6 +430,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000109(store);   
             }
+
+            if (currentSchemaVersion < 110)
+            {
+                STSIM0000110(store);   
+            }
         }
 
         /// <summary>
@@ -3101,6 +3106,80 @@ namespace SyncroSim.STSim
             {
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputEV INTEGER");
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputEVTimesteps INTEGER");
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000110
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000110(DataStore store)
+        {
+            if (store.TableExists("stsim_StateAttributeValue"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_StateAttributeValue RENAME TO TEMP_TABLE");
+
+                store.ExecuteNonQuery(@"CREATE TABLE stsim_StateAttributeValue ( 
+                    StateAttributeValueID   INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID              INTEGER,
+                    Iteration               INTEGER,
+                    Timestep                INTEGER,
+                    StratumID               INTEGER,
+                    SecondaryStratumID      INTEGER,
+                    TertiaryStratumID       INTEGER,
+                    StateClassID            INTEGER,
+                    StateAttributeTypeID    INTEGER,
+                    AgeMin                  INTEGER,
+                    AgeMax                  INTEGER,
+                    TSTGroupID              INTEGER,
+                    TSTMin                  INTEGER,
+                    TSTMax                  INTEGER,
+                    Value                   DOUBLE,
+                    DistributionType        INTEGER,
+                    DistributionFrequencyID INTEGER,
+                    DistributionSD          DOUBLE,
+                    DistributionMin         DOUBLE,
+                    DistributionMax         DOUBLE 
+                )");
+
+                store.ExecuteNonQuery(@"INSERT INTO stsim_StateAttributeValue(
+                        ScenarioID,
+                        Iteration,
+                        Timestep,
+                        StratumID,
+                        SecondaryStratumID,
+                        TertiaryStratumID,
+                        StateClassID,
+                        StateAttributeTypeID,
+                        AgeMin,
+                        AgeMax,
+                        Value,
+                        DistributionType,
+                        DistributionFrequencyID,
+                        DistributionSD,
+                        DistributionMin,
+                        DistributionMax)  
+                    SELECT  
+                        ScenarioID,
+                        Iteration,
+                        Timestep,
+                        StratumID,
+                        SecondaryStratumID,
+                        TertiaryStratumID,
+                        StateClassID,
+                        StateAttributeTypeID,
+                        AgeMin,
+                        AgeMax,
+                        Value,
+                        DistributionType,
+                        DistributionFrequencyID,
+                        DistributionSD,
+                        DistributionMin,
+                        DistributionMax         
+                    FROM TEMP_TABLE");
+
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+                UpdateProvider.CreateIndex(store, "stsim_StateAttributeValue", new[] { "ScenarioID" });
             }
         }
     }

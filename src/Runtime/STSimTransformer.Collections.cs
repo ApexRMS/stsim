@@ -66,9 +66,8 @@ namespace SyncroSim.STSim
             Debug.Assert(numCells > 0);
             List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
  
-            //Create all the cells.  If there are Time Since Transition Groups then create the cell's TSTCollection
-            //and add a TST for each one.  (We don't allocate the TSTCollection unless there are groups since there
-            //can be a large number of cells)
+            //Create all the cells.  If there are Time Since Transition Groups then add
+            //a Tst for each one.
 
             int CollIndex = 0;
 

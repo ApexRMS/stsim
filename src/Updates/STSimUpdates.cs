@@ -435,6 +435,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000110(store);   
             }
+
+            if (currentSchemaVersion < 111)
+            {
+                STSIM0000111(store);   
+            }
         }
 
         /// <summary>
@@ -3180,6 +3185,83 @@ namespace SyncroSim.STSim
 
                 store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
                 UpdateProvider.CreateIndex(store, "stsim_StateAttributeValue", new[] { "ScenarioID" });
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000111
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000111(DataStore store)
+        {
+            if (store.TableExists("stsim_TransitionAttributeValue"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_TransitionAttributeValue RENAME TO TEMP_TABLE");
+
+                store.ExecuteNonQuery(@"CREATE TABLE stsim_TransitionAttributeValue ( 
+                    TransitionAttributeValueID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID                 INTEGER,
+                    Iteration                  INTEGER,
+                    Timestep                   INTEGER,
+                    StratumID                  INTEGER,
+                    SecondaryStratumID         INTEGER,
+                    TertiaryStratumID          INTEGER,
+                    TransitionGroupID          INTEGER,
+                    StateClassID               INTEGER,
+                    TransitionAttributeTypeID  INTEGER,
+                    AgeMin                     INTEGER,
+                    AgeMax                     INTEGER,
+                    TSTGroupID                 INTEGER,
+                    TSTMin                     INTEGER,
+                    TSTMax                     INTEGER,
+                    Value                      DOUBLE,
+                    DistributionType           INTEGER,
+                    DistributionFrequencyID    INTEGER,
+                    DistributionSD             DOUBLE,
+                    DistributionMin            DOUBLE,
+                    DistributionMax            DOUBLE 
+                )");
+
+                store.ExecuteNonQuery(@"INSERT INTO stsim_TransitionAttributeValue(
+                        ScenarioID,                 
+                        Iteration,                  
+                        Timestep,                   
+                        StratumID,                  
+                        SecondaryStratumID,         
+                        TertiaryStratumID,          
+                        TransitionGroupID,          
+                        StateClassID,               
+                        TransitionAttributeTypeID,  
+                        AgeMin,                     
+                        AgeMax,                     
+                        Value,                      
+                        DistributionType,           
+                        DistributionFrequencyID,    
+                        DistributionSD,             
+                        DistributionMin,            
+                        DistributionMax)  
+                    SELECT  
+                        ScenarioID,                 
+                        Iteration,                  
+                        Timestep,                   
+                        StratumID,                  
+                        SecondaryStratumID,         
+                        TertiaryStratumID,          
+                        TransitionGroupID,          
+                        StateClassID,               
+                        TransitionAttributeTypeID,  
+                        AgeMin,                     
+                        AgeMax,                     
+                        Value,                      
+                        DistributionType,           
+                        DistributionFrequencyID,    
+                        DistributionSD,             
+                        DistributionMin,            
+                        DistributionMax 
+                    FROM TEMP_TABLE");
+
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+                UpdateProvider.CreateIndex(store, "stsim_TransitionAttributeValue", new[] { "ScenarioID" });
             }
         }
     }

@@ -23,20 +23,19 @@ namespace SyncroSim.STSim
         private TransitionAdjacencyMultiplierMap m_TransitionAdjacencyMultiplierMap;
         private TransitionPatchPrioritizationMap m_TransitionPatchPrioritizationMap;
         private TransitionSizePrioritizationMap m_TransitionSizePrioritizationMap;
-        private Dictionary<int, bool> m_TransitionAttributeTypeIds;
         private Dictionary<int, double[]> m_TransitionAdjacencyStateAttributeValueMap = new Dictionary<int, double[]>();
         private TransitionPathwayAutoCorrelationMap m_TransitionPathwayAutoCorrelationMap;
 
         private TstRandomizeMap m_TstRandomizeMap;
         private TstTransitionGroupMap m_TstTransitionGroupMap;
-        private StateAttributeValueMap m_StateAttributeValueMapAges;
-        private StateAttributeValueMap m_StateAttributeValueMapNoAges;
+        private StateAttributeValueMap m_StateAttributeValueMap;
         private InitialConditionsDistributionMap m_InitialConditionsDistributionMap;
         private InitialConditionsSpatialMap m_InitialConditionsSpatialMap;
-        private Dictionary<int, bool> m_StateAttributeTypeIdsAges;
-        private Dictionary<int, bool> m_StateAttributeTypeIdsNoAges;
         private IntervalMeanTimestepMap m_IntervalMeanTimestepMap;
         private ProportionAccumulatorMap m_ProportionAccumulatorMap;
+
+        private Dictionary<int, bool> m_StateAttributeTypeIds;
+        private Dictionary<int, bool> m_TransitionAttributeTypeIds;
 
         private Dictionary<int, Dictionary<int, double[]>> m_AvgStateClassMap = new Dictionary<int, Dictionary<int, double[]>>();
         private Dictionary<int, double[]> m_AvgAgeMap = new Dictionary<int, double[]>();

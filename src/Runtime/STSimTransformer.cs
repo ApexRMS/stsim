@@ -165,17 +165,10 @@ namespace SyncroSim.STSim
             return ParallelTransformer.GetJobOutputScenarioFolderName(libraryFileName, scenarioId, create);
         }
 
-        public double? GetAttributeValueNoAge(
-            int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep)
-        {
-            return this.m_StateAttributeValueMapNoAges.GetAttributeValueNoAge(
-                stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep);
-        }
-
-        public double? GetAttributeValueByAge(
+        public double? GetAttributeValue(
             int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep, int age)
         {
-            return this.m_StateAttributeValueMapAges.GetAttributeValueByAge(
+            return this.m_StateAttributeValueMap.GetAttributeValue(
                 stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep, age);
         }
 
@@ -442,10 +435,11 @@ namespace SyncroSim.STSim
 
         private void InternalOnTimestep(int iteration, int timestep)
         {
+            //Call base
             base.OnTimestep(iteration, timestep);
 
+            //Simulate
             this.Simulate(iteration, timestep);
-            this.GenerateStateClassAttributes();
 
             //Tabular data
             this.WriteStratumAmountTabularData(iteration, timestep);
@@ -1159,10 +1153,8 @@ namespace SyncroSim.STSim
             {
                 this.m_StateAttributeValues.Clear();
                 this.FillStateAttributeValueCollection();
-                this.m_StateAttributeTypeIdsAges = null;
-                this.m_StateAttributeTypeIdsNoAges = null;
-                this.m_StateAttributeValueMapAges = null;
-                this.m_StateAttributeValueMapNoAges = null;
+                this.m_StateAttributeTypeIds = null;
+                this.m_StateAttributeValueMap = null;
                 this.InitializeStateAttributes();
             }
             else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME)

@@ -24,26 +24,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public double? GetAttributeValueNoAge(
-            int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
-            int stateClassId, int iteration, int timestep)
-        {
-            List<AttributeValueRecord> cm = this.GetItem(
-                stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, 
-                stateClassId, iteration, timestep);
-
-            if (cm != null)
-            {
-                return AttributeValueRecord.GetAttributeRecordValueNoAge(
-                    cm, iteration, timestep, this.m_DistributionProvider);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public double? GetAttributeValueByAge(
+        public double? GetAttributeValue(
             int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
             int stateClassId, int iteration, int timestep, int age)
         {
@@ -53,7 +34,7 @@ namespace SyncroSim.STSim
 
             if (cm != null)
             {
-                return AttributeValueRecord.GetAttributeRecordValueByAge(cm,
+                return AttributeValueRecord.GetAttributeRecordValue(cm,
                     iteration, timestep, this.m_DistributionProvider, age);
             }
             else

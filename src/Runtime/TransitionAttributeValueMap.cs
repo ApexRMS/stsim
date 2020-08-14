@@ -47,7 +47,7 @@ namespace SyncroSim.STSim
 
             if (cm != null)
             {
-                return AttributeValueRecord.GetAttributeRecordValueByAge(
+                return AttributeValueRecord.GetAttributeRecordValue(
                     cm, iteration, timestep, this.m_DistributionProvider, age);
             }
             else

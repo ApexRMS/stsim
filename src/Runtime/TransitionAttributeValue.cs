@@ -10,8 +10,8 @@ namespace SyncroSim.STSim
         private int m_TransitionAttributeTypeId;
         private int m_TransitionGroupId;
         private int? m_StateClassId;
-        private int? m_MinimumAge;
-        private int? m_MaximumAge;
+        private int m_MinimumAge;
+        private int m_MaximumAge;
 
         public TransitionAttributeValue(
             int transitionAttributeTypeId, 
@@ -22,8 +22,8 @@ namespace SyncroSim.STSim
             int? timestep, 
             int transitionGroupId, 
             int? stateClassId, 
-            int? minimumAge, 
-            int? maximumAge,
+            int minimumAge, 
+            int maximumAge,
             double? value,
             int? distributionTypeId,
             DistributionFrequency? distributionFrequency,
@@ -65,7 +65,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? MinimumAge
+        public int MinimumAge
         {
             get
             {
@@ -73,7 +73,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? MaximumAge
+        public int MaximumAge
         {
             get
             {

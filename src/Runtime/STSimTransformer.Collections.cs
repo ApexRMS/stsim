@@ -861,43 +861,6 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.m_StateAttributeValues.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_NAME);
-            Dictionary<int, bool> HasAges = new Dictionary<int, bool>();
-
-            //If some attribute types have ages and some don't then we want to configure any that don't 
-            //with default values or they will not be included in the calculations.
-
-            foreach (DataRow dr in ds.GetData().Rows)
-            {
-                if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value ||
-                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
-                {
-                    int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-
-                    if (!HasAges.ContainsKey(StateAttributeTypeId))
-                    {
-                        HasAges.Add(StateAttributeTypeId, true);
-                    }
-                }
-            }
-
-            foreach (DataRow dr in ds.GetData().Rows)
-            {
-                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-
-                if (HasAges.ContainsKey(StateAttributeTypeId))
-                {
-                    if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] == DBNull.Value)
-                    {
-                        dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = 0;
-                    }
-
-                    if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] == DBNull.Value)
-                    {
-                        dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = int.MaxValue;
-                    }
-                }
-            }
-
             bool StratumOrStateClassWarningIssued = false;
 
             foreach (DataRow dr in ds.GetData().Rows)
@@ -909,8 +872,8 @@ namespace SyncroSim.STSim
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StateClassId = null;
-                int? AgeMin = null;
-                int? AgeMax = null;
+                int AgeMin = 0;
+                int AgeMax = int.MaxValue;
                 double? Value = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1052,8 +1015,8 @@ namespace SyncroSim.STSim
                 int? Timestep = null;
                 int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StateClassId = null;
-                int? AgeMin = null;
-                int? AgeMax = null;
+                int AgeMin = 0;
+                int AgeMax = int.MaxValue;
                 double? Value = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;

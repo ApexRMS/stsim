@@ -9,8 +9,8 @@ namespace SyncroSim.STSim
     {
         private int m_StateAttributeTypeId;
         private int? m_StateClassId;
-        private int? m_MinimumAge;
-        private int? m_MaximumAge;
+        private int m_MinimumAge;
+        private int m_MaximumAge;
 
         public StateAttributeValue(
             int stateAttributeTypeId, 
@@ -20,8 +20,8 @@ namespace SyncroSim.STSim
             int? iteration, 
             int? timestep, 
             int? stateClassId, 
-            int? minimumAge, 
-            int? maximumAge, 
+            int minimumAge, 
+            int maximumAge, 
             double? value,
             int? distributionTypeId,
             DistributionFrequency? distributionFrequency,
@@ -54,7 +54,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? MinimumAge
+        public int MinimumAge
         {
             get
             {
@@ -62,7 +62,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? MaximumAge
+        public int MaximumAge
         {
             get
             {

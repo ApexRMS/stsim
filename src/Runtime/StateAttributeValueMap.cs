@@ -3,12 +3,12 @@
 
 using SyncroSim.Core;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    internal class StateAttributeValueMap : STSimMapBase5<List<AttributeValueRecord>>
+    internal class StateAttributeValueMap : STSimMapBase5<AttributeValueAgeBinCollection>
     {
+        private Project m_Project;
         private STSimDistributionProvider m_DistributionProvider;
 
         internal StateAttributeValueMap(
@@ -16,6 +16,7 @@ namespace SyncroSim.STSim
             STSimDistributionProvider provider,
             StateAttributeValueCollection items) : base(scenario)
         {
+            this.m_Project = scenario.Project;
             this.m_DistributionProvider = provider;
 
             foreach (StateAttributeValue item in items)
@@ -28,37 +29,32 @@ namespace SyncroSim.STSim
             int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
             int stateClassId, int iteration, int timestep, int age)
         {
-            List<AttributeValueRecord> cm = this.GetItem(
+            AttributeValueAgeBinCollection AgeBins = this.GetItem(
                 stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, 
                 stateClassId, iteration, timestep);
 
-            if (cm != null)
-            {
-                return AttributeValueRecord.GetAttributeRecordValue(cm,
-                    iteration, timestep, this.m_DistributionProvider, age);
-            }
-            else
-            {
-                return null;
-            }
+            Debug.Assert(false);
+            return null;
         }
 
         private void AddAttributeValue(StateAttributeValue item)
         {
-            List<AttributeValueRecord> l = this.GetItemExact(
+            AttributeValueAgeBinCollection AgeBins = this.GetItemExact(
                 item.StateAttributeTypeId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
                 item.StateClassId, item.Iteration, item.Timestep);
 
-            if (l == null)
+            if (AgeBins == null)
             {
-                l = new List<AttributeValueRecord>();
+                AgeBins = new AttributeValueAgeBinCollection(this.m_Project);
 
                 this.AddItem(
                     item.StateAttributeTypeId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
-                    item.StateClassId, item.Iteration, item.Timestep, l);
+                    item.StateClassId, item.Iteration, item.Timestep, AgeBins);
             }
 
-            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item);
+            AttributeValueAgeBin Bin = AgeBins.GetAgeBin(item.MinimumAge, item.MaximumAge);
+            Bin.AddReference(new AttributeValueReference(item.TSTGroupId, item.TSTMin, item.TSTMax, item));
+
             Debug.Assert(this.HasItems);
         }
     }

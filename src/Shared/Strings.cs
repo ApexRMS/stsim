@@ -59,6 +59,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_AGE_MIN_COLUMN_NAME = "AgeMin";
         public const string DATASHEET_AGE_MAX_COLUMN_NAME = "AgeMax";
         public const string DATASHEET_AGE_CLASS_COLUMN_NAME = "AgeClass";
+        public const string DATASHEET_TST_GROUP_ID_COLUMN_NAME = "TSTGroupId";
+        public const string DATASHEET_TST_MIN_COLUMN_NAME = "TSTMin";
+        public const string DATASHEET_TST_MAX_COLUMN_NAME = "TSTMin";
         public const string DATASHEET_EVENT_ID_COLUMN_NAME = "EventID";
         public const string DATASHEET_SIZE_CLASS_ID_COLUMN_NAME = "SizeClassID";
         public const string DATASHEET_COLOR_COLUMN_NAME = "Color";

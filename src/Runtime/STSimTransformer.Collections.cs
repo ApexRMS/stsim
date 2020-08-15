@@ -874,6 +874,9 @@ namespace SyncroSim.STSim
                 int? StateClassId = null;
                 int AgeMin = 0;
                 int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int? TSTMin = null;
+                int? TSTMax = null;
                 double? Value = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -919,6 +922,21 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME] != DBNull.Value)
@@ -972,6 +990,9 @@ namespace SyncroSim.STSim
                         StateClassId,
                         AgeMin,
                         AgeMax,
+                        TSTGroupId,
+                        TSTMin,
+                        TSTMax,
                         Value,
                         DistributionTypeId,
                         DistributionFrequency,
@@ -1017,6 +1038,9 @@ namespace SyncroSim.STSim
                 int? StateClassId = null;
                 int AgeMin = 0;
                 int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int? TSTMin = null;
+                int? TSTMax = null;
                 double? Value = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1064,6 +1088,21 @@ namespace SyncroSim.STSim
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
+                if (dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
                 if (dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME] != DBNull.Value)
                 {
                     Value = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
@@ -1106,6 +1145,9 @@ namespace SyncroSim.STSim
                         StateClassId,
                         AgeMin,
                         AgeMax,
+                        TSTGroupId,
+                        TSTMin,
+                        TSTMax,
                         Value,
                         DistributionTypeId,
                         DistributionFrequency,

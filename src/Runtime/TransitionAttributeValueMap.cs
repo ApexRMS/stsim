@@ -7,8 +7,9 @@ using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionAttributeValueMap : STSimMapBase6<List<AttributeValueRecord>>
+    internal class TransitionAttributeValueMap : STSimMapBase6<AttributeValueAgeBinCollection>
     {
+        private Project m_Project;
         private STSimDistributionProvider m_DistributionProvider;
 
         private Dictionary<int, Dictionary<int, bool>> m_TypeGroupMap = 
@@ -19,6 +20,7 @@ namespace SyncroSim.STSim
             STSimDistributionProvider provider,
             TransitionAttributeValueCollection transitionAttributes) : base(scenario)
         {
+            this.m_Project = scenario.Project;
             this.m_DistributionProvider = provider;
 
             foreach (TransitionAttributeValue ta in transitionAttributes)
@@ -40,40 +42,34 @@ namespace SyncroSim.STSim
             int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
             int stateClassId, int iteration, int timestep, int age)
         {
-            List<AttributeValueRecord> cm = this.GetItem(
+            AttributeValueAgeBinCollection AgeBins = this.GetItem(
                 transitionAttributeTypeId, transitionGroupId, 
                 stratumId, secondaryStratumId, tertiaryStratumId, 
                 stateClassId, iteration, timestep);
 
-            if (cm != null)
-            {
-                return AttributeValueRecord.GetAttributeRecordValue(
-                    cm, iteration, timestep, this.m_DistributionProvider, age);
-            }
-            else
-            {
-                return null;
-            }
+            Debug.Assert(false);
+            return null;
         }
 
         private void AddAttributeValue(TransitionAttributeValue item)
         {
-            List<AttributeValueRecord> l = this.GetItemExact(
+            AttributeValueAgeBinCollection AgeBins = this.GetItemExact(
                 item.TransitionAttributeTypeId, item.TransitionGroupId, 
                 item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
                 item.StateClassId, item.Iteration, item.Timestep);
 
-            if (l == null)
+            if (AgeBins == null)
             {
-                l = new List<AttributeValueRecord>();
+                AgeBins = new AttributeValueAgeBinCollection(this.m_Project);
 
                 this.AddItem(
                     item.TransitionAttributeTypeId, item.TransitionGroupId, 
                     item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId, 
-                    item.StateClassId, item.Iteration, item.Timestep, l);
+                    item.StateClassId, item.Iteration, item.Timestep, AgeBins);
             }
 
-            AttributeValueRecord.AddAttributeRecord(l, item.MinimumAge, item.MaximumAge, item);
+            AttributeValueAgeBin Bin = AgeBins.GetAgeBin(item.MinimumAge, item.MaximumAge);
+            Bin.AddReference(new AttributeValueReference(item.TSTGroupId, item.TSTMin, item.TSTMax, item));
 
             if (!this.m_TypeGroupMap.ContainsKey(item.TransitionGroupId))
             {

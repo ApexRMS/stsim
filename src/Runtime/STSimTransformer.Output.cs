@@ -643,7 +643,8 @@ namespace SyncroSim.STSim
                     simulationCell.StateClassId, 
                     iteration, 
                     timestep, 
-                    simulationCell.Age);
+                    simulationCell.Age, 
+                    simulationCell.TstValues);
 
                 if (AttrValue.HasValue)
                 {
@@ -1258,7 +1259,7 @@ namespace SyncroSim.STSim
                     double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
                         AttributeTypeId, 
                         c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, 
-                        c.StateClassId, iteration, timestep, c.Age);
+                        c.StateClassId, iteration, timestep, c.Age, c.TstValues);
 
                     if (AttrValue != null)
                     {
@@ -1289,7 +1290,7 @@ namespace SyncroSim.STSim
                     double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
                         AttributeTypeId,
                         c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId,
-                        c.StateClassId, iteration, timestep, c.Age);
+                        c.StateClassId, iteration, timestep, c.Age, c.TstValues);
 
                     if (AttrValue != null)
                     {
@@ -1993,7 +1994,9 @@ namespace SyncroSim.STSim
                     foreach (Cell c in this.Cells)
                     {
                         double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
-                            AttributeTypeId, c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, iteration, timestep, c.Age);
+                            AttributeTypeId, 
+                            c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, 
+                            iteration, timestep, c.Age, c.TstValues);
 
                         //If no value, then use NO_DATA, otherwise AttrValue
 
@@ -2472,7 +2475,8 @@ namespace SyncroSim.STSim
                         simulationCell.StateClassId, 
                         iteration, 
                         timestep, 
-                        simulationCell.Age);
+                        simulationCell.Age, 
+                        simulationCell.TstValues);
 
                     if (AttrValue.HasValue)
                     {
@@ -2618,7 +2622,7 @@ namespace SyncroSim.STSim
                                 CellValue = stateAttributeValueMap.GetAttributeValue(
                                     setting.StateAttributeTypeId.Value,
                                     cell.StratumId, cell.SecondaryStratumId, cell.TertiaryStratumId,
-                                    cell.StateClassId, iteration, timestep, cell.Age);                               
+                                    cell.StateClassId, iteration, timestep, cell.Age, cell.TstValues);                               
                             }
                             else
                             {

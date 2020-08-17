@@ -1,7 +1,6 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
-using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
@@ -28,6 +27,22 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_AgeMin <= this.m_AgeMax);
         }
 
+        public int AgeMin
+        {
+            get
+            {
+                return this.m_AgeMin;
+            }
+        }
+
+        public int AgeMax
+        {
+            get
+            {
+                return this.m_AgeMax;
+            }
+        }
+
         public void AddReference(AttributeValueReference attrRef)
         {
             if (attrRef.TSTGroupId == AttributeValueReference.TST_VALUE_NULL)
@@ -42,6 +57,90 @@ namespace SyncroSim.STSim
             Debug.Assert(!this.m_TSTGroupHint.ContainsKey(AttributeValueReference.TST_VALUE_NULL));
         }
 
+        public AttributeValueReference GetReference(TstCollection cellTst)
+        {
+            if (this.m_RefsWithTST.Count > 0 && cellTst.Count > 0)
+            {
+                return this.GetReferenceWithTST(cellTst);
+            }
+            else
+            {
+                return this.GetReferenceWithoutTST();
+            }
+        }
+
+        private AttributeValueReference GetReferenceWithTST(TstCollection cellTst)
+        {
+            Tst tst = GetTstWithSmallestValue(cellTst);
+
+            if (!this.m_TSTGroupHint.ContainsKey(tst.TransitionGroupId) && 
+                !this.m_TSTGroupHint.ContainsKey(AttributeValueReference.TST_GROUP_WILD))
+            {
+                return null;
+            }
+
+            AttributeValueReference FinalRef = null;
+
+            foreach (AttributeValueReference attrRef in this.m_RefsWithTST)
+            {
+                if (attrRef.TSTGroupId != tst.TransitionGroupId && 
+                    attrRef.TSTGroupId != AttributeValueReference.TST_GROUP_WILD)
+                {
+                    continue;
+                }
+
+                if (tst.TstValue >= attrRef.TSTMin && tst.TstValue <= attrRef.TSTMax)
+                {
+                    if (FinalRef == null)
+                    {
+                        FinalRef = attrRef;
+                        continue;
+                    }
+
+                    if (attrRef.TSTMin < FinalRef.TSTMin)
+                    {
+                        FinalRef = attrRef;
+                    }
+                }
+
+            }
+
+            return FinalRef;
+        }
+
+        private AttributeValueReference GetReferenceWithoutTST()
+        {
+            Debug.Assert(this.m_RefsWithoutTST.Count <= 1);
+
+            if (this.m_RefsWithoutTST.Count == 0)
+            {
+                return null;
+            }
+
+            return this.m_RefsWithoutTST[0];
+        }
+
+        private static Tst GetTstWithSmallestValue(TstCollection cellTst)
+        {
+            Tst Smallest = null;
+
+            foreach (Tst tst in cellTst)
+            {
+                if (Smallest == null)
+                {
+                    Smallest = tst;
+                    continue;
+                }
+
+                if (tst.TstValue < Smallest.TstValue)
+                {
+                    Smallest = tst;
+                }
+            }
+
+            return Smallest;
+        }
+
         private void AddReferenceWithTST(AttributeValueReference attrRef)
         {
             Debug.Assert(attrRef.TSTGroupId != AttributeValueReference.TST_VALUE_NULL);
@@ -52,23 +151,18 @@ namespace SyncroSim.STSim
 
             if (this.m_RefWithTSTSeenBefore.ContainsKey(k))
             {
-                string s = string.Format(CultureInfo.InvariantCulture, 
-                    "An attribute with the following TST values has already been added to the age bin {0}-{1}:",
-                    this.m_AgeMin, this.m_AgeMax);
+                string s = string.Format(CultureInfo.InvariantCulture,
+                    "An attribute with the TST values {0}-{1} has already been added to the age bin {2}-{3}:",
+                    attrRef.TSTMin,
+                    attrRef.TSTMax == int.MaxValue ? "NULL" : attrRef.TSTMax.ToString(),
+                    this.m_AgeMin,
+                    this.m_AgeMax == int.MaxValue ? "NULL" : this.m_AgeMax.ToString());
 
-                s += Environment.NewLine;
-                s += Environment.NewLine;
-
-                string TGName = this.GetTransitionGroupName(attrRef.TSTGroupId);
-
-                s += string.Format(CultureInfo.InvariantCulture, "TST Transition Group: " + TGName);
-                s += Environment.NewLine;
-                s += string.Format(CultureInfo.InvariantCulture, "TST Min: {0}", attrRef.TSTMin);
-                s += Environment.NewLine;
-                s += string.Format(CultureInfo.InvariantCulture, "TST Max: {0}", attrRef.TSTMax);
+                throw new STSimMapDuplicateItemException(s);
             }
 
             this.m_RefsWithTST.Add(attrRef);
+            this.m_RefWithTSTSeenBefore.Add(k, true);
 
             if (!this.m_TSTGroupHint.ContainsKey(attrRef.TSTGroupId))
             {
@@ -85,9 +179,12 @@ namespace SyncroSim.STSim
 
             if (this.m_RefsWithoutTST.Count == 1)
             {
-                ExceptionUtils.ThrowArgumentException(
+                string s = string.Format(CultureInfo.InvariantCulture,
                     "An attribute with no TST values has already been added to the age bin {0}-{1}",
-                    this.m_AgeMin, this.m_AgeMax);
+                    this.m_AgeMin, 
+                    this.m_AgeMax == int.MaxValue ? "NULL" : this.m_AgeMax.ToString());
+
+                throw new STSimMapDuplicateItemException(s);
             }
 
             this.m_RefsWithoutTST.Add(attrRef);

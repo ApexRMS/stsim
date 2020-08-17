@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace SyncroSim.STSim
 {
-    internal class TstCollection : KeyedCollection<int, Tst>
+    public class TstCollection : KeyedCollection<int, Tst>
     {
         protected override int GetKeyForItem(Tst item)
         {

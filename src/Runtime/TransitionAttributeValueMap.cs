@@ -1,6 +1,7 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
+using System;
 using SyncroSim.Core;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -40,15 +41,36 @@ namespace SyncroSim.STSim
         public double? GetAttributeValue(
             int transitionAttributeTypeId, int transitionGroupId, 
             int stratumId, int? secondaryStratumId, int? tertiaryStratumId, 
-            int stateClassId, int iteration, int timestep, int age)
+            int stateClassId, int iteration, int timestep, int age, TstCollection cellTst)
         {
             AttributeValueAgeBinCollection AgeBins = this.GetItem(
                 transitionAttributeTypeId, transitionGroupId, 
                 stratumId, secondaryStratumId, tertiaryStratumId, 
                 stateClassId, iteration, timestep);
 
-            Debug.Assert(false);
-            return null;
+            if (AgeBins == null)
+            {
+                return null;
+            }
+
+            AttributeValueAgeBin Bin = AgeBins.GetAgeBin(age);
+
+            if (Bin == null)
+            {
+                return null;
+            }
+
+            AttributeValueReference AttrRef = Bin.GetReference(cellTst);
+
+            if (AttrRef == null)
+            {
+                return null;
+            }
+
+            STSimDistributionBase b = AttrRef.ClassRef;
+            b.Sample(iteration, timestep, this.m_DistributionProvider, StochasticTime.DistributionFrequency.Always);
+
+            return b.CurrentValue.Value;
         }
 
         private void AddAttributeValue(TransitionAttributeValue item)
@@ -68,8 +90,29 @@ namespace SyncroSim.STSim
                     item.StateClassId, item.Iteration, item.Timestep, AgeBins);
             }
 
-            AttributeValueAgeBin Bin = AgeBins.GetAgeBin(item.MinimumAge, item.MaximumAge);
-            Bin.AddReference(new AttributeValueReference(item.TSTGroupId, item.TSTMin, item.TSTMax, item));
+            try
+            {
+                AttributeValueAgeBin Bin = AgeBins.GetOrCreateAgeBin(item.MinimumAge, item.MaximumAge);
+                Bin.AddReference(new AttributeValueReference(item.TSTGroupId, item.TSTMin, item.TSTMax, item));
+            }
+            catch (STSimMapDuplicateItemException ex)
+            {
+                string template = ex.Message + ".  More information:" +
+                    Environment.NewLine + "Transition Attribute={0}, Transition Group={1}, {2}={3}, {4}={5}, {6}={7}, Iteration={8}, Timestep={9}." +
+                    Environment.NewLine + "NOTE: A user defined distribution can result in additional Transition Attributes when the model is run.";
+
+                ExceptionUtils.ThrowArgumentException(template,
+                    this.GetTransitionAttributeTypeName(item.TransitionAttributeTypeId),
+                    this.GetTransitionGroupName(item.TransitionGroupId),
+                    this.PrimaryStratumLabel,
+                    this.GetStratumName(item.StratumId),
+                    this.SecondaryStratumLabel,
+                    this.GetSecondaryStratumName(item.SecondaryStratumId),
+                    this.TertiaryStratumLabel,
+                    this.GetTertiaryStratumName(item.TertiaryStratumId),
+                    STSimMapBase.FormatValue(item.Iteration),
+                    STSimMapBase.FormatValue(item.Timestep));
+            }
 
             if (!this.m_TypeGroupMap.ContainsKey(item.TransitionGroupId))
             {

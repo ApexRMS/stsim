@@ -318,8 +318,8 @@ namespace SyncroSim.STSim
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
-                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
+                        simulationCell.StateClassId, iteration, timestep, simulationCell.Age, simulationCell.TstValues);
 
                     if (AttrValue.HasValue)
                     {
@@ -383,8 +383,8 @@ namespace SyncroSim.STSim
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
-                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+                        tatId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
+                        simulationCell.StateClassId, iteration, timestep, simulationCell.Age, simulationCell.TstValues);
 
                     if (AttrValue.HasValue)
                     {
@@ -546,7 +546,8 @@ namespace SyncroSim.STSim
                             double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
                                 ta.TransitionAttributeId, tg.TransitionGroupId, simulationCell.StratumId, 
                                 simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, 
-                                simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+                                simulationCell.StateClassId, iteration, timestep, simulationCell.Age, 
+                                simulationCell.TstValues);
 
                             if (AttrValue.HasValue)
                             {

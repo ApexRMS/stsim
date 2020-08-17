@@ -152,7 +152,7 @@ namespace SyncroSim.STSim
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        internal TstCollection TstValues
+        public TstCollection TstValues
         {
             get
             {

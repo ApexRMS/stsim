@@ -2689,8 +2689,8 @@ namespace SyncroSim.STSim
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
-                        AttributeTypeId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+                        AttributeTypeId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+                        simulationCell.StateClassId, iteration, timestep, simulationCell.Age, simulationCell.TstValues);
 
                     if (AttrValue.HasValue)
                     {

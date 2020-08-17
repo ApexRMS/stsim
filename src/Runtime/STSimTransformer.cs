@@ -166,10 +166,14 @@ namespace SyncroSim.STSim
         }
 
         public double? GetAttributeValue(
-            int stateAttributeTypeId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, int iteration, int timestep, int age)
+            int stateAttributeTypeId, 
+            int stratumId, int? secondaryStratumId, int? tertiaryStratumId, int stateClassId, 
+            int iteration, int timestep, int age, TstCollection cellTst)
         {
             return this.m_StateAttributeValueMap.GetAttributeValue(
-                stateAttributeTypeId, stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, iteration, timestep, age);
+                stateAttributeTypeId, 
+                stratumId, secondaryStratumId, tertiaryStratumId, stateClassId, 
+                iteration, timestep, age, cellTst);
         }
 
         /// <summary>

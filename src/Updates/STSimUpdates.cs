@@ -440,6 +440,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000111(store);   
             }
+
+            if (currentSchemaVersion < 112)
+            {
+                STSIM0000112(store);   
+            }
         }
 
         /// <summary>
@@ -3262,6 +3267,59 @@ namespace SyncroSim.STSim
 
                 store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
                 UpdateProvider.CreateIndex(store, "stsim_TransitionAttributeValue", new[] { "ScenarioID" });
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000112
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000112(DataStore store)
+        {
+            if (store.TableExists("stsim_InitialConditionsNonSpatialDistribution"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_InitialConditionsNonSpatialDistribution RENAME TO TEMP_TABLE");
+
+                store.ExecuteNonQuery(@"CREATE TABLE stsim_InitialConditionsNonSpatialDistribution ( 
+                    InitialConditionsNonSpatialDistributionID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ScenarioID                                INTEGER,
+                    Iteration                                 INTEGER,
+                    StratumID                                 INTEGER,
+                    SecondaryStratumID                        INTEGER,
+                    TertiaryStratumID                         INTEGER,
+                    StateClassID                              INTEGER,
+                    AgeMin                                    INTEGER,
+                    AgeMax                                    INTEGER,
+                    TSTGroupID                                INTEGER,
+                    TSTMin                                    INTEGER,
+                    TSTMax                                    INTEGER,
+                    RelativeAmount                            DOUBLE 
+                )");
+
+                store.ExecuteNonQuery(@"INSERT INTO stsim_InitialConditionsNonSpatialDistribution(
+                        ScenarioID                                ,
+                        Iteration                                 ,
+                        StratumID                                 ,
+                        SecondaryStratumID                        ,
+                        TertiaryStratumID                         ,
+                        StateClassID                              ,
+                        AgeMin                                    ,
+                        AgeMax                                    ,
+                        RelativeAmount)  
+                    SELECT  
+                        ScenarioID                                ,
+                        Iteration                                 ,
+                        StratumID                                 ,
+                        SecondaryStratumID                        ,
+                        TertiaryStratumID                         ,
+                        StateClassID                              ,
+                        AgeMin                                    ,
+                        AgeMax                                    ,
+                        RelativeAmount                            
+                    FROM TEMP_TABLE");
+
+                store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
+                UpdateProvider.CreateIndex(store, "stsim_InitialConditionsNonSpatialDistribution", new[] { "ScenarioID" });
             }
         }
     }

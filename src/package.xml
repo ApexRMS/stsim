@@ -400,10 +400,14 @@
                 <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="TSTGroupID" dataType="Integer" displayName="TST Type/Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTMin" displayName="TST Min" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="TSTMax" displayName="TST Max" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="RelativeAmount" displayName="Relative Amount" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" allowDbNull="False"/>
               </columns>
               <validations>
                 <validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
+                <validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
               </validations>
             </datasheet>
           </datasheets>
@@ -1574,7 +1578,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="111"
+    schemaVersion="112"
     minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

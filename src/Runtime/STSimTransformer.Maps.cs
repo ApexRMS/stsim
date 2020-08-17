@@ -28,6 +28,7 @@ namespace SyncroSim.STSim
 
         private TstRandomizeMap m_TstRandomizeMap;
         private TstTransitionGroupMap m_TstTransitionGroupMap;
+        private InitialTSTSpatialMap m_InitialTstSpatialMap;
         private StateAttributeValueMap m_StateAttributeValueMap;
         private InitialConditionsDistributionMap m_InitialConditionsDistributionMap;
         private InitialConditionsSpatialMap m_InitialConditionsSpatialMap;

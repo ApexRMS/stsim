@@ -1317,6 +1317,38 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Fills the Initial TST Spatial Collection
+        /// </summary>
+        private void FillInitialTSTSpatialCollection()
+        {
+            Debug.Assert(this.m_InitialTstSpatialMap == null);
+            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.ResultScenario);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_INITIAL_TST_SPATIAL_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int? TransitionGroupId = null;
+                int? Iteration = null; 
+           
+                string FileName = Convert.ToString(
+                    dr[Strings.DATASHEET_INITIAL_TST_SPATIAL_FILE_COLUMN_NAME], 
+                    CultureInfo.InvariantCulture);
+
+                if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
+                {
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                this.m_InitialTstSpatialMap.AddFile(TransitionGroupId, Iteration, FileName);
+            }
+        }
+
+        /// <summary>
         /// Fills the TransitionOrder collection
         /// </summary>
         /// <remarks></remarks>

@@ -366,6 +366,7 @@ namespace SyncroSim.STSim
             this.FillTransitionAttributeTargetPrioritizationCollection();
             this.FillTstTransitionGroupCollection();
             this.FillTstRandomizeCollection();
+            this.FillInitialTSTSpatialCollection();
             this.FillTransitionMultiplierValueCollection();
 
             if (this.IsSpatial)

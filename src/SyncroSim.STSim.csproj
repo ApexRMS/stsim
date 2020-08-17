@@ -178,6 +178,7 @@
     <Compile Include="Runtime\InitialConditionsSpatial.cs" />
     <Compile Include="Runtime\InitialConditionsSpatialCollection.cs" />
     <Compile Include="Runtime\InitialConditionsSpatialMap.cs" />
+    <Compile Include="Runtime\InitialTSTSpatialMap.cs" />
     <Compile Include="Runtime\InputRasters.cs" />
     <Compile Include="Runtime\IntervalMeanTimestepMap.cs" />
     <Compile Include="Runtime\OutputStateAttribute.cs" />

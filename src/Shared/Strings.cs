@@ -238,6 +238,10 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TST_RANDOMIZE_MIN_INITIAL_TST_COLUMN_NAME = "MinInitialTST";
         public const string DATASHEET_TST_RANDOMIZE_MAX_INITIAL_TST_COLUMN_NAME = "MaxInitialTST";
 
+        //Initial TST Spatial
+        public const string DATASHEET_INITIAL_TST_SPATIAL_NAME = "stsim_InitialTSTSpatial";
+        public const string DATASHEET_INITIAL_TST_SPATIAL_FILE_COLUMN_NAME = "TSTFileName";
+
         //Transition multiplier value
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME = "stsim_TransitionMultiplierValue";
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME = "TSTGroupID";

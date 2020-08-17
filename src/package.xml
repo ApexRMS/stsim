@@ -447,7 +447,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-
         <datafeed name="OutputOptions" displayName="Output Options" dataScope="Scenario">
           <datasheets>
             <datasheet name="OutputOptions" displayName="Output Options" isSingleRow="True">
@@ -768,6 +767,22 @@
                 <column name="MinInitialTST" displayName="Initial TST Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="MaxInitialTST" displayName="Initial TST Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
               </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="InitialTSTSpatial" displayName="Initial TST Spatial" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="InitialTSTSpatial" displayName="Initial TST Spatial">
+              <columns>
+                <column name="InitialTSTSpatialID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" isOptional="True" format="d"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTFileName" displayName="TST File Name" dataType="String" isExternalFile="True" isRaster="True" allowDbNull="False"/>
+              </columns>
+              <validations>
+                <validation validationType="Unique" columns="Iteration"/>
+              </validations>
             </datasheet>
           </datasheets>
         </datafeed>
@@ -1545,6 +1560,7 @@
         <group name="TSTGroup" displayName="Time Since Transition">
           <item name="TimeSinceTransitionGroup"/>
           <item name="TimeSinceTransitionRandomize"/>
+          <item name="InitialTSTSpatial"/>          
         </group>
         <group name="Attributes">
           <item name="StateAttributeValue"/>

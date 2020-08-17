@@ -596,6 +596,9 @@ namespace SyncroSim.STSim
                 int? TertiaryStratumId = null;
                 int AgeMin = 0;
                 int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int? TSTMin = null;
+                int? TSTMax = null;
                 double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
@@ -623,8 +626,33 @@ namespace SyncroSim.STSim
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
+                if (dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
                 InitialConditionsDistribution InitialStateRecord = new InitialConditionsDistribution(
-                    StratumId, Iteration, SecondaryStratumId, TertiaryStratumId, StateClassId, AgeMin, AgeMax, RelativeAmount);
+                    StratumId, 
+                    Iteration, 
+                    SecondaryStratumId, 
+                    TertiaryStratumId, 
+                    StateClassId, 
+                    AgeMin, 
+                    AgeMax, 
+                    TSTGroupId,
+                    TSTMin,
+                    TSTMax,
+                    RelativeAmount);
 
                 this.m_InitialConditionsDistributions.Add(InitialStateRecord);
             }

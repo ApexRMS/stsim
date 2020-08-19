@@ -2,7 +2,6 @@
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using SyncroSim.Core;
-using SyncroSim.StochasticTime;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim

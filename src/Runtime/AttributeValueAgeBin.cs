@@ -59,18 +59,23 @@ namespace SyncroSim.STSim
 
         public AttributeValueReference GetReference(TstCollection cellTst)
         {
-            if (this.m_RefsWithTST.Count > 0 && cellTst.Count > 0)
+            AttributeValueReference AttrRef = this.GetReferenceWithTST(cellTst);
+
+            if (AttrRef == null)
             {
-                return this.GetReferenceWithTST(cellTst);
+                AttrRef = this.GetReferenceWithoutTST();
             }
-            else
-            {
-                return this.GetReferenceWithoutTST();
-            }
+    
+            return AttrRef;          
         }
 
         private AttributeValueReference GetReferenceWithTST(TstCollection cellTst)
         {
+            if (this.m_RefsWithTST.Count == 0 || cellTst.Count == 0)
+            {
+                return null;
+            }
+
             Tst tst = GetTstWithSmallestValue(cellTst);
 
             if (!this.m_TSTGroupHint.ContainsKey(tst.TransitionGroupId) && 
@@ -102,7 +107,6 @@ namespace SyncroSim.STSim
                         FinalRef = attrRef;
                     }
                 }
-
             }
 
             return FinalRef;

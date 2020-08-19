@@ -62,44 +62,89 @@ namespace SyncroSim.STSim
         /// Initializes the specified cell's Tst values
         /// </summary>
         /// <param name="simulationCell"></param>
-        /// <remarks></remarks>
+        /// <remarks>
+        /// When initializing the cell TST use the following order of priority:
+        /// 
+        /// If the value for a TST group is specified in a raster use this      
+        /// If the value for a TST group is specified in the initial condition distribution, use this
+        /// If the value for a TST group is specified based on TST randomize data sheet, use this
+        /// If the value for a TST group is not specified set it to Integer Max Value.
+        /// </remarks>
         private void InitializeCellTstValues(Cell simulationCell, int iteration)
         {
-            if (simulationCell.TstValues.Count > 0)
+            if (simulationCell.TstValues.Count == 0)
             {
-                //If there is a randomize value for this cell's stratum, then use that value to initialize
-                //every Tst in the TstValues list.  If there is no value for this cell's stratum then set the
-                //initial value to zero.
+                return;
+            }
 
-                foreach (TransitionGroup tg in this.TransitionGroups)
+            //if (this.TryInitTSTFromRaster(simulationCell, iteration))
+            //{
+            //    return;
+            //}
+
+            //if (this.TryInitTSTFromIC(simulationCell, iteration))
+            //{
+            //    return;
+            //}
+
+            if (this.TryInitTSTFromRamdomize(simulationCell, iteration))
+            {
+                return;
+            }
+
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                tst.TstValue = int.MaxValue;
+            }
+        }
+
+        private bool TryInitTSTFromRaster(Cell simulationCell, int iteration)
+        {
+            Debug.Assert(false);
+            return false;
+        }
+
+        private bool TryInitTSTFromIC(Cell simulationCell, int iteration)
+        {
+            Debug.Assert(false);
+            return false;
+        }
+
+        private bool TryInitTSTFromRamdomize(Cell simulationCell, int iteration)
+        {
+            bool RetVal = false;
+
+            foreach (TransitionGroup tg in this.TransitionGroups)
+            {
+                if (simulationCell.TstValues.Contains(tg.TransitionGroupId))
                 {
-                    if (simulationCell.TstValues.Contains(tg.TransitionGroupId))
+                    TstRandomize TstRand = this.m_TstRandomizeMap.GetTstRandomize(
+                        tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration);
+
+                    int TstMaxRandValue = 0;
+                    int TstMinRandValue = 0;
+
+                    if (TstRand != null)
                     {
-                        TstRandomize TstRand = this.m_TstRandomizeMap.GetTstRandomize(
-                            tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                            simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration);
-
-                        int TstMaxRandValue = 0;
-                        int TstMinRandValue = 0;
-
-                        if (TstRand != null)
-                        {
-                            TstMinRandValue = TstRand.MinInitialTst;
-                            TstMaxRandValue = TstRand.MaxInitialTst;
-                        }
-
-                        if (TstMaxRandValue == int.MaxValue)
-                        {
-                            TstMaxRandValue = int.MaxValue - 1;
-                        }
-
-                        int r = this.m_RandomGenerator.GetNextInteger(TstMinRandValue, TstMaxRandValue + 1);
-                        Tst cellTst = simulationCell.TstValues[tg.TransitionGroupId];
-
-                        cellTst.TstValue = r;
+                        TstMinRandValue = TstRand.MinInitialTst;
+                        TstMaxRandValue = TstRand.MaxInitialTst;
                     }
+
+                    if (TstMaxRandValue == int.MaxValue)
+                    {
+                        TstMaxRandValue = int.MaxValue - 1;
+                    }
+
+                    int r = this.m_RandomGenerator.GetNextInteger(TstMinRandValue, TstMaxRandValue + 1);
+                    Tst cellTst = simulationCell.TstValues[tg.TransitionGroupId];
+
+                    cellTst.TstValue = r;
+                    RetVal = true;
                 }
             }
+
+            return RetVal;
         }
 
         /// <summary>

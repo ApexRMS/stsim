@@ -22,7 +22,8 @@ namespace SyncroSim.STSim
         public InitialConditionsDistributionCollection GetForIteration(int? iteration)
         {
             InitialConditionsDistributionCollection icds = new InitialConditionsDistributionCollection();
-            foreach (SyncroSim.STSim.InitialConditionsDistribution icd in this)
+
+            foreach (InitialConditionsDistribution icd in this)
             {
                 if (Nullable.Equals(icd.Iteration, iteration))
                 {
@@ -40,20 +41,22 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         public List<int?> GetSortedIterationList()
         {
-            List<int?> lstIterations = new List<int?>();
+            List<int?> Iterations = new List<int?>();
+
             foreach (InitialConditionsDistribution icd in this)
             {
                 var iteration = icd.Iteration;
-                if (!lstIterations.Contains(iteration))
+
+                if (!Iterations.Contains(iteration))
                 {
-                    lstIterations.Add(iteration);
+                    Iterations.Add(iteration);
                 }
             }
 
             //Sort Ascending with Null at start
-            lstIterations.Sort();
+            Iterations.Sort();
 
-            return lstIterations;
+            return Iterations;
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         public InitialConditionsDistributionCollection GetFiltered(Cell cell)
         {
-            InitialConditionsDistributionCollection retVal = new InitialConditionsDistributionCollection();
+            InitialConditionsDistributionCollection ICDCollection = new InitialConditionsDistributionCollection();
 
             foreach (InitialConditionsDistribution icd in this)
             {
@@ -105,10 +108,10 @@ namespace SyncroSim.STSim
                 }
 
                 // Passed all the tests, so we'll take this one
-                retVal.Add(icd);
+                ICDCollection.Add(icd);
             }
 
-            return retVal;
+            return ICDCollection;
         }
 
         public double CalcSumOfRelativeAmount()

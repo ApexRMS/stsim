@@ -1,51 +1,52 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
+using System;
 using SyncroSim.Core;
 using SyncroSim.Common;
+using System.Globalization;
 
 namespace SyncroSim.STSim
 {
     class InitialTSTSpatialMap : STSimMapBase
     {
         private bool m_HasItems;
+        private SortedKeyMap1<InitialTSTSpatial> m_Map = 
+            new SortedKeyMap1<InitialTSTSpatial>(SearchMode.ExactPrev);
 
-        private MultiLevelKeyMap1<SortedKeyMap1<string>> m_map = 
-            new MultiLevelKeyMap1<SortedKeyMap1<string>>();
-
-        public InitialTSTSpatialMap(Scenario scenario) : base(scenario)
+        public InitialTSTSpatialMap(InitialTSTSpatialCollection items, Scenario scenario) : base(scenario)
         {
+            foreach (InitialTSTSpatial item in items)
+            {
+                this.AddItem(item);
+            }
         }
 
-        public void AddFile(int? transitionGroupId, int? iteration, string fileName)
+        private void AddItem(InitialTSTSpatial item)
         {
-            SortedKeyMap1<string> m = this.m_map.GetItemExact(transitionGroupId);
+            InitialTSTSpatial v = this.m_Map.GetItemExact(item.Iteration);
 
-            if (m == null)
+            if (v != null)
             {
-                m = new SortedKeyMap1<string>(SearchMode.ExactPrev);
-                this.m_map.AddItem(transitionGroupId, m);
+                string msg = string.Format(CultureInfo.InvariantCulture,
+                    "A record already exists for iteration={0}.",
+                    STSimMapBase.FormatValue(item.Iteration));
+
+                throw new ArgumentException(msg);
             }
 
-            m.AddItem(iteration, fileName);
+            this.m_Map.AddItem(item.Iteration, item);
             this.m_HasItems = true;
         }
 
-        public string GetFile(int transitionGroupId, int iteration)
+        public InitialTSTSpatial GetItem(int iteration)
         {
             if (!this.m_HasItems)
             {
                 return null;
             }
 
-            SortedKeyMap1<string> m = this.m_map.GetItem(transitionGroupId);
-
-            if (m == null)
-            {
-                return null;
-            }
-
-            return m.GetItem(iteration);
+            return this.m_Map.GetItem(iteration);
         }
     }
 }

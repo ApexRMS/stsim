@@ -77,10 +77,10 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            //if (this.TryInitTSTFromRaster(simulationCell, iteration))
-            //{
-            //    return;
-            //}
+            if (this.TryInitTSTFromRaster(simulationCell, iteration))
+            {
+                return;
+            }
 
             //if (this.TryInitTSTFromIC(simulationCell, iteration))
             //{
@@ -100,8 +100,37 @@ namespace SyncroSim.STSim
 
         private bool TryInitTSTFromRaster(Cell simulationCell, int iteration)
         {
-            Debug.Assert(false);
-            return false;
+            if (this.m_InputRasters.InitialTSTRaster == null)
+            {
+                return false;
+            }
+
+            bool SetValue = false;
+            bool IsWild = (!this.m_InputRasters.InitialTSTRasterTransitionGroupId.HasValue);
+
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                if (IsWild)
+                {
+                    SetValue = true;
+                }
+                else
+                {
+                    int v = this.m_InputRasters.InitialTSTRasterTransitionGroupId.Value;
+
+                    if (tst.TransitionGroupId == v)
+                    {
+                        SetValue = true;
+                    }
+                }
+
+                if (SetValue)
+                {
+                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
+                }
+            }
+
+            return SetValue;
         }
 
         private bool TryInitTSTFromIC(Cell simulationCell, int iteration)

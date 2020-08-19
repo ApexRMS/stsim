@@ -316,6 +316,7 @@ namespace SyncroSim.STSim
             if (this.IsSpatial)
             {
                 this.FillInitialConditionsSpatialCollectionAndMap();
+                this.FillInitialTSTSpatialCollectionAndMap();
                 this.InitializeRasterData(this.MinimumIteration);
             }
             else

@@ -53,6 +53,7 @@ namespace SyncroSim.STSim
         private TransitionPathwayAutoCorrelationCollection m_TransitionPathwayAutoCorrelations = new TransitionPathwayAutoCorrelationCollection();
         private StateAttributeValueCollection m_StateAttributeValues = new StateAttributeValueCollection();
         private TransitionAttributeValueCollection m_TransitionAttributeValues = new TransitionAttributeValueCollection();
+        private InitialTSTSpatialCollection m_InitialTSTSpatialRecords = new InitialTSTSpatialCollection();
         private InputRasters m_InputRasters = new InputRasters();
         private Dictionary<int, bool> m_TransitionAttributeTypesWithTarget = new Dictionary<int, bool>();
 
@@ -1317,35 +1318,39 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Fills the Initial TST Spatial Collection
+        /// Fills the Initial TST Spatial Collection and map
         /// </summary>
-        private void FillInitialTSTSpatialCollection()
+        private void FillInitialTSTSpatialCollectionAndMap()
         {
-            Debug.Assert(this.m_InitialTstSpatialMap == null);
-            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.ResultScenario);
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_InitialTSTSpatialRecords.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_INITIAL_TST_SPATIAL_NAME);
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int? TransitionGroupId = null;
                 int? Iteration = null; 
-           
+                int? TransitionGroupId = null;
+         
                 string FileName = Convert.ToString(
                     dr[Strings.DATASHEET_INITIAL_TST_SPATIAL_FILE_COLUMN_NAME], 
                     CultureInfo.InvariantCulture);
-
-                if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
-                {
-                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-                }
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
                     Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
-                this.m_InitialTstSpatialMap.AddFile(TransitionGroupId, Iteration, FileName);
+                if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                InitialTSTSpatial Item = new InitialTSTSpatial(Iteration, TransitionGroupId, FileName);
+                this.m_InitialTSTSpatialRecords.Add(Item);
             }
+
+            Debug.Assert(this.m_InitialTstSpatialMap == null);
+            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.m_InitialTSTSpatialRecords, this.ResultScenario);
         }
 
         /// <summary>

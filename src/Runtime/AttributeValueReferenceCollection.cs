@@ -5,11 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace SyncroSim.STSim
 {
-    public class TstCollection : KeyedCollection<int, Tst>
+    class AttributeValueReferenceCollection : Collection<AttributeValueReference>
     {
-        protected override int GetKeyForItem(Tst item)
-        {
-            return item.TransitionGroupId;
-        }
     }
 }

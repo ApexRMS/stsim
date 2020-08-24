@@ -160,7 +160,10 @@
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
     <Compile Include="DataSheets\TransitionTypeGroupDataSheet.cs" />
     <Compile Include="Providers\STSimResultsProvider.cs" />
-    <Compile Include="Runtime\AttributeValueRecord.cs" />
+    <Compile Include="Runtime\AttributeValueAgeBin.cs" />
+    <Compile Include="Runtime\AttributeValueAgeBinCollection.cs" />
+    <Compile Include="Runtime\AttributeValueReference.cs" />
+    <Compile Include="Runtime\AttributeValueReferenceCollection.cs" />
     <Compile Include="Runtime\AvgStratumExportTransformer.cs" />
     <Compile Include="Runtime\Cell.cs" />
     <Compile Include="Runtime\CellCollection.cs" />
@@ -175,6 +178,9 @@
     <Compile Include="Runtime\InitialConditionsSpatial.cs" />
     <Compile Include="Runtime\InitialConditionsSpatialCollection.cs" />
     <Compile Include="Runtime\InitialConditionsSpatialMap.cs" />
+    <Compile Include="Runtime\InitialTSTSpatial.cs" />
+    <Compile Include="Runtime\InitialTSTSpatialCollection.cs" />
+    <Compile Include="Runtime\InitialTSTSpatialMap.cs" />
     <Compile Include="Runtime\InputRasters.cs" />
     <Compile Include="Runtime\IntervalMeanTimestepMap.cs" />
     <Compile Include="Runtime\OutputStateAttribute.cs" />

@@ -428,46 +428,21 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void InitializeStateAttributes()
         {
-            Debug.Assert(this.m_StateAttributeTypeIdsAges == null);
-            Debug.Assert(this.m_StateAttributeTypeIdsNoAges == null);
-
-            this.m_StateAttributeTypeIdsAges = new Dictionary<int, bool>();
-            this.m_StateAttributeTypeIdsNoAges = new Dictionary<int, bool>();
-
-            StateAttributeValueCollection AgesColl = new StateAttributeValueCollection();
-            StateAttributeValueCollection NoAgesColl = new StateAttributeValueCollection();
+            Debug.Assert(this.m_StateAttributeTypeIds == null);
+            this.m_StateAttributeTypeIds = new Dictionary<int, bool>();
 
             foreach (StateAttributeValue attr in this.m_StateAttributeValues)
             {
-                if (attr.MinimumAge.HasValue || attr.MaximumAge.HasValue)
+                if (!this.m_StateAttributeTypeIds.ContainsKey(attr.StateAttributeTypeId))
                 {
-                    AgesColl.Add(attr);
-
-                    if (!this.m_StateAttributeTypeIdsAges.ContainsKey(attr.StateAttributeTypeId))
-                    {
-                        this.m_StateAttributeTypeIdsAges.Add(attr.StateAttributeTypeId, true);
-                    }
-                }
-                else
-                {
-                    NoAgesColl.Add(attr);
-
-                    if (!this.m_StateAttributeTypeIdsNoAges.ContainsKey(attr.StateAttributeTypeId))
-                    {
-                        this.m_StateAttributeTypeIdsNoAges.Add(attr.StateAttributeTypeId, true);
-                    }
+                    this.m_StateAttributeTypeIds.Add(attr.StateAttributeTypeId, true);
                 }
             }
 
-            Debug.Assert(this.m_StateAttributeValueMapAges == null);
-            Debug.Assert(this.m_StateAttributeValueMapNoAges == null);
-            Debug.Assert(AgesColl.Count + NoAgesColl.Count == this.m_StateAttributeValues.Count);
+            Debug.Assert(this.m_StateAttributeValueMap == null);
 
-            this.m_StateAttributeValueMapAges = new StateAttributeValueMap(
-                this.ResultScenario, this.DistributionProvider, AgesColl);
-
-            this.m_StateAttributeValueMapNoAges = new StateAttributeValueMap(
-                this.ResultScenario, this.DistributionProvider, NoAgesColl);
+            this.m_StateAttributeValueMap = new StateAttributeValueMap(
+                this.ResultScenario, this.DistributionProvider, this.m_StateAttributeValues);
         }
 
         /// <summary>

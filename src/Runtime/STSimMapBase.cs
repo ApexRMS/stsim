@@ -22,7 +22,10 @@ namespace SyncroSim.STSim
             DataSheet ds = scenario.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
 
             TerminologyUtilities.GetStratumLabelTerminology(
-                ds, ref this.m_PrimaryStratumLabel, ref this.m_SecondaryStratumLabel, ref this.m_TertiaryStratumLabel);
+                ds, 
+                ref this.m_PrimaryStratumLabel, 
+                ref this.m_SecondaryStratumLabel, 
+                ref this.m_TertiaryStratumLabel);
         }
 
         protected string PrimaryStratumLabel
@@ -64,7 +67,8 @@ namespace SyncroSim.STSim
 
         protected static void ThrowDuplicateItemException()
         {
-            throw new STSimMapDuplicateItemException("An item with the same keys has already been added.");
+            throw new STSimMapDuplicateItemException(
+                "An item with the same keys has already been added.");
         }
 
         protected static string FormatValue(int? value)
@@ -107,6 +111,11 @@ namespace SyncroSim.STSim
         protected string GetTransitionTypeName(int? id)
         {
             return this.GetProjectItemName(Strings.DATASHEET_TRANSITION_TYPE_NAME, id);
+        }
+
+        protected string GetStateAttributeTypeName(int? id)
+        {
+            return this.GetProjectItemName(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, id);
         }
 
         protected string GetTransitionAttributeTypeName(int? id)

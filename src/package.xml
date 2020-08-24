@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.20" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.21" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>
@@ -400,10 +400,14 @@
                 <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="TSTGroupID" dataType="Integer" displayName="TST Type/Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTMin" displayName="TST Min" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="TSTMax" displayName="TST Max" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="RelativeAmount" displayName="Relative Amount" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" allowDbNull="False"/>
               </columns>
               <validations>
                 <validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
+                <validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
               </validations>
             </datasheet>
           </datasheets>
@@ -443,7 +447,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-
         <datafeed name="OutputOptions" displayName="Output Options" dataScope="Scenario">
           <datasheets>
             <datasheet name="OutputOptions" displayName="Output Options" isSingleRow="True">
@@ -623,6 +626,9 @@
                 <column name="StateAttributeTypeID" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="TSTGroupID" dataType="Integer" displayName="TST Type/Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTMin" displayName="TST Min" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="TSTMax" displayName="TST Max" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="Value" displayName="Value" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
                 <column name="DistributionType" displayName="Value Distribution" dataType="Integer" validationType="Datasheet" formula1="corestime_DistributionType" isOptional="True"/>
                 <column name="DistributionFrequencyID" displayName="Value Sampling Frequency" dataType="Integer" validationType="List" formula1="0:Always|1:Iteration Only|2:Iteration and Timestep" isOptional="True"/>
@@ -631,6 +637,7 @@
                 <column name="DistributionMax" displayName="Value Max" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
               </columns>
               <validations>
+                <validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
                 <validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
               </validations>
             </datasheet>
@@ -669,6 +676,9 @@
                 <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="TSTGroupID" dataType="Integer" displayName="TST Type/Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTMin" displayName="TST Min" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="TSTMax" displayName="TST Max" dataType="Integer" isOptional="True" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>                
                 <column name="Value" displayName="Value" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
                 <column name="DistributionType" displayName="Value Distribution" dataType="Integer" validationType="Datasheet" formula1="corestime_DistributionType" isOptional="True"/>
                 <column name="DistributionFrequencyID" displayName="Value Sampling Frequency" dataType="Integer" validationType="List" formula1="0:Always|1:Iteration Only|2:Iteration and Timestep" isOptional="True"/>
@@ -677,6 +687,7 @@
                 <column name="DistributionMax" displayName="Value Max" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
               </columns>
               <validations>
+                <validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
                 <validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
               </validations>
             </datasheet>
@@ -741,9 +752,9 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="TimeSinceTransitionRandomize" displayName="Time Since Transition Randomize" dataScope="Scenario">
+        <datafeed name="TimeSinceTransitionRandomize" displayName="Initial TST Randomize" dataScope="Scenario">
           <datasheets>
-            <datasheet name="TimeSinceTransitionRandomize" displayName="Time Since Transition Randomize">
+            <datasheet name="TimeSinceTransitionRandomize" displayName="Initial TST Randomize">
               <columns>
                 <column name="TimeSinceTransitionRandomizeID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -756,6 +767,22 @@
                 <column name="MinInitialTST" displayName="Initial TST Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="MaxInitialTST" displayName="Initial TST Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
               </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="InitialTSTSpatial" displayName="Initial TST Spatial" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="InitialTSTSpatial" displayName="Initial TST Spatial">
+              <columns>
+                <column name="InitialTSTSpatialID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" isOptional="True" format="d"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" isOptional="True"/>
+                <column name="TSTFileName" displayName="TST File Name" dataType="String" isExternalFile="True" isRaster="True" allowDbNull="False"/>
+              </columns>
+              <validations>
+                <validation validationType="Unique" columns="Iteration"/>
+              </validations>
             </datasheet>
           </datasheets>
         </datafeed>
@@ -1505,6 +1532,8 @@
       <group name="InitialConditions" displayName="Initial Conditions">
         <item name="InitialConditionsNonSpatial" displayName="Non Spatial"/>
         <item name="InitialConditionsSpatial" displayName="Spatial"/>
+        <item name="TimeSinceTransitionRandomize"/>
+        <item name="InitialTSTSpatial"/>
       </group>
       <item name="TransitionTarget"/>
       <group name="OutputOptions" displayName="Output Options">
@@ -1530,10 +1559,7 @@
         </group>
         <item name="TransitionOrder" displayName="Transitions - Order"/>
         <item name="TransitionTargetPrioritization" displayName="Transitions - Target Prioritization"/>
-        <group name="TSTGroup" displayName="Time Since Transition">
-          <item name="TimeSinceTransitionGroup"/>
-          <item name="TimeSinceTransitionRandomize"/>
-        </group>
+        <item name="TimeSinceTransitionGroup"/>        
         <group name="Attributes">
           <item name="StateAttributeValue"/>
           <item name="TransitionAttributeValue"/>
@@ -1566,7 +1592,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="109"
+    schemaVersion="112"
     minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

@@ -53,6 +53,7 @@ namespace SyncroSim.STSim
         private TransitionPathwayAutoCorrelationCollection m_TransitionPathwayAutoCorrelations = new TransitionPathwayAutoCorrelationCollection();
         private StateAttributeValueCollection m_StateAttributeValues = new StateAttributeValueCollection();
         private TransitionAttributeValueCollection m_TransitionAttributeValues = new TransitionAttributeValueCollection();
+        private InitialTSTSpatialCollection m_InitialTSTSpatialRecords = new InitialTSTSpatialCollection();
         private InputRasters m_InputRasters = new InputRasters();
         private Dictionary<int, bool> m_TransitionAttributeTypesWithTarget = new Dictionary<int, bool>();
 
@@ -66,9 +67,8 @@ namespace SyncroSim.STSim
             Debug.Assert(numCells > 0);
             List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
  
-            //Create all the cells.  If there are Time Since Transition Groups then create the cell's TSTCollection
-            //and add a TST for each one.  (We don't allocate the TSTCollection unless there are groups since there
-            //can be a large number of cells)
+            //Create all the cells.  If there are Time Since Transition Groups then add
+            //a Tst for each one.
 
             int CollIndex = 0;
 
@@ -597,6 +597,9 @@ namespace SyncroSim.STSim
                 int? TertiaryStratumId = null;
                 int AgeMin = 0;
                 int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int? TSTMin = null;
+                int? TSTMax = null;
                 double RelativeAmount = Convert.ToDouble(dr[Strings.DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
@@ -624,8 +627,33 @@ namespace SyncroSim.STSim
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
+                if (dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
                 InitialConditionsDistribution InitialStateRecord = new InitialConditionsDistribution(
-                    StratumId, Iteration, SecondaryStratumId, TertiaryStratumId, StateClassId, AgeMin, AgeMax, RelativeAmount);
+                    StratumId, 
+                    Iteration, 
+                    SecondaryStratumId, 
+                    TertiaryStratumId, 
+                    StateClassId, 
+                    AgeMin, 
+                    AgeMax, 
+                    TSTGroupId,
+                    TSTMin,
+                    TSTMax,
+                    RelativeAmount);
 
                 this.m_InitialConditionsDistributions.Add(InitialStateRecord);
             }
@@ -862,43 +890,6 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.m_StateAttributeValues.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_NAME);
-            Dictionary<int, bool> HasAges = new Dictionary<int, bool>();
-
-            //If some attribute types have ages and some don't then we want to configure any that don't 
-            //with default values or they will not be included in the calculations.
-
-            foreach (DataRow dr in ds.GetData().Rows)
-            {
-                if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] != DBNull.Value ||
-                    dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
-                {
-                    int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-
-                    if (!HasAges.ContainsKey(StateAttributeTypeId))
-                    {
-                        HasAges.Add(StateAttributeTypeId, true);
-                    }
-                }
-            }
-
-            foreach (DataRow dr in ds.GetData().Rows)
-            {
-                int StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
-
-                if (HasAges.ContainsKey(StateAttributeTypeId))
-                {
-                    if (dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] == DBNull.Value)
-                    {
-                        dr[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = 0;
-                    }
-
-                    if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] == DBNull.Value)
-                    {
-                        dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = int.MaxValue;
-                    }
-                }
-            }
-
             bool StratumOrStateClassWarningIssued = false;
 
             foreach (DataRow dr in ds.GetData().Rows)
@@ -910,8 +901,11 @@ namespace SyncroSim.STSim
                 int? Iteration = null;
                 int? Timestep = null;
                 int? StateClassId = null;
-                int? AgeMin = null;
-                int? AgeMax = null;
+                int AgeMin = 0;
+                int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int? TSTMin = null;
+                int? TSTMax = null;
                 double? Value = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -957,6 +951,21 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
                 if (dr[Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME] != DBNull.Value)
@@ -1010,6 +1019,9 @@ namespace SyncroSim.STSim
                         StateClassId,
                         AgeMin,
                         AgeMax,
+                        TSTGroupId,
+                        TSTMin,
+                        TSTMax,
                         Value,
                         DistributionTypeId,
                         DistributionFrequency,
@@ -1053,8 +1065,11 @@ namespace SyncroSim.STSim
                 int? Timestep = null;
                 int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 int? StateClassId = null;
-                int? AgeMin = null;
-                int? AgeMax = null;
+                int AgeMin = 0;
+                int AgeMax = int.MaxValue;
+                int? TSTGroupId = null;
+                int? TSTMin = null;
+                int? TSTMax = null;
                 double? Value = null;
                 int? DistributionTypeId = null;
                 DistributionFrequency? DistributionFrequency = null;
@@ -1102,6 +1117,21 @@ namespace SyncroSim.STSim
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
+                if (dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TST_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMin = Convert.ToInt32(dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                {
+                    TSTMax = Convert.ToInt32(dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
                 if (dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME] != DBNull.Value)
                 {
                     Value = Convert.ToDouble(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_VALUE_COLUMN_NAME], CultureInfo.InvariantCulture);
@@ -1144,6 +1174,9 @@ namespace SyncroSim.STSim
                         StateClassId,
                         AgeMin,
                         AgeMax,
+                        TSTGroupId,
+                        TSTMin,
+                        TSTMax,
                         Value,
                         DistributionTypeId,
                         DistributionFrequency,
@@ -1282,6 +1315,42 @@ namespace SyncroSim.STSim
                     TransitionGroupId, StratumId, SecondaryStratumId, TertiaryStratumId, StateClassId, Iteration, 
                     new TstRandomize(MinInitialTST, MaxInitialTST));
             }
+        }
+
+        /// <summary>
+        /// Fills the Initial TST Spatial Collection and map
+        /// </summary>
+        private void FillInitialTSTSpatialCollectionAndMap()
+        {
+            Debug.Assert(this.IsSpatial);
+            Debug.Assert(this.m_InitialTSTSpatialRecords.Count == 0);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_INITIAL_TST_SPATIAL_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                int? Iteration = null; 
+                int? TransitionGroupId = null;
+         
+                string FileName = Convert.ToString(
+                    dr[Strings.DATASHEET_INITIAL_TST_SPATIAL_FILE_COLUMN_NAME], 
+                    CultureInfo.InvariantCulture);
+
+                if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
+                {
+                    Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+                {
+                    TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                InitialTSTSpatial Item = new InitialTSTSpatial(Iteration, TransitionGroupId, FileName);
+                this.m_InitialTSTSpatialRecords.Add(Item);
+            }
+
+            Debug.Assert(this.m_InitialTstSpatialMap == null);
+            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.m_InitialTSTSpatialRecords, this.ResultScenario);
         }
 
         /// <summary>

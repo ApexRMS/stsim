@@ -3,7 +3,7 @@
 
 namespace SyncroSim.STSim
 {
-    internal class Tst
+    public class Tst
     {
         private int m_TstValue;
         private int m_TransitionGroupId;

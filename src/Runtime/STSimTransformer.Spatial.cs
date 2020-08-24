@@ -2104,7 +2104,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                this.InitializeCellTstValues(c, iteration);
+                this.InitializeCellTstValues(c, iteration, null, true);
 
 #if DEBUG
                 this.VALIDATE_INITIALIZED_CELL(c, iteration, this.m_TimestepZero);
@@ -2247,6 +2247,26 @@ namespace SyncroSim.STSim
                 this.m_InputRasters.DEMRaster = null;
             }
 
+            //Initial TST Raster
+            InitialTSTSpatial InitialTST = this.m_InitialTstSpatialMap.GetItem(iteration);
+
+            if (InitialTST != null)
+            {
+                DataSheet DSInitialTST = this.ResultScenario.GetDataSheet(Strings.DATASHEET_INITIAL_TST_SPATIAL_NAME);
+
+                if (this.m_InputRasters.InitialTSTRaster == null || InitialTST.FileName != Path.GetFileName(this.m_InputRasters.InitialTSTName))
+                {
+                    string fullFileName = Spatial.GetSpatialInputFileName(DSInitialTST, InitialTST.FileName, false);
+                    this.m_InputRasters.InitialTSTRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
+                    this.m_InputRasters.InitialTSTRasterTransitionGroupId = InitialTST.TransitionGroupId;
+                }
+            }
+            else
+            {
+                this.m_InputRasters.InitialTSTRaster = null;
+                this.m_InputRasters.InitialTSTRasterTransitionGroupId = null;
+            }
+
             // Compare the rasters to make sure meta data matches. Note that we might not have loaded a raster 
             // because one of the same name already loaded for a previous iteration.
 
@@ -2348,6 +2368,22 @@ namespace SyncroSim.STSim
                     this.RecordStatus(StatusType.Information, Message);
                 }
             }
+
+            //Initial TST Spatial
+            if (this.m_InputRasters.InitialTSTRaster != null && this.m_InputRasters.InitialTSTRaster.TotalCells > 0)
+            {
+                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.InitialTSTRaster, ref cmpMsg);
+                if (cmpResult == CompareMetadataResult.ImportantDifferences)
+                {
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.DemName, cmpMsg);
+                    throw new STSimException(Message);
+                }
+                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
+                {
+                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.DemName, cmpMsg);
+                    this.RecordStatus(StatusType.Information, Message);
+                }
+            }        
         }
 
         /// <summary>
@@ -2689,8 +2725,8 @@ namespace SyncroSim.STSim
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
-                        AttributeTypeId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
-                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration, timestep, simulationCell.Age);
+                        AttributeTypeId, tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId,
+                        simulationCell.StateClassId, iteration, timestep, simulationCell.Age, simulationCell.TstValues);
 
                     if (AttrValue.HasValue)
                     {

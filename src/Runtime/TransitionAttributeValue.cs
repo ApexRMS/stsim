@@ -10,8 +10,11 @@ namespace SyncroSim.STSim
         private int m_TransitionAttributeTypeId;
         private int m_TransitionGroupId;
         private int? m_StateClassId;
-        private int? m_MinimumAge;
-        private int? m_MaximumAge;
+        private int m_MinimumAge;
+        private int m_MaximumAge;
+        private int? m_TSTGroupId;
+        private int? m_TSTMin;
+        private int? m_TSTMax;
 
         public TransitionAttributeValue(
             int transitionAttributeTypeId, 
@@ -22,8 +25,11 @@ namespace SyncroSim.STSim
             int? timestep, 
             int transitionGroupId, 
             int? stateClassId, 
-            int? minimumAge, 
-            int? maximumAge,
+            int minimumAge, 
+            int maximumAge,
+            int? tstGroupId,
+            int? tstMin,
+            int? tstMax,
             double? value,
             int? distributionTypeId,
             DistributionFrequency? distributionFrequency,
@@ -39,6 +45,9 @@ namespace SyncroSim.STSim
             this.m_StateClassId = stateClassId;
             this.m_MinimumAge = minimumAge;
             this.m_MaximumAge = maximumAge;
+            this.m_TSTGroupId = tstGroupId;
+            this.m_TSTMin = tstMin;
+            this.m_TSTMax = tstMax;
         }
 
         public int TransitionAttributeTypeId
@@ -65,7 +74,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? MinimumAge
+        public int MinimumAge
         {
             get
             {
@@ -73,11 +82,35 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? MaximumAge
+        public int MaximumAge
         {
             get
             {
                 return this.m_MaximumAge;
+            }
+        }
+
+        public int? TSTGroupId
+        {
+            get
+            {
+                return this.m_TSTGroupId;
+            }
+        }
+
+        public int? TSTMin
+        {
+            get
+            {
+                return this.m_TSTMin;
+            }
+        }
+
+        public int? TSTMax
+        {
+            get
+            {
+                return this.m_TSTMax;
             }
         }
 
@@ -94,6 +127,9 @@ namespace SyncroSim.STSim
                 this.StateClassId,
                 this.MinimumAge,
                 this.MaximumAge,
+                this.TSTGroupId,
+                this.TSTMin,
+                this.TSTMax,
                 this.DistributionValue,
                 this.DistributionTypeId,
                 this.DistributionFrequency,

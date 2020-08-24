@@ -59,6 +59,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_AGE_MIN_COLUMN_NAME = "AgeMin";
         public const string DATASHEET_AGE_MAX_COLUMN_NAME = "AgeMax";
         public const string DATASHEET_AGE_CLASS_COLUMN_NAME = "AgeClass";
+        public const string DATASHEET_TST_GROUP_ID_COLUMN_NAME = "TSTGroupId";
+        public const string DATASHEET_TST_MIN_COLUMN_NAME = "TSTMin";
+        public const string DATASHEET_TST_MAX_COLUMN_NAME = "TSTMax";
         public const string DATASHEET_EVENT_ID_COLUMN_NAME = "EventID";
         public const string DATASHEET_SIZE_CLASS_ID_COLUMN_NAME = "SizeClassID";
         public const string DATASHEET_COLOR_COLUMN_NAME = "Color";
@@ -234,6 +237,10 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TST_RANDOMIZE_NAME = "stsim_TimeSinceTransitionRandomize";
         public const string DATASHEET_TST_RANDOMIZE_MIN_INITIAL_TST_COLUMN_NAME = "MinInitialTST";
         public const string DATASHEET_TST_RANDOMIZE_MAX_INITIAL_TST_COLUMN_NAME = "MaxInitialTST";
+
+        //Initial TST Spatial
+        public const string DATASHEET_INITIAL_TST_SPATIAL_NAME = "stsim_InitialTSTSpatial";
+        public const string DATASHEET_INITIAL_TST_SPATIAL_FILE_COLUMN_NAME = "TSTFileName";
 
         //Transition multiplier value
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME = "stsim_TransitionMultiplierValue";

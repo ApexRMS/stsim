@@ -12,11 +12,23 @@ namespace SyncroSim.STSim
         private int m_StateClassId;
         private int m_AgeMin;
         private int m_AgeMax;
+        private int? m_TSTGroupId;
+        private int? m_TSTMin;
+        private int? m_TSTMax;
         private double m_RelativeAmount;
 
         public InitialConditionsDistribution(
-            int stratumId, int? iteration, int? secondaryStratumId, int? tertiaryStratumId, 
-            int stateClassId, int ageMin, int ageMax, double relativeAmount)
+            int stratumId, 
+            int? iteration, 
+            int? secondaryStratumId, 
+            int? tertiaryStratumId, 
+            int stateClassId, 
+            int ageMin, 
+            int ageMax,
+            int? tstGroupId,
+            int? tstMin,
+            int? tstMax,
+            double relativeAmount)
         {
             this.m_StratumId = stratumId;
             this.m_Iteration = iteration;
@@ -25,6 +37,9 @@ namespace SyncroSim.STSim
             this.m_StateClassId = stateClassId;
             this.m_AgeMin = ageMin;
             this.m_AgeMax = ageMax;
+            this.m_TSTGroupId = tstGroupId;
+            this.m_TSTMin = tstMin;
+            this.m_TSTMax = tstMax;
             this.m_RelativeAmount = relativeAmount;
         }
 
@@ -104,6 +119,39 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_AgeMax;
+            }
+        }
+
+        /// <summary>
+        /// Gets the TST Transition Group ID
+        /// </summary>
+        public int? TSTGroupId
+        {
+            get
+            {
+                return this.m_TSTGroupId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the TST Min
+        /// </summary>
+        public int? TSTMin
+        {
+            get
+            {
+                return this.m_TSTMin;
+            }
+        }
+
+        /// <summary>
+        /// Gets the TST Max
+        /// </summary>
+        public int? TSTMax
+        {
+            get
+            {
+                return this.m_TSTMax;
             }
         }
 

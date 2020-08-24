@@ -62,44 +62,148 @@ namespace SyncroSim.STSim
         /// Initializes the specified cell's Tst values
         /// </summary>
         /// <param name="simulationCell"></param>
-        /// <remarks></remarks>
-        private void InitializeCellTstValues(Cell simulationCell, int iteration)
+        /// <remarks>
+        /// When initializing the cell TST use the following order of priority:
+        /// 
+        /// If the value for a TST group is specified in a raster use this      
+        /// If the value for a TST group is specified in the initial condition distribution, use this
+        /// If the value for a TST group is specified based on TST randomize data sheet, use this
+        /// If the value for a TST group is not specified set it to Integer Max Value.
+        /// </remarks>
+        private void InitializeCellTstValues(
+            Cell simulationCell, 
+            int iteration, 
+            InitialConditionsDistribution icd, 
+            bool isSpatial)
         {
-            if (simulationCell.TstValues.Count > 0)
+            if (simulationCell.TstValues.Count == 0)
             {
-                //If there is a randomize value for this cell's stratum, then use that value to initialize
-                //every Tst in the TstValues list.  If there is no value for this cell's stratum then set the
-                //initial value to zero.
+                return;
+            }
 
-                foreach (TransitionGroup tg in this.TransitionGroups)
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                tst.TstValue = int.MaxValue;
+            }
+
+            this.TryInitTSTFromRamdomize(simulationCell, iteration);
+
+            if (IsSpatial)
+            {
+                this.TryInitTSTFromRaster(simulationCell, iteration);
+            }
+            else
+            {
+                this.TryInitTSTFromICDistribution(simulationCell, iteration, icd);
+            }
+        }
+
+        private bool TryInitTSTFromRaster(Cell simulationCell, int iteration)
+        {
+            if (this.m_InputRasters.InitialTSTRaster == null)
+            {
+                return false;
+            }
+
+            bool SetValue = false;
+            bool IsWild = (!this.m_InputRasters.InitialTSTRasterTransitionGroupId.HasValue);
+
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                if (IsWild)
                 {
-                    if (simulationCell.TstValues.Contains(tg.TransitionGroupId))
+                    SetValue = true;
+                }
+                else
+                {
+                    int v = this.m_InputRasters.InitialTSTRasterTransitionGroupId.Value;
+
+                    if (tst.TransitionGroupId == v)
                     {
-                        TstRandomize TstRand = this.m_TstRandomizeMap.GetTstRandomize(
-                            tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, 
-                            simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration);
+                        SetValue = true;
+                    }
+                }
 
-                        int TstMaxRandValue = 0;
-                        int TstMinRandValue = 0;
+                if (SetValue)
+                {
+                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
+                }
+            }
 
-                        if (TstRand != null)
-                        {
-                            TstMinRandValue = TstRand.MinInitialTst;
-                            TstMaxRandValue = TstRand.MaxInitialTst;
-                        }
+            return SetValue;
+        }
 
-                        if (TstMaxRandValue == int.MaxValue)
-                        {
-                            TstMaxRandValue = int.MaxValue - 1;
-                        }
+        private bool TryInitTSTFromICDistribution(Cell simulationCell, int iteration, InitialConditionsDistribution icd)
+        {
+            bool RetVal = false;
 
-                        int r = this.m_RandomGenerator.GetNextInteger(TstMinRandValue, TstMaxRandValue + 1);
-                        Tst cellTst = simulationCell.TstValues[tg.TransitionGroupId];
+            if (icd.TSTGroupId.HasValue)
+            {
+                foreach (Tst tst in simulationCell.TstValues)
+                {
+                    if (tst.TransitionGroupId == icd.TSTGroupId.Value)
+                    {
+                        int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
+                        int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
 
-                        cellTst.TstValue = r;
+                        tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
+                        RetVal = true;
                     }
                 }
             }
+            else
+            {
+                if (icd.TSTMin.HasValue || icd.TSTMax.HasValue)
+                {
+                    foreach (Tst tst in simulationCell.TstValues)
+                    {
+                        int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
+                        int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
+
+                        tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
+                        RetVal = true;
+                    }
+                }
+            }
+
+            return RetVal;
+        }
+
+        private bool TryInitTSTFromRamdomize(Cell simulationCell, int iteration)
+        {
+            bool RetVal = false;
+
+            foreach (TransitionGroup tg in this.TransitionGroups)
+            {
+                if (simulationCell.TstValues.Contains(tg.TransitionGroupId))
+                {
+                    TstRandomize TstRand = this.m_TstRandomizeMap.GetTstRandomize(
+                        tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
+                        simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration);
+
+                    int TstMaxRandValue = 0;
+                    int TstMinRandValue = 0;
+
+                    if (TstRand != null)
+                    {
+                        TstMinRandValue = TstRand.MinInitialTst;
+                        TstMaxRandValue = TstRand.MaxInitialTst;
+                    }
+
+                    if (TstMaxRandValue == int.MaxValue)
+                    {
+                        TstMaxRandValue = int.MaxValue - 1;
+                    }
+
+                    int r = this.m_RandomGenerator.GetNextInteger(TstMinRandValue, TstMaxRandValue + 1);
+                    Tst cellTst = simulationCell.TstValues[tg.TransitionGroupId];
+
+                    cellTst.TstValue = r;
+                    RetVal = true;
+                }
+            }
+
+            return RetVal;
         }
 
         /// <summary>

@@ -102,7 +102,7 @@ namespace SyncroSim.STSim
                         continue;
                     }
 
-                    if (attrRef.TSTMin < FinalRef.TSTMin)
+                    if (attrRef.TSTMin > FinalRef.TSTMin)
                     {
                         FinalRef = attrRef;
                     }

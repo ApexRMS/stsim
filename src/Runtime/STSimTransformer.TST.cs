@@ -70,24 +70,13 @@ namespace SyncroSim.STSim
         /// If the value for a TST group is specified based on TST randomize data sheet, use this
         /// If the value for a TST group is not specified set it to Integer Max Value.
         /// </remarks>
-        private void InitializeCellTstValues(Cell simulationCell, int iteration)
+        private void InitializeCellTstValues(
+            Cell simulationCell, 
+            int iteration, 
+            InitialConditionsDistribution icd, 
+            bool isSpatial)
         {
             if (simulationCell.TstValues.Count == 0)
-            {
-                return;
-            }
-
-            if (this.TryInitTSTFromRaster(simulationCell, iteration))
-            {
-                return;
-            }
-
-            //if (this.TryInitTSTFromIC(simulationCell, iteration))
-            //{
-            //    return;
-            //}
-
-            if (this.TryInitTSTFromRamdomize(simulationCell, iteration))
             {
                 return;
             }
@@ -95,6 +84,17 @@ namespace SyncroSim.STSim
             foreach (Tst tst in simulationCell.TstValues)
             {
                 tst.TstValue = int.MaxValue;
+            }
+
+            this.TryInitTSTFromRamdomize(simulationCell, iteration);
+
+            if (IsSpatial)
+            {
+                this.TryInitTSTFromRaster(simulationCell, iteration);
+            }
+            else
+            {
+                this.TryInitTSTFromICDistribution(simulationCell, iteration, icd);
             }
         }
 
@@ -133,10 +133,40 @@ namespace SyncroSim.STSim
             return SetValue;
         }
 
-        private bool TryInitTSTFromIC(Cell simulationCell, int iteration)
+        private bool TryInitTSTFromICDistribution(Cell simulationCell, int iteration, InitialConditionsDistribution icd)
         {
-            Debug.Assert(false);
-            return false;
+            bool RetVal = false;
+
+            if (icd.TSTGroupId.HasValue)
+            {
+                foreach (Tst tst in simulationCell.TstValues)
+                {
+                    if (tst.TransitionGroupId == icd.TSTGroupId.Value)
+                    {
+                        int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
+                        int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
+
+                        tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
+                        RetVal = true;
+                    }
+                }
+            }
+            else
+            {
+                if (icd.TSTMin.HasValue || icd.TSTMax.HasValue)
+                {
+                    foreach (Tst tst in simulationCell.TstValues)
+                    {
+                        int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
+                        int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
+
+                        tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
+                        RetVal = true;
+                    }
+                }
+            }
+
+            return RetVal;
         }
 
         private bool TryInitTSTFromRamdomize(Cell simulationCell, int iteration)

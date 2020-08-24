@@ -752,9 +752,9 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="TimeSinceTransitionRandomize" displayName="Time Since Transition Randomize" dataScope="Scenario">
+        <datafeed name="TimeSinceTransitionRandomize" displayName="Initial TST Randomize" dataScope="Scenario">
           <datasheets>
-            <datasheet name="TimeSinceTransitionRandomize" displayName="Time Since Transition Randomize">
+            <datasheet name="TimeSinceTransitionRandomize" displayName="Initial TST Randomize">
               <columns>
                 <column name="TimeSinceTransitionRandomizeID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -1532,6 +1532,8 @@
       <group name="InitialConditions" displayName="Initial Conditions">
         <item name="InitialConditionsNonSpatial" displayName="Non Spatial"/>
         <item name="InitialConditionsSpatial" displayName="Spatial"/>
+        <item name="TimeSinceTransitionRandomize"/>
+        <item name="InitialTSTSpatial"/>
       </group>
       <item name="TransitionTarget"/>
       <group name="OutputOptions" displayName="Output Options">
@@ -1557,11 +1559,7 @@
         </group>
         <item name="TransitionOrder" displayName="Transitions - Order"/>
         <item name="TransitionTargetPrioritization" displayName="Transitions - Target Prioritization"/>
-        <group name="TSTGroup" displayName="Time Since Transition">
-          <item name="TimeSinceTransitionGroup"/>
-          <item name="TimeSinceTransitionRandomize"/>
-          <item name="InitialTSTSpatial"/>          
-        </group>
+        <item name="TimeSinceTransitionGroup"/>        
         <group name="Attributes">
           <item name="StateAttributeValue"/>
           <item name="TransitionAttributeValue"/>

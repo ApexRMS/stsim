@@ -2104,7 +2104,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                this.InitializeCellTstValues(c, iteration);
+                this.InitializeCellTstValues(c, iteration, null, true);
 
 #if DEBUG
                 this.VALIDATE_INITIALIZED_CELL(c, iteration, this.m_TimestepZero);

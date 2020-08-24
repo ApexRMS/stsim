@@ -48,7 +48,7 @@ namespace SyncroSim.STSim
             simulationCell.SecondaryStratumId = icd.SecondaryStratumId;
             simulationCell.TertiaryStratumId = icd.TertiaryStratumId;
 
-            this.InitializeCellTstValues(simulationCell, iteration);
+            this.InitializeCellTstValues(simulationCell, iteration, icd, false);
 
 #if DEBUG
             this.VALIDATE_INITIALIZED_CELL(simulationCell, iteration, this.m_TimestepZero);

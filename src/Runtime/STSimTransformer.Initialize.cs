@@ -217,6 +217,8 @@ namespace SyncroSim.STSim
             this.m_SummaryTransitionAttributeOutputAges = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME]);
             this.m_CreateSummaryExternalVariableOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME]);
             this.m_SummaryExternalVariableOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateSummaryTSTOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME]);
+            this.m_SummaryTSTOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_TIMESTEPS_COLUMN_NAME]);
             this.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME]);
             this.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME]);
 

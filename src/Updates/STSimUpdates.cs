@@ -445,6 +445,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000112(store);   
             }
+
+            if (currentSchemaVersion < 113)
+            {
+                STSIM0000113(store);
+            }
         }
 
         /// <summary>
@@ -3108,7 +3113,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="store"></param>
         /// <remarks>
-        /// This update adds a SummaryOutputExternalVariables column to the stsim_OutputOptions table
+        /// This update adds External Variable columns to the stsim_OutputOptions table
         /// </remarks>
         private static void STSIM0000109(DataStore store)
         {
@@ -3320,6 +3325,22 @@ namespace SyncroSim.STSim
 
                 store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
                 UpdateProvider.CreateIndex(store, "stsim_InitialConditionsNonSpatialDistribution", new[] { "ScenarioID" });
+            }
+        }
+
+        /// <summary>
+        /// STSIM0000113
+        /// </summary>
+        /// <param name="store"></param>
+        /// <remarks>
+        /// This update adds TST columns to the stsim_OutputOptions table
+        /// </remarks>
+        private static void STSIM0000113(DataStore store)
+        {
+            if (store.TableExists("stsim_OutputOptions"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputTST INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputTSTTimesteps INTEGER");
             }
         }
     }

@@ -343,6 +343,8 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME = "SummaryOutputTAAges";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME = "SummaryOutputEV";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_EV_TIMESTEPS_COLUMN_NAME = "SummaryOutputEVTimesteps";
+        public const string DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME = "SummaryOutputTST";
+        public const string DATASHEET_OO_SUMMARY_OUTPUT_TST_TIMESTEPS_COLUMN_NAME = "SummaryOutputTSTTimesteps";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME = "SummaryOutputOmitSS";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME = "SummaryOutputOmitTS";
 

@@ -40,6 +40,9 @@ namespace SyncroSim.STSim
         private bool m_CreateSummaryExternalVariableOutput;
         private int m_SummaryExternalVariableOutputTimesteps;
 
+        private bool m_CreateSummaryTSTOutput;
+        private int m_SummaryTSTOutputTimesteps;
+
         private bool m_SummaryOmitSecondaryStrata;
         private bool m_SummaryOmitTertiaryStrata;
 

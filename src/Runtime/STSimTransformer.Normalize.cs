@@ -111,6 +111,7 @@ namespace SyncroSim.STSim
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Summary state attributes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Summary transition attributes", MaxTimestep);
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_TIMESTEPS_COLUMN_NAME, "Summary external variables", MaxTimestep);
+            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_TIMESTEPS_COLUMN_NAME, "Summary TST", MaxTimestep);
         }
 
         private void SetSpatialOutputDefaults(int MaxTimestep)
@@ -367,7 +368,8 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_COLUMN_NAME] != DBNull.Value || 
                 dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME] != DBNull.Value || 
                 dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME] != DBNull.Value)
+                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME] != DBNull.Value ||
+                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME] != DBNull.Value)
             {
                 return true;
             }

@@ -41,6 +41,8 @@ namespace SyncroSim.STSim
             this.SetCheckBoxBinding(this.CheckBoxSummaryTAAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryEV, Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME);
             this.SetTextBoxBinding(this.TextBoxSummaryEVTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxSummaryTST, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxSummaryTSTTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_TIMESTEPS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryOmitSS, Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_SS_COLUMN_NAME);
             this.SetCheckBoxBinding(this.CheckBoxSummaryOmitTS, Strings.DATASHEET_OO_SUMMARY_OUTPUT_OMIT_TS_COLUMN_NAME);
 
@@ -90,6 +92,7 @@ namespace SyncroSim.STSim
             this.LabelSummarySATimesteps.Text = NewTimestepsText;
             this.LabelSummaryTATimesteps.Text = NewTimestepsText;
             this.LabelSummaryEVTimesteps.Text = NewTimestepsText;
+            this.LabelSummaryTSTTimesteps.Text = NewTimestepsText;
         }
 
         private void EnableControls()
@@ -101,6 +104,7 @@ namespace SyncroSim.STSim
             this.TextBoxSummarySATimesteps.Enabled = this.CheckBoxSummarySA.Checked;
             this.TextBoxSummaryTATimesteps.Enabled = this.CheckBoxSummaryTA.Checked;
             this.TextBoxSummaryEVTimesteps.Enabled = this.CheckBoxSummaryEV.Checked;
+            this.TextBoxSummaryTSTTimesteps.Enabled = this.CheckBoxSummaryTST.Checked;
 
             //Timesteps labels
             this.LabelSummarySCTimesteps.Enabled = this.CheckBoxSummarySC.Checked;
@@ -109,6 +113,7 @@ namespace SyncroSim.STSim
             this.LabelSummarySATimesteps.Enabled = this.CheckBoxSummarySA.Checked;
             this.LabelSummaryTATimesteps.Enabled = this.CheckBoxSummaryTA.Checked;
             this.LabelSummaryEVTimesteps.Enabled = this.CheckBoxSummaryEV.Checked;
+            this.LabelSummaryTSTTimesteps.Enabled = this.CheckBoxSummaryTST.Checked;
 
             //Secondary Checkboxes
             this.CheckBoxSummarySCZeroValues.Enabled = this.CheckBoxSummarySC.Checked;
@@ -134,6 +139,7 @@ namespace SyncroSim.STSim
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummarySA, this.TextBoxSummarySATimesteps);
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummaryTA, this.TextBoxSummaryTATimesteps);
             this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummaryEV, this.TextBoxSummaryEVTimesteps);
+            this.SetDefaultTimestepsIfCondition(checkBox, this.CheckBoxSummaryTST, this.TextBoxSummaryTSTTimesteps);
 
             this.m_SettingCheckBox = true;
             this.SetCheckBoxValueIfCondition(checkBox, this.CheckBoxSummarySC, this.CheckBoxSummarySCAges, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME);

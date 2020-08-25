@@ -473,7 +473,9 @@
                 <column name="SummaryOutputOmitTS" dataType="Boolean" displayName="Summary Omit TS"/>
                 <column name="SummaryOutputEV" dataType="Boolean" displayName="Summary EV"/>    
                 <column name="SummaryOutputEVTimesteps" displayName="Summary EV Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>              
-              </columns>
+                <column name="SummaryOutputTST" dataType="Boolean" displayName="Summary TST"/>    
+                <column name="SummaryOutputTSTTimesteps" displayName="Summary TST Timesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>                            
+            </columns>
             </datasheet>
           </datasheets>
         </datafeed>
@@ -533,7 +535,21 @@
               </columns>
             </datasheet>
           </datasheets>
-        </datafeed>                           
+        </datafeed>
+        <datafeed name="OutputOptionsTSTTransitionGroup" displayName="TST Transition Groups" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="OutputOptionsTSTTransitionGroup" displayName="TST Transition Groups">
+              <columns>
+                <column name="TransitionTargetPrioritizationID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+              </columns>
+              <validations>
+                <validation validationType="Unique" columns="TransitionGroupID"/>
+              </validations>
+            </datasheet>
+          </datasheets>
+        </datafeed>     
         <datafeed name="TransitionTarget" displayName="Transition Targets" dataScope="Scenario">
           <datasheets>
             <datasheet name="TransitionTarget" displayName="Transition Targets" className="SyncroSim.STSim.TransitionTargetDataSheet" classAssembly="SyncroSim.STSim">
@@ -1539,7 +1555,8 @@
       <group name="OutputOptions" displayName="Output Options">
         <item name="OutputOptions" displayName="Tabular"/> 
         <item name="OutputOptionsSpatial" displayName="Spatial"/>         
-        <item name="OutputOptionsSpatialAverage" displayName="Spatial Average"/>         
+        <item name="OutputOptionsSpatialAverage" displayName="Spatial Average"/>
+        <item name="OutputOptionsTSTTransitionGroup"/>
       </group>
       <group name="Advanced">
         <item name="TransitionMultiplierValue" displayName="Transitions - Multipliers"/>
@@ -1592,7 +1609,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="112"
+    schemaVersion="113"
     minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

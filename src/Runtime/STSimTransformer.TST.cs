@@ -100,14 +100,15 @@ namespace SyncroSim.STSim
                 return false;
             }
 
-            bool SetValue = false;
+            bool AtLeastOne = false;
             bool IsWild = (!this.m_InputRasters.InitialTSTRasterTransitionGroupId.HasValue);
 
             foreach (Tst tst in simulationCell.TstValues)
             {
                 if (IsWild)
                 {
-                    SetValue = true;
+                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
+                    AtLeastOne = true;
                 }
                 else
                 {
@@ -115,17 +116,13 @@ namespace SyncroSim.STSim
 
                     if (tst.TransitionGroupId == v)
                     {
-                        SetValue = true;
+                        tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
+                        AtLeastOne = true;
                     }
-                }
-
-                if (SetValue)
-                {
-                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
                 }
             }
 
-            return SetValue;
+            return AtLeastOne;
         }
 
         private bool TryInitTSTFromICDistribution(Cell simulationCell, int iteration, InitialConditionsDistribution icd)

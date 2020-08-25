@@ -62,14 +62,9 @@ namespace SyncroSim.STSim
         /// Initializes the specified cell's Tst values
         /// </summary>
         /// <param name="simulationCell"></param>
-        /// <remarks>
-        /// When initializing the cell TST use the following order of priority:
-        /// 
-        /// If the value for a TST group is specified in a raster use this      
-        /// If the value for a TST group is specified in the initial condition distribution, use this
-        /// If the value for a TST group is specified based on TST randomize data sheet, use this
-        /// If the value for a TST group is not specified set it to Integer Max Value.
-        /// </remarks>
+        /// <param name="iteration"></param>
+        /// <param name="icd"></param>
+        /// <param name="isSpatial"></param>
         private void InitializeCellTstValues(
             Cell simulationCell, 
             int iteration, 

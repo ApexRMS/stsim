@@ -81,89 +81,24 @@ namespace SyncroSim.STSim
                 tst.TstValue = int.MaxValue;
             }
 
-            this.TryInitTSTFromRamdomize(simulationCell, iteration);
+            this.InitTSTFromRamdomize(simulationCell, iteration);
 
             if (IsSpatial)
             {
-                this.TryInitTSTFromRaster(simulationCell, iteration);
+                this.InitTSTFromRaster(simulationCell, iteration);
             }
             else
             {
-                this.TryInitTSTFromICDistribution(simulationCell, iteration, icd);
+                this.InitTSTFromICDistribution(simulationCell, iteration, icd);
             }
         }
 
-        private bool TryInitTSTFromRaster(Cell simulationCell, int iteration)
+        private void InitTSTFromRamdomize(Cell simulationCell, int iteration)
         {
-            if (this.m_InputRasters.InitialTSTRaster == null)
+            if (!this.m_TstRandomizeMap.HasItems)
             {
-                return false;
+                return;
             }
-
-            bool AtLeastOne = false;
-            bool IsWild = (!this.m_InputRasters.InitialTSTRasterTransitionGroupId.HasValue);
-
-            foreach (Tst tst in simulationCell.TstValues)
-            {
-                if (IsWild)
-                {
-                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
-                    AtLeastOne = true;
-                }
-                else
-                {
-                    int v = this.m_InputRasters.InitialTSTRasterTransitionGroupId.Value;
-
-                    if (tst.TransitionGroupId == v)
-                    {
-                        tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
-                        AtLeastOne = true;
-                    }
-                }
-            }
-
-            return AtLeastOne;
-        }
-
-        private bool TryInitTSTFromICDistribution(Cell simulationCell, int iteration, InitialConditionsDistribution icd)
-        {
-            bool RetVal = false;
-
-            if (icd.TSTGroupId.HasValue)
-            {
-                foreach (Tst tst in simulationCell.TstValues)
-                {
-                    if (tst.TransitionGroupId == icd.TSTGroupId.Value)
-                    {
-                        int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
-                        int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
-
-                        tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
-                        RetVal = true;
-                    }
-                }
-            }
-            else
-            {
-                if (icd.TSTMin.HasValue || icd.TSTMax.HasValue)
-                {
-                    foreach (Tst tst in simulationCell.TstValues)
-                    {
-                        int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
-                        int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
-
-                        tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
-                        RetVal = true;
-                    }
-                }
-            }
-
-            return RetVal;
-        }
-
-        private bool TryInitTSTFromRamdomize(Cell simulationCell, int iteration)
-        {
-            bool RetVal = false;
 
             foreach (TransitionGroup tg in this.TransitionGroups)
             {
@@ -173,29 +108,61 @@ namespace SyncroSim.STSim
                         tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
                         simulationCell.TertiaryStratumId, simulationCell.StateClassId, iteration);
 
-                    int TstMaxRandValue = 0;
-                    int TstMinRandValue = 0;
-
                     if (TstRand != null)
                     {
-                        TstMinRandValue = TstRand.MinInitialTst;
-                        TstMaxRandValue = TstRand.MaxInitialTst;
+                        int r = this.m_RandomGenerator.GetNextInteger(TstRand.MinInitialTst, TstRand.MaxInitialTst);
+                        Tst cellTst = simulationCell.TstValues[tg.TransitionGroupId];
+
+                        cellTst.TstValue = r;
                     }
-
-                    if (TstMaxRandValue == int.MaxValue)
-                    {
-                        TstMaxRandValue = int.MaxValue - 1;
-                    }
-
-                    int r = this.m_RandomGenerator.GetNextInteger(TstMinRandValue, TstMaxRandValue + 1);
-                    Tst cellTst = simulationCell.TstValues[tg.TransitionGroupId];
-
-                    cellTst.TstValue = r;
-                    RetVal = true;
                 }
             }
+        }
 
-            return RetVal;
+        private void InitTSTFromRaster(Cell simulationCell, int iteration)
+        {
+            if (this.m_InputRasters.InitialTSTRaster == null)
+            {
+                return;
+            }
+
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                if (!this.m_InputRasters.InitialTSTRasterTransitionGroupId.HasValue)
+                {
+                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
+                }
+                else
+                {
+                    int v = this.m_InputRasters.InitialTSTRasterTransitionGroupId.Value;
+
+                    if (tst.TransitionGroupId == v)
+                    {
+                        tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
+                    }
+                }
+            }
+        }
+
+        private void InitTSTFromICDistribution(Cell simulationCell, int iteration, InitialConditionsDistribution icd)
+        {
+            if (!icd.TSTGroupId.HasValue && !icd.TSTMin.HasValue && !icd.TSTMax.HasValue)
+            {
+                return;
+            }
+
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                if (icd.TSTGroupId.HasValue && icd.TSTGroupId.Value != tst.TransitionGroupId)
+                {
+                    continue;
+                }
+
+                int min = icd.TSTMin.HasValue ? icd.TSTMin.Value : 0;
+                int max = icd.TSTMax.HasValue ? icd.TSTMax.Value : int.MaxValue;
+
+                tst.TstValue = this.m_RandomGenerator.GetNextInteger(min, max);
+            }
         }
 
         /// <summary>
@@ -211,7 +178,8 @@ namespace SyncroSim.STSim
             //Time-Since-Transition groups then return True.
 
             TstTransitionGroup tstgroup = this.m_TstTransitionGroupMap.GetGroup(
-                tr.TransitionTypeId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId);
+                tr.TransitionTypeId, simulationCell.StratumId, 
+                simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId);
 
             if (tstgroup == null)
             {

@@ -797,7 +797,7 @@
                 <column name="TSTFileName" displayName="TST File Name" dataType="String" isExternalFile="True" isRaster="True" allowDbNull="False"/>
               </columns>
               <validations>
-                <validation validationType="Unique" columns="Iteration"/>
+                <validation validationType="Unique" columns="Iteration|TransitionGroupID"/>
               </validations>
             </datasheet>
           </datasheets>

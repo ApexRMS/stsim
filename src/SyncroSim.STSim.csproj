@@ -155,6 +155,12 @@
     <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.Designer.cs">
       <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFeedViews\TSTTypeDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TSTTypeDataFeedView.Designer.cs">
+      <DependentUpon>TSTTypeDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
     <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
@@ -610,6 +616,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionTypeGroupDataFeedView.resx">
       <DependentUpon>TransitionTypeGroupDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TSTTypeDataFeedView.resx">
+      <DependentUpon>TSTTypeDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChooseStateClassForm.resx">
       <DependentUpon>ChooseStateClassForm.cs</DependentUpon>

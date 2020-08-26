@@ -1,34 +1,31 @@
-﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
-
-namespace SyncroSim.STSim
+﻿namespace SyncroSim.STSim
 {
-    internal partial class AgeTypeDataFeedView : SyncroSim.Core.Forms.DataFeedView
+    partial class TSTTypeDataFeedView
     {
-        //UserControl overrides dispose to clean up the component list.
-        [System.Diagnostics.DebuggerNonUserCode()]
-        protected override void Dispose(bool disposing)
-        {
-            try
-            {
-                if (disposing && components != null)
-                {
-                    components.Dispose();
-                }
-            }
-            finally
-            {
-                base.Dispose(disposing);
-            }
-        }
-
-        //Required by the Windows Form Designer
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        //NOTE: The following procedure is required by the Windows Form Designer
-        //It can be modified using the Windows Form Designer.  
-        //Do not modify it using the code editor.
-        [System.Diagnostics.DebuggerStepThrough()]
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             this.TableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
@@ -52,24 +49,24 @@ namespace SyncroSim.STSim
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxMaximum, 1, 1);
             this.TableLayoutPanelMain.Controls.Add(this.TextBoxFrequency, 1, 0);
             this.TableLayoutPanelMain.Location = new System.Drawing.Point(4, 4);
-            this.TableLayoutPanelMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TableLayoutPanelMain.Margin = new System.Windows.Forms.Padding(4);
             this.TableLayoutPanelMain.Name = "TableLayoutPanelMain";
             this.TableLayoutPanelMain.RowCount = 2;
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TableLayoutPanelMain.Size = new System.Drawing.Size(600, 62);
-            this.TableLayoutPanelMain.TabIndex = 6;
+            this.TableLayoutPanelMain.TabIndex = 7;
             // 
             // Label1
             // 
             this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(81, 6);
+            this.Label1.Location = new System.Drawing.Point(79, 6);
             this.Label1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(114, 17);
+            this.Label1.Size = new System.Drawing.Size(116, 17);
             this.Label1.TabIndex = 0;
-            this.Label1.Text = "Age types every:";
+            this.Label1.Text = "TST types every:";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LabelTimesteps
@@ -86,18 +83,18 @@ namespace SyncroSim.STSim
             // 
             this.Label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(36, 37);
+            this.Label2.Location = new System.Drawing.Point(26, 37);
             this.Label2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 0);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(159, 17);
+            this.Label2.Size = new System.Drawing.Size(169, 17);
             this.Label2.TabIndex = 3;
-            this.Label2.Text = "Maximum reporting age:";
+            this.Label2.Text = "Maximum reporting value:";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TextBoxMaximum
             // 
             this.TextBoxMaximum.Location = new System.Drawing.Point(203, 35);
-            this.TextBoxMaximum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TextBoxMaximum.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxMaximum.Name = "TextBoxMaximum";
             this.TextBoxMaximum.Size = new System.Drawing.Size(99, 22);
             this.TextBoxMaximum.TabIndex = 4;
@@ -106,25 +103,27 @@ namespace SyncroSim.STSim
             // TextBoxFrequency
             // 
             this.TextBoxFrequency.Location = new System.Drawing.Point(203, 4);
-            this.TextBoxFrequency.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TextBoxFrequency.Margin = new System.Windows.Forms.Padding(4);
             this.TextBoxFrequency.Name = "TextBoxFrequency";
             this.TextBoxFrequency.Size = new System.Drawing.Size(99, 22);
             this.TextBoxFrequency.TabIndex = 1;
             this.TextBoxFrequency.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // AgeTypeDataFeedView
+            // TSTTypeDataFeedView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TableLayoutPanelMain);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "AgeTypeDataFeedView";
-            this.Size = new System.Drawing.Size(608, 68);
+            this.Name = "TSTTypeDataFeedView";
+            this.Size = new System.Drawing.Size(609, 72);
             this.TableLayoutPanelMain.ResumeLayout(false);
             this.TableLayoutPanelMain.PerformLayout();
             this.ResumeLayout(false);
 
         }
+
+        #endregion
+
         internal System.Windows.Forms.TableLayoutPanel TableLayoutPanelMain;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Label LabelTimesteps;

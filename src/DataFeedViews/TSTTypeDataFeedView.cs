@@ -9,9 +9,9 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    internal partial class AgeTypeDataFeedView
+    public partial class TSTTypeDataFeedView : DataFeedView
     {
-        public AgeTypeDataFeedView()
+        public TSTTypeDataFeedView()
         {
             InitializeComponent();
         }
@@ -20,8 +20,8 @@ namespace SyncroSim.STSim
         {
             base.LoadDataFeed(dataFeed);
 
-            this.SetTextBoxBinding(this.TextBoxFrequency, Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxMaximum, Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxFrequency, Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxMaximum, Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME);
 
             this.RefreshBoundControls();
             this.AddStandardCommands();
@@ -41,11 +41,11 @@ namespace SyncroSim.STSim
                 return true;
             }
 
-            if (!ChartingUtilities.HasAgeClassUpdateTag(this.Project))
+            if (!ChartingUtilities.HasTSTClassUpdateTag(this.Project))
             {
                 if (MessageBox.Show(
-                    MessageStrings.PROMPT_AGE_TYPE_CHANGE, 
-                    "Age Type", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    MessageStrings.PROMPT_TST_TYPE_CHANGE,
+                    "TST Type", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 {
                     return false;
                 }

@@ -27,8 +27,6 @@ namespace SyncroSim.STSim
         private StochasticTimeRaster m_StateClassRaster;
         private StochasticTimeRaster m_AgeRaster;
         private StochasticTimeRaster m_DEMRaster;
-        private StochasticTimeRaster m_InitialTSTRaster;
-        private int? m_InitialTSTRasterTransitionGroupId;
 
         public int Width
         {
@@ -146,18 +144,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int[] InitialTSTCells
-        {
-            get
-            {
-                return this.m_InitialTSTRaster.IntCells;
-            }
-            set
-            {
-                this.m_InitialTSTRaster.IntCells = value;
-            }
-        }
-
         public string Projection
         {
             get
@@ -266,14 +252,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        public string InitialTSTName
-        {
-            get
-            {
-                return this.m_InitialTSTRaster.FileName;
-            }
-        }
-
         public StochasticTimeRaster PrimaryStratumRaster
         {
             get
@@ -345,31 +323,7 @@ namespace SyncroSim.STSim
                 m_DEMRaster = value;
             }
         }
-
-        public StochasticTimeRaster InitialTSTRaster
-        {
-            get
-            {
-                return m_InitialTSTRaster;
-            }
-            set
-            {
-                m_InitialTSTRaster = value;
-            }
-        }
-
-        public int? InitialTSTRasterTransitionGroupId
-        {
-            get
-            {
-                return this.m_InitialTSTRasterTransitionGroupId;
-            }
-            set
-            {
-                this.m_InitialTSTRasterTransitionGroupId = value;
-            }
-        }
-
+        
         public void SetMetadata(StochasticTimeRaster raster)
         {
             this.m_Width = raster.Width;

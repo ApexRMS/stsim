@@ -65,6 +65,14 @@ namespace SyncroSim.STSim
             }
         }
 
+        public Scenario Scenario
+        {
+            get
+            {
+                return this.m_Scenario;
+            }
+        }
+
         protected static void ThrowDuplicateItemException()
         {
             throw new STSimMapDuplicateItemException(

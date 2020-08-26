@@ -3,10 +3,10 @@
 
 using System;
 using System.Data;
-using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
+using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
@@ -121,25 +121,18 @@ namespace SyncroSim.STSim
 
         private void InitTSTFromRaster(Cell simulationCell, int iteration)
         {
-            if (this.m_InputRasters.InitialTSTRaster == null)
+            if (!this.m_InitialTstSpatialMap.HasItems)
             {
                 return;
             }
 
             foreach (Tst tst in simulationCell.TstValues)
             {
-                if (!this.m_InputRasters.InitialTSTRasterTransitionGroupId.HasValue)
-                {
-                    tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
-                }
-                else
-                {
-                    int v = this.m_InputRasters.InitialTSTRasterTransitionGroupId.Value;
+                StochasticTimeRaster r = this.m_InitialTstSpatialMap.GetRaster(tst.TransitionGroupId, iteration);
 
-                    if (tst.TransitionGroupId == v)
-                    {
-                        tst.TstValue = this.m_InputRasters.InitialTSTCells[simulationCell.CellId];
-                    }
+                if (r != null)
+                {
+                    tst.TstValue = r.IntCells[simulationCell.CellId];
                 }
             }
         }

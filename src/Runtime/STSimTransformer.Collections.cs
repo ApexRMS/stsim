@@ -1350,7 +1350,7 @@ namespace SyncroSim.STSim
             }
 
             Debug.Assert(this.m_InitialTstSpatialMap == null);
-            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.m_InitialTSTSpatialRecords, this.ResultScenario);
+            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.m_InitialTSTSpatialRecords, this.ResultScenario, this.m_InputRasters);
         }
 
         /// <summary>

@@ -37,6 +37,16 @@ namespace SyncroSim.STSim
             "This can take several minutes because all result scenarios for the current project will also be updated.\n\n" +
             "Are you sure you want to continue?";
 
+        public const string PROMPT_TST_TYPE_CHANGE =
+            "Changing your TST Type data will automatically save this library the next time you refresh your charts.  " +
+            "This can take several minutes because all result scenarios for the current project will also be updated.\n\n" +
+            "Are you sure you want to continue?";
+
+        public const string PROMPT_TST_GROUP_CHANGE =
+            "Changing your TST Group data will automatically save this library the next time you refresh your charts.  " +
+            "This can take several minutes because all result scenarios for the current project will also be updated.\n\n" +
+            "Are you sure you want to continue?";
+
         //Status Messages
         public const string STATUS_USING_DEFAULT_MAX_TIMESTEP_WARNING = "The number of {0}s was not specified.  Using default.";
         public const string STATUS_USING_DEFAULT_MAX_ITERATIONS_WARNING = "The number of iterations was not specified.  Using default.";

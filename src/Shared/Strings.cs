@@ -6,7 +6,8 @@ namespace SyncroSim.STSim
     internal static class Strings
     {
         //General
-        public const string AGE_VALIDATION_TABLE_NAME = "stsim_AgeClass";
+        public const string AGE_CLASS_VALIDATION_TABLE_NAME = "stsim_AgeClass";
+        public const string TST_CLASS_VALIDATION_TABLE_NAME = "stsim_TSTClass";
         public const string STOCHASTIC_TIME_CHART_ANALYZER_TABLE_DATA_KEY = "StochasticTimeChartTableData";
         public const string CLIPBOARD_FORMAT_TRANSITION_DIAGRAM = "DataSheetTransitionDiagram";
 
@@ -56,12 +57,13 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME = "TransitionMultiplierTypeID";
         public const string DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME = "StateAttributeTypeID";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME = "TransitionAttributeTypeID";
+        public const string DATASHEET_TST_GROUP_ID_COLUMN_NAME = "TSTGroupId";
         public const string DATASHEET_AGE_MIN_COLUMN_NAME = "AgeMin";
         public const string DATASHEET_AGE_MAX_COLUMN_NAME = "AgeMax";
         public const string DATASHEET_AGE_CLASS_COLUMN_NAME = "AgeClass";
-        public const string DATASHEET_TST_GROUP_ID_COLUMN_NAME = "TSTGroupId";
         public const string DATASHEET_TST_MIN_COLUMN_NAME = "TSTMin";
         public const string DATASHEET_TST_MAX_COLUMN_NAME = "TSTMax";
+        public const string DATASHEET_TST_CLASS_COLUMN_NAME = "TSTClass";
         public const string DATASHEET_EVENT_ID_COLUMN_NAME = "EventID";
         public const string DATASHEET_SIZE_CLASS_ID_COLUMN_NAME = "SizeClassID";
         public const string DATASHEET_COLOR_COLUMN_NAME = "Color";
@@ -122,6 +124,15 @@ namespace SyncroSim.STSim
         //Age Group
         public const string DATASHEET_AGE_GROUP_NAME = "stsim_AgeGroup";
         public const string DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME = "MaximumAge";
+
+        //TST Type
+        public const string DATASHEET_TST_TYPE_NAME = "stsim_TSTType";
+        public const string DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME = "Frequency";
+        public const string DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME = "MaximumTST";
+
+        //TST Group
+        public const string DATASHEET_TST_GROUP_NAME = "stsim_TSTGroup";
+        public const string DATASHEET_TST_GROUP_MAXIMUM_COLUMN_NAME = "MaximumTST";
 
         //Size Class
         public const string DATASHEET_SIZE_CLASS_NAME = "stsim_SizeClass";
@@ -231,7 +242,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TRANSITION_ORDER_ORDER_COLUMN_NAME = "Order";
 
         //Time Since Transition Group
-        public const string DATASHEET_TST_GROUP_NAME = "stsim_TimeSinceTransitionGroup";
+        public const string DATASHEET_TST_GROUP_VALUE_NAME = "stsim_TimeSinceTransitionGroup";
 
         //Time Since Transition Randomize
         public const string DATASHEET_TST_RANDOMIZE_NAME = "stsim_TimeSinceTransitionRandomize";
@@ -432,6 +443,9 @@ namespace SyncroSim.STSim
         //OutputTransitionAttribute
         public const string DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME = "stsim_OutputTransitionAttribute";
 
+        //OutputTST
+        public const string DATASHEET_OUTPUT_TST_NAME = "stsim_OutputTST";
+
         //Output External Variable Value Data Feed
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME = "stsim_OutputExternalVariableValue";
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeID";
@@ -444,5 +458,6 @@ namespace SyncroSim.STSim
         public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportionVariable";
         public const string TRANSITION_AMOUNT_VARIABLE_NAME = "stsim_TransitionNormalVariable";
         public const string TRANSITION_PROPORTION_VARIABLE_NAME = "stsim_TransitionProportionVariable";
+        public const string TST_VARIABLE_NAME = "stsim_TSTVariable";
     }
 }

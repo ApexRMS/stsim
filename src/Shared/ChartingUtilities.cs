@@ -49,7 +49,8 @@ namespace SyncroSim.STSim
                     string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
 
                     dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] = 
-                        Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture) / dict[k];
+                        Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], 
+                        CultureInfo.InvariantCulture) / dict[k];
                 }
             }
 
@@ -91,7 +92,8 @@ namespace SyncroSim.STSim
                             string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
 
                             dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] = 
-                                Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], CultureInfo.InvariantCulture) / dict[k];
+                                Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME], 
+                                CultureInfo.InvariantCulture) / dict[k];
                         }
                     }
                 }
@@ -118,7 +120,7 @@ namespace SyncroSim.STSim
             return dt;
         }
 
-        public static Dictionary<string, double> CreateAmountDictionary(
+        private static Dictionary<string, double> CreateAmountDictionary(
             Scenario scenario, 
             ChartDescriptor descriptor, 
             DataStore store)
@@ -297,18 +299,15 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Determines if any data exists for the specified data sheet
-        /// </summary>
-        /// <param name="store"></param>
-        /// <param name="dataSheet"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private static bool AnyDataExists(DataStore store, DataSheet dataSheet)
+        private static bool OutputDataExists(
+            DataStore store,
+            string datasheetName,
+            string columnName,
+            Scenario scenario)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, 
-                "SELECT COUNT(ScenarioID) FROM {0} WHERE ScenarioID = {1}", 
-                dataSheet.Name, dataSheet.Scenario.Id);
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT COUNT({0}) FROM {1} WHERE ScenarioID = {2}",
+                columnName, datasheetName, scenario.Id);
 
             if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) == 0)
             {
@@ -320,48 +319,152 @@ namespace SyncroSim.STSim
             }
         }
 
-        /// <summary>
-        /// Determines if any age data exists for the specified scenario
-        /// </summary>
-        /// <param name="store"></param>
-        /// <param name="dataSheet"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private static bool AgeDataExists(DataStore store, DataSheet dataSheet)
+        private static string GetChartCacheTag(ChartDescriptor descriptor)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, 
-                "SELECT COUNT(AgeMin) FROM {0} WHERE ScenarioID = {1}", 
-                dataSheet.Name, dataSheet.Scenario.Id);
-
-            if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) == 0)
+            if (DescriptorHasAgeReference(descriptor))
             {
-                return false;
+                Debug.Assert(!DescriptorHasTSTReference(descriptor));
+                return Constants.AGE_QUERY_CACHE_TAG;
+            }
+            else if (DescriptorHasTSTReference(descriptor))
+            {
+                Debug.Assert(!DescriptorHasAgeReference(descriptor));
+                return Constants.TST_QUERY_CACHE_TAG;
             }
             else
             {
-                return true;
+                return null;
             }
         }
 
-        /// <summary>
-        /// Determines if the current age classes match the data
-        /// </summary>
-        /// <param name="store"></param>
-        /// <param name="dataSheet"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Mismatched age bins which can occur due to a difference in the current age configuration
-        /// and the age data that was generated when the scenario was run.
-        /// </remarks>
-        private static bool AgeClassesMatchData(DataStore store, DataSheet dataSheet)
+        // =======================================================================================
+        // Descriptor references
+        // =======================================================================================
+
+        private static bool DescriptorHasReference(ChartDescriptor descriptor, string columnName)
         {
-            //If any AgeClass values are NULL then the AgeMin and AgeMax did not fall into an AgeClass bin.
+            if (descriptor.IncludeDataFilter != null &&
+                descriptor.IncludeDataFilter.Contains(columnName))
+            {
+                return true;
+            }
+
+            if (descriptor.DisaggregateFilter != null &&
+                descriptor.DisaggregateFilter.Contains(columnName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool DescriptorHasAgeReference(ChartDescriptor descriptor)
+        {
+            return DescriptorHasReference(descriptor, Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
+        }
+
+        private static bool DescriptorHasTSTReference(ChartDescriptor descriptor)
+        {
+            return DescriptorHasReference(descriptor, Strings.DATASHEET_TST_CLASS_COLUMN_NAME);
+        }
+
+        // =======================================================================================
+        // Cache entries
+        // =======================================================================================
+
+        private static void DeleteCacheEntriesWithTag(Scenario scenario, string tag)
+        {
+            string CacheFolder = StochasticTime.ChartCache.GetCacheFolderName(scenario);
+
+            foreach (string f in Directory.GetFiles(CacheFolder))
+            {
+                if (f.EndsWith(tag, StringComparison.Ordinal))
+                {
+                    File.Delete(f);
+                }
+            }
+        }
+
+        private static void DeleteAgeRelatedCacheEntries(Scenario scenario)
+        {
+            DeleteCacheEntriesWithTag(scenario, Constants.AGE_QUERY_CACHE_TAG);
+        }
+
+        private static void DeleteTSTRelatedCacheEntries(Scenario scenario)
+        {
+            DeleteCacheEntriesWithTag(scenario, Constants.TST_QUERY_CACHE_TAG);
+        }
+
+        // =======================================================================================
+        // Class update tag
+        // =======================================================================================
+
+        private static void SetClassUpdateTag(Project project, string tag)
+        {
+            if (!project.Tags.Contains(tag))
+            {
+                project.Tags.Add(new Tag(tag, null));
+            }
+        }
+
+        private static void ClearClassUpdateTag(Project project, string tag)
+        {
+            if (project.Tags.Contains(tag))
+            {
+                project.Tags.Remove(tag);
+            }
+        }
+
+        public static void SetAgeClassUpdateTag(Project project)
+        {
+            SetClassUpdateTag(project, Constants.AGECLASS_UPDATE_REQUIRED_TAG);
+        }
+
+        public static void SetTSTClassUpdateTag(Project project)
+        {
+            SetClassUpdateTag(project, Constants.TSTCLASS_UPDATE_REQUIRED_TAG);
+        }
+
+        public static void ClearAgeClassUpdateTag(Project project)
+        {
+            ClearClassUpdateTag(project, Constants.AGECLASS_UPDATE_REQUIRED_TAG);
+        }
+
+        public static void ClearTSTClassUpdateTag(Project project)
+        {
+            ClearClassUpdateTag(project, Constants.TSTCLASS_UPDATE_REQUIRED_TAG);
+        }
+
+        public static bool HasAgeClassUpdateTag(Project project)
+        {
+            return project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG);
+        }
+
+        public static bool HasTSTClassUpdateTag(Project project)
+        {
+            return project.Tags.Contains(Constants.TSTCLASS_UPDATE_REQUIRED_TAG);
+        }
+
+        // =======================================================================================
+        // Classes match data
+        //
+        // Mismatched age/tst bins can occur due to a difference in the current age/tst definitions
+        // and the age/tst data that was generated when the scenario was run.
+        // =======================================================================================
+
+        private static bool ClassesMatchData(
+            DataStore store, 
+            DataSheet dataSheet, 
+            string minColName, 
+            string classColName)
+        {
+            //If any Age/tst Class values are NULL then the ?Min and ?Max did not fall into a Class bin.
             //This could happen if the data contains values such as 10 - 19, but the frequency is 13.  In this
             //case the bins would be 0-12, 13-25, etc., and 10-19 does not go into any of these bins.
 
-            string query = string.Format(CultureInfo.InvariantCulture, 
-                "SELECT COUNT(AgeMin) FROM {0} WHERE (AgeClass IS NULL) AND ScenarioID = {1}", 
-                dataSheet.Name, dataSheet.Scenario.Id);
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT COUNT({0}) FROM {1} WHERE ({2} IS NULL) AND ScenarioID = {3}",
+                minColName, dataSheet.Name, classColName, dataSheet.Scenario.Id);
 
             if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) != 0)
             {
@@ -371,104 +474,48 @@ namespace SyncroSim.STSim
             return true;
         }
 
-        /// <summary>
-        /// Determinies if a descriptor in the specified collection has an age reference
-        /// </summary>
-        /// <param name="descriptors"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public static bool HasAgeReference(ChartDescriptorCollection descriptors)
+        private static bool AgeClassesMatchData(DataStore store, DataSheet dataSheet)
         {
-            foreach (ChartDescriptor d in descriptors)
-            {
-                if (HasAgeReference(d))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return ClassesMatchData(
+                store, 
+                dataSheet, 
+                Strings.DATASHEET_AGE_MIN_COLUMN_NAME, 
+                Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
         }
 
-        /// <summary>
-        /// Determines if the specified descriptor has an age reference
-        /// </summary>
-        /// <param name="descriptor"></param>
-        /// <returns></returns>
-        public static bool HasAgeReference(ChartDescriptor descriptor)
+        private static bool TSTClassesMatchData(DataStore store, DataSheet dataSheet)
         {
-            if (descriptor.IncludeDataFilter != null && descriptor.IncludeDataFilter.Contains("AgeClass"))
-            {
-                return true;
-            }
-
-            if (descriptor.DisaggregateFilter != null && descriptor.DisaggregateFilter.Contains("AgeClass"))
-            {
-                return true;
-            }
-
-            return false;
+            return ClassesMatchData(
+                store, 
+                dataSheet, 
+                Strings.DATASHEET_TST_MIN_COLUMN_NAME, 
+                Strings.DATASHEET_TST_CLASS_COLUMN_NAME);
         }
 
-        private static string GetChartCacheTag(ChartDescriptor descriptor)
-        {
-            if (HasAgeReference(descriptor))
-            {
-                return Constants.AGE_QUERY_CACHE_TAG;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        // =======================================================================================
+        // Class Bin Descriptors
+        // =======================================================================================
 
-        public static void DeleteAgeRelatedCacheEntries(Scenario scenario)
+        private static IEnumerable<ClassBinDescriptor> GetClassBinDescriptors(
+            Project project,
+            string classTypeDatasheetName,
+            string classTypeFrequencyColumnName,
+            string classTypeMaximumColumnName, 
+            string classGroupDatasheetName,
+            string classGroupMaximumColumnName)
         {
-            string CacheFolder = StochasticTime.ChartCache.GetCacheFolderName(scenario);
-
-            foreach (string f in Directory.GetFiles(CacheFolder))
-            {
-                if (f.EndsWith(Constants.AGE_QUERY_CACHE_TAG, StringComparison.Ordinal))
-                {
-                    File.Delete(f);
-                }
-            }
-        }
-
-        public static void SetAgeClassUpdateTag(Project project)
-        {
-            if (!project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG))
-            {
-                project.Tags.Add(new Tag(Constants.AGECLASS_UPDATE_REQUIRED_TAG, null));
-            }
-        }
-
-        public static void ClearAgeClassUpdateTag(Project project)
-        {
-            if (project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG))
-            {
-                project.Tags.Remove(Constants.AGECLASS_UPDATE_REQUIRED_TAG);
-            }
-        }
-
-        public static bool HasAgeClassUpdateTag(Project project)
-        {
-            return project.Tags.Contains(Constants.AGECLASS_UPDATE_REQUIRED_TAG);
-        }
-
-        /// <summary>
-        /// Gets a collection of current age descriptors
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public static IEnumerable<AgeDescriptor> GetAgeDescriptors(Project project)
-        {
-            IEnumerable<AgeDescriptor> e = GetAgeGroupDescriptors(project);
+            IEnumerable<ClassBinDescriptor> e = GetClassBinGroupDescriptors(
+                project, 
+                classGroupDatasheetName, 
+                classGroupMaximumColumnName);
 
             if (e == null)
             {
-                e = GetAgeTypeDescriptors(project);
+                e = GetClassBinTypeDescriptors(
+                    project, 
+                    classTypeDatasheetName, 
+                    classTypeFrequencyColumnName, 
+                    classTypeMaximumColumnName);
             }
 
 #if DEBUG
@@ -491,51 +538,12 @@ namespace SyncroSim.STSim
             return e;
         }
 
-        /// <summary>
-        /// Gets the AgeDescriptor in position [max-1]
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        public static AgeDescriptor GetNextToLastAgeDescriptor(Project project)
+        public static IEnumerable<ClassBinDescriptor> GetClassBinGroupDescriptors(
+            Project project, 
+            string datasheetName, 
+            string maximumColumnName)
         {
-            IEnumerable<AgeDescriptor> e = GetAgeTypeDescriptors(project);
-
-#if DEBUG
-            if (e != null)
-            {
-                Debug.Assert(e.Count() > 0);
-            }
-#endif
-
-            if (e == null)
-            {
-                return null;
-            }
-
-            if (e.Count() == 0)
-            {
-                return null;
-            }
-
-            if (e.Count() == 1)
-            {
-                return e.First();
-            }
-            else
-            {
-                List<AgeDescriptor> l = e.ToList();
-                return l[e.Count() - 2];
-            }
-        }
-
-        /// <summary>
-        /// Gets an enumeration of age descriptors from the age group data sheet
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public static IEnumerable<AgeDescriptor> GetAgeGroupDescriptors(Project project)
-        {
-            DataTable dt = project.GetDataSheet(Strings.DATASHEET_AGE_GROUP_NAME).GetData();
+            DataTable dt = project.GetDataSheet(datasheetName).GetData();
             DataView dv = new DataView(dt, null, null, DataViewRowState.CurrentRows);
 
             if (dv.Count == 0)
@@ -543,82 +551,85 @@ namespace SyncroSim.STSim
                 return null;
             }
 
-            List<AgeDescriptor> lst = new List<AgeDescriptor>();
+            List<ClassBinDescriptor> lst = new List<ClassBinDescriptor>();
             Dictionary<int, bool> dict = new Dictionary<int, bool>();
 
             foreach (DataRowView drv in dv)
             {
                 int value = Convert.ToInt32(drv[
-                    Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME],
+                    maximumColumnName],
                     CultureInfo.InvariantCulture);
 
                 if (!dict.ContainsKey(value))
                 {
-                    lst.Add(new AgeDescriptor(value, value));
+                    lst.Add(new ClassBinDescriptor(value, value));
                     dict.Add(value, true);
                 }
             }
 
-            lst.Sort((AgeDescriptor ad1, AgeDescriptor ad2) =>
+            lst.Sort((ClassBinDescriptor ad1, ClassBinDescriptor ad2) =>
             {
-                return ad1.MinimumAge.CompareTo(ad2.MinimumAge);
+                return ad1.Minimum.CompareTo(ad2.Minimum);
             });
 
             int Prev = 0;
 
-            foreach (AgeDescriptor ad in lst)
+            foreach (ClassBinDescriptor ad in lst)
             {
-                int t = ad.MinimumAge;
+                int t = ad.Minimum;
 
-                ad.MinimumAge = Prev;
+                ad.Minimum = Prev;
                 Prev = t + 1;
             }
 
-            lst.Add(new AgeDescriptor(Prev, null));
+            lst.Add(new ClassBinDescriptor(Prev, null));
 
 #if DEBUG
             Debug.Assert(lst.Count > 0);
 
-            foreach (AgeDescriptor ad in lst)
+            foreach (ClassBinDescriptor ad in lst)
             {
-                if (ad.MaximumAge.HasValue)
+                if (ad.Maximum.HasValue)
                 {
-                    Debug.Assert(ad.MinimumAge <= ad.MaximumAge.Value);
+                    Debug.Assert(ad.Minimum <= ad.Maximum.Value);
                 }
             }
 #endif
 
-            lst[lst.Count - 1].MaximumAge = null;
+            lst[lst.Count - 1].Maximum = null;
             return lst;
         }
 
-        /// <summary>
-        /// Gets an enumeration of age descriptors from the age type data sheet
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public static IEnumerable<AgeDescriptor> GetAgeTypeDescriptors(Project project)
+        public static IEnumerable<ClassBinDescriptor> GetClassBinTypeDescriptors(
+            Project project, 
+            string datasheetName, 
+            string frequencyColumnName, 
+            string maximumColumnName)
         {
-            DataRow dr = project.GetDataSheet(Strings.DATASHEET_AGE_TYPE_NAME).GetDataRow();
+            DataRow dr = project.GetDataSheet(datasheetName).GetDataRow();
 
             if (dr != null)
             {
-                if (dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME] != DBNull.Value &&
-                    dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME] != DBNull.Value)
+                if (dr[frequencyColumnName] != DBNull.Value &&
+                    dr[maximumColumnName] != DBNull.Value)
                 {
-                    int f = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME], CultureInfo.InvariantCulture);
-                    int m = Convert.ToInt32(dr[Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME], CultureInfo.InvariantCulture);
+                    int f = Convert.ToInt32(dr[frequencyColumnName], CultureInfo.InvariantCulture);
+                    int m = Convert.ToInt32(dr[maximumColumnName], CultureInfo.InvariantCulture);
 
                     if (f <= m)
                     {
-                        AgeHelper h = new AgeHelper(true, f, m);
-                        return h.GetAges();
+                        ClassBinHelper h = new ClassBinHelper(true, f, m);
+                        return h.GetDescriptors();
                     }
                 }
             }
 
             return null;
         }
+
+        // =======================================================================================
+        // Table update
+        // =======================================================================================
 
         public static void UpdateAgeClassIfRequired(DataStore store, Project project)
         {
@@ -628,76 +639,176 @@ namespace SyncroSim.STSim
                 {
                     if (!s.IsDeleted && s.IsResult && s.Project == project)
                     {
-                        UpdateAgeClassWork(store, s);
+                        UpdateAgeClassWork(store, project, s);
                         DeleteAgeRelatedCacheEntries(s);
                     }
                 }
             }
         }
 
-        public static void UpdateAgeClassWork(DataStore store, Scenario s)
+        public static void UpdateTSTClassIfRequired(DataStore store, Project project)
         {
-            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME));
-            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME));
-            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME));
-            ChartingUtilities.UpdateAgeClassColumn(store, s.GetDataSheet(Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME));
+            if (project.Tags.Contains(Constants.TSTCLASS_UPDATE_REQUIRED_TAG))
+            {
+                foreach (Scenario s in project.Library.Scenarios)
+                {
+                    if (!s.IsDeleted && s.IsResult && s.Project == project)
+                    {
+                        UpdateTSTClassWork(store, project, s);
+                        DeleteTSTRelatedCacheEntries(s);
+                    }
+                }
+            }
         }
 
-        /// <summary>
-        /// Updates the age class column for the specified table
-        /// </summary>
-        /// <param name="store"></param>
-        /// <param name="dataSheet"></param>
-        /// <remarks></remarks>
-        public static void UpdateAgeClassColumn(DataStore store, DataSheet dataSheet)
+        public static void UpdateAgeClassWork(DataStore store, Project project, Scenario scenario)
         {
-            IEnumerable<AgeDescriptor> e = GetAgeDescriptors(dataSheet.Project);
+            UpdateClassBinColumn(
+                store, project, scenario,
+                Strings.DATASHEET_AGE_TYPE_NAME,
+                Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_AGE_GROUP_NAME,
+                Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME,
+                Strings.DATASHEET_AGE_MIN_COLUMN_NAME,
+                Strings.DATASHEET_AGE_MAX_COLUMN_NAME,
+                Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
+
+            UpdateClassBinColumn(
+                store, project, scenario,
+                Strings.DATASHEET_AGE_TYPE_NAME,
+                Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_AGE_GROUP_NAME,
+                Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME,
+                Strings.DATASHEET_AGE_MIN_COLUMN_NAME,
+                Strings.DATASHEET_AGE_MAX_COLUMN_NAME,
+                Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
+
+            UpdateClassBinColumn(
+                store, project, scenario,
+                Strings.DATASHEET_AGE_TYPE_NAME,
+                Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_AGE_GROUP_NAME,
+                Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME,
+                Strings.DATASHEET_AGE_MIN_COLUMN_NAME,
+                Strings.DATASHEET_AGE_MAX_COLUMN_NAME,
+                Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
+
+            UpdateClassBinColumn(
+                store, project, scenario,
+                Strings.DATASHEET_AGE_TYPE_NAME,
+                Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_AGE_GROUP_NAME,
+                Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME,
+                Strings.DATASHEET_AGE_MIN_COLUMN_NAME,
+                Strings.DATASHEET_AGE_MAX_COLUMN_NAME,
+                Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
+        }
+
+        public static void UpdateTSTClassWork(DataStore store, Project project, Scenario scenario)
+        {
+            UpdateClassBinColumn(
+                store, project, scenario,
+                Strings.DATASHEET_TST_TYPE_NAME,
+                Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME,
+                Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_TST_GROUP_NAME,
+                Strings.DATASHEET_TST_GROUP_MAXIMUM_COLUMN_NAME,
+                Strings.DATASHEET_OUTPUT_TST_NAME,
+                Strings.DATASHEET_TST_MIN_COLUMN_NAME,
+                Strings.DATASHEET_TST_MAX_COLUMN_NAME,
+                Strings.DATASHEET_TST_CLASS_COLUMN_NAME);
+        }
+
+        private static void UpdateClassBinColumn(
+            DataStore store, 
+            Project project,
+            Scenario scenario,
+            string classTypeDatasheetName,
+            string classTypeFrequencyColumnName,
+            string classTypeMaximumColumnName,
+            string classGroupDatasheetName,
+            string classGroupMaximumColumnName, 
+            string outputDatasheetName, 
+            string outputDatasheetMinimumColumnName, 
+            string outputDatasheetMaximumColumnName,
+            string outputDatasheetClassColumnName)
+        {
+            IEnumerable<ClassBinDescriptor> e = GetClassBinDescriptors(
+                project,
+                classTypeDatasheetName, 
+                classTypeFrequencyColumnName, 
+                classTypeMaximumColumnName,
+                classGroupDatasheetName, 
+                classGroupMaximumColumnName);
 
             if (e == null)
             {
                 return;
             }
 
-            if (!AnyDataExists(store, dataSheet))
+            if (!OutputDataExists(
+                store, 
+                outputDatasheetName, 
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, 
+                scenario))
             {
                 return;
             }
 
-            if (!AgeDataExists(store, dataSheet))
+            if (!OutputDataExists(
+                store,
+                outputDatasheetName,
+                outputDatasheetMinimumColumnName,
+                scenario))
             {
                 return;
             }
 
             StringBuilder sb = new StringBuilder();
-            Debug.Assert(!(e.ElementAtOrDefault(e.Count() - 1).MaximumAge.HasValue));
+            Debug.Assert(!(e.ElementAtOrDefault(e.Count() - 1).Maximum.HasValue));
 
             if (e.Count() > 1)
             {
                 sb.AppendFormat(CultureInfo.InvariantCulture,
-                    "UPDATE [{0}] SET AgeClass = CASE",
-                    dataSheet.Name);
+                    "UPDATE [{0}] SET {1} = CASE",
+                    outputDatasheetName, 
+                    outputDatasheetClassColumnName);
 
                 sb.Append(" WHEN 0 THEN 0");
 
                 for (int i = 0; i < e.Count(); i++)
                 {
-                    AgeDescriptor d = e.ElementAtOrDefault(i);
+                    ClassBinDescriptor d = e.ElementAtOrDefault(i);
 
-                    if (d.MaximumAge.HasValue)
+                    if (d.Maximum.HasValue)
                     {
                         Debug.Assert(i < e.Count() - 1);
 
                         sb.AppendFormat(CultureInfo.InvariantCulture,
-                            " WHEN AgeMin >= {0} And AgeMax <= {1} THEN {2}",
-                            d.MinimumAge, d.MaximumAge.Value, d.MinimumAge);
+                            " WHEN {0} >= {1} And {2} <= {3} THEN {4}", 
+                            outputDatasheetMinimumColumnName, 
+                            d.Minimum, 
+                            outputDatasheetMaximumColumnName,
+                            d.Maximum.Value, 
+                            d.Minimum);
                     }
                     else
                     {
                         Debug.Assert(i == e.Count() - 1);
 
                         sb.AppendFormat(CultureInfo.InvariantCulture,
-                            " WHEN AgeMin >= {0} THEN {1}",
-                            d.MinimumAge, d.MinimumAge);
+                            " WHEN {0} >= {1} THEN {2}",
+                            outputDatasheetMinimumColumnName,
+                            d.Minimum, 
+                            d.Minimum);
                     }
                 }
 
@@ -706,11 +817,13 @@ namespace SyncroSim.STSim
             else
             {
                 sb.AppendFormat(CultureInfo.InvariantCulture,
-                    "UPDATE [{0}] SET AgeClass = {1}",
-                    dataSheet.Name, e.ElementAtOrDefault(0).MinimumAge);
+                    "UPDATE [{0}] SET {1} = {2}",
+                    outputDatasheetName, 
+                    outputDatasheetClassColumnName,
+                    e.ElementAtOrDefault(0).Minimum);
             }
 
-            sb.AppendFormat(CultureInfo.InvariantCulture, " WHERE ScenarioID = {0}", dataSheet.Scenario.Id);
+            sb.AppendFormat(CultureInfo.InvariantCulture, " WHERE ScenarioID = {0}", scenario.Id);
             store.ExecuteNonQuery(sb.ToString());
         }
     }

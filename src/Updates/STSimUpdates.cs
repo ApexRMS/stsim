@@ -37,6 +37,7 @@ namespace SyncroSim.STSim
             ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransitionState");
             ASSERT_INDEX_EXISTS(store, "stsim_OutputStateAttribute");
             ASSERT_INDEX_EXISTS(store, "stsim_OutputTransitionAttribute");
+            ASSERT_INDEX_EXISTS(store, "stsim_OutputTST");
 
 #endif
         }

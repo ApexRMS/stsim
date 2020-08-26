@@ -12,7 +12,9 @@ namespace SyncroSim.STSim
         public const int OUTPUT_COLLECTION_WILDCARD_KEY = 0;
         public const double DEFAULT_TRANSITION_ORDER = double.MinValue;
         public const string AGE_QUERY_CACHE_TAG = "-STSIM-AGE-QUERY";
+        public const string TST_QUERY_CACHE_TAG = "-STSIM-TST-QUERY";
         public const string AGECLASS_UPDATE_REQUIRED_TAG = "STSimAgeClassUpdateRequired";
+        public const string TSTCLASS_UPDATE_REQUIRED_TAG = "STSimTSTClassUpdateRequired";
         public const int STARTING_TRANSITION_EVENT_ID = 0;
         public const double EIGHT_DIV_NINE = 8.0 / 9.0;
         public const int INCLUDE_DATA_NULL_ID = -9999;

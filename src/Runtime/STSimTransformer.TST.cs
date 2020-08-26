@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
             Dictionary<int, bool> dict = new Dictionary<int, bool>();
 
             //From the TST Group datafeed
-            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
+            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_VALUE_NAME);
 
             foreach (DataRow dr in dstst.GetData().Rows)
             {

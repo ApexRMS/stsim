@@ -141,10 +141,10 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_AgeReportingHelperSA == null);
             Debug.Assert(this.m_AgeReportingHelperTA == null);
 
-            this.m_AgeReportingHelperSC = new AgeHelper(false, 0, 0);
-            this.m_AgeReportingHelperTR = new AgeHelper(false, 0, 0);
-            this.m_AgeReportingHelperSA = new AgeHelper(false, 0, 0);
-            this.m_AgeReportingHelperTA = new AgeHelper(false, 0, 0);
+            this.m_AgeReportingHelperSC = new ClassBinHelper(false, 0, 0);
+            this.m_AgeReportingHelperTR = new ClassBinHelper(false, 0, 0);
+            this.m_AgeReportingHelperSA = new ClassBinHelper(false, 0, 0);
+            this.m_AgeReportingHelperTA = new ClassBinHelper(false, 0, 0);
 
             //If not reporting any ages then all age helpers are disabled
             //-----------------------------------------------------------
@@ -218,22 +218,22 @@ namespace SyncroSim.STSim
 
             if (this.m_SummaryStateClassOutputAges)
             {
-                this.m_AgeReportingHelperSC = new AgeHelper(true, f, m);
+                this.m_AgeReportingHelperSC = new ClassBinHelper(true, f, m);
             }
 
             if (this.m_SummaryTransitionOutputAges)
             {
-                this.m_AgeReportingHelperTR = new AgeHelper(true, f, m);
+                this.m_AgeReportingHelperTR = new ClassBinHelper(true, f, m);
             }
 
             if (this.m_SummaryStateAttributeOutputAges)
             {
-                this.m_AgeReportingHelperSA = new AgeHelper(true, f, m);
+                this.m_AgeReportingHelperSA = new ClassBinHelper(true, f, m);
             }
 
             if (this.m_SummaryTransitionAttributeOutputAges)
             {
-                this.m_AgeReportingHelperTA = new AgeHelper(true, f, m);
+                this.m_AgeReportingHelperTA = new ClassBinHelper(true, f, m);
             }           
         }
 

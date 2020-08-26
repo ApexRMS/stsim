@@ -18,10 +18,10 @@ namespace SyncroSim.STSim
         private RandomGenerator m_RandomGenerator = new RandomGenerator();
         private STSimDistributionProvider m_DistributionProvider;
         private string m_TimestepUnitsLower = "timestep";
-        private AgeHelper m_AgeReportingHelperSC;
-        private AgeHelper m_AgeReportingHelperTR;
-        private AgeHelper m_AgeReportingHelperSA;
-        private AgeHelper m_AgeReportingHelperTA;
+        private ClassBinHelper m_AgeReportingHelperSC;
+        private ClassBinHelper m_AgeReportingHelperTR;
+        private ClassBinHelper m_AgeReportingHelperSA;
+        private ClassBinHelper m_AgeReportingHelperTA;
         private SizeClassHelper m_SizeClassHelper;
         private double m_AmountPerCell;
         private int m_TotalIterations;
@@ -363,13 +363,14 @@ namespace SyncroSim.STSim
         {
             base.PostProcess();
 
-            //After the entire transformation is complete we must update the age classes
+            //After the entire transformation is complete we must update the age/tst classes
 
             using (SyncroSimTransactionScope scope = Session.CreateTransactionScope())
             {
                 using (DataStore store = this.Library.CreateDataStore())
                 {
-                    ChartingUtilities.UpdateAgeClassWork(store, this.ResultScenario);
+                    ChartingUtilities.UpdateAgeClassWork(store, this.Project, this.ResultScenario);
+                    ChartingUtilities.UpdateTSTClassWork(store, this.Project, this.ResultScenario);
                 }
 
                 scope.Complete();

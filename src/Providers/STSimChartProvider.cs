@@ -23,6 +23,7 @@ namespace SyncroSim.STSim
             {
                 SyncroSimLayoutItem StateClassGroup = new SyncroSimLayoutItem("stsim_StateClassVariableGroup", "State Classes", true);
                 SyncroSimLayoutItem TransitionGroup = new SyncroSimLayoutItem("stsim_TransitionVariableGroup", "Transitions", true);
+                SyncroSimLayoutItem TSTGroup = new SyncroSimLayoutItem("stsim_TSTGroup", "Time-Since-Transition", true);
                 SyncroSimLayoutItem StateAttributeGroup = new SyncroSimLayoutItem("stsim_StateAttributeVariableGroup", "State Attributes", true);
                 SyncroSimLayoutItem TransitionAttributeGroup = new SyncroSimLayoutItem("stsim_TransitionAttributeVariableGroup", "Transition Attributes", true);
                 SyncroSimLayoutItem ExternalVariableGroup = new SyncroSimLayoutItem("stsim_ExternalVariableGroup", "External Variables", true);
@@ -32,18 +33,16 @@ namespace SyncroSim.STSim
                 DataSheet StateAttrDataSheet = project.GetDataSheet(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME);
                 DataView StateAttrDataView = new DataView(StateAttrDataSheet.GetData(store), null, StateAttrDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
                 DataSheet TransitionAttrDataSheet = project.GetDataSheet(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME);
-
-                DataView TransitionAttrDataView = new DataView(
-                    TransitionAttrDataSheet.GetData(store), 
-                    null, 
-                    TransitionAttrDataSheet.ValidationTable.DisplayMember, 
-                    DataViewRowState.CurrentRows);
+                DataView TransitionAttrDataView = new DataView(TransitionAttrDataSheet.GetData(store), null, TransitionAttrDataSheet.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
 
                 StateClassGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
                 StateClassGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
 
                 TransitionGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
                 TransitionGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
+
+                TSTGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
+                TSTGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|TSTClass"));
 
                 StateAttributeGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStateAttribute"));
                 StateAttributeGroup.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
@@ -55,9 +54,11 @@ namespace SyncroSim.STSim
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, project);
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, project);
                 RefreshChartAgeClassValidationTable(Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, project);
+                RefreshChartTSTClassValidationTable(Strings.DATASHEET_OUTPUT_TST_NAME, project);
 
                 AddChartStateClassVariables(StateClassGroup.Items, project);
                 AddChartTransitionVariables(TransitionGroup.Items, project);
+                AddChartTSTVariables(TSTGroup.Items, project);
                 AddChartExternalVariables(ExternalVariableGroup.Items, project);
 
                 AddChartAttributeVariables(
@@ -69,6 +70,7 @@ namespace SyncroSim.STSim
 
                 layout.Items.Add(StateClassGroup);
                 layout.Items.Add(TransitionGroup);
+                layout.Items.Add(TSTGroup);
 
                 if (StateAttributeGroup.Items.Count > 0)
                 {
@@ -98,6 +100,17 @@ namespace SyncroSim.STSim
                 sess.SetStatusMessageWithEvents(string.Empty);
 
                 Debug.Assert(!ChartingUtilities.HasAgeClassUpdateTag(dataSheet.Project));
+            }
+
+            if (ChartingUtilities.HasTSTClassUpdateTag(dataSheet.Project))
+            {
+                WinFormSession sess = (WinFormSession)dataSheet.Session;
+
+                sess.SetStatusMessageWithEvents("Updating TST related data...");
+                dataSheet.Library.Save(store);
+                sess.SetStatusMessageWithEvents(string.Empty);
+
+                Debug.Assert(!ChartingUtilities.HasTSTClassUpdateTag(dataSheet.Project));
             }
 
             if (
@@ -208,6 +221,17 @@ namespace SyncroSim.STSim
 
             items.Add(Normal);
             items.Add(Proportion);
+        }
+
+        private static void AddChartTSTVariables(SyncroSimLayoutItemCollection items, Project project)
+        {
+            SyncroSimLayoutItem v = new SyncroSimLayoutItem(Strings.TST_VARIABLE_NAME, "Amount", false);
+
+            v.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
+            v.Properties.Add(new MetaDataProperty("column", "Amount"));
+            v.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+            items.Add(v);
         }
 
         private static void AddChartExternalVariables(SyncroSimLayoutItemCollection items, Project project)
@@ -440,8 +464,98 @@ namespace SyncroSim.STSim
                 DataSheet ds = s.GetDataSheet(dataSheetName);
                 DataSheetColumn col = ds.Columns[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME];
 
-                col.ValidationTable = ValidationTableUtilities.CreateAgeValidationTable(project);
+                col.ValidationTable = CreateClassBinValidationTable(
+                    project,
+                    Strings.DATASHEET_AGE_TYPE_NAME,
+                    Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                    Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
+                    Strings.DATASHEET_AGE_GROUP_NAME,
+                    Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
+                    Strings.AGE_CLASS_VALIDATION_TABLE_NAME);
             }
+        }
+
+        private static void RefreshChartTSTClassValidationTable(string dataSheetName, Project project)
+        {
+            foreach (Scenario s in project.Results)
+            {
+                DataSheet ds = s.GetDataSheet(dataSheetName);
+                DataSheetColumn col = ds.Columns[Strings.DATASHEET_TST_CLASS_COLUMN_NAME];
+
+                col.ValidationTable = CreateClassBinValidationTable(
+                    project,
+                    Strings.DATASHEET_TST_TYPE_NAME,
+                    Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME,
+                    Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME,
+                    Strings.DATASHEET_TST_GROUP_NAME,
+                    Strings.DATASHEET_TST_GROUP_MAXIMUM_COLUMN_NAME,
+                    Strings.TST_CLASS_VALIDATION_TABLE_NAME);
+            }
+        }
+
+        private static ValidationTable CreateClassBinValidationTable(
+            Project project,
+            string classTypeDatasheetName,
+            string classTypeFrequencyColumnName,
+            string classTypeMaximumColumnName,
+            string classGroupDatasheetName,
+            string classGroupMaximumColumnName, 
+            string validationTableName)
+        {
+            DataTable dt = new DataTable(validationTableName);
+            dt.Locale = CultureInfo.InvariantCulture;
+
+            dt.Columns.Add(new DataColumn(Strings.VALUE_MEMBER_COLUMN_NAME, typeof(long)));
+            dt.Columns.Add(new DataColumn(Strings.DISPLAY_MEMBER_COLUMN_NAME, typeof(string)));
+
+            IEnumerable<ClassBinDescriptor> e = ChartingUtilities.GetClassBinGroupDescriptors(
+                project, 
+                classGroupDatasheetName, 
+                classGroupMaximumColumnName);
+
+            if (e == null)
+            {
+                e = ChartingUtilities.GetClassBinTypeDescriptors(
+                    project,
+                    classTypeDatasheetName,
+                    classTypeFrequencyColumnName,
+                    classTypeMaximumColumnName);
+            }
+
+            if (e != null)
+            {
+                foreach (ClassBinDescriptor d in e)
+                {
+                    long Value = Convert.ToInt64(d.Minimum);
+                    string Display = null;
+
+                    if (d.Maximum.HasValue)
+                    {
+                        if (d.Maximum.Value == d.Minimum)
+                        {
+                            Display = string.Format(CultureInfo.InvariantCulture, "{0}", d.Minimum);
+                        }
+                        else
+                        {
+                            Display = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", d.Minimum, d.Maximum.Value);
+                        }
+                    }
+                    else
+                    {
+                        Display = string.Format(CultureInfo.InvariantCulture, "{0}+", d.Minimum);
+                    }
+
+                    dt.Rows.Add(new object[] { Value, Display });
+                }
+
+                dt.Rows.Add(new object[] { Constants.INCLUDE_DATA_NULL_ID, "(unclassified)" });
+            }
+
+            return new ValidationTable(
+                dt, 
+                Strings.VALUE_MEMBER_COLUMN_NAME, 
+                Strings.DISPLAY_MEMBER_COLUMN_NAME, 
+                SortOrder.None);
         }
     }
 }

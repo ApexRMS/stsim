@@ -1194,7 +1194,11 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private static bool CreateAgeTypeColorMap(Project project, string colorMapFilename)
         {
-            IEnumerable<AgeDescriptor> ageDescriptors = ChartingUtilities.GetAgeTypeDescriptors(project);
+            IEnumerable<ClassBinDescriptor> ageDescriptors = ChartingUtilities.GetClassBinTypeDescriptors(
+                project,
+                Strings.DATASHEET_AGE_TYPE_NAME,
+                Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME);
 
             if (ageDescriptors != null)
             {
@@ -1217,10 +1221,10 @@ namespace SyncroSim.STSim
                 foreach (var adesc in ageDescriptors)
                 {
                     clr = binColors[clrIdx % binColors.Count()]; // repeat colors when we've used them all up
-                    if (adesc.MaximumAge != null)
+                    if (adesc.Maximum != null)
                     {
-                        ageLbl = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", adesc.MinimumAge, adesc.MaximumAge);
-                        fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", adesc.MaximumAge, clr.R, clr.G, clr.B, clr.A, ageLbl);
+                        ageLbl = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", adesc.Minimum, adesc.Maximum);
+                        fileWriter.WriteLine("{0},{1},{2},{3},{4},{5}", adesc.Maximum, clr.R, clr.G, clr.B, clr.A, ageLbl);
                     }
                     else
                     {

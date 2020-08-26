@@ -409,8 +409,8 @@ namespace SyncroSim.STSim
                     iteration, 
                     timestep, 
                     simulationCell.StateClassId, 
-                    this.m_AgeReportingHelperSC.GetAgeMinimum(simulationCell.Age), 
-                    this.m_AgeReportingHelperSC.GetAgeMaximum(simulationCell.Age), 
+                    this.m_AgeReportingHelperSC.GetMinimum(simulationCell.Age), 
+                    this.m_AgeReportingHelperSC.GetMaximum(simulationCell.Age), 
                     AgeKey, 
                     this.m_AmountPerCell);
 
@@ -479,8 +479,8 @@ namespace SyncroSim.STSim
                         iteration,
                         AggregatorTimestep,
                         tg.TransitionGroupId,
-                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age),
-                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetMinimum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetMaximum(simulationCell.Age),
                         AgeKey,
                         null,
                         EventIdKey,
@@ -534,8 +534,8 @@ namespace SyncroSim.STSim
                         iteration,
                         timestep,
                         tg.TransitionGroupId,
-                        this.m_AgeReportingHelperTR.GetAgeMinimum(simulationCell.Age),
-                        this.m_AgeReportingHelperTR.GetAgeMaximum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetMinimum(simulationCell.Age),
+                        this.m_AgeReportingHelperTR.GetMaximum(simulationCell.Age),
                         AgeKey,
                         eventId,
                         EventIdKey,
@@ -676,8 +676,8 @@ namespace SyncroSim.STSim
                             iteration, 
                             timestep, 
                             AttributeTypeId, 
-                            this.m_AgeReportingHelperSA.GetAgeMinimum(simulationCell.Age), 
-                            this.m_AgeReportingHelperSA.GetAgeMaximum(simulationCell.Age), 
+                            this.m_AgeReportingHelperSA.GetMinimum(simulationCell.Age), 
+                            this.m_AgeReportingHelperSA.GetMaximum(simulationCell.Age), 
                             AgeKey, 
                             (this.m_AmountPerCell * AttrValue.Value));
 
@@ -2545,8 +2545,8 @@ namespace SyncroSim.STSim
                                     iteration,
                                     timestep,
                                     AttributeTypeId, 
-                                    this.m_AgeReportingHelperTA.GetAgeMinimum(simulationCell.Age), 
-                                    this.m_AgeReportingHelperTA.GetAgeMaximum(simulationCell.Age), 
+                                    this.m_AgeReportingHelperTA.GetMinimum(simulationCell.Age), 
+                                    this.m_AgeReportingHelperTA.GetMaximum(simulationCell.Age), 
                                     AgeKey, 
                                     (this.m_AmountPerCell * AttrValue.Value));
 

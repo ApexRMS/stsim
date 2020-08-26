@@ -1210,7 +1210,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TstTransitionGroupMap == null);
 
             this.m_TstTransitionGroupMap = new TstTransitionGroupMap(this.ResultScenario);
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_VALUE_NAME);
 
             foreach (DataRow dr in ds.GetData().Rows)
             {

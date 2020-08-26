@@ -1461,6 +1461,7 @@
     <view name="AgeTypeDatafeedView" target="AgeType" className="SyncroSim.STSim.AgeTypeDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="AgeGroupDatafeedView" target="AgeGroup" className="SyncroSim.STSim.AgeGroupDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="TSTTypeDatafeedView" target="TSTType" className="SyncroSim.STSim.TSTTypeDataFeedView" classAssembly="SyncroSim.STSim"/>
+    <view name="TSTGroupDatafeedView" target="TSTGroup" className="SyncroSim.STSim.TSTGroupDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="InitialConditionsNonSpatialDatafeedView" target="InitialConditionsNonSpatial" className="SyncroSim.STSim.InitialConditionsNonSpatialDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="InitialConditionsSpatialDatafeedView" target="InitialConditionsSpatial" className="SyncroSim.STSim.InitialConditionsSpatialDataFeedView" classAssembly="SyncroSim.STSim"/>
     <view name="OutputOptionsDatafeedView" target="OutputOptions" className="SyncroSim.STSim.OutputOptionsDataFeedView" classAssembly="SyncroSim.STSim"/>

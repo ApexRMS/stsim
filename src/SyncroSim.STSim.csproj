@@ -155,6 +155,12 @@
     <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.Designer.cs">
       <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFeedViews\TSTGroupDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\TSTGroupDataFeedView.Designer.cs">
+      <DependentUpon>TSTGroupDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\TSTTypeDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -616,6 +622,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionTypeGroupDataFeedView.resx">
       <DependentUpon>TransitionTypeGroupDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\TSTGroupDataFeedView.resx">
+      <DependentUpon>TSTGroupDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TSTTypeDataFeedView.resx">
       <DependentUpon>TSTTypeDataFeedView.cs</DependentUpon>

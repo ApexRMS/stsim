@@ -9,7 +9,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    public partial class TSTTypeDataFeedView : DataFeedView
+    internal partial class TSTTypeDataFeedView : DataFeedView
     {
         public TSTTypeDataFeedView()
         {

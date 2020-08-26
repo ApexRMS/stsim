@@ -82,7 +82,9 @@ namespace SyncroSim.STSim
 
             if (!ChartingUtilities.HasAgeClassUpdateTag(this.Project))
             {
-                if (MessageBox.Show(MessageStrings.PROMPT_AGE_GROUP_CHANGE, "Age Group", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                if (MessageBox.Show(
+                    MessageStrings.PROMPT_AGE_GROUP_CHANGE, 
+                    "Age Group", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 {
                     this.m_Grid.CancelEdit();
                     this.ActiveControl = this.m_Grid;

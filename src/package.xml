@@ -559,20 +559,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="OutputOptionsTSTTransitionGroup" displayName="TST Transition Groups" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="OutputOptionsTSTTransitionGroup" displayName="TST Transition Groups">
-              <columns>
-                <column name="TransitionTargetPrioritizationID" dataType="Integer" isPrimary="True"/>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-              </columns>
-              <validations>
-                <validation validationType="Unique" columns="TransitionGroupID"/>
-              </validations>
-            </datasheet>
-          </datasheets>
-        </datafeed>
         <datafeed name="TransitionTarget" displayName="Transition Targets" dataScope="Scenario">
           <datasheets>
             <datasheet name="TransitionTarget" displayName="Transition Targets" className="SyncroSim.STSim.TransitionTargetDataSheet" classAssembly="SyncroSim.STSim">
@@ -1602,7 +1588,6 @@
         <item name="OutputOptions" displayName="Tabular"/>
         <item name="OutputOptionsSpatial" displayName="Spatial"/>
         <item name="OutputOptionsSpatialAverage" displayName="Spatial Average"/>
-        <item name="OutputOptionsTSTTransitionGroup"/>
       </group>
       <group name="Advanced">
         <item name="TransitionMultiplierValue" displayName="Transitions - Multipliers"/>

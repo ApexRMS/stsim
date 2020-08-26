@@ -82,14 +82,11 @@ namespace SyncroSim.STSim
             }
 
             this.InitTSTFromRamdomize(simulationCell, iteration);
+            this.InitTSTFromICDistribution(simulationCell, iteration, icd);
 
             if (IsSpatial)
             {
                 this.InitTSTFromRaster(simulationCell, iteration);
-            }
-            else
-            {
-                this.InitTSTFromICDistribution(simulationCell, iteration, icd);
             }
         }
 

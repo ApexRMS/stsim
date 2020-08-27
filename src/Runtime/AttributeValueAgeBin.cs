@@ -76,7 +76,7 @@ namespace SyncroSim.STSim
                 return null;
             }
 
-            Tst tst = GetTstWithSmallestValue(cellTst);
+            Tst tst = this.GetTstWithSmallestValue(cellTst);
 
             if (!this.m_TSTGroupHint.ContainsKey(tst.TransitionGroupId) && 
                 !this.m_TSTGroupHint.ContainsKey(AttributeValueReference.TST_GROUP_WILD))
@@ -124,21 +124,26 @@ namespace SyncroSim.STSim
             return this.m_RefsWithoutTST[0];
         }
 
-        private static Tst GetTstWithSmallestValue(TstCollection cellTst)
+        private Tst GetTstWithSmallestValue(TstCollection cellTst)
         {
             Tst Smallest = null;
 
             foreach (Tst tst in cellTst)
             {
-                if (Smallest == null)
+                if (this.m_TSTGroupHint.ContainsKey(tst.TransitionGroupId) ||
+                    this.m_TSTGroupHint.ContainsKey(AttributeValueReference.TST_GROUP_WILD))
                 {
-                    Smallest = tst;
-                    continue;
-                }
-
-                if (tst.TstValue < Smallest.TstValue)
-                {
-                    Smallest = tst;
+                    if (Smallest == null)
+                    {
+                        Smallest = tst;
+                    }
+                    else
+                    {
+                        if (tst.TstValue < Smallest.TstValue)
+                        {
+                            Smallest = tst;
+                        }
+                    }
                 }
             }
 

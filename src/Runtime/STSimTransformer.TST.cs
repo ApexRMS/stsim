@@ -136,6 +136,11 @@ namespace SyncroSim.STSim
 
         private void InitTSTFromICDistribution(Cell simulationCell, int iteration, InitialConditionsDistribution icd)
         {
+            if (icd == null)
+            {
+                return;
+            }
+
             if (!icd.TSTGroupId.HasValue && !icd.TSTMin.HasValue && !icd.TSTMax.HasValue)
             {
                 return;

@@ -54,23 +54,37 @@ namespace SyncroSim.STSim
         private StateAttributeValueCollection m_StateAttributeValues = new StateAttributeValueCollection();
         private TransitionAttributeValueCollection m_TransitionAttributeValues = new TransitionAttributeValueCollection();
         private InitialTSTSpatialCollection m_InitialTSTSpatialRecords = new InitialTSTSpatialCollection();
+        private TSTTransitionGroupCollection m_TSTTransitionGroups = new TSTTransitionGroupCollection();
+        private TSTRandomizeCollection m_TSTRandomizeRecords = new TSTRandomizeCollection();
         private InputRasters m_InputRasters = new InputRasters();
         private Dictionary<int, bool> m_TransitionAttributeTypesWithTarget = new Dictionary<int, bool>();
+
+#if DEBUG
+        private bool TRANSITION_TYPES_FILLED;
+        private bool TRANSITION_GROUPS_FILLED;
+        private bool TRANSITION_SIM_GROUPS_FILLED;
+        private bool IC_DISTRIBUTIONS_FILLED;
+        private bool TRANSITION_MULTIPLIERS_FILLED;
+        private bool INITIAL_TST_SPATIAL_FILLED;
+        private bool STATE_ATTRIBUTES_FILLED;
+        private bool TRANSITION_ATTRIBUTES_FILLED;
+        private bool TST_TRANSITION_GROUPS_FILLED;
+        private bool TST_RANDOMIZE_FILLED;
+#endif
 
         /// <summary>
         /// Fills the cell collection
         /// </summary>
         /// <param name="numCells">The number of cells to create</param>
-        /// <remarks></remarks>
+        /// <remarks>
+        /// Note that the cell ID and the collection index are not necessarily the same
+        /// since for spatial runs a NO DATA cell is not created.
+        /// </remarks>
         private void FillCellCollection(int numCells)
         {
             Debug.Assert(numCells > 0);
-            List<int> TSTGroupIds = this.GetTSTTransitionGroupIds();
- 
-            //Create all the cells.  If there are Time Since Transition Groups then add
-            //a Tst for each one.
 
-            int CollIndex = 0;
+            int CollectionIndex = 0;
 
             for (int CellId = 0; CellId < numCells; CellId++)
             {
@@ -83,18 +97,10 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                Cell SimulationCell = new Cell(CellId, CollIndex);
-                CollIndex++;
-
-                if (TSTGroupIds.Count > 0)
-                {
-                    foreach (int tgid in TSTGroupIds)
-                    {
-                        SimulationCell.TstValues.Add(new Tst(tgid));
-                    }
-                }
-
+                Cell SimulationCell = new Cell(CellId, CollectionIndex);
                 this.m_Cells.Add(SimulationCell);
+
+                CollectionIndex++;
             }
         }
 
@@ -191,12 +197,6 @@ namespace SyncroSim.STSim
                 this.m_StateClasses.Add(new StateClass(id, slxid, slyid, name));
             }
         }
-
-#if DEBUG
-        private bool TRANSITION_TYPES_FILLED;
-        private bool TRANSITION_GROUPS_FILLED;
-        private bool TRANSITION_SIM_GROUPS_FILLED;
-#endif
 
         /// <summary>
         /// Fills the model's transition type collection
@@ -658,7 +658,12 @@ namespace SyncroSim.STSim
                 this.m_InitialConditionsDistributions.Add(InitialStateRecord);
             }
 
-            this.m_InitialConditionsDistributionMap = new InitialConditionsDistributionMap(this.m_InitialConditionsDistributions);
+            this.m_InitialConditionsDistributionMap = 
+                new InitialConditionsDistributionMap(this.m_InitialConditionsDistributions);
+
+#if DEBUG
+            this.IC_DISTRIBUTIONS_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -1044,6 +1049,9 @@ namespace SyncroSim.STSim
                     throw new ArgumentException(ds.DisplayName + " -> " + ex.Message);
                 }         
             }
+#if DEBUG
+            this.STATE_ATTRIBUTES_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -1199,6 +1207,10 @@ namespace SyncroSim.STSim
                     throw new ArgumentException(ds.DisplayName + " -> " + ex.Message);
                 }              
             }
+
+#if DEBUG
+            this.TRANSITION_ATTRIBUTES_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -1235,10 +1247,17 @@ namespace SyncroSim.STSim
                     TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
 
+                TstTransitionGroup Item = new TstTransitionGroup(TransitionGroupId);
+
+                this.m_TSTTransitionGroups.Add(Item);
+
                 this.m_TstTransitionGroupMap.AddGroup(
-                    TransitionTypeId, StratumId, SecondaryStratumId, TertiaryStratumId, 
-                    new TstTransitionGroup(TransitionGroupId));
+                    TransitionTypeId, StratumId, SecondaryStratumId, TertiaryStratumId, Item);
             }
+
+#if DEBUG
+            this.TST_TRANSITION_GROUPS_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -1311,10 +1330,18 @@ namespace SyncroSim.STSim
                     MaxInitialTST = int.MaxValue;
                 }
 
+                TstRandomize Item = new TstRandomize(MinInitialTST, MaxInitialTST, TransitionGroupId);
+
+                this.m_TSTRandomizeRecords.Add(Item);
+
                 this.m_TstRandomizeMap.AddTstRandomize(
-                    TransitionGroupId, StratumId, SecondaryStratumId, TertiaryStratumId, StateClassId, Iteration, 
-                    new TstRandomize(MinInitialTST, MaxInitialTST));
+                    TransitionGroupId, StratumId, SecondaryStratumId, 
+                    TertiaryStratumId, StateClassId, Iteration, Item);
             }
+
+#if DEBUG
+            this.TST_RANDOMIZE_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -1350,7 +1377,13 @@ namespace SyncroSim.STSim
             }
 
             Debug.Assert(this.m_InitialTstSpatialMap == null);
-            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(this.m_InitialTSTSpatialRecords, this.ResultScenario, this.m_InputRasters);
+
+            this.m_InitialTstSpatialMap = new InitialTSTSpatialMap(
+                this.m_InitialTSTSpatialRecords, this.ResultScenario, this.m_InputRasters);
+
+#if DEBUG
+            this.INITIAL_TST_SPATIAL_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -1887,6 +1920,10 @@ namespace SyncroSim.STSim
                     throw new ArgumentException(ds.DisplayName + " -> " + ex.Message);
                 }
             }
+
+#if DEBUG
+            this.TRANSITION_MULTIPLIERS_FILLED = true;
+#endif
         }
 
         /// <summary>

@@ -7,11 +7,13 @@ namespace SyncroSim.STSim
     {
         private int m_MaxInitialTst;
         private int m_MinInitialTst;
+        private int? m_TransitionGroupId;
 
-        public TstRandomize(int minInitialTst, int maxInitialTst)
+        public TstRandomize(int minInitialTst, int maxInitialTst, int? transitionGroupId)
         {
             this.m_MinInitialTst = minInitialTst;
             this.m_MaxInitialTst = maxInitialTst;
+            this.m_TransitionGroupId = transitionGroupId;
         }
 
         public int MaxInitialTst
@@ -27,6 +29,14 @@ namespace SyncroSim.STSim
             get
             {
                 return m_MinInitialTst;
+            }
+        }
+
+        public int? TransitionGroupId
+        {
+            get
+            {
+                return this.m_TransitionGroupId;
             }
         }
     }

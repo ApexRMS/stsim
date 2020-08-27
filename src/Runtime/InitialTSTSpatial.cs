@@ -6,13 +6,13 @@ namespace SyncroSim.STSim
     class InitialTSTSpatial
     {
         private int? m_Iteration;
-        private int? m_TransitionGroupId;
+        private int? m_TSTGroupId;
         private string m_FileName;
 
-        public InitialTSTSpatial(int? iteration, int? transitionGroupId, string fileName)
+        public InitialTSTSpatial(int? iteration, int? tstGroupId, string fileName)
         {
             this.m_Iteration = iteration;
-            this.m_TransitionGroupId = transitionGroupId;
+            this.m_TSTGroupId = tstGroupId;
             this.m_FileName = fileName;
         }
 
@@ -24,11 +24,11 @@ namespace SyncroSim.STSim
             }
         }
 
-        public int? TransitionGroupId
+        public int? TSTGroupId
         {
             get
             {
-                return this.m_TransitionGroupId;
+                return this.m_TSTGroupId;
             }
         }
 

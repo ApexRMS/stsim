@@ -387,6 +387,8 @@ namespace SyncroSim.STSim
 
                 this.ValidateSpatialPrimaryGroups();
             }
+
+            this.FillCellTSTCollections();
         }
 
         /// <summary>

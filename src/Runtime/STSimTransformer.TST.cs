@@ -1,53 +1,108 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
-using System;
-using System.Data;
-using System.Globalization;
+using System.Diagnostics;
 using System.Collections.Generic;
-using SyncroSim.Core;
 using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
     public partial class STSimTransformer
     {
-        private List<int> GetTSTTransitionGroupIds()
-        {
-            List<int> Groups = new List<int>();
-            Dictionary<int, bool> dict = new Dictionary<int, bool>();
-
-            //From the TST Group datafeed
-            DataSheet dstst = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TST_GROUP_NAME);
-
-            foreach (DataRow dr in dstst.GetData().Rows)
+        private bool AnyWildTSTGroupSpecified()
+        { 
+            foreach (InitialConditionsDistribution t in this.m_InitialConditionsDistributions)
             {
-                int id = Convert.ToInt32(
-                    dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], 
-                    CultureInfo.InvariantCulture);
-
-                if (!dict.ContainsKey(id))
-                {
-                    dict.Add(id, true);
-                }
+                if ((!t.TSTGroupId.HasValue) && (t.TSTMin.HasValue || t.TSTMax.HasValue)) { return true; }
             }
 
-            //From the Transition Multiplier Value datafeed
-            DataSheet dstmv = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME);
-
-            foreach (DataRow dr in dstmv.GetData().Rows)
+            foreach (TransitionMultiplierValue t in this.m_TransitionMultiplierValues)
             {
-                if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME] != DBNull.Value)
-                {
-                    int id = Convert.ToInt32(
-                        dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME], 
-                        CultureInfo.InvariantCulture);
+                if (!t.TSTGroupId.HasValue) { return true; }
+            }
 
-                    if (!dict.ContainsKey(id))
-                    {
-                        dict.Add(id, true);
-                    }
+            foreach (InitialTSTSpatial t in this.m_InitialTSTSpatialRecords)
+            {
+                if (!t.TSTGroupId.HasValue) { return true; }
+            }
+
+            foreach (StateAttributeValue t in this.m_StateAttributeValues)
+            {
+                if ((!t.TSTGroupId.HasValue) && (t.TSTMin.HasValue || t.TSTMax.HasValue)) { return true; }
+            }
+
+            foreach (TransitionAttributeValue t in this.m_TransitionAttributeValues)
+            {
+                if ((!t.TSTGroupId.HasValue) && (t.TSTMin.HasValue || t.TSTMax.HasValue)) { return true; }
+            }
+
+            return false;
+        }
+
+        private List<int> GetTSTTransitionGroupIds()
+        {
+
+#if DEBUG
+        Debug.Assert(TRANSITION_GROUPS_FILLED);
+        Debug.Assert(IC_DISTRIBUTIONS_FILLED);
+        Debug.Assert(TRANSITION_MULTIPLIERS_FILLED);
+        Debug.Assert(STATE_ATTRIBUTES_FILLED);
+        Debug.Assert(TRANSITION_ATTRIBUTES_FILLED);
+        Debug.Assert(TST_TRANSITION_GROUPS_FILLED);
+        Debug.Assert(TST_RANDOMIZE_FILLED);
+
+        if (this.m_IsSpatial)
+        {
+            Debug.Assert(INITIAL_TST_SPATIAL_FILLED);
+        }
+#endif
+
+            List<int> Groups = new List<int>();
+
+            //If there are any wild card specified then just add all groups
+
+            if (this.AnyWildTSTGroupSpecified())
+            {
+                foreach (TransitionGroup g in this.m_TransitionGroups)
+                {
+                    Groups.Add(g.TransitionGroupId);
                 }
+
+                return Groups;
+            }
+
+            //Otherwise, go through each applicable collection and all the explicitly specified groups
+
+            Dictionary<int, bool> dict = new Dictionary<int, bool>();
+
+            foreach (InitialConditionsDistribution t in this.m_InitialConditionsDistributions)
+            {
+                if (t.TSTGroupId.HasValue && !dict.ContainsKey(t.TSTGroupId.Value)) { dict.Add(t.TSTGroupId.Value, true); }
+            }
+
+            foreach (TransitionMultiplierValue t in this.m_TransitionMultiplierValues)
+            {
+                if (t.TSTGroupId.HasValue && !dict.ContainsKey(t.TSTGroupId.Value)) { dict.Add(t.TSTGroupId.Value, true); }
+            }
+
+            foreach (InitialTSTSpatial t in this.m_InitialTSTSpatialRecords)
+            {
+                if (t.TSTGroupId.HasValue && !dict.ContainsKey(t.TSTGroupId.Value)) { dict.Add(t.TSTGroupId.Value, true); }
+            }
+
+            foreach (StateAttributeValue t in this.m_StateAttributeValues)
+            {
+                if (t.TSTGroupId.HasValue && !dict.ContainsKey(t.TSTGroupId.Value)) { dict.Add(t.TSTGroupId.Value, true); }
+            }
+
+            foreach (TransitionAttributeValue t in this.m_TransitionAttributeValues)
+            {
+                if (t.TSTGroupId.HasValue && !dict.ContainsKey(t.TSTGroupId.Value)) { dict.Add(t.TSTGroupId.Value, true); }
+            }
+
+            foreach (TstTransitionGroup t in this.m_TSTTransitionGroups)
+            {
+                if (!dict.ContainsKey(t.TSTGroupId)) { dict.Add(t.TSTGroupId, true); }
             }
 
             foreach (int id in dict.Keys)
@@ -56,6 +111,24 @@ namespace SyncroSim.STSim
             }
 
             return Groups;
+        }
+
+        private void FillCellTSTCollections()
+        {
+            List<int> GroupIds = this.GetTSTTransitionGroupIds();
+
+            if (GroupIds.Count == 0)
+            {
+                return;
+            }
+
+            foreach (Cell c in this.m_Cells)
+            {
+                foreach (int id in GroupIds)
+                {
+                    c.TstValues.Add(new Tst(id));
+                }
+            }
         }
 
         /// <summary>
@@ -182,7 +255,7 @@ namespace SyncroSim.STSim
             }
 
             //Get the matching Tst for the simulation cell
-            Tst cellTst = simulationCell.TstValues[tstgroup.GroupId];
+            Tst cellTst = simulationCell.TstValues[tstgroup.TSTGroupId];
 
             //If the cell Tst value is within the Transition's TstMin and TstMax range then return TRUE
             if (cellTst.TstValue >= tr.TstMinimum && cellTst.TstValue <= tr.TstMaximum)

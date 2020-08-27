@@ -47,12 +47,12 @@ namespace SyncroSim.STSim
 
         private void AddItem(InitialTSTSpatial item)
         {
-            SortedKeyMap1<InitialTSTSpatial> m = this.m_Map.GetItemExact(item.TransitionGroupId);
+            SortedKeyMap1<InitialTSTSpatial> m = this.m_Map.GetItemExact(item.TSTGroupId);
 
             if (m == null)
             {
                 m = new SortedKeyMap1<InitialTSTSpatial>(SearchMode.ExactPrev);
-                this.m_Map.AddItem(item.TransitionGroupId, m);
+                this.m_Map.AddItem(item.TSTGroupId, m);
             }
 
             InitialTSTSpatial v = m.GetItemExact(item.Iteration);
@@ -61,7 +61,7 @@ namespace SyncroSim.STSim
             {
                 string msg = string.Format(CultureInfo.InvariantCulture,
                     "A record already exists for Transition Group={0} and iteration={1}.",
-                    this.GetTransitionGroupName(item.TransitionGroupId),
+                    this.GetTransitionGroupName(item.TSTGroupId),
                     STSimMapBase.FormatValue(item.Iteration));
 
                 throw new ArgumentException(msg);

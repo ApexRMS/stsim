@@ -309,8 +309,10 @@
     <Compile Include="Runtime\TST.cs" />
     <Compile Include="Runtime\TSTCollection.cs" />
     <Compile Include="Runtime\TSTRandomize.cs" />
+    <Compile Include="Runtime\TSTRandomizeCollection.cs" />
     <Compile Include="Runtime\TSTRandomizeMap.cs" />
     <Compile Include="Runtime\TSTTransitionGroup.cs" />
+    <Compile Include="Runtime\TSTTransitionGroupCollection.cs" />
     <Compile Include="Runtime\TSTTransitionGroupMap.cs" />
     <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.Designer.cs">
       <DependentUpon>AdjacencyMultiplierDataFeedView.cs</DependentUpon>

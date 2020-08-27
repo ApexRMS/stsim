@@ -139,9 +139,9 @@ namespace SyncroSim.STSim
 
             if (tstgroup != null)
             {
-                if (contagionCell.TstValues.Contains(tstgroup.GroupId))
+                if (contagionCell.TstValues.Contains(tstgroup.TSTGroupId))
                 {
-                    tstvalue = contagionCell.TstValues[tstgroup.GroupId].TstValue;
+                    tstvalue = contagionCell.TstValues[tstgroup.TSTGroupId].TstValue;
                 }
             }
 

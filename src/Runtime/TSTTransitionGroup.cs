@@ -5,18 +5,18 @@ namespace SyncroSim.STSim
 {
     internal class TstTransitionGroup
     {
-        private int m_GroupId;
+        private int m_TSTGroupId;
 
-        public TstTransitionGroup(int groupId)
+        public TstTransitionGroup(int tstGroupId)
         {
-            this.m_GroupId = groupId;
+            this.m_TSTGroupId = tstGroupId;
         }
 
-        public int GroupId
+        public int TSTGroupId
         {
             get
             {
-                return this.m_GroupId;
+                return this.m_TSTGroupId;
             }
         }
     }

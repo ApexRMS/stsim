@@ -22,6 +22,7 @@ namespace SyncroSim.STSim
         private ClassBinHelper m_AgeReportingHelperTR;
         private ClassBinHelper m_AgeReportingHelperSA;
         private ClassBinHelper m_AgeReportingHelperTA;
+        private ClassBinHelper m_TSTReportingHelper;
         private SizeClassHelper m_SizeClassHelper;
         private double m_AmountPerCell;
         private int m_TotalIterations;
@@ -329,6 +330,7 @@ namespace SyncroSim.STSim
             this.InitializeSpatialAverageOutputOptions();
             this.InitializeDistributionProvider();
             this.InitializeAgeReportingHelpers();
+            this.InitializeTSTReportingHelpers();
             this.InitializeSizeClassHelper();
             this.InitializeModelCollections();
             this.NormalizeForUserDistributions();
@@ -455,6 +457,7 @@ namespace SyncroSim.STSim
             this.WriteSummaryStateAttributeTabularData(this.m_OutputStateAttributeTable);
             this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
             this.WriteExternalVariableValueTabularData(iteration, timestep, this.m_OutputExternalVariableValueTable);
+            this.WriteSummaryTSTTabularData(this.m_OutputTSTTable, iteration, timestep);
 
             //Spatial data
             this.WriteStateClassRaster(iteration, timestep);
@@ -619,6 +622,7 @@ namespace SyncroSim.STSim
 
             //Record output here because Tst should not be incremented until after the output has been recorded.
             this.RecordSummaryStateClassOutput(simulationCell, iteration, timestep);
+            this.RecordSummaryTSTOutput(simulationCell, iteration, timestep);
             this.RecordSummaryStateAttributeOutput(simulationCell, iteration, timestep);
 
             //If there are Tst values then increment them by one.
@@ -626,7 +630,10 @@ namespace SyncroSim.STSim
             {
                 foreach (Tst t in simulationCell.TstValues)
                 {
-                    t.TstValue += 1;
+                    if (t.TstValue < int.MaxValue)
+                    {
+                        t.TstValue += 1;
+                    }
                 }
             }
         }

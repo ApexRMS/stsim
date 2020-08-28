@@ -183,6 +183,33 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Gets a database value for the specified nullable integer
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>
+        /// If the integer has a value, that value is returned if it is not int.MaxValue.  
+        /// Otherwise, DBNull.Value is returned. 
+        /// </returns>
+        public static object GetNullableDatabaseValueSetMaxIntNull(int? value)
+        {
+            if (value.HasValue)
+            {
+                if( value.Value == int.MaxValue)
+                {
+                    return DBNull.Value;
+                }
+                else
+                {
+                    return value.Value;
+                }
+            }
+            else
+            {
+                return DBNull.Value;
+            }
+        }
+
+        /// <summary>
         /// Gets a database value for the specified nullable double
         /// </summary>
         /// <param name="value"></param>

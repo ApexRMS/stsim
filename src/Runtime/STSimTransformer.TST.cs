@@ -1,9 +1,13 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2019 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
+using System;
+using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.StochasticTime;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
@@ -286,13 +290,89 @@ namespace SyncroSim.STSim
                 if (simulationCell.TstValues.Contains(tg.TransitionGroupId))
                 {
                     Tst celltst = simulationCell.TstValues[tg.TransitionGroupId];
-                    celltst.TstValue += tr.TstRelative;
+                    int diff = int.MaxValue - celltst.TstValue;
+
+                    if (diff >= tr.TstRelative)
+                    {
+                        celltst.TstValue += tr.TstRelative;
+                    }
 
                     if (celltst.TstValue < 0)
                     {
                         celltst.TstValue = 0;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Initializes the TST reporting helpers
+        /// </summary>
+        /// <remarks></remarks>
+        private void InitializeTSTReportingHelpers()
+        {
+            Debug.Assert(this.m_TSTReportingHelper == null);
+            this.m_TSTReportingHelper = new ClassBinHelper(false, 0, 0);
+
+            //If not reporting TST then all TST helpers are disabled
+            //-----------------------------------------------------------
+
+            if (!this.m_CreateSummaryTSTOutput)
+            {
+                return;
+            }
+
+            //If TST is not configured then all TST helpers are disabled
+            //------------------------------------------------------------
+
+            DataRow dr = this.Project.GetDataSheet(Strings.DATASHEET_TST_TYPE_NAME).GetDataRow();
+
+            if (dr == null)
+            {
+                return;
+            }
+
+            //If the TST configuration is invalid then all TST helpers are disabled
+            //---------------------------------------------------------------------
+
+            if (dr[Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME] != DBNull.Value)
+            {
+                if (dr[Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME] == DBNull.Value)
+                {
+                    this.RecordStatus(StatusType.Warning,
+                        "TST reporting freqency set without TST reporting maximum.  Not reporting TST.");
+
+                    return;
+                }
+            }
+
+            if (dr[Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME] != DBNull.Value)
+            {
+                if (dr[Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME] == DBNull.Value)
+                {
+                    this.RecordStatus(StatusType.Warning,
+                        "TST reporting maximum set without TST reporting frequency.  Not reporting TST.");
+
+                    return;
+                }
+            }
+
+            int f = Convert.ToInt32(dr[Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME], CultureInfo.InvariantCulture);
+            int m = Convert.ToInt32(dr[Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+            if (m < f)
+            {
+                this.RecordStatus(StatusType.Warning,
+                    "TST reporting maximum is less than TST reporting frequency.  Not reporting TST.");
+
+                return;
+            }
+
+            //Only enable a TST helper if that type of output is enabled
+
+            if (this.m_CreateSummaryTSTOutput)
+            {
+                this.m_TSTReportingHelper = new ClassBinHelper(true, f, m);
             }
         }
     }

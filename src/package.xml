@@ -1419,6 +1419,8 @@
     </transformer>
     <transformer name="TransitionAttributeReport" displayName="Transition Attributes" className="SyncroSim.STSim.TransitionAttributeReport" classAssembly="SyncroSim.STSim">
     </transformer>
+    <transformer name="TSTReport" displayName="Time-Since-Transition" className="SyncroSim.STSim.TSTReport" classAssembly="SyncroSim.STSim">
+    </transformer>   
     <transformer name="StateClassRasterMap" displayName="State Classes" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialState" column="Filename" isFolderExport="True">
     </transformer>
     <transformer name="TransitionRasterMap" displayName="Transitions" className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms" dataSheet="OutputSpatialTransition" column="Filename" isFolderExport="True">
@@ -1487,6 +1489,7 @@
           <item name="StateClassSummaryReport"/>
           <item name="TransitionSummaryReport"/>
           <item name="TransitionStateSummaryReport"/>
+          <item name="TSTReport"/>
           <item name="StateAttributeReport"/>
           <item name="TransitionAttributeReport"/>
           <item name="coreforms_ScenarioDescriptionReport"/>
@@ -1558,16 +1561,16 @@
       <group name="Ages">
         <item name="AgeType"/>
         <item name="AgeGroup"/>
-      </group>
-      <group name="TST">
-        <item name="TSTType"/>
-        <item name="TSTGroup"/>
-      </group>     
+      </group>   
       <group name="Advanced">
         <group name="Attributes">
           <item name="AttributeGroup"/>
           <item name="StateAttributeType"/>
           <item name="TransitionAttributeType"/>
+        </group>
+        <group name="TST" displayName="Time-Since-Transition">
+          <item name="TSTType"/>
+          <item name="TSTGroup"/>
         </group>
         <item name="corestime_DistributionType"/>
         <item name="corestime_ExternalVariableType"/>

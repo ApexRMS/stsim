@@ -107,6 +107,7 @@ namespace SyncroSim.STSim
         private OutputStratumTransitionStateCollection m_SummaryStratumTransitionStateResults = new OutputStratumTransitionStateCollection();
         private OutputStateAttributeCollection m_SummaryStateAttributeResults = new OutputStateAttributeCollection();
         private OutputTransitionAttributeCollection m_SummaryTransitionAttributeResults = new OutputTransitionAttributeCollection();
+        private OutputTSTCollection m_SummaryTSTResults = new OutputTSTCollection();
 
         //Output data tables
         private DataTable m_OutputStratumAmountTable;
@@ -116,6 +117,7 @@ namespace SyncroSim.STSim
         private DataTable m_OutputStateAttributeTable;
         private DataTable m_OutputTransitionAttributeTable;
         private DataTable m_OutputExternalVariableValueTable;
+        private DataTable m_OutputTSTTable;
 
         /// <summary>
         /// Determines whether or not the specified timestep is an Output timestep
@@ -197,6 +199,11 @@ namespace SyncroSim.STSim
         private bool IsSummaryExternalVariableTimestep(int timestep)
         {
             return this.IsOutputTimestep(timestep, this.m_SummaryExternalVariableOutputTimesteps, this.m_CreateSummaryExternalVariableOutput);
+        }
+
+        private bool IsSummaryTSTOutputTimestep(int timestep)
+        {
+            return this.IsOutputTimestep(timestep, this.m_SummaryTSTOutputTimesteps, this.m_CreateSummaryTSTOutput);
         }
 
         //Spatial output
@@ -683,6 +690,60 @@ namespace SyncroSim.STSim
 
                         this.m_SummaryStateAttributeResults.Add(ossa);
                     }
+                }
+            }
+        }
+
+        private void RecordSummaryTSTOutput(Cell simulationCell, int iteration, int timestep)
+        {
+            if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
+            {
+                return;
+            }
+
+            if (simulationCell.TstValues.Count == 0)
+            {
+                return;
+            }
+
+            if (!this.IsSummaryTSTOutputTimestep(timestep))
+            {
+                return;
+            }
+
+            foreach (Tst tst in simulationCell.TstValues)
+            {
+                int TSTKey = this.m_TSTReportingHelper.GetKey(tst.TstValue);
+
+                SevenIntegerLookupKey key = new SevenIntegerLookupKey(
+                    simulationCell.StratumId,
+                    GetSecondaryStratumIdKey(simulationCell),
+                    GetTertiaryStratumIdKey(simulationCell),
+                    iteration,
+                    timestep,
+                    tst.TransitionGroupId,
+                    TSTKey);
+
+                if (this.m_SummaryTSTResults.Contains(key))
+                {
+                    OutputTST tstrec = this.m_SummaryTSTResults[key];
+                    tstrec.Amount += this.m_AmountPerCell;
+                }
+                else
+                {
+                    OutputTST tstrec = new OutputTST(
+                        simulationCell.StratumId,
+                        GetSecondaryStratumIdValue(simulationCell),
+                        GetTertiaryStratumIdValue(simulationCell),
+                        iteration,
+                        timestep,
+                        tst.TransitionGroupId,
+                        this.m_TSTReportingHelper.GetMinimum(tst.TstValue),
+                        this.m_TSTReportingHelper.GetMaximum(tst.TstValue),
+                        TSTKey,
+                        this.m_AmountPerCell);
+
+                    this.m_SummaryTSTResults.Add(tstrec);
                 }
             }
         }
@@ -1749,6 +1810,46 @@ namespace SyncroSim.STSim
 
                 table.Rows.Add(dr);                    
             }
+        }
+
+        /// <summary>
+        /// Writes the summary TST tabular data
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        /// <remarks></remarks>
+        private void WriteSummaryTSTTabularData(DataTable table, int iteration, int timestep)
+        {
+            if (!this.m_CreateSummaryTSTOutput)
+            {
+                return;
+            }
+
+            if (!this.IsSummaryTSTOutputTimestep(timestep))
+            {
+                return;
+            }
+
+            foreach (OutputTST r in this.m_SummaryTSTResults)
+            {
+                DataRow dr = table.NewRow();
+
+                dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
+                dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
+                dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
+                dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
+                dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
+                dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = r.TransitionGroupId;
+                dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValueSetMaxIntNull(r.TSTMin);
+                dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValueSetMaxIntNull(r.TSTMax);
+                dr[Strings.DATASHEET_TST_CLASS_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                table.Rows.Add(dr);
+            }
+            
+            this.m_SummaryTSTResults.Clear();
         }
 
         /// <summary>

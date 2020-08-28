@@ -132,6 +132,7 @@ namespace SyncroSim.STSim
             this.m_OutputStateAttributeTable = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME).GetData();
             this.m_OutputTransitionAttributeTable = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME).GetData();
             this.m_OutputExternalVariableValueTable = this.ResultScenario.GetDataSheet(Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME).GetData();
+            this.m_OutputTSTTable = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_TST_NAME).GetData();
 
             Debug.Assert(m_OutputStratumAmountTable.Rows.Count == 0);
             Debug.Assert(m_OutputStratumStateTable.Rows.Count == 0);
@@ -140,6 +141,7 @@ namespace SyncroSim.STSim
             Debug.Assert(m_OutputStateAttributeTable.Rows.Count == 0);
             Debug.Assert(m_OutputTransitionAttributeTable.Rows.Count == 0);
             Debug.Assert(m_OutputExternalVariableValueTable.Rows.Count == 0);
+            Debug.Assert(m_OutputTSTTable.Rows.Count == 0);
         }
 
         /// <summary>

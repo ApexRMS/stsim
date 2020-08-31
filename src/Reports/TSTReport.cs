@@ -72,33 +72,68 @@ namespace SyncroSim.STSim
             if (isCSV)
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "SELECT " + "stsim_OutputTST.ScenarioID, " + "stsim_OutputTST.Iteration,  " +
-                    "stsim_OutputTST.Timestep,  " + "stsim_Stratum.Name AS Stratum,  " + "stsim_SecondaryStratum.Name AS SecondaryStratum,  " +
-                    "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + "stsim_TransitionGroup.Name as TransitionGroup, " +
-                    "stsim_OutputTST.TSTMin, " + "stsim_OutputTST.TSTMax, " + "stsim_OutputTST.Amount " +
-                    "FROM stsim_OutputTST " + "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputTST.StratumID " +
+                    "SELECT " + 
+                    "stsim_OutputTST.ScenarioID, " +
+                    "stsim_OutputTST.Iteration,  " +
+                    "stsim_OutputTST.Timestep,  " +
+                    "stsim_Stratum.Name AS Stratum,  " + 
+                    "stsim_SecondaryStratum.Name AS SecondaryStratum,  " +
+                    "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + 
+                    "stsim_TransitionGroup.Name as TransitionGroup, " +
+                    "stsim_OutputTST.TSTMin, " + 
+                    "stsim_OutputTST.TSTMax, " +
+                    "stsim_OutputTST.Amount " +
+                    "FROM stsim_OutputTST " + 
+                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputTST.StratumID " +
                     "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputTST.SecondaryStratumID " +
                     "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputTST.TertiaryStratumID " +
-                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputTST.TransitionGroupID " + "WHERE stsim_OutputTST.ScenarioID IN ({0})  " + "ORDER BY " +
-                    "stsim_OutputTST.ScenarioID, " + "stsim_OutputTST.Iteration, " + "stsim_OutputTST.Timestep, " +
-                    "stsim_Stratum.Name, " + "stsim_SecondaryStratum.Name, " + "stsim_TertiaryStratum.Name, " + "stsim_TransitionGroup.Name, " +
-                    "TSTMin, " + "TSTMax", ScenFilter);
+                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputTST.TransitionGroupID " + 
+                    "WHERE stsim_OutputTST.ScenarioID IN ({0})  " + 
+                    "ORDER BY " +
+                    "stsim_OutputTST.ScenarioID, " + 
+                    "stsim_OutputTST.Iteration, " + 
+                    "stsim_OutputTST.Timestep, " +
+                    "stsim_Stratum.Name, " + 
+                    "stsim_SecondaryStratum.Name, " + 
+                    "stsim_TertiaryStratum.Name, " +
+                    "stsim_TransitionGroup.Name, " +
+                    "TSTMin, " + 
+                    "TSTMax", 
+                    ScenFilter);
             }
             else
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "SELECT " + "stsim_OutputTST.ScenarioID, " + "core_Scenario.Name AS ScenarioName,  " + "stsim_OutputTST.Iteration,  " +
-                    "stsim_OutputTST.Timestep,  " + "stsim_Stratum.Name AS Stratum,  " + "stsim_SecondaryStratum.Name AS SecondaryStratum,  " +
-                    "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + "stsim_TransitionGroup.Name as TransitionGroup, " + "stsim_OutputTST.TSTMin, " +
-                    "stsim_OutputTST.TSTMax, " + "stsim_OutputTST.Amount " + "FROM stsim_OutputTST " +
+                    "SELECT " + 
+                    "stsim_OutputTST.ScenarioID, " +
+                    "core_Scenario.Name AS ScenarioName,  " + 
+                    "stsim_OutputTST.Iteration,  " +
+                    "stsim_OutputTST.Timestep,  " + 
+                    "stsim_Stratum.Name AS Stratum,  " + 
+                    "stsim_SecondaryStratum.Name AS SecondaryStratum,  " +
+                    "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + 
+                    "stsim_TransitionGroup.Name as TransitionGroup, " + 
+                    "stsim_OutputTST.TSTMin, " +
+                    "stsim_OutputTST.TSTMax, " + 
+                    "stsim_OutputTST.Amount " + 
+                    "FROM stsim_OutputTST " +
                     "INNER JOIN core_Scenario ON core_Scenario.ScenarioID = stsim_OutputTST.ScenarioID " +
                     "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputTST.StratumID " +
                     "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputTST.SecondaryStratumID " +
                     "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputTST.TertiaryStratumID " +
                     "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputTST.TransitionGroupID " +
-                    "WHERE stsim_OutputTST.ScenarioID IN ({0})  " + "ORDER BY " + "stsim_OutputTST.ScenarioID, " + "core_Scenario.Name, " +
-                    "stsim_OutputTST.Iteration, " + "stsim_OutputTST.Timestep, " + "stsim_Stratum.Name, " + "stsim_SecondaryStratum.Name, " +
-                    "stsim_TertiaryStratum.Name, " + "stsim_TransitionGroup.Name, " + "TSTMin, " + "TSTMax", ScenFilter);
+                    "WHERE stsim_OutputTST.ScenarioID IN ({0})  " + 
+                    "ORDER BY " + "stsim_OutputTST.ScenarioID, " +
+                    "core_Scenario.Name, " +
+                    "stsim_OutputTST.Iteration, " + 
+                    "stsim_OutputTST.Timestep, " + 
+                    "stsim_Stratum.Name, " + 
+                    "stsim_SecondaryStratum.Name, " +
+                    "stsim_TertiaryStratum.Name, " + 
+                    "stsim_TransitionGroup.Name, " +
+                    "TSTMin, " +
+                    "TSTMax", 
+                    ScenFilter);
             }
         }
     }

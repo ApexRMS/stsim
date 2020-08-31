@@ -166,6 +166,22 @@ namespace SyncroSim.STSim
             return null;
         }
 
+        public override string GetCacheTag(ChartDescriptor descriptor)
+        {
+            if (ChartingUtilities.DescriptorHasAgeReference(descriptor))
+            {
+                return Constants.AGE_QUERY_CACHE_TAG;
+            }
+            else if (ChartingUtilities.DescriptorHasTSTReference(descriptor))
+            {
+                return Constants.TST_QUERY_CACHE_TAG;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private static void AddChartStateClassVariables(SyncroSimLayoutItemCollection items, Project project)
         {
             string AmountLabel = null;
@@ -508,7 +524,7 @@ namespace SyncroSim.STSim
             dt.Columns.Add(new DataColumn(Strings.VALUE_MEMBER_COLUMN_NAME, typeof(long)));
             dt.Columns.Add(new DataColumn(Strings.DISPLAY_MEMBER_COLUMN_NAME, typeof(string)));
 
-            IEnumerable<ClassBinDescriptor> e = ChartingUtilities.GetClassBinGroupDescriptors(
+            List<ClassBinDescriptor> e = ChartingUtilities.GetClassBinGroupDescriptors(
                 project, 
                 classGroupDatasheetName, 
                 classGroupMaximumColumnName);

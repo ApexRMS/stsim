@@ -1841,8 +1841,8 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
                 dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
                 dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = r.TransitionGroupId;
-                dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValueSetMaxIntNull(r.TSTMin);
-                dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValueSetMaxIntNull(r.TSTMax);
+                dr[Strings.DATASHEET_TST_MIN_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TSTMin);
+                dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TSTMax);
                 dr[Strings.DATASHEET_TST_CLASS_COLUMN_NAME] = DBNull.Value;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
 

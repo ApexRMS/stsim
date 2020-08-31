@@ -48,7 +48,12 @@ namespace SyncroSim.STSim
 
 #if DEBUG
         Debug.Assert(TRANSITION_GROUPS_FILLED);
-        Debug.Assert(IC_DISTRIBUTIONS_FILLED);
+
+        if (!this.IsSpatial)
+        {
+            Debug.Assert(IC_DISTRIBUTIONS_FILLED);
+        }
+
         Debug.Assert(TRANSITION_MULTIPLIERS_FILLED);
         Debug.Assert(STATE_ATTRIBUTES_FILLED);
         Debug.Assert(TRANSITION_ATTRIBUTES_FILLED);
@@ -128,6 +133,8 @@ namespace SyncroSim.STSim
 
             foreach (Cell c in this.m_Cells)
             {
+                Debug.Assert(c.TstValues.Count == 0);
+
                 foreach (int id in GroupIds)
                 {
                     c.TstValues.Add(new Tst(id));
@@ -290,16 +297,19 @@ namespace SyncroSim.STSim
                 if (simulationCell.TstValues.Contains(tg.TransitionGroupId))
                 {
                     Tst celltst = simulationCell.TstValues[tg.TransitionGroupId];
-                    int diff = int.MaxValue - celltst.TstValue;
+                    long Value = celltst.TstValue + tr.TstRelative;
 
-                    if (diff >= tr.TstRelative)
+                    if (Value > int.MaxValue)
                     {
-                        celltst.TstValue += tr.TstRelative;
+                        celltst.TstValue = int.MaxValue;
                     }
-
-                    if (celltst.TstValue < 0)
+                    else if (Value < 0)
                     {
                         celltst.TstValue = 0;
+                    }
+                    else
+                    {
+                        celltst.TstValue += tr.TstRelative;
                     }
                 }
             }

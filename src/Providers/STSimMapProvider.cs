@@ -1194,7 +1194,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private static bool CreateAgeTypeColorMap(Project project, string colorMapFilename)
         {
-            IEnumerable<ClassBinDescriptor> ageDescriptors = ChartingUtilities.GetClassBinTypeDescriptors(
+            List<ClassBinDescriptor> ageDescriptors = ChartingUtilities.GetClassBinTypeDescriptors(
                 project,
                 Strings.DATASHEET_AGE_TYPE_NAME,
                 Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,

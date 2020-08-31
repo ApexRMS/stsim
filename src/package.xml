@@ -198,8 +198,8 @@
               <columns>
                 <column name="AgeTypeID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
-                <column name="Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
-                <column name="MaximumAge" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
+                <column name="MaximumAge" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
               </columns>
             </datasheet>
           </datasheets>
@@ -222,8 +222,8 @@
               <columns>
                 <column name="TSTTypeID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
-                <column name="Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
-                <column name="MaximumTST" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
+                <column name="MaximumTST" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
               </columns>
             </datasheet>
           </datasheets>

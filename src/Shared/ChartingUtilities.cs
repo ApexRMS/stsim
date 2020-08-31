@@ -358,12 +358,12 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        private static bool DescriptorHasAgeReference(ChartDescriptor descriptor)
+        public static bool DescriptorHasAgeReference(ChartDescriptor descriptor)
         {
             return DescriptorHasReference(descriptor, Strings.DATASHEET_AGE_CLASS_COLUMN_NAME);
         }
 
-        private static bool DescriptorHasTSTReference(ChartDescriptor descriptor)
+        public static bool DescriptorHasTSTReference(ChartDescriptor descriptor)
         {
             return DescriptorHasReference(descriptor, Strings.DATASHEET_TST_CLASS_COLUMN_NAME);
         }
@@ -496,7 +496,7 @@ namespace SyncroSim.STSim
         // Class Bin Descriptors
         // =======================================================================================
 
-        private static IEnumerable<ClassBinDescriptor> GetClassBinDescriptors(
+        private static List<ClassBinDescriptor> GetClassBinDescriptors(
             Project project,
             string classTypeDatasheetName,
             string classTypeFrequencyColumnName,
@@ -504,7 +504,7 @@ namespace SyncroSim.STSim
             string classGroupDatasheetName,
             string classGroupMaximumColumnName)
         {
-            IEnumerable<ClassBinDescriptor> e = GetClassBinGroupDescriptors(
+            List<ClassBinDescriptor> e = GetClassBinGroupDescriptors(
                 project, 
                 classGroupDatasheetName, 
                 classGroupMaximumColumnName);
@@ -538,7 +538,7 @@ namespace SyncroSim.STSim
             return e;
         }
 
-        public static IEnumerable<ClassBinDescriptor> GetClassBinGroupDescriptors(
+        public static List<ClassBinDescriptor> GetClassBinGroupDescriptors(
             Project project, 
             string datasheetName, 
             string maximumColumnName)
@@ -565,6 +565,12 @@ namespace SyncroSim.STSim
                     lst.Add(new ClassBinDescriptor(value, value));
                     dict.Add(value, true);
                 }
+            }
+
+            if (!dict.ContainsKey(0))
+            {
+                lst.Insert(0, new ClassBinDescriptor(0, 0));
+                dict.Add(0, true);
             }
 
             lst.Sort((ClassBinDescriptor ad1, ClassBinDescriptor ad2) =>
@@ -600,7 +606,7 @@ namespace SyncroSim.STSim
             return lst;
         }
 
-        public static IEnumerable<ClassBinDescriptor> GetClassBinTypeDescriptors(
+        public static List<ClassBinDescriptor> GetClassBinTypeDescriptors(
             Project project, 
             string datasheetName, 
             string frequencyColumnName, 
@@ -619,7 +625,17 @@ namespace SyncroSim.STSim
                     if (f <= m)
                     {
                         ClassBinHelper h = new ClassBinHelper(true, f, m);
-                        return h.GetDescriptors();
+                        List<ClassBinDescriptor> lst = h.GetDescriptors();
+
+#if DEBUG
+                        foreach (ClassBinDescriptor d in lst)
+                        {
+                            Debug.Assert(d.Minimum != 0);
+                        }
+#endif
+
+                        lst.Insert(0, new ClassBinDescriptor(0, 0));
+                        return lst;
                     }
                 }
             }
@@ -741,7 +757,7 @@ namespace SyncroSim.STSim
             string outputDatasheetMaximumColumnName,
             string outputDatasheetClassColumnName)
         {
-            IEnumerable<ClassBinDescriptor> e = GetClassBinDescriptors(
+            List<ClassBinDescriptor> e = GetClassBinDescriptors(
                 project,
                 classTypeDatasheetName, 
                 classTypeFrequencyColumnName, 
@@ -782,8 +798,6 @@ namespace SyncroSim.STSim
                     outputDatasheetName, 
                     outputDatasheetClassColumnName);
 
-                sb.Append(" WHEN 0 THEN 0");
-
                 for (int i = 0; i < e.Count(); i++)
                 {
                     ClassBinDescriptor d = e.ElementAtOrDefault(i);
@@ -800,17 +814,11 @@ namespace SyncroSim.STSim
                             d.Maximum.Value, 
                             d.Minimum);
                     }
-                    else
-                    {
-                        Debug.Assert(i == e.Count() - 1);
-
-                        sb.AppendFormat(CultureInfo.InvariantCulture,
-                            " WHEN {0} >= {1} THEN {2}",
-                            outputDatasheetMinimumColumnName,
-                            d.Minimum, 
-                            d.Minimum);
-                    }
                 }
+
+                sb.AppendFormat(" WHEN {0} IS NULL THEN {1}", 
+                    outputDatasheetMaximumColumnName,
+                    e.Last().Minimum);
 
                 sb.Append(" END");
             }

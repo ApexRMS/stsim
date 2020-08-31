@@ -102,7 +102,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public IEnumerable<ClassBinDescriptor> GetDescriptors()
+        public List<ClassBinDescriptor> GetDescriptors()
         {
             List<ClassBinDescriptor> lst = new List<ClassBinDescriptor>();
 

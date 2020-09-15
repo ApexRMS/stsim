@@ -814,6 +814,16 @@ namespace SyncroSim.STSim
                             d.Maximum.Value, 
                             d.Minimum);
                     }
+                    else
+                    {
+                        Debug.Assert(i == e.Count() - 1);
+
+                        sb.AppendFormat(CultureInfo.InvariantCulture,
+                            " WHEN {0} >= {1} THEN {2}",
+                            outputDatasheetMinimumColumnName,
+                            d.Minimum,
+                            d.Minimum);
+                    }
                 }
 
                 sb.AppendFormat(" WHEN {0} IS NULL THEN {1}", 

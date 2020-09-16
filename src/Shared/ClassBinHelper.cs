@@ -67,7 +67,7 @@ namespace SyncroSim.STSim
                 }
                 else if (value > this.m_Maximum)
                 {
-                    return this.m_Maximum;
+                    return this.m_Maximum + 1;
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace SyncroSim.STSim
                 {
                     int? a = this.GetMinimum(value) + (this.m_Frequency - 1);
 
-                    if (a.Value >= this.m_Maximum)
+                    if (a.Value > this.m_Maximum)
                     {
                         a = null;
                     }
@@ -106,16 +106,41 @@ namespace SyncroSim.STSim
         {
             List<ClassBinDescriptor> lst = new List<ClassBinDescriptor>();
 
-            int MinBin = 1;
+            //Add a default 0 bin
+            lst.Add(new ClassBinDescriptor(0, 0));
 
-            while (MinBin <= this.m_Maximum)
+            int min = 1;
+            int max = 0;
+
+            while (min <= this.m_Maximum)
             {
-                int min = this.GetMinimum(MinBin).Value;
-                int? max = this.GetMaximum(MinBin);
+                max = min + this.m_Frequency - 1;
+
+                if (max > this.m_Maximum)
+                {
+                    max = this.m_Maximum;
+                }
+
+                Debug.Assert(min <= max);
 
                 lst.Add(new ClassBinDescriptor(min, max));
-                MinBin += this.m_Frequency;
+                min = max + 1;
             }
+
+#if DEBUG
+            foreach (ClassBinDescriptor d in lst)
+            {
+                Debug.Assert(d.Minimum <= this.m_Maximum);
+
+                if (d.Maximum.HasValue)
+                {
+                    Debug.Assert(d.Maximum.Value <= this.m_Maximum);
+                }
+            }
+#endif
+
+            //Add a final max+1 catch-all bin
+            lst.Add(new ClassBinDescriptor(this.m_Maximum + 1, null));
 
             Debug.Assert(lst.Count > 0);
             Debug.Assert(!(lst[lst.Count - 1].Maximum.HasValue));

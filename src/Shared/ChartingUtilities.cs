@@ -573,22 +573,24 @@ namespace SyncroSim.STSim
                 dict.Add(0, true);
             }
 
-            lst.Sort((ClassBinDescriptor ad1, ClassBinDescriptor ad2) =>
+            lst.Sort((ClassBinDescriptor d1, ClassBinDescriptor d2) =>
             {
-                return ad1.Minimum.CompareTo(ad2.Minimum);
+                return d1.Minimum.CompareTo(d2.Minimum);
             });
 
             int Prev = 0;
 
-            foreach (ClassBinDescriptor ad in lst)
+            for  (int i = 0; i < lst.Count; i++)
             {
-                int t = ad.Minimum;
+                ClassBinDescriptor d = lst[i];
+                int t = d.Minimum;
 
-                ad.Minimum = Prev;
+                d.Minimum = Prev;
                 Prev = t + 1;
             }
 
-            lst.Add(new ClassBinDescriptor(Prev, null));
+            ClassBinDescriptor last = lst[lst.Count - 1];
+            lst.Add(new ClassBinDescriptor(last.Maximum.Value + 1, null));
 
 #if DEBUG
             Debug.Assert(lst.Count > 0);
@@ -600,9 +602,10 @@ namespace SyncroSim.STSim
                     Debug.Assert(ad.Minimum <= ad.Maximum.Value);
                 }
             }
+
+            Debug.Assert(lst[lst.Count - 1].Maximum == null);
 #endif
 
-            lst[lst.Count - 1].Maximum = null;
             return lst;
         }
 
@@ -625,17 +628,7 @@ namespace SyncroSim.STSim
                     if (f <= m)
                     {
                         ClassBinHelper h = new ClassBinHelper(true, f, m);
-                        List<ClassBinDescriptor> lst = h.GetDescriptors();
-
-#if DEBUG
-                        foreach (ClassBinDescriptor d in lst)
-                        {
-                            Debug.Assert(d.Minimum != 0);
-                        }
-#endif
-
-                        lst.Insert(0, new ClassBinDescriptor(0, 0));
-                        return lst;
+                        return h.GetDescriptors();
                     }
                 }
             }

@@ -1190,7 +1190,7 @@
         </datafeed>
         <datafeed name="OutputExternalVariableValue" displayName="Output External Variable Value" dataScope="Scenario" isOutput="True" >
           <datasheets>
-            <datasheet name="OutputExternalVariableValue" displayName="Output External Variable Value">
+            <datasheet name="OutputExternalVariableValue" displayName="Output External Variable Value" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
                 <column name="Iteration" dataType="Integer" isCompositeIndex="True"/>

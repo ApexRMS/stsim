@@ -356,7 +356,8 @@ namespace SyncroSim.STSim
             this.m_FilesDataGrid.Columns[PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Primary);
             this.m_FilesDataGrid.Columns[SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Secondary);
             this.m_FilesDataGrid.Columns[TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Tertiary);
-            this.LabelCalcTtlAmount.Text = string.Format(CultureInfo.InvariantCulture, "Total {0}:", AmountLabel.ToLower(CultureInfo.InvariantCulture));
+
+            this.RefreshCalculatedValues();
         }
 
         private void SetICSpatialFile(int rowIndex, int colIndex, string rasterFullFilename)

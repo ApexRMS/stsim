@@ -1408,7 +1408,7 @@ namespace SyncroSim.STSim
                 TertiaryStratumDefined = (!string.IsNullOrEmpty(tsName));
                 AgeDefined = (!string.IsNullOrEmpty(ageName));
 
-                if (SecondaryStratumDefined && SecondaryStratumDefined && TertiaryStratumDefined && AgeDefined)
+                if (StateClassDefined && SecondaryStratumDefined && TertiaryStratumDefined && AgeDefined)
                 {
                     // If all the Spatial files are already defined, then we've got nothing to do for this iteration
                     continue;

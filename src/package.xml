@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.23" url="https://github.com/ApexRMS/stsim">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.2.24" url="https://github.com/ApexRMS/stsim">
   <transformers>
     <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
       <runtime>

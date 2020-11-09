@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Globalization;
 using SyncroSim.Common.Forms;
+using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -24,29 +25,44 @@ namespace SyncroSim.STSim
             }
         }
 
-        private DataRow[] GetIncomingDT(StateClassShape shape)
+        private DataTable GetDataTableForIncomingDT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
-            string Query = null;
+            int Key = shape.StratumIdSource.HasValue ? shape.StratumIdSource.Value : 0;
 
-            if (shape.StratumIdSource.HasValue)
+            if (!seenBefore.ContainsKey(Key))
             {
-                Query = string.Format(CultureInfo.InvariantCulture, 
-                    "((StratumIDDest={0} AND StateClassIDDest={1}) OR (StratumIDDest IS NULL AND StratumIDSource={0} AND StateClassIDDest={1}))", 
-                    shape.StratumIdSource.Value, shape.StateClassIdSource);
-            }
-            else
-            {
-                Query = string.Format(CultureInfo.InvariantCulture, 
-                    "StratumIDSource IS NULL AND StateClassIDDest={0}", 
-                    shape.StateClassIdSource);
+                string Query = null;
+
+                if (shape.StratumIdSource.HasValue)
+                {
+                    Query = string.Format(CultureInfo.InvariantCulture,
+                        "((StratumIDDest={0}) OR (StratumIDDest IS NULL AND StratumIDSource={0}))",
+                        shape.StratumIdSource.Value);
+                }
+                else
+                {
+                    Query = "StratumIDSource IS NULL";
+                }
+
+                DataTable Source = this.m_DTDataSheet.GetData();
+                DataTable Target = Source.Clone();
+                DataRow[] Rows = Source.Select(Query, null);
+
+                Rows.CopyToDataTable(Target, LoadOption.OverwriteChanges);
+                seenBefore.Add(Key, Target);
             }
 
-            return this.m_DTDataSheet.GetData().Select(Query, null);
+            return seenBefore[Key];
         }
 
-        private void FillIncomingDT(StateClassShape shape)
+        private void FillIncomingDT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
-            DataRow[] rows = this.GetIncomingDT(shape);
+            string Query = string.Format(CultureInfo.InvariantCulture,
+                "StateClassIDDest={0}",
+                shape.StateClassIdSource);
+
+            DataTable dt = this.GetDataTableForIncomingDT(shape, seenBefore);
+            DataRow[] rows = dt.Select(Query, null);
 
             foreach (DataRow dr in rows)
             {

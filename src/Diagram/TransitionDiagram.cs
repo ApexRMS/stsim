@@ -476,6 +476,9 @@ namespace SyncroSim.STSim
             this.RemoveAllShapes();
 
             List<StateClassShape> lst = this.InternalGetStateClassShapes();
+            Dictionary<int, DataTable> SeenBeforeDT = new Dictionary<int, DataTable>();
+            Dictionary<int, DataTable> SeenBeforePTIn = new Dictionary<int, DataTable>();
+            Dictionary<int, DataTable> SeenBeforePTOut = new Dictionary<int, DataTable>();
 
             foreach (StateClassShape Shape in lst)
             {
@@ -485,9 +488,9 @@ namespace SyncroSim.STSim
                 Shape.SetLocation(rc.X, rc.Y);
                 Shape.CreateConnectorPoints();
 
-                this.FillIncomingDT(Shape);
-                this.FillIncomingPT(Shape);
-                this.FillOutgoingPT(Shape);
+                this.FillIncomingDT(Shape, SeenBeforeDT);
+                this.FillIncomingPT(Shape, SeenBeforePTIn);
+                this.FillOutgoingPT(Shape, SeenBeforePTOut);
 
                 if (Shape.IsStatic)
                 {

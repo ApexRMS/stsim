@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Globalization;
 using SyncroSim.Common.Forms;
+using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -29,24 +30,74 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillIncomingPT(StateClassShape shape)
+        private DataTable GetDataTableForIncomingPT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
-            string Query = null;
+            int Key = shape.StratumIdSource.HasValue ? shape.StratumIdSource.Value : 0;
 
-            if (shape.StratumIdSource.HasValue)
+            if (!seenBefore.ContainsKey(Key))
             {
-                Query = string.Format(CultureInfo.InvariantCulture, 
-                    "((StratumIDDest={0} AND StateClassIDDest={1}) OR (StratumIDDest IS NULL AND StratumIDSource={0} AND StateClassIDDest={1}))", 
-                    shape.StratumIdSource.Value, shape.StateClassIdSource);
-            }
-            else
-            {
-                Query = string.Format(CultureInfo.InvariantCulture, 
-                    "StratumIDSource IS NULL AND StateClassIDDest={0}", 
-                    shape.StateClassIdSource);
+                string Query = null;
+
+                if (shape.StratumIdSource.HasValue)
+                {
+                    Query = string.Format(CultureInfo.InvariantCulture,
+                        "((StratumIDDest={0}) OR (StratumIDDest IS NULL AND StratumIDSource={0}))",
+                        shape.StratumIdSource.Value);
+                }
+                else
+                {
+                    Query = "StratumIDSource IS NULL";
+                }
+
+                DataTable Source = this.m_PTDataSheet.GetData();
+                DataTable Target = Source.Clone();
+                DataRow[] Rows = Source.Select(Query, null);
+
+                Rows.CopyToDataTable(Target, LoadOption.OverwriteChanges);
+                seenBefore.Add(Key, Target);
             }
 
-            DataRow[] rows = this.m_PTDataSheet.GetData().Select(Query, null);
+            return seenBefore[Key];
+        }
+
+        private DataTable GetDataTableForOutgoingPT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
+        {
+            int Key = shape.StratumIdSource.HasValue ? shape.StratumIdSource.Value : 0;
+
+            if (!seenBefore.ContainsKey(Key))
+            {
+                string Query = null;
+
+                if (shape.StratumIdSource.HasValue)
+                {
+                    Query = string.Format(CultureInfo.InvariantCulture,
+                        "StratumIDSource={0}",
+                        shape.StratumIdSource.Value);
+                }
+                else
+                {
+                    Query = "StratumIDSource IS NULL";
+                }
+
+                DataTable Source = this.m_PTDataSheet.GetData();
+                DataTable Target = Source.Clone();
+                DataRow[] Rows = Source.Select(Query, null);
+
+                Rows.CopyToDataTable(Target, LoadOption.OverwriteChanges);
+                seenBefore.Add(Key, Target);
+            }
+
+            return seenBefore[Key];
+        }
+
+        private void FillIncomingPT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
+        {
+            string Query = string.Format(CultureInfo.InvariantCulture,
+                "StateClassIDDest={0}",
+                shape.StateClassIdSource);
+
+            DataTable dt = this.GetDataTableForIncomingPT(shape, seenBefore);
+            DataRow[] rows = dt.Select(Query, null);
 
             foreach (DataRow dr in rows)
             {
@@ -57,24 +108,14 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillOutgoingPT(StateClassShape shape)
+        private void FillOutgoingPT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
-            string Query = null;
+            string Query = string.Format(CultureInfo.InvariantCulture,
+                "StateClassIDSource={0}",
+                shape.StateClassIdSource);
 
-            if (shape.StratumIdSource.HasValue)
-            {
-                Query = string.Format(CultureInfo.InvariantCulture, 
-                    "StratumIDSource={0} AND StateClassIDSource={1}", 
-                    shape.StratumIdSource.Value, shape.StateClassIdSource);
-            }
-            else
-            {
-                Query = string.Format(CultureInfo.InvariantCulture, 
-                    "StratumIDSource IS NULL AND StateClassIDSource={0}", 
-                    shape.StateClassIdSource);
-            }
-
-            DataRow[] rows = this.m_PTDataSheet.GetData().Select(Query, null);
+            DataTable dt = this.GetDataTableForOutgoingPT(shape, seenBefore);
+            DataRow[] rows = dt.Select(Query, null);
 
             foreach (DataRow dr in rows)
             {

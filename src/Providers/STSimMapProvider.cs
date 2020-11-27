@@ -61,6 +61,7 @@ namespace SyncroSim.STSim
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
+            StateClassIterationItem.Properties.Add(new MetaDataProperty("titleOverride", "State Classes"));
 
             AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items);
 
@@ -77,10 +78,12 @@ namespace SyncroSim.STSim
 
             AgesIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
             AgesIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
+            AgesIterationItem.Properties.Add(new MetaDataProperty("titleOverride", "Ages"));
 
             AgesAvgGroup.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
             AgesAvgGroup.Properties.Add(new MetaDataProperty("column", "Filename"));
             AgesAvgGroup.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_ALL_ITER));
+            AgesAvgGroup.Properties.Add(new MetaDataProperty("titleOverride", "Ages"));
 
             AgesGroup.Items.Add(AgesIterationItem);
             AgesGroup.Items.Add(AgesAvgGroup);
@@ -102,6 +105,7 @@ namespace SyncroSim.STSim
             StratumIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
+            StratumIterationItem.Properties.Add(new MetaDataProperty("titleOverride", psl));
 
             AddAvgMapStratumVariables(project, StratumAvgGroup.Items);
 

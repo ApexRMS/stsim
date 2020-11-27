@@ -14,6 +14,7 @@ namespace SyncroSim.STSim
         private int? m_TSTGroupId;
         private int m_TSTMin = 0;
         private int m_TSTMax = int.MaxValue;
+        private bool m_TSTWild;
         private int? m_TransitionMultiplierTypeId;
 
         public TransitionMultiplierValue(
@@ -29,6 +30,7 @@ namespace SyncroSim.STSim
             int? tstGroupId,
             int tstMin,
             int tstMax,
+            bool tstWild,
             int? transitionMultiplierTypeId, 
             double? multiplierValue, 
             int? distributionTypeId, 
@@ -48,6 +50,7 @@ namespace SyncroSim.STSim
             this.m_TSTGroupId = tstGroupId;
             this.m_TSTMin = tstMin;
             this.m_TSTMax = tstMax;
+            this.m_TSTWild = tstWild;
             this.m_TransitionMultiplierTypeId = transitionMultiplierTypeId;
         }
 
@@ -107,6 +110,14 @@ namespace SyncroSim.STSim
             }
         }
 
+        public bool TSTWild
+        {
+            get
+            {
+                return this.m_TSTWild;
+            }
+        }
+
         public int? TransitionMultiplierTypeId
         {
             get
@@ -130,6 +141,7 @@ namespace SyncroSim.STSim
                 this.TSTGroupId,
                 this.TSTMin,
                 this.TSTMax,
+                this.TSTWild,
                 this.TransitionMultiplierTypeId, 
                 this.DistributionValue,
                 this.DistributionTypeId, 

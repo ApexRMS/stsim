@@ -1796,6 +1796,7 @@ namespace SyncroSim.STSim
                 double? DistributionSD = null;
                 double? DistributionMin = null;
                 double? DistributionMax = null;
+                bool TSTWild = false;
 
                 if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
                 {
@@ -1835,6 +1836,15 @@ namespace SyncroSim.STSim
                 if (dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] != DBNull.Value)
                 {
                     AgeMax = Convert.ToInt32(dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME], CultureInfo.InvariantCulture);
+                }
+
+                if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME] == DBNull.Value)
+                {
+                    if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MIN_COLUMN_NAME] != DBNull.Value ||
+                        dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MAX_COLUMN_NAME] != DBNull.Value)
+                    {
+                        TSTWild = true;
+                    }
                 }
 
                 if (dr[Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME] != DBNull.Value)
@@ -1902,6 +1912,7 @@ namespace SyncroSim.STSim
                         TSTGroupId,
                         TSTMin,
                         TSTMax,
+                        TSTWild,
                         TransitionMultiplierTypeId,
                         MultiplierAmount,
                         DistributionTypeId,

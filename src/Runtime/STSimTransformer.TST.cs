@@ -22,7 +22,7 @@ namespace SyncroSim.STSim
 
             foreach (TransitionMultiplierValue t in this.m_TransitionMultiplierValues)
             {
-                if (!t.TSTGroupId.HasValue) { return true; }
+                if (t.TSTWild) { return true; }
             }
 
             foreach (InitialTSTSpatial t in this.m_InitialTSTSpatialRecords)

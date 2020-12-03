@@ -1262,7 +1262,7 @@
                 <column name="Iteration" dataType="Integer" format="d"/>
                 <column name="Timestep" dataType="Integer" displayNameSource="Terminology" displayNameColumn="TimestepUnits" format="d"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tg"/>
+                <column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupID" filenameCode="tge"/>
                 <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
               </columns>
             </datasheet>

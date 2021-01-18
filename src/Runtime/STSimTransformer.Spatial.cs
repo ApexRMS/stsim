@@ -2201,7 +2201,14 @@ namespace SyncroSim.STSim
                         {
                             if (c.Age < dt.AgeMinimum || c.Age > dt.AgeMaximum)
                             {
-                                c.Age = this.m_RandomGenerator.GetNextInteger(dt.AgeMinimum, dt.AgeMaximum);
+                                if (dt.AgeMaximum == int.MaxValue)
+                                {
+                                    c.Age = dt.AgeMinimum;
+                                }
+                                else
+                                {
+                                    c.Age = this.m_RandomGenerator.GetNextInteger(dt.AgeMinimum, dt.AgeMaximum);
+                                }
                             }
                         }
                     }

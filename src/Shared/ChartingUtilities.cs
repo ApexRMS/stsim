@@ -567,12 +567,6 @@ namespace SyncroSim.STSim
                 }
             }
 
-            if (!dict.ContainsKey(0))
-            {
-                lst.Insert(0, new ClassBinDescriptor(0, 0));
-                dict.Add(0, true);
-            }
-
             lst.Sort((ClassBinDescriptor d1, ClassBinDescriptor d2) =>
             {
                 return d1.Minimum.CompareTo(d2.Minimum);

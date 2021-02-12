@@ -42,109 +42,125 @@
             this.CheckBoxPanelMain = new SyncroSim.Common.Forms.CheckBoxPanel();
             this.TransitionGroupsContextMenu.SuspendLayout();
             this.SuspendLayout();
-            //
-            //ButtonOK
-            //
-            this.ButtonOK.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
-            this.ButtonOK.Location = new System.Drawing.Point(403, 420);
+            // 
+            // ButtonOK
+            // 
+            this.ButtonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonOK.Location = new System.Drawing.Point(537, 517);
+            this.ButtonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonOK.Name = "ButtonOK";
-            this.ButtonOK.Size = new System.Drawing.Size(75, 23);
+            this.ButtonOK.Size = new System.Drawing.Size(100, 28);
             this.ButtonOK.TabIndex = 3;
             this.ButtonOK.Text = "OK";
             this.ButtonOK.UseVisualStyleBackColor = true;
-            //
-            //ButtonCancel
-            //
-            this.ButtonCancel.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
+            this.ButtonOK.Click += new System.EventHandler(this.ButtonOK_Click);
+            // 
+            // ButtonCancel
+            // 
+            this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonCancel.Location = new System.Drawing.Point(484, 420);
+            this.ButtonCancel.Location = new System.Drawing.Point(645, 517);
+            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
+            this.ButtonCancel.Size = new System.Drawing.Size(100, 28);
             this.ButtonCancel.TabIndex = 4;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
-            //
-            //TransitionGroupsContextMenu
-            //
-            this.TransitionGroupsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.MenuItemCheckSelected, this.MenuItemUncheckSelected, this.ToolStripSeparator1, this.MenuItemCheckAll, this.MenuItemUncheckAll});
+            this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
+            // 
+            // TransitionGroupsContextMenu
+            // 
+            this.TransitionGroupsContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.TransitionGroupsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemCheckSelected,
+            this.MenuItemUncheckSelected,
+            this.ToolStripSeparator1,
+            this.MenuItemCheckAll,
+            this.MenuItemUncheckAll});
             this.TransitionGroupsContextMenu.Name = "TransitionGroupsContextMenu";
-            this.TransitionGroupsContextMenu.Size = new System.Drawing.Size(168, 98);
-            //
-            //MenuItemCheckSelected
-            //
+            this.TransitionGroupsContextMenu.Size = new System.Drawing.Size(195, 106);
+            // 
+            // MenuItemCheckSelected
+            // 
             this.MenuItemCheckSelected.Name = "MenuItemCheckSelected";
-            this.MenuItemCheckSelected.Size = new System.Drawing.Size(167, 22);
+            this.MenuItemCheckSelected.Size = new System.Drawing.Size(194, 24);
             this.MenuItemCheckSelected.Text = "Check Selected";
-            //
-            //MenuItemUncheckSelected
-            //
+            // 
+            // MenuItemUncheckSelected
+            // 
             this.MenuItemUncheckSelected.Name = "MenuItemUncheckSelected";
-            this.MenuItemUncheckSelected.Size = new System.Drawing.Size(167, 22);
+            this.MenuItemUncheckSelected.Size = new System.Drawing.Size(194, 24);
             this.MenuItemUncheckSelected.Text = "Uncheck Selected";
-            //
-            //ToolStripSeparator1
-            //
+            // 
+            // ToolStripSeparator1
+            // 
             this.ToolStripSeparator1.Name = "ToolStripSeparator1";
-            this.ToolStripSeparator1.Size = new System.Drawing.Size(164, 6);
-            //
-            //MenuItemCheckAll
-            //
+            this.ToolStripSeparator1.Size = new System.Drawing.Size(191, 6);
+            // 
+            // MenuItemCheckAll
+            // 
             this.MenuItemCheckAll.Name = "MenuItemCheckAll";
-            this.MenuItemCheckAll.Size = new System.Drawing.Size(167, 22);
+            this.MenuItemCheckAll.Size = new System.Drawing.Size(194, 24);
             this.MenuItemCheckAll.Text = "Check All";
-            //
-            //MenuItemUncheckAll
-            //
+            // 
+            // MenuItemUncheckAll
+            // 
             this.MenuItemUncheckAll.Name = "MenuItemUncheckAll";
-            this.MenuItemUncheckAll.Size = new System.Drawing.Size(167, 22);
+            this.MenuItemUncheckAll.Size = new System.Drawing.Size(194, 24);
             this.MenuItemUncheckAll.Text = "Uncheck All";
-            //
-            //CheckboxDeterministicTransitions
-            //
+            // 
+            // CheckboxDeterministicTransitions
+            // 
             this.CheckboxDeterministicTransitions.AutoSize = true;
-            this.CheckboxDeterministicTransitions.Location = new System.Drawing.Point(10, 13);
+            this.CheckboxDeterministicTransitions.Location = new System.Drawing.Point(13, 16);
+            this.CheckboxDeterministicTransitions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CheckboxDeterministicTransitions.Name = "CheckboxDeterministicTransitions";
-            this.CheckboxDeterministicTransitions.Size = new System.Drawing.Size(136, 17);
+            this.CheckboxDeterministicTransitions.Size = new System.Drawing.Size(180, 21);
             this.CheckboxDeterministicTransitions.TabIndex = 0;
             this.CheckboxDeterministicTransitions.Text = "Deterministic transitions";
             this.CheckboxDeterministicTransitions.UseVisualStyleBackColor = true;
-            //
-            //CheckboxProbabilisticTransitions
-            //
+            // 
+            // CheckboxProbabilisticTransitions
+            // 
             this.CheckboxProbabilisticTransitions.AutoSize = true;
-            this.CheckboxProbabilisticTransitions.Location = new System.Drawing.Point(10, 42);
+            this.CheckboxProbabilisticTransitions.Location = new System.Drawing.Point(13, 52);
+            this.CheckboxProbabilisticTransitions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CheckboxProbabilisticTransitions.Name = "CheckboxProbabilisticTransitions";
-            this.CheckboxProbabilisticTransitions.Size = new System.Drawing.Size(132, 17);
+            this.CheckboxProbabilisticTransitions.Size = new System.Drawing.Size(175, 21);
             this.CheckboxProbabilisticTransitions.TabIndex = 1;
             this.CheckboxProbabilisticTransitions.Text = "Probabilistic transitions";
             this.CheckboxProbabilisticTransitions.UseVisualStyleBackColor = true;
-            //
-            //CheckBoxPanelMain
-            //
-            this.CheckBoxPanelMain.Anchor = (System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right);
-            this.CheckBoxPanelMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckboxProbabilisticTransitions.CheckedChanged += new System.EventHandler(this.ProbabilisticTransitionsCheckbox_CheckedChanged);
+            // 
+            // CheckBoxPanelMain
+            // 
+            this.CheckBoxPanelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBoxPanelMain.IsReadOnly = false;
-            this.CheckBoxPanelMain.Location = new System.Drawing.Point(10, 71);
+            this.CheckBoxPanelMain.Location = new System.Drawing.Point(13, 87);
+            this.CheckBoxPanelMain.Margin = new System.Windows.Forms.Padding(5);
             this.CheckBoxPanelMain.Name = "CheckBoxPanelMain";
-            this.CheckBoxPanelMain.Size = new System.Drawing.Size(548, 343);
+            this.CheckBoxPanelMain.Size = new System.Drawing.Size(730, 422);
             this.CheckBoxPanelMain.TabIndex = 2;
             this.CheckBoxPanelMain.TitleBarText = "Item Names";
-            //
-            //FilterTransitionsForm
-            //
+            // 
+            // FilterTransitionsForm
+            // 
             this.AcceptButton = this.ButtonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6.0F, 13.0F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.ButtonCancel;
-            this.ClientSize = new System.Drawing.Size(568, 448);
+            this.ClientSize = new System.Drawing.Size(757, 551);
             this.Controls.Add(this.CheckBoxPanelMain);
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.CheckboxDeterministicTransitions);
             this.Controls.Add(this.CheckboxProbabilisticTransitions);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(430, 345);
+            this.MinimumSize = new System.Drawing.Size(567, 414);
             this.Name = "FilterTransitionsForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -154,9 +170,6 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        	ButtonOK.Click += new System.EventHandler(ButtonOK_Click);
-        	ButtonCancel.Click += new System.EventHandler(ButtonCancel_Click);
-        	CheckboxProbabilisticTransitions.CheckedChanged += new System.EventHandler(ProbabilisticTransitionsCheckbox_CheckedChanged);
         }
         internal System.Windows.Forms.Button ButtonOK;
         internal System.Windows.Forms.Button ButtonCancel;

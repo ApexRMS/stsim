@@ -82,11 +82,12 @@ namespace SyncroSim.STSim
             catch (STSimMapDuplicateItemException ex)
             {
                 string template = ex.Message + ".  More information:" +
-                    Environment.NewLine + "State Attribute={0}, {1}={2}, {3}={4}, {5}={6}, Iteration={7}, Timestep={8}." + 
+                    Environment.NewLine + "State Attribute={0}, State Class={1}, {2}={3}, {4}={5}, {6}={7}, Iteration={8}, Timestep={9}." + 
                     Environment.NewLine + "NOTE: A user defined distribution can result in additional State Attributes when the model is run.";
 
                 ExceptionUtils.ThrowArgumentException(template, 
                     this.GetStateAttributeTypeName(item.StateAttributeTypeId), 
+                    this.GetStateClassName(item.StateClassId),
                     this.PrimaryStratumLabel, 
                     this.GetStratumName(item.StratumId), 
                     this.SecondaryStratumLabel, 

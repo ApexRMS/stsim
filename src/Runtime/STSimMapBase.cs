@@ -131,6 +131,11 @@ namespace SyncroSim.STSim
             return this.GetProjectItemName(Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, id);
         }
 
+        protected string GetTSTGroupString(int? id)
+        {
+            return this.GetProjectItemName(Strings.DATASHEET_TRANSITION_GROUP_NAME, id);
+        }
+
         protected string GetProjectItemName(string dataSheetName, int? id)
         {
             if (!id.HasValue)

@@ -95,10 +95,10 @@ namespace SyncroSim.STSim
                 AttributeValueAgeBin Bin = AgeBins.GetOrCreateAgeBin(item.MinimumAge, item.MaximumAge);
                 Bin.AddReference(new AttributeValueReference(item.TSTGroupId, item.TSTMin, item.TSTMax, item));
             }
-            catch (STSimMapDuplicateItemException ex)
+            catch (STSimMapDuplicateItemException)
             {
-                string template = ex.Message + ".  More information:" +
-                    Environment.NewLine + "Transition Attribute={0}, Transition Group={1}, {2}={3}, {4}={5}, {6}={7}, Iteration={8}, Timestep={9}." +
+                string template = "A duplicate Transition Attribute value has been created. More information:" +
+                    Environment.NewLine + "Transition Attribute={0}, Transition Group={1}, {2}={3}, {4}={5}, {6}={7}, MinAge={8}, MaxAge={9}, TSTMin={10}, TSTMax={11}, TSTGroup={12}, Iteration={13}, Timestep={14}." +
                     Environment.NewLine + "NOTE: A user defined distribution can result in additional Transition Attributes when the model is run.";
 
                 ExceptionUtils.ThrowArgumentException(template,
@@ -110,6 +110,11 @@ namespace SyncroSim.STSim
                     this.GetSecondaryStratumName(item.SecondaryStratumId),
                     this.TertiaryStratumLabel,
                     this.GetTertiaryStratumName(item.TertiaryStratumId),
+                    item.MinimumAge,
+                    item.MaximumAge == int.MaxValue ? "NULL" : item.MaximumAge.ToString(),
+                    STSimMapBase.FormatValue(item.TSTMin),
+                    (!item.TSTMax.HasValue || item.TSTMax.Value == int.MaxValue) ? "NULL" : item.TSTMax.ToString(),
+                    this.GetTSTGroupString(item.TSTGroupId),
                     STSimMapBase.FormatValue(item.Iteration),
                     STSimMapBase.FormatValue(item.Timestep));
             }

@@ -160,14 +160,7 @@ namespace SyncroSim.STSim
 
             if (this.m_RefWithTSTSeenBefore.ContainsKey(k))
             {
-                string s = string.Format(CultureInfo.InvariantCulture,
-                    "An attribute with the TST values {0}-{1} has already been added to the age bin {2}-{3}:",
-                    attrRef.TSTMin,
-                    attrRef.TSTMax == int.MaxValue ? "NULL" : attrRef.TSTMax.ToString(),
-                    this.m_AgeMin,
-                    this.m_AgeMax == int.MaxValue ? "NULL" : this.m_AgeMax.ToString());
-
-                throw new STSimMapDuplicateItemException(s);
+                throw new STSimMapDuplicateItemException("A duplicate attribute value has been created.");
             }
 
             this.m_RefsWithTST.Add(attrRef);
@@ -188,12 +181,7 @@ namespace SyncroSim.STSim
 
             if (this.m_RefsWithoutTST.Count == 1)
             {
-                string s = string.Format(CultureInfo.InvariantCulture,
-                    "An attribute with no TST values has already been added to the age bin {0}-{1}",
-                    this.m_AgeMin, 
-                    this.m_AgeMax == int.MaxValue ? "NULL" : this.m_AgeMax.ToString());
-
-                throw new STSimMapDuplicateItemException(s);
+                throw new STSimMapDuplicateItemException("A duplicate attribute value has been created.");
             }
 
             this.m_RefsWithoutTST.Add(attrRef);

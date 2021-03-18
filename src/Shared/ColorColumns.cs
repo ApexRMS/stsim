@@ -66,11 +66,22 @@ namespace SyncroSim.STSim
 
             if (cd.ShowDialog(gridView) == DialogResult.OK)
             {
-                gridView.BeginEdit(false);
-                cell.Value = ColorUtilities.StringFromColor(cd.Color);
+                DataGridViewEditMode OldMode = gridView.EditMode;
+
                 gridView.EndEdit();
 
-                gridView.InvalidateCell(cell);
+                gridView.EditMode = DataGridViewEditMode.EditProgrammatically;
+                gridView.CurrentCell = gridView.Rows[rowIndex].Cells[columnIndex];
+
+                gridView.BeginEdit(false);
+                gridView.NotifyCurrentCellDirty(true);
+                gridView.CurrentCell.Value = ColorUtilities.StringFromColor(cd.Color);
+                gridView.EndEdit();
+
+                gridView.CurrentCell = gridView.Rows[rowIndex].Cells[columnIndex];
+                gridView.EditMode = OldMode;
+
+                gridView.NotifyCurrentCellDirty(false);
             }
         }
     }

@@ -72,35 +72,13 @@ namespace SyncroSim.STSim
             {
                 droo = dsoo.GetData().NewRow();
                 dsoo.GetData().Rows.Add(droo);
-            }
 
-            bool AnyTabular = this.AnyTabularOutputOptionsSelected();
-            bool AnySpatial = this.AnySpatialOutputOptionsSelected();
-            bool AnySpatialAvg = this.AnySpatialAveragingOutputOptionsSelected();
-
-            if (!AnyTabular && !AnySpatial && !AnySpatialAvg)
-            {
                 DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME, Booleans.BoolToInt(true));
                 DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_COLUMN_NAME, Booleans.BoolToInt(true));
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_COLUMN_NAME, Booleans.BoolToInt(true));
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME, Booleans.BoolToInt(true));
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME, Booleans.BoolToInt(true));
-
                 DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_AGES_COLUMN_NAME, Booleans.BoolToInt(true));
                 DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_AGES_COLUMN_NAME, Booleans.BoolToInt(true));
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_AGES_COLUMN_NAME, Booleans.BoolToInt(true));
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_AGES_COLUMN_NAME, Booleans.BoolToInt(true));
-
                 DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, 1);
                 DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_TIMESTEPS_COLUMN_NAME, 1);
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_TIMESTEPS_COLUMN_NAME, 1);
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, 1);
-                DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, 1);
-
-                if (this.m_IsSpatial)
-                {
-                    this.SetSpatialOutputDefaults(MaxTimestep);
-                }
 
                 this.RecordStatus(StatusType.Information, MessageStrings.STATUS_NO_OUTPUT_OPTIONS_WARNIING);
             }
@@ -114,50 +92,34 @@ namespace SyncroSim.STSim
             this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_TIMESTEPS_COLUMN_NAME, "Summary TST", MaxTimestep);
         }
 
-        private void SetSpatialOutputDefaults(int MaxTimestep)
-        {
-            Debug.Assert(this.m_IsSpatial);
-            DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_NAME);
-            DataRow droo = dsoo.GetDataRow();
-
-            if (droo == null)
-            {
-                droo = dsoo.GetData().NewRow();
-                dsoo.GetData().Rows.Add(droo);
-            }
-
-            DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME, Booleans.BoolToInt(true));
-            DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, MaxTimestep);
-            DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_COLUMN_NAME, Booleans.BoolToInt(true));
-            DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME, MaxTimestep);
-        }
-
         /// <summary>
         /// Normalizes the spatial output options data feed
         /// </summary>
         /// <remarks></remarks>
         private void NormalizeSpatialOutputOptions()
         {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
             DataSheet dsrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME);
             DataRow drrc = dsrc.GetDataRow();
             int MaxTimestep = Convert.ToInt32(drrc[Strings.RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
             DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_NAME);
             DataRow droo = dsoo.GetDataRow();
 
-            if (droo == null)
+            if (droo != null)
             {
-                droo = dsoo.GetData().NewRow();
-                dsoo.GetData().Rows.Add(droo);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, "Raster state classes", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME, "Raster ages", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Raster stratum", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME, "Raster transitions", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME, "Raster transition events", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME, "Raster Time-since-transition", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Raster state attributes", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Raster transition attributes", MaxTimestep);
             }
-
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, "Raster state classes", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME, "Raster ages", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Raster stratum", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_TIMESTEPS_COLUMN_NAME, "Raster transitions", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_TIMESTEPS_COLUMN_NAME, "Raster transition events", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME, "Raster Time-since-transition", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Raster state attributes", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Raster transition attributes", MaxTimestep);
         }
 
         /// <summary>
@@ -166,25 +128,27 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void NormalizeSpatialAverageOutputOptions()
         {
+            if (!this.m_IsSpatial)
+            {
+                return;
+            }
+
             DataSheet dsrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME);
             DataRow drrc = dsrc.GetDataRow();
             int MaxTimestep = Convert.ToInt32(drrc[Strings.RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
             DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_AVERAGE_NAME);
             DataRow droo = dsoo.GetDataRow();
 
-            if (droo == null)
+            if (droo != null)
             {
-                droo = dsoo.GetData().NewRow();
-                dsoo.GetData().Rows.Add(droo);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, "Average raster state classes", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME, "Average raster ages", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Average raster strata", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME, "Average Raster transition probability", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME, "Average raster time-since-transition", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Average Raster state attributes", MaxTimestep);
+                this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Average Raster transition attributes", MaxTimestep);
             }
-
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME, "Average raster state classes", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_TIMESTEPS_COLUMN_NAME, "Average raster ages", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Average raster strata", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_TIMESTEPS_COLUMN_NAME, "Average Raster transition probability", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TST_TIMESTEPS_COLUMN_NAME, "Average raster time-since-transition", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_TIMESTEPS_COLUMN_NAME, "Average Raster state attributes", MaxTimestep);
-            this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_TIMESTEPS_COLUMN_NAME, "Average Raster transition attributes", MaxTimestep);
         }
 
         /// <summary>
@@ -348,94 +312,6 @@ namespace SyncroSim.STSim
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Determines if any tabular output options are selected
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private bool AnyTabularOutputOptionsSelected()
-        {
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_TABULAR_NAME);
-            DataRow dr = ds.GetDataRow();
-
-            if (dr == null)
-            {
-                return false;
-            }
-
-            if (dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TR_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TRSC_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_SA_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TA_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_EV_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SUMMARY_OUTPUT_TST_COLUMN_NAME] != DBNull.Value)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Determines if any spatial output options are selected
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private bool AnySpatialOutputOptionsSelected()
-        {
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_NAME);
-            DataRow dr = ds.GetDataRow();
-
-            if (dr == null)
-            {
-                return false;
-            }
-
-            if (dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_AGE_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_ST_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TR_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TE_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TST_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SA_COLUMN_NAME] != DBNull.Value || 
-                dr[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_TA_COLUMN_NAME] != DBNull.Value)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Determines if any spatial averaging output options are selected
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        private bool AnySpatialAveragingOutputOptionsSelected()
-        {
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_AVERAGE_NAME);
-            DataRow dr = ds.GetDataRow();
-
-            if (dr == null)
-            {
-                return false;
-            }
-
-            if (dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_AGE_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_ST_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TP_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TST_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SA_COLUMN_NAME] != DBNull.Value ||
-                dr[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_COLUMN_NAME] != DBNull.Value)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>

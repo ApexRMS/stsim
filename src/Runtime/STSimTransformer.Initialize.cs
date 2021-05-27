@@ -261,6 +261,11 @@ namespace SyncroSim.STSim
 
             DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_NAME).GetDataRow();
 
+            if (droo == null)
+            {
+                return;
+            }
+
             this.m_CreateRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_COLUMN_NAME]);
             this.m_RasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);
 
@@ -310,6 +315,11 @@ namespace SyncroSim.STSim
             };
 
             DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_SPATIAL_AVERAGE_NAME).GetDataRow();
+
+            if (droo == null)
+            {
+                return;
+            }
 
             this.m_CreateAvgRasterStateClassOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_COLUMN_NAME]);
             this.m_AvgRasterStateClassOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_SC_TIMESTEPS_COLUMN_NAME]);

@@ -100,7 +100,7 @@ namespace SyncroSim.STSim
                 StochasticTimeRaster r = new StochasticTimeRaster(FullFileName, RasterDataType.DTInteger);
                 CompareMetadataResult cmpResult = this.m_InputRasters.CompareMetadata(r, ref CmpMsg);
 
-                if (cmpResult == CompareMetadataResult.ImportantDifferences)
+                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
                 {
                     string Message = string.Format(CultureInfo.InvariantCulture, 
                         MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, 

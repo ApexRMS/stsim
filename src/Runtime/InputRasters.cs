@@ -381,14 +381,14 @@ namespace SyncroSim.STSim
             if (this.Width != raster.Width)
             {
                 compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Columns ({1} vs {0})", this.Width, raster.Width);
-                return CompareMetadataResult.ImportantDifferences;
+                return CompareMetadataResult.RowColumnMismatch;
             }
 
             // Test number of rows. 
             if (this.Height != raster.Height)
             {
                 compareMsg = string.Format(CultureInfo.InvariantCulture, "Mismatch in Number of Rows ({1} vs {0})", this.Height, raster.Height);
-                return CompareMetadataResult.ImportantDifferences;
+                return CompareMetadataResult.RowColumnMismatch;
             }
 
             // Test XLL Corner. See if NOT negligable difference - arbitrarily 1/10 of cell size. 

@@ -62,6 +62,6 @@ namespace SyncroSim.STSim
     {
         Same,
         UnimportantDifferences,
-        ImportantDifferences
+        RowColumnMismatch
     }
 }

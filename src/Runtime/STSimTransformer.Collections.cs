@@ -1984,10 +1984,10 @@ namespace SyncroSim.STSim
 
                 var cmpRes = this.m_InputRasters.CompareMetadata(rastTSM, ref compareMsg);
 
-                if (cmpRes == CompareMetadataResult.ImportantDifferences)
+                if (cmpRes == CompareMetadataResult.RowColumnMismatch)
                 {
-                    string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_METADATA_WARNING, tsmFilename);
-                    RecordStatus(StatusType.Warning, msg);
+                    string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_ROW_COLUMN_MISMATCH, tsmFilename);
+                    ExceptionUtils.ThrowArgumentException(msg);
                 }
                 else
                 {
@@ -2056,10 +2056,10 @@ namespace SyncroSim.STSim
                 //Compare the TSIM raster metadata to that of the Initial Condition raster files
                 var cmpRes = this.m_InputRasters.CompareMetadata(rastTSIM, ref cmpMsg);
 
-                if (cmpRes == STSim.CompareMetadataResult.ImportantDifferences)
+                if (cmpRes == STSim.CompareMetadataResult.RowColumnMismatch)
                 {
-                    string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSIM_METADATA_WARNING, tsimFilename);
-                    RecordStatus(StatusType.Warning, msg);
+                    string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSIM_ROW_COLUMN_MISMATCH, tsimFilename);
+                    ExceptionUtils.ThrowArgumentException(msg);
                 }
                 else
                 {

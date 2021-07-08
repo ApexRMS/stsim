@@ -1248,5 +1248,243 @@ namespace SyncroSim.STSim
         {
             return this.m_TransitionMap.GetTransitions(stratumId, stateClassId, iteration, timestep);
         }
+
+        private bool FilterIncludesSummaryForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSummary;
+        }
+
+        private bool FilterIncludesSummaryByStateClassForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSummaryByStateClass;
+        }
+
+        private bool FilterIncludesTSTForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputTimeSinceTransition;
+        }
+
+        private bool FilterIncludesSpatialForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSpatial;
+        }
+
+        private bool FilterIncludesSpatialEventsForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSpatialEvents;
+        }
+
+        private bool FilterIncludesSpatialTSTForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSpatialTimeSinceTransition;
+        }
+
+        private bool FilterIncludesSpatialProbabilityForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSpatialProbability;
+        }
+
+        private bool FilterIncludesAvgSpatialTSTForTG(int transitionGroupId)
+        {
+            if (!this.m_OutputFilterTransitionGroups.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterTransitionGroup c = this.m_OutputFilterTransitionGroups.Get(transitionGroupId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputAvgSpatialTimeSinceTransition;
+        }
+
+        private bool FilterIncludesSummaryForSAT(int stateAttributeTypeId)
+        {
+            if (!this.m_OutputFilterStateAttributes.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterAttribute c = this.m_OutputFilterStateAttributes.Get(stateAttributeTypeId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSummaryData;
+        }
+
+        private bool FilterIncludesSpatialForForSAT(int stateAttributeTypeId)
+        {
+            if (!this.m_OutputFilterStateAttributes.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterAttribute c = this.m_OutputFilterStateAttributes.Get(stateAttributeTypeId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSpatialData;
+        }
+
+        private bool FilterIncludesAvgSpatialForForSAT(int stateAttributeTypeId)
+        {
+            if (!this.m_OutputFilterStateAttributes.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterAttribute c = this.m_OutputFilterStateAttributes.Get(stateAttributeTypeId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputAvgSpatialData;
+        }
+
+        private bool FilterIncludesSummaryForTAT(int transitionAttributeTypeId)
+        {
+            if (!this.m_OutputFilterTransitionAttributes.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterAttribute c = this.m_OutputFilterTransitionAttributes.Get(transitionAttributeTypeId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSummaryData;
+        }
+
+        private bool FilterIncludesSpatialForTAT(int transitionAttributeTypeId)
+        {
+            if (!this.m_OutputFilterTransitionAttributes.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterAttribute c = this.m_OutputFilterTransitionAttributes.Get(transitionAttributeTypeId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputSpatialData;
+        }
+
+        private bool FilterIncludesAvgSpatialForTAT(int transitionAttributeTypeId)
+        {
+            if (!this.m_OutputFilterTransitionAttributes.HasItems)
+            {
+                return true;
+            }
+
+            OutputFilterAttribute c = this.m_OutputFilterTransitionAttributes.Get(transitionAttributeTypeId);
+
+            if (c == null)
+            {
+                return false;
+            }
+
+            return c.OutputAvgSpatialData;
+        }
     }
 }

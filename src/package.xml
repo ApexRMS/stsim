@@ -583,7 +583,7 @@
         </datafeed>
         <datafeed name="OutputFilterStateAttributes" displayName="Filter State Attribute Output" dataScope="Scenario">
           <datasheets>
-            <datasheet name="OutputFilterStateAttribute" displayName="Filter State Attribute Output">
+            <datasheet name="OutputFilterStateAttributes" displayName="Filter State Attribute Output">
               <columns>
                 <column name="OutputFilterStateAttributeID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -600,7 +600,7 @@
         </datafeed>
         <datafeed name="OutputFilterTransitionAttributes" displayName="Filter Transition Attribute Output" dataScope="Scenario">
           <datasheets>
-            <datasheet name="OutputFilterTransitionAttribute" displayName="Filter Transition Attribute Output">
+            <datasheet name="OutputFilterTransitionAttributes" displayName="Filter Transition Attribute Output">
               <columns>
                 <column name="OutputFilterTransitionAttributeID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>

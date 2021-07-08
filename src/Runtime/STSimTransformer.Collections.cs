@@ -58,11 +58,16 @@ namespace SyncroSim.STSim
         private TSTRandomizeCollection m_TSTRandomizeRecords = new TSTRandomizeCollection();
         private InputRasters m_InputRasters = new InputRasters();
         private Dictionary<int, bool> m_TransitionAttributeTypesWithTarget = new Dictionary<int, bool>();
+        private OutputFilterTransitionGroupCollection m_OutputFilterTransitionGroups = new OutputFilterTransitionGroupCollection();
+        private OutputFilterAttributeCollection m_OutputFilterStateAttributes = new OutputFilterAttributeCollection();
+        private OutputFilterAttributeCollection m_OutputFilterTransitionAttributes = new OutputFilterAttributeCollection();
 
 #if DEBUG
         private bool TRANSITION_TYPES_FILLED;
         private bool TRANSITION_GROUPS_FILLED;
         private bool TRANSITION_SIM_GROUPS_FILLED;
+        private bool STATE_ATTRIBUTE_TYPES_FILLED;
+        private bool TRANSITION_ATTRIBUTE_TYPES_FILLED;
         private bool IC_DISTRIBUTIONS_FILLED;
         private bool TRANSITION_MULTIPLIERS_FILLED;
         private bool INITIAL_TST_SPATIAL_FILLED;
@@ -511,6 +516,10 @@ namespace SyncroSim.STSim
                 int StateAttributeTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 this.m_StateAttributeTypes.Add(new StateAttributeType(StateAttributeTypeId));
             }
+
+#if DEBUG
+            STATE_ATTRIBUTE_TYPES_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -527,6 +536,10 @@ namespace SyncroSim.STSim
                 int TransitionAttributeTypeId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 this.m_TransitionAttributeTypes.Add(new TransitionAttributeType(TransitionAttributeTypeId));
             }
+
+#if DEBUG
+            TRANSITION_ATTRIBUTE_TYPES_FILLED = true;
+#endif
         }
 
         /// <summary>
@@ -884,6 +897,107 @@ namespace SyncroSim.STSim
                     AgeMinimum, AgeMaximum, AgeRelative, AgeReset, TstMinimum, TstMaximum, TstRelative);
 
                 this.m_Transitions.Add(pt);
+            }
+        }
+
+        /// <summary>
+        /// Fills the output filter transition group collection
+        /// </summary>
+        private void FillOutputFilterTransitionGroupCollection()
+        {
+            Debug.Assert(TRANSITION_GROUPS_FILLED);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                this.m_OutputFilterTransitionGroups.Add(
+                    new OutputFilterTransitionGroup(
+                        Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_BY_STATE_CLASS_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_TST_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_EVENTS_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_TST_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_PROB_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_AVG_SPATIAL_TST_COLUMN_NAME], CultureInfo.InvariantCulture)));
+            }
+
+            foreach (TransitionGroup g in this.m_TransitionGroups)
+            {
+                OutputFilterFlagTransitionGroup f = OutputFilterFlagTransitionGroup.None;
+
+                if (this.FilterIncludesSummaryForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.Summary;
+                if (this.FilterIncludesSummaryByStateClassForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SummaryByStateClass;
+                if (this.FilterIncludesTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.TimeSinceTransition;
+                if (this.FilterIncludesSpatialForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.Spatial;
+                if (this.FilterIncludesSpatialEventsForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialEvents;
+                if (this.FilterIncludesSpatialTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialTimeSinceTransition;
+                if (this.FilterIncludesSpatialProbabilityForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialProbability;
+                if (this.FilterIncludesAvgSpatialTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.AvgSpatialTimeSinceTransition;
+
+                g.OutputFilter = f;
+            }
+        }
+
+        /// <summary>
+        /// Fills the output filter state attribute collection
+        /// </summary>
+        private void FillOutputFilterStateAttributeCollection()
+        {
+            Debug.Assert(STATE_ATTRIBUTE_TYPES_FILLED);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                this.m_OutputFilterStateAttributes.Add(
+                    new OutputFilterAttribute(
+                        Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SUMMARY_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture)));
+            }
+
+
+            foreach (StateAttributeType t in this.m_StateAttributeTypes)
+            {
+                OutputFilterFlagAttribute f = OutputFilterFlagAttribute.None;
+
+                if (this.FilterIncludesSummaryForSAT(t.Id)) f |= OutputFilterFlagAttribute.Summary;
+                if (this.FilterIncludesSpatialForForSAT(t.Id)) f |= OutputFilterFlagAttribute.Spatial;
+                if (this.FilterIncludesAvgSpatialForForSAT(t.Id)) f |= OutputFilterFlagAttribute.AvgSpatial;
+
+                t.OutputFilter = f;
+            }
+        }
+
+        /// <summary>
+        /// Fills the output filter transition attribute collection
+        /// </summary>
+        private void FillOutputFilterTransitionAttributeCollection()
+        {
+            Debug.Assert(TRANSITION_ATTRIBUTE_TYPES_FILLED);
+            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                this.m_OutputFilterTransitionAttributes.Add(
+                    new OutputFilterAttribute(
+                        Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SUMMARY_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture),
+                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture)));
+            }
+
+            foreach (TransitionAttributeType t in this.m_TransitionAttributeTypes)
+            {
+                OutputFilterFlagAttribute f = OutputFilterFlagAttribute.None;
+
+                if (this.FilterIncludesSummaryForTAT(t.TransitionAttributeId)) f |= OutputFilterFlagAttribute.Summary;
+                if (this.FilterIncludesSpatialForTAT(t.TransitionAttributeId)) f |= OutputFilterFlagAttribute.Spatial;
+                if (this.FilterIncludesAvgSpatialForTAT(t.TransitionAttributeId)) f |= OutputFilterFlagAttribute.AvgSpatial;
+
+                t.OutputFilter = f;
             }
         }
 

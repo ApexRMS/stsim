@@ -68,10 +68,10 @@ namespace SyncroSim.STSim
     }
 
     /// <summary>
-    /// OutputFilterTransitionGroup
+    /// OutputFilterFlagTransitionGroup
     /// </summary>
     [Flags()]
-    public enum OutputFilter
+    internal enum OutputFilterFlagTransitionGroup
     {
         None = 0,
         Summary = 1,
@@ -85,13 +85,13 @@ namespace SyncroSim.STSim
     }
 
     /// <summary>
-    /// OutputFilterAttribute
+    /// OutputFilterFlagAttribute
     /// </summary>
     [Flags()]
-    public enum OutputFilterAttribute
+    internal enum OutputFilterFlagAttribute
     {
         None = 0,
-        Tabular = 1,
+        Summary = 1,
         Spatial = 2,
         AvgSpatial = 4
     }

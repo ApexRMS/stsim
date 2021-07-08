@@ -1,6 +1,8 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2021 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
+using System;
+
 namespace SyncroSim.STSim
 {
     /// <summary>
@@ -63,5 +65,34 @@ namespace SyncroSim.STSim
         Same,
         UnimportantDifferences,
         RowColumnMismatch
+    }
+
+    /// <summary>
+    /// OutputFilterTransitionGroup
+    /// </summary>
+    [Flags()]
+    public enum OutputFilter
+    {
+        None = 0,
+        Summary = 1,
+        SummaryByStateClass = 2,
+        TimeSinceTransition = 4,
+        Spatial = 8,
+        SpatialEvents = 16,
+        SpatialTimeSinceTransition = 32,
+        SpatialProbability = 64,
+        AvgSpatialTimeSinceTransition = 128
+    }
+
+    /// <summary>
+    /// OutputFilterAttribute
+    /// </summary>
+    [Flags()]
+    public enum OutputFilterAttribute
+    {
+        None = 0,
+        Tabular = 1,
+        Spatial = 2,
+        AvgSpatial = 4
     }
 }

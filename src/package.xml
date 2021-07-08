@@ -559,6 +559,62 @@
             </datasheet>
           </datasheets>
         </datafeed>
+        <datafeed name="OutputFilterTransitionGroups" displayName="Filter Transition Group Output" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="OutputFilterTransitionGroups" displayName="Filter Transition Group Output">
+              <columns>
+                <column name="OutputFilterTransitionGroupsID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+                <column name="Summary" displayName="Summary" dataType="Boolean" allowDbNull="False"/>
+                <column name="SummaryByStateClass" displayName="Summary by State Class" dataType="Boolean" allowDbNull="False"/>
+                <column name="TimeSinceTransition" displayName="Time-Since-Transition" dataType="Boolean" allowDbNull="False"/>
+                <column name="Spatial" displayName="Spatial" dataType="Boolean" allowDbNull="False"/>                
+                <column name="SpatialEvents" displayName="Spatial Events" dataType="Boolean" allowDbNull="False"/>
+                <column name="SpatialTimeSinceTransition" displayName="Spatial Time-Since-Transition" dataType="Boolean" allowDbNull="False"/>
+                <column name="SpatialProbability" displayName="Spatial Probability" dataType="Boolean" allowDbNull="False"/>                
+                <column name="AvgSpatialTimeSinceTransition" displayName="Average Spatial Time-Since-Transition" dataType="Boolean" allowDbNull="False"/>                             
+              </columns>          
+              <validations>
+                <validation validationType="Unique" columns="TransitionGroupID"/>
+              </validations>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="OutputFilterStateAttributes" displayName="Filter State Attribute Output" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="OutputFilterStateAttribute" displayName="Filter State Attribute Output">
+              <columns>
+                <column name="OutputFilterStateAttributeID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="StateAttributeTypeID" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
+                <column name="Summary" displayName="Summary" dataType="Boolean" allowDbNull="False"/>
+                <column name="Spatial" displayName="Spatial" dataType="Boolean" allowDbNull="False"/>
+                <column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean" allowDbNull="False"/>
+              </columns>
+              <validations>
+                <validation validationType="Unique" columns="StateAttributeTypeID"/>
+              </validations>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="OutputFilterTransitionAttributes" displayName="Filter Transition Attribute Output" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="OutputFilterTransitionAttribute" displayName="Filter Transition Attribute Output">
+              <columns>
+                <column name="OutputFilterTransitionAttributeID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
+                <column name="Summary" displayName="Summary" dataType="Boolean" allowDbNull="False"/>
+                <column name="Spatial" displayName="Spatial" dataType="Boolean" allowDbNull="False"/>
+                <column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean" allowDbNull="False"/>
+              </columns>
+              <validations>
+                <validation validationType="Unique" columns="TransitionAttributeTypeID"/>
+              </validations>
+            </datasheet>
+          </datasheets>
+        </datafeed>              
         <datafeed name="TransitionTarget" displayName="Transition Targets" dataScope="Scenario">
           <datasheets>
             <datasheet name="TransitionTarget" displayName="Transition Targets" className="SyncroSim.STSim.TransitionTargetDataSheet" classAssembly="SyncroSim.STSim">
@@ -1593,6 +1649,11 @@
         <item name="OutputOptions" displayName="Tabular"/>
         <item name="OutputOptionsSpatial" displayName="Spatial"/>
         <item name="OutputOptionsSpatialAverage" displayName="Spatial Average"/>
+      <group name="OutputFilters" displayName="Output Filters">
+        <item name="OutputFilterTransitionGroups" displayName="Transition Groups"/>
+        <item name="OutputFilterStateAttributes" displayName="State Attributes"/>
+        <item name="OutputFilterTransitionAttributes" displayName="Transition Attributes"/>        
+      </group>
       </group>
       <group name="Advanced">
         <item name="TransitionMultiplierValue" displayName="Transitions - Multipliers"/>

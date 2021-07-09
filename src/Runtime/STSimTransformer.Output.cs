@@ -1078,6 +1078,13 @@ namespace SyncroSim.STSim
 
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
+                TransitionGroup tg = this.m_TransitionGroups[transitionGroupId];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SpatialProbability))
+                {
+                    continue;
+                }
+
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
                 var distArray = transitionedPixels.Distinct();
 
@@ -1232,6 +1239,13 @@ namespace SyncroSim.STSim
 
             foreach (int tgid in TSTGroupIds)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.AvgSpatialTST))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
                 double[] Values = dict[timestep];
 
@@ -1263,6 +1277,13 @@ namespace SyncroSim.STSim
 
             foreach (int tgid in TSTGroupIds)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.AvgSpatialTST))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
                 double[] Values = dict[timestepKey];
 
@@ -2017,6 +2038,11 @@ namespace SyncroSim.STSim
             {
                 foreach (TransitionGroup tg in this.m_TransitionGroups)
                 {
+                    if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SpatialTST))
+                    {
+                        continue;
+                    }
+
                     StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                     foreach (Cell cell in this.Cells)

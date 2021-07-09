@@ -2619,6 +2619,11 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SpatialProbability))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
@@ -2663,6 +2668,13 @@ namespace SyncroSim.STSim
 
             foreach (int tgid in TSTGroupIds)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.AvgSpatialTST))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)

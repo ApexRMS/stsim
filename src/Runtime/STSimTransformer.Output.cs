@@ -460,6 +460,11 @@ namespace SyncroSim.STSim
 
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.Summary))
+                {
+                    continue;
+                }
+
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
 
                 EightIntegerLookupKey key = new EightIntegerLookupKey(
@@ -514,6 +519,11 @@ namespace SyncroSim.STSim
 
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.Summary))
+                {
+                    continue;
+                }
+
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
                 int EventIdKey = GetKeyOrWildcardKey(eventId);
 
@@ -584,6 +594,13 @@ namespace SyncroSim.STSim
             if (currentTransition.StateClassIdDestination.HasValue)
             {
                 DestStateClass = currentTransition.StateClassIdDestination.Value;
+            }
+
+            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+
+            if (!tt.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SummaryByStateClass))
+            {
+                return;
             }
 
             EightIntegerLookupKey key = new EightIntegerLookupKey(
@@ -713,6 +730,13 @@ namespace SyncroSim.STSim
 
             foreach (Tst tst in simulationCell.TstValues)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tst.TransitionGroupId];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SummaryTST))
+                {
+                    continue;
+                }
+
                 int TSTKey = this.m_TSTReportingHelper.GetKey(tst.TstValue);
 
                 SevenIntegerLookupKey key = new SevenIntegerLookupKey(

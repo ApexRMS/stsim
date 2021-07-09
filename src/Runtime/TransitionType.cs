@@ -14,6 +14,7 @@ namespace SyncroSim.STSim
         private int? m_MapId;
         private TransitionGroupCollection m_TransitionGroups = new TransitionGroupCollection();
         private TransitionGroupCollection m_PrimaryTransitionGroups = new TransitionGroupCollection();
+        private OutputFilterFlagTransitionGroup m_OutputFilter;
 
         public TransitionType(int transitionTypeId, string displayName, int? mapId)
         {
@@ -75,6 +76,18 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_PrimaryTransitionGroups;
+            }
+        }
+
+        internal OutputFilterFlagTransitionGroup OutputFilter
+        {
+            get
+            {
+                return this.m_OutputFilter;
+            }
+            set
+            {
+                this.m_OutputFilter = value;
             }
         }
     }

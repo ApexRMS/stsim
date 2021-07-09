@@ -566,14 +566,14 @@
                 <column name="OutputFilterTransitionGroupsID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="TransitionGroupID" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-                <column name="Summary" displayName="Summary" dataType="Boolean" allowDbNull="False"/>
-                <column name="SummaryByStateClass" displayName="Summary by State Class" dataType="Boolean" allowDbNull="False"/>
-                <column name="TimeSinceTransition" displayName="Time-Since-Transition" dataType="Boolean" allowDbNull="False"/>
-                <column name="Spatial" displayName="Spatial" dataType="Boolean" allowDbNull="False"/>                
-                <column name="SpatialEvents" displayName="Spatial Events" dataType="Boolean" allowDbNull="False"/>
-                <column name="SpatialTimeSinceTransition" displayName="Spatial Time-Since-Transition" dataType="Boolean" allowDbNull="False"/>
-                <column name="SpatialProbability" displayName="Spatial Probability" dataType="Boolean" allowDbNull="False"/>                
-                <column name="AvgSpatialTimeSinceTransition" displayName="Average Spatial Time-Since-Transition" dataType="Boolean" allowDbNull="False"/>                             
+                <column name="Summary" displayName="Summary" dataType="Boolean"/>
+                <column name="SummaryByStateClass" displayName="Summary by State Class" dataType="Boolean"/>
+                <column name="TimeSinceTransition" displayName="Time-Since-Transition" dataType="Boolean"/>
+                <column name="Spatial" displayName="Spatial" dataType="Boolean"/>                
+                <column name="SpatialEvents" displayName="Spatial Events" dataType="Boolean"/>
+                <column name="SpatialTimeSinceTransition" displayName="Spatial Time-Since-Transition" dataType="Boolean"/>
+                <column name="SpatialProbability" displayName="Spatial Probability" dataType="Boolean"/>                
+                <column name="AvgSpatialTimeSinceTransition" displayName="Average Spatial Time-Since-Transition" dataType="Boolean"/>                             
               </columns>          
               <validations>
                 <validation validationType="Unique" columns="TransitionGroupID"/>
@@ -588,9 +588,9 @@
                 <column name="OutputFilterStateAttributeID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="StateAttributeTypeID" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
-                <column name="Summary" displayName="Summary" dataType="Boolean" allowDbNull="False"/>
-                <column name="Spatial" displayName="Spatial" dataType="Boolean" allowDbNull="False"/>
-                <column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean" allowDbNull="False"/>
+                <column name="Summary" displayName="Summary" dataType="Boolean"/>
+                <column name="Spatial" displayName="Spatial" dataType="Boolean"/>
+                <column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean"/>
               </columns>
               <validations>
                 <validation validationType="Unique" columns="StateAttributeTypeID"/>
@@ -605,9 +605,9 @@
                 <column name="OutputFilterTransitionAttributeID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="TransitionAttributeTypeID" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
-                <column name="Summary" displayName="Summary" dataType="Boolean" allowDbNull="False"/>
-                <column name="Spatial" displayName="Spatial" dataType="Boolean" allowDbNull="False"/>
-                <column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean" allowDbNull="False"/>
+                <column name="Summary" displayName="Summary" dataType="Boolean"/>
+                <column name="Spatial" displayName="Spatial" dataType="Boolean"/>
+                <column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean"/>
               </columns>
               <validations>
                 <validation validationType="Unique" columns="TransitionAttributeTypeID"/>

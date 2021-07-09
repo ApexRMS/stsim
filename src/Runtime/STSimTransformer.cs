@@ -1486,5 +1486,20 @@ namespace SyncroSim.STSim
 
             return c.OutputAvgSpatialData;
         }
+
+        private bool FilterIncludesSummaryByStateClassForTT(int transitionTypeId)
+        {
+            TransitionType tt = this.m_TransitionTypes[transitionTypeId];
+
+            foreach (TransitionGroup tg in tt.TransitionGroups)
+            {
+                if (this.FilterIncludesSummaryByStateClassForTG(tg.TransitionGroupId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

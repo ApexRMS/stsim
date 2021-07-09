@@ -913,14 +913,14 @@ namespace SyncroSim.STSim
                 this.m_OutputFilterTransitionGroups.Add(
                     new OutputFilterTransitionGroup(
                         Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_BY_STATE_CLASS_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_TST_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_EVENTS_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_TST_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_PROB_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_AVG_SPATIAL_TST_COLUMN_NAME], CultureInfo.InvariantCulture)));
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_BY_STATE_CLASS_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_TST_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_EVENTS_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_TST_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_PROB_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_AVG_SPATIAL_TST_COLUMN_NAME])));
             }
 
             foreach (TransitionGroup g in this.m_TransitionGroups)
@@ -929,14 +929,23 @@ namespace SyncroSim.STSim
 
                 if (this.FilterIncludesSummaryForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.Summary;
                 if (this.FilterIncludesSummaryByStateClassForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SummaryByStateClass;
-                if (this.FilterIncludesTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.TimeSinceTransition;
+                if (this.FilterIncludesTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SummaryTST;
                 if (this.FilterIncludesSpatialForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.Spatial;
                 if (this.FilterIncludesSpatialEventsForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialEvents;
-                if (this.FilterIncludesSpatialTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialTimeSinceTransition;
+                if (this.FilterIncludesSpatialTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialTST;
                 if (this.FilterIncludesSpatialProbabilityForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.SpatialProbability;
-                if (this.FilterIncludesAvgSpatialTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.AvgSpatialTimeSinceTransition;
+                if (this.FilterIncludesAvgSpatialTSTForTG(g.TransitionGroupId)) f |= OutputFilterFlagTransitionGroup.AvgSpatialTST;
 
                 g.OutputFilter = f;
+            }
+
+            foreach (TransitionType tt in this.m_TransitionTypes)
+            {
+                OutputFilterFlagTransitionGroup f = OutputFilterFlagTransitionGroup.None;
+
+                if (this.FilterIncludesSummaryByStateClassForTT(tt.TransitionTypeId)) f |= OutputFilterFlagTransitionGroup.SummaryByStateClass;
+
+                tt.OutputFilter = f;
             }
         }
 
@@ -952,10 +961,10 @@ namespace SyncroSim.STSim
             {
                 this.m_OutputFilterStateAttributes.Add(
                     new OutputFilterAttribute(
-                        Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SUMMARY_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture)));
+                        Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SUMMARY_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SPATIAL_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME])));
             }
 
 
@@ -984,9 +993,9 @@ namespace SyncroSim.STSim
                 this.m_OutputFilterTransitionAttributes.Add(
                     new OutputFilterAttribute(
                         Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SUMMARY_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture),
-                        Convert.ToBoolean(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME], CultureInfo.InvariantCulture)));
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SUMMARY_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SPATIAL_COLUMN_NAME]),
+                        Booleans.BoolFromValue(dr[Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME])));
             }
 
             foreach (TransitionAttributeType t in this.m_TransitionAttributeTypes)

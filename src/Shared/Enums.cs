@@ -76,12 +76,12 @@ namespace SyncroSim.STSim
         None = 0,
         Summary = 1,
         SummaryByStateClass = 2,
-        TimeSinceTransition = 4,
+        SummaryTST = 4,
         Spatial = 8,
         SpatialEvents = 16,
-        SpatialTimeSinceTransition = 32,
+        SpatialTST = 32,
         SpatialProbability = 64,
-        AvgSpatialTimeSinceTransition = 128
+        AvgSpatialTST = 128
     }
 
     /// <summary>

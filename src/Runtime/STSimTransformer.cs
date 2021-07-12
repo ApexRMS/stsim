@@ -514,8 +514,8 @@ namespace SyncroSim.STSim
             if (this.IsSpatial)
             {
                 Dictionary<int, double[]> RasterTransitionAttrValues = CreateRasterTransitionAttributeArrays(timestep);
-                Dictionary<int, int[]> dictTransitionedPixels = CreateTransitionGroupTransitionedPixels();
-                Dictionary<int, int[]> dictTransitionedEventPixels = CreateTransitionGroupTransitionedPixels();
+                Dictionary<int, int[]> dictTransitionedPixels = CreateTransitionGroupTransitionedPixels(OutputFilterFlagTransitionGroup.Spatial | OutputFilterFlagTransitionGroup.SpatialProbability);
+                Dictionary<int, int[]> dictTransitionedEventPixels = CreateTransitionGroupTransitionedPixels(OutputFilterFlagTransitionGroup.SpatialEvents);
 
                 ApplyingSpatialTransitions?.Invoke(this, new SpatialTransitionEventArgs(iteration, timestep));
 

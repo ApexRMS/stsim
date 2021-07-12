@@ -282,6 +282,11 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            if (transitionedPixels == null)
+            {
+                return;
+            }
+
             transitionedPixels[cell.CollectionIndex] = eventId;
         }
 
@@ -290,7 +295,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <returns>Dictionary(Of Integer, Integer())</returns>
         /// <remarks></remarks>
-        private Dictionary<int, int[]> CreateTransitionGroupTransitionedPixels()
+        private Dictionary<int, int[]> CreateTransitionGroupTransitionedPixels(OutputFilterFlagTransitionGroup flags)
         {
             Debug.Assert(this.IsSpatial);
 
@@ -310,16 +315,19 @@ namespace SyncroSim.STSim
 
                 int[] transitionPixel = null;
 
-                if (this.m_CreateRasterTransitionOutput || 
-                    this.m_CreateAvgRasterTransitionProbOutput || 
-                    this.m_CreateRasterTransitionEventOutput)
+                if (tg.OutputFilter.HasFlag(flags))
                 {
-                    transitionPixel = new int[this.Cells.Count];
+                    if (this.m_CreateRasterTransitionOutput || 
+                        this.m_CreateAvgRasterTransitionProbOutput || 
+                        this.m_CreateRasterTransitionEventOutput)
+                        {
+                            transitionPixel = new int[this.Cells.Count];
 
-                    for (var i = 0; i < this.Cells.Count; i++)
-                    {
-                        transitionPixel[i] = 0;
-                    }
+                            for (var i = 0; i < this.Cells.Count; i++)
+                            {
+                                transitionPixel[i] = 0;
+                            }
+                        }
                 }
 
                 dictTransitionPixels.Add(tg.TransitionGroupId, transitionPixel);

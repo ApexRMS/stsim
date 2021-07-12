@@ -1078,13 +1078,6 @@ namespace SyncroSim.STSim
 
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
-                TransitionGroup tg = this.m_TransitionGroups[transitionGroupId];
-
-                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SpatialProbability))
-                {
-                    continue;
-                }
-
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
                 var distArray = transitionedPixels.Distinct();
 
@@ -2230,6 +2223,12 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (transitionedPixels == null)
+                {
+                    continue;
+                }
+
                 var distArray = transitionedPixels.Distinct();
 
                 if (distArray.Count() == 1)

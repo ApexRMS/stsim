@@ -2729,9 +2729,16 @@ namespace SyncroSim.STSim
             {
                 return;
             }
- 
-            foreach (StateAttributeType sat in this.m_StateAttributeTypes)
+
+            foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)

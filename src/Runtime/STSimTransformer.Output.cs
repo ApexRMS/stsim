@@ -662,6 +662,13 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Summary))
+                {
+                    continue;
+                }
+
                 double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
                     AttributeTypeId, 
                     simulationCell.StratumId, 
@@ -1353,6 +1360,13 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
                 double[] Values = dict[timestep];
 
@@ -1384,6 +1398,13 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
                 double[] Values = dict[timestepKey];
 
@@ -2136,6 +2157,13 @@ namespace SyncroSim.STSim
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
                 {
+                    StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                    if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Spatial))
+                    {
+                        continue;
+                    }
+
                     rastOutput.InitDblCells();
 
                     foreach (Cell c in this.Cells)

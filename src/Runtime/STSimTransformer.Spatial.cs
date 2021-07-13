@@ -352,15 +352,20 @@ namespace SyncroSim.STSim
             {
                 foreach (int id in this.m_TransitionAttributeTypeIds.Keys)
                 {
-                    Debug.Assert(this.m_TransitionAttributeTypes.Contains(id));
-                    double[] arr = new double[this.Cells.Count];
+                    TransitionAttributeType tat = this.m_TransitionAttributeTypes[id];
 
-                    for (int i = 0; i < this.Cells.Count; i++)
+                    if (tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Spatial) ||
+                        tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
                     {
-                        arr[i] = 0.0;
-                    }
+                        double[] arr = new double[this.Cells.Count];
 
-                    dict.Add(id, arr);
+                        for (int i = 0; i < this.Cells.Count; i++)
+                        {
+                            arr[i] = 0.0;
+                        }
+
+                        dict.Add(id, arr);
+                    }
                 }
             }
 

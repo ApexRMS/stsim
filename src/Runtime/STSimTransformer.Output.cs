@@ -2645,6 +2645,8 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_TransitionAttributeTypeIds.Keys)
             {
+                TransitionAttributeType tat = this.m_TransitionAttributeTypes[AttributeTypeId];
+
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
@@ -2667,14 +2669,18 @@ namespace SyncroSim.STSim
 
                         if (this.IsSpatial && IsAttrTimestep)
                         {
-                            double[] arr = rasterTransitionAttrValues[AttributeTypeId];
-                            if (arr[simulationCell.CollectionIndex] == Spatial.DefaultNoDataValue)
+                            if (tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Spatial) ||
+                                tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
                             {
-                                arr[simulationCell.CollectionIndex] = AttrValue.Value;
-                            }
-                            else
-                            {
-                                arr[simulationCell.CollectionIndex] += AttrValue.Value;
+                                double[] arr = rasterTransitionAttrValues[AttributeTypeId];
+                                if (arr[simulationCell.CollectionIndex] == Spatial.DefaultNoDataValue)
+                                {
+                                    arr[simulationCell.CollectionIndex] = AttrValue.Value;
+                                }
+                                else
+                                {
+                                    arr[simulationCell.CollectionIndex] += AttrValue.Value;
+                                }
                             }
                         }
 
@@ -2696,7 +2702,8 @@ namespace SyncroSim.STSim
                             }
                         }
 
-                        if (this.IsSummaryTransitionAttributeTimestep(timestep))
+                        if (this.IsSummaryTransitionAttributeTimestep(timestep) && 
+                            tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Summary))
                         {
                             int AgeKey = this.m_AgeReportingHelperTA.GetKey(simulationCell.Age);
 

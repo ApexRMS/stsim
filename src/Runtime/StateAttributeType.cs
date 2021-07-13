@@ -6,6 +6,7 @@ namespace SyncroSim.STSim
     class StateAttributeType
     {
         private int m_Id;
+        private OutputFilterFlagAttribute m_OutputFilter;
 
         public StateAttributeType(int id)
         {
@@ -17,6 +18,18 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_Id;
+            }
+        }
+
+        public OutputFilterFlagAttribute OutputFilter
+        {
+            get
+            {
+                return this.m_OutputFilter;
+            }
+            set
+            {
+                this.m_OutputFilter = value;
             }
         }
     }

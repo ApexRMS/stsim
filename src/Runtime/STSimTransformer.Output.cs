@@ -460,6 +460,11 @@ namespace SyncroSim.STSim
 
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.Summary))
+                {
+                    continue;
+                }
+
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
 
                 EightIntegerLookupKey key = new EightIntegerLookupKey(
@@ -514,6 +519,11 @@ namespace SyncroSim.STSim
 
             foreach (TransitionGroup tg in tt.TransitionGroups)
             {
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.Summary))
+                {
+                    continue;
+                }
+
                 int AgeKey = this.m_AgeReportingHelperTR.GetKey(simulationCell.Age);
                 int EventIdKey = GetKeyOrWildcardKey(eventId);
 
@@ -586,6 +596,13 @@ namespace SyncroSim.STSim
                 DestStateClass = currentTransition.StateClassIdDestination.Value;
             }
 
+            TransitionType tt = this.m_TransitionTypes[currentTransition.TransitionTypeId];
+
+            if (!tt.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SummaryByStateClass))
+            {
+                return;
+            }
+
             EightIntegerLookupKey key = new EightIntegerLookupKey(
                 simulationCell.StratumId, 
                 GetSecondaryStratumIdKey(simulationCell), 
@@ -645,6 +662,13 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Summary))
+                {
+                    continue;
+                }
+
                 double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
                     AttributeTypeId, 
                     simulationCell.StratumId, 
@@ -713,6 +737,13 @@ namespace SyncroSim.STSim
 
             foreach (Tst tst in simulationCell.TstValues)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tst.TransitionGroupId];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SummaryTST))
+                {
+                    continue;
+                }
+
                 int TSTKey = this.m_TSTReportingHelper.GetKey(tst.TstValue);
 
                 SevenIntegerLookupKey key = new SevenIntegerLookupKey(
@@ -1055,6 +1086,12 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (transitionedPixels == null)
+                {
+                    continue;
+                }
+
                 var distArray = transitionedPixels.Distinct();
 
                 if (distArray.Count() == 1)
@@ -1208,6 +1245,13 @@ namespace SyncroSim.STSim
 
             foreach (int tgid in TSTGroupIds)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.AvgSpatialTST))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
                 double[] Values = dict[timestep];
 
@@ -1239,6 +1283,13 @@ namespace SyncroSim.STSim
 
             foreach (int tgid in TSTGroupIds)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.AvgSpatialTST))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[tgid];
                 double[] Values = dict[timestepKey];
 
@@ -1315,6 +1366,13 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
                 double[] Values = dict[timestep];
 
@@ -1346,6 +1404,13 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = this.m_AvgStateAttrMap[AttributeTypeId];
                 double[] Values = dict[timestepKey];
 
@@ -1915,6 +1980,12 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (transitionedPixels == null)
+                {
+                    continue;
+                }
+
                 var distArray = transitionedPixels.Distinct();
 
                 if (distArray.Count() == 1)
@@ -1993,6 +2064,11 @@ namespace SyncroSim.STSim
             {
                 foreach (TransitionGroup tg in this.m_TransitionGroups)
                 {
+                    if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SpatialTST))
+                    {
+                        continue;
+                    }
+
                     StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                     foreach (Cell cell in this.Cells)
@@ -2093,6 +2169,13 @@ namespace SyncroSim.STSim
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
                 {
+                    StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                    if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Spatial))
+                    {
+                        continue;
+                    }
+
                     rastOutput.InitDblCells();
 
                     foreach (Cell c in this.Cells)
@@ -2180,6 +2263,12 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (transitionedPixels == null)
+                {
+                    continue;
+                }
+
                 var distArray = transitionedPixels.Distinct();
 
                 if (distArray.Count() == 1)
@@ -2342,6 +2431,11 @@ namespace SyncroSim.STSim
             foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
             {
                 Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
+
+                if (dict == null)
+                {
+                    continue;
+                }
 
                 // Now lets loop thru the timestep arrays in the dict
                 foreach (int timestep in dict.Keys)
@@ -2568,6 +2662,8 @@ namespace SyncroSim.STSim
 
             foreach (int AttributeTypeId in this.m_TransitionAttributeTypeIds.Keys)
             {
+                TransitionAttributeType tat = this.m_TransitionAttributeTypes[AttributeTypeId];
+
                 foreach (TransitionGroup tg in tt.TransitionGroups)
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
@@ -2590,14 +2686,18 @@ namespace SyncroSim.STSim
 
                         if (this.IsSpatial && IsAttrTimestep)
                         {
-                            double[] arr = rasterTransitionAttrValues[AttributeTypeId];
-                            if (arr[simulationCell.CollectionIndex] == Spatial.DefaultNoDataValue)
+                            if (tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Spatial) ||
+                                tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
                             {
-                                arr[simulationCell.CollectionIndex] = AttrValue.Value;
-                            }
-                            else
-                            {
-                                arr[simulationCell.CollectionIndex] += AttrValue.Value;
+                                double[] arr = rasterTransitionAttrValues[AttributeTypeId];
+                                if (arr[simulationCell.CollectionIndex] == Spatial.DefaultNoDataValue)
+                                {
+                                    arr[simulationCell.CollectionIndex] = AttrValue.Value;
+                                }
+                                else
+                                {
+                                    arr[simulationCell.CollectionIndex] += AttrValue.Value;
+                                }
                             }
                         }
 
@@ -2619,7 +2719,8 @@ namespace SyncroSim.STSim
                             }
                         }
 
-                        if (this.IsSummaryTransitionAttributeTimestep(timestep))
+                        if (this.IsSummaryTransitionAttributeTimestep(timestep) && 
+                            tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Summary))
                         {
                             int AgeKey = this.m_AgeReportingHelperTA.GetKey(simulationCell.Age);
 

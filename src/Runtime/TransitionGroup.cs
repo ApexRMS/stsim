@@ -18,6 +18,7 @@ namespace SyncroSim.STSim
         private bool m_HasSizeDistribution;
         private PatchPrioritization m_PatchPrioritization;
         private double m_Order = Constants.DEFAULT_TRANSITION_ORDER;
+        private OutputFilterFlagTransitionGroup m_OutputFilter;
         private bool m_IsAuto;
 
         public TransitionGroup(int transitionGroupId, string transitionGroupName, bool isAuto)
@@ -117,6 +118,18 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_Order = value;
+            }
+        }
+
+        internal OutputFilterFlagTransitionGroup OutputFilter
+        {
+            get
+            {
+                return this.m_OutputFilter;
+            }
+            set
+            {
+                this.m_OutputFilter = value;
             }
         }
 

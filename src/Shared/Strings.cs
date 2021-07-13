@@ -223,6 +223,29 @@ namespace SyncroSim.STSim
         public const string DATASHEET_PT_PROBABILITY_COLUMN_NAME = "Probability";
         public const string DATASHEET_PT_PROBXPROPN_COLUMN_NAME = "ProbXPropn";
 
+        //Transition Group Output Filters
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS = "stsim_OutputFilterTransitionGroups";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_COLUMN_NAME = "Summary";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SUMMARY_BY_STATE_CLASS_COLUMN_NAME = "SummaryByStateClass";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_TST_COLUMN_NAME = "TimeSinceTransition";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_COLUMN_NAME = "Spatial";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_EVENTS_COLUMN_NAME = "SpatialEvents";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_TST_COLUMN_NAME = "SpatialTimeSinceTransition";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_SPATIAL_PROB_COLUMN_NAME = "SpatialProbability";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS_AVG_SPATIAL_TST_COLUMN_NAME = "AvgSpatialTimeSinceTransition";
+
+        //State Attribute Output Filters
+        public const string DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES = "stsim_OutputFilterStateAttributes";
+        public const string DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SUMMARY_COLUMN_NAME = "Summary";
+        public const string DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_SPATIAL_COLUMN_NAME = "Spatial";
+        public const string DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME = "AvgSpatial";
+
+        //Transition Attribute Output Filters
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES = "stsim_OutputFilterTransitionAttributes";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SUMMARY_COLUMN_NAME = "Summary";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_SPATIAL_COLUMN_NAME = "Spatial";
+        public const string DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES_AVG_SPATIAL_COLUMN_NAME = "AvgSpatial";
+
         //Transition Target
         public const string DATASHEET_TRANSITION_TARGET_NAME = "stsim_TransitionTarget";
 

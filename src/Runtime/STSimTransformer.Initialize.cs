@@ -381,6 +381,9 @@ namespace SyncroSim.STSim
             this.FillTstTransitionGroupCollection();
             this.FillTstRandomizeCollection();
             this.FillTransitionMultiplierValueCollection();
+            this.FillOutputFilterTransitionGroupCollection();
+            this.FillOutputFilterStateAttributeCollection();
+            this.FillOutputFilterTransitionAttributeCollection();
 
             if (this.IsSpatial)
             {

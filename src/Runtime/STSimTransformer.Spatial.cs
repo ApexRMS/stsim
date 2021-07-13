@@ -257,6 +257,11 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            if (transitionedPixels == null)
+            {
+                return;
+            }
+
             //Dereference to find TT "ID". If blank, dont bother to record transition.
             int? TransTypeMapId = this.m_TransitionTypes[transitionTypeId].MapId;
 
@@ -282,6 +287,11 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            if (transitionedPixels == null)
+            {
+                return;
+            }
+
             transitionedPixels[cell.CollectionIndex] = eventId;
         }
 
@@ -290,7 +300,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <returns>Dictionary(Of Integer, Integer())</returns>
         /// <remarks></remarks>
-        private Dictionary<int, int[]> CreateTransitionGroupTransitionedPixels()
+        private Dictionary<int, int[]> CreateTransitionGroupTransitionedPixels(OutputFilterFlagTransitionGroup flags)
         {
             Debug.Assert(this.IsSpatial);
 
@@ -310,16 +320,19 @@ namespace SyncroSim.STSim
 
                 int[] transitionPixel = null;
 
-                if (this.m_CreateRasterTransitionOutput || 
-                    this.m_CreateAvgRasterTransitionProbOutput || 
-                    this.m_CreateRasterTransitionEventOutput)
+                if (tg.OutputFilter.HasFlag(flags))
                 {
-                    transitionPixel = new int[this.Cells.Count];
+                    if (this.m_CreateRasterTransitionOutput || 
+                        this.m_CreateAvgRasterTransitionProbOutput || 
+                        this.m_CreateRasterTransitionEventOutput)
+                        {
+                            transitionPixel = new int[this.Cells.Count];
 
-                    for (var i = 0; i < this.Cells.Count; i++)
-                    {
-                        transitionPixel[i] = 0;
-                    }
+                            for (var i = 0; i < this.Cells.Count; i++)
+                            {
+                                transitionPixel[i] = 0;
+                            }
+                        }
                 }
 
                 dictTransitionPixels.Add(tg.TransitionGroupId, transitionPixel);
@@ -344,15 +357,20 @@ namespace SyncroSim.STSim
             {
                 foreach (int id in this.m_TransitionAttributeTypeIds.Keys)
                 {
-                    Debug.Assert(this.m_TransitionAttributeTypes.Contains(id));
-                    double[] arr = new double[this.Cells.Count];
+                    TransitionAttributeType tat = this.m_TransitionAttributeTypes[id];
 
-                    for (int i = 0; i < this.Cells.Count; i++)
+                    if (tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Spatial) ||
+                        tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
                     {
-                        arr[i] = 0.0;
-                    }
+                        double[] arr = new double[this.Cells.Count];
 
-                    dict.Add(id, arr);
+                        for (int i = 0; i < this.Cells.Count; i++)
+                        {
+                            arr[i] = 0.0;
+                        }
+
+                        dict.Add(id, arr);
+                    }
                 }
             }
 
@@ -2619,6 +2637,11 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.SpatialProbability))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
@@ -2663,6 +2686,13 @@ namespace SyncroSim.STSim
 
             foreach (int tgid in TSTGroupIds)
             {
+                TransitionGroup tg = this.m_TransitionGroups[tgid];
+
+                if (!tg.OutputFilter.HasFlag(OutputFilterFlagTransitionGroup.AvgSpatialTST))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)
@@ -2709,9 +2739,16 @@ namespace SyncroSim.STSim
             {
                 return;
             }
- 
-            foreach (StateAttributeType sat in this.m_StateAttributeTypes)
+
+            foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
             {
+                StateAttributeType sat = this.m_StateAttributeTypes[AttributeTypeId];
+
+                if (!sat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)

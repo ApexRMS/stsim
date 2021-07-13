@@ -10,6 +10,7 @@ namespace SyncroSim.STSim
     internal class TransitionAttributeType
     {
         private int m_TransitionAttributeId;
+        private OutputFilterFlagAttribute m_OutputFilter;
 
         public TransitionAttributeType(int transitionAttributeId)
         {
@@ -21,6 +22,18 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_TransitionAttributeId;
+            }
+        }
+
+        public OutputFilterFlagAttribute OutputFilter
+        {
+            get
+            {
+                return this.m_OutputFilter;
+            }
+            set
+            {
+                this.m_OutputFilter = value;
             }
         }
     }

@@ -1086,6 +1086,12 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (transitionedPixels == null)
+                {
+                    continue;
+                }
+
                 var distArray = transitionedPixels.Distinct();
 
                 if (distArray.Count() == 1)
@@ -1974,6 +1980,12 @@ namespace SyncroSim.STSim
             foreach (int transitionGroupId in dictTransitionedPixels.Keys)
             {
                 int[] transitionedPixels = dictTransitionedPixels[transitionGroupId];
+
+                if (transitionedPixels == null)
+                {
+                    continue;
+                }
+
                 var distArray = transitionedPixels.Distinct();
 
                 if (distArray.Count() == 1)
@@ -2419,6 +2431,11 @@ namespace SyncroSim.STSim
             foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
             {
                 Dictionary<int, double[]> dict = this.m_AvgTransitionProbMap[tgId];
+
+                if (dict == null)
+                {
+                    continue;
+                }
 
                 // Now lets loop thru the timestep arrays in the dict
                 foreach (int timestep in dict.Keys)

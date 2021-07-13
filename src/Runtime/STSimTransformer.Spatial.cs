@@ -257,6 +257,11 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            if (transitionedPixels == null)
+            {
+                return;
+            }
+
             //Dereference to find TT "ID". If blank, dont bother to record transition.
             int? TransTypeMapId = this.m_TransitionTypes[transitionTypeId].MapId;
 

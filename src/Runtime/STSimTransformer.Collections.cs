@@ -905,7 +905,9 @@ namespace SyncroSim.STSim
         /// </summary>
         private void FillOutputFilterTransitionGroupCollection()
         {
+#if DEBUG
             Debug.Assert(TRANSITION_GROUPS_FILLED);
+#endif
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_GROUPS);
 
             foreach (DataRow dr in ds.GetData().Rows)
@@ -954,7 +956,9 @@ namespace SyncroSim.STSim
         /// </summary>
         private void FillOutputFilterStateAttributeCollection()
         {
+#if DEBUG
             Debug.Assert(STATE_ATTRIBUTE_TYPES_FILLED);
+#endif
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_FILTER_STATE_ATTRIBUTES);
 
             foreach (DataRow dr in ds.GetData().Rows)
@@ -985,7 +989,9 @@ namespace SyncroSim.STSim
         /// </summary>
         private void FillOutputFilterTransitionAttributeCollection()
         {
+#if DEBUG
             Debug.Assert(TRANSITION_ATTRIBUTE_TYPES_FILLED);
+#endif
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_FILTER_TRANSITION_ATTRIBUTES);
 
             foreach (DataRow dr in ds.GetData().Rows)

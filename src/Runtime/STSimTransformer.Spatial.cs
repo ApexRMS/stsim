@@ -2798,6 +2798,11 @@ namespace SyncroSim.STSim
 
             foreach (TransitionAttributeType tat in this.m_TransitionAttributeTypes)
             {
+                if (!tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.AvgSpatial))
+                {
+                    continue;
+                }
+
                 Dictionary<int, double[]> dict = new Dictionary<int, double[]>();
 
                 for (var timestep = this.MinimumTimestep; timestep <= this.MaximumTimestep; timestep++)

@@ -434,7 +434,7 @@ namespace SyncroSim.STSim
             if (drProp == null)
             {
                 return;
-            }
+            }          
 
             //Num Cells
             int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]);
@@ -467,7 +467,9 @@ namespace SyncroSim.STSim
 
             // Calc Cell Area in terminology units
             double cellAreaTU = 0;
-            if (!CheckBoxCellSizeOverride.Checked)
+            bool SizeOverride = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME]);
+
+            if (!SizeOverride)
             {
                 cellAreaTU = InitialConditionsSpatialDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal);
                 this.TextBoxCellAreaCalc.Text = cellAreaTU.ToString("N4", CultureInfo.InvariantCulture);

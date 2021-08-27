@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.2" url="https://docs.stsim.net/">
   <transformers>
-    <transformer name="Primary" isPrimary="True" displayName="ST-Sim" isPipelineBased="True" isRunnable="True" forceAllDatafeedsForPipeline="True">
+    <transformer 
+      name="Primary" 
+      isPrimary="True" 
+      displayName="ST-Sim" 
+      isPipelineBased="True" 
+      isRunnable="True" 
+      forceAllDatafeedsForPipeline="True"
+      transformerSpecificOutput="False">
       <runtime>
         <transformer name="External"/>
         <transformer name="Runtime"/>

@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.2" url="https://docs.stsim.net/">
   <transformers>
-    <transformer name="Primary" isPrimary="True" displayName="ST-Sim">
+    <transformer 
+      name="Primary" 
+      isPrimary="True" 
+      displayName="ST-Sim" 
+      isPipelineBased="True" 
+      isRunnable="True" 
+      forceAllDatafeedsForPipeline="True"
+      transformerSpecificOutput="False">
       <runtime>
         <transformer name="External"/>
         <transformer name="Runtime"/>
@@ -1706,7 +1713,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="113"
+    schemaVersion="114"
     minPackageVersion="3.2.18"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

@@ -451,6 +451,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000113(store);
             }
+
+            if (currentSchemaVersion < 114)
+            {
+                STSIM0000114(store);
+            }
         }
 
         /// <summary>
@@ -3343,6 +3348,12 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputTST INTEGER");
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptions ADD COLUMN SummaryOutputTSTTimesteps INTEGER");
             }
+        }
+
+        private static void STSIM0000114(DataStore store)
+        {
+            UpdateProvider.UpdateTransformerTable(store, 
+                "stsim_Primary", "ST-Sim", "stsim", "The ST-Sim state-and-transition simulation model");
         }
     }
 }

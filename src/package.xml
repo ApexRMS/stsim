@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.3" url="https://docs.stsim.net/">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.4" url="https://docs.stsim.net/">
   <transformers>
     <transformer 
       name="Primary" 

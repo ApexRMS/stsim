@@ -1165,7 +1165,11 @@ namespace SyncroSim.STSim
 
                     Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
 
-                    if (!Item.IsDisabled)
+                    if (Item.IsDisabled)
+                    {
+                        throw new ArgumentException("A State Attribute must have a Value or a Distribution Type.");
+                    }
+                    else
                     {
                         this.m_DistributionProvider.Validate(
                             Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);
@@ -1323,7 +1327,11 @@ namespace SyncroSim.STSim
 
                     Item.IsDisabled = (!Item.DistributionValue.HasValue && !Item.DistributionTypeId.HasValue);
 
-                    if (!Item.IsDisabled)
+                    if (Item.IsDisabled)
+                    {
+                        throw new ArgumentException("A Transition Attribute must have a Value or a Distribution Type.");
+                    }
+                    else
                     {
                         this.m_DistributionProvider.Validate(
                             Item.DistributionTypeId, Item.DistributionValue, Item.DistributionSD, Item.DistributionMin, Item.DistributionMax);

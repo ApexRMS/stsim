@@ -51,6 +51,35 @@ namespace SyncroSim.STSim
         }
     }
 
+    public class SpatialCellEventArgs : STSimEventArgs
+    {
+        private Cell m_SimulationCell;
+        private TransitionGroup m_TransitionGroup;
+        public bool Cancel { get; set; }
+
+        internal SpatialCellEventArgs(Cell simulationCell, int iteration, int timestep, TransitionGroup tg) : base(iteration, timestep)
+        {
+            this.m_SimulationCell = simulationCell;
+            this.m_TransitionGroup = tg;
+        }
+
+        public Cell SimulationCell
+        {
+            get
+            {
+                return this.m_SimulationCell;
+            }
+        }
+
+        public TransitionGroup TransitionGroup
+        {
+            get
+            {
+                return this.m_TransitionGroup;
+            }
+        }
+    }
+
     public class CellChangeEventArgs : CellEventArgs
     {
         private DeterministicTransition m_DeterministicPathway;

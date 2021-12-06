@@ -42,6 +42,8 @@ namespace SyncroSim.STSim
         public event EventHandler<EventArgs> ModelRunComplete;
         public event EventHandler<EventArgs> BeginNormalSpatialMerge;
         public event EventHandler<EventArgs> NormalSpatialMergeComplete;
+        public event EventHandler<SpatialCellEventArgs> BeginSpatialCellTransition;
+
 
         /// <summary>
         /// Gets whether this should be a spatial run
@@ -671,6 +673,13 @@ namespace SyncroSim.STSim
 
                     foreach (TransitionGroup tg in tt.TransitionGroups)
                     {
+                        SpatialCellEventArgs args = new SpatialCellEventArgs(simulationCell, iteration, timestep, tg);
+                        BeginSpatialCellTransition?.Invoke(this, new SpatialCellEventArgs(simulationCell, iteration, timestep, tg));
+                        if (args.Cancel)
+                        {
+                            continue;
+                        }
+
                         TransitionTarget target = this.m_TransitionTargetMap.GetTransitionTarget(
                             tg.TransitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId,
                             simulationCell.TertiaryStratumId, iteration, timestep);

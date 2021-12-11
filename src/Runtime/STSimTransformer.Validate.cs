@@ -63,6 +63,16 @@ namespace SyncroSim.STSim
 
                 foreach (Transition tr in trlist)
                 {
+                    if(c.SecondaryStratumId != tr.SecondaryStratumId)
+                    {
+                        continue;
+                    }
+
+                    if (c.TertiaryStratumId != tr.TertiaryStratumId)
+                    {
+                        continue;
+                    }
+
                     if (c.Age < tr.AgeMinimum)
                     {
                         continue;

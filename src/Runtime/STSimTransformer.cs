@@ -807,6 +807,16 @@ namespace SyncroSim.STSim
             //But if there are transitions, add them to the cell's transition list
             foreach (Transition tr in trlist)
             {
+                if (simulationCell.SecondaryStratumId != tr.SecondaryStratumId)
+                {
+                    continue;
+                }
+
+                if (simulationCell.TertiaryStratumId != tr.TertiaryStratumId)
+                {
+                    continue;
+                }
+
                 if (simulationCell.Age < tr.AgeMinimum)
                 {
                     continue;

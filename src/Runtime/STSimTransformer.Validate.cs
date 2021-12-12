@@ -63,12 +63,12 @@ namespace SyncroSim.STSim
 
                 foreach (Transition tr in trlist)
                 {
-                    if(c.SecondaryStratumId != tr.SecondaryStratumId)
+                    if((tr.SecondaryStratumId != null) && (c.SecondaryStratumId != tr.SecondaryStratumId))
                     {
                         continue;
                     }
 
-                    if (c.TertiaryStratumId != tr.TertiaryStratumId)
+                    if ((tr.TertiaryStratumId != null) && (c.TertiaryStratumId != tr.TertiaryStratumId))
                     {
                         continue;
                     }

@@ -154,17 +154,17 @@ namespace SyncroSim.STSim
 
         public int STSimGetJobIdFromFolder(string folderName)
         {
-            return ParallelTransformer.GetJobIdFromFolder(folderName);
+            return GetJobIdFromFolder(folderName);
         }
 
         public int STSimGetMergeScenarioId(DataStore store)
         {
-            return ParallelTransformer.GetMergeScenarioId(store);
+            return GetMergeScenarioId(store);
         }
 
         public string STSimGetJobOutputScenarioFolderName(string libraryFileName, int scenarioId, bool create)
         {
-            return ParallelTransformer.GetJobOutputScenarioFolderName(libraryFileName, scenarioId, create);
+            return GetJobOutputScenarioFolderName(libraryFileName, scenarioId, create);
         }
 
         public double? GetAttributeValue(
@@ -206,6 +206,23 @@ namespace SyncroSim.STSim
 
                 raster.DblCells = arr;
             }
+        }
+
+        public void PerformEndModelRun()
+        {
+            this.InternalWriteSpatialAveragingRasters();
+        }
+
+        public void PerformIteration(int iteration)
+        {
+            this.InternalOnBeforeIteration(iteration);
+            this.InternalOnIteration(iteration);
+        }
+
+        public void PerformTimestep(int iteration, int timestep)
+        {
+            this.InternalOnBeforeTimestep(iteration, timestep);
+            this.InternalOnTimestep(iteration, timestep);
         }
 
         /// <summary>
@@ -351,6 +368,13 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
+            this.InternalWriteSpatialAveragingRasters();
+
+            ModelRunComplete?.Invoke(this, new EventArgs());
+        }
+
+        private void InternalWriteSpatialAveragingRasters()
+        {
             this.WriteAvgStateClassRasters();
             this.WriteAvgAgeRasters();
             this.WriteAvgStratumRasters();
@@ -358,8 +382,6 @@ namespace SyncroSim.STSim
             this.WriteAvgTSTRasters();
             this.WriteAvgStateAttributeRasters();
             this.WriteAvgTransitionAttributeRasters();
-
-            ModelRunComplete?.Invoke(this, new EventArgs());
         }
 
         public override void PostProcess()

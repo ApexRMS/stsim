@@ -29,7 +29,7 @@ namespace SyncroSim.STSim
         private TransitionMultiplierTypeCollection m_TransitionMultiplierTypes = new TransitionMultiplierTypeCollection();
         private PatchPrioritizationCollection m_PatchPrioritizations = new PatchPrioritizationCollection();
         private InitialConditionsDistributionCollection m_InitialConditionsDistributions = new InitialConditionsDistributionCollection();
-        private InitialConditionsSpatialCollection m_InitialConditionsSpatials = new InitialConditionsSpatialCollection();
+        private InitialConditionsSpatialCollection m_InitialConditionsSpatialValues = new InitialConditionsSpatialCollection();
         private TransitionCollection m_Transitions = new TransitionCollection();
         private DeterministicTransitionCollection m_DeterministicTransitions = new DeterministicTransitionCollection();
         private TransitionMultiplierValueCollection m_TransitionMultiplierValues = new TransitionMultiplierValueCollection();
@@ -685,7 +685,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void FillInitialConditionsSpatialCollectionAndMap()
         {
-            this.m_InitialConditionsSpatials.Clear();
+            this.m_InitialConditionsSpatialValues.Clear();
 
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
 
@@ -717,10 +717,10 @@ namespace SyncroSim.STSim
                 InitialConditionsSpatial InitialStateRecord = new InitialConditionsSpatial(
                     Iteration, PrimaryStratumName, SecondaryStratumName, TertiaryStratumName, StateClassName, AgeName);
 
-                this.m_InitialConditionsSpatials.Add(InitialStateRecord);
+                this.m_InitialConditionsSpatialValues.Add(InitialStateRecord);
             }
 
-            this.m_InitialConditionsSpatialMap = new InitialConditionsSpatialMap(this.m_InitialConditionsSpatials);
+            this.m_InitialConditionsSpatialMap = new InitialConditionsSpatialMap(this.m_InitialConditionsSpatialValues);
         }
 
         /// <summary>

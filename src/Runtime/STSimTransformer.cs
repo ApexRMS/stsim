@@ -11,7 +11,7 @@ using SyncroSim.Common;
 
 namespace SyncroSim.STSim
 {
-    public sealed partial class STSimTransformer : StochasticTimeTransformer
+    public partial class STSimTransformer : StochasticTimeTransformer
     {
         private double m_TotalAmount;
         private bool m_CalcNumCellsFromDist;

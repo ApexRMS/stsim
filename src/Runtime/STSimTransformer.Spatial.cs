@@ -1470,7 +1470,7 @@ namespace SyncroSim.STSim
             DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
 
             // Get a list of the Iterations that are defined in the InitialConditionsSpatials
-            var lstIterations = this.m_InitialConditionsSpatials.GetSortedIterationList();
+            var lstIterations = this.m_InitialConditionsSpatialValues.GetSortedIterationList();
             bool StateClassDefined = false;
             bool SecondaryStratumDefined = false;
             bool TertiaryStratumDefined = false;

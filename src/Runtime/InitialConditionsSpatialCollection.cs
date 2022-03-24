@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 namespace SyncroSim.STSim
 {
     /// <summary>
-    /// Initial Conditions Distirbution collection
+    /// Initial Conditions Spatial collection
     /// </summary>
     internal class InitialConditionsSpatialCollection : Collection<InitialConditionsSpatial>
     {

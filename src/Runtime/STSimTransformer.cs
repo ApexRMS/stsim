@@ -208,23 +208,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        public void PerformEndModelRun()
-        {
-            this.InternalWriteSpatialAveragingRasters();
-        }
-
-        public void PerformIteration(int iteration)
-        {
-            this.InternalOnBeforeIteration(iteration);
-            this.InternalOnIteration(iteration);
-        }
-
-        public void PerformTimestep(int iteration, int timestep)
-        {
-            this.InternalOnBeforeTimestep(iteration, timestep);
-            this.InternalOnTimestep(iteration, timestep);
-        }
-
         /// <summary>
         /// Overrides Configure
         /// </summary>
@@ -368,12 +351,12 @@ namespace SyncroSim.STSim
             //We process spatial averaging output after the rest of the model has completed because
             //these calculations must be done across the entire data set.
 
-            this.InternalWriteSpatialAveragingRasters();
+            this.WriteSpatialAveragingRasters();
 
             ModelRunComplete?.Invoke(this, new EventArgs());
         }
 
-        private void InternalWriteSpatialAveragingRasters()
+        protected void WriteSpatialAveragingRasters()
         {
             this.WriteAvgStateClassRasters();
             this.WriteAvgAgeRasters();

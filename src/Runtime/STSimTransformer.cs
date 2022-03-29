@@ -36,6 +36,8 @@ namespace SyncroSim.STSim
         public event EventHandler<CellChangeEventArgs> ChangingCellDeterministic;
         public event EventHandler<CellChangeEventArgs> CellBeforeTransitions;
         public event EventHandler<SpatialTransitionEventArgs> ApplyingSpatialTransitions;
+        public event EventHandler<SpatialTransitionEventArgsEx> ApplySpatialTransition;
+        public event EventHandler<SpatialTransitionGroupEventArgs> ApplySpatialTransitionGroup;
         public event EventHandler<MultiplierEventArgs> ApplyingTransitionMultipliers;
         public event EventHandler<MultiplierEventArgs> ApplyingSpatialMultipliers;
         public event EventHandler<EventArgs> BeginModelRun;
@@ -701,7 +703,7 @@ namespace SyncroSim.STSim
                                     if (SelectedTransition != null)
                                     {
                                         this.InvokeProbabilisticTransitionForCell(
-                                        simulationCell, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
+                                        simulationCell, tg, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
 
                                         return;
                                     }
@@ -739,7 +741,7 @@ namespace SyncroSim.STSim
                             if (SelectedTransition != null)
                             {
                                 this.InvokeProbabilisticTransitionForCell(
-                                    simulationCell, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
+                                    simulationCell, TransitionGroup, SelectedTransition, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
 
                                 return;
                             }
@@ -763,15 +765,15 @@ namespace SyncroSim.STSim
 
                     if (CumulativeProbability > RandomNextDouble)
                     {
-                        this.InvokeProbabilisticTransitionForCell(simulationCell, tr, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
+                        this.InvokeProbabilisticTransitionForCell(simulationCell, TransitionGroup, tr, iteration, timestep, transitionedPixels, rasterTransitionAttrValues);
                         return;
                     }
                 }
             }
         }
 
-        private void InvokeProbabilisticTransitionForCell(
-            Cell simulationCell, Transition tr, int iteration, int timestep, 
+        public void InvokeProbabilisticTransitionForCell(
+            Cell simulationCell, TransitionGroup tg, Transition tr, int iteration, int timestep, 
             int[] transitionedPixels, Dictionary<int, double[]> rasterTransitionAttrValues)
         {
             this.RecordSummaryTransitionOutput(simulationCell, tr, iteration, timestep, null);
@@ -783,6 +785,7 @@ namespace SyncroSim.STSim
             if (this.IsSpatial)
             {
                 this.UpdateTransitionedPixels(simulationCell, tr.TransitionTypeId, transitionedPixels);
+                this.ApplySpatialTransition?.Invoke(this, new SpatialTransitionEventArgsEx(iteration, timestep, tg, simulationCell));
             }
         }
 

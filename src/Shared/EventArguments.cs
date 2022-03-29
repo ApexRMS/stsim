@@ -2,6 +2,7 @@
 // Copyright © 2007-2021 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -85,6 +86,90 @@ namespace SyncroSim.STSim
     {
         internal SpatialTransitionEventArgs(int iteration, int timestep) : base(iteration, timestep)
         {
+        }
+    }
+
+    public class SpatialTransitionEventArgsEx : STSimEventArgs
+    {
+        private TransitionGroup m_TransitionGroup;
+        private Cell m_SimulationCell;
+
+        public TransitionGroup TransitionGroup
+        {
+            get
+            {
+                return this.m_TransitionGroup;
+            }
+        }
+        public Cell SimulationCell
+        {
+            get
+            {
+                return this.m_SimulationCell;
+            }
+        }
+        internal SpatialTransitionEventArgsEx(int iteration, int timestep, TransitionGroup tg, Cell cell) : base(iteration, timestep)
+        {
+            this.m_TransitionGroup = tg;
+            this.m_SimulationCell = cell;
+        }
+    }
+
+    public class SpatialTransitionGroupEventArgs : STSimEventArgs
+    {
+        private TransitionGroup m_TransitionGroup;
+        private bool m_Cancel;
+        private CellCollection m_Cells;
+        private Transition m_Transition;
+
+        public TransitionGroup TransitionGroup
+        {
+            get
+            {
+                return this.m_TransitionGroup;
+            }
+        }
+
+        public bool Cancel
+        {
+            get
+            {
+                return this.m_Cancel;
+            }
+
+            set
+            {
+                this.m_Cancel = value;
+            }
+        }
+
+        public CellCollection Cells
+        {
+            get
+            {
+                return this.m_Cells;
+            }
+            set
+            {
+                this.m_Cells = value;
+            }
+        }
+
+        public Transition Transition
+        {
+            get
+            {
+                return this.m_Transition;
+            }
+            set
+            {
+                this.m_Transition = value;
+            }
+        }
+
+        internal SpatialTransitionGroupEventArgs(int iteration, int timestep, TransitionGroup tg) : base(iteration, timestep)
+        {
+            this.m_TransitionGroup = tg;
         }
     }
 

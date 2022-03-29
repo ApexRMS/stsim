@@ -377,6 +377,11 @@ namespace SyncroSim.STSim
             return dict;
         }
 
+        protected virtual void OnSpatialTransitionGroup(object sender, SpatialTransitionGroupEventArgs e)
+        {
+            this.ApplySpatialTransitionGroup?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Applies probabilistic transitions in raster mode
         /// </summary>
@@ -409,6 +414,14 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup TransitionGroup in this.m_ShufflableTransitionGroups)
             {
                 if (TransitionGroup.PrimaryTransitionTypes.Count == 0)
+                {
+                    continue;
+                }
+
+                SpatialTransitionGroupEventArgs args = new SpatialTransitionGroupEventArgs(iteration, timestep, TransitionGroup);
+                this.OnSpatialTransitionGroup(this, args);
+
+                if (args.Cancel)
                 {
                     continue;
                 }
@@ -2251,6 +2264,21 @@ namespace SyncroSim.STSim
             CellsInitialized?.Invoke(this, new CellEventArgs(null, iteration, this.m_TimestepZero));
         }
 
+        protected virtual string GetStateClassRaster(int iteration, DataSheet dsIC, string stateClassFileName)
+        {
+            return Spatial.GetSpatialInputFileName(dsIC, stateClassFileName, false);
+        }
+
+        protected virtual string GetPrimaryStratumRaster(int iteration, DataSheet dsIC, string primaryStratumFileName)
+        {
+            return Spatial.GetSpatialInputFileName(dsIC, primaryStratumFileName, false);
+        }
+
+        protected virtual string GetAgeRaster(int iteration, DataSheet dsIC, string ageFileName)
+        {
+            return Spatial.GetSpatialInputFileName(dsIC, ageFileName, false);
+        }
+
         /// <summary>
         /// Fills the raster data if this is a raster model run
         /// </summary>
@@ -2277,7 +2305,7 @@ namespace SyncroSim.STSim
             //State Class Raster
             if (this.m_InputRasters.StateClassRaster == null || ics.StateClassFileName != Path.GetFileName(this.m_InputRasters.StateClassName))
             {
-                string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.StateClassFileName, false);
+                string fullFileName = this.GetStateClassRaster(iteration, dsIC, ics.StateClassFileName);
                 this.m_InputRasters.StateClassRaster = this.LoadMaskedInputRaster(fullFileName, RasterDataType.DTInteger);
                 DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
                 this.m_InputRasters.SClassCells = Spatial.RemapRasterCells(this.m_InputRasters.StateClassRaster.IntCells, dsRemap, Strings.DATASHEET_MAPID_COLUMN_NAME);
@@ -2286,7 +2314,7 @@ namespace SyncroSim.STSim
             //Primary Stratum Raster
             if (this.m_InputRasters.PrimaryStratumRaster == null || ics.PrimaryStratumFileName != Path.GetFileName(this.m_InputRasters.PrimaryStratumName))
             {
-                string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.PrimaryStratumFileName, false);
+                string fullFileName = this.GetPrimaryStratumRaster(iteration, dsIC, ics.PrimaryStratumFileName);
                 this.m_InputRasters.PrimaryStratumRaster = this.LoadMaskedInputRaster(fullFileName, RasterDataType.DTInteger);
 
                 DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
@@ -2341,7 +2369,7 @@ namespace SyncroSim.STSim
             {
                 if (this.m_InputRasters.AgeRaster == null || ics.AgeFileName != Path.GetFileName(this.m_InputRasters.AgeName))
                 {
-                    string fullFileName = Spatial.GetSpatialInputFileName(dsIC, ics.AgeFileName, false);
+                    string fullFileName = this.GetAgeRaster(iteration, dsIC, ics.AgeFileName);
                     this.m_InputRasters.AgeRaster = new StochasticTimeRaster(fullFileName, RasterDataType.DTInteger);
                 }
             }

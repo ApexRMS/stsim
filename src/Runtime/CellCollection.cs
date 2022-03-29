@@ -16,7 +16,7 @@ namespace SyncroSim.STSim
         /// <remarks>
         /// Prevent public constructor
         /// </remarks>
-        internal CellCollection()
+        public CellCollection()
         {
             return;
         }

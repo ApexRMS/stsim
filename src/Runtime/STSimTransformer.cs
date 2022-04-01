@@ -785,8 +785,13 @@ namespace SyncroSim.STSim
             if (this.IsSpatial)
             {
                 this.UpdateTransitionedPixels(simulationCell, tr.TransitionTypeId, transitionedPixels);
-                this.ApplySpatialTransition?.Invoke(this, new SpatialTransitionEventArgsEx(iteration, timestep, tg, simulationCell));
+                this.OnApplySpatialTransition(iteration, timestep, tg, simulationCell);
             }
+        }
+
+        protected virtual void OnApplySpatialTransition(int iteration, int timestep, TransitionGroup tg, Cell simulationCell)
+        {
+            this.ApplySpatialTransition?.Invoke(this, new SpatialTransitionEventArgsEx(iteration, timestep, tg, simulationCell));
         }
 
         /// <summary>

@@ -164,7 +164,7 @@ namespace SyncroSim.STSim
         /// Collection of transitions for the cell
         /// </summary>
         /// <remarks></remarks>
-        internal IList<Transition> Transitions
+        public IList<Transition> Transitions
         {
             get
             {

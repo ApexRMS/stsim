@@ -13,7 +13,7 @@ namespace SyncroSim.STSim
     /// Utilities relating to the terminology data feed
     /// </summary>
     /// <remarks></remarks>
-    internal static class TerminologyUtilities
+    public static class TerminologyUtilities
     {
         public static string GetTimestepUnits(Project project)
         {

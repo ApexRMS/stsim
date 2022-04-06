@@ -9,7 +9,7 @@ namespace SyncroSim.STSim
     /// Terminolgy Unit
     /// </summary>
     /// <remarks></remarks>
-    internal enum TerminologyUnit
+    public enum TerminologyUnit
     {
         None = 0,
         Acres,

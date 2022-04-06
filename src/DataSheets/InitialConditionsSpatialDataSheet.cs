@@ -10,7 +10,7 @@ using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
-    internal class InitialConditionsSpatialDataSheet : DataSheet
+    public class InitialConditionsSpatialDataSheet : DataSheet
     {
         public event EventHandler<EventArgs> ValidatingRasters;
         public event EventHandler<EventArgs> RastersValidated;
@@ -267,7 +267,7 @@ namespace SyncroSim.STSim
         /// <param name="destAreaUnits">The specified Area Units</param>
         /// <returns>The calculated Cell Area</returns>
         /// <remarks></remarks>
-        internal static double CalcCellArea(double srcCellArea, string srcSizeUnits, TerminologyUnit destAreaUnits)
+        public static double CalcCellArea(double srcCellArea, string srcSizeUnits, TerminologyUnit destAreaUnits)
         {
             double convFactor = 0;
 

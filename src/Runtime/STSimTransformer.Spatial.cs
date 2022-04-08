@@ -418,7 +418,8 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                SpatialTransitionGroupEventArgs args = new SpatialTransitionGroupEventArgs(iteration, timestep, TransitionGroup);
+                SpatialTransitionGroupEventArgs args = new SpatialTransitionGroupEventArgs(iteration, timestep, TransitionGroup, dictTransitionedPixels[TransitionGroup.TransitionGroupId],
+                            rasterTransitionAttrValues);
                 this.OnSpatialTransitionGroup(this, args);
 
                 if (args.Cancel)

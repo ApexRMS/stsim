@@ -801,7 +801,7 @@ namespace SyncroSim.STSim
         /// <param name="iteration"></param>
         /// <param name="timestep"></param>
         /// <remarks></remarks>
-        private void FillProbabilisticTransitionsForCell(Cell simulationCell, int iteration, int timestep)
+        public void FillProbabilisticTransitionsForCell(Cell simulationCell, int iteration, int timestep)
         {
             //DEVTODO: would it make sense to check for zero multipliers (temporal or spatial or area targets) to 
             //shorten this list based on excluding transitions that are impossible based on these?
@@ -1011,7 +1011,7 @@ namespace SyncroSim.STSim
 #endif
         }
 
-        private Transition SelectTransitionPathway(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
+        public Transition SelectTransitionPathway(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
         {
             double SumProbability = 0.0;
             TransitionCollection Transitions = new TransitionCollection();

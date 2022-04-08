@@ -121,6 +121,8 @@ namespace SyncroSim.STSim
         private bool m_Cancel;
         private CellCollection m_Cells;
         private Transition m_Transition;
+        private int[] m_TransitionedPixels;
+        private Dictionary<int, double[]> m_RasterTransitionAttrValues;
 
         public TransitionGroup TransitionGroup
         {
@@ -167,9 +169,27 @@ namespace SyncroSim.STSim
             }
         }
 
-        internal SpatialTransitionGroupEventArgs(int iteration, int timestep, TransitionGroup tg) : base(iteration, timestep)
+        public int[] TransitionedPixels
+        {
+            get
+            {
+                return this.m_TransitionedPixels;
+            }
+        }
+
+        public Dictionary<int, double[]> RasterTransitionAttrValues
+        {
+            get
+            {
+                return this.m_RasterTransitionAttrValues;
+            }
+        }
+
+        internal SpatialTransitionGroupEventArgs(int iteration, int timestep, TransitionGroup tg, int[] tpixels, Dictionary<int, double[]> rtav) : base(iteration, timestep)
         {
             this.m_TransitionGroup = tg;
+            this.m_TransitionedPixels = tpixels;
+            this.m_RasterTransitionAttrValues = rtav;
         }
     }
 

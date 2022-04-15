@@ -939,7 +939,7 @@ namespace SyncroSim.STSim
                             transitionedCells, 
                             initiationCells, 
                             InitiationCell, 
-                            transitionGroupId, 
+                            TransitionGroup, 
                             iteration, timestep, 
                             transitionedPixels, 
                             transitionedEventPixels, 
@@ -958,7 +958,7 @@ namespace SyncroSim.STSim
             Dictionary<int, Cell> transitionedCells, 
             Dictionary<int, Cell> initiationCells, 
             Cell initiationCell, 
-            int transitionGroupId, 
+            TransitionGroup tg, 
             int iteration, 
             int timestep, 
             int[] transitionedPixels, 
@@ -987,7 +987,7 @@ namespace SyncroSim.STSim
 
                 TransitionPathwayAutoCorrelation AutoCorrelation = 
                     this.m_TransitionPathwayAutoCorrelationMap.GetCorrelation(
-                        transitionGroupId, 
+                        tg.TransitionGroupId, 
                         CurrentRecord.Cell.StratumId, 
                         CurrentRecord.Cell.SecondaryStratumId, 
                         CurrentRecord.Cell.TertiaryStratumId, 
@@ -1035,13 +1035,13 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    Transition = this.SelectTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
+                    Transition = this.SelectTransitionPathway(CurrentRecord.Cell, tg.TransitionGroupId, iteration, timestep);
                 }
                 else
                 {
                     if (AutoCorrelation == null || (!AutoCorrelation.AutoCorrelation))
                     {
-                        Transition = this.SelectTransitionPathway(CurrentRecord.Cell, transitionGroupId, iteration, timestep);
+                        Transition = this.SelectTransitionPathway(CurrentRecord.Cell, tg.TransitionGroupId, iteration, timestep);
                     }
                 }
 
@@ -1059,7 +1059,7 @@ namespace SyncroSim.STSim
                 this.RecordSummaryTransitionOutput(CurrentRecord.Cell, Transition, iteration, timestep, transitionEventId);
                 this.RecordSummaryTransitionByStateClassOutput(CurrentRecord.Cell, Transition, iteration, timestep);
 
-                this.ChangeCellForProbabilisticTransition(CurrentRecord.Cell, Transition, iteration, timestep, rasterTransitionAttrValues);
+                this.ChangeCellForProbabilisticTransition(CurrentRecord.Cell, tg, Transition, iteration, timestep, rasterTransitionAttrValues);
 
                 if (!transitionDictionary.ContainsKey(CurrentRecord.Cell.CellId))
                 {
@@ -1068,7 +1068,7 @@ namespace SyncroSim.STSim
 
                 this.FillProbabilisticTransitionsForCell(CurrentRecord.Cell, iteration, timestep);
 
-                this.UpdateCellPatchMembership(transitionGroupId, CurrentRecord.Cell);
+                this.UpdateCellPatchMembership(tg.TransitionGroupId, CurrentRecord.Cell);
                 this.UpdateTransitionedPixels(CurrentRecord.Cell, Transition.TransitionTypeId, transitionedPixels);
                 this.UpdateTransitionedPixelEvents(CurrentRecord.Cell, transitionEventId, transitionedEventPixels);
 
@@ -1087,8 +1087,8 @@ namespace SyncroSim.STSim
                 double tempVar = CurrentRecord.TravelTime;
 
                 this.AddGrowEventRecords(
-                    EventCandidates, transitionedCells, SeenBefore, CurrentRecord.Cell, 
-                    transitionGroupId, iteration, timestep, ref tempVar);
+                    EventCandidates, transitionedCells, SeenBefore, CurrentRecord.Cell,
+                    tg.TransitionGroupId, iteration, timestep, ref tempVar);
             }
 
             expectedArea -= TotalEventAmount;

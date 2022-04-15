@@ -172,7 +172,7 @@ namespace SyncroSim.STSim
                     this.RecordSummaryTransitionOutput(neighboringCell, tr, iteration, timestep, null);
                     this.RecordSummaryTransitionByStateClassOutput(neighboringCell, tr, iteration, timestep);
 
-                    this.ChangeCellForProbabilisticTransition(neighboringCell, tr, iteration, timestep, rasterTransitionAttrValues);
+                    this.ChangeCellForProbabilisticTransition(neighboringCell, spreadGroup, tr, iteration, timestep, rasterTransitionAttrValues);
                     this.UpdateTransitionedPixels(neighboringCell, tr.TransitionTypeId, dictTransitionedPixels[spreadGroup.TransitionGroupId]);
                     this.FillProbabilisticTransitionsForCell(neighboringCell, iteration, timestep);
                 }
@@ -190,7 +190,7 @@ namespace SyncroSim.STSim
                             this.RecordSummaryTransitionOutput(DistantCell, DistantTransition, iteration, timestep, null);
                             this.RecordSummaryTransitionByStateClassOutput(DistantCell, DistantTransition, iteration, timestep);
 
-                            this.ChangeCellForProbabilisticTransition(DistantCell, DistantTransition, iteration, timestep, rasterTransitionAttrValues);
+                            this.ChangeCellForProbabilisticTransition(DistantCell, spreadGroup, DistantTransition, iteration, timestep, rasterTransitionAttrValues);
                             this.UpdateTransitionedPixels(DistantCell, DistantTransition.TransitionTypeId, dictTransitionedPixels[spreadGroup.TransitionGroupId]);
                             this.FillProbabilisticTransitionsForCell(DistantCell, iteration, timestep);
                         }

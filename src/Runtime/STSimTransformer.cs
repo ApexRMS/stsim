@@ -149,6 +149,14 @@ namespace SyncroSim.STSim
             }
         }
 
+        public TransitionGroupCollection TransitionSimulationGroups
+        {
+            get
+            {
+                return this.m_TransitionSimulationGroups;
+            }
+        }
+
         public ParallelJobConfig STSimLoadConfigurationFile()
         {
             return this.LoadConfigurationFile();

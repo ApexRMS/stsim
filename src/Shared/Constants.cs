@@ -18,6 +18,7 @@ namespace SyncroSim.STSim
         public const int STARTING_TRANSITION_EVENT_ID = 0;
         public const double EIGHT_DIV_NINE = 8.0 / 9.0;
         public const int INCLUDE_DATA_NULL_ID = -9999;
+        public const string STSIMRESOLUTION_SCENARIO_NAME = "[1] Partial";
 
         //Run Control
         public const int DATASHEET_RUN_CONTROL_NON_SPATIAL_NUM_CELLS_DEFAULT = 1000;

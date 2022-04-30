@@ -1147,7 +1147,7 @@ namespace SyncroSim.STSim
 #endif
         }
 
-        public Transition SelectTransitionPathway(Cell simulationCell, int transitionGroupId, int iteration, int timestep)
+        public Transition SelectTransitionPathway(Cell simulationCell, int transitionGroupId, int iteration, int timestep, bool multiRes = false)
         {
             double SumProbability = 0.0;
             TransitionCollection Transitions = new TransitionCollection();
@@ -1163,7 +1163,7 @@ namespace SyncroSim.STSim
                     multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
                     multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
 
-                    if (this.m_IsSpatial)
+                    if (this.m_IsSpatial && !multiRes)
                     {
                         multiplier *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 
@@ -1201,7 +1201,7 @@ namespace SyncroSim.STSim
                 multiplier *= this.GetExternalTransitionMultipliers(tr.TransitionTypeId, iteration, timestep, simulationCell);
                 multiplier *= this.GetTransitionTargetMultiplier(transitionGroupId, simulationCell.StratumId, simulationCell.SecondaryStratumId, simulationCell.TertiaryStratumId, iteration, timestep);
 
-                if (this.m_IsSpatial)
+                if (this.m_IsSpatial && !multiRes)
                 {
                     multiplier *= this.GetTransitionSpatialMultiplier(simulationCell, tr.TransitionTypeId, iteration, timestep);
 

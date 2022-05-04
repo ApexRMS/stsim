@@ -22,8 +22,7 @@
       displayName="ST-Sim External"
       className="SyncroSim.StochasticTime.StochasticTimeExternalTransformer"
       classAssembly="SyncroSim.StochasticTime"
-      extendsTransformer="Runtime"
-	  alternateDatafeedMetaData="corestime_Runtime">
+      extendsTransformer="Runtime">
     </transformer>
     <transformer
       name="Runtime"

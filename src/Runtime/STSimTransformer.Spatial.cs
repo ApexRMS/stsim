@@ -320,7 +320,7 @@ namespace SyncroSim.STSim
 
                 int[] transitionPixel = null;
 
-                if (tg.OutputFilter.HasFlag(flags))
+                if ((tg.OutputFilter & flags) != 0)
                 {
                     if (this.m_CreateRasterTransitionOutput || 
                         this.m_CreateAvgRasterTransitionProbOutput || 

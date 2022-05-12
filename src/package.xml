@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.6" url="https://docs.stsim.net/">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.7" url="https://docs.stsim.net/">
   <transformers>
     <transformer 
       name="Primary" 
@@ -22,8 +22,7 @@
       displayName="ST-Sim External"
       className="SyncroSim.StochasticTime.StochasticTimeExternalTransformer"
       classAssembly="SyncroSim.StochasticTime"
-      extendsTransformer="Runtime"
-	  alternateDatafeedMetaData="corestime_Runtime">
+      extendsTransformer="Runtime">
     </transformer>
     <transformer
       name="Runtime"

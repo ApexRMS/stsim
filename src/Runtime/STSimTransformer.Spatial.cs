@@ -1909,7 +1909,7 @@ namespace SyncroSim.STSim
             {
                 string FileName = CreatePrimaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
                 StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
-                StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+                GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
 
                 rst.InitIntCells();
 
@@ -1944,7 +1944,7 @@ namespace SyncroSim.STSim
             {
                 string FileName = CreateStateClassInputRasterFileName(this.ResultScenario, iterVal, 0);
                 StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
-                StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+                SyncroSim.StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
 
                 rst.InitIntCells();
 
@@ -1968,7 +1968,7 @@ namespace SyncroSim.STSim
             {
                 string FileName = CreateSecondaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
                 StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
-                StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+                SyncroSim.StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
 
                 rst.InitIntCells();
 
@@ -1999,7 +1999,7 @@ namespace SyncroSim.STSim
             {
                 string FileName = CreateTertiaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
                 StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
-                StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+                SyncroSim.StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
 
                 rst.InitIntCells();
 
@@ -2030,7 +2030,7 @@ namespace SyncroSim.STSim
             {
                 string FileName = CreateAgeInputRasterFileName(this.ResultScenario, iterVal, 0);
                 StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
-                StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+                SyncroSim.StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
 
                 rst.InitIntCells();
 

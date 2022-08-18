@@ -358,9 +358,13 @@ namespace SyncroSim.STSim
             {
                 rast.InitIntCells();
             }
-            else
+            else if (dataType == RasterDataType.DTDouble)
             {
                 rast.InitDblCells();
+            } 
+            else
+            {
+                rast.InitFloatCells();
             }
 
             return rast;

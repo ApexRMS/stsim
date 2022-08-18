@@ -1909,7 +1909,7 @@ namespace SyncroSim.STSim
             {
                 string FileName = CreatePrimaryStratumInputRasterFileName(this.ResultScenario, iterVal, 0);
                 StochasticTimeRaster rst = new StochasticTimeRaster(FileName, TemplateRaster);
-                SyncroSim.StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
+                StochasticTime.GeoTiffCompressionType comptype = Spatial.GetGeoTiffCompressionType(this.Library);
 
                 rst.InitIntCells();
 

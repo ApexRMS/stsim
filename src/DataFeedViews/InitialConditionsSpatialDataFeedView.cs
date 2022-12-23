@@ -122,7 +122,6 @@ namespace SyncroSim.STSim
             this.m_InRefresh = true;
             this.ResetControls();
             this.RefreshNonCalculatedValues();
-            this.RefreshCalculatedValues();
             this.m_InRefresh = false;
         }
 
@@ -198,7 +197,7 @@ namespace SyncroSim.STSim
 
                     ChooseRasterFile(e.RowIndex, e.ColumnIndex - 1);
                     break;
-            }            
+            }
         }
 
         private void OnGridCellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -261,7 +260,7 @@ namespace SyncroSim.STSim
                     DataGridViewCell Cell = this.m_FilesDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
                     bool MouseInCell = (
-                        e.RowIndex == this.m_CellMouseRowIndex && 
+                        e.RowIndex == this.m_CellMouseRowIndex &&
                         e.ColumnIndex == this.m_CellMouseColIndex);
 
                     bool IsFocusedCell = (
@@ -278,14 +277,14 @@ namespace SyncroSim.STSim
                     {
                         ControlPaint.DrawImageDisabled(e.Graphics, img, X, Y, this.BackColor);
                     }
-                  
+
                     if (IsFocusedCell || MouseInCell)
                     {
                         Rectangle rc = new Rectangle(
-                            e.CellBounds.Left, e.CellBounds.Top, 
+                            e.CellBounds.Left, e.CellBounds.Top,
                             e.CellBounds.Width - 2, e.CellBounds.Height - 2);
 
-                        Color clr = Color.FromArgb(132, 172, 221); 
+                        Color clr = Color.FromArgb(132, 172, 221);
                         SmoothingMode OldMode = e.Graphics.SmoothingMode;
                         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -294,7 +293,7 @@ namespace SyncroSim.STSim
                             e.Graphics.DrawRectangle(p, rc);
                         }
 
-                        e.Graphics.SmoothingMode = OldMode;                     
+                        e.Graphics.SmoothingMode = OldMode;
                     }
 
                     e.Handled = true;
@@ -332,14 +331,14 @@ namespace SyncroSim.STSim
                     if (e.KeyValue == (Int32)Keys.Enter)
                     {
                         ChooseRasterFile(
-                            this.m_FilesDataGrid.CurrentCell.RowIndex, 
+                            this.m_FilesDataGrid.CurrentCell.RowIndex,
                             this.m_FilesDataGrid.CurrentCell.ColumnIndex - 1);
 
                         e.Handled = true;
                     }
 
                     break;
-            }            
+            }
         }
 
         private void OnTerminologyChanged(DataSheetMonitorEventArgs e)
@@ -357,7 +356,7 @@ namespace SyncroSim.STSim
             this.m_FilesDataGrid.Columns[SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Secondary);
             this.m_FilesDataGrid.Columns[TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Tertiary);
 
-            this.RefreshCalculatedValues();
+            this.RefreshNonCalculatedValues();
         }
 
         private void SetICSpatialFile(int rowIndex, int colIndex, string rasterFullFilename)
@@ -420,28 +419,8 @@ namespace SyncroSim.STSim
             int NumCols = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME]);
             float CellArea = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
             double cellAreaCalc = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
-
-            this.TextBoxNumRows.Text = NumRows.ToString(CultureInfo.InvariantCulture);
-            this.TextBoxNumColumns.Text = NumCols.ToString(CultureInfo.InvariantCulture);
-            this.TextBoxCellArea.Text = CellArea.ToString("N4", CultureInfo.InvariantCulture);
-            this.TextBoxCellAreaCalc.Text = cellAreaCalc.ToString("N4", CultureInfo.InvariantCulture);
-        }
-
-        private void RefreshCalculatedValues()
-        {
-            DataRow drProp = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
-
-            if (drProp == null)
-            {
-                return;
-            }          
-
-            //Num Cells
             int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]);
 
-            this.TextBoxNumCells.Text = NumCells.ToString(CultureInfo.InvariantCulture);
-
-            //Get the units and refresh the units labels - the default Raster Cell Units is Metres^2
             string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME]);
             string srcAreaUnits = srcSizeUnits + "^2";
             string amountlabel = null;
@@ -456,34 +435,16 @@ namespace SyncroSim.STSim
             amountlabel = amountlabel.ToLower(CultureInfo.InvariantCulture);
             destAreaLbl = destAreaLbl.ToLower(CultureInfo.InvariantCulture);
 
+            this.TextBoxNumRows.Text = NumRows.ToString(CultureInfo.InvariantCulture);
+            this.TextBoxNumColumns.Text = NumCols.ToString(CultureInfo.InvariantCulture);
+            this.TextBoxCellArea.Text = CellArea.ToString("N4", CultureInfo.InvariantCulture);
+            this.TextBoxCellAreaCalc.Text = cellAreaCalc.ToString("N4", CultureInfo.InvariantCulture);
+            this.TextBoxNumCells.Text = NumCells.ToString(CultureInfo.InvariantCulture);
             this.LabelRasterCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", srcAreaUnits);
             this.LabelCalcCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", destAreaLbl);
             this.LabelCalcTtlAmount.Text = string.Format(CultureInfo.InvariantCulture, "Total {0} ({1}):", amountlabel, destAreaLbl);
 
-            // Calculate Cell Area in raster's native units
-            float cellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
-            double cellArea = Math.Pow(cellSize, 2);
-            this.TextBoxCellArea.Text = cellArea.ToString("N4", CultureInfo.InvariantCulture);
-
-            // Calc Cell Area in terminology units
-            double cellAreaTU = 0;
-            bool SizeOverride = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME]);
-
-            if (!SizeOverride)
-            {
-                cellAreaTU = InitialConditionsSpatialDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal);
-                this.TextBoxCellAreaCalc.Text = cellAreaTU.ToString("N4", CultureInfo.InvariantCulture);
-                drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = cellAreaTU;
-                TextBoxCellAreaCalc.ReadOnly = true;
-            }
-            else
-            {
-                cellAreaTU = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
-                TextBoxCellAreaCalc.ReadOnly = false;
-            }
-
-            // Now calculate total area in the specified terminology units
-            var ttlArea = cellAreaTU * NumCells;
+            var ttlArea = CellArea * NumCells;
             this.TextBoxTotalArea.Text = ttlArea.ToString("N4", CultureInfo.InvariantCulture);
         }
 
@@ -576,7 +537,7 @@ namespace SyncroSim.STSim
             }
 
             ds.SetSingleRowData(Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME, CheckBoxCellSizeOverride.Checked);
-            this.RefreshCalculatedValues();
+            this.RefreshNonCalculatedValues();
         }
 
         private void TextBoxCellAreaCalc_KeyPress(object sender, KeyPressEventArgs e)
@@ -669,7 +630,7 @@ namespace SyncroSim.STSim
             }
 
             ds.EndModifyRows();
-            RefreshCalculatedValues();
+            RefreshNonCalculatedValues();
 
             this.m_CellAreaCalcHasChanges = false;
         }

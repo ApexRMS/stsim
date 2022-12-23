@@ -15,6 +15,100 @@ namespace SyncroSim.STSim
         public event EventHandler<EventArgs> ValidatingRasters;
         public event EventHandler<EventArgs> RastersValidated;
 
+        private DataSheetMonitor m_TerminologyMonitor;
+        private bool m_IsDisposed;
+
+        protected override void Initialize(DataStore store)
+        {
+            base.Initialize(store);
+
+            this.m_TerminologyMonitor = new DataSheetMonitor(this.Project, Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && !this.m_IsDisposed)
+            {
+                if (this.m_TerminologyMonitor != null)
+                {
+                    this.m_TerminologyMonitor.Dispose();
+                }
+
+                this.m_IsDisposed = true;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private void OnTerminologyChanged(DataSheetMonitorEventArgs e)
+        {
+            if (this.Scenario.IsResult)
+            {
+                return;
+            }
+
+            string Primary = null;
+            string Secondary = null;
+            string Tertiary = null;
+            string AmountLabel = null;
+            TerminologyUnit AmountUnits = TerminologyUnit.None;
+
+            TerminologyUtilities.GetStratumLabelTerminology(e.DataSheet, ref Primary, ref Secondary, ref Tertiary);
+            TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
+
+            DataSheet dsProp = this.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataRow drProp = dsProp.GetDataRow();
+
+            if (drProp == null)
+            {
+                return;
+            }
+
+            //Num Cells
+            int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]);
+
+            //Get the units and refresh the units labels - the default Raster Cell Units is Metres^2
+            string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME]);
+            string srcAreaUnits = srcSizeUnits + "^2";
+            string amountlabel = null;
+            TerminologyUnit destUnitsVal = 0;
+
+            TerminologyUtilities.GetAmountLabelTerminology(
+                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+
+            string destAreaLbl = TerminologyUtilities.TerminologyUnitToString(destUnitsVal);
+
+            srcAreaUnits = srcAreaUnits.ToLower(CultureInfo.InvariantCulture);
+            amountlabel = amountlabel.ToLower(CultureInfo.InvariantCulture);
+            destAreaLbl = destAreaLbl.ToLower(CultureInfo.InvariantCulture);
+
+            // Calculate Cell Area in raster's native units
+            float cellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
+            double cellArea = Math.Pow(cellSize, 2);
+
+            // Calc Cell Area in terminology units
+            double cellAreaTU = 0;
+            bool SizeOverride = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME]);
+            double? currentCellArea = (double)drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME];
+
+            if (!SizeOverride)
+            {
+                cellAreaTU = InitialConditionsSpatialDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal);
+                drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = cellAreaTU;
+            }
+            else
+            {
+                cellAreaTU = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
+            }
+
+            if (currentCellArea == null || currentCellArea != cellAreaTU)
+            {
+                dsProp.Changes.Add(new ChangeRecord(this, "Changed Cell Size"));
+            }
+        }
+
+
+
         public override void Validate(DataRow proposedRow, DataTransferMethod transferMethod)
         {
             base.Validate(proposedRow, transferMethod);

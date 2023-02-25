@@ -444,7 +444,7 @@ namespace SyncroSim.STSim
             this.LabelCalcCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", destAreaLbl);
             this.LabelCalcTtlAmount.Text = string.Format(CultureInfo.InvariantCulture, "Total {0} ({1}):", amountlabel, destAreaLbl);
 
-            var ttlArea = CellArea * NumCells;
+            var ttlArea = cellAreaCalc * NumCells;
             this.TextBoxTotalArea.Text = ttlArea.ToString("N4", CultureInfo.InvariantCulture);
         }
 

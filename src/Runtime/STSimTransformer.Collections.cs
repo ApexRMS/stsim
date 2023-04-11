@@ -2087,7 +2087,7 @@ namespace SyncroSim.STSim
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME);
             bool highResScenario = false;
 
-            if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
+            if ((this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME) && (this.Library.GetLibraryPackageName() == Constants.STSIM_RESOLUTION_PACKAGENAME ))
             {
                 highResScenario = true;
             }

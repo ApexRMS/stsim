@@ -2087,9 +2087,13 @@ namespace SyncroSim.STSim
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME);
             bool highResScenario = false;
 
-            if ((this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME) && (this.Library.GetLibraryPackageNames().Contains(Constants.STSIM_RESOLUTION_PACKAGENAME)))
+            if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
             {
-                highResScenario = true;
+                DataSheet resDS = this.ResultScenario.GetDataSheet(Constants.STSIMRESOLUTION_DATASHEET_NAME);
+                if (resDS != null)
+                {
+                    highResScenario = true;
+                }
             }
 
             foreach (DataRow dr in ds.GetData().Rows)

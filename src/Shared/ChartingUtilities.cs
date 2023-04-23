@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.StochasticTime.Forms;
+using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {

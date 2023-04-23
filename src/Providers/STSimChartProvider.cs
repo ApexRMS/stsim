@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using SyncroSim.StochasticTime.Forms;
+using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {

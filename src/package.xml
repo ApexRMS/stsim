@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.11" url="https://docs.stsim.net/">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.12" url="https://docs.stsim.net/">
   <transformers>
     <transformer 
       name="Primary" 
@@ -1713,8 +1713,8 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="114"
-    minPackageVersion="3.2.18"
+    schemaVersion="115"
+    minPackageVersion="3.3.12"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

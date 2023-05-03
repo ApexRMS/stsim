@@ -456,6 +456,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000114(store);
             }
+
+            if (currentSchemaVersion < 115)
+            {
+                STSIM0000115(store);
+            }
         }
 
         /// <summary>
@@ -3354,6 +3359,31 @@ namespace SyncroSim.STSim
         {
             UpdateProvider.UpdateTransformerTable(store, 
                 "stsim_Primary", "ST-Sim", "stsim", "The ST-Sim state-and-transition simulation model");
+        }
+
+        /// <summary>
+        /// STSIM0000115
+        /// 
+        /// This update changes the variable names in the corstime_Chart "Criteria" column(s) to use the 
+        /// variable name instead of the group name. This change is required because selecting disaggregate 
+        /// and include data by group is no longer supported as of SyncroSim v2.4.27.
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000115(DataStore store)
+        {
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateClassVariableGroup", "stsim_StateClassNormalVariable");
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateClassVariableGroup", "stsim_StateClassProportionVariable");
+
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionVariableGroup", "stsim_TransitionNormalVariable");
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionVariableGroup", "stsim_TransitionProportionVariable");
+
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TSTGroup", "stsim_TSTVariable");
+
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateAttributeVariableGroup", "stsim_AttrNormal");
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateAttributeVariableGroup", "stsim_AttrDensity");
+
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionAttributeVariableGroup", "stsim_AttrNormal");
+            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionAttributeVariableGroup", "stsim_AttrDensity");
         }
     }
 }

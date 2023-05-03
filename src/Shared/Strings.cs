@@ -477,9 +477,9 @@ namespace SyncroSim.STSim
         public const string CORESTIME_EXTERNAL_VAR_TYPE_DATASHEET_NAME = "corestime_ExternalVariableType";
 
         //Charting Variables
-        public const string STATE_CLASS_AMOUNT_VARIABLE_NAME = "stsim_StateClassNormalVariable";
+        public const string STATE_CLASS_VARIABLE_NAME = "stsim_StateClassNormalVariable";
         public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportionVariable";
-        public const string TRANSITION_AMOUNT_VARIABLE_NAME = "stsim_TransitionNormalVariable";
+        public const string TRANSITION_VARIABLE_NAME = "stsim_TransitionNormalVariable";
         public const string TRANSITION_PROPORTION_VARIABLE_NAME = "stsim_TransitionProportionVariable";
         public const string TST_VARIABLE_NAME = "stsim_TSTVariable";
     }

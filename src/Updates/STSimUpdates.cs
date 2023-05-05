@@ -3371,19 +3371,18 @@ namespace SyncroSim.STSim
         /// <param name="store"></param>
         private static void STSIM0000115(DataStore store)
         {
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateClassVariableGroup", "stsim_StateClassNormalVariable");
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateClassVariableGroup", "stsim_StateClassProportionVariable");
-
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionVariableGroup", "stsim_TransitionNormalVariable");
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionVariableGroup", "stsim_TransitionProportionVariable");
-
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TSTGroup", "stsim_TSTVariable");
-
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateAttributeVariableGroup", "stsim_AttrNormal");
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_StateAttributeVariableGroup", "stsim_AttrDensity");
-
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionAttributeVariableGroup", "stsim_AttrNormal");
-            UpdateProvider.RemoveChartGroupCriteria(store, "stsim_TransitionAttributeVariableGroup", "stsim_AttrDensity");
+            UpdateProvider.RemoveChartGroupCriteria(store, new[]
+            {
+                "stsim_StateClassVariableGroup|stsim_StateClassNormalVariable",
+                "stsim_StateClassVariableGroup|stsim_StateClassProportionVariable",
+                "stsim_TransitionVariableGroup|stsim_TransitionNormalVariable",
+                "stsim_TransitionVariableGroup|stsim_TransitionProportionVariable",
+                "stsim_TSTGroup|stsim_TSTVariable",
+                "stsim_StateAttributeVariableGroup|stsim_AttrNormal",
+                "stsim_StateAttributeVariableGroup|stsim_AttrDensity",
+                "stsim_TransitionAttributeVariableGroup|stsim_AttrNormal",
+                "stsim_TransitionAttributeVariableGroup|stsim_AttrDensity"
+            });
         }
     }
 }

@@ -461,6 +461,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000115(store);
             }
+
+            if (currentSchemaVersion < 116)
+            {
+                STSIM0000116(store);
+            }
         }
 
         /// <summary>
@@ -3364,12 +3369,64 @@ namespace SyncroSim.STSim
         /// <summary>
         /// STSIM0000115
         /// 
+        /// This update changes the state and transition attribute keys in the chart
+        ///  Criteria tables to be both unique and more descriptive.
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000115(DataStore store)
+        {
+            //The state and transition variables currently use the same prefix:
+            //
+            //stsim_AttrNormal-N
+            //stsim_AttrDensity-N
+            //
+            //This works because their primary keys are unique and they target different tables.
+            //However, for clarity and to make it easier to remove group-based selections in the
+            //criteria (see STSIM0000116) we want to name the variables are follows:
+            //
+            //stsim_StateAttributeNormalVariable
+            //stsim_StateAttributeDensityVariable
+            //stsim_TransitionAttributeNormalVariable
+            //stsim_TransitionAttributeDensityVariable
+
+            //First, rename the state attribute variables
+
+            if (!store.TableExists("stsim_StateAttributeType") || !store.TableExists("stsim_TransitionAttributeType"))
+            {
+                Debug.Assert(false);
+                return;
+            }
+
+            DataTable dt = store.CreateDataTable("stsim_StateAttributeType");
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                int Id = Convert.ToInt32(dr["StateAttributeTypeID"]);
+                string OldNormal = string.Format("stsim_AttrNormal-{0}", Id);
+                string OldDensity = string.Format("stsim_AttrDensity-{0}", Id);
+                string NewNormal = string.Format("stsim_StateAttributeNormalVariable-{0}", Id);
+                string NewDensity = string.Format("stsim_StateAttributeDensityVariable-{0}", Id);
+
+                UpdateProvider.RenameChartVariable(store, OldNormal, NewNormal);
+                UpdateProvider.RenameChartVariable(store, OldDensity, NewDensity);
+            }
+
+            //Now rename the remaining stsim_AttrNormal and stsim_AttrDensity
+            //variables to their new unique, descriptive names.
+
+            UpdateProvider.RenameChartVariable(store, "stsim_AttrNormal", "stsim_TransitionAttributeNormalVariable");
+            UpdateProvider.RenameChartVariable(store, "stsim_AttrDensity", "stsim_TransitionAttributeDensityVariable");
+        }
+
+        /// <summary>
+        /// STSIM0000116
+        /// 
         /// This update changes the variable names in the corstime_Chart "Criteria" column(s) to use the 
         /// variable name instead of the group name. This change is required because selecting disaggregate 
         /// and include data by group is no longer supported as of SyncroSim v2.4.27.
         /// </summary>
         /// <param name="store"></param>
-        private static void STSIM0000115(DataStore store)
+        private static void STSIM0000116(DataStore store)
         {
             UpdateProvider.RemoveChartGroupCriteria(store, new[]
             {
@@ -3378,10 +3435,10 @@ namespace SyncroSim.STSim
                 "stsim_TransitionVariableGroup|stsim_TransitionNormalVariable",
                 "stsim_TransitionVariableGroup|stsim_TransitionProportionVariable",
                 "stsim_TSTGroup|stsim_TSTVariable",
-                "stsim_StateAttributeVariableGroup|stsim_AttrNormal",
-                "stsim_StateAttributeVariableGroup|stsim_AttrDensity",
-                "stsim_TransitionAttributeVariableGroup|stsim_AttrNormal",
-                "stsim_TransitionAttributeVariableGroup|stsim_AttrDensity"
+                "stsim_StateAttributeVariableGroup|stsim_StateAttributeNormalVariable",
+                "stsim_StateAttributeVariableGroup|stsim_StateAttributeDensityVariable",
+                "stsim_TransitionAttributeVariableGroup|stsim_TransitionAttributeNormalVariable",
+                "stsim_TransitionAttributeVariableGroup|stsim_TransitionAttributeDensityVariable"
             });
         }
     }

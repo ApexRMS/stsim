@@ -1713,7 +1713,7 @@
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="115"
+    schemaVersion="116"
     minPackageVersion="3.3.12"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>

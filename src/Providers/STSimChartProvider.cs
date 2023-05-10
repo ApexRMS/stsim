@@ -16,6 +16,10 @@ namespace SyncroSim.STSim
     internal class STSimChartProvider : ChartProvider
     {
         private const string DENSITY_GROUP_NAME = "stsim_DensityGroup";
+        private const string SA_NORMAL_VAR = "stsim_StateAttributeNormalVariable";
+        private const string SA_DENSITY_VAR = "stsim_StateAttributeDensityVariable";
+        private const string TA_NORMAL_VAR = "stsim_TransitionAttributeNormalVariable";
+        private const string TA_DENSITY_VAR = "stsim_TransitionAttributeDensityVariable";
 
         public override void RefreshCriteria(SyncroSimLayout layout, Project project)
         {
@@ -47,11 +51,21 @@ namespace SyncroSim.STSim
                 AddChartExternalVariables(ExternalVariableGroup.Items, project);
 
                 AddChartAttributeVariables(
-                    StateAttributeGroup.Items, AttrGroupView, AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, 
-                    Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, false);
+                    StateAttributeGroup.Items, AttrGroupView, 
+                    AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, 
+                    Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, 
+                    Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, 
+                    false,
+                    SA_NORMAL_VAR, 
+                    SA_DENSITY_VAR);
 
-                AddChartAttributeVariables(TransitionAttributeGroup.Items, AttrGroupView, AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, 
-                    Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, true);
+                AddChartAttributeVariables(
+                    TransitionAttributeGroup.Items, AttrGroupView, 
+                    AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, 
+                    Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, 
+                    Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, true, 
+                    TA_NORMAL_VAR, 
+                    TA_DENSITY_VAR);
 
                 layout.Items.Add(StateClassGroup);
                 layout.Items.Add(TransitionGroup);
@@ -98,46 +112,40 @@ namespace SyncroSim.STSim
                 Debug.Assert(!ChartingUtilities.HasTSTClassUpdateTag(dataSheet.Project));
             }
 
-            if (
-                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME || 
-                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME)
+            if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME)
             {
-                if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME)
-                {
-                    return ChartingUtilities.CreateProportionChartData(
-                        dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, store);
-                }
-                else if (descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME)
-                {
-                    return ChartingUtilities.CreateProportionChartData(
-                        dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);
-                }
-                else
-                {
-                    return null;
-                }
+                return ChartingUtilities.CreateProportionChartData(
+                    dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, store);
             }
-            else if (
-                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME || 
-                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
+            else if (descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME)
+            {
+                return ChartingUtilities.CreateProportionChartData(
+                    dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);
+            }
+            else if (descriptor.VariableName.StartsWith(SA_NORMAL_VAR) || descriptor.VariableName.StartsWith(SA_DENSITY_VAR))
             {
                 string[] s = descriptor.VariableName.Split('-');
 
                 Debug.Assert(s.Count() == 2);
-                Debug.Assert(s[0] == "stsim_AttrNormal" || s[0] == "stsim_AttrDensity");
+                Debug.Assert(s[0] == SA_NORMAL_VAR || s[0] == SA_DENSITY_VAR);
 
                 int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);
-                bool IsDensity = (s[0] == "stsim_AttrDensity");
-                string ColumnName = null;
+                bool IsDensity = (s[0] == SA_DENSITY_VAR);
+                string ColumnName = Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
 
-                if (descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME)
-                {
-                    ColumnName = Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
-                }
-                else
-                {
-                    ColumnName = Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
-                }
+                return ChartingUtilities.CreateRawAttributeChartData(
+                    dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
+            }
+            else if (descriptor.VariableName.StartsWith(TA_NORMAL_VAR) || descriptor.VariableName.StartsWith(TA_DENSITY_VAR))
+            {
+                string[] s = descriptor.VariableName.Split('-');
+
+                Debug.Assert(s.Count() == 2);
+                Debug.Assert(s[0] == TA_NORMAL_VAR || s[0] == TA_DENSITY_VAR);
+
+                int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);
+                bool IsDensity = (s[0] == TA_DENSITY_VAR);
+                string ColumnName = Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
 
                 return ChartingUtilities.CreateRawAttributeChartData(
                     dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
@@ -261,14 +269,24 @@ namespace SyncroSim.STSim
             }         
         }
 
-        private static void AddChartAttributeVariables(SyncroSimLayoutItemCollection items, DataView attrGroupView, DataSheet attrGroupDataSheet, DataView attrView, DataSheet attrDataSheet, string outputTableName, string attributeTypeColumnName, bool skipTimestepZero)
+        private static void AddChartAttributeVariables(
+            SyncroSimLayoutItemCollection items, 
+            DataView attrGroupView, 
+            DataSheet attrGroupDataSheet, 
+            DataView attrView, 
+            DataSheet attrDataSheet, 
+            string outputTableName, 
+            string attributeTypeColumnName, 
+            bool skipTimestepZero,
+            string normalAttributePrefix,
+            string densityAttributePrefix)
         {
             Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
             SyncroSimLayoutItem NonGroupedDensityGroup = new SyncroSimLayoutItem(DENSITY_GROUP_NAME + "STSIM_NON_GROUPED", "Density", true);
 
             AddChartNonGroupedAttributes(
                 items, attrView, attrDataSheet, outputTableName, attributeTypeColumnName, 
-                skipTimestepZero, NonGroupedDensityGroup);
+                skipTimestepZero, NonGroupedDensityGroup, normalAttributePrefix, densityAttributePrefix);
 
             if (NonGroupedDensityGroup.Items.Count > 0)
             {
@@ -293,7 +311,8 @@ namespace SyncroSim.STSim
 
             AddChartGroupedAttributes(
                 GroupsDict, attrGroupDataSheet, attrView, attrDataSheet, 
-                outputTableName, attributeTypeColumnName, skipTimestepZero);
+                outputTableName, attributeTypeColumnName, skipTimestepZero, 
+                normalAttributePrefix, densityAttributePrefix);
 
             foreach (SyncroSimLayoutItem g in GroupsList)
             {
@@ -314,7 +333,9 @@ namespace SyncroSim.STSim
             string outputDataSheetName, 
             string outputColumnName, 
             bool skipTimestepZero, 
-            SyncroSimLayoutItem densityGroup)
+            SyncroSimLayoutItem densityGroup, 
+            string normalAttributePrefix, 
+            string densityAttributePrefix)
         {
             foreach (DataRowView drv in attrsView)
             {
@@ -326,7 +347,7 @@ namespace SyncroSim.STSim
                     //Normal Attribute
                     //----------------
 
-                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "stsim_AttrNormal-{0}", AttrId);
+                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", normalAttributePrefix, AttrId);
                     string DisplayNameNormal = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)
@@ -353,7 +374,7 @@ namespace SyncroSim.STSim
                     //Density Attribute
                     //-----------------
 
-                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "stsim_AttrDensity-{0}", AttrId);
+                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", densityAttributePrefix, AttrId);
                     string DisplayNameDensity = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)
@@ -386,7 +407,10 @@ namespace SyncroSim.STSim
             DataView attrsView, 
             DataSheet attrsDataSheet, 
             string outputDataSheetName, 
-            string outputColumnName, bool skipTimestepZero)
+            string outputColumnName, 
+            bool skipTimestepZero,
+            string normalAttributePrefix,
+            string densityAttributePrefix)
         {
             //The density groups have already been created and added to the groups.  Howver, we want the
             //attributes themselves to appear before this group so we must insert them in reverse order.
@@ -407,7 +431,7 @@ namespace SyncroSim.STSim
                     //Normal Attribute
                     //----------------
 
-                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "stsim_AttrNormal-{0}", AttrId);
+                    string AttrNameNormal = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", normalAttributePrefix, AttrId);
                     string DisplayNameNormal = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)
@@ -434,7 +458,7 @@ namespace SyncroSim.STSim
                     //Density Attribute
                     //-----------------
 
-                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "stsim_AttrDensity-{0}", AttrId);
+                    string AttrNameDensity = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", densityAttributePrefix, AttrId);
                     string DisplayNameDensity = Convert.ToString(drv.Row[attrsDataSheet.ValidationTable.DisplayMember], CultureInfo.InvariantCulture);
 
                     if (Units != null)

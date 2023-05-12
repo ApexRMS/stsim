@@ -24,7 +24,7 @@ namespace SyncroSim.STSim
             this.m_Map.Add(record.Cell.CellId, record);
             this.m_TotalLikelihood += record.Likelihood;
 
-            Debug.Assert(MathUtils.CompareDoublesGTEqual(this.m_TotalLikelihood, record.Likelihood, 0.000001));
+            Debug.Assert(MathUtilities.CompareDoublesGTEqual(this.m_TotalLikelihood, record.Likelihood, 0.000001));
         }
 
         public GrowEventRecord RemoveRecord()
@@ -38,7 +38,7 @@ namespace SyncroSim.STSim
             foreach (GrowEventRecord v in this.m_Map.Values)
             {
                 InverseCumulativeProb -= (v.Likelihood / this.m_TotalLikelihood);
-                Debug.Assert(MathUtils.CompareDoublesGTEqual(InverseCumulativeProb, 0.0, 0.00001));
+                Debug.Assert(MathUtilities.CompareDoublesGTEqual(InverseCumulativeProb, 0.0, 0.00001));
 
                 if (r >= InverseCumulativeProb)
                 {
@@ -68,11 +68,11 @@ namespace SyncroSim.STSim
 #if DEBUG
                 if (this.m_Map.Count == 0)
                 {
-                    Debug.Assert(MathUtils.CompareDoublesEqual(this.m_TotalLikelihood, 0.0, 0.000001));
+                    Debug.Assert(MathUtilities.CompareDoublesEqual(this.m_TotalLikelihood, 0.0, 0.000001));
                 }
                 else
                 {
-                    Debug.Assert(MathUtils.CompareDoublesGTEqual(this.m_TotalLikelihood, 0.0, 0.000001));
+                    Debug.Assert(MathUtilities.CompareDoublesGTEqual(this.m_TotalLikelihood, 0.0, 0.000001));
                 }
 #endif
                 return this.m_Map.Count;

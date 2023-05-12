@@ -517,7 +517,6 @@
     <Compile Include="Shared\FileSystemUtilities.cs" />
     <Compile Include="Shared\FormsUtilities.cs" />
     <Compile Include="Shared\LookupKeyUtils.cs" />
-    <Compile Include="Shared\MathUtils.cs" />
     <Compile Include="Shared\MessageStrings.cs" />
     <Compile Include="Shared\NullableUtilities.cs" />
     <Compile Include="Shared\RasterUtilities.cs" />

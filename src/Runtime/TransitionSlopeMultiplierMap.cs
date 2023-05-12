@@ -95,7 +95,7 @@ namespace SyncroSim.STSim
             PrevMult.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
             ThisMult.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
 
-            return MathUtils.Interpolate(PrevKey, PrevMult.CurrentValue.Value, ThisKey, ThisMult.CurrentValue.Value, slope);
+            return Statistics.Interpolate(PrevKey, PrevMult.CurrentValue.Value, ThisKey, ThisMult.CurrentValue.Value, slope);
         }
 
         private void AddSlopeMultiplier(TransitionSlopeMultiplier item)

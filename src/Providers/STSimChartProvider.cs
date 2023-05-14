@@ -159,6 +159,41 @@ namespace SyncroSim.STSim
             return null;
         }
 
+        public override ValidationTable GetCustomValidationTable(string dataSheetName, string columnName, Project project)
+        {
+            if (dataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME ||
+                dataSheetName == Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME ||
+                dataSheetName == Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME ||
+                dataSheetName == Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME)
+            {
+                if (columnName == Strings.DATASHEET_AGE_CLASS_COLUMN_NAME)
+                {
+                    return CreateClassBinValidationTable(
+                        project,
+                        Strings.DATASHEET_AGE_TYPE_NAME,
+                        Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
+                        Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
+                        Strings.DATASHEET_AGE_GROUP_NAME,
+                        Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
+                        Strings.AGE_CLASS_VALIDATION_TABLE_NAME);
+                }
+            }
+
+            if (dataSheetName == Strings.DATASHEET_OUTPUT_TST_NAME)
+            {
+                return CreateClassBinValidationTable(
+                    project,
+                    Strings.DATASHEET_TST_TYPE_NAME,
+                    Strings.DATASHEET_TST_TYPE_FREQUENCY_COLUMN_NAME,
+                    Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME,
+                    Strings.DATASHEET_TST_GROUP_NAME,
+                    Strings.DATASHEET_TST_GROUP_MAXIMUM_COLUMN_NAME,
+                    Strings.TST_CLASS_VALIDATION_TABLE_NAME);
+            }
+
+            return null;
+        }
+
         public override string GetCacheTag(ChartDescriptor descriptor)
         {
             if (ChartingUtilities.DescriptorHasAgeReference(descriptor))

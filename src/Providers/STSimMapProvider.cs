@@ -19,39 +19,36 @@ namespace SyncroSim.STSim
         static string AVG_ALL_ITER = "(Average for all Iterations)";
         static string AVG_PROB_ALL_ITER = "(Probability for all Iterations)";
 
-        public override void CreateColorMaps(Project project)
+        public override void CreateColorMaps(DataStore store, Project project)
         {
             //State Class Color Map and Legend Map
-            var LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, LegendColors);
+            var LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, LegendColors, store);
 
             //Primary Stratum Color Map and Legend Map
-            LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, LegendColors);
+            LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, LegendColors, store);
 
             //Transition Groups Color Map and Legend Map
-            CreateTransitionGroupMaps(project);
+            CreateTransitionGroupMaps(project, store);
 
             //Age  Color Map 
-            CreateAgeColorMap(project);
+            CreateAgeColorMap(project, store);
         }
 
-        public override void RefreshCriteria(SyncroSimLayout layout, Project project)
+        public override void RefreshCriteria(DataStore store, SyncroSimLayout layout, Project project)
         {
-            using (DataStore store = project.Library.CreateDataStore())
-            {
-                DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
+            DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
 
-                this.AddStateClassCriteria(layout, project);
-                this.AddAgeCriteria(layout);
-                this.AddStratumCriteria(layout, project);
-                this.AddTransitionCriteria(layout, project);
-                this.AddStateAttributeCriteria(layout, project, store, AttrGroupView);
-                this.AddTransitionAttributeCriteria(layout, project, store, AttrGroupView);
-            }
+            this.AddStateClassCriteria(layout, project, store);
+            this.AddAgeCriteria(layout);
+            this.AddStratumCriteria(layout, project, store);
+            this.AddTransitionCriteria(layout, project, store);
+            this.AddStateAttributeCriteria(layout, project, store, AttrGroupView);
+            this.AddTransitionAttributeCriteria(layout, project, store, AttrGroupView);
         }
 
-        private void AddStateClassCriteria(SyncroSimLayout layout, Project project)
+        private void AddStateClassCriteria(SyncroSimLayout layout, Project project, DataStore store)
         {
             SyncroSimLayoutItem StateClassesGroup = new SyncroSimLayoutItem("stsim_StateClassesGroup", "State Classes", true);
             SyncroSimLayoutItem StateClassIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
@@ -62,7 +59,7 @@ namespace SyncroSim.STSim
             StateClassIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("titleOverride", "State Classes (Iteration)"));
 
-            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items);
+            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items, store);
 
             StateClassesGroup.Items.Add(StateClassIterationItem);
             StateClassesGroup.Items.Add(StateClassAvgGroup);
@@ -93,7 +90,7 @@ namespace SyncroSim.STSim
             layout.Items.Add(AgesGroup);
         }
 
-        private void AddStratumCriteria(SyncroSimLayout layout, Project project)
+        private void AddStratumCriteria(SyncroSimLayout layout, Project project, DataStore store)
         {
             string psl = null;
             string ssl = null;
@@ -110,14 +107,14 @@ namespace SyncroSim.STSim
             StratumIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
             StratumIterationItem.Properties.Add(new MetaDataProperty("titleOverride", psl + " (Iteration)"));
 
-            AddAvgMapStratumVariables(project, StratumAvgGroup.Items);
+            AddAvgMapStratumVariables(project, StratumAvgGroup.Items, store);
 
             StratumGroup.Items.Add(StratumIterationItem);
             StratumGroup.Items.Add(StratumAvgGroup);
             layout.Items.Add(StratumGroup);
         }
 
-        private void AddTransitionCriteria(SyncroSimLayout layout, Project project)
+        private void AddTransitionCriteria(SyncroSimLayout layout, Project project, DataStore store)
         {
             SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("stsim_TransitionsGroup", "Transitions", true);
             SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
@@ -129,27 +126,27 @@ namespace SyncroSim.STSim
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
                 "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Iteration)",
-                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME);
+                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX, Strings.DATASHEET_TRANSITION_TYPE_NAME, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTPGroup.Items,
                 "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER,
-                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null);
+                Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX, null, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationEventsGroup.Items,
                 "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)",
-                Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null);
+                Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX, null, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsTSTGroup.Items,
                 "stsim_OutputSpatialTST", "Filename", "TransitionGroupID", "(Time-Since-Transition)",
-                Constants.SPATIAL_MAP_TST_VARIABLE_PREFIX, null);
+                Constants.SPATIAL_MAP_TST_VARIABLE_PREFIX, null, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTSTGroup.Items,
                 "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupID", "(Time-Since-Transition - Average)",
-                Constants.SPATIAL_MAP_AVG_TST_VARIABLE_PREFIX, null);
+                Constants.SPATIAL_MAP_AVG_TST_VARIABLE_PREFIX, null, store);
 
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
             if (TransitionsAvgTPGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroup); }
@@ -217,9 +214,10 @@ namespace SyncroSim.STSim
 
         private static void AddAvgMapStratumVariables(
             Project project,
-            SyncroSimLayoutItemCollection items)
+            SyncroSimLayoutItemCollection items, 
+            DataStore store)
         {
-            List<Stratum> Strata = GetStrata(project);
+            List<Stratum> Strata = GetStrata(project, store);
             string FilePrefix = Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX;
 
             Strata.Sort((Stratum st1, Stratum st2) =>
@@ -244,9 +242,10 @@ namespace SyncroSim.STSim
 
         private static void AddAvgMapStateClassVariables(
             Project project,
-            SyncroSimLayoutItemCollection items)
+            SyncroSimLayoutItemCollection items, 
+            DataStore store)
         {
-            List<StateClass> StateClasses = GetStateClasses(project);
+            List<StateClass> StateClasses = GetStateClasses(project, store);
             string FilePrefix = Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX;
 
             StateClasses.Sort((StateClass sc1, StateClass sc2) =>
@@ -277,9 +276,10 @@ namespace SyncroSim.STSim
             string filterColumnName, 
             string extendedIdentifier, 
             string filePrefix, 
-            string colorMapSource)
+            string colorMapSource, 
+            DataStore store)
         {
-            Dictionary<int, TransitionGroup> PrimaryGroups = GetPrimaryTransitionGroups(project);
+            Dictionary<int, TransitionGroup> PrimaryGroups = GetPrimaryTransitionGroups(project, store);
             List<TransitionGroup> PrimaryGroupList = new List<TransitionGroup>();
 
             foreach (TransitionGroup g in PrimaryGroups.Values)
@@ -493,12 +493,12 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static List<Stratum> GetStrata(Project project)
+        private static List<Stratum> GetStrata(Project project, DataStore store)
         {
             List<Stratum> Strata = new List<Stratum>();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
 
-            foreach (DataRow dr in ds.GetData().Rows)
+            foreach (DataRow dr in ds.GetData(store).Rows)
             {
                 int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
@@ -509,12 +509,12 @@ namespace SyncroSim.STSim
             return Strata;
         }
 
-        private static List<StateClass> GetStateClasses(Project project)
+        private static List<StateClass> GetStateClasses(Project project, DataStore store)
         {
             List<StateClass> StateClasses = new List<StateClass>();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
 
-            foreach (DataRow dr in ds.GetData().Rows)
+            foreach (DataRow dr in ds.GetData(store).Rows)
             {
                 int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int slxid = Convert.ToInt32(dr[Strings.DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
@@ -527,11 +527,11 @@ namespace SyncroSim.STSim
             return StateClasses;
         }
 
-        private static Dictionary<int, TransitionGroup> GetPrimaryTransitionGroups(Project project)
+        private static Dictionary<int, TransitionGroup> GetPrimaryTransitionGroups(Project project, DataStore store)
         {
-            TransitionTypeCollection TransitionTypes = GetTransitionTypes(project);
-            TransitionGroupCollection TransitionGroups = GetTransitionGroups(project);
-            Dictionary<int, bool> TransitionSimulationGroups = GetTransitionSimulationGroups(project);
+            TransitionTypeCollection TransitionTypes = GetTransitionTypes(project, store);
+            TransitionGroupCollection TransitionGroups = GetTransitionGroups(project, store);
+            Dictionary<int, bool> TransitionSimulationGroups = GetTransitionSimulationGroups(project, store);
             DataSheet TypeGroupDataSheet = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
             Dictionary<int, TransitionGroup> PrimaryGroups = new Dictionary<int, TransitionGroup>();
 
@@ -540,7 +540,7 @@ namespace SyncroSim.STSim
                 string query = string.Format(CultureInfo.InvariantCulture,
                     "{0}={1}", Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME, TType.TransitionTypeId);
 
-                DataRow[] TGroupRows = TypeGroupDataSheet.GetData().Select(query);
+                DataRow[] TGroupRows = TypeGroupDataSheet.GetData(store).Select(query);
                 bool TypeHasNonAutoPrimaryGroup = false;
 
                 foreach (DataRow TGroupRow in TGroupRows)
@@ -583,12 +583,12 @@ namespace SyncroSim.STSim
             return PrimaryGroups;
         }
 
-        private static TransitionTypeCollection GetTransitionTypes(Project project)
+        private static TransitionTypeCollection GetTransitionTypes(Project project, DataStore store)
         {
             TransitionTypeCollection types = new TransitionTypeCollection();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
-            foreach (DataRow dr in ds.GetData().Rows)
+            foreach (DataRow dr in ds.GetData(store).Rows)
             {
                 if (dr.RowState != DataRowState.Deleted)
                 {
@@ -602,12 +602,12 @@ namespace SyncroSim.STSim
             return types;
         }
 
-        private static TransitionGroupCollection GetTransitionGroups(Project project)
+        private static TransitionGroupCollection GetTransitionGroups(Project project, DataStore store)
         {
             TransitionGroupCollection groups = new TransitionGroupCollection();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
 
-            foreach (DataRow dr in ds.GetData().Rows)
+            foreach (DataRow dr in ds.GetData(store).Rows)
             {
                 if (dr.RowState != DataRowState.Deleted)
                 {
@@ -622,12 +622,12 @@ namespace SyncroSim.STSim
             return groups;
         }
 
-        private static Dictionary<int, bool> GetTransitionSimulationGroups(Project project)
+        private static Dictionary<int, bool> GetTransitionSimulationGroups(Project project, DataStore store)
         {
             Dictionary<int, bool> groups = new Dictionary<int, bool>();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TRANSITION_SIMULATION_GROUP_NAME);
 
-            foreach (DataRow dr in ds.GetData().Rows)
+            foreach (DataRow dr in ds.GetData(store).Rows)
             {
                 if (dr.RowState != DataRowState.Deleted)
                 {
@@ -652,7 +652,8 @@ namespace SyncroSim.STSim
             Project project,
             string mapVariable,
             string datasheetName,
-            Dictionary<string, string> dicLegendLblColor)
+            Dictionary<string, string> dicLegendLblColor, 
+            DataStore store)
         {
             if (project.Library.Session.IsRunningOnMono)
             {
@@ -674,7 +675,7 @@ namespace SyncroSim.STSim
 
             //Now create the color maps
             DataSheet ds = project.GetDataSheet(datasheetName);
-            DataTable dt = ds.GetData();
+            DataTable dt = ds.GetData(store);
 
             // Check if there any non-null or non-white color definitions
 
@@ -730,7 +731,7 @@ namespace SyncroSim.STSim
         /// <param name="datasheetName">The name of the datasheet containing the color map configuration</param>
         /// <returns>A dictionary of Legend labels(key), and Color values</returns>
         /// <remarks></remarks>
-        private static Dictionary<string, string> CreateLegendMap(Project project, string mapVariable, string datasheetName)
+        private static Dictionary<string, string> CreateLegendMap(Project project, string mapVariable, string datasheetName, DataStore store)
         {
             if (project.Library.Session.IsRunningOnMono)
             {
@@ -752,7 +753,7 @@ namespace SyncroSim.STSim
 
             //Now create the legend color maps
             DataSheet ds = project.GetDataSheet(datasheetName);
-            DataTable dt = ds.GetData().Copy();
+            DataTable dt = ds.GetData(store).Copy();
 
             // Loop thru and change all Legend nulls to Blank Item string
             foreach (DataRow dr in dt.Rows)
@@ -815,14 +816,14 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="project">The current Project</param>
         /// <remarks></remarks>
-        private static void CreateTransitionGroupColorMap(Project project, DataRow drTg, Dictionary<string, string> dicLegendLblColor)
+        private static void CreateTransitionGroupColorMap(Project project, DataRow drTg, Dictionary<string, string> dicLegendLblColor, DataStore store)
         {
             DataSheet dsTg = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
             DataSheet dsTTG = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
             DataSheet dsTT = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_NAME);
 
-            DataTable dtTTg = dsTTG.GetData();
-            DataTable dtTT = dsTT.GetData();
+            DataTable dtTTg = dsTTG.GetData(store);
+            DataTable dtTT = dsTT.GetData(store);
 
             string tgId = drTg[dsTg.PrimaryKeyColumn.Name].ToString();
             string tgName = drTg[Strings.DATASHEET_NAME_COLUMN_NAME].ToString();
@@ -928,7 +929,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="project">The current Project</param>
         /// <remarks></remarks>
-        private static void CreateTransitionGroupMaps(Project project)
+        private static void CreateTransitionGroupMaps(Project project, DataStore store)
         {
             if (project.Library.Session.IsRunningOnMono)
             {
@@ -936,10 +937,10 @@ namespace SyncroSim.STSim
             }
 
             // Loop thru the Transition Groups
-            foreach (DataRow drTg in project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME).GetData().Select(null, null, DataViewRowState.CurrentRows))
+            foreach (DataRow drTg in project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME).GetData(store).Select(null, null, DataViewRowState.CurrentRows))
             {
-                var dicLegendColors = CreateTransitionGroupLegendMap(project, drTg);
-                CreateTransitionGroupColorMap(project, drTg, dicLegendColors);
+                var dicLegendColors = CreateTransitionGroupLegendMap(project, drTg, store);
+                CreateTransitionGroupColorMap(project, drTg, dicLegendColors, store);
             }
         }
 
@@ -949,13 +950,13 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="project">The current Project</param>
         /// <remarks></remarks>
-        private static Dictionary<string, string> CreateTransitionGroupLegendMap(Project project, DataRow drTg)
+        private static Dictionary<string, string> CreateTransitionGroupLegendMap(Project project, DataRow drTg, DataStore store)
         {
             DataSheet dsTTG = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
             DataSheet dsTT = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_NAME);
             DataSheet dsTg = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
-            DataTable dtTTg = dsTTG.GetData();
-            DataTable dtTT = dsTT.GetData();
+            DataTable dtTTg = dsTTG.GetData(store);
+            DataTable dtTT = dsTT.GetData(store);
 
             string tgId = drTg[dsTg.PrimaryKeyColumn.Name].ToString();
             string tgName = drTg[Strings.DATASHEET_NAME_COLUMN_NAME].ToString();
@@ -1069,7 +1070,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="project">The current Project.</param>
         /// <remarks></remarks>
-        private static void CreateAgeColorMap(Project project)
+        private static void CreateAgeColorMap(Project project, DataStore store)
         {
             if (project.Library.Session.IsRunningOnMono)
             {
@@ -1088,9 +1089,9 @@ namespace SyncroSim.STSim
             File.Delete(colorMapFilename);
 
             var cmName = Path.Combine(colorMapPath, colorMapFilename);
-            if (!CreateAgeGroupColorMap(project, cmName))
+            if (!CreateAgeGroupColorMap(project, cmName, store))
             {
-                CreateAgeTypeColorMap(project, cmName);
+                CreateAgeTypeColorMap(project, cmName, store);
             }
         }
 
@@ -1101,11 +1102,11 @@ namespace SyncroSim.STSim
         /// <param name="colorMapFilename">The full absolute name of the color map file to be generated</param>
         /// <returns>True if successful in generating the color map file</returns>
         /// <remarks></remarks>
-        private static bool CreateAgeGroupColorMap(Project project, string colorMapFilename)
+        private static bool CreateAgeGroupColorMap(Project project, string colorMapFilename, DataStore store)
         {
             //Now create the Age Group color maps
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_AGE_GROUP_NAME);
-            DataTable dt = ds.GetData();
+            DataTable dt = ds.GetData(store);
 
             if (dt == null)
             {
@@ -1199,13 +1200,14 @@ namespace SyncroSim.STSim
         /// <param name="colorMapFilename">The full absolute name of the color map file to be generated</param>
         /// <returns>True if successful in generating the color map file</returns>
         /// <remarks></remarks>
-        private static bool CreateAgeTypeColorMap(Project project, string colorMapFilename)
+        private static bool CreateAgeTypeColorMap(Project project, string colorMapFilename, DataStore store)
         {
             List<ClassBinDescriptor> ageDescriptors = ChartingUtilities.GetClassBinTypeDescriptors(
                 project,
                 Strings.DATASHEET_AGE_TYPE_NAME,
                 Strings.DATASHEET_AGE_TYPE_FREQUENCY_COLUMN_NAME,
-                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME);
+                Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME, 
+                store);
 
             if (ageDescriptors != null)
             {

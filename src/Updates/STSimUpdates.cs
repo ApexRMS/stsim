@@ -466,6 +466,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000116(store);
             }
+
+            if (currentSchemaVersion < 117)
+            {
+                STSIM0000117(store);
+            }
         }
 
         /// <summary>
@@ -3440,6 +3445,26 @@ namespace SyncroSim.STSim
                 "stsim_TransitionAttributeVariableGroup|stsim_TransitionAttributeNormalVariable",
                 "stsim_TransitionAttributeVariableGroup|stsim_TransitionAttributeDensityVariable"
             });
+        }
+
+        /// <summary>
+        /// STSIM0000117
+        /// 
+        /// This update changes the variable names in the corstime_Chart "Criteria" column(s) 
+        /// to be more concise.
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000117(DataStore store)
+        {
+            UpdateProvider.RenameChartVariable(store, "stsim_StateClassNormalVariable", "stsim_StateClass");
+            UpdateProvider.RenameChartVariable(store, "stsim_StateClassProportionVariable", "stsim_StateClassProportion");
+            UpdateProvider.RenameChartVariable(store, "stsim_TransitionNormalVariable", "stsim_Transition");
+            UpdateProvider.RenameChartVariable(store, "stsim_TransitionProportionVariable", "stsim_TransitionProportion");
+            UpdateProvider.RenameChartVariable(store, "stsim_TSTVariable", "stsim_TST");
+            UpdateProvider.RenameChartVariable(store, "stsim_StateAttributeNormalVariable", "stsim_StateAttribute");
+            UpdateProvider.RenameChartVariable(store, "stsim_StateAttributeDensityVariable", "stsim_StateAttributeDensity");
+            UpdateProvider.RenameChartVariable(store, "stsim_TransitionAttributeNormalVariable", "stsim_TransitionAttribute");
+            UpdateProvider.RenameChartVariable(store, "stsim_TransitionAttributeDensityVariable", "stsim_TransitionAttributeDensity");
         }
     }
 }

@@ -233,8 +233,9 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStratum"));
                 Item.Properties.Add(new MetaDataProperty("column", "Filename"));
                 Item.Properties.Add(new MetaDataProperty("filter", "StratumID"));
-                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
                 Item.Properties.Add(new MetaDataProperty("itemId", st.StratumId.ToString(CultureInfo.InvariantCulture)));
+                Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_STRATA_NAME));
+                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
 
                 items.Add(Item);
             }
@@ -261,8 +262,9 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStateClass"));
                 Item.Properties.Add(new MetaDataProperty("column", "Filename"));
                 Item.Properties.Add(new MetaDataProperty("filter", "StateClassID"));
-                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
                 Item.Properties.Add(new MetaDataProperty("itemId", sc.Id.ToString(CultureInfo.InvariantCulture)));
+                Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_STATECLASS_NAME));
+                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
 
                 items.Add(Item);
             }
@@ -300,8 +302,9 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
                 Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
                 Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
-                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", extendedIdentifier));
                 Item.Properties.Add(new MetaDataProperty("itemId", g.TransitionGroupId.ToString(CultureInfo.InvariantCulture)));
+                Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_TRANSITION_GROUP_NAME));
+                Item.Properties.Add(new MetaDataProperty("extendedIdentifier", extendedIdentifier));
                 Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
 
                 items.Add(Item);
@@ -324,7 +327,7 @@ namespace SyncroSim.STSim
             AddMapNonGroupedAttributes(
                 store, items, StateAttrsDataSheet, 
                 dataSheetName, fileColumnName, filterColumnName,
-                filePrefix, extendedIdentifier);
+                Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
             List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
@@ -341,7 +344,7 @@ namespace SyncroSim.STSim
             AddMapGroupedAttributes(
                 store, GroupsDict, StateAttrsDataSheet,
                 dataSheetName, fileColumnName, filterColumnName,
-                filePrefix, extendedIdentifier);
+                Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             foreach (SyncroSimLayoutItem g in GroupsList)
             {
@@ -368,7 +371,7 @@ namespace SyncroSim.STSim
             AddMapNonGroupedAttributes(
                 store, items, TransitionAttrsDataSheet, 
                 dataSheetName, fileColumnName, filterColumnName,
-                filePrefix, extendedIdentifier);
+                Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
             List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
@@ -385,7 +388,7 @@ namespace SyncroSim.STSim
             AddMapGroupedAttributes(
                 store, GroupsDict, TransitionAttrsDataSheet,
                 dataSheetName, fileColumnName, filterColumnName,
-                filePrefix, extendedIdentifier);
+                Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             foreach (SyncroSimLayoutItem g in GroupsList)
             {
@@ -402,7 +405,8 @@ namespace SyncroSim.STSim
             DataSheet attrsDataSheet, 
             string dataSheetName, 
             string fileColumnName, 
-            string filterColumnName, 
+            string filterColumnName,
+            string itemSource,
             string prefix, 
             string extendedIdentifier)
         {
@@ -432,6 +436,7 @@ namespace SyncroSim.STSim
                     Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
                     Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
                     Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
+                    Item.Properties.Add(new MetaDataProperty("itemSource", itemSource));
 
                     if (extendedIdentifier != null)
                     {
@@ -450,6 +455,7 @@ namespace SyncroSim.STSim
             string dataSheetName, 
             string fileColumnName, 
             string filterColumnName, 
+            string itemSource,
             string prefix, 
             string extendedIdentifier)
         {
@@ -482,6 +488,7 @@ namespace SyncroSim.STSim
                     Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
                     Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
                     Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
+                    Item.Properties.Add(new MetaDataProperty("itemSource", itemSource));
 
                     if (extendedIdentifier != null)
                     {

@@ -531,7 +531,7 @@
     <Compile Include="Statistics\STSimDistributionValue.cs" />
     <Compile Include="Statistics\STSimDistributionValueMap.cs" />
     <Compile Include="Providers\STSimChartProvider.cs" />
-    <Compile Include="Providers\STSimMapProvider.cs" />
+    <Compile Include="Providers\STSimImageProvider.cs" />
     <Compile Include="Diagram\DeterministicTransitionLine.cs" />
     <Compile Include="Diagram\DeterministicTransitionsTabStripItem.cs" />
     <Compile Include="Diagram\ProbabilisticTransitionLine.cs" />

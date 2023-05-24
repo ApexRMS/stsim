@@ -471,6 +471,11 @@ namespace SyncroSim.STSim
             {
                 STSIM0000117(store);
             }
+
+            if (currentSchemaVersion < 118)
+            {
+                STSIM0000118(store);
+            }
         }
 
         /// <summary>
@@ -3450,7 +3455,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// STSIM0000117
         /// 
-        /// This update changes the variable names in the corstime_Chart "Criteria" column(s) 
+        /// This update changes the variable names in the corstime_Charts "Criteria" column(s) 
         /// to be more concise.
         /// </summary>
         /// <param name="store"></param>
@@ -3465,6 +3470,48 @@ namespace SyncroSim.STSim
             UpdateProvider.RenameChartVariable(store, "stsim_StateAttributeDensityVariable", "stsim_StateAttributeDensity");
             UpdateProvider.RenameChartVariable(store, "stsim_TransitionAttributeNormalVariable", "stsim_TransitionAttribute");
             UpdateProvider.RenameChartVariable(store, "stsim_TransitionAttributeDensityVariable", "stsim_TransitionAttributeDensity");
+        }
+
+        /// <summary>
+        /// STSIM0000118
+        /// 
+        /// This update changes the variable names in the corstime_Maps "Criteria" column(s) 
+        /// to be more concise. It also updates the names of the color maps to match the new variable names.
+        /// </summary>
+        /// <param name="store"></param>
+        private static void STSIM0000118(DataStore store)
+        {
+            UpdateProvider.RenameMapVariable(store, "stsim_sc", "stsim_StateClass");
+            UpdateProvider.RenameMapVariable(store, "stsim_str", "stsim_Stratum");
+            UpdateProvider.RenameMapVariable(store, "stsim_age", "stsim_Age");
+            UpdateProvider.RenameMapVariable(store, "stsim_tg", "stsim_TransitionGroup");
+            UpdateProvider.RenameMapVariable(store, "stsim_tge", "stsim_TransitionEvent");
+            UpdateProvider.RenameMapVariable(store, "stsim_tst", "stsim_TST");
+            UpdateProvider.RenameMapVariable(store, "stsim_sa", "stsim_StateAttribute");
+            UpdateProvider.RenameMapVariable(store, "stsim_ta", "stsim_TransitionAttribute");
+            UpdateProvider.RenameMapVariable(store, "avgsc", "stsim_StateClassProb");
+            UpdateProvider.RenameMapVariable(store, "avgstr", "stsim_StratumProb");
+            UpdateProvider.RenameMapVariable(store, "stsim_AgesAvgGroup", "stsim_AgeProb");
+            UpdateProvider.RenameMapVariable(store, "stsim_avgtp", "stsim_TransitionProb");
+            UpdateProvider.RenameMapVariable(store, "stsim_avgtst", "stsim_TSTProb");
+            UpdateProvider.RenameMapVariable(store, "stsim_avgsa", "stsim_StateAttributeProb");
+            UpdateProvider.RenameMapVariable(store, "stsim_avgta", "stsim_TransitionAttributeProb");
+
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_sc", "stsim_StateClass");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_str", "stsim_Stratum");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_age", "stsim_Age");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tg", "stsim_TransitionGroup");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tge", "stsim_TransitionEvent");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tst", "stsim_TST");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_sa", "stsim_StateAttribute");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_ta", "stsim_TransitionAttribute");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "avgsc", "stsim_StateClassProb");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "avgstr", "stsim_StratumProb");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_AgesAvgGroup", "stsim_AgeProb");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_avgtp", "stsim_TransitionProb");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_avgtst", "stsim_TSTProb");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_avgsa", "stsim_StateAttributeProb");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_avgta", "stsim_TransitionAttributeProb");
         }
     }
 }

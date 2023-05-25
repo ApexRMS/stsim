@@ -83,7 +83,7 @@ namespace SyncroSim.STSim
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("colorMapSourceDataRequired", "True"));
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_ALL_ITER));
-            AgesAvgProbItem.Properties.Add(new MetaDataProperty("titleOverride", "Ages"));
+            AgesAvgProbItem.Properties.Add(new MetaDataProperty("titleOverride", "Ages (Average)"));
 
             AgesGroup.Items.Add(AgesIterationItem);
             AgesGroup.Items.Add(AgesAvgProbItem);

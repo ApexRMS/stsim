@@ -3484,8 +3484,8 @@ namespace SyncroSim.STSim
             UpdateProvider.RenameMapVariable(store, "stsim_sc", "stsim_StateClass");
             UpdateProvider.RenameMapVariable(store, "stsim_str", "stsim_Stratum");
             UpdateProvider.RenameMapVariable(store, "stsim_age", "stsim_Age");
-            UpdateProvider.RenameMapVariable(store, "stsim_tg", "stsim_TransitionGroup");
             UpdateProvider.RenameMapVariable(store, "stsim_tge", "stsim_TransitionEvent");
+            UpdateProvider.RenameMapVariable(store, "stsim_tg", "stsim_TransitionGroup");
             UpdateProvider.RenameMapVariable(store, "stsim_tst", "stsim_TST");
             UpdateProvider.RenameMapVariable(store, "stsim_sa", "stsim_StateAttribute");
             UpdateProvider.RenameMapVariable(store, "stsim_ta", "stsim_TransitionAttribute");
@@ -3500,8 +3500,8 @@ namespace SyncroSim.STSim
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_sc", "stsim_StateClass");
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_str", "stsim_Stratum");
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_age", "stsim_Age");
-            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tg", "stsim_TransitionGroup");
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tge", "stsim_TransitionEvent");
+            UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tg", "stsim_TransitionGroup");
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_tst", "stsim_TST");
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_sa", "stsim_StateAttribute");
             UpdateProvider.RenameProjectFilesContainingVariableName(store, "stsim_ta", "stsim_TransitionAttribute");

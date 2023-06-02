@@ -1708,7 +1708,7 @@
     </layout>
     <layout name="corestimeforms_Maps"
       configurationSheet="RunControl"
-      className="SyncroSim.STSim.STSimImageProvider"
+      className="SyncroSim.STSim.STSimPlotProvider"
       classAssembly="SyncroSim.STSim">
     </layout>
   </layouts>

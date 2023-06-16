@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.3.13" url="https://docs.stsim.net/">
+<package name="stsim" displayName="The ST-Sim state-and-transition simulation model" version="3.4.0" minSyncroSimVersion="2.5.0" url="https://docs.stsim.net/">
   <transformers>
     <transformer 
       name="Primary" 
@@ -1708,13 +1708,13 @@
     </layout>
     <layout name="corestimeforms_Maps"
       configurationSheet="RunControl"
-      className="SyncroSim.STSim.STSimMapProvider"
+      className="SyncroSim.STSim.STSimPlotProvider"
       classAssembly="SyncroSim.STSim">
     </layout>
   </layouts>
   <updateProvider
-    schemaVersion="114"
-    minPackageVersion="3.2.18"
+    schemaVersion="118"
+    minPackageVersion="3.4.0"
     className="SyncroSim.STSim.STSimUpdates"
     classAssembly="SyncroSim.STSim"/>
   <console

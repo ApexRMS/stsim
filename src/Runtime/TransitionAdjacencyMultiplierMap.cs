@@ -127,7 +127,7 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        return MathUtils.Interpolate(
+                        return Statistics.Interpolate(
                             PrevVal, 
                             PrevMult.CurrentValue.Value, 
                             NextVal, 

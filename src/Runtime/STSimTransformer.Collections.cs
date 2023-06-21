@@ -2169,6 +2169,12 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionSpatialInitiationMultiplierRasters.Count == 0);
 
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME);
+            bool highResScenario = false;
+
+            if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
+            {
+                highResScenario = true;
+            }
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
@@ -2206,6 +2212,11 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == STSim.CompareMetadataResult.RowColumnMismatch)
                 {
+                    if (highResScenario)
+                    {
+                        return; // do not apply transition spatial multiplier for now
+                    }
+
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSIM_ROW_COLUMN_MISMATCH, tsimFilename);
                     ExceptionUtils.ThrowArgumentException(msg);
                 }

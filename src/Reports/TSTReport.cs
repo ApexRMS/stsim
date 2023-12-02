@@ -47,7 +47,7 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetStratumLabelTerminology(
                 dsterm, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
 
-            c.Add(new ExportColumn("ScenarioID", "Scenario ID"));
+            c.Add(new ExportColumn("ScenarioId", "Scenario Id"));
             c.Add(new ExportColumn("ScenarioName", "Scenario"));
             c.Add(new ExportColumn("Iteration", "Iteration"));
             c.Add(new ExportColumn("Timestep", TimestepLabel));
@@ -73,7 +73,7 @@ namespace SyncroSim.STSim
             {
                 return string.Format(CultureInfo.InvariantCulture,
                     "SELECT " + 
-                    "stsim_OutputTST.ScenarioID, " +
+                    "stsim_OutputTST.ScenarioId, " +
                     "stsim_OutputTST.Iteration,  " +
                     "stsim_OutputTST.Timestep,  " +
                     "stsim_Stratum.Name AS Stratum,  " + 
@@ -84,13 +84,13 @@ namespace SyncroSim.STSim
                     "stsim_OutputTST.TSTMax, " +
                     "stsim_OutputTST.Amount " +
                     "FROM stsim_OutputTST " + 
-                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputTST.StratumID " +
-                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputTST.SecondaryStratumID " +
-                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputTST.TertiaryStratumID " +
-                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputTST.TransitionGroupID " + 
-                    "WHERE stsim_OutputTST.ScenarioID IN ({0})  " + 
+                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumId = stsim_OutputTST.StratumId " +
+                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumId = stsim_OutputTST.SecondaryStratumId " +
+                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumId = stsim_OutputTST.TertiaryStratumId " +
+                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupId = stsim_OutputTST.TransitionGroupId " + 
+                    "WHERE stsim_OutputTST.ScenarioId IN ({0})  " + 
                     "ORDER BY " +
-                    "stsim_OutputTST.ScenarioID, " + 
+                    "stsim_OutputTST.ScenarioId, " + 
                     "stsim_OutputTST.Iteration, " + 
                     "stsim_OutputTST.Timestep, " +
                     "stsim_Stratum.Name, " + 
@@ -105,7 +105,7 @@ namespace SyncroSim.STSim
             {
                 return string.Format(CultureInfo.InvariantCulture,
                     "SELECT " + 
-                    "stsim_OutputTST.ScenarioID, " +
+                    "stsim_OutputTST.ScenarioId, " +
                     "core_Scenario.Name AS ScenarioName,  " + 
                     "stsim_OutputTST.Iteration,  " +
                     "stsim_OutputTST.Timestep,  " + 
@@ -117,13 +117,13 @@ namespace SyncroSim.STSim
                     "stsim_OutputTST.TSTMax, " + 
                     "stsim_OutputTST.Amount " + 
                     "FROM stsim_OutputTST " +
-                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioID = stsim_OutputTST.ScenarioID " +
-                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputTST.StratumID " +
-                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputTST.SecondaryStratumID " +
-                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputTST.TertiaryStratumID " +
-                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputTST.TransitionGroupID " +
-                    "WHERE stsim_OutputTST.ScenarioID IN ({0})  " + 
-                    "ORDER BY " + "stsim_OutputTST.ScenarioID, " +
+                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioId = stsim_OutputTST.ScenarioId " +
+                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumId = stsim_OutputTST.StratumId " +
+                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumId = stsim_OutputTST.SecondaryStratumId " +
+                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumId = stsim_OutputTST.TertiaryStratumId " +
+                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupId = stsim_OutputTST.TransitionGroupId " +
+                    "WHERE stsim_OutputTST.ScenarioId IN ({0})  " + 
+                    "ORDER BY " + "stsim_OutputTST.ScenarioId, " +
                     "core_Scenario.Name, " +
                     "stsim_OutputTST.Iteration, " + 
                     "stsim_OutputTST.Timestep, " + 

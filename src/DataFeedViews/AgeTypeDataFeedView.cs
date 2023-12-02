@@ -4,7 +4,6 @@
 using System;
 using System.Globalization;
 using System.Windows.Forms;
-using SyncroSim.Core.Forms;
 using SyncroSim.Core;
 
 namespace SyncroSim.STSim
@@ -16,7 +15,7 @@ namespace SyncroSim.STSim
             InitializeComponent();
         }
 
-        public override void LoadDataFeed(Core.DataFeed dataFeed)
+        public override void LoadDataFeed(DataFeed dataFeed)
         {
             base.LoadDataFeed(dataFeed);
 

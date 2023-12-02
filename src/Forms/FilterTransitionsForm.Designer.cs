@@ -39,7 +39,7 @@
             this.MenuItemUncheckAll = new System.Windows.Forms.ToolStripMenuItem();
             this.CheckboxDeterministicTransitions = new System.Windows.Forms.CheckBox();
             this.CheckboxProbabilisticTransitions = new System.Windows.Forms.CheckBox();
-            this.CheckBoxPanelMain = new SyncroSim.Common.Forms.CheckBoxPanel();
+            this.CheckBoxPanelMain = new STSim.CheckBoxPanel();
             this.TransitionGroupsContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -181,6 +181,6 @@
         internal System.Windows.Forms.ToolStripMenuItem MenuItemUncheckAll;
         internal System.Windows.Forms.CheckBox CheckboxDeterministicTransitions;
         internal System.Windows.Forms.CheckBox CheckboxProbabilisticTransitions;
-        internal SyncroSim.Common.Forms.CheckBoxPanel CheckBoxPanelMain;
+        internal SyncroSim.STSim.CheckBoxPanel CheckBoxPanelMain;
     }
 }

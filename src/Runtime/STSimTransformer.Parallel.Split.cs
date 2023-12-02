@@ -451,11 +451,6 @@ namespace SyncroSim.STSim
 
             foreach (DataFeed df in scenario.DataFeeds)
             {
-                if (df.IsOutput)
-                {
-                    continue;
-                }
-
                 foreach (DataSheet ds in df.DataSheets)
                 {
                     foreach (DataSheetColumn dc in ds.Columns)

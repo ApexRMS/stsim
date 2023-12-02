@@ -6,7 +6,6 @@ using System.Data;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
@@ -121,7 +120,7 @@ namespace SyncroSim.STSim
             ColNames.Add(Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME);
 
             DataTable ThisData = this.GetData();
-            StochasticTimeRaster FirstRaster = null;
+            SyncroSimRaster FirstRaster = null;
 
             if (ThisData.DefaultView.Count == 0)
             {
@@ -140,7 +139,7 @@ namespace SyncroSim.STSim
                 {
                     if (proposedRow[s] != DBNull.Value)
                     {
-                        StochasticTimeRaster rast = this.LoadRaster(proposedRow, s);
+                        SyncroSimRaster rast = this.LoadRaster(proposedRow, s);
 
                         try
                         {
@@ -177,7 +176,7 @@ namespace SyncroSim.STSim
             ColNames.Add(Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME);
 
             DataTable ThisData = this.GetData();
-            StochasticTimeRaster FirstRaster = null;
+            SyncroSimRaster FirstRaster = null;
 
             if (ThisData.DefaultView.Count == 0)
             {
@@ -200,7 +199,7 @@ namespace SyncroSim.STSim
                         {
                             if (dr[s] != DBNull.Value)
                             {
-                                StochasticTimeRaster rast = this.LoadRaster(dr, s);
+                                SyncroSimRaster rast = this.LoadRaster(dr, s);
 
                                 try
                                 {
@@ -236,7 +235,7 @@ namespace SyncroSim.STSim
                 drProp = dsProp.GetData().NewRow();
 
                 DataRow FirstRow = ThisData.DefaultView[0].Row;
-                StochasticTimeRaster FirstRast = this.LoadRaster(FirstRow, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                SyncroSimRaster FirstRast = this.LoadRaster(FirstRow, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
 
                 if (FirstRast.IntCells == null)
                 {
@@ -279,19 +278,19 @@ namespace SyncroSim.STSim
             }
         }
 
-        private StochasticTimeRaster LoadRaster(DataRow dr, string fileNameColumn)
+        private SyncroSimRaster LoadRaster(DataRow dr, string fileNameColumn)
         {
             string FileName = Convert.ToString(dr[fileNameColumn], CultureInfo.InvariantCulture);
-            string InputFilename = Spatial.GetSpatialInputFileName(this, FileName, true);
+            string InputFilename = Spatial.GetSpatialDataFileName(this, FileName, true);
 
-            return new StochasticTimeRaster(
+            return new SyncroSimRaster(
                 InputFilename, 
                 RasterDataType.DTInteger, 
                 false, 
                 Spatial.UndefinedRasterBand);
         }
 
-        private void ValidateRaster(StochasticTimeRaster rast, int rows, int columns, string columnName)
+        private void ValidateRaster(SyncroSimRaster rast, int rows, int columns, string columnName)
         {
             string PrimaryStratumLabel = null;
             string SecondaryStratumLabel = null;

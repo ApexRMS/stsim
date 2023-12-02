@@ -5,24 +5,24 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Globalization;
-using SyncroSim.StochasticTime;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
     class RasterMerger
     {
-        private StochasticTimeRaster m_rasterMerge;
+        private SyncroSimRaster m_rasterMerge;
 
         public void Merge(string inpRasterFileName, int numIterations)
         {
             if (m_rasterMerge == null)
             {
-                this.m_rasterMerge = new StochasticTimeRaster(inpRasterFileName, RasterDataType.DTDouble);
+                this.m_rasterMerge = new SyncroSimRaster(inpRasterFileName, RasterDataType.DTDouble);
                 m_rasterMerge.ScaleDblCells(numIterations);
                 return;
             }
 
-            StochasticTimeRaster rastInput = new StochasticTimeRaster(inpRasterFileName, RasterDataType.DTDouble);
+            SyncroSimRaster rastInput = new SyncroSimRaster(inpRasterFileName, RasterDataType.DTDouble);
 
             if (rastInput.Width != m_rasterMerge.Width || rastInput.Height != m_rasterMerge.Height)
             {
@@ -51,7 +51,7 @@ namespace SyncroSim.STSim
             }
 
             Debug.Assert(this.m_rasterMerge.DataType == RasterDataType.DTDouble);
-            StochasticTimeRaster OutRast = new StochasticTimeRaster(mergedRasterOutputFilename, this.m_rasterMerge);
+            SyncroSimRaster OutRast = new SyncroSimRaster(mergedRasterOutputFilename, this.m_rasterMerge);
 
             OutRast.DblCells = this.m_rasterMerge.DblCells;
             OutRast.Save(compressionType);

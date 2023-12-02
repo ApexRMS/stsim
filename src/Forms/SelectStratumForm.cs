@@ -31,8 +31,6 @@ namespace SyncroSim.STSim
         {
             this.DataGridViewStrata.BackgroundColor = System.Drawing.Color.White;
             this.DataGridViewStrata.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            this.DataGridViewStrata.PaintGridBorders = false;
-            this.PanelGrid.ShowBorder = true;
 
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
             DataView dv = new DataView(ds.GetData(), null, ds.DisplayMember, DataViewRowState.CurrentRows);

@@ -2,7 +2,7 @@
 // Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.Drawing;
-using SyncroSim.Common.Forms;
+using SyncroSim.Apex.Forms;
 
 namespace SyncroSim.STSim
 {

@@ -5,9 +5,8 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
-using SyncroSim.StochasticTime;
-using System.Collections.Generic;
 using SyncroSim.Core;
+using System.Collections.Generic;
 
 namespace SyncroSim.STSim
 {
@@ -34,9 +33,9 @@ namespace SyncroSim.STSim
         private DeterministicTransitionCollection m_DeterministicTransitions = new DeterministicTransitionCollection();
         private TransitionMultiplierValueCollection m_TransitionMultiplierValues = new TransitionMultiplierValueCollection();
         private TransitionSpatialMultiplierCollection m_TransitionSpatialMultipliers = new TransitionSpatialMultiplierCollection();
-        private Dictionary<string, StochasticTimeRaster> m_TransitionSpatialMultiplierRasters = new Dictionary<string, StochasticTimeRaster>();
+        private Dictionary<string, SyncroSimRaster> m_TransitionSpatialMultiplierRasters = new Dictionary<string, SyncroSimRaster>();
         private TransitionSpatialInitiationMultiplierCollection m_TransitionSpatialInitiationMultipliers = new TransitionSpatialInitiationMultiplierCollection();
-        private Dictionary<string, StochasticTimeRaster> m_TransitionSpatialInitiationMultiplierRasters = new Dictionary<string, StochasticTimeRaster>();
+        private Dictionary<string, SyncroSimRaster> m_TransitionSpatialInitiationMultiplierRasters = new Dictionary<string, SyncroSimRaster>();
         private TransitionTargetCollection m_TransitionTargets = new TransitionTargetCollection();
         private TransitionTargetPrioritizationCollection m_TransitionTargetPrioritizations = new TransitionTargetPrioritizationCollection();
         private TransitionAttributeTargetCollection m_TransitionAttributeTargets = new TransitionAttributeTargetCollection();
@@ -2119,8 +2118,8 @@ namespace SyncroSim.STSim
                 TransitionSpatialMultiplier Multiplier = new TransitionSpatialMultiplier(
                     TransitionSpatialMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName);
 
-                string tsmFilename = Spatial.GetSpatialInputFileName(ds, FileName, false);
-                StochasticTimeRaster rastTSM = new StochasticTimeRaster(tsmFilename, RasterDataType.DTDouble);
+                string tsmFilename = Spatial.GetSpatialDataFileName(ds, FileName, false);
+                SyncroSimRaster rastTSM = new SyncroSimRaster(tsmFilename, RasterDataType.DTDouble);
                 string compareMsg = "";
 
                 //Compare the TSM raster metadata to that of the Initial Condition raster files
@@ -2203,8 +2202,8 @@ namespace SyncroSim.STSim
                 TransitionSpatialInitiationMultiplier Multiplier = new TransitionSpatialInitiationMultiplier(
                     TransitionSpatialInitiationMultiplierId, TransitionGroupId, TransitionMultiplierTypeId, Iteration, Timestep, FileName);
 
-                string tsimFilename = Spatial.GetSpatialInputFileName(ds, FileName, false);
-                StochasticTimeRaster rastTSIM = new StochasticTimeRaster(tsimFilename, RasterDataType.DTDouble);
+                string tsimFilename = Spatial.GetSpatialDataFileName(ds, FileName, false);
+                SyncroSimRaster rastTSIM = new SyncroSimRaster(tsimFilename, RasterDataType.DTDouble);
                 string cmpMsg = "";
 
                 //Compare the TSIM raster metadata to that of the Initial Condition raster files

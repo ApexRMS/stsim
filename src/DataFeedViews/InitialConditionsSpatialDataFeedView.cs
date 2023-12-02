@@ -12,8 +12,7 @@ using System.Globalization;
 using System.Drawing.Drawing2D;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using SyncroSim.StochasticTime;
-using SyncroSim.Common.Forms;
+using SyncroSim.Apex.Forms;
 
 namespace SyncroSim.STSim
 {
@@ -469,7 +468,7 @@ namespace SyncroSim.STSim
             {
                 try
                 {
-                    StochasticTimeRaster rast = new StochasticTimeRaster(FileName, RasterDataType.DTInteger);
+                    SyncroSimRaster rast = new SyncroSimRaster(FileName, RasterDataType.DTInteger);
 
                     if (colIndex == PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX && rast.Projection == null)
                     {

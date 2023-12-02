@@ -60,7 +60,7 @@ namespace SyncroSim.STSim
 
             string AmountTitle = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
 
-            c.Add(new ExportColumn("ScenarioID", "Scenario ID"));
+            c.Add(new ExportColumn("ScenarioId", "Scenario Id"));
             c.Add(new ExportColumn("ScenarioName", "Scenario"));
             c.Add(new ExportColumn("Iteration", "Iteration"));
             c.Add(new ExportColumn("Timestep", TimestepLabel));
@@ -85,36 +85,36 @@ namespace SyncroSim.STSim
             if (isCSV)
             {
                 return string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT " + "stsim_OutputStratumTransitionState.ScenarioID, " + "stsim_OutputStratumTransitionState.Iteration,  " + 
+                    "SELECT " + "stsim_OutputStratumTransitionState.ScenarioId, " + "stsim_OutputStratumTransitionState.Iteration,  " + 
                     "stsim_OutputStratumTransitionState.Timestep,  " + "ST1.Name AS Stratum,  " + "ST2.Name AS SecondaryStratum,  " + 
                     "ST3.Name AS TertiaryStratum,  " + "stsim_TransitionType.Name as TransitionType, " + "SC1.Name AS StateClass, " + 
                     "SC2.Name AS EndStateClass, " + "stsim_OutputStratumTransitionState.Amount " + "FROM stsim_OutputStratumTransitionState " + 
-                    "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumID = stsim_OutputStratumTransitionState.StratumID " + 
-                    "LEFT JOIN stsim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumID = stsim_OutputStratumTransitionState.SecondaryStratumID " + 
-                    "LEFT JOIN stsim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumID = stsim_OutputStratumTransitionState.TertiaryStratumID " +
-                    "INNER JOIN stsim_StateClass as SC1 ON SC1.StateClassID = stsim_OutputStratumTransitionState.StateClassID " +
-                    "INNER JOIN stsim_StateClass as SC2 ON SC2.StateClassID = stsim_OutputStratumTransitionState.EndStateClassID " + 
-                    "INNER JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeID = stsim_OutputStratumTransitionState.TransitionTypeID " + 
-                    "WHERE stsim_OutputStratumTransitionState.ScenarioID IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransitionState.ScenarioID, " + 
+                    "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumId = stsim_OutputStratumTransitionState.StratumId " + 
+                    "LEFT JOIN stsim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumId = stsim_OutputStratumTransitionState.SecondaryStratumId " + 
+                    "LEFT JOIN stsim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumId = stsim_OutputStratumTransitionState.TertiaryStratumId " +
+                    "INNER JOIN stsim_StateClass as SC1 ON SC1.StateClassId = stsim_OutputStratumTransitionState.StateClassId " +
+                    "INNER JOIN stsim_StateClass as SC2 ON SC2.StateClassId = stsim_OutputStratumTransitionState.EndStateClassId " + 
+                    "INNER JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeId = stsim_OutputStratumTransitionState.TransitionTypeId " + 
+                    "WHERE stsim_OutputStratumTransitionState.ScenarioId IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransitionState.ScenarioId, " + 
                     "stsim_OutputStratumTransitionState.Iteration, " + "stsim_OutputStratumTransitionState.Timestep, " + "ST1.Name, " + "ST2.Name, " + 
                     "ST3.Name, " + "SC1.Name, " + "SC2.Name, " + "stsim_TransitionType.Name", ScenFilter);
             }
             else
             {
                 return string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT " + "stsim_OutputStratumTransitionState.ScenarioID, " + 
+                    "SELECT " + "stsim_OutputStratumTransitionState.ScenarioId, " + 
                     "core_Scenario.Name AS ScenarioName,  " + "stsim_OutputStratumTransitionState.Iteration,  " + 
                     "stsim_OutputStratumTransitionState.Timestep,  " + "ST1.Name AS Stratum,  " + "ST2.Name AS SecondaryStratum,  " + 
                     "ST3.Name AS TertiaryStratum,  " + "stsim_TransitionType.Name as TransitionType, " + "SC1.Name AS StateClass, " + 
                     "SC2.Name AS EndStateClass, " + "stsim_OutputStratumTransitionState.Amount " + "FROM stsim_OutputStratumTransitionState " +
-                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioID = stsim_OutputStratumTransitionState.ScenarioID " + 
-                    "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumID = stsim_OutputStratumTransitionState.StratumID " + 
-                    "LEFT JOIN stsim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumID = stsim_OutputStratumTransitionState.SecondaryStratumID " +
-                    "LEFT JOIN stsim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumID = stsim_OutputStratumTransitionState.TertiaryStratumID " + 
-                    "INNER JOIN stsim_StateClass as SC1 ON SC1.StateClassID = stsim_OutputStratumTransitionState.StateClassID " +
-                    "INNER JOIN stsim_StateClass as SC2 ON SC2.StateClassID = stsim_OutputStratumTransitionState.EndStateClassID " + 
-                    "INNER JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeID = stsim_OutputStratumTransitionState.TransitionTypeID " +
-                    "WHERE stsim_OutputStratumTransitionState.ScenarioID IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransitionState.ScenarioID, " +
+                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioId = stsim_OutputStratumTransitionState.ScenarioId " + 
+                    "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumId = stsim_OutputStratumTransitionState.StratumId " + 
+                    "LEFT JOIN stsim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumId = stsim_OutputStratumTransitionState.SecondaryStratumId " +
+                    "LEFT JOIN stsim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumId = stsim_OutputStratumTransitionState.TertiaryStratumId " + 
+                    "INNER JOIN stsim_StateClass as SC1 ON SC1.StateClassId = stsim_OutputStratumTransitionState.StateClassId " +
+                    "INNER JOIN stsim_StateClass as SC2 ON SC2.StateClassId = stsim_OutputStratumTransitionState.EndStateClassId " + 
+                    "INNER JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeId = stsim_OutputStratumTransitionState.TransitionTypeId " +
+                    "WHERE stsim_OutputStratumTransitionState.ScenarioId IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransitionState.ScenarioId, " +
                     "core_Scenario.Name, " + "stsim_OutputStratumTransitionState.Iteration, " + "stsim_OutputStratumTransitionState.Timestep, " + 
                     "ST1.Name, " + "ST2.Name, " + "ST3.Name, " + "SC1.Name, " + "SC2.Name, " + "stsim_TransitionType.Name", ScenFilter);
             }

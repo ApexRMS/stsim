@@ -86,29 +86,19 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SyncroSim.Common">
-      <HintPath>..\..\ssimbin\SyncroSim.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SyncroSim.Apex">
+      <HintPath>..\..\ssimbin3\SyncroSim.Apex.dll</HintPath>
     </Reference>
-    <Reference Include="SyncroSim.Common.Forms">
-      <HintPath>..\..\ssimbin\SyncroSim.Common.Forms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SyncroSim.Apex.Forms">
+      <HintPath>..\..\ssimbin3\SyncroSim.Apex.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="SyncroSim.Core">
-      <HintPath>..\..\ssimbin\SyncroSim.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SyncroSim.Core, Version=2.5.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ssimbin3\SyncroSim.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SyncroSim.Core.Forms">
-      <HintPath>..\..\ssimbin\SyncroSim.Core.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SyncroSim.StochasticTime">
-      <HintPath>..\..\ssimbin\SyncroSim.StochasticTime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SyncroSim.StochasticTime.Forms">
-      <HintPath>..\..\ssimbin\SyncroSim.StochasticTime.Forms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SyncroSim.Core.Forms, Version=2.5.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ssimbin3\SyncroSim.Core.Forms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -501,6 +491,12 @@
     <Compile Include="Reports\TransitionAttributeReport.cs" />
     <Compile Include="Reports\TransitionStateSummaryReport.cs" />
     <Compile Include="Reports\TransitionSummaryReport.cs" />
+    <Compile Include="Shared\CheckBoxPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\CheckBoxPanel.Designer.cs">
+      <DependentUpon>CheckBoxPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Shared\ClassBinHelper.cs" />
     <Compile Include="Shared\BaseValueDisplayListItem.cs" />
     <Compile Include="Shared\ChartingUtilities.cs" />
@@ -559,13 +555,6 @@
     <Compile Include="Diagram\TransitionDiagramClipData.cs" />
     <Compile Include="Diagram\TransitionDiagramLine.cs" />
     <Compile Include="Diagram\TransitionDiagramTabStripItem.cs" />
-    <Compile Include="Updates\STSimUpdates.DM.cs" />
-    <Compile Include="Updates\STSimUpdates.ED.cs" />
-    <Compile Include="Updates\STSimUpdates.SF.cs" />
-    <Compile Include="Updates\STSimUpdates.SSIM_V_1.cs" />
-    <Compile Include="Updates\STSimUpdates.TPE.cs" />
-    <Compile Include="Updates\STSimUpdates.Utils.cs" />
-    <Compile Include="Updates\STSimUpdates.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataFeedViews\AdjacencyMultiplierDataFeedView.resx">
@@ -656,6 +645,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\CheckBoxPanel.resx">
+      <DependentUpon>CheckBoxPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

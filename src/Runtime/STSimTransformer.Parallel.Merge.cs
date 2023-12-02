@@ -196,7 +196,7 @@ namespace SyncroSim.STSim
                 m.Multiply(1 / (double)ttlIterations);
 
                 string newFilename = dictFilenames[k][0];
-                m.Save(newFilename, StochasticTime.Spatial.GetGeoTiffCompressionType(this.Library));
+                m.Save(newFilename, Core.Spatial.GetGeoTiffCompressionType(this.Library));
             }
         }
 

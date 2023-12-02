@@ -8,8 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.Common;
-using SyncroSim.StochasticTime;
+using SyncroSim.Apex;
 
 namespace SyncroSim.STSim
 {
@@ -1937,7 +1936,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateClassTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                 foreach (Cell c in this.Cells)
                 {
@@ -2005,7 +2004,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
                 int[] arr = rastOP.IntCells;
 
                 foreach (Cell c in this.Cells)
@@ -2037,7 +2036,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterAgeTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                 // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
@@ -2076,7 +2075,7 @@ namespace SyncroSim.STSim
                         continue;
                     }
 
-                    StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                    SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                     foreach (Cell cell in this.Cells)
                     {
@@ -2128,7 +2127,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStratumTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
 
                 foreach (Cell c in this.Cells)
                 {
@@ -2172,7 +2171,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateAttributeTimestep(timestep))
             {
-                StochasticTimeRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
                 {
@@ -2227,7 +2226,7 @@ namespace SyncroSim.STSim
             {
                 foreach (int AttributeId in rasterTransitionAttrValues.Keys)
                 {
-                    StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] NewValues = rasterTransitionAttrValues[AttributeId];
                     double[] arr = rastOP.DblCells;
 
@@ -2288,7 +2287,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                StochasticTimeRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
                 int[] arr = rastOP.IntCells;
 
                 foreach (Cell c in this.Cells)
@@ -2329,7 +2328,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2357,7 +2356,7 @@ namespace SyncroSim.STSim
             foreach (int timestep in this.m_AvgAgeMap.Keys)
             {
                 double[] Values = this.m_AvgAgeMap[timestep];
-                StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                 double[] arr = RastOutput.DblCells;
 
                 foreach (Cell c in this.Cells)
@@ -2399,7 +2398,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2465,7 +2464,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2507,7 +2506,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2561,7 +2560,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2620,7 +2619,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    StochasticTimeRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)

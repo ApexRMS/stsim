@@ -3,9 +3,8 @@
 
 using System;
 using SyncroSim.Core;
-using SyncroSim.Common;
+using SyncroSim.Apex;
 using System.Globalization;
-using SyncroSim.StochasticTime;
 using System.Collections.Generic;
 
 namespace SyncroSim.STSim
@@ -14,8 +13,8 @@ namespace SyncroSim.STSim
     {
         private bool m_HasItems;
 
-        private Dictionary<string, StochasticTimeRaster> m_Rasters = 
-            new Dictionary<string, StochasticTimeRaster>();
+        private Dictionary<string, SyncroSimRaster> m_Rasters = 
+            new Dictionary<string, SyncroSimRaster>();
 
         private MultiLevelKeyMap1<SortedKeyMap1<InitialTSTSpatial>> m_Map = 
             new MultiLevelKeyMap1<SortedKeyMap1<InitialTSTSpatial>>();
@@ -71,7 +70,7 @@ namespace SyncroSim.STSim
             this.m_HasItems = true;
         }
 
-        public StochasticTimeRaster GetRaster(int transitionGroupId, int iteration)
+        public SyncroSimRaster GetRaster(int transitionGroupId, int iteration)
         {
             if (!this.m_HasItems)
             {
@@ -92,12 +91,12 @@ namespace SyncroSim.STSim
                 return null;
             }
 
-            string FullFileName = Spatial.GetSpatialInputFileName(this.m_DataSheet, v.FileName, false);
+            string FullFileName = Spatial.GetSpatialDataFileName(this.m_DataSheet, v.FileName, false);
 
             if (!this.m_Rasters.ContainsKey(FullFileName))
             {
                 string CmpMsg = null;
-                StochasticTimeRaster r = new StochasticTimeRaster(FullFileName, RasterDataType.DTInteger);
+                SyncroSimRaster r = new SyncroSimRaster(FullFileName, RasterDataType.DTInteger);
                 CompareMetadataResult cmpResult = this.m_InputRasters.CompareMetadata(r, ref CmpMsg);
 
                 if (cmpResult == CompareMetadataResult.RowColumnMismatch)

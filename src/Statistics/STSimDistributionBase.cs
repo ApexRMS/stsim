@@ -3,7 +3,7 @@
 
 using System;
 using System.Diagnostics;
-using SyncroSim.StochasticTime;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {

@@ -38,10 +38,8 @@ namespace SyncroSim.STSim
         public void Initialize(Project project, bool enableMergeDeps)
         {
             this.DataGridViewStrata.BackgroundColor = System.Drawing.Color.White;
-            this.DataGridViewStrata.PaintGridBorders = false;
             this.DataGridViewStrata.MultiSelect = true;
             this.DataGridViewStrata.StandardTab = true;
-            this.PanelGrid.ShowBorder = true;
             this.CheckBoxMergeDeps.Enabled = enableMergeDeps;
 
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);

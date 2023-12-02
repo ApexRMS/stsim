@@ -7,7 +7,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    class AvgStratumExportTransformer : StochasticTime.Forms.StochasticTimeExportTransformer
+    class AvgStratumExportTransformer : Core.Forms.MultibandExportTransformer
     {
         public override void Configure()
         {

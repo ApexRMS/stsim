@@ -42,21 +42,21 @@ namespace SyncroSim.STSim
 
         //Columns
         public const string DATASHEET_NAME_COLUMN_NAME = "Name";
-        public const string DATASHEET_MAPID_COLUMN_NAME = "ID";
+        public const string DATASHEET_MAPID_COLUMN_NAME = "Id";
         public const string DATASHEET_DESCRIPTION_COLUMN_NAME = "Description";
-        public const string DATASHEET_SCENARIOID_COLUMN_NAME = "ScenarioID";
-        public const string DATASHEET_STRATUM_ID_COLUMN_NAME = "StratumID";
-        public const string DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME = "SecondaryStratumID";
-        public const string DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME = "TertiaryStratumID";
+        public const string DATASHEET_SCENARIOID_COLUMN_NAME = "ScenarioId";
+        public const string DATASHEET_STRATUM_ID_COLUMN_NAME = "StratumId";
+        public const string DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME = "SecondaryStratumId";
+        public const string DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME = "TertiaryStratumId";
         public const string DATASHEET_ITERATION_COLUMN_NAME = "Iteration";
         public const string DATASHEET_TIMESTEP_COLUMN_NAME = "Timestep";
-        public const string DATASHEET_STATECLASS_ID_COLUMN_NAME = "StateClassID";
-        public const string DATASHEET_END_STATECLASS_ID_COLUMN_NAME = "EndStateClassID";
-        public const string DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME = "TransitionTypeID";
-        public const string DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME = "TransitionGroupID";
-        public const string DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME = "TransitionMultiplierTypeID";
-        public const string DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME = "StateAttributeTypeID";
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME = "TransitionAttributeTypeID";
+        public const string DATASHEET_STATECLASS_ID_COLUMN_NAME = "StateClassId";
+        public const string DATASHEET_END_STATECLASS_ID_COLUMN_NAME = "EndStateClassId";
+        public const string DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME = "TransitionTypeId";
+        public const string DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME = "TransitionGroupId";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_TYPE_ID_COLUMN_NAME = "TransitionMultiplierTypeId";
+        public const string DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME = "StateAttributeTypeId";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME = "TransitionAttributeTypeId";
         public const string DATASHEET_TST_GROUP_ID_COLUMN_NAME = "TSTGroupId";
         public const string DATASHEET_AGE_MIN_COLUMN_NAME = "AgeMin";
         public const string DATASHEET_AGE_MAX_COLUMN_NAME = "AgeMax";
@@ -64,14 +64,14 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TST_MIN_COLUMN_NAME = "TSTMin";
         public const string DATASHEET_TST_MAX_COLUMN_NAME = "TSTMax";
         public const string DATASHEET_TST_CLASS_COLUMN_NAME = "TSTClass";
-        public const string DATASHEET_EVENT_ID_COLUMN_NAME = "EventID";
-        public const string DATASHEET_SIZE_CLASS_ID_COLUMN_NAME = "SizeClassID";
+        public const string DATASHEET_EVENT_ID_COLUMN_NAME = "EventId";
+        public const string DATASHEET_SIZE_CLASS_ID_COLUMN_NAME = "SizeClassId";
         public const string DATASHEET_COLOR_COLUMN_NAME = "Color";
         public const string DATASHEET_LEGEND_COLUMN_NAME = "Legend";
         public const string DATASHEET_AMOUNT_COLUMN_NAME = "Amount";
-        public const string DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME = "AttributeGroupID";
+        public const string DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME = "AttributeGroupId";
         public const string DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME = "DistributionType";
-        public const string DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME = "DistributionFrequencyID";
+        public const string DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME = "DistributionFrequencyId";
         public const string DATASHEET_DISTRIBUTIONSD_COLUMN_NAME = "DistributionSD";
         public const string DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME = "DistributionMin";
         public const string DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME = "DistributionMax";
@@ -98,8 +98,8 @@ namespace SyncroSim.STSim
 
         //State class
         public const string DATASHEET_STATECLASS_NAME = "stsim_StateClass";
-        public const string DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME = "StateLabelXID";
-        public const string DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME = "StateLabelYID";
+        public const string DATASHEET_STATECLASS_STATE_LABEL_X_ID_COLUMN_NAME = "StateLabelXId";
+        public const string DATASHEET_STATECLASS_STATE_LABEL_Y_ID_COLUMN_NAME = "StateLabelYId";
         public const string DATASHEET_IS_AUTO_NAME_COLUMN_NAME = "IsAutoName";
 
         //Transition type
@@ -113,8 +113,8 @@ namespace SyncroSim.STSim
 
         //Transition type group
         public const string DATASHEET_TRANSITION_TYPE_GROUP_NAME = "stsim_TransitionTypeGroup";
-        public const string DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME = "TransitionTypeID";
-        public const string DATASHEET_TRANSITION_TYPE_GROUP_GROUP_COLUMN_NAME = "TransitionGroupID";
+        public const string DATASHEET_TRANSITION_TYPE_GROUP_TYPE_COLUMN_NAME = "TransitionTypeId";
+        public const string DATASHEET_TRANSITION_TYPE_GROUP_GROUP_COLUMN_NAME = "TransitionGroupId";
 
         //Age Type
         public const string DATASHEET_AGE_TYPE_NAME = "stsim_AgeType";
@@ -153,12 +153,12 @@ namespace SyncroSim.STSim
 
         //State Attribute Type
         public const string DATASHEET_STATE_ATTRIBUTE_TYPE_NAME = "stsim_StateAttributeType";
-        public const string DATASHEET_STATE_ATTRIBUTE_TYPE_GROUP_COLUMN_NAME = "AttributeGroupID";
+        public const string DATASHEET_STATE_ATTRIBUTE_TYPE_GROUP_COLUMN_NAME = "AttributeGroupId";
         public const string DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME = "Units";
 
         //Transition Attribute Type
         public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME = "stsim_TransitionAttributeType";
-        public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_GROUP_COLUMN_NAME = "AttributeGroupID";
+        public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_GROUP_COLUMN_NAME = "AttributeGroupId";
         public const string DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME = "Units";
 
         //Run control
@@ -201,19 +201,19 @@ namespace SyncroSim.STSim
 
         //Deterministic Transitions
         public const string DATASHEET_DT_NAME = "stsim_DeterministicTransition";
-        public const string DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME = "StratumIDSource";
-        public const string DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME = "StateClassIDSource";
-        public const string DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME = "StratumIDDest";
-        public const string DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME = "StateClassIDDest";
+        public const string DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME = "StratumIdSource";
+        public const string DATASHEET_DT_STATECLASSIDSOURCE_COLUMN_NAME = "StateClassIdSource";
+        public const string DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME = "StratumIdDest";
+        public const string DATASHEET_DT_STATECLASSIDDEST_COLUMN_NAME = "StateClassIdDest";
         public const string DATASHEET_DT_LOCATION_COLUMN_NAME = "Location";
 
         //Probabilisitic Transitions
         public const string DATASHEET_PT_NAME = "stsim_Transition";
-        public const string DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME = "StratumIDSource";
-        public const string DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME = "StateClassIDSource";
-        public const string DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME = "StratumIDDest";
-        public const string DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME = "StateClassIDDest";
-        public const string DATASHEET_PT_TRANSITION_TYPE_COLUMN_NAME = "TransitionTypeID";
+        public const string DATASHEET_PT_STRATUMIDSOURCE_COLUMN_NAME = "StratumIdSource";
+        public const string DATASHEET_PT_STATECLASSIDSOURCE_COLUMN_NAME = "StateClassIdSource";
+        public const string DATASHEET_PT_STRATUMIDDEST_COLUMN_NAME = "StratumIdDest";
+        public const string DATASHEET_PT_STATECLASSIDDEST_COLUMN_NAME = "StateClassIdDest";
+        public const string DATASHEET_PT_TRANSITION_TYPE_COLUMN_NAME = "TransitionTypeId";
         public const string DATASHEET_PT_AGE_RELATIVE_COLUMN_NAME = "AgeRelative";
         public const string DATASHEET_PT_AGE_RESET_COLUMN_NAME = "AgeReset";
         public const string DATASHEET_PT_TST_MIN_COLUMN_NAME = "TSTMin";
@@ -278,14 +278,14 @@ namespace SyncroSim.STSim
 
         //Transition multiplier value
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME = "stsim_TransitionMultiplierValue";
-        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME = "TSTGroupID";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_GROUP_COLUMN_NAME = "TSTGroupId";
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MIN_COLUMN_NAME = "TSTMin";
         public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_TST_MAX_COLUMN_NAME = "TSTMax";
-        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeID";
+        public const string DATASHEET_TRANSITION_MULTIPLIER_VALUE_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeId";
 
         //Transition spatial multiplier
         public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME = "stsim_TransitionSpatialMultiplier";
-        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeID";
+        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_MULTIPLIER_TYPE_COLUMN_NAME = "TransitionMultiplierTypeId";
         public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FILE_COLUMN_NAME = "MultiplierFilename";
 
         //Transition spatial initiation multiplier
@@ -326,7 +326,7 @@ namespace SyncroSim.STSim
 
         //Transition Patch Prioritization
         public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_NAME = "stsim_TransitionPatchPrioritization";
-        public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_PP_COLUMN_NAME = "PatchPrioritizationID";
+        public const string DATASHEET_TRANSITION_PATCH_PRIORITIZATION_PP_COLUMN_NAME = "PatchPrioritizationId";
 
         //Transition Size Prioritization
         public const string DATASHEET_TRANSITION_SIZE_PRIORITIZATION_NAME = "stsim_TransitionSizePrioritization";
@@ -432,12 +432,12 @@ namespace SyncroSim.STSim
 
         //Distribution Value Data Feed
         public const string DISTRIBUTION_VALUE_DATASHEET_NAME = "stsim_DistributionValue";
-        public const string DISTRIBUTION_VALUE_DIST_TYPE_ID_COLUMN_NAME = "DistributionTypeID";
-        public const string DISTRIBUTION_VALUE_EXTVAR_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeID";
+        public const string DISTRIBUTION_VALUE_DIST_TYPE_ID_COLUMN_NAME = "DistributionTypeId";
+        public const string DISTRIBUTION_VALUE_EXTVAR_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeId";
         public const string DISTRIBUTION_VALUE_EXTVAR_MIN_COLUMN_NAME = "ExternalVariableMin";
         public const string DISTRIBUTION_VALUE_EXTVAR_MAX_COLUMN_NAME = "ExternalVariableMax";
         public const string DISTRIBUTION_VALUE_DIST_VALUE_COLUMN_NAME = "Value";
-        public const string DISTRIBUTION_VALUE_VALUE_DIST_TYPE_ID_COLUMN_NAME = "ValueDistributionTypeID";
+        public const string DISTRIBUTION_VALUE_VALUE_DIST_TYPE_ID_COLUMN_NAME = "ValueDistributionTypeId";
         public const string DISTRIBUTION_VALUE_VALUE_DIST_FREQUENCY_COLUMN_NAME = "ValueDistributionFrequency";
         public const string DISTRIBUTION_VALUE_VALUE_DIST_SD_COLUMN_NAME = "ValueDistributionSD";
         public const string DISTRIBUTION_VALUE_VALUE_DIST_MIN_COLUMN_NAME = "ValueDistributionMin";
@@ -471,7 +471,7 @@ namespace SyncroSim.STSim
 
         //Output External Variable Value Data Feed
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME = "stsim_OutputExternalVariableValue";
-        public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeID";
+        public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeId";
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME = "Value";
 
         public const string CORESTIME_EXTERNAL_VAR_TYPE_DATASHEET_NAME = "corestime_ExternalVariableType";

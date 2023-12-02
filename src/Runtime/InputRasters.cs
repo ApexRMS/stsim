@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
-using SyncroSim.StochasticTime;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
@@ -21,12 +21,12 @@ namespace SyncroSim.STSim
         private double m_cellArea; // The cell area
         private bool m_cellAreaOverride; // Is the cell area overriden by the user
         private string m_cellSizeUnits; // The raster native cell units
-        private StochasticTimeRaster m_PrimaryStratumRaster;
-        private StochasticTimeRaster m_SecondaryStratumRaster;
-        private StochasticTimeRaster m_TertiaryStratumRaster;
-        private StochasticTimeRaster m_StateClassRaster;
-        private StochasticTimeRaster m_AgeRaster;
-        private StochasticTimeRaster m_DEMRaster;
+        private SyncroSimRaster m_PrimaryStratumRaster;
+        private SyncroSimRaster m_SecondaryStratumRaster;
+        private SyncroSimRaster m_TertiaryStratumRaster;
+        private SyncroSimRaster m_StateClassRaster;
+        private SyncroSimRaster m_AgeRaster;
+        private SyncroSimRaster m_DEMRaster;
 
         public int Width
         {
@@ -252,7 +252,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public StochasticTimeRaster PrimaryStratumRaster
+        public SyncroSimRaster PrimaryStratumRaster
         {
             get
             {
@@ -264,7 +264,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public StochasticTimeRaster SecondaryStratumRaster
+        public SyncroSimRaster SecondaryStratumRaster
         {
             get
             {
@@ -276,7 +276,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public StochasticTimeRaster TertiaryStratumRaster
+        public SyncroSimRaster TertiaryStratumRaster
         {
             get
             {
@@ -288,7 +288,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public StochasticTimeRaster StateClassRaster
+        public SyncroSimRaster StateClassRaster
         {
             get
             {
@@ -300,7 +300,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public StochasticTimeRaster AgeRaster
+        public SyncroSimRaster AgeRaster
         {
             get
             {
@@ -312,7 +312,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public StochasticTimeRaster DEMRaster
+        public SyncroSimRaster DEMRaster
         {
             get
             {
@@ -324,7 +324,7 @@ namespace SyncroSim.STSim
             }
         }
         
-        public void SetMetadata(StochasticTimeRaster raster)
+        public void SetMetadata(SyncroSimRaster raster)
         {
             this.m_Width = raster.Width;
             this.m_Height = raster.Height;
@@ -336,9 +336,9 @@ namespace SyncroSim.STSim
             this.m_Projection = raster.Projection;
         }
 
-        public StochasticTimeRaster CreateOutputRaster(RasterDataType dataType)
+        public SyncroSimRaster CreateOutputRaster(RasterDataType dataType)
         {
-            StochasticTimeRaster rast = new StochasticTimeRaster(
+            SyncroSimRaster rast = new SyncroSimRaster(
                 "output",
                 dataType,  
                 1,                                
@@ -376,7 +376,7 @@ namespace SyncroSim.STSim
         /// <param name="raster">A instance of class Raster</param>
         /// <returns>An Enum containing the comparison Result</returns>
         /// <remarks></remarks>
-        public CompareMetadataResult CompareMetadata(StochasticTimeRaster raster, ref string compareMsg)
+        public CompareMetadataResult CompareMetadata(SyncroSimRaster raster, ref string compareMsg)
         {
             CompareMetadataResult retVal = CompareMetadataResult.Same;
             compareMsg = "";

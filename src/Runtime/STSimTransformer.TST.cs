@@ -6,7 +6,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
-using SyncroSim.StochasticTime;
 using SyncroSim.Core;
 
 namespace SyncroSim.STSim
@@ -209,7 +208,7 @@ namespace SyncroSim.STSim
 
             foreach (Tst tst in simulationCell.TstValues)
             {
-                StochasticTimeRaster r = this.m_InitialTstSpatialMap.GetRaster(tst.TransitionGroupId, iteration);
+                SyncroSimRaster r = this.m_InitialTstSpatialMap.GetRaster(tst.TransitionGroupId, iteration);
 
                 if (r != null)
                 {

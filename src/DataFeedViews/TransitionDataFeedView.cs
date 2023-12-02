@@ -11,7 +11,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using SyncroSim.Common.Forms;
+using SyncroSim.Apex.Forms;
 
 namespace SyncroSim.STSim
 {
@@ -1439,8 +1439,6 @@ namespace SyncroSim.STSim
                 if (item.Control == null)
                 {
                     v = this.Session.CreateMultiRowDataFeedView(this.DataFeed.Scenario, this.ControllingScenario);
-
-                    v.ShowBorder = false;
 
                     if ((item) is DeterministicTransitionsTabStripItem)
                     {

@@ -8,7 +8,7 @@ namespace SyncroSim.STSim
 {
     internal class STSimResultsProvider : LayoutProvider
     {
-        protected override void ModifyLayout(SyncroSimLayout layout)
+        protected override void ModifyLayout(Layout layout)
         {
             if (this.Library == null)
             {
@@ -22,7 +22,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            SyncroSimLayoutItem PrimaryStrataGroup = layout.Items.FindItem("stsim_PrimaryStrata", true);
+            LayoutItem PrimaryStrataGroup = layout.Items.FindItem("stsim_PrimaryStrata", true);
 
             if (PrimaryStrataGroup == null)
             {

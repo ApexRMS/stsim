@@ -3,7 +3,7 @@
 
 using System.Drawing;
 using System.Windows.Forms;
-using SyncroSim.Common.Forms;
+using SyncroSim.Apex.Forms;
 
 namespace SyncroSim.STSim
 {

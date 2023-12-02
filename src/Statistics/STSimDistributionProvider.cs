@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
-using SyncroSim.StochasticTime;
 using SyncroSim.Core;
 
 namespace SyncroSim.STSim

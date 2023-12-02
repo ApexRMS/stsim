@@ -5,8 +5,8 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
-using SyncroSim.Common;
-using SyncroSim.StochasticTime;
+using SyncroSim.Apex;
+using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
@@ -193,7 +193,7 @@ namespace SyncroSim.STSim
 
                             if (this.m_TransitionSpatialMultiplierRasters.ContainsKey(tsmr.FileName))
                             {
-                                StochasticTimeRaster rastMult = this.m_TransitionSpatialMultiplierRasters[tsmr.FileName];
+                                SyncroSimRaster rastMult = this.m_TransitionSpatialMultiplierRasters[tsmr.FileName];
                                 double spatialMult = rastMult.DblCells[cell.CollectionIndex];
 
                                 //Test for NODATA_VALUE
@@ -239,7 +239,7 @@ namespace SyncroSim.STSim
 
                         if (this.m_TransitionSpatialInitiationMultiplierRasters.ContainsKey(tsmr.FileName))
                         {
-                            StochasticTimeRaster rastMult = this.m_TransitionSpatialInitiationMultiplierRasters[tsmr.FileName];
+                            SyncroSimRaster rastMult = this.m_TransitionSpatialInitiationMultiplierRasters[tsmr.FileName];
                             double spatialMult = rastMult.DblCells[cell.CollectionIndex];
 
                             //Test for NODATA_VALUE

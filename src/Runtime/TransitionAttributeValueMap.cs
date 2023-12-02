@@ -68,7 +68,7 @@ namespace SyncroSim.STSim
             }
 
             STSimDistributionBase b = AttrRef.ClassRef;
-            b.Sample(iteration, timestep, this.m_DistributionProvider, StochasticTime.DistributionFrequency.Always);
+            b.Sample(iteration, timestep, this.m_DistributionProvider, Core.DistributionFrequency.Always);
 
             return b.CurrentValue.Value;
         }

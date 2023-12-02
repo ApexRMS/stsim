@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
             this.ButtonZoomIn = new System.Windows.Forms.Button();
             this.ButtonZoomOut = new System.Windows.Forms.Button();
             this.SplitContainerTabStrip = new System.Windows.Forms.SplitContainer();
-            this.TabStripMain = new SyncroSim.Common.Forms.TabStrip();
+            this.TabStripMain = new SyncroSim.Apex.Forms.TabStrip();
             this.ScrollBarHorizontal = new System.Windows.Forms.HScrollBar();
             this.PanelBottomControls = new System.Windows.Forms.Panel();
             this.PanelTabNavigator = new System.Windows.Forms.Panel();
@@ -262,7 +262,7 @@ namespace SyncroSim.STSim
         	ScrollBarHorizontal.Scroll += new System.Windows.Forms.ScrollEventHandler(OnHorizontalScroll);
         }
         internal System.Windows.Forms.Panel PanelBottomControls;
-        internal SyncroSim.Common.Forms.TabStrip TabStripMain;
+        internal SyncroSim.Apex.Forms.TabStrip TabStripMain;
         internal System.Windows.Forms.Panel PanelTabNavigator;
         internal System.Windows.Forms.SplitContainer SplitContainerTabStrip;
         internal System.Windows.Forms.Button ButtonLast;

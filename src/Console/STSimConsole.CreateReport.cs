@@ -27,7 +27,7 @@ namespace SyncroSim.STSim
             string n = this.GetReportName();
             string f = this.GetOutputFileName();
             Library l = this.OpenLibrary();
-            IEnumerable<int> sids = this.GetMultiDatabaseIdArguments("sids");
+            IEnumerable<int> sids = this.GetMultiDatabaseIdArgument("sids");
             Project p = this.ConfigureReportActiveProject(sids, l);
 
             ValidateReportScenarios(sids, l);

@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using SyncroSim.Core;
 using SyncroSim.Core.Forms;
-using SyncroSim.Common.Forms;
+using SyncroSim.Apex.Forms;
 
 namespace SyncroSim.STSim
 {

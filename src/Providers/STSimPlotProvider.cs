@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
@@ -36,7 +35,7 @@ namespace SyncroSim.STSim
             CreateAgeColorMap(project, store);
         }
 
-        public override void RefreshCriteria(DataStore store, SyncroSimLayout layout, Project project)
+        public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
             DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
 
@@ -48,11 +47,11 @@ namespace SyncroSim.STSim
             this.AddTransitionAttributeCriteria(layout, project, store, AttrGroupView);
         }
 
-        private void AddStateClassCriteria(SyncroSimLayout layout, Project project, DataStore store)
+        private void AddStateClassCriteria(Layout layout, Project project, DataStore store)
         {
-            SyncroSimLayoutItem StateClassesGroup = new SyncroSimLayoutItem("stsim_StateClassesGroup", "State Classes", true);
-            SyncroSimLayoutItem StateClassIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem StateClassAvgGroup = new SyncroSimLayoutItem("stsim_StateClassAvgGroup", "Probability", true);
+            LayoutItem StateClassesGroup = new LayoutItem("stsim_StateClassesGroup", "State Classes", true);
+            LayoutItem StateClassIterationItem = new LayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
+            LayoutItem StateClassAvgGroup = new LayoutItem("stsim_StateClassAvgGroup", "Probability", true);
 
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -66,11 +65,11 @@ namespace SyncroSim.STSim
             layout.Items.Add(StateClassesGroup);
         }
 
-        private void AddAgeCriteria(SyncroSimLayout layout)
+        private void AddAgeCriteria(Layout layout)
         {
-            SyncroSimLayoutItem AgesGroup = new SyncroSimLayoutItem("stsim_AgesGroup", "Ages", true);
-            SyncroSimLayoutItem AgesIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem AgesAvgProbItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average", false);
+            LayoutItem AgesGroup = new LayoutItem("stsim_AgesGroup", "Ages", true);
+            LayoutItem AgesIterationItem = new LayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Iteration", false);
+            LayoutItem AgesAvgProbItem = new LayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average", false);
 
             AgesIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
             AgesIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -90,7 +89,7 @@ namespace SyncroSim.STSim
             layout.Items.Add(AgesGroup);
         }
 
-        private void AddStratumCriteria(SyncroSimLayout layout, Project project, DataStore store)
+        private void AddStratumCriteria(Layout layout, Project project, DataStore store)
         {
             string psl = null;
             string ssl = null;
@@ -98,9 +97,9 @@ namespace SyncroSim.STSim
             DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
-            SyncroSimLayoutItem StratumGroup = new SyncroSimLayoutItem("stsim_StratumGroup", psl, true);
-            SyncroSimLayoutItem StratumIterationItem = new SyncroSimLayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, "Iteration", false);
-            SyncroSimLayoutItem StratumAvgGroup = new SyncroSimLayoutItem("stsim_StratumAvgGroup", "Probability", true);
+            LayoutItem StratumGroup = new LayoutItem("stsim_StratumGroup", psl, true);
+            LayoutItem StratumIterationItem = new LayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, "Iteration", false);
+            LayoutItem StratumAvgGroup = new LayoutItem("stsim_StratumAvgGroup", "Probability", true);
 
             StratumIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -114,14 +113,14 @@ namespace SyncroSim.STSim
             layout.Items.Add(StratumGroup);
         }
 
-        private void AddTransitionCriteria(SyncroSimLayout layout, Project project, DataStore store)
+        private void AddTransitionCriteria(Layout layout, Project project, DataStore store)
         {
-            SyncroSimLayoutItem TransitionsGroup = new SyncroSimLayoutItem("stsim_TransitionsGroup", "Transitions", true);
-            SyncroSimLayoutItem TransitionsIterationGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem TransitionsAvgTPGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgGroup", "Probability", true);
-            SyncroSimLayoutItem TransitionsIterationEventsGroup = new SyncroSimLayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
-            SyncroSimLayoutItem TransitionsTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsTSTGroup", "Time-Since-Transition", true);
-            SyncroSimLayoutItem TransitionsAvgTSTGroup = new SyncroSimLayoutItem("stsim_TransitionsAvgTSTGroup", "Time-Since-Transition - Average", true);
+            LayoutItem TransitionsGroup = new LayoutItem("stsim_TransitionsGroup", "Transitions", true);
+            LayoutItem TransitionsIterationGroup = new LayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
+            LayoutItem TransitionsAvgTPGroup = new LayoutItem("stsim_TransitionsAvgGroup", "Probability", true);
+            LayoutItem TransitionsIterationEventsGroup = new LayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
+            LayoutItem TransitionsTSTGroup = new LayoutItem("stsim_TransitionsTSTGroup", "Time-Since-Transition", true);
+            LayoutItem TransitionsAvgTSTGroup = new LayoutItem("stsim_TransitionsAvgTSTGroup", "Time-Since-Transition - Average", true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
@@ -156,11 +155,11 @@ namespace SyncroSim.STSim
             if (TransitionsGroup.Items.Count > 0) { layout.Items.Add(TransitionsGroup); }
         }
 
-        private void AddStateAttributeCriteria(SyncroSimLayout layout, Project project, DataStore store, DataView attrGroupView)
+        private void AddStateAttributeCriteria(Layout layout, Project project, DataStore store, DataView attrGroupView)
         {
-            SyncroSimLayoutItem StateAttributesGroup = new SyncroSimLayoutItem("stsim_StateAttributesGroup", "State Attributes", true);
-            SyncroSimLayoutItem StateAttributesIterationGroup = new SyncroSimLayoutItem("stsim_StateAttributesIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem StateAttributesAvgGroup = new SyncroSimLayoutItem("stsim_StateAttributesAvgGroup", "Average", true);
+            LayoutItem StateAttributesGroup = new LayoutItem("stsim_StateAttributesGroup", "State Attributes", true);
+            LayoutItem StateAttributesIterationGroup = new LayoutItem("stsim_StateAttributesIterationsGroup", "Iteration", true);
+            LayoutItem StateAttributesAvgGroup = new LayoutItem("stsim_StateAttributesAvgGroup", "Average", true);
 
             AddMapStateAttributes(
                 project, StateAttributesIterationGroup.Items, 
@@ -178,11 +177,11 @@ namespace SyncroSim.STSim
             if (StateAttributesGroup.Items.Count > 0) { layout.Items.Add(StateAttributesGroup); }
         }
 
-        private void AddTransitionAttributeCriteria(SyncroSimLayout layout, Project project, DataStore store, DataView attrGroupView)
+        private void AddTransitionAttributeCriteria(Layout layout, Project project, DataStore store, DataView attrGroupView)
         {
-            SyncroSimLayoutItem TransitionAttributesGroup = new SyncroSimLayoutItem("stsim_TransitionAttributesGroup", "Transition Attributes", true);
-            SyncroSimLayoutItem TransitionAttributesIterationGroup = new SyncroSimLayoutItem("stsim_TransitionAttributesIterationsGroup", "Iteration", true);
-            SyncroSimLayoutItem TransitionAttributesAvgGroup = new SyncroSimLayoutItem("stsim_TransitionAttributesAvgGroup", "Average", true);
+            LayoutItem TransitionAttributesGroup = new LayoutItem("stsim_TransitionAttributesGroup", "Transition Attributes", true);
+            LayoutItem TransitionAttributesIterationGroup = new LayoutItem("stsim_TransitionAttributesIterationsGroup", "Iteration", true);
+            LayoutItem TransitionAttributesAvgGroup = new LayoutItem("stsim_TransitionAttributesAvgGroup", "Average", true);
 
             AddMapTransitionAttributes(
                 project, TransitionAttributesIterationGroup.Items,
@@ -214,7 +213,7 @@ namespace SyncroSim.STSim
 
         private static void AddAvgMapStratumVariables(
             Project project,
-            SyncroSimLayoutItemCollection items, 
+            LayoutItemCollection items, 
             DataStore store)
         {
             List<Stratum> Strata = GetStrata(project, store);
@@ -228,7 +227,7 @@ namespace SyncroSim.STSim
             foreach (Stratum st in Strata)
             {
                 string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", FilePrefix, st.StratumId);
-                SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, st.DisplayName, false);
+                LayoutItem Item = new LayoutItem(VarName, st.DisplayName, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStratum"));
                 Item.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -243,7 +242,7 @@ namespace SyncroSim.STSim
 
         private static void AddAvgMapStateClassVariables(
             Project project,
-            SyncroSimLayoutItemCollection items, 
+            LayoutItemCollection items, 
             DataStore store)
         {
             List<StateClass> StateClasses = GetStateClasses(project, store);
@@ -257,7 +256,7 @@ namespace SyncroSim.STSim
             foreach (StateClass sc in StateClasses)
             {
                 string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", FilePrefix, sc.Id);
-                SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, sc.DisplayName, false);
+                LayoutItem Item = new LayoutItem(VarName, sc.DisplayName, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStateClass"));
                 Item.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -272,7 +271,7 @@ namespace SyncroSim.STSim
 
         private static void AddMapTransitionGroupVariables(
             Project project, 
-            SyncroSimLayoutItemCollection items, 
+            LayoutItemCollection items, 
             string dataSheetName, 
             string fileColumnName, 
             string filterColumnName, 
@@ -297,7 +296,7 @@ namespace SyncroSim.STSim
             foreach (TransitionGroup g in PrimaryGroupList)
             {
                 string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", filePrefix, g.TransitionGroupId);
-                SyncroSimLayoutItem Item = new SyncroSimLayoutItem(VarName, g.DisplayName, false);
+                LayoutItem Item = new LayoutItem(VarName, g.DisplayName, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
                 Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
@@ -313,7 +312,7 @@ namespace SyncroSim.STSim
 
         private static void AddMapStateAttributes(
             Project project, 
-            SyncroSimLayoutItemCollection items,
+            LayoutItemCollection items,
             string dataSheetName,
             string fileColumnName,
             string filterColumnName,
@@ -329,13 +328,13 @@ namespace SyncroSim.STSim
                 dataSheetName, fileColumnName, filterColumnName,
                 Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
-            Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
-            List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
+            Dictionary<string, LayoutItem> GroupsDict = new Dictionary<string, LayoutItem>();
+            List<LayoutItem> GroupsList = new List<LayoutItem>();
 
             foreach (DataRowView drv in attrGroupsView)
             {
                 string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
-                SyncroSimLayoutItem Group = new SyncroSimLayoutItem(GroupName, GroupName, true);
+                LayoutItem Group = new LayoutItem(GroupName, GroupName, true);
 
                 GroupsDict.Add(GroupName, Group);
                 GroupsList.Add(Group);
@@ -346,7 +345,7 @@ namespace SyncroSim.STSim
                 dataSheetName, fileColumnName, filterColumnName,
                 Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
-            foreach (SyncroSimLayoutItem g in GroupsList)
+            foreach (LayoutItem g in GroupsList)
             {
                 if (g.Items.Count > 0)
                 {
@@ -357,7 +356,7 @@ namespace SyncroSim.STSim
 
         private static void AddMapTransitionAttributes(
             Project project, 
-            SyncroSimLayoutItemCollection items,
+            LayoutItemCollection items,
             string dataSheetName,
             string fileColumnName,
             string filterColumnName,
@@ -373,13 +372,13 @@ namespace SyncroSim.STSim
                 dataSheetName, fileColumnName, filterColumnName,
                 Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
-            Dictionary<string, SyncroSimLayoutItem> GroupsDict = new Dictionary<string, SyncroSimLayoutItem>();
-            List<SyncroSimLayoutItem> GroupsList = new List<SyncroSimLayoutItem>();
+            Dictionary<string, LayoutItem> GroupsDict = new Dictionary<string, LayoutItem>();
+            List<LayoutItem> GroupsList = new List<LayoutItem>();
 
             foreach (DataRowView drv in attrGroupsView)
             {
                 string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
-                SyncroSimLayoutItem Group = new SyncroSimLayoutItem(GroupName, GroupName, true);
+                LayoutItem Group = new LayoutItem(GroupName, GroupName, true);
 
                 GroupsDict.Add(GroupName, Group);
                 GroupsList.Add(Group);
@@ -390,7 +389,7 @@ namespace SyncroSim.STSim
                 dataSheetName, fileColumnName, filterColumnName,
                 Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
-            foreach (SyncroSimLayoutItem g in GroupsList)
+            foreach (LayoutItem g in GroupsList)
             {
                 if (g.Items.Count > 0)
                 {
@@ -401,7 +400,7 @@ namespace SyncroSim.STSim
 
         private static void AddMapNonGroupedAttributes(
             DataStore store, 
-            SyncroSimLayoutItemCollection items, 
+            LayoutItemCollection items, 
             DataSheet attrsDataSheet, 
             string dataSheetName, 
             string fileColumnName, 
@@ -430,7 +429,7 @@ namespace SyncroSim.STSim
                             Convert.ToString(drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture));
                     }
 
-                    SyncroSimLayoutItem Item = new SyncroSimLayoutItem(AttrName, DisplayName, false);
+                    LayoutItem Item = new LayoutItem(AttrName, DisplayName, false);
 
                     Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
                     Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
@@ -450,7 +449,7 @@ namespace SyncroSim.STSim
 
         private static void AddMapGroupedAttributes(
             DataStore store, 
-            Dictionary<string, SyncroSimLayoutItem> groupsDict, 
+            Dictionary<string, LayoutItem> groupsDict, 
             DataSheet attrsDataSheet, 
             string dataSheetName, 
             string fileColumnName, 
@@ -482,7 +481,7 @@ namespace SyncroSim.STSim
                             Convert.ToString(drv.Row[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME], CultureInfo.InvariantCulture));
                     }
 
-                    SyncroSimLayoutItem Item = new SyncroSimLayoutItem(AttrName, DisplayName, false);
+                    LayoutItem Item = new LayoutItem(AttrName, DisplayName, false);
 
                     Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
                     Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
@@ -668,7 +667,7 @@ namespace SyncroSim.STSim
             }
 
             // Where are the color maps stored
-            string colorMapPath = project.Library.GetFolderName(LibraryFolderType.Input, project, true);
+            string colorMapPath = project.Library.GetFolderName(LibraryFolderType.Data, project, true);
 
             // What's the absolute name of the color map file
             string colorMapFilename = Spatial.GetColorMapFileName(project, mapVariable);
@@ -746,7 +745,7 @@ namespace SyncroSim.STSim
             }
 
             // Where are the legend maps stored
-            string colorMapPath = project.Library.GetFolderName(LibraryFolderType.Input, project, true);
+            string colorMapPath = project.Library.GetFolderName(LibraryFolderType.Data, project, true);
 
             // What's the absolute name of the legend map file
             string mapFilename = Spatial.GetLegendMapFileName(project, mapVariable);
@@ -970,7 +969,7 @@ namespace SyncroSim.STSim
             var colorMapType = Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME + "-" + tgId;
 
             // Where are the color legend stored
-            string legendMapPath = project.Library.GetFolderName(LibraryFolderType.Input, project, false);
+            string legendMapPath = project.Library.GetFolderName(LibraryFolderType.Data, project, false);
 
             // What's the absolute name of the legend  map file
             string legendMapFilename = Spatial.GetLegendMapFileName(project, colorMapType);
@@ -1087,7 +1086,7 @@ namespace SyncroSim.STSim
             string colorMapType = Constants.SPATIAL_MAP_AGE_VARIABLE_NAME;
 
             // Where are the color maps stored
-            string colorMapPath = project.Library.GetFolderName(LibraryFolderType.Input, project, true);
+            string colorMapPath = project.Library.GetFolderName(LibraryFolderType.Data, project, true);
 
             // What's the absolute name of the color map file
             string colorMapFilename = Spatial.GetColorMapFileName(project, colorMapType);

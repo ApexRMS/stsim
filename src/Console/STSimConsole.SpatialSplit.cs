@@ -139,7 +139,7 @@ namespace SyncroSim.STSim
             List<int> l = new List<int>();
             DataSheet ds = s.Project.GetDataSheet(Strings.DATASHEET_SECONDARY_STRATA_NAME);
             DataTable dt = ds.GetData();
-            IEnumerable<int> ssids = this.GetMultiDatabaseIdArguments("ssids");
+            IEnumerable<int> ssids = this.GetMultiDatabaseIdArgument("ssids");
 
             foreach (int ssid in ssids)
             {

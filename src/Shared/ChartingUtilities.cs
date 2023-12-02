@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
@@ -31,12 +30,12 @@ namespace SyncroSim.STSim
 
             string tag = GetChartCacheTag(descriptor);
             string query = CreateRawDataQuery(scenario, descriptor, tableName);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
+            DataTable dt = ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "RawData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
+                ChartCache.SetCachedData(scenario, query, dt, tag);
             }
 
             foreach (DataRow dr in dt.Rows)
@@ -68,12 +67,12 @@ namespace SyncroSim.STSim
         {
             string tag = GetChartCacheTag(descriptor);
             string query = CreateRawAttributeDataQuery(scenario, descriptor, tableName, attributeTypeColumnName, attributeTypeId);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
+            DataTable dt = ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "RawData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
+                ChartCache.SetCachedData(scenario, query, dt, tag);
             }
                           
             if (isDensity)
@@ -109,12 +108,12 @@ namespace SyncroSim.STSim
         {
             string tag = GetChartCacheTag(descriptor);
             string query = CreateRawExternalVariableDataQuery(scenario, descriptor);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
+            DataTable dt = ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "RawData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
+                ChartCache.SetCachedData(scenario, query, dt, tag);
             }
 
             return dt;
@@ -128,12 +127,12 @@ namespace SyncroSim.STSim
             string tag = GetChartCacheTag(descriptor);
             Dictionary<string, double> dict = new Dictionary<string, double>();
             string query = CreateAmountQuery(scenario, descriptor);
-            DataTable dt = StochasticTime.ChartCache.GetCachedData(scenario, query, tag);
+            DataTable dt = ChartCache.GetCachedData(scenario, query, tag);
 
             if (dt == null)
             {
                 dt = store.CreateDataTableFromQuery(query, "AmountData");
-                StochasticTime.ChartCache.SetCachedData(scenario, query, dt, tag);
+                ChartCache.SetCachedData(scenario, query, dt, tag);
             }
 
             foreach (DataRow dr in dt.Rows)
@@ -374,7 +373,7 @@ namespace SyncroSim.STSim
 
         private static void DeleteCacheEntriesWithTag(Scenario scenario, string tag)
         {
-            string CacheFolder = StochasticTime.ChartCache.GetCacheFolderName(scenario);
+            string CacheFolder = ChartCache.GetCacheFolderName(scenario);
 
             foreach (string f in Directory.GetFiles(CacheFolder))
             {

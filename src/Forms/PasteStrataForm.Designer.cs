@@ -55,7 +55,6 @@ namespace SyncroSim.STSim
             this.PanelGrid.Location = new System.Drawing.Point(11, 12);
             this.PanelGrid.Name = "PanelGrid";
             this.PanelGrid.Padding = new System.Windows.Forms.Padding(1);
-            this.PanelGrid.ShowBorder = true;
             this.PanelGrid.Size = new System.Drawing.Size(584, 359);
             this.PanelGrid.TabIndex = 4;
             //
@@ -84,12 +83,10 @@ namespace SyncroSim.STSim
             DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DataGridViewStrata.DefaultCellStyle = DataGridViewCellStyle4;
             this.DataGridViewStrata.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DataGridViewStrata.EnableMouseClicks = true;
             this.DataGridViewStrata.IsReadOnly = false;
             this.DataGridViewStrata.Location = new System.Drawing.Point(1, 1);
             this.DataGridViewStrata.MultiSelect = false;
             this.DataGridViewStrata.Name = "DataGridViewStrata";
-            this.DataGridViewStrata.PaintGridBorders = true;
             this.DataGridViewStrata.RowHeadersVisible = false;
             DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(Convert.ToInt32(Convert.ToByte(232)), Convert.ToInt32(Convert.ToByte(232)), Convert.ToInt32(Convert.ToByte(232)));
             this.DataGridViewStrata.RowsDefaultCellStyle = DataGridViewCellStyle5;

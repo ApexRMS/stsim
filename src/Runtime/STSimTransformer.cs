@@ -4,10 +4,9 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using SyncroSim.StochasticTime;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.Common;
+using SyncroSim.Apex;
 
 namespace SyncroSim.STSim
 {
@@ -159,7 +158,7 @@ namespace SyncroSim.STSim
 
         public ParallelJobConfig STSimLoadConfigurationFile()
         {
-            return this.LoadConfigurationFile();
+            return this.LoadSplitConfigurationFile();
         }
 
         public int STSimGetJobIdFromFolder(string folderName)
@@ -174,7 +173,7 @@ namespace SyncroSim.STSim
 
         public string STSimGetJobOutputScenarioFolderName(string libraryFileName, int scenarioId, bool create)
         {
-            return GetJobOutputScenarioFolderName(libraryFileName, scenarioId, create);
+            return GetJobDataFolderName(libraryFileName, scenarioId, create);
         }
 
         public double? GetAttributeValue(
@@ -192,7 +191,7 @@ namespace SyncroSim.STSim
         /// Compresses the specified raster to match the cell collection
         /// </summary>
         /// <param name="raster"></param>
-        public void CompressRasterForCellCollection(StochasticTimeRaster raster)
+        public void CompressRasterForCellCollection(SyncroSimRaster raster)
         {
             if (raster.DataType == RasterDataType.DTInteger)
             {
@@ -288,15 +287,17 @@ namespace SyncroSim.STSim
             this.InternalOnTimestep(iteration, timestep);
         }
 
+        //DEVTODO-3.0
+
         /// <summary>
         /// Called when external data has been appended to the specified data sheet
         /// </summary>
         /// <param name="dataSheet"></param>
         /// <remarks></remarks>
-        protected override void OnExternalDataReady(DataSheet dataSheet)
-        {
-            this.STSimExternalDataReady(dataSheet);
-        }
+        //protected override void OnExternalDataReady(DataSheet dataSheet)
+        //{
+        //    this.STSimExternalDataReady(dataSheet);
+        //}
 
         private void InternalConfigure()
         {

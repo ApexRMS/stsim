@@ -59,7 +59,7 @@ namespace SyncroSim.STSim
 
             string AmountTitle = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
 
-            c.Add(new ExportColumn("ScenarioID", "Scenario ID"));
+            c.Add(new ExportColumn("ScenarioId", "Scenario Id"));
             c.Add(new ExportColumn("ScenarioName", "Scenario"));
             c.Add(new ExportColumn("Iteration", "Iteration"));
             c.Add(new ExportColumn("Timestep", TimestepLabel));
@@ -84,32 +84,32 @@ namespace SyncroSim.STSim
             if (isCSV)
             {
                 return string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT " + "stsim_OutputStratumTransition.ScenarioID, " + "stsim_OutputStratumTransition.Iteration,  " + 
+                    "SELECT " + "stsim_OutputStratumTransition.ScenarioId, " + "stsim_OutputStratumTransition.Iteration,  " + 
                     "stsim_OutputStratumTransition.Timestep,  " + "stsim_Stratum.Name AS Stratum,  " + "stsim_SecondaryStratum.Name AS SecondaryStratum,  " + 
                     "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + "stsim_TransitionGroup.Name as TransitionGroup, " + "stsim_OutputStratumTransition.AgeMin, " + 
                     "stsim_OutputStratumTransition.AgeMax, " + "stsim_OutputStratumTransition.Amount " + "FROM stsim_OutputStratumTransition " + 
-                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputStratumTransition.StratumID " +
-                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputStratumTransition.SecondaryStratumID " +
-                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputStratumTransition.TertiaryStratumID " + 
-                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputStratumTransition.TransitionGroupID " + 
-                    "WHERE stsim_OutputStratumTransition.ScenarioID IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransition.ScenarioID, " + 
+                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumId = stsim_OutputStratumTransition.StratumId " +
+                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumId = stsim_OutputStratumTransition.SecondaryStratumId " +
+                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumId = stsim_OutputStratumTransition.TertiaryStratumId " + 
+                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupId = stsim_OutputStratumTransition.TransitionGroupId " + 
+                    "WHERE stsim_OutputStratumTransition.ScenarioId IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransition.ScenarioId, " + 
                     "stsim_OutputStratumTransition.Iteration, " + "stsim_OutputStratumTransition.Timestep, " + "stsim_Stratum.Name, " + 
                     "stsim_SecondaryStratum.Name, " + "stsim_TertiaryStratum.Name, " + "stsim_TransitionGroup.Name, " + "AgeMin, " + "AgeMax", ScenFilter);
             }
             else
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "SELECT " + "stsim_OutputStratumTransition.ScenarioID, " +
+                    "SELECT " + "stsim_OutputStratumTransition.ScenarioId, " +
                     "core_Scenario.Name AS ScenarioName,  " + "stsim_OutputStratumTransition.Iteration,  " + "stsim_OutputStratumTransition.Timestep,  " + 
                     "stsim_Stratum.Name AS Stratum,  " + "stsim_SecondaryStratum.Name AS SecondaryStratum,  " + "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + 
                     "stsim_TransitionGroup.Name as TransitionGroup, " + "stsim_OutputStratumTransition.AgeMin, " + "stsim_OutputStratumTransition.AgeMax, " + 
                     "stsim_OutputStratumTransition.Amount " + "FROM stsim_OutputStratumTransition " +
-                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioID = stsim_OutputStratumTransition.ScenarioID " + 
-                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputStratumTransition.StratumID " + 
-                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputStratumTransition.SecondaryStratumID " + 
-                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputStratumTransition.TertiaryStratumID " + 
-                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupID = stsim_OutputStratumTransition.TransitionGroupID " +
-                    "WHERE stsim_OutputStratumTransition.ScenarioID IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransition.ScenarioID, " + 
+                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioId = stsim_OutputStratumTransition.ScenarioId " + 
+                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumId = stsim_OutputStratumTransition.StratumId " + 
+                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumId = stsim_OutputStratumTransition.SecondaryStratumId " + 
+                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumId = stsim_OutputStratumTransition.TertiaryStratumId " + 
+                    "INNER JOIN stsim_TransitionGroup ON stsim_TransitionGroup.TransitionGroupId = stsim_OutputStratumTransition.TransitionGroupId " +
+                    "WHERE stsim_OutputStratumTransition.ScenarioId IN ({0})  " + "ORDER BY " + "stsim_OutputStratumTransition.ScenarioId, " + 
                     "core_Scenario.Name, " + "stsim_OutputStratumTransition.Iteration, " + "stsim_OutputStratumTransition.Timestep, " +
                     "stsim_Stratum.Name, " + "stsim_SecondaryStratum.Name, " + "stsim_TertiaryStratum.Name, " + "stsim_TransitionGroup.Name, " + 
                     "AgeMin, " + "AgeMax", ScenFilter);

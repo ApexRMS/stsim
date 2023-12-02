@@ -79,10 +79,8 @@ namespace SyncroSim.STSim
             this.m_PTGrid = this.m_PTView.GridControl;
             this.PanelProbabilistic.Controls.Add(this.m_PTView);
 
-            this.m_DTGrid.PaintGridBorders = false;
             this.m_DTView.ManageOptionalColumns = false;
 
-            this.m_PTGrid.PaintGridBorders = false;
             this.m_PTView.ManageOptionalColumns = false;
 
             this.FilterDeterministicTransitions();

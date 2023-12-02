@@ -46,7 +46,7 @@ namespace SyncroSim.STSim
 
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
 
-            c.Add(new ExportColumn("ScenarioID", "Scenario ID"));
+            c.Add(new ExportColumn("ScenarioId", "Scenario Id"));
             c.Add(new ExportColumn("ScenarioName", "Scenario"));
             c.Add(new ExportColumn("Iteration", "Iteration"));
             c.Add(new ExportColumn("Timestep", TimestepLabel));
@@ -71,31 +71,31 @@ namespace SyncroSim.STSim
             if (isCSV)
             {
                 return string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT " + "stsim_OutputStateAttribute.ScenarioID, " + "stsim_OutputStateAttribute.Iteration,  " + 
+                    "SELECT " + "stsim_OutputStateAttribute.ScenarioId, " + "stsim_OutputStateAttribute.Iteration,  " + 
                     "stsim_OutputStateAttribute.Timestep,  " + "stsim_Stratum.Name AS Stratum,  " + "stsim_SecondaryStratum.Name AS SecondaryStratum,  " +
                     "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + "stsim_StateAttributeType.Name as AttributeType, " + 
                     "stsim_OutputStateAttribute.AgeMin, " + "stsim_OutputStateAttribute.AgeMax, " + "stsim_OutputStateAttribute.Amount " + 
-                    "FROM stsim_OutputStateAttribute " + "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputStateAttribute.StratumID " + 
-                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputStateAttribute.SecondaryStratumID " +
-                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputStateAttribute.TertiaryStratumID " +
-                    "INNER JOIN stsim_StateAttributeType ON stsim_StateAttributeType.StateAttributeTypeID = stsim_OutputStateAttribute.StateAttributeTypeID " + "WHERE stsim_OutputStateAttribute.ScenarioID IN ({0})  " + "ORDER BY " + 
-                    "stsim_OutputStateAttribute.ScenarioID, " + "stsim_OutputStateAttribute.Iteration, " + "stsim_OutputStateAttribute.Timestep, " + 
+                    "FROM stsim_OutputStateAttribute " + "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumId = stsim_OutputStateAttribute.StratumId " + 
+                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumId = stsim_OutputStateAttribute.SecondaryStratumId " +
+                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumId = stsim_OutputStateAttribute.TertiaryStratumId " +
+                    "INNER JOIN stsim_StateAttributeType ON stsim_StateAttributeType.StateAttributeTypeId = stsim_OutputStateAttribute.StateAttributeTypeId " + "WHERE stsim_OutputStateAttribute.ScenarioId IN ({0})  " + "ORDER BY " + 
+                    "stsim_OutputStateAttribute.ScenarioId, " + "stsim_OutputStateAttribute.Iteration, " + "stsim_OutputStateAttribute.Timestep, " + 
                     "stsim_Stratum.Name, " + "stsim_SecondaryStratum.Name, " + "stsim_TertiaryStratum.Name, " + "stsim_StateAttributeType.Name, " +
                     "AgeMin, " + "AgeMax", ScenFilter);
             }
             else
             {
                 return string.Format(CultureInfo.InvariantCulture, 
-                    "SELECT " + "stsim_OutputStateAttribute.ScenarioID, " + "core_Scenario.Name AS ScenarioName,  " + "stsim_OutputStateAttribute.Iteration,  " + 
+                    "SELECT " + "stsim_OutputStateAttribute.ScenarioId, " + "core_Scenario.Name AS ScenarioName,  " + "stsim_OutputStateAttribute.Iteration,  " + 
                     "stsim_OutputStateAttribute.Timestep,  " + "stsim_Stratum.Name AS Stratum,  " + "stsim_SecondaryStratum.Name AS SecondaryStratum,  " + 
                     "stsim_TertiaryStratum.Name AS TertiaryStratum,  " + "stsim_StateAttributeType.Name as AttributeType, " + "stsim_OutputStateAttribute.AgeMin, " + 
                     "stsim_OutputStateAttribute.AgeMax, " + "stsim_OutputStateAttribute.Amount " + "FROM stsim_OutputStateAttribute " + 
-                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioID = stsim_OutputStateAttribute.ScenarioID " + 
-                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumID = stsim_OutputStateAttribute.StratumID " + 
-                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumID = stsim_OutputStateAttribute.SecondaryStratumID " + 
-                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumID = stsim_OutputStateAttribute.TertiaryStratumID " + 
-                    "INNER JOIN stsim_StateAttributeType ON stsim_StateAttributeType.StateAttributeTypeID = stsim_OutputStateAttribute.StateAttributeTypeID " + 
-                    "WHERE stsim_OutputStateAttribute.ScenarioID IN ({0})  " + "ORDER BY " + "stsim_OutputStateAttribute.ScenarioID, " + "core_Scenario.Name, " +
+                    "INNER JOIN core_Scenario ON core_Scenario.ScenarioId = stsim_OutputStateAttribute.ScenarioId " + 
+                    "INNER JOIN stsim_Stratum ON stsim_Stratum.StratumId = stsim_OutputStateAttribute.StratumId " + 
+                    "LEFT JOIN stsim_SecondaryStratum ON stsim_SecondaryStratum.SecondaryStratumId = stsim_OutputStateAttribute.SecondaryStratumId " + 
+                    "LEFT JOIN stsim_TertiaryStratum ON stsim_TertiaryStratum.TertiaryStratumId = stsim_OutputStateAttribute.TertiaryStratumId " + 
+                    "INNER JOIN stsim_StateAttributeType ON stsim_StateAttributeType.StateAttributeTypeId = stsim_OutputStateAttribute.StateAttributeTypeId " + 
+                    "WHERE stsim_OutputStateAttribute.ScenarioId IN ({0})  " + "ORDER BY " + "stsim_OutputStateAttribute.ScenarioId, " + "core_Scenario.Name, " +
                     "stsim_OutputStateAttribute.Iteration, " + "stsim_OutputStateAttribute.Timestep, " + "stsim_Stratum.Name, " + "stsim_SecondaryStratum.Name, " +
                     "stsim_TertiaryStratum.Name, " + "stsim_StateAttributeType.Name, " + "AgeMin, " + "AgeMax", ScenFilter);
             }

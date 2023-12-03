@@ -9,7 +9,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    public class InitialConditionsSpatialDataSheet : DataSheet
+    public class InitialConditionsSpatialRasterDataSheet : DataSheet
     {
         public event EventHandler<EventArgs> ValidatingRasters;
         public event EventHandler<EventArgs> RastersValidated;
@@ -21,7 +21,8 @@ namespace SyncroSim.STSim
         {
             base.Initialize(store);
 
-            this.m_TerminologyMonitor = new DataSheetMonitor(this.Project, Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged);
+            this.m_TerminologyMonitor = new DataSheetMonitor(
+                this.Project, Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged);
         }
 
         protected override void Dispose(bool disposing)
@@ -92,7 +93,7 @@ namespace SyncroSim.STSim
 
             if (!SizeOverride)
             {
-                cellAreaTU = InitialConditionsSpatialDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal);
+                cellAreaTU = InitialConditionsSpatialRasterDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal);
                 drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = cellAreaTU;
             }
             else
@@ -105,8 +106,6 @@ namespace SyncroSim.STSim
                 dsProp.Changes.Add(new ChangeRecord(this, "Changed Cell Size"));
             }
         }
-
-
 
         public override void Validate(DataRow proposedRow, DataTransferMethod transferMethod)
         {

@@ -224,8 +224,8 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
             Proportion.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
 
-            Normal.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
-            Proportion.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID|AgeClass"));
+            Normal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
+            Proportion.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
 
             Normal.Properties.Add(new MetaDataProperty("column", "Amount"));
             Proportion.Properties.Add(new MetaDataProperty("column", "Amount"));
@@ -254,8 +254,8 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
             Proportion.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
 
-            Normal.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
-            Proportion.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|AgeClass|SizeClassID"));
+            Normal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
+            Proportion.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
 
             Normal.Properties.Add(new MetaDataProperty("column", "Amount"));
             Proportion.Properties.Add(new MetaDataProperty("column", "Amount"));
@@ -275,7 +275,7 @@ namespace SyncroSim.STSim
             LayoutItem v = new LayoutItem(Constants.TST_VARIABLE_NAME, "Amount", false);
 
             v.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
-            v.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID|TSTClass"));
+            v.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
             v.Properties.Add(new MetaDataProperty("column", "Amount"));
             v.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
 
@@ -284,7 +284,7 @@ namespace SyncroSim.STSim
 
         private static void AddChartExternalVariables(DataStore store, LayoutItemCollection items, Project project)
         {
-            DataSheet ds = project.GetDataSheet(Strings.CORESTIME_EXTERNAL_VAR_TYPE_DATASHEET_NAME);
+            DataSheet ds = project.GetDataSheet(Strings.CORE_EXTERNAL_VAR_TYPE_DATASHEET_NAME);
 
             foreach (DataRow dr in ds.GetData(store).Rows)
             {
@@ -390,7 +390,7 @@ namespace SyncroSim.STSim
                     LayoutItem ItemNormal = new LayoutItem(AttrNameNormal, DisplayNameNormal, false);
 
                     ItemNormal.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemNormal.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
+                    ItemNormal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
                     ItemNormal.Properties.Add(new MetaDataProperty("column", outputColumnName));
                     ItemNormal.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
                     ItemNormal.Properties.Add(new MetaDataProperty("customTitle", DisplayNameNormal));
@@ -417,7 +417,7 @@ namespace SyncroSim.STSim
                     LayoutItem ItemDensity = new LayoutItem(AttrNameDensity, DisplayNameDensity, false);
 
                     ItemDensity.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemDensity.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
+                    ItemDensity.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
                     ItemDensity.Properties.Add(new MetaDataProperty("column", outputColumnName));
                     ItemDensity.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
                     ItemDensity.Properties.Add(new MetaDataProperty("customTitle", "(Density): " + DisplayNameNormal));
@@ -474,7 +474,7 @@ namespace SyncroSim.STSim
                     LayoutItem ItemNormal = new LayoutItem(AttrNameNormal, DisplayNameNormal, false);
 
                     ItemNormal.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemNormal.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
+                    ItemNormal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
                     ItemNormal.Properties.Add(new MetaDataProperty("column", outputColumnName));
                     ItemNormal.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
                     ItemNormal.Properties.Add(new MetaDataProperty("customTitle", GroupName + ": " + DisplayNameNormal));
@@ -501,7 +501,7 @@ namespace SyncroSim.STSim
                     LayoutItem ItemDensity = new LayoutItem(AttrNameDensity, DisplayNameDensity, false);
 
                     ItemDensity.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemDensity.Properties.Add(new MetaDataProperty("filter", "StratumID|SecondaryStratumID|TertiaryStratumID|AgeClass"));
+                    ItemDensity.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
                     ItemDensity.Properties.Add(new MetaDataProperty("column", outputColumnName));
                     ItemDensity.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
                     ItemDensity.Properties.Add(new MetaDataProperty("customTitle", GroupName + " (Density): " + DisplayNameNormal));

@@ -169,17 +169,19 @@ namespace SyncroSim.STSim
         public const string RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME = "MaximumTimestep";
         public const string RUN_CONTROL_IS_SPATIAL_COLUMN_NAME = "IsSpatial";
 
-        //Non-Spatial Initial conditions
-        public const string DATASHEET_NSIC_NAME = "stsim_InitialConditionsNonSpatial";
+        //Non-Spatial Initial conditions properties
+        public const string DATASHEET_NSIC_NAME = "stsim_InitialConditionsNonSpatialProperties";
         public const string DATASHEET_NSIC_TOTAL_AMOUNT_COLUMN_NAME = "TotalAmount";
         public const string DATASHEET_NSIC_NUM_CELLS_COLUMN_NAME = "NumCells";
         public const string DATASHEET_NSIC_CALC_FROM_DIST_COLUMN_NAME = "CalcFromDist";
+
+        //Non-Spatial Initial conditions distribution
         public const string DATASHEET_NSIC_DISTRIBUTION_NAME = "stsim_InitialConditionsNonSpatialDistribution";
         public const string DATASHEET_NSIC_DISTRIBUTION_DISPLAY_NAME = "Initial Conditions Distribution";
         public const string DATASHEET_NSIC_DISTRIBUTION_RELATIVE_AMOUNT_COLUMN_NAME = "RelativeAmount";
 
         //Spatial Initial Conditions Properties
-        public const string DATASHEET_SPPIC_NAME = "stsim_InitialConditionsSpatialProperties";
+        public const string DATASHEET_SPPIC_NAME = "stsim_InitialConditionsSpatialProperty";
         public const string DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
         public const string DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME = "NumRows";
         public const string DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME = "NumCells";
@@ -191,8 +193,8 @@ namespace SyncroSim.STSim
         public const string DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME = "CellAreaOverride";
         public const string DATASHEET_SPPIC_SRS_COLUMN_NAME = "SRS";
 
-        //Spatial Initial Conditions Files
-        public const string DATASHEET_SPIC_NAME = "stsim_InitialConditionsSpatial";
+        //Spatial Initial Conditions Raster
+        public const string DATASHEET_SPIC_NAME = "stsim_InitialConditionsSpatialRaster";
         public const string DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
         public const string DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
         public const string DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME = "TertiaryStratumFileName";
@@ -426,7 +428,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OO_SPATIAL_AVG_RASTER_OUTPUT_TA_CUMULATIVE_COLUMN_NAME = "AvgRasterOutputTACumulative";
 
         //Distribution Type Data Feed
-        public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "corestime_DistributionType";
+        public const string DISTRIBUTION_TYPE_DATASHEET_NAME = "core_DistributionType";
         public const string DISTRIBUTION_TYPE_IS_INTERNAL_COLUMN_NAME = "IsInternal";
         public const string DISTRIBUTION_TYPE_NAME_UNIFORM_INTEGER = "Uniform Integer";
 
@@ -474,6 +476,6 @@ namespace SyncroSim.STSim
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME = "ExternalVariableTypeId";
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME = "Value";
 
-        public const string CORESTIME_EXTERNAL_VAR_TYPE_DATASHEET_NAME = "corestime_ExternalVariableType";
+        public const string CORE_EXTERNAL_VAR_TYPE_DATASHEET_NAME = "core_ExternalVariableType";
     }
 }

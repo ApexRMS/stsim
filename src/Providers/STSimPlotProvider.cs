@@ -124,27 +124,27 @@ namespace SyncroSim.STSim
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
-                "stsim_OutputSpatialTransition", "Filename", "TransitionGroupID", "(Iteration)",
+                "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, Strings.DATASHEET_TRANSITION_TYPE_NAME, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTPGroup.Items,
-                "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupID", AVG_PROB_ALL_ITER,
+                "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupId", AVG_PROB_ALL_ITER,
                 Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_NAME, null, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationEventsGroup.Items,
-                "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupID", "(Transitions Events)",
+                "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupId", "(Transitions Events)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_NAME, null, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsTSTGroup.Items,
-                "stsim_OutputSpatialTST", "Filename", "TransitionGroupID", "(Time-Since-Transition)",
+                "stsim_OutputSpatialTST", "Filename", "TransitionGroupId", "(Time-Since-Transition)",
                 Constants.SPATIAL_MAP_TST_VARIABLE_NAME, null, store);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTSTGroup.Items,
-                "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupID", "(Time-Since-Transition - Average)",
+                "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupId", "(Time-Since-Transition - Average)",
                 Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store);
 
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
@@ -163,13 +163,13 @@ namespace SyncroSim.STSim
 
             AddMapStateAttributes(
                 project, StateAttributesIterationGroup.Items, 
-                "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeID", 
+                "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeId", 
                 Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_NAME, null, store, attrGroupView);
 
             //Average State Attributes
             AddMapStateAttributes(
                 project, StateAttributesAvgGroup.Items,
-                "stsim_OutputSpatialAverageStateAttribute", "Filename", "StateAttributeTypeID",
+                "stsim_OutputSpatialAverageStateAttribute", "Filename", "StateAttributeTypeId",
                 Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_NAME, AVG_ALL_ITER, store, attrGroupView);
 
             if (StateAttributesIterationGroup.Items.Count > 0) { StateAttributesGroup.Items.Add(StateAttributesIterationGroup); }
@@ -185,12 +185,12 @@ namespace SyncroSim.STSim
 
             AddMapTransitionAttributes(
                 project, TransitionAttributesIterationGroup.Items,
-                "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeID",
+                "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeId",
                 Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_NAME, null, store, attrGroupView);
 
             AddMapTransitionAttributes(
                 project, TransitionAttributesAvgGroup.Items,
-                "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeID",
+                "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeId",
                 Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_NAME, AVG_ALL_ITER, store, attrGroupView);
 
             if (TransitionAttributesIterationGroup.Items.Count > 0) { TransitionAttributesGroup.Items.Add(TransitionAttributesIterationGroup); }
@@ -231,7 +231,7 @@ namespace SyncroSim.STSim
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStratum"));
                 Item.Properties.Add(new MetaDataProperty("column", "Filename"));
-                Item.Properties.Add(new MetaDataProperty("filter", "StratumID"));
+                Item.Properties.Add(new MetaDataProperty("filter", "StratumId"));
                 Item.Properties.Add(new MetaDataProperty("itemId", st.StratumId.ToString(CultureInfo.InvariantCulture)));
                 Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_STRATA_NAME));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
@@ -260,7 +260,7 @@ namespace SyncroSim.STSim
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStateClass"));
                 Item.Properties.Add(new MetaDataProperty("column", "Filename"));
-                Item.Properties.Add(new MetaDataProperty("filter", "StateClassID"));
+                Item.Properties.Add(new MetaDataProperty("filter", "StateClassId"));
                 Item.Properties.Add(new MetaDataProperty("itemId", sc.Id.ToString(CultureInfo.InvariantCulture)));
                 Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_STATECLASS_NAME));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));

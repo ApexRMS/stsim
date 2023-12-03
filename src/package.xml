@@ -34,7 +34,7 @@
 		<column name="Description" dataType="String" isOptional="True"/>
 	</dataSheet>
 
-	<dataSheet name="StateClass" displayName="State Class" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.StateClassdataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.StateClassDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="StateClass" displayName="State Class" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.StateClassDataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.StateClassDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="Name" dataType="String" fillWeight="10"/>
 		<column name="StateLabelXId" displayName="State Label X" dataType="Integer"  allowDbNull="False" validationType="Datasheet" formula1="StateLabelX" fillWeight="10" displayNameSource="Terminology" displayNameColumn="StateLabelX"/>
 		<column name="StateLabelYId" displayName="State Label Y" dataType="Integer"  allowDbNull="False" validationType="Datasheet" formula1="StateLabelY" fillWeight="10" displayNameSource="Terminology" displayNameColumn="StateLabelY"/>
@@ -47,7 +47,7 @@
 		<validation validationType="Unique" columns="StateLabelXId|StateLabelYId"/>
 	</dataSheet>
 
-	<dataSheet name="TransitionType" displayName="Transition Type" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.TransitionTypedataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.TransitionTypeDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="TransitionType" displayName="Transition Type" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.TransitionTypeDataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.TransitionTypeDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="Name" dataType="String" fillWeight="10"/>
 		<column name="Id" dataType="Integer" isOptional="True" fillWeight="5" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="Color" dataType="String" isOptional="True" isReadOnly="True" autoSizeMode="None" width="35"/>
@@ -56,13 +56,13 @@
 		<validation validationType="UniqueOrNull" columns="Id"/>
 	</dataSheet>
 
-	<dataSheet name="TransitionGroup" displayName="Transition Group" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.TransitionGroupdataSheet" classAssembly="SyncroSim.STSim" filter="IsAuto IS NULL OR IsAuto=0">
+	<dataSheet name="TransitionGroup" displayName="Transition Group" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.TransitionGroupDataSheet" classAssembly="SyncroSim.STSim" filter="IsAuto IS NULL OR IsAuto=0">
 		<column name="Name" dataType="String"/>
 		<column name="Description" dataType="String" isOptional="True"/>
 		<column name="IsAuto" dataType="Boolean" isVisible="False"/>
 	</dataSheet>
 
-	<dataSheet name="TransitionTypeGroup" displayName="Transition Types by Group" dataScope="Project" className="SyncroSim.STSim.TransitionTypeGroupdataSheet" classAssembly="SyncroSim.STSim" filter="IsAuto IS NULL OR IsAuto=0" viewClassName="SyncroSim.STSim.TransitionTypeGroupDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="TransitionTypeGroup" displayName="Transition Types by Group" dataScope="Project" className="SyncroSim.STSim.TransitionTypeGroupDataSheet" classAssembly="SyncroSim.STSim" filter="IsAuto IS NULL OR IsAuto=0" viewClassName="SyncroSim.STSim.TransitionTypeGroupDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="TransitionTypeId" displayName="Transition Type" dataType="Integer" validationType="Datasheet" formula1="TransitionType" allowDbNull="False"/>
 		<column name="TransitionGroupId" displayName="Transition Group" dataType="Integer" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="IsAuto" dataType="Boolean" isVisible="False"/>
@@ -78,26 +78,26 @@
 		<column name="Name" dataType="String"/>
 	</dataSheet>
 
-	<dataSheet name="AgeType" displayName="Age Types" isSingleRow="True" dataScope="Project" className="SyncroSim.STSim.AgeTypedataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.AgeTypeDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="AgeType" displayName="Age Types" isSingleRow="True" dataScope="Project" className="SyncroSim.STSim.AgeTypeDataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.AgeTypeDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
 		<column name="MaximumAge" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
 	</dataSheet>
 
-	<dataSheet name="AgeGroup" displayName="Age Groups" dataScope="Project" className="SyncroSim.STSim.AgeGroupdataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.AgeGroupDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="AgeGroup" displayName="Age Groups" dataScope="Project" className="SyncroSim.STSim.AgeGroupDataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.AgeGroupDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="MaximumAge" displayName="Maximum Age" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" allowDbNull="False"/>
 		<column name="Color" dataType="String" isOptional="True" isReadOnly="True"/>
 	</dataSheet>
 
-	<dataSheet name="TSTType" displayName="TST Types" isSingleRow="True" dataScope="Project" className="SyncroSim.STSim.TSTTypedataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.TSTTypeDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="TSTType" displayName="TST Types" isSingleRow="True" dataScope="Project" className="SyncroSim.STSim.TSTTypeDataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.TSTTypeDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
 		<column name="MaximumTST" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="1"/>
 	</dataSheet>
 
-	<dataSheet name="TSTGroup" displayName="TST Groups" dataScope="Project" className="SyncroSim.STSim.TSTGroupdataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.TSTGroupDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="TSTGroup" displayName="TST Groups" dataScope="Project" className="SyncroSim.STSim.TSTGroupDataSheet" classAssembly="SyncroSim.STSim" viewClassName="SyncroSim.STSim.TSTGroupDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="MaximumTST" displayName="Maximum TST" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" allowDbNull="False"/>
 	</dataSheet>
 
-	<dataSheet name="AttributeGroup" displayName="Attribute Group" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.AttributeGroupdataSheet" classAssembly="SyncroSim.STSim">
+	<dataSheet name="AttributeGroup" displayName="Attribute Group" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.AttributeGroupDataSheet" classAssembly="SyncroSim.STSim">
 		<column name="Name" dataType="String"/>
 		<column name="Description" dataType="String" isOptional="True"/>
 	</dataSheet>
@@ -151,7 +151,7 @@
 		<dataSheet name="Transition"/>
 	</dataFeed>
 
-	<dataSheet name="DeterministicTransition" displayName="States" className="SyncroSim.STSim.DeterministicTransitiondataSheet" classAssembly="SyncroSim.STSim" noRowLimit="True" hasIteration="True" hasTimestep="True">
+	<dataSheet name="DeterministicTransition" displayName="States" className="SyncroSim.STSim.DeterministicTransitionDataSheet" classAssembly="SyncroSim.STSim" noRowLimit="True" hasIteration="True" hasTimestep="True">
 		<column name="StratumIdSource" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isOptional="True"/>
 		<column name="StateClassIdSource" dataType="Integer" displayName="Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
 		<column name="StratumIdDest" dataType="Integer" displayName="To Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True"/>
@@ -164,7 +164,7 @@
 		<validation validationType="Unique" columns="StratumIdSource|Location"/>
 	</dataSheet>
 
-	<dataSheet name="Transition" displayName="Transitions" className="SyncroSim.STSim.ProbabilisticTransitiondataSheet" classAssembly="SyncroSim.STSim" noRowLimit="True" hasIteration="True" hasTimestep="True">
+	<dataSheet name="Transition" displayName="Transitions" className="SyncroSim.STSim.ProbabilisticTransitionDataSheet" classAssembly="SyncroSim.STSim" noRowLimit="True" hasIteration="True" hasTimestep="True">
 		<column name="StratumIdSource" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isOptional="True"/>
 		<column name="StateClassIdSource" dataType="Integer" displayName="Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
 		<column name="StratumIdDest" dataType="Integer" displayName="To Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True"/>
@@ -185,12 +185,12 @@
 		<validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
 	</dataSheet>
 
-	<dataFeed name="InitialConditions" displayName="Initial Conditions" viewClassName="SyncroSim.STSim.InitialConditionsNonSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
-		<dataSheet name="InitialConditionsNonSpatial"/>
+	<dataFeed name="InitialConditionsNonSpatial" displayName="Initial Conditions" viewClassName="SyncroSim.STSim.InitialConditionsNonSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<dataSheet name="InitialConditionsNonSpatialProperties"/>
 		<dataSheet name="InitialConditionsNonSpatialDistribution"/>
 	</dataFeed>
 
-	<dataSheet name="InitialConditionsNonSpatial" displayName="Initial Conditions Non Spatial" isSingleRow="True">
+	<dataSheet name="InitialConditionsNonSpatialProperties" displayName="Initial Conditions Non Spatial" isSingleRow="True">
 		<column name="TotalAmount" displayName="Total Amount" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
 		<column name="NumCells" displayName="Number of Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="CalcFromDist" displayName="Calculate from Distribution" dataType="Boolean"/>
@@ -211,7 +211,12 @@
 		<validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsSpatial" displayName="Initial Conditions Spatial Files" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialdataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.InitialConditionsSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataFeed name="InitialConditionsSpatial" viewClassName="SyncroSim.STSim.InitialConditionsSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<dataSheet name="InitialConditionsSpatialRaster"/>
+		<dataSheet name="InitialConditionsSpatialProperty"/>		
+	</dataFeed>
+
+	<dataSheet name="InitialConditionsSpatialRaster" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
 		<column name="StratumFileName" displayName="Stratum File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 		<column name="SecondaryStratumFileName" displayName="Secondary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
 		<column name="TertiaryStratumFileName" displayName="Tertiary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
@@ -220,7 +225,7 @@
 		<validation validationType="Unique" columns="Iteration"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsSpatialProperties" displayName="Initial Conditions Spatial Properties" isSingleRow="True">
+	<dataSheet name="InitialConditionsSpatialProperty" displayName="Initial Conditions Spatial Properties" isSingleRow="True">
 		<column name="NumRows" displayName="Num Rows" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumColumns" displayName="Num Columns" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumCells" displayName="Num Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
@@ -330,7 +335,13 @@
 		<validation validationType="Unique" columns="TransitionAttributeTypeId"/>
 	</dataSheet>
 
-	<dataSheet name="TransitionTarget" displayName="Transition Targets" className="SyncroSim.STSim.TransitionTargetdataSheet" classAssembly="SyncroSim.STSim" hasIteration="True" hasTimestep="True">
+	<dataSheet name="TransitionOrder" displayName="Transition Order" hasIteration="True" hasTimestep="True">
+		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+		<column name="Order" displayName="Order" dataType="Double" validationType="Decimal"/>
+		<validation validationType="Unique" columns="Iteration|Timestep|TransitionGroupId"/>
+	</dataSheet>
+
+	<dataSheet name="TransitionTarget" displayName="Transition Targets" className="SyncroSim.STSim.TransitionTargetDataSheet" classAssembly="SyncroSim.STSim" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
 		<column name="SecondaryStratumId" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
 		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel"/>
@@ -395,12 +406,6 @@
 		<column name="DistributionMax" displayName="Value Max" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" isOptional="True"/>
 		<validation validationType="LessEqual" columns="TSTMin|TSTMax"/>
 		<validation validationType="LessEqual" columns="AgeMin|AgeMax"/>
-	</dataSheet>
-
-	<dataSheet name="TransitionOrder" displayName="Transition Order" hasIteration="True" hasTimestep="True">
-		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
-		<column name="Order" displayName="Order" dataType="Double" validationType="Decimal"/>
-		<validation validationType="Unique" columns="Iteration|Timestep|TransitionGroupId"/>
 	</dataSheet>
 
 	<dataSheet name="TransitionAttributeValue" displayName="Transition Attribute Values" hasIteration="True" hasTimestep="True">
@@ -473,7 +478,7 @@
 		<validation validationType="Unique" columns="Iteration|TransitionGroupId"/>
 	</dataSheet>
 
-	<dataSheet name="TransitionSizeDistribution" displayName="Transition Size Distribution" className="SyncroSim.STSim.TransitionSizeDistributiondataSheet" classAssembly="SyncroSim.STSim" hasIteration="True" hasTimestep="True">
+	<dataSheet name="TransitionSizeDistribution" displayName="Transition Size Distribution" className="SyncroSim.STSim.TransitionSizeDistributionDataSheet" classAssembly="SyncroSim.STSim" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="MaximumArea" displayName="Maximum Area" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0" allowDbNull="False"/>
@@ -547,6 +552,11 @@
 		<validation validationType="LessEqual" columns="DistributionMin|DistributionMax"/>
 	</dataSheet>
 
+	<dataFeed name="TransitionAdjacencyMultipliers" displayName="Transition Adjacency Multipliers" viewClassName="SyncroSim.STSim.AdjacencyMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<dataSheet name="TransitionAdjacencySetting"/>
+		<dataSheet name="TransitionAdjacencyMultiplier"/>		
+	</dataFeed>
+
 	<dataSheet name="TransitionAdjacencySetting" displayName="Transition Adjacency Setting">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="StateClassId" dataType="Integer" displayName="Adjacent State Class" validationType="Datasheet" formula1="StateClass" isOptional="True" initOptionalVisible="True"/>
@@ -555,7 +565,7 @@
 		<column name="UpdateFrequency" displayName="Update Frequency" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" isOptional="True"/>
 	</dataSheet>
 
-	<dataSheet name="TransitionAdjacencyMultiplier" displayName="Transition Adjacency Multipliers" hasIteration="True" hasTimestep="True" viewClassName="SyncroSim.STSim.AdjacencyMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+	<dataSheet name="TransitionAdjacencyMultiplier" displayName="Transition Adjacency Multipliers" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
 		<column name="SecondaryStratumId" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
 		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel"/>
@@ -599,6 +609,13 @@
 	<dataSheet name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" isSingleRow="True" viewClassName="SyncroSim.STSim.ProcessingDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="SplitBySecondaryStrata" dataType="Boolean" displayName="Split by Secondary Strata"/>
 	</dataSheet>
+	
+	<dataSheet name="OutputStratum" displayName="Stratum Amount" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
+		<column name="Amount" dataType="Double"/>
+	</dataSheet>	
 
 	<dataSheet name="OutputStratumState" displayName="Stratum State" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
@@ -610,13 +627,6 @@
 		<column name="AgeMin" displayName="Age Min" dataType="Integer"/>
 		<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
 		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="Amount" dataType="Double"/>
-	</dataSheet>
-
-	<dataSheet name="OutputStratum" displayName="Stratum Amount" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
@@ -766,54 +776,110 @@
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
 	</dataSheet>
 
-	<transformer name="StateClassSummaryReport" displayName="State Classes" isExport="True"  className="SyncroSim.STSim.StateClassSummaryReport" classAssembly="SyncroSim.STSim">
+	<transformer name="StateClassSummaryReport" displayName="State Classes" isExport="True" className="SyncroSim.STSim.StateClassSummaryReport" classAssembly="SyncroSim.STSim">
 	</transformer>
-	<transformer name="TransitionSummaryReport" displayName="Transitions" isExport="True"  className="SyncroSim.STSim.TransitionSummaryReport" classAssembly="SyncroSim.STSim">
+	<transformer name="TransitionSummaryReport" displayName="Transitions" isExport="True" className="SyncroSim.STSim.TransitionSummaryReport" classAssembly="SyncroSim.STSim">
 	</transformer>
-	<transformer name="TransitionStateSummaryReport" displayName="Transitions by State Class" isExport="True"  className="SyncroSim.STSim.TransitionStateSummaryReport" classAssembly="SyncroSim.STSim">
+	<transformer name="TransitionStateSummaryReport" displayName="Transitions by State Class" isExport="True" className="SyncroSim.STSim.TransitionStateSummaryReport" classAssembly="SyncroSim.STSim">
 	</transformer>
-	<transformer name="StateAttributeReport" displayName="State Attributes" isExport="True"  className="SyncroSim.STSim.StateAttributeReport" classAssembly="SyncroSim.STSim">
+	<transformer name="StateAttributeReport" displayName="State Attributes" isExport="True" className="SyncroSim.STSim.StateAttributeReport" classAssembly="SyncroSim.STSim">
 	</transformer>
-	<transformer name="TransitionAttributeReport" displayName="Transition Attributes" isExport="True"  className="SyncroSim.STSim.TransitionAttributeReport" classAssembly="SyncroSim.STSim">
+	<transformer name="TransitionAttributeReport" displayName="Transition Attributes" isExport="True" className="SyncroSim.STSim.TransitionAttributeReport" classAssembly="SyncroSim.STSim">
 	</transformer>
-	<transformer name="TSTReport" displayName="Time-Since-Transition" isExport="True"  className="SyncroSim.STSim.TSTReport" classAssembly="SyncroSim.STSim">
+	<transformer name="TSTReport" displayName="Time-Since-Transition" isExport="True" className="SyncroSim.STSim.TSTReport" classAssembly="SyncroSim.STSim">
 	</transformer>
-	<transformer name="StateClassRasterMap" displayName="State Classes" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialState" column="Filename" isFolderExport="True">
+	<transformer name="StateClassRasterMap" displayName="State Classes" isRasterExport="True" dataSheet="OutputSpatialState" column="Filename">
 	</transformer>
-	<transformer name="TransitionRasterMap" displayName="Transitions" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialTransition" column="Filename" isFolderExport="True">
+	<transformer name="TransitionRasterMap" displayName="Transitions" isRasterExport="True" dataSheet="OutputSpatialTransition" column="Filename">
 	</transformer>
-	<transformer name="AgeRasterMap" displayName="Ages" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAge" column="Filename" isFolderExport="True">
+	<transformer name="AgeRasterMap" displayName="Ages" isRasterExport="True" dataSheet="OutputSpatialAge" column="Filename">
 	</transformer>
-	<transformer name="TSTRasterMap" displayName="Time-Since-Transition" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialTST" column="Filename" isFolderExport="True">
+	<transformer name="TSTRasterMap" displayName="Time-Since-Transition" isRasterExport="True" dataSheet="OutputSpatialTST" column="Filename">
 	</transformer>
-	<transformer name="StratumRasterMap" displayName="Stratum" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialStratum" column="Filename" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isFolderExport="True">
+	<transformer name="StratumRasterMap" displayName="Stratum" isRasterExport="True" dataSheet="OutputSpatialStratum" column="Filename" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel">
 	</transformer>
-	<transformer name="StateAttributeRasterMap" displayName="State Attributes" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialStateAttribute" column="Filename" isFolderExport="True">
+	<transformer name="StateAttributeRasterMap" displayName="State Attributes" isRasterExport="True" dataSheet="OutputSpatialStateAttribute" column="Filename">
 	</transformer>
-	<transformer name="TransitionAttributeRasterMap" displayName="Transition Attributes" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialTransitionAttribute" column="Filename" isFolderExport="True">
+	<transformer name="TransitionAttributeRasterMap" displayName="Transition Attributes" isRasterExport="True" dataSheet="OutputSpatialTransitionAttribute" column="Filename">
 	</transformer>
-	<transformer name="TransitionEventRasterMap" displayName="Transition Events" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialTransitionEvent" column="Filename" isFolderExport="True">
+	<transformer name="TransitionEventRasterMap" displayName="Transition Events" isRasterExport="True" dataSheet="OutputSpatialTransitionEvent" column="Filename">
 	</transformer>
-	<transformer name="AverageStratumRasterMap" isExport="True"  className="SyncroSim.STSim.AvgStratumExportTransformer" classAssembly="SyncroSim.STSim" dataSheet="OutputSpatialAverageStratum" column="Filename" isFolderExport="True">
+	<transformer name="AverageStratumRasterMap" isExport="True" className="SyncroSim.STSim.AvgStratumExportTransformer" classAssembly="SyncroSim.STSim" dataSheet="OutputSpatialAverageStratum" column="Filename">
 	</transformer>
-	<transformer name="AverageStateClassRasterMap" displayName="State Class Probability" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAverageStateClass" column="Filename" isFolderExport="True">
+	<transformer name="AverageStateClassRasterMap" displayName="State Class Probability" isRasterExport="True" dataSheet="OutputSpatialAverageStateClass" column="Filename">
 	</transformer>
-	<transformer name="AverageAgeRasterMap" displayName="Average Ages" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAverageAge" column="Filename" isFolderExport="True">
+	<transformer name="AverageAgeRasterMap" displayName="Average Ages" isRasterExport="True" dataSheet="OutputSpatialAverageAge" column="Filename">
 	</transformer>
-	<transformer name="AverageStateAttributeRasterMap" displayName="Average State Attributes" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAverageStateAttribute" column="Filename" isFolderExport="True">
+	<transformer name="AverageStateAttributeRasterMap" displayName="Average State Attributes" isRasterExport="True" dataSheet="OutputSpatialAverageStateAttribute" column="Filename">
 	</transformer>
-	<transformer name="AverageTransitionAttributeRasterMap" displayName="Average Transition Attributes" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAverageTransitionAttribute" column="Filename" isFolderExport="True">
+	<transformer name="AverageTransitionAttributeRasterMap" displayName="Average Transition Attributes" isRasterExport="True" dataSheet="OutputSpatialAverageTransitionAttribute" column="Filename">
 	</transformer>
-	<transformer name="AverageTransitionProbabilityRasterMap" displayName="Transition Probability" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename" isFolderExport="True">
+	<transformer name="AverageTransitionProbabilityRasterMap" displayName="Transition Probability" isRasterExport="True" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename">
 	</transformer>
-	<transformer name="AverageTSTRasterMap" displayName="Time-Since-Transition - Average" isExport="True"  className="SyncroSim.Core.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.Core.Forms" dataSheet="OutputSpatialAverageTST" column="Filename" isFolderExport="True">
+	<transformer name="AverageTSTRasterMap" displayName="Time-Since-Transition - Average" isRasterExport="True" dataSheet="OutputSpatialAverageTST" column="Filename">
 	</transformer>
 
-	<transformer
-		name="Main"
-		displayName="ST-Sim"
-		className="SyncroSim.STSim.STSimTransformer"
-		classAssembly="SyncroSim.STSim">
+	<transformer name="Main" displayName="ST-Sim" className="SyncroSim.STSim.STSimTransformer" classAssembly="SyncroSim.STSim">
+		<dataSheet name="RunControl" type="Input"/>
+		<dataSheet name="DeterministicTransition" type="Input"/>		
+		<dataSheet name="Transition" type="Input"/>				
+		<dataSheet name="InitialConditionsNonSpatialProperties" type="Input"/>				
+		<dataSheet name="InitialConditionsNonSpatialDistribution" type="Input"/>				
+	  <dataSheet name="InitialConditionsSpatialRaster" type="Input"/>			
+		<dataSheet name="InitialConditionsSpatialProperty" type="Input"/>		
+		<dataSheet name="OutputOptions" type="Input"/>				
+		<dataSheet name="OutputOptionsSpatial" type="Input"/>				
+		<dataSheet name="OutputOptionsSpatialAverage" type="Input"/>				
+	  <dataSheet name="OutputFilterTransitionGroups" type="Input"/>				
+		<dataSheet name="OutputFilterStateAttributes" type="Input"/>		
+		<dataSheet name="OutputFilterTransitionAttributes" type="Input"/>				
+		<dataSheet name="TransitionTarget" type="Input"/>				
+		<dataSheet name="TransitionTargetPrioritization" type="Input"/>				
+	  <dataSheet name="TransitionMultiplierValue" type="Input"/>				
+		<dataSheet name="StateAttributeValue" type="Input"/>				
+		<dataSheet name="TransitionAttributeValue" type="Input"/>				
+		<dataSheet name="TransitionAttributeTarget" type="Input"/>				
+	  <dataSheet name="TransitionAttributeTargetPrioritization" type="Input"/>	
+		<dataSheet name="TimeSinceTransitionGroup" type="Input"/>				
+		<dataSheet name="TimeSinceTransitionRandomize" type="Input"/>				
+		<dataSheet name="InitialTSTSpatial" type="Input"/>				
+	  <dataSheet name="TransitionSizeDistribution" type="Input"/>				
+		<dataSheet name="TransitionSpreadDistribution" type="Input"/>				
+		<dataSheet name="TransitionPatchPrioritization" type="Input"/>				
+		<dataSheet name="TransitionSizePrioritization" type="Input"/>				
+	  <dataSheet name="TransitionSpatialMultiplier" type="Input"/>			
+	  <dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>		
+	  <dataSheet name="TransitionDirectionMultiplier" type="Input"/>			
+	  <dataSheet name="DigitalElevationModel" type="Input"/>				
+	  <dataSheet name="TransitionSlopeMultiplier" type="Input"/>			
+	  <dataSheet name="TransitionAdjacencySetting" type="Input"/>				
+	  <dataSheet name="TransitionAdjacencyMultiplier" type="Input"/>			
+	  <dataSheet name="TransitionPathwayAutoCorrelation" type="Input"/>				
+	  <dataSheet name="DistributionValue" type="Input"/>			
+	  <dataSheet name="Multiprocessing" type="Input"/>				
+	  <dataSheet name="OutputStratum" type="Output"/>				
+	  <dataSheet name="OutputStratumState" type="Output"/>			
+	  <dataSheet name="OutputStratumTransition" type="Output"/>		
+	  <dataSheet name="OutputStratumTransitionState" type="Output"/>				
+	  <dataSheet name="OutputTST" type="Output"/>			
+	  <dataSheet name="OutputStateAttribute" type="Output"/>				
+	  <dataSheet name="OutputTransitionAttribute" type="Output"/>				
+	  <dataSheet name="OutputExternalVariableValue" type="Output"/>			
+	  <dataSheet name="OutputSpatialState" type="Output"/>				
+	  <dataSheet name="OutputSpatialAge" type="Output"/>				
+	  <dataSheet name="OutputSpatialStratum" type="Output"/>			
+	  <dataSheet name="OutputSpatialTransition" type="Output"/>		
+	  <dataSheet name="OutputSpatialTransitionEvent" type="Output"/>			
+	  <dataSheet name="OutputSpatialTST" type="Output"/>	
+	  <dataSheet name="OutputSpatialStateAttribute" type="Output"/>			
+	  <dataSheet name="OutputSpatialTransitionAttribute" type="Output"/>		
+	  <dataSheet name="OutputSpatialAverageStateClass" type="Output"/>			
+	  <dataSheet name="OutputSpatialAverageAge" type="Output"/>	
+	  <dataSheet name="OutputSpatialAverageStratum" type="Output"/>			
+	  <dataSheet name="OutputSpatialAverageTransitionProbability" type="Output"/>		
+	  <dataSheet name="OutputSpatialAverageTST" type="Output"/>			
+	  <dataSheet name="OutputSpatialAverageStateAttribute" type="Output"/>	
+	  <dataSheet name="OutputSpatialAverageTransitionAttribute" type="Output"/>			
 	</transformer>
 
 	<layout type="Export"
@@ -828,7 +894,6 @@
 			<item name="TSTReport"/>
 			<item name="StateAttributeReport"/>
 			<item name="TransitionAttributeReport"/>
-			<item name="coreforms_ScenarioDescriptionReport"/>
 		</group>
 		<group name="Maps">
 			<group name="StateClasses" displayName="State Classes">
@@ -895,10 +960,7 @@
 				<item name="TSTType"/>
 				<item name="TSTGroup"/>
 			</group>
-			<item name="core_DistributionType"/>
-			<item name="core_ExternalVariableType"/>
 			<item name="SizeClass"/>
-			<item name="core_AutoGenTag"/>
 		</group>
 		<item name="Terminology"/>
 	</layout>
@@ -936,7 +998,7 @@
 				<item name="TransitionSpatialInitiationMultiplier"/>
 				<item name="TransitionDirectionMultiplier"/>
 				<item name="TransitionSlopeMultiplier"/>
-				<item name="TransitionAdjacencyMultiplier"/>
+				<item name="TransitionAdjacencyMultipliers"/>				
 				<item name="TransitionPathwayAutoCorrelation"/>
 			</group>
 			<item name="TransitionOrder" displayName="Transitions - Order"/>
@@ -949,13 +1011,7 @@
 				<item name="TransitionAttributeTargetPrioritization" displayName="Attribute Target Prioritization"/>
 			</group>
 			<item name="DistributionValue"/>
-			<item name="core_ExternalVariableValue"/>
-			<group name="Multiprocessing">
-				<item name="Multiprocessing"/>
-				<item name="core_Multiprocessing"/>
-			</group>
-			<item name="core_External" displayName="External Program"/>
-			<item name="core_AutoGenTagValue"/>
+		  <item name="Multiprocessing"/>			
 		</group>
 	</layout>
 

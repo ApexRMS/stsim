@@ -29,32 +29,32 @@ namespace SyncroSim.STSim
         private bool m_CellAreaCalcHasChanges;
         private int m_CellMouseColIndex = -1;
         private int m_CellMouseRowIndex = -1;
-        private DataFeedView m_FilesView;
-        private DataGridView m_FilesDataGrid;
-        private InitialConditionsSpatialDataSheet m_FilesDataSheet;
+        private DataFeedView m_RastersView;
+        private DataGridView m_RastersDataGrid;
+        private InitialConditionsSpatialRasterDataSheet m_FilesDataSheet;
         private HourGlass m_HourGlass;
         private delegate void DelegateNoArgs();
 
         private const int BROWSE_COLUMN_WIDTH = 25;
-        private const int ITERATION_COLUMN_INDEX = 0;
-        private const int PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX = 1;
-        private const int PRIMARY_STRATUM_BROWSE_COLUMN_INDEX = 2;
-        private const int SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX = 3;
-        private const int SECONDARY_STRATUM_BROWSE_COLUMN_INDEX = 4;
-        private const int TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX = 5;
-        private const int TERTIARY_STRATUM_BROWSE_COLUMN_INDEX = 6;
-        private const int SCLASS_FILE_NAME_COLUMN_INDEX = 7;
-        private const int SCLASS_BROWSE_COLUMN_INDEX = 8;
-        private const int AGE_FILE_NAME_COLUMN_INDEX = 9;
-        private const int AGE_BROWSE_COLUMN_INDEX = 10;
+        private const int ITERATION_COLUMN_INDEX = 1;
+        private const int PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 1;
+        private const int PRIMARY_STRATUM_BROWSE_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 2;
+        private const int SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 3;
+        private const int SECONDARY_STRATUM_BROWSE_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 4;
+        private const int TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 5;
+        private const int TERTIARY_STRATUM_BROWSE_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 6;
+        private const int SCLASS_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 7;
+        private const int SCLASS_BROWSE_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 8;
+        private const int AGE_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 9;
+        private const int AGE_BROWSE_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 10;
 
         protected override void InitializeView()
         {
             base.InitializeView();
 
-            this.m_FilesView = (this.Session.CreateMultiRowDataFeedView(this.Scenario, this.ControllingScenario));
-            this.m_FilesDataGrid = ((MultiRowDataFeedView)this.m_FilesView).GridControl;
-            this.PanelTopContent.Controls.Add(this.m_FilesView);
+            this.m_RastersView = (this.Session.CreateMultiRowDataFeedView(this.Scenario, this.ControllingScenario));
+            this.m_RastersDataGrid = ((MultiRowDataFeedView)this.m_RastersView).GridControl;
+            this.PanelTopContent.Controls.Add(this.m_RastersView);
             this.PanelBottomContent.BackColor = Color.FromArgb(214, 219, 233);
         }
 
@@ -86,32 +86,32 @@ namespace SyncroSim.STSim
         {
             base.LoadDataFeed(dataFeed);
 
-            this.m_FilesView.LoadDataFeed(dataFeed, Strings.DATASHEET_SPIC_NAME);
+            this.m_RastersView.LoadDataFeed(dataFeed, Strings.DATASHEET_SPIC_NAME);
 
             if (!this.m_ColumnsInitialized)
             {
                 //Add handlers
-                this.m_FilesDataGrid.CellFormatting += this.OnGridCellFormatting;
-                this.m_FilesDataGrid.CellMouseClick += this.OnGridCellMouseClick;
-                this.m_FilesDataGrid.CellPainting += this.OnGridCellPainting;
-                this.m_FilesDataGrid.CellMouseEnter += this.OnGridCellMouseEnter;
-                this.m_FilesDataGrid.CellMouseLeave += this.OnGridCellMouseLeave;
-                this.m_FilesDataGrid.CellBeginEdit += this.OnGridBeginEdit;
-                this.m_FilesDataGrid.KeyDown += this.OnGridKeyDown;
+                this.m_RastersDataGrid.CellFormatting += this.OnGridCellFormatting;
+                this.m_RastersDataGrid.CellMouseClick += this.OnGridCellMouseClick;
+                this.m_RastersDataGrid.CellPainting += this.OnGridCellPainting;
+                this.m_RastersDataGrid.CellMouseEnter += this.OnGridCellMouseEnter;
+                this.m_RastersDataGrid.CellMouseLeave += this.OnGridCellMouseLeave;
+                this.m_RastersDataGrid.CellBeginEdit += this.OnGridBeginEdit;
+                this.m_RastersDataGrid.KeyDown += this.OnGridKeyDown;
 
                 //Add browse button columns
-                this.m_FilesDataGrid.Columns.Insert(PRIMARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(SECONDARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(TERTIARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(SCLASS_BROWSE_COLUMN_INDEX, CreateButtonColumn());
-                this.m_FilesDataGrid.Columns.Insert(AGE_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_RastersDataGrid.Columns.Insert(PRIMARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_RastersDataGrid.Columns.Insert(SECONDARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_RastersDataGrid.Columns.Insert(TERTIARY_STRATUM_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_RastersDataGrid.Columns.Insert(SCLASS_BROWSE_COLUMN_INDEX, CreateButtonColumn());
+                this.m_RastersDataGrid.Columns.Insert(AGE_BROWSE_COLUMN_INDEX, CreateButtonColumn());
 
                 this.m_ColumnsInitialized = true;
             }
 
             this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
 
-            this.m_FilesDataSheet = (InitialConditionsSpatialDataSheet)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            this.m_FilesDataSheet = (InitialConditionsSpatialRasterDataSheet)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             this.m_FilesDataSheet.ValidatingRasters += this.OnValidatingRasters;
             this.m_FilesDataSheet.RastersValidated += this.OnRastersValidated;
         }
@@ -126,7 +126,7 @@ namespace SyncroSim.STSim
 
         public override void EnableView(bool enable)
         {
-            this.m_FilesView.EnableView(enable);
+            this.m_RastersView.EnableView(enable);
 
             this.TableAttributes.Enabled = enable;
             this.TableCalculated.Enabled = enable;
@@ -160,7 +160,7 @@ namespace SyncroSim.STSim
 
         private void OnGridBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            DataGridViewColumn IterCol = this.m_FilesDataGrid.Columns["Iteration"];
+            DataGridViewColumn IterCol = this.m_RastersDataGrid.Columns["Iteration"];
 
             //Always allow editing of the Iteration column
             if (e.ColumnIndex == IterCol.Index)
@@ -212,7 +212,7 @@ namespace SyncroSim.STSim
             this.m_CellMouseColIndex = e.ColumnIndex;
             this.m_CellMouseRowIndex = e.RowIndex;
 
-            this.m_FilesDataGrid.InvalidateCell(e.ColumnIndex, e.RowIndex);
+            this.m_RastersDataGrid.InvalidateCell(e.ColumnIndex, e.RowIndex);
         }
 
         private void OnGridCellMouseLeave(object sender, DataGridViewCellEventArgs e)
@@ -220,7 +220,7 @@ namespace SyncroSim.STSim
             this.m_CellMouseColIndex = -1;
             this.m_CellMouseRowIndex = -1;
 
-            this.m_FilesDataGrid.InvalidateCell(e.ColumnIndex, e.RowIndex);
+            this.m_RastersDataGrid.InvalidateCell(e.ColumnIndex, e.RowIndex);
         }
 
         private void OnGridCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -230,7 +230,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            DataGridViewCell Cell = this.m_FilesDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            DataGridViewCell Cell = this.m_RastersDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
             if (!Cell.OwningRow.Selected)
             {
@@ -256,15 +256,15 @@ namespace SyncroSim.STSim
                     Image img = Properties.Resources.Open16x16;
                     int X = e.CellBounds.Left + e.CellBounds.Width / 2 - 8;
                     int Y = e.CellBounds.Top + e.CellBounds.Height / 2 - 8;
-                    DataGridViewCell Cell = this.m_FilesDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                    DataGridViewCell Cell = this.m_RastersDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
                     bool MouseInCell = (
                         e.RowIndex == this.m_CellMouseRowIndex &&
                         e.ColumnIndex == this.m_CellMouseColIndex);
 
                     bool IsFocusedCell = (
-                        this.m_FilesDataGrid.ContainsFocus &&
-                        Cell == this.m_FilesDataGrid.CurrentCell);
+                        this.m_RastersDataGrid.ContainsFocus &&
+                        Cell == this.m_RastersDataGrid.CurrentCell);
 
                     e.PaintBackground(e.ClipBounds, Cell.OwningRow.Selected);
 
@@ -302,7 +302,7 @@ namespace SyncroSim.STSim
 
         private void OnGridKeyDown(object sender, KeyEventArgs e)
         {
-            DataGridViewCell CurCell = this.m_FilesDataGrid.CurrentCell;
+            DataGridViewCell CurCell = this.m_RastersDataGrid.CurrentCell;
 
             if (CurCell == null)
             {
@@ -330,8 +330,8 @@ namespace SyncroSim.STSim
                     if (e.KeyValue == (Int32)Keys.Enter)
                     {
                         ChooseRasterFile(
-                            this.m_FilesDataGrid.CurrentCell.RowIndex,
-                            this.m_FilesDataGrid.CurrentCell.ColumnIndex - 1);
+                            this.m_RastersDataGrid.CurrentCell.RowIndex,
+                            this.m_RastersDataGrid.CurrentCell.ColumnIndex - 1);
 
                         e.Handled = true;
                     }
@@ -351,9 +351,9 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetStratumLabelTerminology(e.DataSheet, ref Primary, ref Secondary, ref Tertiary);
             TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
 
-            this.m_FilesDataGrid.Columns[PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Primary);
-            this.m_FilesDataGrid.Columns[SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Secondary);
-            this.m_FilesDataGrid.Columns[TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Tertiary);
+            this.m_RastersDataGrid.Columns[PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Primary);
+            this.m_RastersDataGrid.Columns[SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Secondary);
+            this.m_RastersDataGrid.Columns[TERTIARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Tertiary);
 
             this.RefreshNonCalculatedValues();
         }
@@ -367,17 +367,17 @@ namespace SyncroSim.STSim
                 using (HourGlass h = new HourGlass())
                 {
                     DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
-                    DataGridViewEditMode OldMode = this.m_FilesDataGrid.EditMode;
+                    DataGridViewEditMode OldMode = this.m_RastersDataGrid.EditMode;
 
-                    this.m_FilesDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-                    this.m_FilesDataGrid.CurrentCell = this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex];
+                    this.m_RastersDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+                    this.m_RastersDataGrid.CurrentCell = this.m_RastersDataGrid.Rows[rowIndex].Cells[colIndex];
 
-                    this.m_FilesDataGrid.BeginEdit(false);
-                    this.m_FilesDataGrid.EditingControl.Text = Path.GetFileName(rasterFullFilename);
-                    this.m_FilesDataGrid.EndEdit();
+                    this.m_RastersDataGrid.BeginEdit(false);
+                    this.m_RastersDataGrid.EditingControl.Text = Path.GetFileName(rasterFullFilename);
+                    this.m_RastersDataGrid.EndEdit();
 
-                    this.m_FilesDataGrid.CurrentCell = this.m_FilesDataGrid.Rows[rowIndex].Cells[colIndex + 1];
-                    this.m_FilesDataGrid.EditMode = OldMode;
+                    this.m_RastersDataGrid.CurrentCell = this.m_RastersDataGrid.Rows[rowIndex].Cells[colIndex + 1];
+                    this.m_RastersDataGrid.EditMode = OldMode;
 
                     ds.AddExternalInputFile(rasterFullFilename);
                 }

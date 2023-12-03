@@ -1785,7 +1785,7 @@ namespace SyncroSim.STSim
                 this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref units);
 
             string cellSizeUnits = RasterCellSizeUnit.Meter.ToString();
-            double convFactor = InitialConditionsSpatialDataSheet.CalcCellArea(1.0, cellSizeUnits, units);
+            double convFactor = InitialConditionsSpatialRasterDataSheet.CalcCellArea(1.0, cellSizeUnits, units);
             double cellArea = cellSizeTermUnits / convFactor;
 
             drSpIcProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME] = Convert.ToInt32(Math.Sqrt(numRasterCells), CultureInfo.InvariantCulture);

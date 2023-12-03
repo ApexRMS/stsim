@@ -434,7 +434,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DataSheets\DeterministicTransitionDataSheet.cs" />
-    <Compile Include="DataSheets\InitialConditionsSpatialDataSheet.cs" />
+    <Compile Include="DataSheets\InitialConditionsSpatialRasterDataSheet.cs" />
     <Compile Include="DataSheets\ProbabilisticTransitionDataSheet.cs" />
     <Compile Include="DataSheets\StateClassDataSheet.cs" />
     <Compile Include="DataSheets\TransitionGroupDataSheet.cs" />

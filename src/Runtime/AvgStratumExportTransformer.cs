@@ -7,7 +7,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    class AvgStratumExportTransformer : Core.Forms.MultibandExportTransformer
+    class AvgStratumExportTransformer : Core.Forms.RasterExportTransformer
     {
         public override void Configure()
         {

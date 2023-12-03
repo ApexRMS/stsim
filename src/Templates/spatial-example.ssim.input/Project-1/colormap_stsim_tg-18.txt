@@ -1,3 +1,0 @@
-# Syncrosim Generated Transition Group (Fire [Type]) Color Map (QGIS-compatible) Export File,,,,,
-INTERPOLATION:EXACT
-2,255,0,0,255,Fire

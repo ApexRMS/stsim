@@ -8,7 +8,7 @@ namespace SyncroSim.STSim
 		private readonly int? m_iteration;
 		private readonly int? m_timestep;
 		private readonly int m_flowTypeId;
-		private readonly double m_Order = Strings.DEFAULT_FLOW_ORDER;
+		private readonly double m_Order = Constants.DEFAULT_FLOW_ORDER;
 
 		public FlowOrder(int? iteration, int? timestep, int flowTypeId, double? order)
 		{

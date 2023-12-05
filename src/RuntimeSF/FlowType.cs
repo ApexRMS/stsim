@@ -6,7 +6,7 @@ namespace SyncroSim.STSim
 	internal class FlowType : StockFlowType
 	{
         private readonly FlowGroupLinkageCollection m_FlowGroupLinkages = new FlowGroupLinkageCollection();
-        private double m_Order = Strings.DEFAULT_FLOW_ORDER;
+        private double m_Order = Constants.DEFAULT_FLOW_ORDER;
 
 		public FlowType(int id, string name) : base(id, name)
 		{

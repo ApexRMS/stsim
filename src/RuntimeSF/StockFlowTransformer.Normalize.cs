@@ -19,7 +19,7 @@ namespace SyncroSim.STSim
 		{
 			DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
 			int MaxTimestep = Convert.ToInt32(drrc["MaximumTimestep"], CultureInfo.InvariantCulture);
-			DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_NAME);
+			DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STOCKFLOW_OO_NAME);
 			DataRow droo = dsoo.GetDataRow();
 
 			if (droo == null)
@@ -30,22 +30,22 @@ namespace SyncroSim.STSim
 
 			if (!AnyOutputOptionsSelected())
 			{
-				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME, Booleans.BoolToInt(true));
-				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME, Booleans.BoolToInt(true));
-				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, 1);
-				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, 1);
+				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME, Booleans.BoolToInt(true));
+				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME, Booleans.BoolToInt(true));
+				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, 1);
+				DataTableUtilities.SetRowValue(droo, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, 1);
 
 				this.RecordStatus(StatusType.Information, Strings.NO_SUMMARY_OUTPUT_OPTIONS_INFORMATION);
 			}
 
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Summary stocks", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Summary flows", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Spatial stocks", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Spatial flows", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Lateral flows", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Average spatial stocks", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Average spatial flows", MaxTimestep);
-			this.ValidateTimesteps(droo, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME, "Average lateral flows", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Summary stocks", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Summary flows", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Spatial stocks", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Spatial flows", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Lateral flows", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME, "Average spatial stocks", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME, "Average spatial flows", MaxTimestep);
+			this.ValidateTimesteps(droo, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME, "Average lateral flows", MaxTimestep);
         }
 
 		/// <summary>

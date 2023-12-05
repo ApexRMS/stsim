@@ -83,7 +83,7 @@ namespace SyncroSim.STSim
 
             string Query =
                 "SELECT " +
-                "stsimsf_OutputFlow.ScenarioId, ";
+                "stsim_OutputFlow.ScenarioId, ";
 
             if (!isCSV)
             {
@@ -91,8 +91,8 @@ namespace SyncroSim.STSim
             }
 
             Query += string.Format(CultureInfo.InvariantCulture,
-                "stsimsf_OutputFlow.Iteration,  " +
-                "stsimsf_OutputFlow.Timestep,  " +
+                "stsim_OutputFlow.Iteration,  " +
+                "stsim_OutputFlow.Timestep,  " +
                 "ST1.Name AS FromStratum, " +
                 "SS1.Name AS FromSecondaryStratum, " +
                 "TS1.Name AS FromTertiaryStratum, " +
@@ -102,32 +102,32 @@ namespace SyncroSim.STSim
                 "ST2.Name AS ToStratum, " +
                 "SC2.Name AS ToStateClass, " +
                 "STK2.Name AS ToStock, " +
-                "stsimsf_FlowGroup.Name as FlowGroup, " +
+                "stsim_FlowGroup.Name as FlowGroup, " +
                 "ST3.Name AS EndStratum, " +
                 "SS2.Name AS EndSecondaryStratum, " +
                 "TS2.Name AS EndTertiaryStratum, " +
                 "SC3.Name AS EndStateClass, " +
-                "stsimsf_OutputFlow.EndMinAge, " +
-                "stsimsf_OutputFlow.Amount " +
-                "FROM stsimsf_OutputFlow " +
-                "INNER JOIN core_Scenario ON core_Scenario.ScenarioId = stsimsf_OutputFlow.ScenarioId " +
-                "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumId = stsimsf_OutputFlow.FromStratumId " +
-                "INNER JOIN stsim_Stratum AS ST2 ON ST2.StratumId = stsimsf_OutputFlow.ToStratumId " +
-                "LEFT JOIN stsim_Stratum AS ST3 ON ST3.StratumId = stsimsf_OutputFlow.EndStratumId " +
-                "LEFT JOIN stsim_SecondaryStratum AS SS1 ON SS1.SecondaryStratumId = stsimsf_OutputFlow.FromSecondaryStratumId " +
-                "LEFT JOIN stsim_SecondaryStratum AS SS2 ON SS2.SecondaryStratumId = stsimsf_OutputFlow.EndSecondaryStratumId " +
-                "LEFT JOIN stsim_TertiaryStratum AS TS1 ON TS1.TertiaryStratumId = stsimsf_OutputFlow.FromTertiaryStratumId " +
-                "LEFT JOIN stsim_TertiaryStratum AS TS2 ON TS2.TertiaryStratumId = stsimsf_OutputFlow.EndTertiaryStratumId " +
-                "INNER JOIN stsim_StateClass AS SC1 ON SC1.StateClassId = stsimsf_OutputFlow.FromStateClassId " +
-                "INNER JOIN stsim_StateClass AS SC2 ON SC2.StateClassId = stsimsf_OutputFlow.ToStateClassId " +
-                "LEFT JOIN stsim_StateClass AS SC3 ON SC3.StateClassId = stsimsf_OutputFlow.EndStateClassId " +
-                "INNER JOIN stsimsf_StockType AS STK1 ON STK1.StockTypeId = stsimsf_OutputFlow.FromStockTypeId " +
-                "INNER JOIN stsimsf_StockType AS STK2 ON STK2.StockTypeId = stsimsf_OutputFlow.ToStockTypeId " +
-                "INNER JOIN stsimsf_FlowGroup ON stsimsf_FlowGroup.FlowGroupId = stsimsf_OutputFlow.FlowGroupId " +
-                "LEFT JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeId = stsimsf_OutputFlow.TransitionTypeId " +
-                "WHERE stsimsf_OutputFlow.ScenarioId IN ({0})  " +
+                "stsim_OutputFlow.EndMinAge, " +
+                "stsim_OutputFlow.Amount " +
+                "FROM stsim_OutputFlow " +
+                "INNER JOIN core_Scenario ON core_Scenario.ScenarioId = stsim_OutputFlow.ScenarioId " +
+                "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumId = stsim_OutputFlow.FromStratumId " +
+                "INNER JOIN stsim_Stratum AS ST2 ON ST2.StratumId = stsim_OutputFlow.ToStratumId " +
+                "LEFT JOIN stsim_Stratum AS ST3 ON ST3.StratumId = stsim_OutputFlow.EndStratumId " +
+                "LEFT JOIN stsim_SecondaryStratum AS SS1 ON SS1.SecondaryStratumId = stsim_OutputFlow.FromSecondaryStratumId " +
+                "LEFT JOIN stsim_SecondaryStratum AS SS2 ON SS2.SecondaryStratumId = stsim_OutputFlow.EndSecondaryStratumId " +
+                "LEFT JOIN stsim_TertiaryStratum AS TS1 ON TS1.TertiaryStratumId = stsim_OutputFlow.FromTertiaryStratumId " +
+                "LEFT JOIN stsim_TertiaryStratum AS TS2 ON TS2.TertiaryStratumId = stsim_OutputFlow.EndTertiaryStratumId " +
+                "INNER JOIN stsim_StateClass AS SC1 ON SC1.StateClassId = stsim_OutputFlow.FromStateClassId " +
+                "INNER JOIN stsim_StateClass AS SC2 ON SC2.StateClassId = stsim_OutputFlow.ToStateClassId " +
+                "LEFT JOIN stsim_StateClass AS SC3 ON SC3.StateClassId = stsim_OutputFlow.EndStateClassId " +
+                "INNER JOIN stsim_StockType AS STK1 ON STK1.StockTypeId = stsim_OutputFlow.FromStockTypeId " +
+                "INNER JOIN stsim_StockType AS STK2 ON STK2.StockTypeId = stsim_OutputFlow.ToStockTypeId " +
+                "INNER JOIN stsim_FlowGroup ON stsim_FlowGroup.FlowGroupId = stsim_OutputFlow.FlowGroupId " +
+                "LEFT JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeId = stsim_OutputFlow.TransitionTypeId " +
+                "WHERE stsim_OutputFlow.ScenarioId IN ({0})  " +
                 "ORDER BY " +
-                "stsimsf_OutputFlow.ScenarioId, ", ScenFilter);
+                "stsim_OutputFlow.ScenarioId, ", ScenFilter);
 
             if (!isCSV)
             {
@@ -135,8 +135,8 @@ namespace SyncroSim.STSim
             }
              
             Query +=       
-                "stsimsf_OutputFlow.Iteration, " + 
-                "stsimsf_OutputFlow.Timestep, " + 
+                "stsim_OutputFlow.Iteration, " + 
+                "stsim_OutputFlow.Timestep, " + 
                 "ST1.Name, " + 
                 "SS1.Name, " + 
                 "TS1.Name, " + 
@@ -146,12 +146,12 @@ namespace SyncroSim.STSim
                 "ST2.Name, " + 
                 "SC2.Name, " +
                 "STK2.Name, " + 
-                "stsimsf_FlowGroup.Name, " + 
+                "stsim_FlowGroup.Name, " + 
                 "ST3.Name, " +
                 "SS2.Name, " +
                 "TS2.Name, " +
                 "SC3.Name, " +
-                "stsimsf_OutputFlow.EndMinAge";
+                "stsim_OutputFlow.EndMinAge";
 
             return Query;
 		}

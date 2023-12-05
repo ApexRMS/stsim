@@ -1183,63 +1183,13 @@
 		<dataSheet name="OutputAverageLateralFlowGroup" type="Output"/>
 	</transformer>
 
-	<layout type="Export"
-		className="SyncroSim.STSim.STSimResultsProvider"
+	<transformer
+		name="StockFlow"
+		displayName="Stocks and Flows"
+		className="SyncroSim.STSim.StockFlowTransformer"
 		classAssembly="SyncroSim.STSim"
-		displayNameSource="Terminology"
-		displayNameColumn="PrimaryStratumLabel">
-		<group name="Reports">
-			<item name="StateClassSummaryReport"/>
-			<item name="TransitionSummaryReport"/>
-			<item name="TransitionStateSummaryReport"/>
-			<item name="TSTReport"/>
-			<item name="StateAttributeReport"/>
-			<item name="TransitionAttributeReport"/>
-			<item name="SummaryStockReport"/>
-			<item name="SummaryFlowReport"/>
-		</group>
-		<group name="Maps">
-			<group name="StateClasses" displayName="State Classes">
-				<item name="StateClassRasterMap" displayName="Iteration"/>
-				<item name="AverageStateClassRasterMap" displayName="Average"/>
-			</group>
-			<group name="Ages">
-				<item name="AgeRasterMap" displayName="Iteration"/>
-				<item name="AverageAgeRasterMap" displayName="Average"/>
-			</group>
-			<group name="PrimaryStrata" displayName="Primary Strata">
-				<item name="StratumRasterMap" displayName="Iteration"/>
-				<item name="AverageStratumRasterMap" displayName="Average"/>
-			</group>
-			<group name="Transitions">
-				<item name="TransitionRasterMap" displayName="Iteration"/>
-				<item name="AverageTransitionProbabilityRasterMap" displayName="Average"/>
-				<item name="TransitionEventRasterMap" displayName="Iteration - Events"/>
-				<item name="TSTRasterMap"/>
-				<item name="AverageTSTRasterMap"/>
-			</group>"
-			<group name="StateAttributes" displayName="State Attributes">
-				<item name="StateAttributeRasterMap" displayName="Iteration"/>
-				<item name="AverageStateAttributeRasterMap" displayName="Average"/>
-			</group>
-			<group name="TransitionAttributes" displayName="Transition Attributes">
-				<item name="TransitionAttributeRasterMap" displayName="Iteration"/>
-				<item name="AverageTransitionAttributeRasterMap" displayName="Average"/>
-			</group>
-			<group name="Stocks">
-				<item name="StockRasterMap" displayName="Iteration"/>
-				<item name="AvgStockRasterMap" displayName="Average"/>
-			</group>
-			<group name="Flows">
-				<item name="FlowRasterMap" displayName="Iteration"/>
-				<item name="AvgFlowRasterMap" displayName="Average"/>
-			</group>			
-			<group name="LateralFlows" displayName="Lateral Flows">
-				<item name="LateralFlowRasterMap" displayName="Iteration"/>
-				<item name="AvgLateralFlowRasterMap" displayName="Average"/>
-			</group>					
-		</group>
-	</layout>
+		isPipeline="False">
+	</transformer>
 
 	<layout type="Project">
 		<group name="Strata">
@@ -1336,7 +1286,7 @@
 				<item name="FlowPathways"/>
 				<item name="InitialStocks"/>
 				<group name="Output" displayName="Output Options">
-					<item name="OutputOptions" displayName="Tabular and Spatial"/>
+					<item name="OutputOptionsStockFlow" displayName="Tabular and Spatial"/>
 					<group name="OutputFilters" displayName="Output Filters">
 						<item name="OutputFilterStocks" displayName="Stocks"/>
 						<item name="OutputFilterFlows" displayName="Flows"/>
@@ -1378,6 +1328,64 @@
 			<item name="lflog" displayName="Iteration - Lateral" dataSheet="OutputLateralFlowGroup" column="Filename" filter="FlowGroupId" extendedIdentifier="(Lateral Flow)"></item>
 			<item name="avgflog" displayName="Average" dataSheet="OutputAverageSpatialFlowGroup" column="Filename" filter="FlowGroupId" extendedIdentifier="(Flow) (Average for all Iterations)"></item>
 			<item name="avglflog" displayName="Average - Lateral" dataSheet="OutputAverageLateralFlowGroup" column="Filename" filter="FlowGroupId" extendedIdentifier="(Lateral Flow) (Average for all Iterations)"></item>
+		</group>
+	</layout>
+
+	<layout type="Export"
+		className="SyncroSim.STSim.STSimResultsProvider"
+		classAssembly="SyncroSim.STSim"
+		displayNameSource="Terminology"
+		displayNameColumn="PrimaryStratumLabel">
+		<group name="Reports">
+			<item name="StateClassSummaryReport"/>
+			<item name="TransitionSummaryReport"/>
+			<item name="TransitionStateSummaryReport"/>
+			<item name="TSTReport"/>
+			<item name="StateAttributeReport"/>
+			<item name="TransitionAttributeReport"/>
+			<item name="SummaryStockReport"/>
+			<item name="SummaryFlowReport"/>
+		</group>
+		<group name="Maps">
+			<group name="StateClasses" displayName="State Classes">
+				<item name="StateClassRasterMap" displayName="Iteration"/>
+				<item name="AverageStateClassRasterMap" displayName="Average"/>
+			</group>
+			<group name="Ages">
+				<item name="AgeRasterMap" displayName="Iteration"/>
+				<item name="AverageAgeRasterMap" displayName="Average"/>
+			</group>
+			<group name="PrimaryStrata" displayName="Primary Strata">
+				<item name="StratumRasterMap" displayName="Iteration"/>
+				<item name="AverageStratumRasterMap" displayName="Average"/>
+			</group>
+			<group name="Transitions">
+				<item name="TransitionRasterMap" displayName="Iteration"/>
+				<item name="AverageTransitionProbabilityRasterMap" displayName="Average"/>
+				<item name="TransitionEventRasterMap" displayName="Iteration - Events"/>
+				<item name="TSTRasterMap"/>
+				<item name="AverageTSTRasterMap"/>
+			</group>"
+			<group name="StateAttributes" displayName="State Attributes">
+				<item name="StateAttributeRasterMap" displayName="Iteration"/>
+				<item name="AverageStateAttributeRasterMap" displayName="Average"/>
+			</group>
+			<group name="TransitionAttributes" displayName="Transition Attributes">
+				<item name="TransitionAttributeRasterMap" displayName="Iteration"/>
+				<item name="AverageTransitionAttributeRasterMap" displayName="Average"/>
+			</group>
+			<group name="Stocks">
+				<item name="StockRasterMap" displayName="Iteration"/>
+				<item name="AvgStockRasterMap" displayName="Average"/>
+			</group>
+			<group name="Flows">
+				<item name="FlowRasterMap" displayName="Iteration"/>
+				<item name="AvgFlowRasterMap" displayName="Average"/>
+			</group>
+			<group name="LateralFlows" displayName="Lateral Flows">
+				<item name="LateralFlowRasterMap" displayName="Iteration"/>
+				<item name="AvgLateralFlowRasterMap" displayName="Average"/>
+			</group>
 		</group>
 	</layout>
 

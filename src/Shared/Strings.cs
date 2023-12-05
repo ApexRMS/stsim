@@ -19,13 +19,6 @@ namespace SyncroSim.STSim
         //All Strata Diagram Tab
         public const string DIAGRAM_ALL_STRATA_DISPLAY_NAME = "All Strata";
 
-        //Report names
-        public const string STATECLASS_SUMMARY_REPORT_NAME = "stateclass-summary";
-        public const string TRANSITION_SUMMARY_REPORT_NAME = "transition-summary";
-        public const string TRANSITION_STATECLASS_SUMMARY_REPORT_NAME = "transition-stateclass-summary";
-        public const string STATE_ATTRIBUTE_REPORT_NAME = "state-attributes";
-        public const string TRANSITION_ATTRIBUTE_REPORT_NAME = "transition-attributes";
-
         //Commands
         public const string COMMAND_STRING_OPEN = "Open";
         public const string COMMAND_STRING_CUT = "Cut";
@@ -537,30 +530,30 @@ namespace SyncroSim.STSim
         public const string DATASHEET_FLOW_ORDER_OPTIONS_AERS_COLUMN_NAME = "ApplyEquallyRankedSimultaneously";
         public const string DATASHEET_FLOW_ORDER_ORDER_COLUMN_NAME = "Order";
 
-        //Output Options
-        public const string DATASHEET_OO_NAME = "stsim_OutputOptions";
-        public const string DATASHEET_OO_DISPLAY_NAME = "Output Options";
-        public const string DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME = "SummaryOutputST";
-        public const string DATASHEET_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SummaryOutputSTTimesteps";
-        public const string DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME = "SummaryOutputFL";
-        public const string DATASHEET_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SummaryOutputFLTimesteps";
-        public const string DATASHEET_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME = "SpatialOutputST";
-        public const string DATASHEET_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SpatialOutputSTTimesteps";
-        public const string DATASHEET_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME = "SpatialOutputFL";
-        public const string DATASHEET_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SpatialOutputFLTimesteps";
-        public const string DATASHEET_OO_LATERAL_OUTPUT_FL_COLUMN_NAME = "LateralOutputFL";
-        public const string DATASHEET_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "LateralOutputFLTimesteps";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME = "AvgSpatialOutputST";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputSTTimesteps";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputSTAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME = "AvgSpatialOutputFL";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputFLTimesteps";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputFLAcrossTimesteps";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME = "AvgSpatialOutputLFL";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputLFLTimesteps";
-        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputLFLAcrossTimesteps";
+        //Stock Flow Output Options
+        public const string DATASHEET_STOCKFLOW_OO_NAME = "stsim_OutputOptionsStockFlow";
+        public const string DATASHEET_STOCKFLOW_OO_DISPLAY_NAME = "Stock Flow Output Options";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME = "SummaryOutputST";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SummaryOutputSTTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME = "SummaryOutputFL";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SummaryOutputFLTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME = "SpatialOutputST";
+        public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SpatialOutputSTTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME = "SpatialOutputFL";
+        public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SpatialOutputFLTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_COLUMN_NAME = "LateralOutputFL";
+        public const string DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "LateralOutputFLTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME = "AvgSpatialOutputST";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputSTTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputSTAcrossTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME = "AvgSpatialOutputFL";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputFLTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputFLAcrossTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME = "AvgSpatialOutputLFL";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputLFLTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputLFLAcrossTimesteps";
 
-        //Stock Flow Datasheets
+        //Stock Flow Datasheets (general)
         public const string DATASHEET_STOCK_TYPE_NAME = "stsim_StockType";
         public const string DATASHEET_STOCK_GROUP_NAME = "stsim_StockGroup";
         public const string DATASHEET_FLOW_TYPE_NAME = "stsim_FlowType";
@@ -591,11 +584,21 @@ namespace SyncroSim.STSim
         public const string DATASHEET_OUTPUT_FILTER_STOCKS = "stsim_OutputFilterStocks";
         public const string DATASHEET_OUTPUT_FILTER_FLOWS = "stsim_OutputFilterFlows";
 
-        //Stock-Flow Report names
-        public const string STOCK_REPORT_NAME = "stocks";
-        public const string FLOW_REPORT_NAME = "flows";
-        public const double DEFAULT_FLOW_ORDER = double.MinValue;
-        public const int NULL_FROM_STOCK_TYPE_ID = 0;
+        //Chart Variable Names
+        public const string DENSITY_GROUP_NAME = "stsim_DensityGroup";
+        public const string STATE_CLASS_VARIABLE_NAME = "stsim_StateClass";
+        public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportion";
+        public const string TRANSITION_VARIABLE_NAME = "stsim_Transition";
+        public const string TRANSITION_PROPORTION_VARIABLE_NAME = "stsim_TransitionProportion";
+        public const string TST_VARIABLE_NAME = "stsim_TST";
+        public const string STATE_ATTRIBUTE_VARIABLE_NAME = "stsim_StateAttribute";
+        public const string STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_StateAttributeDensity";
+        public const string TRANSITION_ATTRIBUTE_VARIABLE_NAME = "stsim_TransitionAttribute";
+        public const string TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_TransitionAttributeDensity";
+        public const string STOCK_GROUP_VAR_NAME = "stsimsf_StockGroup";
+        public const string STOCK_GROUP_DENSITY_VAR_NAME = "stsimsf_StockGroupDensity";
+        public const string FLOW_GROUP_VAR_NAME = "stsimsf_FlowGroup";
+        public const string FLOW_GROUP_DENSITY_VAR_NAME = "stsimsf_FlowGroupDensity";
 
         //Stock-Flow Messages
         public const string NO_SUMMARY_OUTPUT_OPTIONS_INFORMATION = "No summary output options specified for stocks and flows.  Using defaults.";

@@ -47,8 +47,8 @@ namespace SyncroSim.STSim
                 Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, 
                 Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, 
                 false,
-                Constants.STATE_ATTRIBUTE_VARIABLE_NAME, 
-                Constants.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
+                Strings.STATE_ATTRIBUTE_VARIABLE_NAME,
+                Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
             AddChartAttributeVariables(
                 TransitionAttributeGroup.Items, AttrGroupView, 
@@ -56,8 +56,8 @@ namespace SyncroSim.STSim
                 Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, 
                 Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, 
                 true,
-                Constants.TRANSITION_ATTRIBUTE_VARIABLE_NAME,
-                Constants.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
+                Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME,
+                Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
             layout.Items.Add(StateClassGroup);
             layout.Items.Add(TransitionGroup);
@@ -76,6 +76,26 @@ namespace SyncroSim.STSim
             if (ExternalVariableGroup.Items.Count > 0)
             {
                 layout.Items.Add(ExternalVariableGroup);
+            }
+
+            //Stock Groups
+            LayoutItem StockGroupsGroup = new LayoutItem("stsim_Stocks", "Stocks", true);
+            StockGroupsGroup.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
+            AddStockGroupChartVariables(store, project, StockGroupsGroup.Items);
+
+            if (StockGroupsGroup.Items.Count > 0)
+            {
+                layout.Items.Add(StockGroupsGroup);
+            }
+
+            //Flow Groups
+            LayoutItem FlowGroupsGroup = new LayoutItem("stsim_Flows", "Flows", true);
+            FlowGroupsGroup.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
+            AddFlowGroupChartVariables(store, project, FlowGroupsGroup.Items);
+
+            if (FlowGroupsGroup.Items.Count > 0)
+            {
+                layout.Items.Add(FlowGroupsGroup);
             }
         }
 
@@ -103,43 +123,43 @@ namespace SyncroSim.STSim
                 Debug.Assert(!ChartingUtilities.HasTSTClassUpdateTag(dataSheet.Project));
             }
 
-            if (descriptor.VariableName == Constants.STATE_CLASS_PROPORTION_VARIABLE_NAME)
+            if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME)
             {
                 return ChartingUtilities.CreateProportionChartData(
                     dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, store);
             }
-            else if (descriptor.VariableName == Constants.TRANSITION_PROPORTION_VARIABLE_NAME)
+            else if (descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME)
             {
                 return ChartingUtilities.CreateProportionChartData(
                     dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);
             }
             else if (
-                descriptor.VariableName.StartsWith(Constants.STATE_ATTRIBUTE_VARIABLE_NAME) || 
-                descriptor.VariableName.StartsWith(Constants.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME))
+                descriptor.VariableName.StartsWith(Strings.STATE_ATTRIBUTE_VARIABLE_NAME) || 
+                descriptor.VariableName.StartsWith(Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME))
             {
                 string[] s = descriptor.VariableName.Split('-');
 
                 Debug.Assert(s.Count() == 2);
-                Debug.Assert(s[0] == Constants.STATE_ATTRIBUTE_VARIABLE_NAME || s[0] == Constants.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
+                Debug.Assert(s[0] == Strings.STATE_ATTRIBUTE_VARIABLE_NAME || s[0] == Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
                 int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);
-                bool IsDensity = (s[0] == Constants.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
+                bool IsDensity = (s[0] == Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
                 string ColumnName = Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
 
                 return ChartingUtilities.CreateRawAttributeChartData(
                     dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
             }
             else if (
-                descriptor.VariableName.StartsWith(Constants.TRANSITION_ATTRIBUTE_VARIABLE_NAME) || 
-                descriptor.VariableName.StartsWith(Constants.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME))
+                descriptor.VariableName.StartsWith(Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME) || 
+                descriptor.VariableName.StartsWith(Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME))
             {
                 string[] s = descriptor.VariableName.Split('-');
 
                 Debug.Assert(s.Count() == 2);
-                Debug.Assert(s[0] == Constants.TRANSITION_ATTRIBUTE_VARIABLE_NAME || s[0] == Constants.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
+                Debug.Assert(s[0] == Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME || s[0] == Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
                 int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);
-                bool IsDensity = (s[0] == Constants.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
+                bool IsDensity = (s[0] == Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
                 string ColumnName = Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME;
 
                 return ChartingUtilities.CreateRawAttributeChartData(
@@ -149,6 +169,22 @@ namespace SyncroSim.STSim
             {
                 return ChartingUtilities.CreateRawExternalVariableData(
                     dataSheet.Scenario, descriptor, store);
+            }
+            else if (
+                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_STOCK_NAME ||
+                descriptor.DatasheetName == Strings.DATASHEET_OUTPUT_FLOW_NAME)
+            {
+                string[] v = descriptor.VariableName.Split('-');
+                string VarName = v[0];
+
+                if (
+                    VarName == Strings.STOCK_GROUP_VAR_NAME ||
+                    VarName == Strings.STOCK_GROUP_DENSITY_VAR_NAME ||
+                    VarName == Strings.FLOW_GROUP_VAR_NAME ||
+                    VarName == Strings.FLOW_GROUP_DENSITY_VAR_NAME)
+                {
+                    return ChartingUtilities.CreateRawStockFlowChartData(dataSheet, descriptor, store, VarName);
+                }
             }
 
             return null;
@@ -218,8 +254,8 @@ namespace SyncroSim.STSim
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
 
             string disp = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
-            LayoutItem Normal = new LayoutItem(Constants.STATE_CLASS_VARIABLE_NAME, disp, false);
-            LayoutItem Proportion = new LayoutItem(Constants.STATE_CLASS_PROPORTION_VARIABLE_NAME, "Proportion", false);
+            LayoutItem Normal = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME, disp, false);
+            LayoutItem Proportion = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
             Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
             Proportion.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
@@ -248,8 +284,8 @@ namespace SyncroSim.STSim
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
 
             string disp = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
-            LayoutItem Normal = new LayoutItem(Constants.TRANSITION_VARIABLE_NAME, disp, false);
-            LayoutItem Proportion = new LayoutItem(Constants.TRANSITION_PROPORTION_VARIABLE_NAME, "Proportion", false);
+            LayoutItem Normal = new LayoutItem(Strings.TRANSITION_VARIABLE_NAME, disp, false);
+            LayoutItem Proportion = new LayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
             Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
             Proportion.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
@@ -272,7 +308,7 @@ namespace SyncroSim.STSim
 
         private static void AddChartTSTVariables(LayoutItemCollection items)
         {
-            LayoutItem v = new LayoutItem(Constants.TST_VARIABLE_NAME, "Amount", false);
+            LayoutItem v = new LayoutItem(Strings.TST_VARIABLE_NAME, "Amount", false);
 
             v.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
             v.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
@@ -314,7 +350,7 @@ namespace SyncroSim.STSim
             string densityAttributePrefix)
         {
             Debug.Assert(Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
-            LayoutItem NonGroupedDensityGroup = new LayoutItem(Constants.DENSITY_GROUP_NAME + "STSIM_NON_GROUPED", "Density", true);
+            LayoutItem NonGroupedDensityGroup = new LayoutItem(Strings.DENSITY_GROUP_NAME + "STSIM_NON_GROUPED", "Density", true);
 
             AddChartNonGroupedAttributes(
                 items, attrView, attrDataSheet, outputTableName, attributeTypeColumnName, 
@@ -331,7 +367,7 @@ namespace SyncroSim.STSim
             foreach (DataRowView drv in attrGroupView)
             {
                 string GroupName = Convert.ToString(drv.Row[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
-                string DensityGroupName = Constants.DENSITY_GROUP_NAME + GroupName;
+                string DensityGroupName = Strings.DENSITY_GROUP_NAME + GroupName;
                 LayoutItem Group = new LayoutItem(GroupName, GroupName, true);
                 LayoutItem DensityGroup = new LayoutItem(DensityGroupName, "Density", true);
 
@@ -350,7 +386,7 @@ namespace SyncroSim.STSim
             {
                 if (g.Items.Count > 0)
                 {
-                    string DensityGroupName = Constants.DENSITY_GROUP_NAME + g.Name;
+                    string DensityGroupName = Strings.DENSITY_GROUP_NAME + g.Name;
 
                     g.Items.Add(GroupsDict[DensityGroupName]);
                     items.Add(g);
@@ -457,7 +493,7 @@ namespace SyncroSim.STSim
                     string GroupName = groupsDataSheet.ValidationTable.GetDisplayName(GroupId);
                     int AttrId = Convert.ToInt32(drv.Row[attrsDataSheet.ValueMember], CultureInfo.InvariantCulture);
                     LayoutItem MainGroup = groupsDict[GroupName];
-                    LayoutItem DensityGroup = groupsDict[Constants.DENSITY_GROUP_NAME + GroupName];
+                    LayoutItem DensityGroup = groupsDict[Strings.DENSITY_GROUP_NAME + GroupName];
                     string Units = DataTableUtilities.GetDataStr(drv.Row, Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_UNITS_COLUMN_NAME);
 
                     //Normal Attribute
@@ -514,6 +550,63 @@ namespace SyncroSim.STSim
 
                     DensityGroup.Items.Insert(0, ItemDensity);
                 }
+            }
+        }
+
+        private static void AddStockGroupChartVariables(DataStore store, Project project, LayoutItemCollection items)
+        {
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STOCK_GROUP_NAME);
+
+            if (ds.HasData(store))
+            {
+                //Normal
+                LayoutItem ItemNormal = new LayoutItem(Strings.STOCK_GROUP_VAR_NAME, "Total", false);
+
+                ItemNormal.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
+                ItemNormal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StockGroupId"));
+                ItemNormal.Properties.Add(new MetaDataProperty("column", "Amount"));
+                ItemNormal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+                items.Add(ItemNormal);
+
+                //Density
+                LayoutItem ItemDensity = new LayoutItem(Strings.STOCK_GROUP_DENSITY_VAR_NAME, "Density", false);
+
+                ItemDensity.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
+                ItemDensity.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StockGroupId"));
+                ItemDensity.Properties.Add(new MetaDataProperty("column", "Amount"));
+                ItemDensity.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+                items.Add(ItemDensity);
+            }
+        }
+
+        private static void AddFlowGroupChartVariables(DataStore store, Project project, LayoutItemCollection items)
+        {
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_FLOW_GROUP_NAME);
+
+            if (ds.HasData(store))
+            {
+                LayoutItem ItemNormal = new LayoutItem(Strings.FLOW_GROUP_VAR_NAME, "Total", false);
+
+                ItemNormal.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
+                ItemNormal.Properties.Add(new MetaDataProperty("filter", "FromStratumId|FromSecondaryStratumId|FromTertiaryStratumId|FromStateClassId|FromStockTypeId|TransitionTypeId|ToStratumId|ToStateClassId|ToStockTypeId|FlowGroupId|EndStratumId|EndSecondaryStratumId|EndTertiaryStratumId|EndStateClassId"));
+                ItemNormal.Properties.Add(new MetaDataProperty("column", "Amount"));
+                ItemNormal.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                ItemNormal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+                items.Add(ItemNormal);
+
+                //Density
+                LayoutItem ItemDensity = new LayoutItem(Strings.FLOW_GROUP_DENSITY_VAR_NAME, "Density", false);
+
+                ItemDensity.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
+                ItemDensity.Properties.Add(new MetaDataProperty("filter", "FromStratumId|FromSecondaryStratumId|FromTertiaryStratumId|FromStateClassId|FromStockTypeId|TransitionTypeId|ToStratumId|ToStateClassId|ToStockTypeId|FlowGroupId|EndStratumId|EndSecondaryStratumId|EndTertiaryStratumId|EndStateClassId"));
+                ItemDensity.Properties.Add(new MetaDataProperty("column", "Amount"));
+                ItemDensity.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                ItemDensity.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+                items.Add(ItemDensity);
             }
         }
 

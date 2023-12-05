@@ -19,18 +19,8 @@ namespace SyncroSim.STSim
         public const double EIGHT_DIV_NINE = 8.0 / 9.0;
         public const int INCLUDE_DATA_NULL_ID = -9999;
         public const string STSIMRESOLUTION_SCENARIO_NAME = "[1] Partial";
-
-        //Chart Variable Names
-        public const string DENSITY_GROUP_NAME = "stsim_DensityGroup";
-        public const string STATE_CLASS_VARIABLE_NAME = "stsim_StateClass";
-        public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportion";
-        public const string TRANSITION_VARIABLE_NAME = "stsim_Transition";
-        public const string TRANSITION_PROPORTION_VARIABLE_NAME = "stsim_TransitionProportion";
-        public const string TST_VARIABLE_NAME = "stsim_TST";
-        public const string STATE_ATTRIBUTE_VARIABLE_NAME = "stsim_StateAttribute";
-        public const string STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_StateAttributeDensity";
-        public const string TRANSITION_ATTRIBUTE_VARIABLE_NAME = "stsim_TransitionAttribute";
-        public const string TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_TransitionAttributeDensity";
+        public const double DEFAULT_FLOW_ORDER = double.MinValue;
+        public const int NULL_FROM_STOCK_TYPE_ID = 0;
 
         //Run Control
         public const int DATASHEET_RUN_CONTROL_NON_SPATIAL_NUM_CELLS_DEFAULT = 1000;

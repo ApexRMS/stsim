@@ -34,7 +34,7 @@ namespace SyncroSim.STSim
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        protected STSimTransformer STSimTransformer
+        public STSimTransformer STSimTransformer
         {
             get
             {
@@ -133,27 +133,6 @@ namespace SyncroSim.STSim
                 this.STSimTransformer.MaximumIteration -
                 this.STSimTransformer.MinimumIteration + 1);
 
-#if DEBUG
-            foreach (StockType t in this.m_StockTypes) { Debug.Assert(t.StockGroupLinkages.Count > 0); }
-            foreach (FlowType t in this.m_FlowTypes) { Debug.Assert(t.FlowGroupLinkages.Count > 0); }
-#endif
-        }
-
-        /// <summary>
-        /// Overrides Transform
-        /// </summary>
-        /// <remarks>
-        /// NOTE: We must initialize the ST-Sim transformer and the flag indicating whether or
-        /// not we can do stocks and flows here because we might be loaded in a separate process as
-        /// part of an MP run.
-        /// </remarks>
-        public override void Transform()
-        {
-            if (!this.m_CanComputeStocksAndFlows)
-            {
-                return;
-            }
-
             this.STSimTransformer.CellInitialized += this.OnSTSimCellInitialized;
             this.STSimTransformer.CellsInitialized += this.OnSTSimAfterCellsInitialized;
             this.STSimTransformer.ChangingCellProbabilistic += this.OnSTSimBeforeChangeCellProbabilistic;
@@ -168,6 +147,11 @@ namespace SyncroSim.STSim
             {
                 this.STSimTransformer.ApplyingTransitionMultipliers += this.OnApplyingTransitionMultipliers;
             }
+
+#if DEBUG
+            foreach (StockType t in this.m_StockTypes) { Debug.Assert(t.StockGroupLinkages.Count > 0); }
+            foreach (FlowType t in this.m_FlowTypes) { Debug.Assert(t.FlowGroupLinkages.Count > 0); }
+#endif
         }
 
         /// <summary>
@@ -712,7 +696,7 @@ namespace SyncroSim.STSim
                     this.ApplyTransitionFlows(l, st.Id, e.SimulationCell, e.Iteration, e.Timestep, null, e.ProbabilisticPathway);
                 }
 
-                this.ApplyTransitionFlows(l, Strings.NULL_FROM_STOCK_TYPE_ID, e.SimulationCell, e.Iteration, e.Timestep, null, e.ProbabilisticPathway);
+                this.ApplyTransitionFlows(l, Constants.NULL_FROM_STOCK_TYPE_ID, e.SimulationCell, e.Iteration, e.Timestep, null, e.ProbabilisticPathway);
             }
         }
 
@@ -761,7 +745,7 @@ namespace SyncroSim.STSim
                     this.ApplyTransitionFlows(l, st.Id, e.SimulationCell, e.Iteration, e.Timestep, e.DeterministicPathway, null);
                 }
 
-                this.ApplyTransitionFlows(l, Strings.NULL_FROM_STOCK_TYPE_ID, e.SimulationCell, e.Iteration, e.Timestep, e.DeterministicPathway, null);
+                this.ApplyTransitionFlows(l, Constants.NULL_FROM_STOCK_TYPE_ID, e.SimulationCell, e.Iteration, e.Timestep, e.DeterministicPathway, null);
             }
         }
 
@@ -1302,7 +1286,7 @@ namespace SyncroSim.STSim
 
             foreach (FlowType ft in this.m_ShufflableFlowTypes)
             {
-                ft.Order = Strings.DEFAULT_FLOW_ORDER;
+                ft.Order = Constants.DEFAULT_FLOW_ORDER;
             }
 
             //Apply the new ordering from the order collection
@@ -1363,8 +1347,8 @@ namespace SyncroSim.STSim
                 ShuffleUtilities.ShuffleSubList(
                             this.m_ShufflableFlowTypes,
                             this.GetMinOrderIndex(
-                            Strings.DEFAULT_FLOW_ORDER),
-                            this.GetMaxOrderIndex(Strings.DEFAULT_FLOW_ORDER),
+                            Constants.DEFAULT_FLOW_ORDER),
+                            this.GetMaxOrderIndex(Constants.DEFAULT_FLOW_ORDER),
                             this.m_RandomGenerator.Random);
             }
 
@@ -1376,7 +1360,7 @@ namespace SyncroSim.STSim
 
             foreach (FlowType tg in this.m_ShufflableFlowTypes)
             {
-                if (tg.Order == Strings.DEFAULT_FLOW_ORDER)
+                if (tg.Order == Constants.DEFAULT_FLOW_ORDER)
                 {
                     c += 1;
 

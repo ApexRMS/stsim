@@ -61,6 +61,41 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_SummaryStratumTransitionStateResults.Count == 0);
         }
 
+        private void InitializeStocksAndFlows()
+        {
+            //Stocks and flows was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
+            //but it is still separate and driven off of ST-Sim events so we need to create and 
+            //initialize it here. Note that if not doing an MP run the Configure function will
+            //have already created the transformer.
+
+            if (this.m_StockFlowTransformer == null)
+            {
+                this.m_StockFlowTransformer = (StockFlowTransformer)this.Session.CreateTransformer(
+                    "stsim_StockFlow", 
+                    this.Library, this.Project, this.Scenario, this.ResultScenario);
+
+                this.m_StockFlowTransformer.STSimTransformer = this;
+            }
+
+            this.m_StockFlowTransformer.Initialize();
+        }
+
+        private void ConfigureStocksAndFlows()
+        {
+            //Stocks and flows was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
+            //but it is still separate and driven off of ST-Sim events so we need to create and 
+            //initialize it here.
+
+            Debug.Assert(this.m_StockFlowTransformer == null);
+
+            this.m_StockFlowTransformer = (StockFlowTransformer)this.Session.CreateTransformer(
+                "stsim_StockFlow", 
+                this.Library, this.Project, this.Scenario, this.ResultScenario);
+
+            this.m_StockFlowTransformer.STSimTransformer = this;
+            this.m_StockFlowTransformer.Configure();
+        }
+
         /// <summary>
         /// Configures the lower case version of the timestep units
         /// </summary>

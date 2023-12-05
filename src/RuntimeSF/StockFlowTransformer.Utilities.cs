@@ -144,7 +144,7 @@ namespace SyncroSim.STSim
 
 				protected bool AnyOutputOptionsSelected()
 		{
-			DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_NAME).GetDataRow();
+			DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STOCKFLOW_OO_NAME).GetDataRow();
 
 			if (dr == null)
 			{
@@ -152,11 +152,11 @@ namespace SyncroSim.STSim
 			}
 
 			if (DataTableUtilities.GetDataBool(
-								dr, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME) || 
-								DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME) || 
-								DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME) ||
-								DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME) ||
-								DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_COLUMN_NAME))
+				dr, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME) || 
+				DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME) || 
+				DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME) ||
+				DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME) ||
+				DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_COLUMN_NAME))
 			{
 				return true;
 			}

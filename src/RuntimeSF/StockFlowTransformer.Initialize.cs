@@ -27,7 +27,7 @@ namespace SyncroSim.STSim
         /// </summary>
         private void Initialize_SS_TS_Flags()
         {
-            DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
+            DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_TABULAR_NAME).GetDataRow();
 
             if (dr != null)
             {
@@ -57,7 +57,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void InitializeOutputOptions()
         {
-            DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_NAME).GetDataRow();
+            DataRow droo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STOCKFLOW_OO_NAME).GetDataRow();
 
             Func<object, int> SafeInt = (object o) =>
             {
@@ -71,25 +71,25 @@ namespace SyncroSim.STSim
                 }
             };
 
-            this.m_CreateSummaryStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME]);
-            this.m_SummaryStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateSummaryFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME]);
-            this.m_SummaryFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateSpatialStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME]);
-            this.m_SpatialStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateSpatialFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME]);
-            this.m_SpatialFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateLateralFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_COLUMN_NAME]);
-            this.m_LateralFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateAvgSpatialStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME]);
-            this.m_AvgSpatialStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
-            this.m_AvgSpatialStockOutputAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateAvgSpatialFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME]);
-            this.m_AvgSpatialFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
-            this.m_AvgSpatialFlowOutputAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME]);
-            this.m_CreateAvgSpatialLateralFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME]);
-            this.m_AvgSpatialLateralFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME]);
-            this.m_AvgSpatialLateralFlowOutputAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateSummaryStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME]);
+            this.m_SummaryStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateSummaryFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME]);
+            this.m_SummaryFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateSpatialStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME]);
+            this.m_SpatialStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateSpatialFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME]);
+            this.m_SpatialFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateLateralFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_COLUMN_NAME]);
+            this.m_LateralFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateAvgSpatialStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME]);
+            this.m_AvgSpatialStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgSpatialStockOutputAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateAvgSpatialFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME]);
+            this.m_AvgSpatialFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgSpatialFlowOutputAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME]);
+            this.m_CreateAvgSpatialLateralFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME]);
+            this.m_AvgSpatialLateralFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME]);
+            this.m_AvgSpatialLateralFlowOutputAcrossTimesteps = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME]);
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace SyncroSim.STSim
                     if (!t.IsDisabled)
                     {
                         t.Initialize(
-                                      this.m_STSimTransformer.MinimumIteration,
-                                      this.m_STSimTransformer.MinimumTimestep,
-                                      this.m_STSimTransformer.DistributionProvider);
+                            this.m_STSimTransformer.MinimumIteration,
+                            this.m_STSimTransformer.MinimumTimestep,
+                            this.m_STSimTransformer.DistributionProvider);
                     }
                 }
             }
@@ -136,9 +136,9 @@ namespace SyncroSim.STSim
                 foreach (FlowMultiplierByStock t in this.m_FlowMultipliersByStock)
                 {
                     t.Initialize(
-                                  this.m_STSimTransformer.MinimumIteration,
-                                  this.m_STSimTransformer.MinimumTimestep,
-                                  this.m_STSimTransformer.DistributionProvider);
+                        this.m_STSimTransformer.MinimumIteration,
+                        this.m_STSimTransformer.MinimumTimestep,
+                        this.m_STSimTransformer.DistributionProvider);
                 }
             }
             catch (Exception ex)
@@ -157,9 +157,9 @@ namespace SyncroSim.STSim
                 foreach (StockTransitionMultiplier t in this.m_StockTransitionMultipliers)
                 {
                     t.Initialize(
-                                  this.m_STSimTransformer.MinimumIteration,
-                                  this.m_STSimTransformer.MinimumTimestep,
-                                  this.m_STSimTransformer.DistributionProvider);
+                        this.m_STSimTransformer.MinimumIteration,
+                        this.m_STSimTransformer.MinimumTimestep,
+                        this.m_STSimTransformer.DistributionProvider);
                 }
             }
             catch (Exception ex)

@@ -29,7 +29,7 @@ namespace SyncroSim.STSim
 
 		public void AddItem(FlowPathway pathway)
 		{
-			int StockTypeId = pathway.FromStockTypeId.HasValue ? pathway.FromStockTypeId.Value : Strings.NULL_FROM_STOCK_TYPE_ID;
+			int StockTypeId = pathway.FromStockTypeId.HasValue ? pathway.FromStockTypeId.Value : Constants.NULL_FROM_STOCK_TYPE_ID;
 
 			SortedKeyMap4<List<FlowPathway>> m1 = this.m_Map.GetItemExact(
                 pathway.FromStratumId, pathway.FromSecondaryStratumId, pathway.FromTertiaryStratumId, pathway.FromStateClassId, StockTypeId, 

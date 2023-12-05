@@ -119,6 +119,218 @@ namespace SyncroSim.STSim
             return dt;
         }
 
+        public static DataTable CreateRawStockFlowChartData(
+            DataSheet dataSheet,
+            ChartDescriptor descriptor,
+            DataStore store,
+            string variableName)
+        {
+            Debug.Assert(
+                variableName == Strings.STOCK_GROUP_VAR_NAME ||
+                variableName == Strings.STOCK_GROUP_DENSITY_VAR_NAME ||
+                variableName == Strings.FLOW_GROUP_VAR_NAME ||
+                variableName == Strings.FLOW_GROUP_DENSITY_VAR_NAME);
+
+            string query = CreateRawStockFlowChartDataQueryForGroup(dataSheet, descriptor, variableName);
+            DataTable dt = ChartCache.GetCachedData(dataSheet.Scenario, query, null);
+
+            if (dt == null)
+            {
+                dt = store.CreateDataTableFromQuery(query, "RawData");
+                ChartCache.SetCachedData(dataSheet.Scenario, query, dt, null);
+            }
+
+            if (variableName.EndsWith("Density", StringComparison.Ordinal))
+            {
+                Dictionary<string, double> dict = CreateStockFlowAmountDictionary(dataSheet.Scenario, descriptor, variableName, store);
+
+                if (dict.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                        int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+                        string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
+
+                        dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME] =
+                            Convert.ToDouble(dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME],
+                            CultureInfo.InvariantCulture) / dict[k];
+                    }
+                }
+            }
+
+            return dt;
+        }
+
+        private static string CreateRawStockFlowChartDataQueryForGroup(
+            DataSheet dataSheet,
+            ChartDescriptor descriptor,
+            string variableName)
+        {
+            Debug.Assert(dataSheet.Scenario.Id > 0);
+
+            Debug.Assert(
+                variableName == Strings.STOCK_GROUP_VAR_NAME ||
+                variableName == Strings.STOCK_GROUP_DENSITY_VAR_NAME ||
+                variableName == Strings.FLOW_GROUP_VAR_NAME ||
+                variableName == Strings.FLOW_GROUP_DENSITY_VAR_NAME);
+
+            string ScenarioClause = string.Format(CultureInfo.InvariantCulture,
+                "([{0}]={1})",
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, dataSheet.Scenario.Id);
+
+            string SumStatement = string.Format(CultureInfo.InvariantCulture,
+                "SUM([{0}]) AS {1}",
+                descriptor.ColumnName, Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME);
+
+            string WhereClause = ScenarioClause;
+
+            if (!string.IsNullOrEmpty(descriptor.DisaggregateFilter))
+            {
+                WhereClause = string.Format(CultureInfo.InvariantCulture,
+                    "{0} AND ({1})",
+                    WhereClause, descriptor.DisaggregateFilter);
+            }
+
+            if (!string.IsNullOrEmpty(descriptor.IncludeDataFilter))
+            {
+                WhereClause = string.Format(CultureInfo.InvariantCulture,
+                    "{0} AND ({1})",
+                    WhereClause, descriptor.IncludeDataFilter);
+            }
+
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT {0},{1},{2} FROM {3} WHERE {4} GROUP BY [{5}],[{6}]",
+                Strings.DATASHEET_ITERATION_COLUMN_NAME,
+                Strings.DATASHEET_TIMESTEP_COLUMN_NAME,
+                SumStatement,
+                descriptor.DatasheetName,
+                WhereClause,
+                Strings.DATASHEET_ITERATION_COLUMN_NAME,
+                Strings.DATASHEET_TIMESTEP_COLUMN_NAME);
+
+            return query;
+        }
+
+        public static Dictionary<string, double> CreateStockFlowAmountDictionary(
+            Scenario scenario,
+            ChartDescriptor descriptor,
+            string variableName,
+            DataStore store)
+        {
+            Dictionary<string, double> dict = new Dictionary<string, double>();
+            string query = CreateStockFlowAmountQuery(scenario, descriptor, variableName);
+            DataTable dt = ChartCache.GetCachedData(scenario, query, null);
+
+            if (dt == null)
+            {
+                dt = store.CreateDataTableFromQuery(query, "AmountData");
+                ChartCache.SetCachedData(scenario, query, dt, null);
+            }
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                int it = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+                int ts = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
+                string k = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", it, ts);
+
+                dict.Add(k, Convert.ToDouble
+                    (dr[Strings.DATASHEET_SUMOFAMOUNT_COLUMN_NAME],
+                    CultureInfo.InvariantCulture));
+            }
+
+            return dict;
+        }
+
+        private static string CreateStockFlowAmountQuery(Scenario scenario, ChartDescriptor descriptor, string variableName)
+        {
+            Debug.Assert(variableName.EndsWith("Density", StringComparison.Ordinal));
+
+            string ScenarioClause = string.Format(CultureInfo.InvariantCulture,
+                "([{0}]={1})",
+                Strings.DATASHEET_SCENARIOID_COLUMN_NAME, scenario.Id);
+
+            string WhereClause = ScenarioClause;
+            string Disagg = RemoveUnwantedStockFlowColumnReferences(descriptor.DisaggregateFilter, variableName);
+            string IncData = RemoveUnwantedStockFlowColumnReferences(descriptor.IncludeDataFilter, variableName);
+
+            if (!string.IsNullOrEmpty(Disagg))
+            {
+                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, Disagg);
+            }
+
+            if (!string.IsNullOrEmpty(IncData))
+            {
+                WhereClause = string.Format(CultureInfo.InvariantCulture, "{0} AND ({1})", WhereClause, IncData);
+            }
+
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "SELECT Iteration, Timestep, SUM(Amount) AS SumOfAmount FROM stsim_OutputStratum WHERE ({0}) GROUP BY Iteration, Timestep",
+                WhereClause);
+
+            return query;
+        }
+
+        private static string RemoveUnwantedStockFlowColumnReferences(string filter, string variableName)
+        {
+            if (filter == null)
+            {
+                return null;
+            }
+
+            string[] AndSplit = filter.Split(new[] { " AND " }, StringSplitOptions.None);
+            StringBuilder sb = new StringBuilder();
+
+            if (variableName.StartsWith("stsimsf_Flow", StringComparison.Ordinal))
+            {
+                foreach (string s in AndSplit)
+                {
+                    string sCopy = s;
+
+                    if (sCopy.Contains("FromStratumId"))
+                    {
+                        sCopy = sCopy.Replace("FromStratumId", "StratumId");
+                        sb.AppendFormat(CultureInfo.InvariantCulture, "{0} AND ", sCopy);
+                    }
+                    else if (sCopy.Contains("FromSecondaryStratumId"))
+                    {
+                        sCopy = sCopy.Replace("FromSecondaryStratumId", "SecondaryStratumId");
+                        sb.AppendFormat(CultureInfo.InvariantCulture, "{0} AND ", sCopy);
+                    }
+                    else if (sCopy.Contains("FromTertiaryStratumId"))
+                    {
+                        sCopy = sCopy.Replace("FromTertiaryStratumId", "TertiaryStratumId");
+                        sb.AppendFormat(CultureInfo.InvariantCulture, "{0} AND ", sCopy);
+                    }
+                }
+            }
+            else
+            {
+                foreach (string s in AndSplit)
+                {
+                    if (s.Contains(Strings.DATASHEET_STRATUM_ID_COLUMN_NAME) ||
+                        s.Contains(Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) ||
+                        s.Contains(Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
+                    {
+                        sb.AppendFormat(CultureInfo.InvariantCulture, "{0} AND ", s);
+                    }
+                }
+            }
+
+            string final = sb.ToString();
+
+            if (final.Count() > 0)
+            {
+                Debug.Assert(final.Count() >= 5);
+                return final.Substring(0, final.Length - 5);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private static Dictionary<string, double> CreateAmountDictionary(
             Scenario scenario, 
             ChartDescriptor descriptor, 

@@ -22,25 +22,25 @@ namespace SyncroSim.STSim
 		{
 			base.LoadDataFeed(dataFeed);
 
-			this.SetCheckBoxBinding(this.CheckBoxSummaryST, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME);
-			this.SetTextBoxBinding(this.TextBoxSummarySTTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
-			this.SetCheckBoxBinding(this.CheckBoxSummaryFL, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME);
-			this.SetTextBoxBinding(this.TextBoxSummaryFLTimesteps, Strings.DATASHEET_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
-			this.SetCheckBoxBinding(this.CheckBoxSpatialST, Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME);
-			this.SetTextBoxBinding(this.TextBoxSpatialSTTimesteps, Strings.DATASHEET_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
-			this.SetCheckBoxBinding(this.CheckBoxSpatialFL, Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME);
-			this.SetTextBoxBinding(this.TextBoxSpatialFLTimesteps, Strings.DATASHEET_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
-			this.SetCheckBoxBinding(this.CheckBoxLateralFL, Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_COLUMN_NAME);
-			this.SetTextBoxBinding(this.TextBoxLateralFLTimesteps, Strings.DATASHEET_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialST, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxAvgSpatialSTTimesteps, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialSTCumulative, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialFL, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxAvgSpatialFLTimesteps, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialFLCumulative, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialLFL, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME);
-            this.SetTextBoxBinding(this.TextBoxAvgSpatialLFLTimesteps, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME);
-            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialLFLCumulative, Strings.DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxSummaryST, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME);
+			this.SetTextBoxBinding(this.TextBoxSummarySTTimesteps, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxSummaryFL, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME);
+			this.SetTextBoxBinding(this.TextBoxSummaryFLTimesteps, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxSpatialST, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME);
+			this.SetTextBoxBinding(this.TextBoxSpatialSTTimesteps, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxSpatialFL, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME);
+			this.SetTextBoxBinding(this.TextBoxSpatialFLTimesteps, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxLateralFL, Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_COLUMN_NAME);
+			this.SetTextBoxBinding(this.TextBoxLateralFLTimesteps, Strings.DATASHEET_STOCKFLOW_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialST, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgSpatialSTTimesteps, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialSTCumulative, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialFL, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgSpatialFLTimesteps, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialFLCumulative, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialLFL, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME);
+            this.SetTextBoxBinding(this.TextBoxAvgSpatialLFLTimesteps, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME);
+            this.SetCheckBoxBinding(this.CheckBoxAvgSpatialLFLCumulative, Strings.DATASHEET_STOCKFLOW_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME);
 
 			this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
 			this.AddStandardCommands();

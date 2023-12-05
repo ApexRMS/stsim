@@ -286,5 +286,172 @@ namespace SyncroSim.STSim
 
             return DBNull.Value;
         }
+
+        public static bool TableHasData(DataTable table, string columnName)
+        {
+
+            foreach (DataRow dr in table.Rows)
+            {
+                if (dr.RowState == DataRowState.Deleted)
+                {
+                    continue;
+                }
+
+                object value = dr[columnName];
+
+                if (!object.ReferenceEquals(value, DBNull.Value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static FlowPathway CreateFlowPathway(DataRow dr)
+        {
+            int? Iteration = null;
+            int? Timestep = null;
+            int? FromStratumId = null;
+            int? FromSecondaryStratumId = null;
+            int? FromTertiaryStratumId = null;
+            int? FromStateClassId = null;
+            int? FromMinimumAge = null;
+            int? FromStockTypeId = null;
+            int? ToStratumId = null;
+            int? ToStateClassId = null;
+            int? ToMinimumAge = null;
+            int? ToStockTypeId = null;
+            int? StateAttributeTypeId = null;
+            int? TargetType = null;
+            int? TransferToStratumId = null;
+            int? TransferToSecondaryStratumId = null;
+            int? TransferToTertiaryStratumId = null;
+            int? TransferToStateClassId = null;
+            int? TransferToMinimumAge = null;
+
+            if (dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] != DBNull.Value)
+            {
+                Iteration = Convert.ToInt32(dr[Strings.DATASHEET_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] != DBNull.Value)
+            {
+                Timestep = Convert.ToInt32(dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.FROM_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                FromStratumId = Convert.ToInt32(dr[Strings.FROM_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.FROM_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                FromSecondaryStratumId = Convert.ToInt32(dr[Strings.FROM_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.FROM_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                FromTertiaryStratumId = Convert.ToInt32(dr[Strings.FROM_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.FROM_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                FromStateClassId = Convert.ToInt32(dr[Strings.FROM_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.FROM_MIN_AGE_COLUMN_NAME] != DBNull.Value)
+            {
+                FromMinimumAge = Convert.ToInt32(dr[Strings.FROM_MIN_AGE_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.FROM_STOCK_TYPE_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                FromStockTypeId = Convert.ToInt32(dr[Strings.FROM_STOCK_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TO_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                ToStratumId = Convert.ToInt32(dr[Strings.TO_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TO_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                ToStateClassId = Convert.ToInt32(dr[Strings.TO_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TO_MIN_AGE_COLUMN_NAME] != DBNull.Value)
+            {
+                ToMinimumAge = Convert.ToInt32(dr[Strings.TO_MIN_AGE_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TO_STOCK_TYPE_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                ToStockTypeId = Convert.ToInt32(dr[Strings.TO_STOCK_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            int TransitionGroupId;
+            if (dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                TransitionGroupId = 0;
+            }
+
+            if (dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                StateAttributeTypeId = Convert.ToInt32(dr[Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            int FlowTypeId = Convert.ToInt32(dr[Strings.FLOW_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+            if (dr[Strings.TARGET_TYPE] != DBNull.Value)
+            {
+                TargetType = Convert.ToInt32(dr[Strings.TARGET_TYPE], CultureInfo.InvariantCulture);
+            }
+
+            double Multiplier = Convert.ToDouble(dr[Strings.DATASHEET_MULTIPLIER_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+            if (dr[Strings.TRANSFER_TO_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                TransferToStratumId = Convert.ToInt32(dr[Strings.TRANSFER_TO_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TRANSFER_TO_SECONDARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                TransferToSecondaryStratumId = Convert.ToInt32(dr[Strings.TRANSFER_TO_SECONDARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TRANSFER_TO_TERTIARY_STRATUM_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                TransferToTertiaryStratumId = Convert.ToInt32(dr[Strings.TRANSFER_TO_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TRANSFER_TO_STATECLASS_ID_COLUMN_NAME] != DBNull.Value)
+            {
+                TransferToStateClassId = Convert.ToInt32(dr[Strings.TRANSFER_TO_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            if (dr[Strings.TRANSFER_TO_MIN_AGE_COLUMN_NAME] != DBNull.Value)
+            {
+                TransferToMinimumAge = Convert.ToInt32(dr[Strings.TRANSFER_TO_MIN_AGE_COLUMN_NAME], CultureInfo.InvariantCulture);
+            }
+
+            FlowPathway p = new FlowPathway(
+                Iteration, Timestep,
+                FromStratumId, FromSecondaryStratumId, FromTertiaryStratumId, FromStateClassId, FromMinimumAge, FromStockTypeId,
+                ToStratumId, ToStateClassId, ToMinimumAge, ToStockTypeId,
+                TransitionGroupId, StateAttributeTypeId, FlowTypeId, TargetType, Multiplier,
+                TransferToStratumId, TransferToSecondaryStratumId, TransferToTertiaryStratumId, TransferToStateClassId, TransferToMinimumAge);
+
+            return p;
+        }
+
+        public static string GetAutoGeneratedGroupName(string typeName)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0} {1}", typeName, Strings.AUTO_COLUMN_SUFFIX);
+        }
     }
 }

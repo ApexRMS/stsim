@@ -29,6 +29,20 @@ namespace SyncroSim.STSim
             }
         }
 
+        public static string GetStockUnits(DataSheet terminologySheet)
+        {
+            DataRow dr = terminologySheet.GetDataRow();
+
+            if (dr == null || dr["StockUnits"] == DBNull.Value)
+            {
+                return "Tons";
+            }
+            else
+            {
+                return Convert.ToString(dr["StockUnits"], CultureInfo.InvariantCulture);
+            }
+        }
+
         /// <summary>
         /// Converts a terminology unit to its corresponding string
         /// </summary>

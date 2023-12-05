@@ -122,6 +122,34 @@
 		<column name="Description" dataType="String" isOptional="True"/>
 	</dataSheet>
 
+	<dataSheet name="StockType" displayName="Stock Type" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.StockTypeDataSheet" classAssembly="SyncroSim.STSim">
+		<column name="Name" dataType="String"/>
+		<column name="Description" dataType="String" isOptional="True"/>
+	</dataSheet>
+
+	<dataSheet name="StockGroup" displayName="Stock Group" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.StockGroupDataSheet" classAssembly="SyncroSim.STSim" filter="IsAuto IS NULL OR IsAuto=0">
+		<column name="Name" dataType="String"/>
+		<column name="Description" dataType="String" isOptional="True"/>
+		<column name="Units" dataType="String" isOptional="True"/>
+		<column name="IsAuto" dataType="Boolean" isVisible="False"/>
+	</dataSheet>
+
+	<dataSheet name="FlowType" displayName="Flow Type" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.FlowTypeDataSheet" classAssembly="SyncroSim.STSim">
+		<column name="Name" dataType="String"/>
+		<column name="Description" dataType="String" isOptional="True"/>
+	</dataSheet>
+
+	<dataSheet name="FlowGroup" displayName="Flow Group" dataScope="Project" displayMember="Name" className="SyncroSim.STSim.FlowGroupDataSheet" classAssembly="SyncroSim.STSim" filter="IsAuto IS NULL OR IsAuto=0">
+		<column name="Name" dataType="String"/>
+		<column name="Description" dataType="String" isOptional="True"/>
+		<column name="Units" dataType="String" isOptional="True"/>
+		<column name="IsAuto" dataType="Boolean" isVisible="False"/>
+	</dataSheet>
+
+	<dataSheet name="FlowMultiplierType" displayName="Flow Multiplier Type" dataScope="Project" displayMember="Name">
+		<column name="Name" dataType="String"/>
+	</dataSheet>
+
 	<dataSheet name="Terminology" isSingleRow="True" dataScope="Project">
 		<column name="AmountLabel" dataType="String" displayName="Amount Label"/>
 		<column name="AmountUnits" dataType="Integer" displayName="Amount Units" validationType="List" formula1="1:Acres|2:Hectares|3:Square Kilometers|4:SquareMiles"/>
@@ -131,7 +159,8 @@
 		<column name="SecondaryStratumLabel" dataType="String" displayName="Secondary Stratum Label"/>
 		<column name="TertiaryStratumLabel" dataType="String" displayName="Tertiary Stratum Label"/>
 		<column name="TimestepUnits" dataType="String" displayName="Timestep Units"/>
-		<record columns="AmountLabel|AmountUnits|StateLabelX|StateLabelY|PrimaryStratumLabel|SecondaryStratumLabel|TertiaryStratumLabel|TimestepUnits" values="Area|1|Class|Subclass|Primary Stratum|Secondary Stratum|Tertiary Stratum|Timestep"/>
+		<column name="StockUnits" dataType="String" displayName="Stock Units"/>
+		<record columns="AmountLabel|AmountUnits|StateLabelX|StateLabelY|PrimaryStratumLabel|SecondaryStratumLabel|TertiaryStratumLabel|TimestepUnits|StockUnits" values="Area|1|Class|Subclass|Primary Stratum|Secondary Stratum|Tertiary Stratum|Timestep|Tons"/>
 	</dataSheet>
 
 	<dataSheet name="PatchPrioritization" displayName="Patch Prioritization" dataScope="Project" displayMember="Name">
@@ -213,7 +242,7 @@
 
 	<dataFeed name="InitialConditionsSpatial" viewClassName="SyncroSim.STSim.InitialConditionsSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<dataSheet name="InitialConditionsSpatialRaster"/>
-		<dataSheet name="InitialConditionsSpatialProperty"/>		
+		<dataSheet name="InitialConditionsSpatialProperty"/>
 	</dataFeed>
 
 	<dataSheet name="InitialConditionsSpatialRaster" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
@@ -306,6 +335,28 @@
 		<column name="AvgRasterOutputTACumulative" displayName="Avg. Raster TA Cumulative" dataType="Boolean"/>
 	</dataSheet>
 
+	<dataSheet name="OutputOptionsStockFlow" displayName="Stock-Flow Output" dataScope="Scenario" isSingleRow="True" viewClassName="SyncroSim.STSim.StockFlowOutputOptionsDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<column name="SummaryOutputST" dataType="Boolean"/>
+		<column name="SummaryOutputSTTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="SummaryOutputFL" dataType="Boolean"/>
+		<column name="SummaryOutputFLTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="SpatialOutputST" dataType="Boolean"/>
+		<column name="SpatialOutputSTTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="SpatialOutputFL" dataType="Boolean"/>
+		<column name="SpatialOutputFLTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="LateralOutputFL" dataType="Boolean"/>
+		<column name="LateralOutputFLTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="AvgSpatialOutputST" dataType="Boolean"/>
+		<column name="AvgSpatialOutputSTTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="AvgSpatialOutputSTAcrossTimesteps" dataType="Boolean"/>
+		<column name="AvgSpatialOutputFL" dataType="Boolean"/>
+		<column name="AvgSpatialOutputFLTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="AvgSpatialOutputFLAcrossTimesteps" dataType="Boolean"/>
+		<column name="AvgSpatialOutputLFL" dataType="Boolean"/>
+		<column name="AvgSpatialOutputLFLTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+		<column name="AvgSpatialOutputLFLAcrossTimesteps" dataType="Boolean"/>
+	</dataSheet>
+
 	<dataSheet name="OutputFilterTransitionGroups" displayName="Filter Transition Group Output">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="Summary" displayName="Summary" dataType="Boolean"/>
@@ -333,6 +384,22 @@
 		<column name="Spatial" displayName="Spatial" dataType="Boolean"/>
 		<column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean"/>
 		<validation validationType="Unique" columns="TransitionAttributeTypeId"/>
+	</dataSheet>
+
+	<dataSheet name="OutputFilterStocks" displayName="Filter Stock Output">
+		<column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False"/>
+		<column name="Summary" displayName="Summary" dataType="Boolean"/>
+		<column name="Spatial" displayName="Spatial" dataType="Boolean"/>
+		<column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean"/>
+		<validation validationType="Unique" columns="StockGroupId"/>
+	</dataSheet>
+
+	<dataSheet name="OutputFilterFlows" displayName="Filter Flow Output">
+		<column name="FlowGroupId" dataType="Integer" displayName="Flow Type/Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False"/>
+		<column name="Summary" displayName="Summary" dataType="Boolean"/>
+		<column name="Spatial" displayName="Spatial" dataType="Boolean"/>
+		<column name="AvgSpatial" displayName="Average Spatial" dataType="Boolean"/>
+		<validation validationType="Unique" columns="FlowGroupId"/>
 	</dataSheet>
 
 	<dataSheet name="TransitionOrder" displayName="Transition Order" hasIteration="True" hasTimestep="True">
@@ -554,7 +621,7 @@
 
 	<dataFeed name="TransitionAdjacencyMultipliers" displayName="Transition Adjacency Multipliers" viewClassName="SyncroSim.STSim.AdjacencyMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<dataSheet name="TransitionAdjacencySetting"/>
-		<dataSheet name="TransitionAdjacencyMultiplier"/>		
+		<dataSheet name="TransitionAdjacencyMultiplier"/>
 	</dataFeed>
 
 	<dataSheet name="TransitionAdjacencySetting" displayName="Transition Adjacency Setting">
@@ -609,13 +676,13 @@
 	<dataSheet name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" isSingleRow="True" viewClassName="SyncroSim.STSim.ProcessingDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="SplitBySecondaryStrata" dataType="Boolean" displayName="Split by Secondary Strata"/>
 	</dataSheet>
-	
+
 	<dataSheet name="OutputStratum" displayName="Stratum Amount" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
 		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
 		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
 		<column name="Amount" dataType="Double"/>
-	</dataSheet>	
+	</dataSheet>
 
 	<dataSheet name="OutputStratumState" displayName="Stratum State" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
@@ -776,110 +843,99 @@
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
 	</dataSheet>
 
-	<transformer name="StateClassSummaryReport" displayName="State Classes" isExport="True" className="SyncroSim.STSim.StateClassSummaryReport" classAssembly="SyncroSim.STSim">
-	</transformer>
-	<transformer name="TransitionSummaryReport" displayName="Transitions" isExport="True" className="SyncroSim.STSim.TransitionSummaryReport" classAssembly="SyncroSim.STSim">
-	</transformer>
-	<transformer name="TransitionStateSummaryReport" displayName="Transitions by State Class" isExport="True" className="SyncroSim.STSim.TransitionStateSummaryReport" classAssembly="SyncroSim.STSim">
-	</transformer>
-	<transformer name="StateAttributeReport" displayName="State Attributes" isExport="True" className="SyncroSim.STSim.StateAttributeReport" classAssembly="SyncroSim.STSim">
-	</transformer>
-	<transformer name="TransitionAttributeReport" displayName="Transition Attributes" isExport="True" className="SyncroSim.STSim.TransitionAttributeReport" classAssembly="SyncroSim.STSim">
-	</transformer>
-	<transformer name="TSTReport" displayName="Time-Since-Transition" isExport="True" className="SyncroSim.STSim.TSTReport" classAssembly="SyncroSim.STSim">
-	</transformer>
-	<transformer name="StateClassRasterMap" displayName="State Classes" isRasterExport="True" dataSheet="OutputSpatialState" column="Filename">
-	</transformer>
-	<transformer name="TransitionRasterMap" displayName="Transitions" isRasterExport="True" dataSheet="OutputSpatialTransition" column="Filename">
-	</transformer>
-	<transformer name="AgeRasterMap" displayName="Ages" isRasterExport="True" dataSheet="OutputSpatialAge" column="Filename">
-	</transformer>
-	<transformer name="TSTRasterMap" displayName="Time-Since-Transition" isRasterExport="True" dataSheet="OutputSpatialTST" column="Filename">
-	</transformer>
-	<transformer name="StratumRasterMap" displayName="Stratum" isRasterExport="True" dataSheet="OutputSpatialStratum" column="Filename" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel">
-	</transformer>
-	<transformer name="StateAttributeRasterMap" displayName="State Attributes" isRasterExport="True" dataSheet="OutputSpatialStateAttribute" column="Filename">
-	</transformer>
-	<transformer name="TransitionAttributeRasterMap" displayName="Transition Attributes" isRasterExport="True" dataSheet="OutputSpatialTransitionAttribute" column="Filename">
-	</transformer>
-	<transformer name="TransitionEventRasterMap" displayName="Transition Events" isRasterExport="True" dataSheet="OutputSpatialTransitionEvent" column="Filename">
-	</transformer>
-	<transformer name="AverageStratumRasterMap" isExport="True" className="SyncroSim.STSim.AvgStratumExportTransformer" classAssembly="SyncroSim.STSim" dataSheet="OutputSpatialAverageStratum" column="Filename">
-	</transformer>
-	<transformer name="AverageStateClassRasterMap" displayName="State Class Probability" isRasterExport="True" dataSheet="OutputSpatialAverageStateClass" column="Filename">
-	</transformer>
-	<transformer name="AverageAgeRasterMap" displayName="Average Ages" isRasterExport="True" dataSheet="OutputSpatialAverageAge" column="Filename">
-	</transformer>
-	<transformer name="AverageStateAttributeRasterMap" displayName="Average State Attributes" isRasterExport="True" dataSheet="OutputSpatialAverageStateAttribute" column="Filename">
-	</transformer>
-	<transformer name="AverageTransitionAttributeRasterMap" displayName="Average Transition Attributes" isRasterExport="True" dataSheet="OutputSpatialAverageTransitionAttribute" column="Filename">
-	</transformer>
-	<transformer name="AverageTransitionProbabilityRasterMap" displayName="Transition Probability" isRasterExport="True" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename">
-	</transformer>
-	<transformer name="AverageTSTRasterMap" displayName="Time-Since-Transition - Average" isRasterExport="True" dataSheet="OutputSpatialAverageTST" column="Filename">
-	</transformer>
-
+	<transformer name="StateClassSummaryReport" displayName="State Classes" isExport="True" className="SyncroSim.STSim.StateClassSummaryReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="TransitionSummaryReport" displayName="Transitions" isExport="True" className="SyncroSim.STSim.TransitionSummaryReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="TransitionStateSummaryReport" displayName="Transitions by State Class" isExport="True" className="SyncroSim.STSim.TransitionStateSummaryReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="StateAttributeReport" displayName="State Attributes" isExport="True" className="SyncroSim.STSim.StateAttributeReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="TransitionAttributeReport" displayName="Transition Attributes" isExport="True" className="SyncroSim.STSim.TransitionAttributeReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="TSTReport" displayName="Time-Since-Transition" isExport="True" className="SyncroSim.STSim.TSTReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="StateClassRasterMap" displayName="State Classes" isRasterExport="True" dataSheet="OutputSpatialState" column="Filename"/>
+	<transformer name="TransitionRasterMap" displayName="Transitions" isRasterExport="True" dataSheet="OutputSpatialTransition" column="Filename"/>
+	<transformer name="AgeRasterMap" displayName="Ages" isRasterExport="True" dataSheet="OutputSpatialAge" column="Filename"/>
+	<transformer name="TSTRasterMap" displayName="Time-Since-Transition" isRasterExport="True" dataSheet="OutputSpatialTST" column="Filename"/>
+	<transformer name="StratumRasterMap" displayName="Stratum" isRasterExport="True" dataSheet="OutputSpatialStratum" column="Filename" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
+	<transformer name="StateAttributeRasterMap" displayName="State Attributes" isRasterExport="True" dataSheet="OutputSpatialStateAttribute" column="Filename"/>
+	<transformer name="TransitionAttributeRasterMap" displayName="Transition Attributes" isRasterExport="True" dataSheet="OutputSpatialTransitionAttribute" column="Filename"/>
+	<transformer name="TransitionEventRasterMap" displayName="Transition Events" isRasterExport="True" dataSheet="OutputSpatialTransitionEvent" column="Filename"/>
+	<transformer name="AverageStratumRasterMap" isExport="True" className="SyncroSim.STSim.AvgStratumExportTransformer" classAssembly="SyncroSim.STSim" dataSheet="OutputSpatialAverageStratum" column="Filename"/>
+	<transformer name="AverageStateClassRasterMap" displayName="State Class Probability" isRasterExport="True" dataSheet="OutputSpatialAverageStateClass" column="Filename"/>
+	<transformer name="AverageAgeRasterMap" displayName="Average Ages" isRasterExport="True" dataSheet="OutputSpatialAverageAge" column="Filename"/>
+	<transformer name="AverageStateAttributeRasterMap" displayName="Average State Attributes" isRasterExport="True" dataSheet="OutputSpatialAverageStateAttribute" column="Filename"/>
+	<transformer name="AverageTransitionAttributeRasterMap" displayName="Average Transition Attributes" isRasterExport="True" dataSheet="OutputSpatialAverageTransitionAttribute" column="Filename"/>
+	<transformer name="AverageTransitionProbabilityRasterMap" displayName="Transition Probability" isRasterExport="True" dataSheet="OutputSpatialAverageTransitionProbability" column="Filename"/>
+	<transformer name="AverageTSTRasterMap" displayName="Time-Since-Transition - Average" isRasterExport="True" dataSheet="OutputSpatialAverageTST" column="Filename"/>
+	<transformer name="SummaryStockReport" displayName="Stocks" isExport="True" className="SyncroSim.STSim.SummaryStockReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="SummaryFlowReport" displayName="Flows" isExport="True" className="SyncroSim.STSim.SummaryFlowReport" classAssembly="SyncroSim.STSim"/>
+	<transformer name="StockRasterMap" displayName="Stock Groups" isRasterExport="True" dataSheet="OutputSpatialStockGroup" column="Filename" isFolderExport="True"/>
+	<transformer name="FlowRasterMap" displayName="Flow Groups" isRasterExport="True" dataSheet="OutputSpatialFlowGroup" column="Filename" isFolderExport="True"/>
+	<transformer name="LateralFlowRasterMap" displayName="Lateral Flow Groups" isRasterExport="True" dataSheet="OutputLateralFlowGroup" column="Filename" isFolderExport="True"/>
+	<transformer name="AvgStockRasterMap" displayName="Average Stock Groups" isRasterExport="True" dataSheet="OutputAverageSpatialStockGroup" column="Filename" isFolderExport="True"/>
+	<transformer name="AvgFlowRasterMap" displayName="Average Flow Groups" isRasterExport="True" dataSheet="OutputAverageSpatialFlowGroup" column="Filename" isFolderExport="True"/>
+	<transformer name="AvgLateralFlowRasterMap" displayName="Average Lateral Flow Groups" isRasterExport="True" dataSheet="OutputAverageSpatialLateralFlowGroup" column="Filename" isFolderExport="True"/>
+	
 	<transformer name="Main" displayName="ST-Sim" className="SyncroSim.STSim.STSimTransformer" classAssembly="SyncroSim.STSim">
 		<dataSheet name="RunControl" type="Input"/>
-		<dataSheet name="DeterministicTransition" type="Input"/>		
-		<dataSheet name="Transition" type="Input"/>				
-		<dataSheet name="InitialConditionsNonSpatialProperties" type="Input"/>				
-		<dataSheet name="InitialConditionsNonSpatialDistribution" type="Input"/>				
-	  <dataSheet name="InitialConditionsSpatialRaster" type="Input"/>			
-		<dataSheet name="InitialConditionsSpatialProperty" type="Input"/>		
-		<dataSheet name="OutputOptions" type="Input"/>				
-		<dataSheet name="OutputOptionsSpatial" type="Input"/>				
-		<dataSheet name="OutputOptionsSpatialAverage" type="Input"/>				
-	  <dataSheet name="OutputFilterTransitionGroups" type="Input"/>				
-		<dataSheet name="OutputFilterStateAttributes" type="Input"/>		
-		<dataSheet name="OutputFilterTransitionAttributes" type="Input"/>				
-		<dataSheet name="TransitionTarget" type="Input"/>				
-		<dataSheet name="TransitionTargetPrioritization" type="Input"/>				
-	  <dataSheet name="TransitionMultiplierValue" type="Input"/>				
-		<dataSheet name="StateAttributeValue" type="Input"/>				
-		<dataSheet name="TransitionAttributeValue" type="Input"/>				
-		<dataSheet name="TransitionAttributeTarget" type="Input"/>				
-	  <dataSheet name="TransitionAttributeTargetPrioritization" type="Input"/>	
-		<dataSheet name="TimeSinceTransitionGroup" type="Input"/>				
-		<dataSheet name="TimeSinceTransitionRandomize" type="Input"/>				
-		<dataSheet name="InitialTSTSpatial" type="Input"/>				
-	  <dataSheet name="TransitionSizeDistribution" type="Input"/>				
-		<dataSheet name="TransitionSpreadDistribution" type="Input"/>				
-		<dataSheet name="TransitionPatchPrioritization" type="Input"/>				
-		<dataSheet name="TransitionSizePrioritization" type="Input"/>				
-	  <dataSheet name="TransitionSpatialMultiplier" type="Input"/>			
-	  <dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>		
-	  <dataSheet name="TransitionDirectionMultiplier" type="Input"/>			
-	  <dataSheet name="DigitalElevationModel" type="Input"/>				
-	  <dataSheet name="TransitionSlopeMultiplier" type="Input"/>			
-	  <dataSheet name="TransitionAdjacencySetting" type="Input"/>				
-	  <dataSheet name="TransitionAdjacencyMultiplier" type="Input"/>			
-	  <dataSheet name="TransitionPathwayAutoCorrelation" type="Input"/>				
-	  <dataSheet name="DistributionValue" type="Input"/>			
-	  <dataSheet name="Multiprocessing" type="Input"/>				
-	  <dataSheet name="OutputStratum" type="Output"/>				
-	  <dataSheet name="OutputStratumState" type="Output"/>			
-	  <dataSheet name="OutputStratumTransition" type="Output"/>		
-	  <dataSheet name="OutputStratumTransitionState" type="Output"/>				
-	  <dataSheet name="OutputTST" type="Output"/>			
-	  <dataSheet name="OutputStateAttribute" type="Output"/>				
-	  <dataSheet name="OutputTransitionAttribute" type="Output"/>				
-	  <dataSheet name="OutputExternalVariableValue" type="Output"/>			
-	  <dataSheet name="OutputSpatialState" type="Output"/>				
-	  <dataSheet name="OutputSpatialAge" type="Output"/>				
-	  <dataSheet name="OutputSpatialStratum" type="Output"/>			
-	  <dataSheet name="OutputSpatialTransition" type="Output"/>		
-	  <dataSheet name="OutputSpatialTransitionEvent" type="Output"/>			
-	  <dataSheet name="OutputSpatialTST" type="Output"/>	
-	  <dataSheet name="OutputSpatialStateAttribute" type="Output"/>			
-	  <dataSheet name="OutputSpatialTransitionAttribute" type="Output"/>		
-	  <dataSheet name="OutputSpatialAverageStateClass" type="Output"/>			
-	  <dataSheet name="OutputSpatialAverageAge" type="Output"/>	
-	  <dataSheet name="OutputSpatialAverageStratum" type="Output"/>			
-	  <dataSheet name="OutputSpatialAverageTransitionProbability" type="Output"/>		
-	  <dataSheet name="OutputSpatialAverageTST" type="Output"/>			
-	  <dataSheet name="OutputSpatialAverageStateAttribute" type="Output"/>	
-	  <dataSheet name="OutputSpatialAverageTransitionAttribute" type="Output"/>			
+		<dataSheet name="DeterministicTransition" type="Input"/>
+		<dataSheet name="Transition" type="Input"/>
+		<dataSheet name="InitialConditionsNonSpatialProperties" type="Input"/>
+		<dataSheet name="InitialConditionsNonSpatialDistribution" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialRaster" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialProperty" type="Input"/>
+		<dataSheet name="OutputOptions" type="Input"/>
+		<dataSheet name="OutputOptionsSpatial" type="Input"/>
+		<dataSheet name="OutputOptionsSpatialAverage" type="Input"/>
+		<dataSheet name="OutputFilterTransitionGroups" type="Input"/>
+		<dataSheet name="OutputFilterStateAttributes" type="Input"/>
+		<dataSheet name="OutputFilterTransitionAttributes" type="Input"/>	
+		<dataSheet name="OutputFilterStocks" type="Input"/>
+		<dataSheet name="OutputFilterFlows" type="Input"/>			
+		<dataSheet name="TransitionTarget" type="Input"/>
+		<dataSheet name="TransitionTargetPrioritization" type="Input"/>
+		<dataSheet name="TransitionMultiplierValue" type="Input"/>
+		<dataSheet name="StateAttributeValue" type="Input"/>
+		<dataSheet name="TransitionAttributeValue" type="Input"/>
+		<dataSheet name="TransitionAttributeTarget" type="Input"/>
+		<dataSheet name="TransitionAttributeTargetPrioritization" type="Input"/>
+		<dataSheet name="TimeSinceTransitionGroup" type="Input"/>
+		<dataSheet name="TimeSinceTransitionRandomize" type="Input"/>
+		<dataSheet name="InitialTSTSpatial" type="Input"/>
+		<dataSheet name="TransitionSizeDistribution" type="Input"/>
+		<dataSheet name="TransitionSpreadDistribution" type="Input"/>
+		<dataSheet name="TransitionPatchPrioritization" type="Input"/>
+		<dataSheet name="TransitionSizePrioritization" type="Input"/>
+		<dataSheet name="TransitionSpatialMultiplier" type="Input"/>
+		<dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
+		<dataSheet name="TransitionDirectionMultiplier" type="Input"/>
+		<dataSheet name="DigitalElevationModel" type="Input"/>
+		<dataSheet name="TransitionSlopeMultiplier" type="Input"/>
+		<dataSheet name="TransitionAdjacencySetting" type="Input"/>
+		<dataSheet name="TransitionAdjacencyMultiplier" type="Input"/>
+		<dataSheet name="TransitionPathwayAutoCorrelation" type="Input"/>
+		<dataSheet name="DistributionValue" type="Input"/>
+		<dataSheet name="Multiprocessing" type="Input"/>
+		<dataSheet name="OutputStratum" type="Output"/>
+		<dataSheet name="OutputStratumState" type="Output"/>
+		<dataSheet name="OutputStratumTransition" type="Output"/>
+		<dataSheet name="OutputStratumTransitionState" type="Output"/>
+		<dataSheet name="OutputTST" type="Output"/>
+		<dataSheet name="OutputStateAttribute" type="Output"/>
+		<dataSheet name="OutputTransitionAttribute" type="Output"/>
+		<dataSheet name="OutputExternalVariableValue" type="Output"/>
+		<dataSheet name="OutputSpatialState" type="Output"/>
+		<dataSheet name="OutputSpatialAge" type="Output"/>
+		<dataSheet name="OutputSpatialStratum" type="Output"/>
+		<dataSheet name="OutputSpatialTransition" type="Output"/>
+		<dataSheet name="OutputSpatialTransitionEvent" type="Output"/>
+		<dataSheet name="OutputSpatialTST" type="Output"/>
+		<dataSheet name="OutputSpatialStateAttribute" type="Output"/>
+		<dataSheet name="OutputSpatialTransitionAttribute" type="Output"/>
+		<dataSheet name="OutputSpatialAverageStateClass" type="Output"/>
+		<dataSheet name="OutputSpatialAverageAge" type="Output"/>
+		<dataSheet name="OutputSpatialAverageStratum" type="Output"/>
+		<dataSheet name="OutputSpatialAverageTransitionProbability" type="Output"/>
+		<dataSheet name="OutputSpatialAverageTST" type="Output"/>
+		<dataSheet name="OutputSpatialAverageStateAttribute" type="Output"/>
+		<dataSheet name="OutputSpatialAverageTransitionAttribute" type="Output"/>
 	</transformer>
 
 	<layout type="Export"
@@ -894,6 +950,8 @@
 			<item name="TSTReport"/>
 			<item name="StateAttributeReport"/>
 			<item name="TransitionAttributeReport"/>
+			<item name="SummaryStockReport"/>
+			<item name="SummaryFlowReport"/>			
 		</group>
 		<group name="Maps">
 			<group name="StateClasses" displayName="State Classes">
@@ -922,6 +980,14 @@
 			<group name="TransitionAttributes" displayName="Transition Attributes">
 				<item name="TransitionAttributeRasterMap" displayName="Iteration"/>
 				<item name="AverageTransitionAttributeRasterMap" displayName="Average"/>
+			</group>
+			<group name="stockflow" displayName="Stocks and Flows">
+				<item name="StockRasterMap" displayName="Iteration"/>		
+				<item name="FlowRasterMap" displayName="Iteration"/>					
+				<item name="LateralFlowRasterMap" displayName="Iteration"/>		
+				<item name="AvgStockRasterMap" displayName="Average"/>						
+				<item name="AvgFlowRasterMap" displayName="Average"/>		
+				<item name="AvgLateralFlowRasterMap" displayName="Average"/>										
 			</group>
 		</group>
 	</layout>
@@ -960,6 +1026,13 @@
 				<item name="TSTType"/>
 				<item name="TSTGroup"/>
 			</group>
+			<group name="StockFlow">
+				<item name="StockType"/>
+				<item name="StockGroup"/>
+				<item name="FlowType"/>
+				<item name="FlowGroup"/>
+				<item name="FlowMultiplierType"/>
+			</group>
 			<item name="SizeClass"/>
 		</group>
 		<item name="Terminology"/>
@@ -979,10 +1052,13 @@
 			<item name="OutputOptions" displayName="Tabular"/>
 			<item name="OutputOptionsSpatial" displayName="Spatial"/>
 			<item name="OutputOptionsSpatialAverage" displayName="Spatial Average"/>
+			<item name="OutputOptionsStockFlow" displayName="Stocks and Flows"/>
 			<group name="OutputFilters" displayName="Output Filters">
 				<item name="OutputFilterTransitionGroups" displayName="Transition Groups"/>
 				<item name="OutputFilterStateAttributes" displayName="State Attributes"/>
 				<item name="OutputFilterTransitionAttributes" displayName="Transition Attributes"/>
+				<item name="OutputFilterStocks" displayName="Stocks"/>
+				<item name="OutputFilterFlows" displayName="Flows"/>				
 			</group>
 		</group>
 		<group name="Advanced">
@@ -998,7 +1074,7 @@
 				<item name="TransitionSpatialInitiationMultiplier"/>
 				<item name="TransitionDirectionMultiplier"/>
 				<item name="TransitionSlopeMultiplier"/>
-				<item name="TransitionAdjacencyMultipliers"/>				
+				<item name="TransitionAdjacencyMultipliers"/>
 				<item name="TransitionPathwayAutoCorrelation"/>
 			</group>
 			<item name="TransitionOrder" displayName="Transitions - Order"/>
@@ -1011,7 +1087,7 @@
 				<item name="TransitionAttributeTargetPrioritization" displayName="Attribute Target Prioritization"/>
 			</group>
 			<item name="DistributionValue"/>
-		  <item name="Multiprocessing"/>			
+			<item name="Multiprocessing"/>
 		</group>
 	</layout>
 
@@ -1026,12 +1102,5 @@
 		className="SyncroSim.STSim.STSimPlotProvider"
 		classAssembly="SyncroSim.STSim">
 	</layout>
-
-	<console
-		name="console"
-		displayName="ST-Sim Console"
-		className="SyncroSim.STSim.STSimConsole"
-		classAssembly="SyncroSim.STSim">
-	</console>
-
+	
 </package>

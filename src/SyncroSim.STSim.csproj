@@ -123,10 +123,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
-    <Compile Include="Console\STSimConsole.CreateReport.cs" />
-    <Compile Include="Console\STSimConsole.ListReports.cs" />
-    <Compile Include="Console\STSimConsole.SpatialSplit.cs" />
-    <Compile Include="Console\STSimConsole.cs" />
+    <Compile Include="DataFeedViews\FlowOrderDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\FlowOrderDataFeedView.Designer.cs">
+      <DependentUpon>FlowOrderDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\FlowPathwayDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\FlowPathwayDataFeedView.Designer.cs">
+      <DependentUpon>FlowPathwayDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialStocksDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialStocksDataFeedView.Designer.cs">
+      <DependentUpon>InitialStocksDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,6 +152,18 @@
     </Compile>
     <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.Designer.cs">
+      <DependentUpon>StockFlowOutputOptionsDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\StockTypeQuickView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\StockTypeQuickView.Designer.cs">
+      <DependentUpon>StockTypeQuickView.cs</DependentUpon>
     </Compile>
     <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.cs">
       <SubType>UserControl</SubType>
@@ -160,11 +186,111 @@
     <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
     <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
+    <Compile Include="DataSheets\FlowGroupDataSheet.cs" />
+    <Compile Include="DataSheets\FlowPathwayDataSheet.cs" />
+    <Compile Include="DataSheets\FlowPathwayDiagramDataSheet.cs" />
+    <Compile Include="DataSheets\FlowTypeDataSheet.cs" />
+    <Compile Include="DataSheets\OutputFlowDataSheet.cs" />
+    <Compile Include="DataSheets\StockGroupDataSheet.cs" />
+    <Compile Include="DataSheets\StockTypeDataSheet.cs" />
     <Compile Include="DataSheets\TransitionTypeGroupDataSheet.cs" />
     <Compile Include="DataSheets\TSTGroupDataSheet.cs" />
     <Compile Include="DataSheets\TSTTypeDataSheet.cs" />
+    <Compile Include="DiagramSF\FlowPathwayDiagramFilterCriteria.cs" />
+    <Compile Include="DiagramSF\FlowPathwayDiagram.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DiagramSF\FlowPathwayLine.cs" />
+    <Compile Include="DiagramSF\FlowPathwayTabStripItem.cs" />
+    <Compile Include="DiagramSF\StockTypeShape.cs" />
+    <Compile Include="Forms\ChooseStockTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChooseStockTypeForm.Designer.cs">
+      <DependentUpon>ChooseStockTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FilterFlowTypesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FilterFlowTypesForm.Designer.cs">
+      <DependentUpon>FilterFlowTypesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Providers\STSimResultsProvider.cs" />
+    <Compile Include="Reports\SummaryFlowReport.cs" />
+    <Compile Include="Reports\SummaryStockReport.cs" />
     <Compile Include="Reports\TSTReport.cs" />
+    <Compile Include="RuntimeSF\FlowGroup.cs" />
+    <Compile Include="RuntimeSF\FlowGroupCollection.cs" />
+    <Compile Include="RuntimeSF\FlowGroupLinkage.cs" />
+    <Compile Include="RuntimeSF\FlowGroupLinkageCollection.cs" />
+    <Compile Include="RuntimeSF\FlowLateralMultiplier.cs" />
+    <Compile Include="RuntimeSF\FlowLateralMultiplierCollection.cs" />
+    <Compile Include="RuntimeSF\FlowLateralMultiplierMap.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplier.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierByStock.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierByStockCollection.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierByStockMap.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierCollection.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierMap.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierType.cs" />
+    <Compile Include="RuntimeSF\FlowMultiplierTypeCollection.cs" />
+    <Compile Include="RuntimeSF\FlowOrder.cs" />
+    <Compile Include="RuntimeSF\FlowOrderCollection.cs" />
+    <Compile Include="RuntimeSF\FlowOrderMap.cs" />
+    <Compile Include="RuntimeSF\FlowSpatialMultiplier.cs" />
+    <Compile Include="RuntimeSF\FlowSpatialMultiplierCollection.cs" />
+    <Compile Include="RuntimeSF\FlowSpatialMultiplierMap.cs" />
+    <Compile Include="RuntimeSF\FlowType.cs" />
+    <Compile Include="RuntimeSF\FlowTypeCollection.cs" />
+    <Compile Include="RuntimeSF\FlowTypeLinkage.cs" />
+    <Compile Include="RuntimeSF\FlowTypeLinkageCollection.cs" />
+    <Compile Include="RuntimeSF\InitialStockNonSpatial.cs" />
+    <Compile Include="RuntimeSF\InitialStockNonSpatialCollection.cs" />
+    <Compile Include="RuntimeSF\InitialStockSpatial.cs" />
+    <Compile Include="RuntimeSF\InitialStockSpatialCollection.cs" />
+    <Compile Include="RuntimeSF\InitialStockSpatialMap.cs" />
+    <Compile Include="RuntimeSF\LateralFlowAmountMap.cs" />
+    <Compile Include="RuntimeSF\LateralFlowAmountRecord.cs" />
+    <Compile Include="RuntimeSF\LateralFlowCouplet.cs" />
+    <Compile Include="RuntimeSF\LateralFlowCoupletMap.cs" />
+    <Compile Include="RuntimeSF\OutputFilterBase.cs" />
+    <Compile Include="RuntimeSF\OutputFilterCollection.cs" />
+    <Compile Include="RuntimeSF\OutputFilterFlows.cs" />
+    <Compile Include="RuntimeSF\OutputFilterStocks.cs" />
+    <Compile Include="RuntimeSF\OutputFlow.cs" />
+    <Compile Include="RuntimeSF\OutputFlowCollection.cs" />
+    <Compile Include="RuntimeSF\OutputStock.cs" />
+    <Compile Include="RuntimeSF\OutputStockCollection.cs" />
+    <Compile Include="RuntimeSF\SpatialOutputFlowRecord.cs" />
+    <Compile Include="RuntimeSF\StockFlowMapBase.cs" />
+    <Compile Include="RuntimeSF\StockFlowMapBase1.cs" />
+    <Compile Include="RuntimeSF\StockFlowMapBase4.cs" />
+    <Compile Include="RuntimeSF\StockFlowMapBase5.cs" />
+    <Compile Include="RuntimeSF\StockFlowMapBase6.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Collections.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Initialize.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Maps.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Merge.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Multipliers.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Normalize.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Output.cs" />
+    <Compile Include="RuntimeSF\StockFlowTransformer.Utilities.cs" />
+    <Compile Include="RuntimeSF\StockFlowType.cs" />
+    <Compile Include="RuntimeSF\StockGroup.cs" />
+    <Compile Include="RuntimeSF\StockGroupCollection.cs" />
+    <Compile Include="RuntimeSF\StockGroupLinkage.cs" />
+    <Compile Include="RuntimeSF\StockGroupLinkageCollection.cs" />
+    <Compile Include="RuntimeSF\StockLimit.cs" />
+    <Compile Include="RuntimeSF\StockLimitCollection.cs" />
+    <Compile Include="RuntimeSF\StockLimitMap.cs" />
+    <Compile Include="RuntimeSF\StockTransitionMultiplier.cs" />
+    <Compile Include="RuntimeSF\StockTransitionMultiplierCollection.cs" />
+    <Compile Include="RuntimeSF\StockTransitionMultiplierMap.cs" />
+    <Compile Include="RuntimeSF\StockType.cs" />
+    <Compile Include="RuntimeSF\StockTypeCollection.cs" />
+    <Compile Include="RuntimeSF\StockTypeLinkage.cs" />
+    <Compile Include="RuntimeSF\StockTypeLinkageCollection.cs" />
     <Compile Include="Runtime\AttributeValueAgeBin.cs" />
     <Compile Include="Runtime\AttributeValueAgeBinCollection.cs" />
     <Compile Include="Runtime\AttributeValueReference.cs" />
@@ -491,6 +617,9 @@
     <Compile Include="Reports\TransitionAttributeReport.cs" />
     <Compile Include="Reports\TransitionStateSummaryReport.cs" />
     <Compile Include="Reports\TransitionSummaryReport.cs" />
+    <Compile Include="RuntimeSF\FlowPathway.cs" />
+    <Compile Include="RuntimeSF\FlowPathwayCollection.cs" />
+    <Compile Include="RuntimeSF\FlowPathwayMap.cs" />
     <Compile Include="Shared\CheckBoxPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -569,11 +698,20 @@
     <EmbeddedResource Include="DataFeedViews\DistributionValueDataFeedView.resx">
       <DependentUpon>DistributionValueDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\FlowOrderDataFeedView.resx">
+      <DependentUpon>FlowOrderDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\FlowPathwayDataFeedView.resx">
+      <DependentUpon>FlowPathwayDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsNonSpatialDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\InitialStocksDataFeedView.resx">
+      <DependentUpon>InitialStocksDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.resx">
       <DependentUpon>OutputOptionsSpatialAverageDataFeedView.cs</DependentUpon>
@@ -608,6 +746,12 @@
     <EmbeddedResource Include="DataFeedViews\StateClassQuickView.resx">
       <DependentUpon>StateClassQuickView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.resx">
+      <DependentUpon>StockFlowOutputOptionsDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\StockTypeQuickView.resx">
+      <DependentUpon>StockTypeQuickView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\TransitionDataFeedView.resx">
       <DependentUpon>TransitionDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
@@ -628,6 +772,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChooseStateClassForm.resx">
       <DependentUpon>ChooseStateClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChooseStockTypeForm.resx">
+      <DependentUpon>ChooseStockTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FilterFlowTypesForm.resx">
+      <DependentUpon>FilterFlowTypesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FilterTransitionsForm.resx">
       <DependentUpon>FilterTransitionsForm.cs</DependentUpon>

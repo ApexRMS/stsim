@@ -132,5 +132,27 @@ namespace SyncroSim.STSim
 
         //General colors
         public static Color READONLY_COLUMN_COLOR = Color.FromArgb(232, 232, 232);
+
+        //Stock Flow Diagram
+        public const int DIAGRAM_MAX_ROWS = 256;
+        public const int DIAGRAM_MAX_COLUMNS = 26;
+        public const int DIAGRAM_ITEM_HEIGHT = 25;
+        public const int DIAGRAM_TITLE_BAR_HEIGHT = 25;
+        public const int DIAGRAM_SHAPE_PADDING = 44;
+        public const int DIAGRAM_SHAPE_SIZE = (DIAGRAM_TITLE_BAR_HEIGHT + (2 * DIAGRAM_ITEM_HEIGHT));
+        public const int DIAGRAM_SPACE_BETWEEN_SHAPES = 2 * DIAGRAM_SHAPE_PADDING;
+        public const int DIAGRAM_NUM_VERTICAL_CONNECTORS = 9;
+        public const int DIAGRAM_NUM_HORIZONTAL_CONNECTORS = 9;
+        public const int DIAGRAM_OFF_STRATUM_CUE_SIZE = 14;
+        public const int DIAGRAM_LANES_BETWEEN_SHAPES = 11;
+        public const int ZOOM_SAFE_PEN_WIDTH = -1;
+
+        public static Color DIAGRAM_SHAPE_TEXT_COLOR = Color.Black;
+        public static Color DIAGRAM_SHAPE_READONLY_TEXT_COLOR = Color.Gray;
+        public static Color DIAGRAM_SHAPE_BORDER_COLOR = Color.Gray;
+        public static Color DIAGRAM_SHAPE_READONLY_BORDER_COLOR = Color.LightGray;
+        public static Color DIAGRAM_SHAPE_BACKGROUND_COLOR = Color.FromArgb(255, 240, 240, 240);
+        public static Color DIAGRAM_FLOW_PATHWAY_LINE_COLOR = Color.CornflowerBlue;
+        public static Font DIAGRAM_SHAPE_NORMAL_FONT = new Font("Segoe UI", 9.0F, FontStyle.Regular);
     }
 }

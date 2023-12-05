@@ -1229,130 +1229,130 @@ namespace SyncroSim.STSim
             return null;
         }
 
-        private void STSimExternalDataReady(DataSheet dataSheet)
-        {
-            if (dataSheet.Name == Strings.DATASHEET_PT_NAME)
-            {
-                this.m_Transitions.Clear();
-                this.FillProbabilisticTransitionsCollection();
-                this.m_TransitionMap = new TransitionMap(this.ResultScenario, this.m_Transitions);
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_TARGET_NAME)
-            {
-                this.m_TransitionTargets.Clear();
-                this.FillTransitionTargetCollection();
-                this.InitializeTransitionTargetDistributionValues();
-                this.InitializeTransitionTargetPrioritizations();
-                this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME)
-            {
-                this.m_TransitionMultiplierValues.Clear();
-                this.FillTransitionMultiplierValueCollection();
-                this.InitializeTransitionMultiplierDistributionValues();
+        //private void STSimExternalDataReady(DataSheet dataSheet)
+        //{
+        //    if (dataSheet.Name == Strings.DATASHEET_PT_NAME)
+        //    {
+        //        this.m_Transitions.Clear();
+        //        this.FillProbabilisticTransitionsCollection();
+        //        this.m_TransitionMap = new TransitionMap(this.ResultScenario, this.m_Transitions);
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_TARGET_NAME)
+        //    {
+        //        this.m_TransitionTargets.Clear();
+        //        this.FillTransitionTargetCollection();
+        //        this.InitializeTransitionTargetDistributionValues();
+        //        this.InitializeTransitionTargetPrioritizations();
+        //        this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME)
+        //    {
+        //        this.m_TransitionMultiplierValues.Clear();
+        //        this.FillTransitionMultiplierValueCollection();
+        //        this.InitializeTransitionMultiplierDistributionValues();
 
-                foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-                {
-                    tmt.ClearMultiplierValueMap();
-                }
+        //        foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
+        //        {
+        //            tmt.ClearMultiplierValueMap();
+        //        }
 
-                foreach (TransitionMultiplierValue sm in this.m_TransitionMultiplierValues)
-                {
-                    TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
-                    mt.AddTransitionMultiplierValue(sm);
-                }
+        //        foreach (TransitionMultiplierValue sm in this.m_TransitionMultiplierValues)
+        //        {
+        //            TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
+        //            mt.AddTransitionMultiplierValue(sm);
+        //        }
 
-                foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-                {
-                    tmt.CreateMultiplierValueMap();
-                }
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME)
-            {
-                if (this.m_IsSpatial)
-                {
-                    this.m_TransitionSpatialMultipliers.Clear();
-                    this.m_TransitionSpatialMultiplierRasters.Clear();
-                    this.FillTransitionSpatialMultiplierCollection();
+        //        foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
+        //        {
+        //            tmt.CreateMultiplierValueMap();
+        //        }
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME)
+        //    {
+        //        if (this.m_IsSpatial)
+        //        {
+        //            this.m_TransitionSpatialMultipliers.Clear();
+        //            this.m_TransitionSpatialMultiplierRasters.Clear();
+        //            this.FillTransitionSpatialMultiplierCollection();
 
-                    foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-                    {
-                        tmt.ClearSpatialMultiplierMap();
-                    }
+        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
+        //            {
+        //                tmt.ClearSpatialMultiplierMap();
+        //            }
 
-                    foreach (TransitionSpatialMultiplier sm in this.m_TransitionSpatialMultipliers)
-                    {
-                        TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
-                        mt.AddTransitionSpatialMultiplier(sm);
-                    }
+        //            foreach (TransitionSpatialMultiplier sm in this.m_TransitionSpatialMultipliers)
+        //            {
+        //                TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
+        //                mt.AddTransitionSpatialMultiplier(sm);
+        //            }
 
-                    foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-                    {
-                        tmt.CreateSpatialMultiplierMap();
-                    }
-                }
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
-            {
-                if (this.m_IsSpatial)
-                {
-                    this.m_TransitionSpatialInitiationMultipliers.Clear();
-                    this.m_TransitionSpatialInitiationMultiplierRasters.Clear();
-                    this.FillTransitionSpatialInitiationMultiplierCollection();
+        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
+        //            {
+        //                tmt.CreateSpatialMultiplierMap();
+        //            }
+        //        }
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
+        //    {
+        //        if (this.m_IsSpatial)
+        //        {
+        //            this.m_TransitionSpatialInitiationMultipliers.Clear();
+        //            this.m_TransitionSpatialInitiationMultiplierRasters.Clear();
+        //            this.FillTransitionSpatialInitiationMultiplierCollection();
 
-                    foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-                    {
-                        tmt.ClearSpatialInitiationMultiplierMap();
-                    }
+        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
+        //            {
+        //                tmt.ClearSpatialInitiationMultiplierMap();
+        //            }
 
-                    foreach (TransitionSpatialInitiationMultiplier sm in this.m_TransitionSpatialInitiationMultipliers)
-                    {
-                        TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
-                        mt.AddTransitionSpatialInitiationMultiplier(sm);
-                    }
+        //            foreach (TransitionSpatialInitiationMultiplier sm in this.m_TransitionSpatialInitiationMultipliers)
+        //            {
+        //                TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
+        //                mt.AddTransitionSpatialInitiationMultiplier(sm);
+        //            }
 
-                    foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-                    {
-                        tmt.CreateSpatialInitiationMultiplierMap();
-                    }
-                }
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ORDER_NAME)
-            {
-                this.m_TransitionOrders.Clear();
-                this.FillTransitionOrderCollection();
-                this.m_TransitionOrderMap = new TransitionOrderMap(this.m_TransitionOrders);
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_NAME)
-            {
-                this.m_StateAttributeValues.Clear();
-                this.FillStateAttributeValueCollection();
-                this.m_StateAttributeTypeIds = null;
-                this.m_StateAttributeValueMap = null;
-                this.InitializeStateAttributes();
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME)
-            {
-                this.m_TransitionAttributeValues.Clear();
-                this.FillTransitionAttributeValueCollection();
-                this.m_TransitionAttributeValueMap = null;
-                this.m_TransitionAttributeTypeIds = null;
-                this.InitializeTransitionAttributes();
-            }
-            else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME)
-            {
-                this.m_TransitionAttributeTargets.Clear();
-                this.FillTransitionAttributeTargetCollection();
-                this.InitializeTransitionAttributeTargetDistributionValues();
-                this.InitializeTransitionAttributeTargetPrioritizations();
-                this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
-            }
-            else
-            {
-                string msg = string.Format(CultureInfo.InvariantCulture, "External data is not supported for: {0}", dataSheet.Name);
-                throw new TransformerFailedException(msg);
-            }
-        }
+        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
+        //            {
+        //                tmt.CreateSpatialInitiationMultiplierMap();
+        //            }
+        //        }
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ORDER_NAME)
+        //    {
+        //        this.m_TransitionOrders.Clear();
+        //        this.FillTransitionOrderCollection();
+        //        this.m_TransitionOrderMap = new TransitionOrderMap(this.m_TransitionOrders);
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_NAME)
+        //    {
+        //        this.m_StateAttributeValues.Clear();
+        //        this.FillStateAttributeValueCollection();
+        //        this.m_StateAttributeTypeIds = null;
+        //        this.m_StateAttributeValueMap = null;
+        //        this.InitializeStateAttributes();
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME)
+        //    {
+        //        this.m_TransitionAttributeValues.Clear();
+        //        this.FillTransitionAttributeValueCollection();
+        //        this.m_TransitionAttributeValueMap = null;
+        //        this.m_TransitionAttributeTypeIds = null;
+        //        this.InitializeTransitionAttributes();
+        //    }
+        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME)
+        //    {
+        //        this.m_TransitionAttributeTargets.Clear();
+        //        this.FillTransitionAttributeTargetCollection();
+        //        this.InitializeTransitionAttributeTargetDistributionValues();
+        //        this.InitializeTransitionAttributeTargetPrioritizations();
+        //        this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
+        //    }
+        //    else
+        //    {
+        //        string msg = string.Format(CultureInfo.InvariantCulture, "External data is not supported for: {0}", dataSheet.Name);
+        //        throw new TransformerFailedException(msg);
+        //    }
+        //}
 
         /// <summary>
         /// Resets the remaining amounts for transition attribute targets

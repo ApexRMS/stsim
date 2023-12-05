@@ -95,4 +95,20 @@ namespace SyncroSim.STSim
         Spatial = 2,
         AvgSpatial = 4
     }
+
+    public enum TargetType
+    {
+        Flow = 0,
+        ToStock = 1,
+        FromStock = 2
+    };
+
+    [Flags()]
+    public enum OutputFilter
+    {
+        None = 0,
+        Tabular = 1,
+        Spatial = 2,
+        AvgSpatial = 4
+    }
 }

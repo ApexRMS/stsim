@@ -1,6 +1,8 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
+using System.Drawing;
+
 namespace SyncroSim.STSim
 {
     internal static class Strings
@@ -69,6 +71,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_COLOR_COLUMN_NAME = "Color";
         public const string DATASHEET_LEGEND_COLUMN_NAME = "Legend";
         public const string DATASHEET_AMOUNT_COLUMN_NAME = "Amount";
+        public const string DATASHEET_MULTIPLIER_COLUMN_NAME = "Multiplier";
+        public const string DATASHEET_MULTIPLIER_FILE_COLUMN_NAME = "MultiplierFilename";
+        public const string DATASHEET_VALUE_COLUMN_NAME = "Value";
         public const string DATASHEET_ATTRIBUTE_GROUP_ID_COLUMN_NAME = "AttributeGroupId";
         public const string DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME = "DistributionType";
         public const string DATASHEET_DISTRIBUTION_FREQUENCY_COLUMN_NAME = "DistributionFrequencyId";
@@ -76,10 +81,47 @@ namespace SyncroSim.STSim
         public const string DATASHEET_DISTRIBUTIONMIN_COLUMN_NAME = "DistributionMin";
         public const string DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME = "DistributionMax";
         public const string DATASHEET_SUMOFAMOUNT_COLUMN_NAME = "SumOfAmount";
+        public const string DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename";
         public const string VALUE_MEMBER_COLUMN_NAME = "Value";
         public const string DISPLAY_MEMBER_COLUMN_NAME = "Display";
         public const string IS_AUTO_COLUMN_NAME = "IsAuto";
         public const string AUTO_COLUMN_SUFFIX = "[Type]";
+
+        public const string STOCK_VALUE_COLUMN_NAME = "StockValue";
+        public const string STOCK_MIN_COLUMN_NAME = "StockMinimum";
+        public const string STOCK_MAX_COLUMN_NAME = "StockMaximum";
+        public const string STOCK_TYPE_ID_COLUMN_NAME = "StockTypeId";
+        public const string STOCK_GROUP_ID_COLUMN_NAME = "StockGroupId";
+        public const string FLOW_TYPE_ID_COLUMN_NAME = "FlowTypeId";
+        public const string FLOW_GROUP_ID_COLUMN_NAME = "FlowGroupId";
+        public const string FLOW_MULTIPLIER_TYPE_ID_COLUMN_NAME = "FlowMultiplierTypeId";
+        public const string FROM_STRATUM_ID_COLUMN_NAME = "FromStratumId";
+        public const string FROM_SECONDARY_STRATUM_ID_COLUMN_NAME = "FromSecondaryStratumId";
+        public const string FROM_TERTIARY_STRATUM_ID_COLUMN_NAME = "FromTertiaryStratumId";
+        public const string FROM_STATECLASS_ID_COLUMN_NAME = "FromStateClassId";
+        public const string FROM_MIN_AGE_COLUMN_NAME = "FromAgeMin";
+        public const string FROM_STOCK_TYPE_ID_COLUMN_NAME = "FromStockTypeId";
+        public const string TO_STRATUM_ID_COLUMN_NAME = "ToStratumId";
+        public const string TO_STATECLASS_ID_COLUMN_NAME = "ToStateClassId";
+        public const string TO_MIN_AGE_COLUMN_NAME = "ToAgeMin";
+        public const string TO_STOCK_TYPE_ID_COLUMN_NAME = "ToStockTypeId";
+        public const string TARGET_TYPE = "TargetType";
+
+        public const string TRANSFER_TO_STRATUM_ID_COLUMN_NAME = "TransferToStratumId";
+        public const string TRANSFER_TO_SECONDARY_STRATUM_ID_COLUMN_NAME = "TransferToSecondaryStratumId";
+        public const string TRANSFER_TO_TERTIARY_STRATUM_ID_COLUMN_NAME = "TransferToTertiaryStratumId";
+        public const string TRANSFER_TO_STATECLASS_ID_COLUMN_NAME = "TransferToStateClassId";
+        public const string TRANSFER_TO_MIN_AGE_COLUMN_NAME = "TransferToAgeMin";
+
+        public const string END_STRATUM_ID_COLUMN_NAME = "EndStratumId";
+        public const string END_SECONDARY_STRATUM_ID_COLUMN_NAME = "EndSecondaryStratumId";
+        public const string END_TERTIARY_STRATUM_ID_COLUMN_NAME = "EndTertiaryStratumId";
+        public const string END_STATECLASS_ID_COLUMN_NAME = "EndStateClassId";
+        public const string END_MIN_AGE_COLUMN_NAME = "EndMinAge";
+
+        public const string OUTPUT_SUMMARY_COLUMN_NAME = "Summary";
+        public const string OUTPUT_SPATIAL_COLUMN_NAME = "Spatial";
+        public const string OUTPUT_AVG_SPATIAL_COLUMN_NAME = "AvgSpatial";
 
         //State Label X
         public const string DATASHEET_STATE_LABEL_X_NAME = "stsim_StateLabelX";
@@ -477,5 +519,102 @@ namespace SyncroSim.STSim
         public const string OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME = "Value";
 
         public const string CORE_EXTERNAL_VAR_TYPE_DATASHEET_NAME = "core_ExternalVariableType";
+
+        //Initial Stock
+        public const string RASTER_FILE_COLUMN_NAME = "RasterFileName";
+
+        //Flow Pathway
+        public const string STOCK_TYPE_ID_SOURCE_COLUMN_NAME = "StockTypeIDSource";
+        public const string STOCK_TYPE_ID_DEST_COLUMN_NAME = "StockTypeIDDest";
+
+        //Flow Diagram
+        public const string LOCATION_COLUMN_NAME = "Location";
+        public const int FLOW_PATHWAY_NULL_STOCK_TYPE_CUE_SIZE = 14;
+        public static Color FLOW_PATHWAY_CUE_COLOR = Color.Green;
+
+        //Flow Order
+        public const string DATASHEET_FLOW_ORDER_OPTIONS_ABT_COLUMN_NAME = "ApplyBeforeTransitions";
+        public const string DATASHEET_FLOW_ORDER_OPTIONS_AERS_COLUMN_NAME = "ApplyEquallyRankedSimultaneously";
+        public const string DATASHEET_FLOW_ORDER_ORDER_COLUMN_NAME = "Order";
+
+        //Output Options
+        public const string DATASHEET_OO_NAME = "stsim_OutputOptions";
+        public const string DATASHEET_OO_DISPLAY_NAME = "Output Options";
+        public const string DATASHEET_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME = "SummaryOutputST";
+        public const string DATASHEET_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SummaryOutputSTTimesteps";
+        public const string DATASHEET_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME = "SummaryOutputFL";
+        public const string DATASHEET_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SummaryOutputFLTimesteps";
+        public const string DATASHEET_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME = "SpatialOutputST";
+        public const string DATASHEET_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SpatialOutputSTTimesteps";
+        public const string DATASHEET_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME = "SpatialOutputFL";
+        public const string DATASHEET_OO_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SpatialOutputFLTimesteps";
+        public const string DATASHEET_OO_LATERAL_OUTPUT_FL_COLUMN_NAME = "LateralOutputFL";
+        public const string DATASHEET_OO_LATERAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "LateralOutputFLTimesteps";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_COLUMN_NAME = "AvgSpatialOutputST";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputSTTimesteps";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_ST_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputSTAcrossTimesteps";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_COLUMN_NAME = "AvgSpatialOutputFL";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputFLTimesteps";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_FL_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputFLAcrossTimesteps";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_COLUMN_NAME = "AvgSpatialOutputLFL";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputLFLTimesteps";
+        public const string DATASHEET_OO_AVG_SPATIAL_OUTPUT_LFL_ACROSS_TIMESTEPS_COLUMN_NAME = "AvgSpatialOutputLFLAcrossTimesteps";
+
+        //Stock Flow Datasheets
+        public const string DATASHEET_STOCK_TYPE_NAME = "stsim_StockType";
+        public const string DATASHEET_STOCK_GROUP_NAME = "stsim_StockGroup";
+        public const string DATASHEET_FLOW_TYPE_NAME = "stsim_FlowType";
+        public const string DATASHEET_FLOW_MULTIPLIER_TYPE_NAME = "stsim_FlowMultiplierType";
+        public const string DATASHEET_FLOW_GROUP_NAME = "stsim_FlowGroup";
+        public const string DATASHEET_INITIAL_STOCK_NON_SPATIAL = "stsim_InitialStockNonSpatial";
+        public const string DATASHEET_INITIAL_STOCK_SPATIAL = "stsim_InitialStockSpatial";
+        public const string DATASHEET_STOCK_LIMIT_NAME = "stsim_StockLimit";
+        public const string DATASHEET_FLOW_MULTIPLIER_BY_STOCK_NAME = "stsim_FlowMultiplierByStock";
+        public const string DATASHEET_STOCK_TRANSITION_MULTIPLIER_NAME = "stsim_StockTransitionMultiplier";
+        public const string DATASHEET_STOCK_TYPE_GROUP_MEMBERSHIP_NAME = "stsim_StockTypeGroupMembership";
+        public const string DATASHEET_FLOW_PATHWAY_NAME = "stsim_FlowPathway";
+        public const string DATASHEET_FLOW_PATHWAY_DIAGRAM_NAME = "stsim_FlowPathwayDiagram";
+        public const string DATASHEET_FLOW_MULTIPLIER_NAME = "stsim_FlowMultiplier";
+        public const string DATASHEET_FLOW_SPATIAL_MULTIPLIER_NAME = "stsim_FlowSpatialMultiplier";
+        public const string DATASHEET_FLOW_LATERAL_MULTIPLIER_NAME = "stsim_FlowLateralMultiplier";
+        public const string DATASHEET_FLOW_TYPE_GROUP_MEMBERSHIP_NAME = "stsim_FlowTypeGroupMembership";
+        public const string DATASHEET_FLOW_ORDER = "stsim_FlowOrder";
+        public const string DATASHEET_FLOW_ORDER_OPTIONS = "stsim_FlowOrderOptions";
+        public const string DATASHEET_OUTPUT_FLOW_NAME = "stsim_OutputFlow";
+        public const string DATASHEET_OUTPUT_STOCK_NAME = "stsim_OutputStock";
+        public const string DATASHEET_OUTPUT_SPATIAL_STOCK_GROUP = "stsim_OutputSpatialStockGroup";
+        public const string DATASHEET_OUTPUT_SPATIAL_FLOW_GROUP = "stsim_OutputSpatialFlowGroup";
+        public const string DATASHEET_OUTPUT_LATERAL_FLOW_GROUP = "stsim_OutputLateralFlowGroup";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_STOCK_GROUP = "stsim_OutputAverageSpatialStockGroup";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_FLOW_GROUP = "stsim_OutputAverageSpatialFlowGroup";
+        public const string DATASHEET_OUTPUT_AVG_SPATIAL_LATERAL_FLOW_GROUP = "stsim_OutputAverageLateralFlowGroup";
+        public const string DATASHEET_OUTPUT_FILTER_STOCKS = "stsim_OutputFilterStocks";
+        public const string DATASHEET_OUTPUT_FILTER_FLOWS = "stsim_OutputFilterFlows";
+
+        //Stock-Flow Report names
+        public const string STOCK_REPORT_NAME = "stocks";
+        public const string FLOW_REPORT_NAME = "flows";
+        public const double DEFAULT_FLOW_ORDER = double.MinValue;
+        public const int NULL_FROM_STOCK_TYPE_ID = 0;
+
+        //Stock-Flow Messages
+        public const string NO_SUMMARY_OUTPUT_OPTIONS_INFORMATION = "No summary output options specified for stocks and flows.  Using defaults.";
+        public const string REPORT_EXCEL_TOO_MANY_ROWS = "There are too many rows for Excel.  Please try another format for your report.";
+        public const string SPATIAL_FILE_STOCK_LOAD_WARNING = "The Initial Stocks Raster file '{0}' did not load, and will be ignored.";
+        public const string SPATIAL_FILE_STOCK_ROW_COLUMN_MISMATCH = "The Initial Stocks Raster file '{0}' metadata did not match that of the Initial Condition Primary Stratum raster file. {1}.";
+        public const string SPATIAL_FILE_STOCK_METADATA_INFO = "The Initial Stocks Raster file '{0}' metadata did not match that of the Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
+        public const string ERROR_NO_RESULT_SCENARIOS_FOR_REPORT = "There must be at least one selected result scenario to create this report.";
+        public const string ERROR_FLOW_MULTIPLIERS_BETA_DISTRIBUTION_INVALID = "Flow Multipliers: The beta distribution parameters are invalid.  The multiplier will be used for all iterations.";
+        public const string SPATIAL_METADATA_ROW_COLUMN_MISMATCH = "The Flow Spatial Multiplier file '{0}' number of rows and/or columns did not match that of ST-Sim's Initial Condition Primary Stratum raster file.";
+        public const string SPATIAL_METADATA_INFO = "The Flow Spatial Multiplier file '{0}' metadata did not match that of ST-Sim's Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
+        public const string SPATIAL_PROCESS_WARNING = "The Flow Spatial Multiplier file '{0}' did not load, and will be ignored.";
+
+        //Spatial Map file naming constants - Stock and Flow Group
+        public const string SPATIAL_MAP_STOCK_GROUP_VARIABLE_PREFIX = "stkg";
+        public const string SPATIAL_MAP_FLOW_GROUP_VARIABLE_PREFIX = "flog";
+        public const string SPATIAL_MAP_LATERAL_FLOW_GROUP_VARIABLE_PREFIX = "lflog";
+        public const string SPATIAL_MAP_AVG_STOCK_GROUP_VARIABLE_PREFIX = "avgstkg";
+        public const string SPATIAL_MAP_AVG_FLOW_GROUP_VARIABLE_PREFIX = "avgflog";
+        public const string SPATIAL_MAP_AVG_LATERAL_FLOW_GROUP_VARIABLE_PREFIX = "avglflog";
     }
 }

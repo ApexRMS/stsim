@@ -272,13 +272,13 @@ namespace SyncroSim.STSim
 
             if (this.m_StratumId.HasValue)
             {
-                FromFormatString = "StratumIDSource={0} AND StateClassIDSource IN ({1})";
-                ToFormatString = "(StratumIDDest={0} AND StateClassIDDest IN ({1})) OR (StratumIDSource={0} AND StratumIDDest IS NULL AND StateClassIDDest IN ({1}))";
+                FromFormatString = "StratumIdSource={0} AND StateClassIdSource IN ({1})";
+                ToFormatString = "(StratumIdDest={0} AND StateClassIdDest IN ({1})) OR (StratumIdSource={0} AND StratumIdDest IS NULL AND StateClassIdDest IN ({1}))";
             }
             else
             {
-                FromFormatString = "StratumIDSource IS NULL AND StateClassIDSource IN ({1})";
-                ToFormatString = "(StratumIDSource IS NULL AND StateClassIDDest IN ({1}))";
+                FromFormatString = "StratumIdSource IS NULL AND StateClassIdSource IN ({1})";
+                ToFormatString = "(StratumIdSource IS NULL AND StateClassIdDest IN ({1}))";
             }
 
             if (this.m_ShowTransitionsFrom)
@@ -580,11 +580,11 @@ namespace SyncroSim.STSim
 
             if (sourceStratumId.HasValue)
             {
-                query = string.Format(CultureInfo.InvariantCulture, "StratumIDSource={0} OR (StratumIDSource IS NULL)", sourceStratumId.Value);
+                query = string.Format(CultureInfo.InvariantCulture, "StratumIdSource={0} OR (StratumIdSource IS NULL)", sourceStratumId.Value);
             }
             else
             {
-                query = "StratumIDSource IS NULL";
+                query = "StratumIdSource IS NULL";
             }
 
             DataTable dt = this.m_DTDataSheet.GetData();
@@ -592,7 +592,7 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in rows)
             {
-                int id = Convert.ToInt32(dr["StateClassIDSource"], CultureInfo.InvariantCulture);
+                int id = Convert.ToInt32(dr["StateClassIdSource"], CultureInfo.InvariantCulture);
 
                 if (!lst.Contains(id))
                 {
@@ -602,12 +602,12 @@ namespace SyncroSim.STSim
 
             if (lst.Count == 0)
             {
-                return "StateClassID=-1";
+                return "StateClassId=-1";
             }
             else
             {
                 string filter = CreateIntegerFilterSpec(lst);
-                return string.Format(CultureInfo.InvariantCulture, "StateClassID IN ({0})", filter);
+                return string.Format(CultureInfo.InvariantCulture, "StateClassId IN ({0})", filter);
             }
         }
 
@@ -622,7 +622,7 @@ namespace SyncroSim.STSim
         {
             foreach (DataRowView drv in dv)
             {
-                if (Convert.ToInt32(drv.Row["StateClassID"], CultureInfo.InvariantCulture) == stateClassId)
+                if (Convert.ToInt32(drv.Row[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture) == stateClassId)
                 {
                     return true;
                 }
@@ -634,7 +634,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Creates a state class dataview filtered by the specified stratum Id
         /// </summary>
-        /// <param name="stratumID"></param>
+        /// <param name="stratumId"></param>
         /// <returns></returns>
         /// <remarks></remarks>
         private DataView CreateNewFilteredStateClassView(int? stratumId)
@@ -687,7 +687,7 @@ namespace SyncroSim.STSim
                 if (dv.Count > 0)
                 {
                     DataRowView drvzero = dv[0];
-                    DestStateClassCell.Value = Convert.ToInt32(drvzero.Row["StateClassID"], CultureInfo.InvariantCulture);
+                    DestStateClassCell.Value = Convert.ToInt32(drvzero.Row[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -713,7 +713,7 @@ namespace SyncroSim.STSim
 
             if (selectedClassesOnly)
             {
-                filter = string.Format(CultureInfo.InvariantCulture, "StateClassID IN ({0})", CreateIntegerFilterSpec(this.m_StateClasses));
+                filter = string.Format(CultureInfo.InvariantCulture, "StateClassId IN ({0})", CreateIntegerFilterSpec(this.m_StateClasses));
             }
             else
             {
@@ -723,8 +723,8 @@ namespace SyncroSim.STSim
             DataView dv = new DataView(ds.GetData(), filter, ds.DisplayMember, DataViewRowState.CurrentRows);
 
             StateClassComboCell.DataSource = dv;
-            StateClassComboCell.ValueMember = "StateClassID";
-            StateClassComboCell.DisplayMember = "Name";
+            StateClassComboCell.ValueMember = Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME;
+            StateClassComboCell.DisplayMember = Strings.DATASHEET_NAME_COLUMN_NAME;
         }
 
         /// <summary>

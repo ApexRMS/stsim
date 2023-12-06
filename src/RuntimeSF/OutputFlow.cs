@@ -7,7 +7,7 @@ namespace SyncroSim.STSim
 	{
 		private readonly int m_FromStratumId;
 		private readonly int? m_FromSecondaryStratumId;
-		private readonly int? m_FromTertiaryStratumID;
+		private readonly int? m_FromTertiaryStratumId;
 		private readonly int m_FromStateClassId;
 		private readonly int? m_FromStockTypeId;
 		private readonly int? m_transitionTypeId;
@@ -42,7 +42,7 @@ namespace SyncroSim.STSim
 		{
 			this.m_FromStratumId = fromStratumId;
 			this.m_FromSecondaryStratumId = fromSecondaryStratumId;
-			this.m_FromTertiaryStratumID = fromTertiaryStratumId;
+			this.m_FromTertiaryStratumId = fromTertiaryStratumId;
 			this.m_FromStateClassId = fromStateClassId;
 			this.m_FromStockTypeId = fromStockTypeId;
 			this.m_transitionTypeId = transitionTypeId;
@@ -79,7 +79,7 @@ namespace SyncroSim.STSim
 		{
 			get
 			{
-				return this.m_FromTertiaryStratumID;
+				return this.m_FromTertiaryStratumId;
 			}
 		}
 

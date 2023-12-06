@@ -696,7 +696,7 @@ namespace SyncroSim.STSim
                 var lbl = dr.Row[Strings.DATASHEET_NAME_COLUMN_NAME].ToString();
                 var mapLegendLbl = dr.Row[Strings.DATASHEET_LEGEND_COLUMN_NAME].ToString();
 
-                // Dont include a color entry for record without ID or defined colors assigned
+                // Dont include a color entry for record without Id or defined colors assigned
                 if (id.Trim().Length > 0 && transpenciesRGB.Length > 0)
                 {
                     // Do we have a Legend Map for this map Variable. If so we need to get ""fancy""
@@ -785,7 +785,7 @@ namespace SyncroSim.STSim
                 // Check to see if we've already define this legend lavel
                 if (!legendDefined.ContainsKey(lbl))
                 {
-                    // Dont include a color entry for record without ID or defined colors assigned
+                    // Dont include a color entry for record without Id or defined colors assigned
                     if (id.Trim().Length > 0 && transpenciesRGB.Length > 0)
                     {
                         var aryColor = transpenciesRGB.Split(','); // Split into individual Transparency, Red, Green,Blue
@@ -864,7 +864,7 @@ namespace SyncroSim.STSim
                         var transparencyRGB = drTT[Strings.DATASHEET_COLOR_COLUMN_NAME].ToString();
                         var mapLegendLbl = drTT[Strings.DATASHEET_LEGEND_COLUMN_NAME].ToString();
 
-                        // Dont include a color entry for Transition Type without ID or colors assigned
+                        // Dont include a color entry for Transition Type without Id or colors assigned
                         if (id.Trim().Length > 0 && transparencyRGB.Length > 0)
                         {
                             // Do we have a Legend Map for this map Variable. If so we need to get ""fancy""
@@ -900,7 +900,7 @@ namespace SyncroSim.STSim
 
             for (var i = 0; i < sortedTT.Count; i++)
             {
-                // Dont include a color entry for Transition Type without ID or colors assigned
+                // Dont include a color entry for Transition Type without Id or colors assigned
 
                 string lbl = sortedTT.Keys[i].Replace(",", " "); // Dont allow comma in label
                 string idColor = sortedTT.Values[i];
@@ -1002,7 +1002,7 @@ namespace SyncroSim.STSim
 
                     var transparencyRGB = drTT[Strings.DATASHEET_COLOR_COLUMN_NAME].ToString();
 
-                    // Dont include a legend entry for Transition Type without ID or colors or Map label assigned
+                    // Dont include a legend entry for Transition Type without Id or colors or Map label assigned
                     if (id.Trim().Length > 0 && transparencyRGB.Length > 0 && lbl.Length > 0)
                     {
                         // Stuff into a list, so we can sort alphabetically
@@ -1012,7 +1012,7 @@ namespace SyncroSim.STSim
                         }
                         else
                         {
-                            // Use the TT with the lowest ID value
+                            // Use the TT with the lowest Id value
                             string oldIdColor = sortedTT[lbl];
 
                             if (int.Parse(oldIdColor.Split(',')[0], CultureInfo.InvariantCulture) > int.Parse(id, CultureInfo.InvariantCulture))
@@ -1037,7 +1037,7 @@ namespace SyncroSim.STSim
 
                 for (var i = 0; i < sortedTT.Count; i++)
                 {
-                    // Dont include a color entry for Transition Type without ID or colors assigned
+                    // Dont include a color entry for Transition Type without Id or colors assigned
 
                     string lbl = sortedTT.Keys[i].Replace(",", " "); // Dont allow comma in label
                     string idColor = sortedTT.Values[i];

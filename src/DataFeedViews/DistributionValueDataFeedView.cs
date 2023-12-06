@@ -204,7 +204,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                return string.Format(CultureInfo.InvariantCulture, "DistributionTypeID IN ({0})", CreateIntegerFilterSpec(ids));
+                return string.Format(CultureInfo.InvariantCulture, "DistributionTypeId IN ({0})", CreateIntegerFilterSpec(ids));
             }
         }
 
@@ -219,7 +219,7 @@ namespace SyncroSim.STSim
             else
             {
                 return string.Format(CultureInfo.InvariantCulture, 
-                    "DistributionTypeID NOT IN ({0})", 
+                    "DistributionTypeId NOT IN ({0})", 
                     CreateIntegerFilterSpec(ids));
             }
         }

@@ -90,7 +90,7 @@ namespace SyncroSim.STSim
                     }
                     else
                     {
-                        Debug.Assert(false, "Either the Job ID Or Number of iterations are invalid");
+                        Debug.Assert(false, "Either the Job Id Or Number of iterations are invalid");
                     }
                 }
 

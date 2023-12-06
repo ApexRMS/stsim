@@ -491,7 +491,9 @@ namespace SyncroSim.STSim
 
             foreach (string s in AndSplit)
             {
-                if (s.Contains("StratumID") || s.Contains("SecondaryStratumID") | s.Contains("TertiaryStratumID"))
+                if (s.Contains(Strings.DATASHEET_STRATUM_ID_COLUMN_NAME) || 
+                    s.Contains(Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) ||
+                    s.Contains(Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME))
                 {
                     sb.AppendFormat(CultureInfo.InvariantCulture, "{0} AND ", s);
                 }
@@ -517,7 +519,7 @@ namespace SyncroSim.STSim
             Scenario scenario)
         {
             string query = string.Format(CultureInfo.InvariantCulture,
-                "SELECT COUNT({0}) FROM {1} WHERE ScenarioID = {2}",
+                "SELECT COUNT({0}) FROM {1} WHERE ScenarioId = {2}",
                 columnName, datasheetName, scenario.Id);
 
             if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) == 0)
@@ -674,7 +676,7 @@ namespace SyncroSim.STSim
             //case the bins would be 0-12, 13-25, etc., and 10-19 does not go into any of these bins.
 
             string query = string.Format(CultureInfo.InvariantCulture,
-                "SELECT COUNT({0}) FROM {1} WHERE ({2} IS NULL) AND ScenarioID = {3}",
+                "SELECT COUNT({0}) FROM {1} WHERE ({2} IS NULL) AND ScenarioId = {3}",
                 minColName, dataSheet.Name, classColName, dataSheet.Scenario.Id);
 
             if (Convert.ToInt32(store.ExecuteScalar(query), CultureInfo.InvariantCulture) != 0)
@@ -1045,7 +1047,7 @@ namespace SyncroSim.STSim
                     e.ElementAtOrDefault(0).Minimum);
             }
 
-            sb.AppendFormat(CultureInfo.InvariantCulture, " WHERE ScenarioID = {0}", scenario.Id);
+            sb.AppendFormat(CultureInfo.InvariantCulture, " WHERE ScenarioId = {0}", scenario.Id);
             store.ExecuteNonQuery(sb.ToString());
         }
     }

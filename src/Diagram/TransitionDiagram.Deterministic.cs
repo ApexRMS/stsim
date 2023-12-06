@@ -36,12 +36,12 @@ namespace SyncroSim.STSim
                 if (shape.StratumIdSource.HasValue)
                 {
                     Query = string.Format(CultureInfo.InvariantCulture,
-                        "((StratumIDDest={0}) OR (StratumIDDest IS NULL AND StratumIDSource={0}))",
+                        "((StratumIdDest={0}) OR (StratumIdDest IS NULL AND StratumIdSource={0}))",
                         shape.StratumIdSource.Value);
                 }
                 else
                 {
-                    Query = "StratumIDSource IS NULL";
+                    Query = "StratumIdSource IS NULL";
                 }
 
                 DataTable Source = this.m_DTDataSheet.GetData();
@@ -58,7 +58,7 @@ namespace SyncroSim.STSim
         private void FillIncomingDT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
             string Query = string.Format(CultureInfo.InvariantCulture,
-                "StateClassIDDest={0}",
+                "StateClassIdDest={0}",
                 shape.StateClassIdSource);
 
             DataTable dt = this.GetDataTableForIncomingDT(shape, seenBefore);

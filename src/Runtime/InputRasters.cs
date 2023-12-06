@@ -451,11 +451,11 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Get ID based on the row and column specified.
+        /// Get Id based on the row and column specified.
         /// </summary>
         /// <param name="row">The row number</param>
         /// <param name="column">The column number</param>
-        /// <returns>The ID for the specified row and column</returns>
+        /// <returns>The Id for the specified row and column</returns>
         /// <remarks></remarks>
         public int GetIdForRowCol(int row, int column)
         {
@@ -562,7 +562,7 @@ namespace SyncroSim.STSim
             return Math.Sqrt(2 * System.Math.Pow(cellSizeM, 2));
         }
 
-        /// <summary>Gets the cell neighbor ID based on specified direction and distance </summary>
+        /// <summary>Gets the cell neighbor Id based on specified direction and distance </summary>
         /// <param name="InitiationCellId">The cell we're looking for the neighbor of</param>
         /// <param name="Degrees">The direction in degrees.</param>
         /// <param name="Distance">The distance in metres</param>

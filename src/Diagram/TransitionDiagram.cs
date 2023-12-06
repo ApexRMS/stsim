@@ -717,7 +717,7 @@ namespace SyncroSim.STSim
                     StateClassIdDest = Convert.ToInt32(dr[toStateClassColname], CultureInfo.InvariantCulture);
                 }
 
-                //If the FROM state class is the old ID then change it, but ONLY
+                //If the FROM state class is the old Id then change it, but ONLY
                 //if the FROM stratum is the current stratum.
 
                 if (StateClassIdSource == oldStateClassId)
@@ -728,7 +728,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                //If the TO state class is the old ID then change it, but only
+                //If the TO state class is the old Id then change it, but only
                 //if the TO stratum is the current stratum.
 
                 if (!StateClassIdDest.HasValue)

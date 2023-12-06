@@ -30,7 +30,7 @@ namespace SyncroSim.STSim
             }
 
             this.m_ToStringName = string.Format(CultureInfo.InvariantCulture,
-                "{0}-{1}-(MapID={2})",
+                "{0}-{1}-(MapId={2})",
                 this.m_TransitionTypeId, this.m_DisplayName, MapIDString);
         }
 

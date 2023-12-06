@@ -440,10 +440,10 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
-        /// Normalizes the ID values for Stratums and State Class.
+        /// Normalizes the Id values for Stratums and State Class.
         /// </summary>
         /// <remarks>
-        /// If there are records with no ID then add sequenctial ID values.  
+        /// If there are records with no Id then add sequenctial Id values.  
         /// </remarks>
         private void NormalizeMapIds()
         {
@@ -489,7 +489,7 @@ namespace SyncroSim.STSim
 
             if (noIDFound)
             {
-                string msg = string.Format(CultureInfo.InvariantCulture, "ID values not specified for '{0}'.  Using defaults.", ds.DisplayName);
+                string msg = string.Format(CultureInfo.InvariantCulture, "Id values not specified for '{0}'. Using defaults.", ds.DisplayName);
                 this.RecordStatus(StatusType.Information, msg);
             }
         }

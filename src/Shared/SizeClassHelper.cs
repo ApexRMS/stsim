@@ -23,7 +23,7 @@ namespace SyncroSim.STSim
             {
                 SizeClass sc = new SizeClass();
 
-                sc.SizeClassID = Convert.ToInt32(dr[sizeClassDatasheet.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                sc.SizeClassId = Convert.ToInt32(dr[sizeClassDatasheet.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 sc.MaximumSize = Convert.ToDouble(dr[Strings.DATASHEET_SIZE_CLASS_MAXIMUM_SIZE_COLUMN_NAME], CultureInfo.InvariantCulture);
 
                 if (this.m_Hint.ContainsKey(sc.MaximumSize))
@@ -46,8 +46,8 @@ namespace SyncroSim.STSim
             }
             else
             {
-                Debug.Assert(sc.SizeClassID > 0);
-                return sc.SizeClassID;
+                Debug.Assert(sc.SizeClassId > 0);
+                return sc.SizeClassId;
             }
         }
 
@@ -82,7 +82,7 @@ namespace SyncroSim.STSim
 
     class SizeClass
     {
-        public int SizeClassID;
+        public int SizeClassId;
         public double MaximumSize;
     }
 }

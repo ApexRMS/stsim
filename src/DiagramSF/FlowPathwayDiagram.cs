@@ -150,7 +150,7 @@ namespace SyncroSim.STSim
 		{
 
 #if DEBUG
-			string q = string.Format(CultureInfo.InvariantCulture, "StockTypeID={0}", stockTypeId);
+			string q = string.Format(CultureInfo.InvariantCulture, "StockTypeId={0}", stockTypeId);
 			DataRow[] r = this.m_FlowDiagramData.Select(q);
 			Debug.Assert(r.Count() == 0 || r.Count() == 1);
 #endif

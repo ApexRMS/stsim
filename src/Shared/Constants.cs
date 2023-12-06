@@ -117,7 +117,7 @@ namespace SyncroSim.STSim
         // Legend Map Common Strings
         public const string LEGEND_MAP_BLANK_LEGEND_ITEM = "[blank]";
 
-        //Spatial Map file naming Regex filter, containing 1 ID value
+        //Spatial Map file naming Regex filter, containing 1 Id value
         public const string FILE_FILTER_ID_REGEX = "^(.*){0}-([\\d]*)\\.(tif|vrt)$";
 
         //General colors

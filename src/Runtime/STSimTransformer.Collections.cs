@@ -81,7 +81,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="numCells">The number of cells to create</param>
         /// <remarks>
-        /// Note that the cell ID and the collection index are not necessarily the same
+        /// Note that the cell Id and the collection index are not necessarily the same
         /// since for spatial runs a NO DATA cell is not created.
         /// </remarks>
         private void FillCellCollection(int numCells)

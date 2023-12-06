@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
 		private void NormalizeOutputOptions()
 		{
 			DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
-			int MaxTimestep = Convert.ToInt32(drrc["MaximumTimestep"], CultureInfo.InvariantCulture);
+			int MaxTimestep = Convert.ToInt32(drrc[Strings.RUN_CONTROL_MAX_TIMESTEP_COLUMN_NAME], CultureInfo.InvariantCulture);
 			DataSheet dsoo = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STOCKFLOW_OO_NAME);
 			DataRow droo = dsoo.GetDataRow();
 
@@ -57,7 +57,12 @@ namespace SyncroSim.STSim
 		/// <param name="timestepsColumnHeaderText"></param>
 		/// <param name="maxTimestep"></param>
 		/// <remarks></remarks>
-		private void ValidateTimesteps(DataRow dr, string optionColumnName, string timestepsColumnName, string timestepsColumnHeaderText, int maxTimestep)
+		private void ValidateTimesteps(
+			DataRow dr, 
+			string optionColumnName, 
+			string timestepsColumnName, 
+			string timestepsColumnHeaderText, 
+			int maxTimestep)
 		{
 			if (dr[optionColumnName] == DBNull.Value)
 			{

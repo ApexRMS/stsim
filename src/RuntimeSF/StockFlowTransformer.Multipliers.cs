@@ -42,7 +42,7 @@ namespace SyncroSim.STSim
             {
                 float StockGroupValue = 0.0F;
                 int StockGroupId = Convert.ToInt32(dr[Groups.ValueMember], CultureInfo.InvariantCulture);
-                string query = string.Format(CultureInfo.InvariantCulture, "StockGroupID={0}", StockGroupId);
+                string query = string.Format(CultureInfo.InvariantCulture, "{0}={1}", Strings.STOCK_GROUP_ID_COLUMN_NAME, StockGroupId);
                 DataRow[] rows = dtmembership.Select(query);
 
                 foreach (DataRow r in rows)

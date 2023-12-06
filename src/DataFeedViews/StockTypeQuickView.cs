@@ -90,8 +90,8 @@ namespace SyncroSim.STSim
 		{
 			string Filter = CreateIntegerFilterSpec(this.m_StockTypeIds);
 
-			string FromFormatString = "FromStockTypeID IS NULL OR FromStockTypeId IN ({0})";
-			string ToFormatString = "ToStockTypeID IS NULL OR ToStockTypeID IN ({0})";
+			string FromFormatString = "FromStockTypeId IS NULL OR FromStockTypeId IN ({0})";
+			string ToFormatString = "ToStockTypeId IS NULL OR ToStockTypeId IN ({0})";
 
 			if (this.m_ShowFlowsFrom)
 			{
@@ -566,14 +566,14 @@ namespace SyncroSim.STSim
 			DataView dv = new DataView(ds.GetData(), filter, ds.DisplayMember, DataViewRowState.CurrentRows);
 
 			cell.DataSource = dv;
-			cell.ValueMember = "StockTypeID";
-			cell.DisplayMember = "Name";
+			cell.ValueMember = Strings.STOCK_TYPE_ID_COLUMN_NAME;
+			cell.DisplayMember = Strings.DATASHEET_NAME_COLUMN_NAME;
 		}
 
 		private string CreateFromStockTypeFilter()
 		{
 			string spec = CreateIntegerFilterSpec(this.m_StockTypeIds);
-			return string.Format(CultureInfo.InvariantCulture, "StockTypeID IN ({0})", spec);
+			return string.Format(CultureInfo.InvariantCulture, "{0} IN ({1})", Strings.STOCK_TYPE_ID_COLUMN_NAME, spec);
 		}
 
 		private string CreateToStockTypeFilter()
@@ -595,12 +595,12 @@ namespace SyncroSim.STSim
 
 			if (lst.Count == 0)
 			{
-				return "StockTypeID=-1";
+				return "StockTypeId=-1";
 			}
 			else
 			{
 				string filter = CreateIntegerFilterSpec(lst);
-				return string.Format(CultureInfo.InvariantCulture, "StockTypeID IN ({0})", filter);
+				return string.Format(CultureInfo.InvariantCulture, "StockTypeId IN ({0})", filter);
 			}
 		}
 

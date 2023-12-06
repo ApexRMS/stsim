@@ -6,19 +6,19 @@ namespace SyncroSim.STSim
     internal class StateClass
     {
         private int m_Id;
-        private int m_StateLabelXID;
-        private int m_StateLabelYID;
+        private int m_StateLabelXId;
+        private int m_StateLabelYId;
         private string m_DisplayName;
 
         public StateClass(
             int id, 
-            int stateLabelXID, 
-            int stateLabelYID, 
+            int stateLabelXId, 
+            int stateLabelYId, 
             string displayName)
         {
             this.m_Id = id;
-            this.m_StateLabelXID = stateLabelXID;
-            this.m_StateLabelYID = stateLabelYID;
+            this.m_StateLabelXId = stateLabelXId;
+            this.m_StateLabelYId = stateLabelYId;
             this.m_DisplayName = displayName;
         }
 
@@ -34,7 +34,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return this.m_StateLabelXID;
+                return this.m_StateLabelXId;
             }
         }
 
@@ -42,7 +42,7 @@ namespace SyncroSim.STSim
         {
             get
             {
-                return this.m_StateLabelYID;
+                return this.m_StateLabelYId;
             }
         }
 

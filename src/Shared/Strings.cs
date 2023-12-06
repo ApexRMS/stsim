@@ -517,8 +517,8 @@ namespace SyncroSim.STSim
         public const string RASTER_FILE_COLUMN_NAME = "RasterFileName";
 
         //Flow Pathway
-        public const string STOCK_TYPE_ID_SOURCE_COLUMN_NAME = "StockTypeIDSource";
-        public const string STOCK_TYPE_ID_DEST_COLUMN_NAME = "StockTypeIDDest";
+        public const string STOCK_TYPE_ID_SOURCE_COLUMN_NAME = "StockTypeIdSource";
+        public const string STOCK_TYPE_ID_DEST_COLUMN_NAME = "StockTypeIdDest";
 
         //Flow Diagram
         public const string LOCATION_COLUMN_NAME = "Location";

@@ -41,12 +41,12 @@ namespace SyncroSim.STSim
                 if (shape.StratumIdSource.HasValue)
                 {
                     Query = string.Format(CultureInfo.InvariantCulture,
-                        "((StratumIDDest={0}) OR (StratumIDDest IS NULL AND StratumIDSource={0}))",
+                        "((StratumIdDest={0}) OR (StratumIdDest IS NULL AND StratumIdSource={0}))",
                         shape.StratumIdSource.Value);
                 }
                 else
                 {
-                    Query = "StratumIDSource IS NULL";
+                    Query = "StratumIdSource IS NULL";
                 }
 
                 DataTable Source = this.m_PTDataSheet.GetData();
@@ -71,12 +71,12 @@ namespace SyncroSim.STSim
                 if (shape.StratumIdSource.HasValue)
                 {
                     Query = string.Format(CultureInfo.InvariantCulture,
-                        "StratumIDSource={0}",
+                        "StratumIdSource={0}",
                         shape.StratumIdSource.Value);
                 }
                 else
                 {
-                    Query = "StratumIDSource IS NULL";
+                    Query = "StratumIdSource IS NULL";
                 }
 
                 DataTable Source = this.m_PTDataSheet.GetData();
@@ -93,7 +93,7 @@ namespace SyncroSim.STSim
         private void FillIncomingPT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
             string Query = string.Format(CultureInfo.InvariantCulture,
-                "StateClassIDDest={0}",
+                "StateClassIdDest={0}",
                 shape.StateClassIdSource);
 
             DataTable dt = this.GetDataTableForIncomingPT(shape, seenBefore);
@@ -111,7 +111,7 @@ namespace SyncroSim.STSim
         private void FillOutgoingPT(StateClassShape shape, Dictionary<int, DataTable> seenBefore)
         {
             string Query = string.Format(CultureInfo.InvariantCulture,
-                "StateClassIDSource={0}",
+                "StateClassIdSource={0}",
                 shape.StateClassIdSource);
 
             DataTable dt = this.GetDataTableForOutgoingPT(shape, seenBefore);
@@ -130,12 +130,12 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(line.TransitionGroups.Count == 0);
 
-            string filter = string.Format(CultureInfo.InvariantCulture, "TransitionTypeID={0}", line.TransitionTypeId);
+            string filter = string.Format(CultureInfo.InvariantCulture, "{0}={1}", Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME, line.TransitionTypeId);
             DataRow[] trrows = this.m_TTGDataSheet.GetData().Select(filter);
 
             foreach (DataRow dr in trrows)
             {
-                int TransitionGroupId = Convert.ToInt32(dr["TransitionGroupID"], CultureInfo.InvariantCulture);
+                int TransitionGroupId = Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME],CultureInfo.InvariantCulture);
                 line.TransitionGroups.Add(TransitionGroupId);
             }
         }

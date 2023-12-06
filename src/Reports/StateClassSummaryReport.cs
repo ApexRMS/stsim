@@ -103,13 +103,13 @@ namespace SyncroSim.STSim
         {
             using (StreamWriter sw = new StreamWriter(fileName, false))
             {
-                sw.Write("ScenarioID,");
+                sw.Write("ScenarioId,");
                 sw.Write("Iteration,");
                 sw.Write("Timestep,");
-                sw.Write("StratumID,");
-                sw.Write("SecondaryStratumID,");
-                sw.Write("TertiaryStratumID,");
-                sw.Write("StateClassID,");
+                sw.Write("StratumId,");
+                sw.Write("SecondaryStratumId,");
+                sw.Write("TertiaryStratumId,");
+                sw.Write("StateClassId,");
                 sw.Write("AgeMin,");
                 sw.Write("AgeMax,");
                 sw.Write("Amount,");

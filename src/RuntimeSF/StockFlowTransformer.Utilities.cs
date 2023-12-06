@@ -98,13 +98,13 @@ namespace SyncroSim.STSim
 						return this.m_LateralOutputFlowDict;
 				}
 
-				/// <summary>
-				/// Get Stock Values for the specified Stock Type ID, placing then into the DblCells() in the specified raster.
-				/// </summary>
-				/// <param name="stockTypeId">The Stock Type ID that we want values for</param>
-				/// <param name="rastStockType">An object of type ApexRaster, where we will write the Stock Type values. The raster should be initialized with metadata and appropriate array sizing.</param>
-				/// <remarks></remarks>
-				private void GetStockValues(int stockTypeId, SyncroSimRaster rastStockType)
+		/// <summary>
+		/// Get Stock Values for the specified Stock Type Id, placing then into the DblCells() in the specified raster.
+		/// </summary>
+		/// <param name="stockTypeId">The Stock Type Id that we want values for</param>
+		/// <param name="rastStockType">An object of type ApexRaster, where we will write the Stock Type values. The raster should be initialized with metadata and appropriate array sizing.</param>
+		/// <remarks></remarks>
+		private void GetStockValues(int stockTypeId, SyncroSimRaster rastStockType)
 				{
 						double AmountPerCell = this.m_STSimTransformer.AmountPerCell;
 

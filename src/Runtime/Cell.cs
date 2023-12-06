@@ -29,7 +29,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="cellId">The ID for this cell.</param>
+        /// <param name="cellId">The Id for this cell.</param>
         /// <param name="rasterIndex">The collection index for this cell.</param>
         /// <remarks></remarks>
         public Cell(int cellId, int rasterIndex)
@@ -42,7 +42,7 @@ namespace SyncroSim.STSim
         /// Unique integer Id for the cell
         /// </summary>
         /// <remarks>
-        /// If the model is run spatially, this ID is also the index into the raster used to generate the cell.
+        /// If the model is run spatially, this Id is also the index into the raster used to generate the cell.
         /// </remarks>
         public int CellId
         {

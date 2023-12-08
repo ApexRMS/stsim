@@ -282,7 +282,7 @@ namespace SyncroSim.STSim
             string[] AndSplit = filter.Split(new[] { " AND " }, StringSplitOptions.None);
             StringBuilder sb = new StringBuilder();
 
-            if (variableName.StartsWith("stsimsf_Flow", StringComparison.Ordinal))
+            if (variableName.StartsWith("stsim_Flow", StringComparison.Ordinal))
             {
                 foreach (string s in AndSplit)
                 {

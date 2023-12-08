@@ -595,10 +595,10 @@ namespace SyncroSim.STSim
         public const string STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_StateAttributeDensity";
         public const string TRANSITION_ATTRIBUTE_VARIABLE_NAME = "stsim_TransitionAttribute";
         public const string TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_TransitionAttributeDensity";
-        public const string STOCK_GROUP_VAR_NAME = "stsimsf_StockGroup";
-        public const string STOCK_GROUP_DENSITY_VAR_NAME = "stsimsf_StockGroupDensity";
-        public const string FLOW_GROUP_VAR_NAME = "stsimsf_FlowGroup";
-        public const string FLOW_GROUP_DENSITY_VAR_NAME = "stsimsf_FlowGroupDensity";
+        public const string STOCK_GROUP_VAR_NAME = "stsim_StockGroup";
+        public const string STOCK_GROUP_DENSITY_VAR_NAME = "stsim_StockGroupDensity";
+        public const string FLOW_GROUP_VAR_NAME = "stsim_FlowGroup";
+        public const string FLOW_GROUP_DENSITY_VAR_NAME = "stsim_FlowGroupDensity";
 
         //Stock-Flow Messages
         public const string NO_SUMMARY_OUTPUT_OPTIONS_INFORMATION = "No summary output options specified for stocks and flows.  Using defaults.";

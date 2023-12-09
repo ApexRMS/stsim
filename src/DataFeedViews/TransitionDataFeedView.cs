@@ -40,7 +40,6 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Overrides InitializeView
         /// </summary>
-        /// <remarks>We add a pixel of padding to make our custom border visible</remarks>
         protected override void InitializeView()
         {
             base.InitializeView();
@@ -48,10 +47,22 @@ namespace SyncroSim.STSim
             this.InitializeToolTips();
             this.InitializeCommands();
 
-            this.Padding = new Padding(1);
+            this.Padding = new Padding(0, 0, 0, 1);
+
+            ButtonZoomIn.Click += new System.EventHandler(ZoomIn);
+            ButtonZoomOut.Click += new System.EventHandler(ZoomOut);
+            ButtonFirst.Click += new System.EventHandler(ButtonFirst_Click);
+            ButtonPrevious.Click += new System.EventHandler(ButtonPrevious_Click);
+            ButtonNext.Click += new System.EventHandler(ButtonNext_Click);
+            ButtonLast.Click += new System.EventHandler(ButtonLast_Click);
+            ButtonSelectStratum.Click += new System.EventHandler(ButtonSelectStratum_Click);
+            TabStripMain.SelectedItemChanging += OnSelectedTabItemChanging;
+            TabStripMain.SelectedItemChanged += OnSelectedTabItemChanged;
+            SplitContainerTabStrip.Paint += new System.Windows.Forms.PaintEventHandler(OnPaintSplitContainer);
+            ScrollBarVertical.Scroll += new System.Windows.Forms.ScrollEventHandler(OnVerticalScroll);
+            ScrollBarHorizontal.Scroll += new System.Windows.Forms.ScrollEventHandler(OnHorizontalScroll);
 
             this.m_Monitor = new DataSheetMonitor(this.Project, Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged);
-
             this.m_Monitor.Invoke();
         }
 
@@ -124,23 +135,6 @@ namespace SyncroSim.STSim
                     v.EnableView(this.m_IsEnabled);
                 }
             }
-        }
-
-        /// <summary>
-        /// Overrides OnPaint
-        /// </summary>
-        /// <param name="e"></param>
-        /// <remarks>We override this function so we can have a light gray border...</remarks>
-        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            Pen p = Pens.Silver;
-
-            e.Graphics.DrawLine(p, 0, 0, this.Bounds.Width - 1, 0);
-            e.Graphics.DrawLine(p, this.Bounds.Width - 1, 0, this.Bounds.Width - 1, this.Bounds.Height - 1);
-            e.Graphics.DrawLine(p, this.Bounds.Width - 1, this.Bounds.Height - 1, 0, this.Bounds.Height - 1);
-            e.Graphics.DrawLine(p, 0, this.Bounds.Height - 1, 0, 0);
         }
 
         /// <summary>

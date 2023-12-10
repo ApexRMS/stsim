@@ -37,7 +37,7 @@ namespace SyncroSim.STSim
 
         public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
-            DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);
+            DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);     
 
             this.AddStateClassCriteria(layout, project, store);
             this.AddAgeCriteria(layout);
@@ -45,6 +45,14 @@ namespace SyncroSim.STSim
             this.AddTransitionCriteria(layout, project, store);
             this.AddStateAttributeCriteria(layout, project, store, AttrGroupView);
             this.AddTransitionAttributeCriteria(layout, project, store, AttrGroupView);
+
+            //Move the stock and flow groups to the end
+            LayoutItem StockGroupsItem = layout.Items[0];
+            LayoutItem FlowGroupsItem = layout.Items[1];
+            layout.Items.Remove("stsim_StockGroups");
+            layout.Items.Remove("stsim_FlowGroups");    
+            layout.Items.Add(StockGroupsItem);
+            layout.Items.Add(FlowGroupsItem);
         }
 
         private void AddStateClassCriteria(Layout layout, Project project, DataStore store)

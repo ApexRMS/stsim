@@ -43,8 +43,18 @@ namespace SyncroSim.STSim
 			this.TabStripMain.Items.Add(this.m_StockTab);
 			this.TabStripMain.Items.Add(this.m_FlowTab);
 
-			this.Padding = new Padding(1);
 			this.SplitContainerTabStrip.SplitterWidth = 8;
+			this.SplitContainerTabStrip.SplitterDistance = 300;
+
+			SplitContainerTabStrip.Paint += new System.Windows.Forms.PaintEventHandler(OnPaintSplitContainer);
+			TabStripMain.SelectedItemChanging += OnSelectedTabItemChanging;
+			TabStripMain.SelectedItemChanged += OnSelectedTabItemChanged;
+			ScrollBarVertical.Scroll += new System.Windows.Forms.ScrollEventHandler(OnVerticalScroll);
+			ScrollBarHorizontal.Scroll += new System.Windows.Forms.ScrollEventHandler(OnHorizontalScroll);
+			ButtonZoomIn.Click += new System.EventHandler(ZoomIn);
+			ButtonZoomOut.Click += new System.EventHandler(ZoomOut);
+
+			this.Padding = new Padding(0, 0, 0, 1);
 		}
 
 		protected override void Dispose(bool disposing)

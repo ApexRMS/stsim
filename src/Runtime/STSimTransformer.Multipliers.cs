@@ -1,5 +1,5 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
 using System.Diagnostics;
@@ -198,7 +198,7 @@ namespace SyncroSim.STSim
 
                                 //Test for NODATA_VALUE
 
-                                if (spatialMult < 0.0 | MathUtils.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon))
+                                if (spatialMult < 0.0 | Core.MathUtilities.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon))
                                 {
                                     spatialMult = 1.0;
                                 }
@@ -244,7 +244,7 @@ namespace SyncroSim.STSim
 
                             //Test for NODATA_VALUE
 
-                            if (spatialMult < 0.0 | MathUtils.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon))
+                            if (spatialMult < 0.0 | SyncroSim.Core.MathUtilities.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon))
                             {
                                 spatialMult = 1.0;
                             }

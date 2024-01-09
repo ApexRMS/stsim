@@ -1,5 +1,5 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
 using System.IO;
@@ -470,7 +470,7 @@ namespace SyncroSim.STSim
                             bool MaximizeFidelityToTotalArea = this.MaximizeFidelityToTotalArea(TransitionGroup.TransitionGroupId, Stratum.StratumId, iteration, timestep);
                             double rand = this.m_RandomGenerator.GetNextDouble();
 
-                            while ((MathUtils.CompareDoublesGT(ExpectedArea / this.m_AmountPerCell, rand, 0.000001)) && (InitiationCells.Count > 0))
+                            while ((MathUtilities.CompareDoublesGT(ExpectedArea / this.m_AmountPerCell, rand, 0.000001)) && (InitiationCells.Count > 0))
                             {
                                 List<TransitionEvent> TransitionEventList = this.CreateTransitionEventList(Stratum.StratumId, TransitionGroup.TransitionGroupId, iteration, timestep, ExpectedArea);
 
@@ -543,7 +543,7 @@ namespace SyncroSim.STSim
             double AccumulatedArea = 0.0;
             List<TransitionEvent> TransitionEventList = new List<TransitionEvent>();
 
-            while (MathUtils.CompareDoublesGT(expectedArea, AccumulatedArea, 0.000001))
+            while (MathUtilities.CompareDoublesGT(expectedArea, AccumulatedArea, 0.000001))
             {
                 double diff = expectedArea - AccumulatedArea;
 
@@ -849,7 +849,7 @@ namespace SyncroSim.STSim
 
                 Rand1 = this.m_RandomGenerator.GetNextDouble();
 
-                if (!MathUtils.CompareDoublesGT(Rand1, CellProbability, 0.000001))
+                if (!MathUtilities.CompareDoublesGT(Rand1, CellProbability, 0.000001))
                 {
                     KeepLooping = false;
                 }

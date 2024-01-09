@@ -1,5 +1,5 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.Drawing;
 
@@ -20,6 +20,18 @@ namespace SyncroSim.STSim
         public const int INCLUDE_DATA_NULL_ID = -9999;
         public const string STSIMRESOLUTION_SCENARIO_NAME = "[1] Partial";
         public const string STSIMRESOLUTION_DATASHEET_NAME = "stsimresolution_TransitionGroupResolution";
+
+        //Chart Variable Names
+        public const string DENSITY_GROUP_NAME = "stsim_DensityGroup";
+        public const string STATE_CLASS_VARIABLE_NAME = "stsim_StateClass";
+        public const string STATE_CLASS_PROPORTION_VARIABLE_NAME = "stsim_StateClassProportion";
+        public const string TRANSITION_VARIABLE_NAME = "stsim_Transition";
+        public const string TRANSITION_PROPORTION_VARIABLE_NAME = "stsim_TransitionProportion";
+        public const string TST_VARIABLE_NAME = "stsim_TST";
+        public const string STATE_ATTRIBUTE_VARIABLE_NAME = "stsim_StateAttribute";
+        public const string STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_StateAttributeDensity";
+        public const string TRANSITION_ATTRIBUTE_VARIABLE_NAME = "stsim_TransitionAttribute";
+        public const string TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME = "stsim_TransitionAttributeDensity";
 
         //Run Control
         public const int DATASHEET_RUN_CONTROL_NON_SPATIAL_NUM_CELLS_DEFAULT = 1000;
@@ -75,22 +87,22 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX = "avgta";
 
         //Spatial map variables
-        public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME = "stsim_sc";
-        public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "stsim_age";
-        public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_str";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_PREFIX = "stsim_tg";
-        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_PREFIX = "stsim_tge";
-        public const string SPATIAL_MAP_TST_VARIABLE_PREFIX = "stsim_tst";
-        public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_sa";
-        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_ta";
+        public const string SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME = "stsim_StateClass";
+        public const string SPATIAL_MAP_AGE_VARIABLE_NAME = "stsim_Age";
+        public const string SPATIAL_MAP_STRATUM_VARIABLE_NAME = "stsim_Stratum";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME = "stsim_TransitionGroup";
+        public const string SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_NAME = "stsim_TransitionEvent";
+        public const string SPATIAL_MAP_TST_VARIABLE_NAME = "stsim_TST";
+        public const string SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_NAME = "stsim_StateAttribute";
+        public const string SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_NAME = "stsim_TransitionAttribute";
 
-        public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_avgsc";
-        public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_avgage";
-        public const string SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME = "stsim_avgstr";
-        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_PREFIX = "stsim_avgtp";
-        public const string SPATIAL_MAP_AVG_TST_VARIABLE_PREFIX = "stsim_avgtst";
-        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgsa";
-        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_PREFIX = "stsim_avgta";
+        public const string SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME = "stsim_StateClassProb";
+        public const string SPATIAL_MAP_AVG_AGE_VARIABLE_NAME = "stsim_AgeProb";
+        public const string SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME = "stsim_StratumProb";
+        public const string SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_NAME = "stsim_TransitionProb";
+        public const string SPATIAL_MAP_AVG_TST_VARIABLE_NAME = "stsim_TSTProb";
+        public const string SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_NAME = "stsim_StateAttributeProb";
+        public const string SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_NAME = "stsim_TransitionAttributeProb";
 
         //Spatial Output Datasheets
         public const string DATASHEET_OUTPUT_SPATIAL_STATE_CLASS = "stsim_OutputSpatialState";

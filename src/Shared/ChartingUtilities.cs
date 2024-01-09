@@ -1,5 +1,5 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
-using SyncroSim.StochasticTime.Forms;
+using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
@@ -502,12 +502,14 @@ namespace SyncroSim.STSim
             string classTypeFrequencyColumnName,
             string classTypeMaximumColumnName, 
             string classGroupDatasheetName,
-            string classGroupMaximumColumnName)
+            string classGroupMaximumColumnName, 
+            DataStore store)
         {
             List<ClassBinDescriptor> e = GetClassBinGroupDescriptors(
                 project, 
                 classGroupDatasheetName, 
-                classGroupMaximumColumnName);
+                classGroupMaximumColumnName, 
+                store);
 
             if (e == null)
             {
@@ -515,7 +517,8 @@ namespace SyncroSim.STSim
                     project, 
                     classTypeDatasheetName, 
                     classTypeFrequencyColumnName, 
-                    classTypeMaximumColumnName);
+                    classTypeMaximumColumnName, 
+                    store);
             }
 
 #if DEBUG
@@ -541,9 +544,10 @@ namespace SyncroSim.STSim
         public static List<ClassBinDescriptor> GetClassBinGroupDescriptors(
             Project project, 
             string datasheetName, 
-            string maximumColumnName)
+            string maximumColumnName, 
+            DataStore store)
         {
-            DataTable dt = project.GetDataSheet(datasheetName).GetData();
+            DataTable dt = project.GetDataSheet(datasheetName).GetData(store);
             DataView dv = new DataView(dt, null, null, DataViewRowState.CurrentRows);
 
             if (dv.Count == 0)
@@ -607,9 +611,10 @@ namespace SyncroSim.STSim
             Project project, 
             string datasheetName, 
             string frequencyColumnName, 
-            string maximumColumnName)
+            string maximumColumnName, 
+            DataStore store)
         {
-            DataRow dr = project.GetDataSheet(datasheetName).GetDataRow();
+            DataRow dr = project.GetDataSheet(datasheetName).GetDataRow(store);
 
             if (dr != null)
             {
@@ -750,7 +755,8 @@ namespace SyncroSim.STSim
                 classTypeFrequencyColumnName, 
                 classTypeMaximumColumnName,
                 classGroupDatasheetName, 
-                classGroupMaximumColumnName);
+                classGroupMaximumColumnName, 
+                store);
 
             if (e == null)
             {

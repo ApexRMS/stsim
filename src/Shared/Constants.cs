@@ -19,6 +19,7 @@ namespace SyncroSim.STSim
         public const double EIGHT_DIV_NINE = 8.0 / 9.0;
         public const int INCLUDE_DATA_NULL_ID = -9999;
         public const string STSIMRESOLUTION_SCENARIO_NAME = "[1] Partial";
+        public const string STSIMRESOLUTION_DATASHEET_NAME = "stsimresolution_TransitionGroupResolution";
 
         //Chart Variable Names
         public const string DENSITY_GROUP_NAME = "stsim_DensityGroup";

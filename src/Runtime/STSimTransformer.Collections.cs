@@ -2089,7 +2089,11 @@ namespace SyncroSim.STSim
 
             if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
             {
-                highResScenario = true;
+                DataSheet resDS = this.ResultScenario.GetDataSheet(Constants.STSIMRESOLUTION_DATASHEET_NAME);
+                if (resDS != null)
+                {
+                    highResScenario = true;
+                }
             }
 
             foreach (DataRow dr in ds.GetData().Rows)

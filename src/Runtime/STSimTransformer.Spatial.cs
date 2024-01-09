@@ -2398,7 +2398,18 @@ namespace SyncroSim.STSim
             dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME);
             DataRow drRIS = dsIC.GetDataRow();
 
-            if (drRIS != null && this.ResultScenario.DisplayName != Constants.STSIMRESOLUTION_SCENARIO_NAME)
+            bool highResScenario = false;
+
+            if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
+            {
+                DataSheet resDS = this.ResultScenario.GetDataSheet(Constants.STSIMRESOLUTION_DATASHEET_NAME);
+                if (resDS != null)
+                {
+                    highResScenario = true;
+                }
+            }
+
+            if (drRIS != null && !highResScenario)
             {
                 string rasterFileName = drRIS[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME].ToString();
 

@@ -1316,7 +1316,7 @@
 		classAssembly="SyncroSim.STSim">
 	</layout>
 
-	<layout type="Plot"
+	<layout type="Map"
 		configurationSheet="RunControl"
 		className="SyncroSim.STSim.STSimPlotProvider"
 		classAssembly="SyncroSim.STSim">

@@ -15,6 +15,7 @@ namespace SyncroSim.STSim
         Acres,
         Hectares,
         SquareKilometers,
+        SquareMeters,
         SquareMiles
     }
 

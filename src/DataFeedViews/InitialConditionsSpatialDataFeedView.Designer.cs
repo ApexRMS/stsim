@@ -27,7 +27,7 @@ namespace SyncroSim.STSim
             this.Label1 = new System.Windows.Forms.Label();
             this.TextBoxNumColumns = new System.Windows.Forms.TextBox();
             this.LabelRasterCellArea = new System.Windows.Forms.Label();
-            this.TextBoxCellArea = new System.Windows.Forms.TextBox();
+            this.TextBoxCellSize = new System.Windows.Forms.TextBox();
             this.LabelAttributes = new System.Windows.Forms.Label();
             this.LableCalculated = new System.Windows.Forms.Label();
             this.PanelBottom = new System.Windows.Forms.Panel();
@@ -199,14 +199,14 @@ namespace SyncroSim.STSim
             // 
             // TextBoxCellArea
             // 
-            this.TextBoxCellArea.BackColor = System.Drawing.Color.White;
-            this.TextBoxCellArea.Location = new System.Drawing.Point(210, 67);
-            this.TextBoxCellArea.Margin = new System.Windows.Forms.Padding(4, 5, 4, 4);
-            this.TextBoxCellArea.Name = "TextBoxCellArea";
-            this.TextBoxCellArea.ReadOnly = true;
-            this.TextBoxCellArea.Size = new System.Drawing.Size(136, 22);
-            this.TextBoxCellArea.TabIndex = 2;
-            this.TextBoxCellArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.TextBoxCellSize.BackColor = System.Drawing.Color.White;
+            this.TextBoxCellSize.Location = new System.Drawing.Point(210, 67);
+            this.TextBoxCellSize.Margin = new System.Windows.Forms.Padding(4, 5, 4, 4);
+            this.TextBoxCellSize.Name = "TextBoxCellArea";
+            this.TextBoxCellSize.ReadOnly = true;
+            this.TextBoxCellSize.Size = new System.Drawing.Size(136, 22);
+            this.TextBoxCellSize.TabIndex = 2;
+            this.TextBoxCellSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // LabelAttributes
             // 
@@ -289,7 +289,7 @@ namespace SyncroSim.STSim
             this.TableAttributes.Controls.Add(this.LabelRasterCellArea, 0, 2);
             this.TableAttributes.Controls.Add(this.TextBoxNumRows, 1, 0);
             this.TableAttributes.Controls.Add(this.TextBoxNumColumns, 1, 1);
-            this.TableAttributes.Controls.Add(this.TextBoxCellArea, 1, 2);
+            this.TableAttributes.Controls.Add(this.TextBoxCellSize, 1, 2);
             this.TableAttributes.Location = new System.Drawing.Point(16, 62);
             this.TableAttributes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TableAttributes.Name = "TableAttributes";
@@ -368,7 +368,7 @@ namespace SyncroSim.STSim
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.TextBox TextBoxNumColumns;
         internal System.Windows.Forms.Label LabelRasterCellArea;
-        internal System.Windows.Forms.TextBox TextBoxCellArea;
+        internal System.Windows.Forms.TextBox TextBoxCellSize;
         private System.Windows.Forms.Label LabelAttributes;
         private System.Windows.Forms.Label LableCalculated;
         private System.Windows.Forms.Panel PanelBottom;

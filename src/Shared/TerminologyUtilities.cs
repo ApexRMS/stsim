@@ -49,6 +49,10 @@ namespace SyncroSim.STSim
             {
                 return "square kilometers";
             }
+            else if (unit == TerminologyUnit.SquareMeters)
+            {
+                return "square meters";
+            }
             else if (unit == TerminologyUnit.SquareMiles)
             {
                 return "square miles";

@@ -306,7 +306,7 @@
                 <column name="TerminologyID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
                 <column name="AmountLabel" dataType="String" displayName="Amount Label"/>
-                <column name="AmountUnits" dataType="Integer" displayName="Amount Units" validationType="List" formula1="1:acres|2:hectares|3:square kilometers|4:square miles"/>
+                <column name="AmountUnits" dataType="Integer" displayName="Amount Units" validationType="List" formula1="1:acres|2:hectares|3:square kilometers|4:square meters|5:square miles"/>
                 <column name="StateLabelX" dataType="String" displayName="State Label X"/>
                 <column name="StateLabelY" dataType="String" displayName="State Label Y"/>
                 <column name="PrimaryStratumLabel" dataType="String" displayName="Primary Stratum Label"/>

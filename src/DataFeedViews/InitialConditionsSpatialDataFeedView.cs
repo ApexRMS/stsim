@@ -393,7 +393,7 @@ namespace SyncroSim.STSim
         {
             this.TextBoxNumColumns.Text = null;
             this.TextBoxNumRows.Text = null;
-            this.TextBoxCellArea.Text = null;
+            this.TextBoxCellSize.Text = null;
             this.TextBoxCellAreaCalc.Text = null;
             this.TextBoxCellAreaCalc.ReadOnly = true;
             this.TextBoxNumCells.Text = null;
@@ -417,12 +417,11 @@ namespace SyncroSim.STSim
 
             int NumRows = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME]);
             int NumCols = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME]);
-            float CellArea = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
+            float CellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
             double cellAreaCalc = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
             int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]);
 
             string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME]);
-            string srcAreaUnits = srcSizeUnits + "^2";
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
 
@@ -431,17 +430,17 @@ namespace SyncroSim.STSim
 
             string destAreaLbl = TerminologyUtilities.TerminologyUnitToString(destUnitsVal);
 
-            srcAreaUnits = srcAreaUnits.ToLower(CultureInfo.InvariantCulture);
+            srcSizeUnits = srcSizeUnits.ToLower(CultureInfo.InvariantCulture);
             amountlabel = amountlabel.ToLower(CultureInfo.InvariantCulture);
             destAreaLbl = destAreaLbl.ToLower(CultureInfo.InvariantCulture);
 
             this.TextBoxNumRows.Text = NumRows.ToString(CultureInfo.InvariantCulture);
             this.TextBoxNumColumns.Text = NumCols.ToString(CultureInfo.InvariantCulture);
-            this.TextBoxCellArea.Text = CellArea.ToString("N4", CultureInfo.InvariantCulture);
+            this.TextBoxCellSize.Text = CellSize.ToString("N4", CultureInfo.InvariantCulture);
             this.TextBoxCellAreaCalc.Text = cellAreaCalc.ToString("N4", CultureInfo.InvariantCulture);
             this.TextBoxNumCells.Text = NumCells.ToString(CultureInfo.InvariantCulture);
-            this.LabelRasterCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", srcAreaUnits);
-            this.LabelCalcCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", destAreaLbl);
+            this.LabelRasterCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell size ({0}):", srcSizeUnits);
+            this.LabelCalcCellArea.Text = string.Format(CultureInfo.InvariantCulture, "Cell area ({0}):", destAreaLbl);
             this.LabelCalcTtlAmount.Text = string.Format(CultureInfo.InvariantCulture, "Total {0} ({1}):", amountlabel, destAreaLbl);
 
             var ttlArea = cellAreaCalc * NumCells;

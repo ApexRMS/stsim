@@ -14,7 +14,7 @@ using SyncroSim.StochasticTime;
 
 namespace SyncroSim.STSim
 {
-    internal class STSimPlotProvider : PlotProvider
+    internal class STSimPlotProvider : MapProvider
     {
         static string AVG_ALL_ITER = "(Average for all Iterations)";
         static string AVG_PROB_ALL_ITER = "(Probability for all Iterations)";

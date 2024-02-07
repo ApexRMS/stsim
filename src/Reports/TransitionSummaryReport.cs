@@ -26,12 +26,12 @@ namespace SyncroSim.STSim
             if (exportType == ExportType.ExcelFile)
             {
                 string WorksheetName = string.Format(CultureInfo.InvariantCulture, "{0} by Transition Group", AmountLabel);
-                this.ExcelExport(location, columns, this.CreateReportQuery(false), WorksheetName);
+                this.ExportToExcel(location, columns, this.CreateReportQuery(false), WorksheetName);
             }
             else
             {
                 columns.Remove("ScenarioName");
-                this.CSVExport(location, columns, this.CreateReportQuery(true));
+                this.ExportToCSVFile(location, columns, this.CreateReportQuery(true));
 
                 if (showMessage)
                 {
@@ -79,7 +79,7 @@ namespace SyncroSim.STSim
 
         private string CreateReportQuery(bool isCSV)
         {
-            string ScenFilter = this.CreateActiveResultScenarioFilter();
+            string ScenFilter = this.ExportCreateActiveResultScenarioFilter();
 
             if (isCSV)
             {

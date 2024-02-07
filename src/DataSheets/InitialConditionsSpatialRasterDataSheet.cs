@@ -410,12 +410,19 @@ namespace SyncroSim.STSim
                     convFactor = 0.000001;
 
                     break;
+                case TerminologyUnit.SquareMeters:
+                    // 1m2
+                    convFactor = 1;
+
+                    break;
                 case TerminologyUnit.SquareMiles:
                     // 1m2 = 3.861e-7 Mi2
                     convFactor = 0.0000003861;
+
                     break;
                 default:
                     convFactor = 0;
+
                     break;
             }
 

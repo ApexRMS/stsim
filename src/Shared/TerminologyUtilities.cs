@@ -53,19 +53,23 @@ namespace SyncroSim.STSim
         {
             if (unit == TerminologyUnit.Acres)
             {
-                return "Acres";
+                return "acres";
             }
             else if (unit == TerminologyUnit.Hectares)
             {
-                return "Hectares";
+                return "hectares";
             }
             else if (unit == TerminologyUnit.SquareKilometers)
             {
-                return "Square Kilometers";
+                return "square kilometers";
+            }
+            else if (unit == TerminologyUnit.SquareMeters)
+            {
+                return "square meters";
             }
             else if (unit == TerminologyUnit.SquareMiles)
             {
-                return "Square Miles";
+                return "square miles";
             }
             else if (unit == TerminologyUnit.None)
             {

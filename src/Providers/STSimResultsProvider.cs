@@ -16,7 +16,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            if (this.Library.Session.ActiveProject == null)
+            if (this.Library.ActiveProject == null)
             {
                 Debug.Assert(false);
                 return;
@@ -34,7 +34,7 @@ namespace SyncroSim.STSim
             string ssl = null;
             string tsl = null;
 
-            DataSheet dsterm = this.Library.Session.ActiveProject.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
+            DataSheet dsterm = this.Library.ActiveProject.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
             PrimaryStrataGroup.DisplayName = psl;

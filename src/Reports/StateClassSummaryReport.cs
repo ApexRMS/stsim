@@ -88,7 +88,7 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref AmountLabelUnits);
             string WorksheetName = string.Format(CultureInfo.InvariantCulture, "{0} by State Class", AmountLabel);
 
-            ExportTransformer.ExcelExport(fileName, this.CreateColumnCollection(), ReportData, WorksheetName);
+            this.ExportToExcel(fileName, this.CreateColumnCollection(), ReportData, WorksheetName);
         }
 
         private void CreateCSVReport(string fileName)
@@ -226,7 +226,7 @@ namespace SyncroSim.STSim
 
         private string CreateReportQuery(bool isCSV)
         {
-            string ScenFilter = this.CreateActiveResultScenarioFilter();
+            string ScenFilter = this.ExportCreateActiveResultScenarioFilter();
 
             if (isCSV)
             {

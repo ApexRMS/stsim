@@ -22,12 +22,12 @@ namespace SyncroSim.STSim
 
 			if (exportType == ExportType.ExcelFile)
 			{
-				this.ExcelExport(location, columns, this.CreateReportQuery(false), "Stocks");
+				this.ExportToExcel(location, columns, this.CreateReportQuery(false), "Stocks");
 			}
 			else
 			{
 				columns.Remove("ScenarioName");
-                this.CSVExport(location, columns, this.CreateReportQuery(true));
+                this.ExportToCSVFile(location, columns, this.CreateReportQuery(true));
 
 				if (showMessage)
 				{
@@ -68,7 +68,7 @@ namespace SyncroSim.STSim
 
 		private string CreateReportQuery(bool isCSV)
 		{
-			string ScenFilter = this.CreateActiveResultScenarioFilter();
+			string ScenFilter = this.ExportCreateActiveResultScenarioFilter();
 
             string Query =
                 "SELECT " +

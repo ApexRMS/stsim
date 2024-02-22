@@ -71,7 +71,7 @@ namespace SyncroSim.STSim
             if (this.m_StockFlowTransformer == null)
             {
                 this.m_StockFlowTransformer = (StockFlowTransformer)this.Session.CreateTransformer(
-                    "stsim_StockFlow", 
+                    "stsim_StockFlow",
                     this.Library, this.Project, this.Scenario, this.ResultScenario);
 
                 this.m_StockFlowTransformer.STSimTransformer = this;
@@ -89,7 +89,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_StockFlowTransformer == null);
 
             this.m_StockFlowTransformer = (StockFlowTransformer)this.Session.CreateTransformer(
-                "stsim_StockFlow", 
+                "stsim_StockFlow",
                 this.Library, this.Project, this.Scenario, this.ResultScenario);
 
             this.m_StockFlowTransformer.STSimTransformer = this;

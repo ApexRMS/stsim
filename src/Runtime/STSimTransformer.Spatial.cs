@@ -2397,7 +2397,8 @@ namespace SyncroSim.STSim
             dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME);
             DataRow drRIS = dsIC.GetDataRow();
 
-            if (drRIS != null && this.ResultScenario.DisplayName != Constants.STSIMRESOLUTION_SCENARIO_NAME)
+            // TODO: fix this when we incorporate the stsim multiresolution package into stsim
+            if (drRIS != null) //&& this.ResultScenario.DisplayName != Constants.STSIMRESOLUTION_SCENARIO_NAME)
             {
                 string rasterFileName = drRIS[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME].ToString();
 

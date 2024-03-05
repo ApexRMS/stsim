@@ -17,15 +17,15 @@ namespace SyncroSim.STSim
         private bool m_AllowRowChangeEvents = true;
         private const string TEMP_NAME_VALUE = "__SYNCROSIM_TEMP_VALUE__";
 
-        protected override void OnDataFeedsRefreshed()
+        protected override void OnDataFeedsRefreshed(DataStore store)
         {
-            base.OnDataFeedsRefreshed();
+            base.OnDataFeedsRefreshed(store);
 
             this.m_SlxSheet = this.Project.GetDataSheet(Strings.DATASHEET_STATE_LABEL_X_NAME);
             this.m_SlySheet = this.Project.GetDataSheet(Strings.DATASHEET_STATE_LABEL_Y_NAME);
 
             this.SubscribeChildSheets();
-            this.SubscribeDataTable();
+            this.SubscribeDataTable(store);
         }
 
         protected override void Dispose(bool disposing)
@@ -254,12 +254,18 @@ namespace SyncroSim.STSim
             return NextName;
         }
 
-        private void SubscribeDataTable()
+        private void SubscribeDataTable(DataStore store)
         {
-            this.UnsubscribeDataTable();
+            this.UnsubscribeDataTable(store);
 
-            DataTable dt = this.GetData();
+            DataTable dt = this.GetData(store);
             dt.ColumnChanged += this.OnColumnChanged;
+        }
+
+        private void UnsubscribeDataTable(DataStore store)
+        {
+            DataTable dt = this.GetData(store);
+            dt.ColumnChanged -= this.OnColumnChanged;
         }
 
         private void UnsubscribeDataTable()

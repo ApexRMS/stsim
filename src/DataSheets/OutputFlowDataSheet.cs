@@ -10,9 +10,9 @@ namespace SyncroSim.STSim
 	[ObfuscationAttribute(Exclude=true, ApplyToMembers=false)]
 	internal class OutputFlowDataSheet : DataSheet
 	{
-		protected override void OnDataFeedsRefreshed()
+		protected override void OnDataFeedsRefreshed(DataStore store)
 		{
-			base.OnDataFeedsRefreshed();
+			base.OnDataFeedsRefreshed(store);
 
 			string s = null;
 			string ss = null;

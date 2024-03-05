@@ -17,13 +17,13 @@ namespace SyncroSim.STSim
         private DataTable m_FlowGroupDataTable;
         private readonly Dictionary<int, string> m_PrevNames = new Dictionary<int, string>();
 
-        protected override void OnDataFeedsRefreshed()
+        protected override void OnDataFeedsRefreshed(DataStore store)
         {
-            base.OnDataFeedsRefreshed();
+            base.OnDataFeedsRefreshed(store);
 
-            this.m_FlowTypeDataTable = this.GetData();
+            this.m_FlowTypeDataTable = this.GetData(store);
             this.m_FlowGroupDataSheet = this.Project.GetDataSheet(Strings.DATASHEET_FLOW_GROUP_NAME);
-            this.m_FlowGroupDataTable = this.m_FlowGroupDataSheet.GetData();
+            this.m_FlowGroupDataTable = this.m_FlowGroupDataSheet.GetData(store);
         }
 
         protected override void OnRowsAdded(object sender, DataSheetRowEventArgs e)

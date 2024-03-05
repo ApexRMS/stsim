@@ -17,20 +17,20 @@ namespace SyncroSim.STSim
         private DataTable m_TGData;
         private DataSheet m_TTGDataSheet;
         private DataTable m_TTGData;
-        private Dictionary<int, string> m_PrevNames = new Dictionary<int, string>();
+        private readonly Dictionary<int, string> m_PrevNames = new Dictionary<int, string>();
         private bool m_InTTGRowsAdded;
 
-        protected override void OnDataFeedsRefreshed()
+        protected override void OnDataFeedsRefreshed(DataStore store)
         {
-            base.OnDataFeedsRefreshed();
+            base.OnDataFeedsRefreshed(store);
 
-            this.m_TTData = this.GetData();
+            this.m_TTData = this.GetData(store);
 
             this.m_TGDataSheet = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
-            this.m_TGData = this.m_TGDataSheet.GetData();
+            this.m_TGData = this.m_TGDataSheet.GetData(store);
 
             this.m_TTGDataSheet = this.Project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
-            this.m_TTGData = this.m_TTGDataSheet.GetData();
+            this.m_TTGData = this.m_TTGDataSheet.GetData(store);
 
             this.m_TTGDataSheet.RowsAdded += this.OnTTGRowsAdded;
         }

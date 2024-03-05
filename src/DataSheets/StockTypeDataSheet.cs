@@ -17,13 +17,13 @@ namespace SyncroSim.STSim
         private DataTable m_StockGroupDataTable;
         private readonly Dictionary<int, string> m_PrevNames = new Dictionary<int, string>();
 
-        protected override void OnDataFeedsRefreshed()
+        protected override void OnDataFeedsRefreshed(DataStore store)
         {
-            base.OnDataFeedsRefreshed();
+            base.OnDataFeedsRefreshed(store);
 
-            this.m_StockTypeDataTable = this.GetData();
+            this.m_StockTypeDataTable = this.GetData(store);
             this.m_StockGroupDataSheet = this.Project.GetDataSheet(Strings.DATASHEET_STOCK_GROUP_NAME );
-            this.m_StockGroupDataTable = this.m_StockGroupDataSheet.GetData();
+            this.m_StockGroupDataTable = this.m_StockGroupDataSheet.GetData(store);
         }
 
         protected override void OnRowsAdded(object sender, DataSheetRowEventArgs e)

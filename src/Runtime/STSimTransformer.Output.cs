@@ -1701,8 +1701,11 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            DataTable tempTable = table.Clone();
+
             foreach (OutputStratumTransition r in this.m_SummaryStratumTransitionResults)
             {
+                // TODO: check if the transition has already been added, and if so, add to the amount
                 double AmountToReport = 0;
 
                 if (this.m_SummaryTransitionOutputAsIntervalMean)
@@ -1729,7 +1732,7 @@ namespace SyncroSim.STSim
                     AmountToReport = r.Amount;
                 }
 
-                DataRow dr = table.NewRow();
+                DataRow dr = tempTable.NewRow();
 
                 dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
                 dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
@@ -1756,10 +1759,215 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                table.Rows.Add(dr);
+                tempTable.Rows.Add(dr);
             }
 
+            //RemoveDuplicateRows(table);
+
+            DataTable tempTable2 = tempTable.AsEnumerable()
+                .GroupBy(s => new
+                {
+                    iteration = s[Strings.DATASHEET_ITERATION_COLUMN_NAME],
+                    timestep = s[Strings.DATASHEET_TIMESTEP_COLUMN_NAME],
+                    stratumId = s[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME],
+                    secondaryStratumId = s[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME],
+                    tertiaryStratumId = s[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME],
+                    transitionGrupId = s[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME],
+                    ageMin = s[Strings.DATASHEET_AGE_MIN_COLUMN_NAME],
+                    ageMax = s[Strings.DATASHEET_AGE_MAX_COLUMN_NAME],
+                    ageClass = s[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME],
+                    sizeClass = s[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME],
+                    eventId = s[Strings.DATASHEET_EVENT_ID_COLUMN_NAME],
+                    // amount = s[Strings.DATASHEET_AMOUNT_COLUMN_NAME],
+                })
+                .Select(s =>
+                {
+                    DataRow newDataRow = table.NewRow();
+
+                    newDataRow[Strings.DATASHEET_ITERATION_COLUMN_NAME] = s.Key.iteration;
+                    newDataRow[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = s.Key.timestep;
+                    newDataRow[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = s.Key.stratumId;
+
+                    if (s.Key.secondaryStratumId is null)
+                    {
+                        newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = s.Key.secondaryStratumId;
+                    }
+
+                    if (s.Key.tertiaryStratumId is null)
+                    {
+                        newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = s.Key.tertiaryStratumId;
+                    }
+
+                    newDataRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = s.Key.transitionGrupId;
+
+                    if (s.Key.ageMin is null)
+                    {
+                        newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = s.Key.ageMin;
+                    }
+
+                    if (s.Key.ageMax is null)
+                    {
+                        newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = s.Key.ageMax;
+                    }
+
+                    if (s.Key.ageClass is null)
+                    {
+                        newDataRow[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = s.Key.ageClass;
+                    }
+
+                    if (s.Key.sizeClass is null)
+                    {
+                        newDataRow[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = s.Key.sizeClass;
+                    }
+
+                    if (s.Key.eventId is null)
+                    {
+                        newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
+                    }
+                    else
+                    {
+                        newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = s.Key.eventId;
+                    }
+
+                    // Add the amounts of all duplicate columns - TODO: how to get this to work...
+                    newDataRow[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = s.Sum(tempTable.Amount);
+
+                    return newDataRow;
+
+                }).CopyToDataTable();
+
+            table.Merge(tempTable2);
+
             this.m_SummaryStratumTransitionResults.Clear();
+        }
+
+        private void RemoveDuplicateRows(DataTable table)
+        {
+            var distinctRows = table.AsEnumerable()
+                .Select(s => new
+                {
+                    unique1 = s.Field<Int64>(Strings.DATASHEET_ITERATION_COLUMN_NAME),
+                    unique2 = s.Field<Int64>(Strings.DATASHEET_TIMESTEP_COLUMN_NAME),
+                    unique3 = s.Field<Int64>(Strings.DATASHEET_STRATUM_ID_COLUMN_NAME),
+                    unique4 = s.Field<Int64?>(Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME),
+                    unique5 = s.Field<Int64?>(Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME),
+                    unique6 = s.Field<Int64>(Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME),
+                    unique7 = s.Field<Int64?>(Strings.DATASHEET_AGE_MIN_COLUMN_NAME),
+                    unique8 = s.Field<Int64?>(Strings.DATASHEET_AGE_MAX_COLUMN_NAME),
+                    unique9 = s.Field<Int64?>(Strings.DATASHEET_EVENT_ID_COLUMN_NAME),
+                })
+                .Distinct();
+
+            DataTable finalTable = table.Clone();
+
+            DataRow newDataRow;
+            IEnumerable<DataRow> results;
+            double amountColumn;
+
+            foreach (var item in distinctRows)
+            {
+                newDataRow = finalTable.NewRow();
+
+                // select all rows in original datatable with distinct values in 8-int lookup key
+                results = table.Select().Where(
+                    p => p.Field<long>(Strings.DATASHEET_ITERATION_COLUMN_NAME) == item.unique1
+                    && p.Field<long>(Strings.DATASHEET_TIMESTEP_COLUMN_NAME) == item.unique2
+                    && p.Field<long>(Strings.DATASHEET_STRATUM_ID_COLUMN_NAME) == item.unique3
+                    && p.Field<long?>(Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) == item.unique4
+                    && p.Field<long?>(Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) == item.unique5
+                    && p.Field<long?>(Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME) == item.unique6
+                    && p.Field<long?>(Strings.DATASHEET_AGE_MIN_COLUMN_NAME) == item.unique7
+                    && p.Field<long?>(Strings.DATASHEET_AGE_MAX_COLUMN_NAME) == item.unique8
+                    && p.Field<long?>(Strings.DATASHEET_EVENT_ID_COLUMN_NAME) == item.unique9);
+
+                // P
+                newDataRow[Strings.DATASHEET_ITERATION_COLUMN_NAME] = item.unique1;
+                newDataRow[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = item.unique2;
+                newDataRow[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = item.unique3;
+
+                if (item.unique4 is null)
+                {
+                    newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
+                } 
+                else
+                {
+                    newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = item.unique4;
+                }
+
+                if (item.unique5 is null)
+                {
+                    newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
+                }
+                else
+                {
+                    newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = item.unique5;
+                }
+
+                newDataRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = item.unique6;
+
+                if (item.unique7 is null)
+                {
+                    newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DBNull.Value;
+                }
+                else
+                {
+                    newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = item.unique7;
+                }
+
+                if (item.unique8 is null)
+                {
+                    newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DBNull.Value;
+                }
+                else
+                {
+                    newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = item.unique8;
+                }
+
+                if (item.unique9 is null)
+                {
+                    newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
+                }
+                else
+                {
+                    newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = item.unique8;
+                }
+
+                // Add the amounts of all duplicate columns
+                amountColumn = 0;
+                foreach (DataRow dr in results)
+                {
+                    amountColumn += (double)dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME];
+                }
+
+                newDataRow[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = amountColumn;
+                finalTable.Rows.Add(newDataRow);
+            }
+
+            this.m_OutputStratumTransitionTable = finalTable;
         }
 
         /// <summary>

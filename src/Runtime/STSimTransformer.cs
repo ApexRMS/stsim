@@ -363,6 +363,9 @@ namespace SyncroSim.STSim
 
             this.WriteSpatialAveragingRasters();
 
+            //Remove duplicate records from transition datasheet
+            //RemoveExtraEventRecords();
+
             ModelRunComplete?.Invoke(this, new EventArgs());
         }
 
@@ -380,6 +383,9 @@ namespace SyncroSim.STSim
         public override void PostProcess()
         {
             base.PostProcess();
+
+            //Remove duplicate records from transition datasheet
+            RemoveExtraEventRecords();
 
             //After the entire transformation is complete we must update the age/tst classes
 

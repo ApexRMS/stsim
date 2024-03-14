@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Common;
 using SyncroSim.StochasticTime;
+using System.Text;
 
 namespace SyncroSim.STSim
 {
@@ -1701,11 +1702,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            DataTable tempTable = table.Clone();
-
             foreach (OutputStratumTransition r in this.m_SummaryStratumTransitionResults)
             {
-                // TODO: check if the transition has already been added, and if so, add to the amount
                 double AmountToReport = 0;
 
                 if (this.m_SummaryTransitionOutputAsIntervalMean)
@@ -1732,7 +1730,7 @@ namespace SyncroSim.STSim
                     AmountToReport = r.Amount;
                 }
 
-                DataRow dr = tempTable.NewRow();
+                DataRow dr = table.NewRow();
 
                 dr[Strings.DATASHEET_ITERATION_COLUMN_NAME] = r.Iteration;
                 dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = r.Timestep;
@@ -1759,215 +1757,69 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                tempTable.Rows.Add(dr);
+                table.Rows.Add(dr);
             }
-
-            //RemoveDuplicateRows(table);
-
-            DataTable tempTable2 = tempTable.AsEnumerable()
-                .GroupBy(s => new
-                {
-                    iteration = s[Strings.DATASHEET_ITERATION_COLUMN_NAME],
-                    timestep = s[Strings.DATASHEET_TIMESTEP_COLUMN_NAME],
-                    stratumId = s[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME],
-                    secondaryStratumId = s[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME],
-                    tertiaryStratumId = s[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME],
-                    transitionGrupId = s[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME],
-                    ageMin = s[Strings.DATASHEET_AGE_MIN_COLUMN_NAME],
-                    ageMax = s[Strings.DATASHEET_AGE_MAX_COLUMN_NAME],
-                    ageClass = s[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME],
-                    sizeClass = s[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME],
-                    eventId = s[Strings.DATASHEET_EVENT_ID_COLUMN_NAME],
-                    // amount = s[Strings.DATASHEET_AMOUNT_COLUMN_NAME],
-                })
-                .Select(s =>
-                {
-                    DataRow newDataRow = table.NewRow();
-
-                    newDataRow[Strings.DATASHEET_ITERATION_COLUMN_NAME] = s.Key.iteration;
-                    newDataRow[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = s.Key.timestep;
-                    newDataRow[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = s.Key.stratumId;
-
-                    if (s.Key.secondaryStratumId is null)
-                    {
-                        newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = s.Key.secondaryStratumId;
-                    }
-
-                    if (s.Key.tertiaryStratumId is null)
-                    {
-                        newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = s.Key.tertiaryStratumId;
-                    }
-
-                    newDataRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = s.Key.transitionGrupId;
-
-                    if (s.Key.ageMin is null)
-                    {
-                        newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = s.Key.ageMin;
-                    }
-
-                    if (s.Key.ageMax is null)
-                    {
-                        newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = s.Key.ageMax;
-                    }
-
-                    if (s.Key.ageClass is null)
-                    {
-                        newDataRow[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = s.Key.ageClass;
-                    }
-
-                    if (s.Key.sizeClass is null)
-                    {
-                        newDataRow[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_SIZE_CLASS_ID_COLUMN_NAME] = s.Key.sizeClass;
-                    }
-
-                    if (s.Key.eventId is null)
-                    {
-                        newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
-                    }
-                    else
-                    {
-                        newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = s.Key.eventId;
-                    }
-
-                    // Add the amounts of all duplicate columns - TODO: how to get this to work...
-                    newDataRow[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = s.Sum(tempTable.Amount);
-
-                    return newDataRow;
-
-                }).CopyToDataTable();
-
-            table.Merge(tempTable2);
 
             this.m_SummaryStratumTransitionResults.Clear();
         }
 
-        private void RemoveDuplicateRows(DataTable table)
+        private void RemoveExtraEventRecords()
         {
-            var distinctRows = table.AsEnumerable()
-                .Select(s => new
-                {
-                    unique1 = s.Field<Int64>(Strings.DATASHEET_ITERATION_COLUMN_NAME),
-                    unique2 = s.Field<Int64>(Strings.DATASHEET_TIMESTEP_COLUMN_NAME),
-                    unique3 = s.Field<Int64>(Strings.DATASHEET_STRATUM_ID_COLUMN_NAME),
-                    unique4 = s.Field<Int64?>(Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME),
-                    unique5 = s.Field<Int64?>(Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME),
-                    unique6 = s.Field<Int64>(Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME),
-                    unique7 = s.Field<Int64?>(Strings.DATASHEET_AGE_MIN_COLUMN_NAME),
-                    unique8 = s.Field<Int64?>(Strings.DATASHEET_AGE_MAX_COLUMN_NAME),
-                    unique9 = s.Field<Int64?>(Strings.DATASHEET_EVENT_ID_COLUMN_NAME),
-                })
-                .Distinct();
+            string tableName = Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME;
+            DataSheet ds = this.ResultScenario.GetDataSheet(tableName);
+            string sumColumnName = Strings.DATASHEET_AMOUNT_COLUMN_NAME;
+            string selectColumnNames = BuildSelectColumnList(ds, sumColumnName);
 
-            DataTable finalTable = table.Clone();
-
-            DataRow newDataRow;
-            IEnumerable<DataRow> results;
-            double amountColumn;
-
-            foreach (var item in distinctRows)
+            using (SyncroSimTransactionScope scope = Session.CreateTransactionScope())
             {
-                newDataRow = finalTable.NewRow();
-
-                // select all rows in original datatable with distinct values in 8-int lookup key
-                results = table.Select().Where(
-                    p => p.Field<long>(Strings.DATASHEET_ITERATION_COLUMN_NAME) == item.unique1
-                    && p.Field<long>(Strings.DATASHEET_TIMESTEP_COLUMN_NAME) == item.unique2
-                    && p.Field<long>(Strings.DATASHEET_STRATUM_ID_COLUMN_NAME) == item.unique3
-                    && p.Field<long?>(Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME) == item.unique4
-                    && p.Field<long?>(Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME) == item.unique5
-                    && p.Field<long?>(Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME) == item.unique6
-                    && p.Field<long?>(Strings.DATASHEET_AGE_MIN_COLUMN_NAME) == item.unique7
-                    && p.Field<long?>(Strings.DATASHEET_AGE_MAX_COLUMN_NAME) == item.unique8
-                    && p.Field<long?>(Strings.DATASHEET_EVENT_ID_COLUMN_NAME) == item.unique9);
-
-                // P
-                newDataRow[Strings.DATASHEET_ITERATION_COLUMN_NAME] = item.unique1;
-                newDataRow[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = item.unique2;
-                newDataRow[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = item.unique3;
-
-                if (item.unique4 is null)
+                using (DataStore store = this.ResultScenario.Library.CreateDataStore())
                 {
-                    newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
-                } 
-                else
-                {
-                    newDataRow[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = item.unique4;
+                    RemoveDupsSumAmounts(store, tableName, selectColumnNames, sumColumnName);
                 }
 
-                if (item.unique5 is null)
-                {
-                    newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DBNull.Value;
-                }
-                else
-                {
-                    newDataRow[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = item.unique5;
-                }
+                scope.Complete();
+            }
+        }
 
-                newDataRow[Strings.DATASHEET_TRANSITION_GROUP_ID_COLUMN_NAME] = item.unique6;
+        private static string BuildSelectColumnList(DataSheet datasheet, string sumColumnName)
+        {
+            StringBuilder sb = new StringBuilder();
 
-                if (item.unique7 is null)
-                {
-                    newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = DBNull.Value;
-                }
-                else
-                {
-                    newDataRow[Strings.DATASHEET_AGE_MIN_COLUMN_NAME] = item.unique7;
-                }
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0},", Strings.DATASHEET_SCENARIOID_COLUMN_NAME);
 
-                if (item.unique8 is null)
+            foreach (DataSheetColumn col in datasheet.Columns)
+            {
+                if (col.Name != sumColumnName && !col.IsPrimaryKey)
                 {
-                    newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DBNull.Value;
+                    Debug.Assert(col.Name != Strings.DATASHEET_SCENARIOID_COLUMN_NAME);
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0},", col.Name);
                 }
-                else
-                {
-                    newDataRow[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = item.unique8;
-                }
-
-                if (item.unique9 is null)
-                {
-                    newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
-                }
-                else
-                {
-                    newDataRow[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = item.unique8;
-                }
-
-                // Add the amounts of all duplicate columns
-                amountColumn = 0;
-                foreach (DataRow dr in results)
-                {
-                    amountColumn += (double)dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME];
-                }
-
-                newDataRow[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = amountColumn;
-                finalTable.Rows.Add(newDataRow);
             }
 
-            this.m_OutputStratumTransitionTable = finalTable;
+            return sb.ToString().TrimEnd(',');
+        }
+
+        private void RemoveDupsSumAmounts(DataStore store, string tableName, string selectColumnNames, string sumColumnName)
+        {
+            string q = string.Format(CultureInfo.InvariantCulture,
+                "CREATE TABLE TEMP_TABLE AS SELECT {0}, SUM({1}) AS {2} FROM {3} WHERE ScenarioID={4} GROUP BY {5}",
+                selectColumnNames, sumColumnName, sumColumnName, tableName, this.ResultScenario.Id, selectColumnNames);
+
+            store.ExecuteNonQuery(q);
+
+            q = string.Format(CultureInfo.InvariantCulture,
+                    "DELETE FROM {0} WHERE ScenarioID={1}",
+                    tableName, this.ResultScenario.Id);
+
+            store.ExecuteNonQuery(q);
+
+            q = string.Format(CultureInfo.InvariantCulture,
+                    "INSERT INTO {0}({1},{2}) SELECT {3},{4} FROM TEMP_TABLE",
+                    tableName, selectColumnNames, sumColumnName, selectColumnNames, sumColumnName);
+
+            store.ExecuteNonQuery(q);
+
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
         }
 
         /// <summary>

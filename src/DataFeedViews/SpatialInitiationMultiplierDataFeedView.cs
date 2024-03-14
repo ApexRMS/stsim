@@ -22,8 +22,8 @@ namespace SyncroSim.STSim
         private bool m_IsEnabled = true;
 
         private const string BROWSE_BUTTON_TEXT = "...";
-        private const int FILE_NAME_COLUMN_INDEX = 5;
-        private const int BROWSE_COLUMN_INDEX = 6;
+        private const int FILE_NAME_COLUMN_INDEX = 4;
+        private const int BROWSE_COLUMN_INDEX = 5;
 
         protected override void InitializeView()
         {

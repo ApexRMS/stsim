@@ -36,7 +36,7 @@ namespace SyncroSim.STSim
         private delegate void DelegateNoArgs();
 
         private const int BROWSE_COLUMN_WIDTH = 25;
-        private const int ITERATION_COLUMN_INDEX = 1;
+        private const int ITERATION_COLUMN_INDEX = 0;
         private const int PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 1;
         private const int PRIMARY_STRATUM_BROWSE_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 2;
         private const int SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX = ITERATION_COLUMN_INDEX + 3;

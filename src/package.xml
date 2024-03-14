@@ -1318,7 +1318,7 @@
 
 	<layout type="Raster"
 		configurationSheet="RunControl"
-		className="SyncroSim.STSim.STSimPlotProvider"
+		className="SyncroSim.STSim.STSimMapProvider"
 		classAssembly="SyncroSim.STSim">
 		<group name="StockGroups" displayName="Stock Groups">
 			<item name="stkg" displayName="Iteration" dataSheet="OutputSpatialStockGroup" column="Filename" filter="StockGroupId"></item>

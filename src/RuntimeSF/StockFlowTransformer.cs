@@ -1,5 +1,5 @@
 ﻿// stsim-stockflow: SyncroSim Add-On Package (to stsim) for integrating stocks and flows into state-and-transition simulation models in ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
 using System.Data;
@@ -361,11 +361,16 @@ namespace SyncroSim.STSim
             //Is it spatial flow output timestep?  If so, then iterate over flow types and initialize an output raster 
             //for each flow type Initialize to DEFAULT_NODATA_VALUE.  Note that we need to do this for lateral rasters also.
             //Note also that we need to set each SpatialOutputFlowRecord.HasOutputData to FALSE before each timestep.
+            bool createOutput = (this.m_CreateSpatialFlowOutput
+                || this.m_CreateAvgSpatialFlowOutput
+                || this.m_CreateLateralFlowOutput
+                || this.m_CreateAvgSpatialLateralFlowOutput);
 
-            if (this.m_STSimTransformer.IsOutputTimestep(
-                e.Timestep,
-                this.m_SpatialFlowOutputTimesteps,
-                this.m_CreateSpatialFlowOutput))
+            int sampleFreq = FindFlowSamplingFrequency(createOutput,
+                this.m_SpatialFlowOutputTimesteps, this.m_AvgSpatialFlowOutputTimesteps,
+                this.m_LateralFlowOutputTimesteps, this.m_AvgSpatialLateralFlowOutputTimesteps);
+
+            if (this.m_STSimTransformer.IsOutputTimestep(e.Timestep, sampleFreq, createOutput))
             {
                 foreach (FlowType ft in this.m_FlowTypes)
                 {
@@ -1246,6 +1251,37 @@ namespace SyncroSim.STSim
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// Finds the minimum flow sampling frequency
+        /// </summary>
+        /// <param name="createOutput"></param>
+        /// <param name="spatialFlowTS"></param>
+        /// <param name="avgSpatialFlowTS"></param>
+        /// <param name="spatialLateralFlowTS"></param>
+        /// <param name="avgSpatialLateralFlowTS"></param>
+        /// <remarks></remarks>
+        private int FindFlowSamplingFrequency(bool createOutput, int spatialFlowTS, int avgSpatialFlowTS, int spatialLateralFlowTS, int avgSpatialLateralFlowTS)
+        {
+            // Determine frequency of writing to dictionary - should find the minimum of the two (four including lateral flow?)
+            // timesteps and then determine if the larger of the two (four?) numbers is a multiple of the smaller number
+            // If not, then frequency should be 1
+            int sampleFreq = 1;
+
+            if (createOutput)
+            {
+                int sampleFreqFlow = ReturnMinimumNonZeroValue(avgSpatialFlowTS, spatialFlowTS);
+                sampleFreqFlow = IsValueMultipleOf(sampleFreqFlow, Math.Max(spatialFlowTS, avgSpatialFlowTS)) ? 1 : sampleFreqFlow;
+
+                int sampleFreqLateralFlow = ReturnMinimumNonZeroValue(avgSpatialLateralFlowTS, spatialLateralFlowTS);
+                sampleFreqLateralFlow = IsValueMultipleOf(sampleFreqLateralFlow, Math.Max(spatialLateralFlowTS, avgSpatialLateralFlowTS)) ? 1 : sampleFreqLateralFlow;
+
+                sampleFreq = ReturnMinimumNonZeroValue(sampleFreqFlow, sampleFreqLateralFlow);
+                sampleFreq = IsValueMultipleOf(sampleFreq, Math.Max(sampleFreqFlow, sampleFreqLateralFlow)) ? 1 : 0;
+            }
+
+            return sampleFreq;
         }
 
         /// <summary>

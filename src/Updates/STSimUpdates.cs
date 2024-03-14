@@ -149,13 +149,15 @@ namespace SyncroSim.STSim
         [UpdateAttribute(0.105, "This update will apply namespace prefixes to chart and map criteria")]
         public static void Update_0_105(DataStore store)
         {
+            //Note: Criteria is all uppercase in v3 
+
             if (store.TableExists("core_Chart"))
             {
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'StateClassGroup', 'stsim_StateClassVariableGroup')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TransitionGroup-disagg', 'stsim_TransitionVariableGroup-disagg')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TransitionGroup-include', 'stsim_TransitionVariableGroup-include')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'StateAttributeGroup', 'stsim_StateAttributeVariableGroup')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TransitionAttributeGroup', 'stsim_TransitionAttributeVariableGroup')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STATECLASSGROUP', 'STSIM_STATECLASSVARIABLEGROUP')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TRANSITIONGROUP-DISAGG', 'STSIM_TRANSITIONVARIABLEGROUP-DISAGG')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TRANSITIONGROUP-INCLUDE', 'STSIM_TRANSITIONVARIABLEGROUP-INCLUDE')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STATEATTRIBUTEGROUP', 'STSIM_STATEATTRIBUTEVARIABLEGROUP')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TRANSITIONATTRIBUTEGROUP', 'STSIM_TRANSITIONATTRIBUTEVARIABLEGROUP')");
             }
 
             RenameChartVariable(store, "STSimStateClassNormalVariable", "stsim_StateClassNormalVariable");
@@ -633,6 +635,10 @@ namespace SyncroSim.STSim
         {
             store.ExecuteNonQuery("ALTER TABLE stsim_Terminology ADD COLUMN StockUnits TEXT");
             store.ExecuteNonQuery("UPDATE stsim_Terminology SET StockUnits='Tons'");
+
+            RenameColumn(store, "stsim_OutputFilterStateAttributes", "OutputFilterStateAttributeID", "OutputFilterStateAttributesID");
+            RenameColumn(store, "stsim_OutputFilterTransitionAttributes", "OutputFilterTransitionAttributeID", "OutputFilterTransitionAttributesID");
+            RenameColumn(store, "stsim_Multiprocessing", "ProcessingID", "MultiprocessingID");
         }
     }
 }

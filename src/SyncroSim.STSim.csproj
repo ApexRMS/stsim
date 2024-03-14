@@ -215,6 +215,7 @@
     <Compile Include="Forms\FilterFlowTypesForm.Designer.cs">
       <DependentUpon>FilterFlowTypesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Providers\STSimMapProvider.cs" />
     <Compile Include="Providers\STSimResultsProvider.cs" />
     <Compile Include="Reports\SummaryFlowReport.cs" />
     <Compile Include="Reports\SummaryStockReport.cs" />
@@ -656,7 +657,6 @@
     <Compile Include="Statistics\STSimDistributionValue.cs" />
     <Compile Include="Statistics\STSimDistributionValueMap.cs" />
     <Compile Include="Providers\STSimChartProvider.cs" />
-    <Compile Include="Providers\STSimPlotProvider.cs" />
     <Compile Include="Diagram\DeterministicTransitionLine.cs" />
     <Compile Include="Diagram\DeterministicTransitionsTabStripItem.cs" />
     <Compile Include="Diagram\ProbabilisticTransitionLine.cs" />

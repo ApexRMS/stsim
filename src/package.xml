@@ -756,15 +756,15 @@
 	</dataSheet>
 
 	<dataSheet name="StockTypeGroupMembership" displayName="Stock Type-Group Membership">
-		<column name="StockTypeId" dataType="Integer" displayName="Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="StockGroupId" dataType="Integer" displayName="Stock Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StockTypeId" dataType="Integer" displayName="Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isIndex="True"/>
+		<column name="StockGroupId" dataType="Integer" displayName="Stock Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isIndex="True"/>
 		<column name="Value" dataType="Double" isOptional="True" format="N8"/>
 		<validation validationType="Unique" columns="StockTypeId|StockGroupId"/>
 	</dataSheet>
 
 	<dataSheet name="FlowTypeGroupMembership" displayName="Flow Type-Group Membership">
-		<column name="FlowTypeId" dataType="Integer" displayName="Flow Type" validationType="Datasheet" formula1="FlowType" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="FlowGroupId" dataType="Integer" displayName="Flow Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="FlowTypeId" dataType="Integer" displayName="Flow Type" validationType="Datasheet" formula1="FlowType" allowDbNull="False" isIndex="True"/>
+		<column name="FlowGroupId" dataType="Integer" displayName="Flow Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False" isIndex="True"/>
 		<column name="Value" dataType="Double" isOptional="True" format="N8"/>
 		<validation validationType="Unique" columns="FlowTypeId|FlowGroupId"/>
 	</dataSheet>
@@ -836,78 +836,78 @@
 	</dataSheet>
 
 	<dataSheet name="OutputStratum" displayName="Stratum Amount" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputStratumState" displayName="Stratum State" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="StateLabelXId" displayName="State Label X" dataType="Integer" validationType="Datasheet" formula1="StateLabelX" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="StateLabelX" isCompositeIndex="True"/>
-		<column name="StateLabelYId" displayName="State Label Y" dataType="Integer" validationType="Datasheet" formula1="StateLabelY" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="StateLabelY" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
+		<column name="StateLabelXId" displayName="State Label X" dataType="Integer" validationType="Datasheet" formula1="StateLabelX" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="StateLabelX" isIndex="True"/>
+		<column name="StateLabelYId" displayName="State Label Y" dataType="Integer" validationType="Datasheet" formula1="StateLabelY" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="StateLabelY" isIndex="True"/>
 		<column name="AgeMin" displayName="Age Min" dataType="Integer"/>
 		<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
-		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputStratumTransition" displayName="Stratum Transition" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False" isIndex="True"/>
 		<column name="AgeMin" displayName="Age Min" dataType="Integer"/>
 		<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
-		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="SizeClassId" displayName="Size Class" dataType="Integer" validationType="Datasheet" formula1="SizeClass" isCompositeIndex="True"/>
+		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
+		<column name="SizeClassId" displayName="Size Class" dataType="Integer" validationType="Datasheet" formula1="SizeClass" isIndex="True"/>
 		<column name="EventId" displayName="Event" dataType="Integer"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputStratumTransitionState" displayName="Stratum Transition State" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TransitionTypeId" dataType="Integer" displayName="Transition Type" validationType="Datasheet" formula1="TransitionType" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="TransitionTypeId" dataType="Integer" displayName="Transition Type" validationType="Datasheet" formula1="TransitionType" allowDbNull="False" isIndex="True"/>
+		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
+		<column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputTST" displayName="Output TST" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False" isIndex="True"/>
 		<column name="TSTMin" displayName="TST Min" dataType="Integer"/>
 		<column name="TSTMax" displayName="TST Max" dataType="Integer"/>
-		<column name="TSTClass" displayName="TST" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="TSTClass" displayName="TST" dataType="Integer" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputStateAttribute" displayName="State Attribute" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="StateAttributeTypeId" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="StateAttributeTypeId" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False" isIndex="True"/>
 		<column name="AgeMin" displayName="Age Min" dataType="Integer"/>
 		<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
-		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputTransitionAttribute" displayName="Transition Attribute" spatialMultiProcessing="True" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TransitionAttributeTypeId" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" allowDbNull="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="TransitionAttributeTypeId" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False" isIndex="True"/>
 		<column name="AgeMin" displayName="Age Min" dataType="Integer"/>
 		<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
-		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
@@ -972,7 +972,7 @@
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageStratum" displayName="Output Stratum Probability" spatialMultiProcessing="True" hasIteration="True" hasTimestep="True">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
 		<column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StratumId" filenameCode="avgstr"/>
 		<column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
 	</dataSheet>
@@ -1002,31 +1002,31 @@
 	</dataSheet>
 
 	<dataSheet name="OutputStock" displayName="Output Stock Group" hasIteration="True" hasTimestep="True" spatialMultiProcessing="True" sumColumnNames="Amount">
-		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" displayNameSource="stsim_Terminology" displayNameColumn="PrimaryStratumLabel" isCompositeIndex="True"/>
-		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" allowDbNull="True" displayNameSource="stsim_Terminology" displayNameColumn="SecondaryStratumLabel" isCompositeIndex="True"/>
-		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" displayNameSource="stsim_Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
+		<column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" allowDbNull="True" displayNameSource="stsim_Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
+		<column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
+		<column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
 	</dataSheet>
 
 	<dataSheet name="OutputFlow" displayName="Output Flow Group" hasIteration="True" hasTimestep="True" className="SyncroSim.STSim.OutputFlowDataSheet" classAssembly="SyncroSim.STSim" spatialMultiProcessing="True" sumColumnNames="Amount">
-		<column name="FromStratumId" displayName="From Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="FromSecondaryStratumId" displayName="From Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" allowDbNull="True" isCompositeIndex="True"/>
-		<column name="FromTertiaryStratumId" dataType="Integer" displayName="From Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="FromStateClassId" dataType="Integer" displayName="From State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="FromStockTypeId" dataType="Integer" displayName="From Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="TransitionTypeId" dataType="Integer" displayName="From Transition Type" validationType="Datasheet" formula1="stsim_TransitionType" allowDbNull="True" isCompositeIndex="True"/>
-		<column name="ToStratumId" displayName="To Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="ToStateClassId" dataType="Integer" displayName="To State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="ToStockTypeId" dataType="Integer" displayName="To Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isCompositeIndex="True"/>
-		<column name="FlowGroupId" dataType="Integer" displayName="Flow Type/Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False" isCompositeIndex="True"/>
+		<column name="FromStratumId" displayName="From Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" isIndex="True"/>
+		<column name="FromSecondaryStratumId" displayName="From Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" allowDbNull="True" isIndex="True"/>
+		<column name="FromTertiaryStratumId" dataType="Integer" displayName="From Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="FromStateClassId" dataType="Integer" displayName="From State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
+		<column name="FromStockTypeId" dataType="Integer" displayName="From Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isIndex="True"/>
+		<column name="TransitionTypeId" dataType="Integer" displayName="From Transition Type" validationType="Datasheet" formula1="stsim_TransitionType" allowDbNull="True" isIndex="True"/>
+		<column name="ToStratumId" displayName="To Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" isIndex="True"/>
+		<column name="ToStateClassId" dataType="Integer" displayName="To State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
+		<column name="ToStockTypeId" dataType="Integer" displayName="To Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isIndex="True"/>
+		<column name="FlowGroupId" dataType="Integer" displayName="Flow Type/Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False" isIndex="True"/>
 		<column name="Amount" dataType="Double"/>
-		<column name="EndStratumId" displayName="End Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" isCompositeIndex="True"/>
-		<column name="EndSecondaryStratumId" displayName="End Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" isCompositeIndex="True"/>
-		<column name="EndTertiaryStratumId" dataType="Integer" displayName="End Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isCompositeIndex="True"/>
-		<column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="stsim_StateClass" isCompositeIndex="True"/>
-		<column name="EndMinAge" dataType="Integer" displayName="End Min Age" isCompositeIndex="True"/>
+		<column name="EndStratumId" displayName="End Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" isIndex="True"/>
+		<column name="EndSecondaryStratumId" displayName="End Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" isIndex="True"/>
+		<column name="EndTertiaryStratumId" dataType="Integer" displayName="End Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
+		<column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="stsim_StateClass" isIndex="True"/>
+		<column name="EndMinAge" dataType="Integer" displayName="End Min Age" isIndex="True"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialStockGroup" displayName="Output Spatial Stock Group" hasIteration="True" hasTimestep="True" spatialMultiProcessing="True">
@@ -1389,5 +1389,10 @@
 			</group>
 		</group>
 	</layout>
+
+	<updateProvider
+		className="SyncroSim.STSim.STSimUpdates"
+		classAssembly="SyncroSim.STSim">
+	</updateProvider>
 
 </package>

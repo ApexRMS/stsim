@@ -580,7 +580,7 @@ namespace SyncroSim.STSim
             });
         }
 
-        [UpdateAttribute(0.117, "The update changes the chart variable names to be more concise")]
+        [UpdateAttribute(0.117, "This update changes the chart variable names to be more concise")]
         public static void Update_0_117(DataStore store)
         {
             RenameChartVariable(store, "stsim_StateClassNormalVariable", "stsim_StateClass");
@@ -594,7 +594,7 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "stsim_TransitionAttributeDensityVariable", "stsim_TransitionAttributeDensity");
         }
 
-        [UpdateAttribute(0.118, "The update changes the map variable names to be more concise")]
+        [UpdateAttribute(0.118, "This update changes the map variable names to be more concise")]
         public static void Update_0_118(DataStore store)
         {
             RenamePlotVariable(store, "stsim_sc", "stsim_StateClass");

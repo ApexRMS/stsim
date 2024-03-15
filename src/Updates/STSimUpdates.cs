@@ -2,11 +2,8 @@
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
-using System.IO;
 using System.Data;
-using System.Text;
 using System.Diagnostics;
-using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 
@@ -14,12 +11,24 @@ namespace SyncroSim.STSim
 {
     internal partial class STSimUpdates : DotNetUpdateProvider
     {
+        protected override IEnumerable<UpdateProvider> GetAdditional2xLegacyUpdateProviders()
+        {
+            //The core and corestime packges were combined for v3, but we need to keep their
+            //updates separate so we return the stochastic time update provider here.
+
+            List<UpdateProvider> l = new List<UpdateProvider>
+            {
+                new SFUpdates()
+            };
+
+            return l;
+        }
+
         protected override void OnAfterUpdate(DataStore store)
         {
             base.OnAfterUpdate(store);
 
 #if DEBUG
-
             //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
             //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
 
@@ -38,7 +47,6 @@ namespace SyncroSim.STSim
             ASSERT_INDEX_EXISTS(store, "stsim_OutputStateAttribute");
             ASSERT_INDEX_EXISTS(store, "stsim_OutputTransitionAttribute");
             ASSERT_INDEX_EXISTS(store, "stsim_OutputTST");
-
 #endif
         }
 

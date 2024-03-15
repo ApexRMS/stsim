@@ -684,6 +684,7 @@
     <Compile Include="Diagram\TransitionDiagramClipData.cs" />
     <Compile Include="Diagram\TransitionDiagramLine.cs" />
     <Compile Include="Diagram\TransitionDiagramTabStripItem.cs" />
+    <Compile Include="Updates\SFUpdates.cs" />
     <Compile Include="Updates\STSimUpdates.cs" />
     <Compile Include="Updates\STSimUpdates.Utils.cs" />
   </ItemGroup>

@@ -215,11 +215,11 @@
 	</dataSheet>
 
 	<dataFeed name="InitialConditionsNonSpatial" displayName="Initial Conditions" viewClassName="SyncroSim.STSim.InitialConditionsNonSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
-		<dataSheet name="InitialConditionsNonSpatialProperties"/>
+		<dataSheet name="InitialConditionsNonSpatial"/>
 		<dataSheet name="InitialConditionsNonSpatialDistribution"/>
 	</dataFeed>
 
-	<dataSheet name="InitialConditionsNonSpatialProperties" displayName="Initial Conditions Non Spatial" isSingleRow="True">
+	<dataSheet name="InitialConditionsNonSpatial" displayName="Initial Conditions Non Spatial" isSingleRow="True">
 		<column name="TotalAmount" displayName="Total Amount" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
 		<column name="NumCells" displayName="Number of Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="CalcFromDist" displayName="Calculate from Distribution" dataType="Boolean"/>
@@ -241,11 +241,11 @@
 	</dataSheet>
 
 	<dataFeed name="InitialConditionsSpatial" viewClassName="SyncroSim.STSim.InitialConditionsSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
-		<dataSheet name="InitialConditionsSpatialRaster"/>
-		<dataSheet name="InitialConditionsSpatialProperty"/>
+		<dataSheet name="InitialConditionsSpatial"/>
+		<dataSheet name="InitialConditionsSpatialProperties"/>
 	</dataFeed>
 
-	<dataSheet name="InitialConditionsSpatialRaster" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
+	<dataSheet name="InitialConditionsSpatial" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
 		<column name="StratumFileName" displayName="Stratum File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 		<column name="SecondaryStratumFileName" displayName="Secondary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
 		<column name="TertiaryStratumFileName" displayName="Tertiary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
@@ -254,7 +254,7 @@
 		<validation validationType="Unique" columns="Iteration"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsSpatialProperty" displayName="Initial Conditions Spatial Properties" isSingleRow="True">
+	<dataSheet name="InitialConditionsSpatialProperties" displayName="Initial Conditions Spatial Properties" isSingleRow="True">
 		<column name="NumRows" displayName="Num Rows" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumColumns" displayName="Num Columns" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumCells" displayName="Num Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
@@ -1099,10 +1099,10 @@
 		<dataSheet name="RunControl" type="Input"/>
 		<dataSheet name="DeterministicTransition" type="Input"/>
 		<dataSheet name="Transition" type="Input"/>
-		<dataSheet name="InitialConditionsNonSpatialProperties" type="Input"/>
+		<dataSheet name="InitialConditionsNonSpatial" type="Input"/>
 		<dataSheet name="InitialConditionsNonSpatialDistribution" type="Input"/>
-		<dataSheet name="InitialConditionsSpatialRaster" type="Input"/>
-		<dataSheet name="InitialConditionsSpatialProperty" type="Input"/>
+		<dataSheet name="InitialConditionsSpatial" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialProperties" type="Input"/>
 		<dataSheet name="OutputOptions" type="Input"/>
 		<dataSheet name="OutputOptionsSpatial" type="Input"/>
 		<dataSheet name="OutputOptionsSpatialAverage" type="Input"/>
@@ -1318,7 +1318,7 @@
 
 	<layout type="Raster"
 		configurationSheet="RunControl"
-		className="SyncroSim.STSim.STSimPlotProvider"
+		className="SyncroSim.STSim.STSimMapProvider"
 		classAssembly="SyncroSim.STSim">
 		<group name="StockGroups" displayName="Stock Groups">
 			<item name="stkg" displayName="Iteration" dataSheet="OutputSpatialStockGroup" column="Filename" filter="StockGroupId"></item>

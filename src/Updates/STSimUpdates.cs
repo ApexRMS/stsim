@@ -2,11 +2,8 @@
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
-using System.IO;
 using System.Data;
-using System.Text;
 using System.Diagnostics;
-using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 
@@ -14,12 +11,24 @@ namespace SyncroSim.STSim
 {
     internal partial class STSimUpdates : DotNetUpdateProvider
     {
+        protected override IEnumerable<UpdateProvider> GetAdditional2xLegacyUpdateProviders()
+        {
+            //The core and corestime packges were combined for v3, but we need to keep their
+            //updates separate so we return the stochastic time update provider here.
+
+            List<UpdateProvider> l = new List<UpdateProvider>
+            {
+                new SFUpdates()
+            };
+
+            return l;
+        }
+
         protected override void OnAfterUpdate(DataStore store)
         {
             base.OnAfterUpdate(store);
 
 #if DEBUG
-
             //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
             //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
 
@@ -38,7 +47,6 @@ namespace SyncroSim.STSim
             ASSERT_INDEX_EXISTS(store, "stsim_OutputStateAttribute");
             ASSERT_INDEX_EXISTS(store, "stsim_OutputTransitionAttribute");
             ASSERT_INDEX_EXISTS(store, "stsim_OutputTST");
-
 #endif
         }
 
@@ -149,13 +157,15 @@ namespace SyncroSim.STSim
         [UpdateAttribute(0.105, "This update will apply namespace prefixes to chart and map criteria")]
         public static void Update_0_105(DataStore store)
         {
+            //Note: Criteria is all uppercase in v3 
+
             if (store.TableExists("core_Chart"))
             {
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'StateClassGroup', 'stsim_StateClassVariableGroup')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TransitionGroup-disagg', 'stsim_TransitionVariableGroup-disagg')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TransitionGroup-include', 'stsim_TransitionVariableGroup-include')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'StateAttributeGroup', 'stsim_StateAttributeVariableGroup')");
-                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TransitionAttributeGroup', 'stsim_TransitionAttributeVariableGroup')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STATECLASSGROUP', 'STSIM_STATECLASSVARIABLEGROUP')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TRANSITIONGROUP-DISAGG', 'STSIM_TRANSITIONVARIABLEGROUP-DISAGG')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TRANSITIONGROUP-INCLUDE', 'STSIM_TRANSITIONVARIABLEGROUP-INCLUDE')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STATEATTRIBUTEGROUP', 'STSIM_STATEATTRIBUTEVARIABLEGROUP')");
+                store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'TRANSITIONATTRIBUTEGROUP', 'STSIM_TRANSITIONATTRIBUTEVARIABLEGROUP')");
             }
 
             RenameChartVariable(store, "STSimStateClassNormalVariable", "stsim_StateClassNormalVariable");
@@ -578,7 +588,7 @@ namespace SyncroSim.STSim
             });
         }
 
-        [UpdateAttribute(0.117, "The update changes the chart variable names to be more concise")]
+        [UpdateAttribute(0.117, "This update changes the chart variable names to be more concise")]
         public static void Update_0_117(DataStore store)
         {
             RenameChartVariable(store, "stsim_StateClassNormalVariable", "stsim_StateClass");
@@ -592,7 +602,7 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "stsim_TransitionAttributeDensityVariable", "stsim_TransitionAttributeDensity");
         }
 
-        [UpdateAttribute(0.118, "The update changes the map variable names to be more concise")]
+        [UpdateAttribute(0.118, "This update changes the map variable names to be more concise")]
         public static void Update_0_118(DataStore store)
         {
             RenamePlotVariable(store, "stsim_sc", "stsim_StateClass");
@@ -633,6 +643,10 @@ namespace SyncroSim.STSim
         {
             store.ExecuteNonQuery("ALTER TABLE stsim_Terminology ADD COLUMN StockUnits TEXT");
             store.ExecuteNonQuery("UPDATE stsim_Terminology SET StockUnits='Tons'");
+
+            RenameColumn(store, "stsim_OutputFilterStateAttributes", "OutputFilterStateAttributeID", "OutputFilterStateAttributesID");
+            RenameColumn(store, "stsim_OutputFilterTransitionAttributes", "OutputFilterTransitionAttributeID", "OutputFilterTransitionAttributesID");
+            RenameColumn(store, "stsim_Multiprocessing", "ProcessingID", "MultiprocessingID");
         }
     }
 }

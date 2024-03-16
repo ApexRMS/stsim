@@ -1,5 +1,5 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.IO;
 using System.Windows.Forms;
@@ -23,8 +23,8 @@ namespace SyncroSim.STSim
         private bool m_IsEnabled = true;
 
         private const string BROWSE_BUTTON_TEXT = "...";
-        private const int FILE_NAME_COLUMN_INDEX = 5;
-        private const int BROWSE_COLUMN_INDEX = 6;
+        private const int FILE_NAME_COLUMN_INDEX = 4;
+        private const int BROWSE_COLUMN_INDEX = 5;
 
         protected override void InitializeView()
         {

@@ -1,5 +1,5 @@
 ﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
-// Copyright © 2007-2023 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System.Drawing;
 
@@ -18,7 +18,8 @@ namespace SyncroSim.STSim
         public const int STARTING_TRANSITION_EVENT_ID = 0;
         public const double EIGHT_DIV_NINE = 8.0 / 9.0;
         public const int INCLUDE_DATA_NULL_ID = -9999;
-        public const string STSIMRESOLUTION_SCENARIO_NAME = "[1] Partial";
+        // TODO: fix this when we incorporate the stsim multiresolution package into stsim
+        // public const string STSIMRESOLUTION_SCENARIO_NAME = "[1] Partial";
         public const double DEFAULT_FLOW_ORDER = double.MinValue;
         public const int NULL_FROM_STOCK_TYPE_ID = 0;
 

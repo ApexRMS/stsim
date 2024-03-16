@@ -339,7 +339,7 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "stsimsf_FlowGroupDensityVariable", "stsimsf_FlowGroupDensity");
         }
 
-        [UpdateAttribute(0.109, "This is the final update to move from v2 to v3")]
+        [UpdateAttribute(0.109, "This update finalizes the move from from v2 to v3")]
         public static void Update_0_109(DataStore store)
         {
             store.ExecuteNonQuery("ALTER TABLE stsimsf_OutputOptions RENAME TO stsim_OutputOptionsStockFlow");
@@ -362,6 +362,8 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
             store.ExecuteNonQuery("UPDATE core_Chart SET CriteriaXVariable = REPLACE(CriteriaXVariable, 'STSIMSF_', 'STSIM_')");
             store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
+
+            RenameColumn(store, "stsim_OutputOptionsStockFlow", "OutputOptionsID", "OutputOptionsStockFlowID");
         }
 
 #if DEBUG

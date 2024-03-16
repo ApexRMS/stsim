@@ -638,7 +638,7 @@ namespace SyncroSim.STSim
             RenameProjectFilesContainingVariableName(store, "stsim_avgta", "stsim_TransitionAttributeProb");
         }
 
-        [UpdateAttribute(0.119, "This is the final update to move from v2 to v3")]
+        [UpdateAttribute(0.119, "This update finalizes the move from from v2 to v3")]
         public static void Update_0_119(DataStore store)
         {
             store.ExecuteNonQuery("ALTER TABLE stsim_Terminology ADD COLUMN StockUnits TEXT");

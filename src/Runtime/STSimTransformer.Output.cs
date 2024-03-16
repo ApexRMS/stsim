@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Apex;
+using System.Text;
 
 namespace SyncroSim.STSim
 {
@@ -1691,6 +1692,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Writes the summary transition tabular data
         /// </summary>
+        /// <param name="timestep"></param>
         /// <param name="table"></param>
         /// <remarks></remarks>
         private void WriteSummaryTransitionTabularData(int timestep, DataTable table)
@@ -1789,6 +1791,83 @@ namespace SyncroSim.STSim
             }
 
             this.m_SummaryStratumTransitionStateResults.Clear();
+        }
+
+        /// <summary>
+        /// Removes duplicate records from the output transition tabular data
+        /// </summary>
+        /// <remarks></remarks>
+        private void RemoveExtraEventRecords()
+        {
+            string tableName = Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME;
+            DataSheet ds = this.ResultScenario.GetDataSheet(tableName);
+            string sumColumnName = Strings.DATASHEET_AMOUNT_COLUMN_NAME;
+            string selectColumnNames = BuildSelectColumnList(ds, sumColumnName);
+
+            using (SyncroSimTransactionScope scope = Session.CreateTransactionScope())
+            {
+                using (DataStore store = this.ResultScenario.Library.CreateDataStore())
+                {
+                    RemoveDupsSumAmounts(store, tableName, selectColumnNames, sumColumnName);
+                }
+
+                scope.Complete();
+            }
+        }
+
+        /// <summary>
+        /// Creates a string list of columns to group by when removing extra event records
+        /// </summary>
+        /// <param name="datasheet"></param>
+        /// <param name="sumColumnName"></param>
+        /// <remarks></remarks>
+        private static string BuildSelectColumnList(DataSheet datasheet, string sumColumnName)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0},", Strings.DATASHEET_SCENARIOID_COLUMN_NAME);
+
+            foreach (DataSheetColumn col in datasheet.Columns)
+            {
+                if (col.Name != sumColumnName && !col.IsPrimaryKey)
+                {
+                    Debug.Assert(col.Name != Strings.DATASHEET_SCENARIOID_COLUMN_NAME);
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0},", col.Name);
+                }
+            }
+
+            return sb.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
+        /// Creates the SQL query to remove extra event records
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="tableName"></param>
+        /// <param name="selectColumnNames"></param>
+        /// <param name="sumColumnName"></param>
+        /// <remarks></remarks>
+        private void RemoveDupsSumAmounts(DataStore store, string tableName, string selectColumnNames, string sumColumnName)
+        {
+            string q = string.Format(CultureInfo.InvariantCulture,
+                "CREATE TABLE TEMP_TABLE AS SELECT {0}, SUM({1}) AS {2} FROM {3} WHERE ScenarioID={4} GROUP BY {5}",
+                selectColumnNames, sumColumnName, sumColumnName, tableName, this.ResultScenario.Id, selectColumnNames);
+
+            store.ExecuteNonQuery(q);
+
+            q = string.Format(CultureInfo.InvariantCulture,
+                    "DELETE FROM {0} WHERE ScenarioID={1}",
+                    tableName, this.ResultScenario.Id);
+
+            store.ExecuteNonQuery(q);
+
+            q = string.Format(CultureInfo.InvariantCulture,
+                    "INSERT INTO {0}({1},{2}) SELECT {3},{4} FROM TEMP_TABLE",
+                    tableName, selectColumnNames, sumColumnName, selectColumnNames, sumColumnName);
+
+            store.ExecuteNonQuery(q);
+
+            store.ExecuteNonQuery("DROP TABLE TEMP_TABLE");
         }
 
         /// <summary>

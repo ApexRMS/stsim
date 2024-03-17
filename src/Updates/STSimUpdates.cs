@@ -11,15 +11,18 @@ namespace SyncroSim.STSim
 {
     internal partial class STSimUpdates : DotNetUpdateProvider
     {
-        protected override IEnumerable<UpdateProvider> GetAdditional2xLegacyUpdateProviders()
+        protected override IEnumerable<UpdateProvider> GetAdditional2xLegacyUpdateProviders(DataStore store)
         {
-            //The core and corestime packges were combined for v3, but we need to keep their
-            //updates separate so we return the stochastic time update provider here.
+            //The stsim and stsimsf packges were combined for v3, but we need to keep their
+            //updates separate so we return the stsimsf update provider here. Note, however,
+            //that we don't want to try to do a legacy update if there is no schema table.
 
-            List<UpdateProvider> l = new List<UpdateProvider>
+            List<UpdateProvider> l = new List<UpdateProvider>();
+         
+            if (store.TableExists("stsimsf_Schema"))
             {
-                new SFUpdates()
-            };
+                l.Add(new SFUpdates());
+            }
 
             return l;
         }
@@ -638,8 +641,8 @@ namespace SyncroSim.STSim
             RenameProjectFilesContainingVariableName(store, "stsim_avgta", "stsim_TransitionAttributeProb");
         }
 
-        [UpdateAttribute(0.119, "This update finalizes the move from from v2 to v3")]
-        public static void Update_0_119(DataStore store)
+        [UpdateAttribute(4.0, "This update adjusts the system tables for v2 to v3")]
+        public static void Update_4_000(DataStore store)
         {
             store.ExecuteNonQuery("ALTER TABLE stsim_Terminology ADD COLUMN StockUnits TEXT");
             store.ExecuteNonQuery("UPDATE stsim_Terminology SET StockUnits='Tons'");

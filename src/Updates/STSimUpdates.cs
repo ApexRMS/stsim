@@ -522,10 +522,12 @@ namespace SyncroSim.STSim
         }
 
         [UpdateAttribute(0.114, "This update changes the transformer table for new transformer names")]
-        public static void Update_0_114(DataStore store)
+        public static void Update_0_114(DataStore _)
         {
-            UpdateTransformerTable(store, 
-                "stsim_Primary", "ST-Sim", "stsim", "The ST-Sim state-and-transition simulation model");
+            //This update is obsolete
+
+            //UpdateTransformerTable(store, 
+            //    "stsim_Primary", "ST-Sim", "stsim", "The ST-Sim state-and-transition simulation model");
         }
 
         [UpdateAttribute(0.115, "This update changes the state and transition attribute chart keys to be unique and more descriptive")]

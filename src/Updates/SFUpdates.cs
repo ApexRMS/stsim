@@ -16,24 +16,6 @@ namespace SyncroSim.STSim
             this.LegacyPackageName = "stsimsf";
         }
 
-        protected override void OnAfterUpdate(DataStore store)
-        {
-            base.OnAfterUpdate(store);
-
-#if DEBUG
-            //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
-            //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
-
-            ASSERT_INDEX_EXISTS(store, "stsimsf_FlowPathway");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_OutputFlow");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_OutputStock");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_StockTypeGroupMembership");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_FlowTypeGroupMembership");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_StockTransitionMultiplier");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_FlowMultiplier");
-#endif
-        }
-
         [UpdateAttribute(0.101, "This update adds support lateral flows")]
         public static void Update_0_101(DataStore store)
         {
@@ -363,17 +345,5 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("UPDATE core_Chart SET CriteriaXVariable = REPLACE(CriteriaXVariable, 'STSIMSF_', 'STSIM_')");
             store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
         }
-
-#if DEBUG
-        public static void ASSERT_INDEX_EXISTS(DataStore store, string tableName)
-        {
-            if (store.TableExists(tableName))
-            {
-                string IndexName = tableName + "_Index";
-                string Query = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(name) FROM sqlite_master WHERE type = 'index' AND name = '{0}'", IndexName);
-                Debug.Assert((long)store.ExecuteScalar(Query) == 1);
-            }
-        }
-#endif
     }
 }

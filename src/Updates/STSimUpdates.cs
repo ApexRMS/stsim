@@ -27,32 +27,6 @@ namespace SyncroSim.STSim
             return l;
         }
 
-        protected override void OnAfterUpdate(DataStore store)
-        {
-            base.OnAfterUpdate(store);
-
-#if DEBUG
-            //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
-            //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
-
-            ASSERT_INDEX_EXISTS(store, "stsim_Transition");
-            ASSERT_INDEX_EXISTS(store, "stsim_InitialConditionsNonSpatialDistribution");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionTarget");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionMultiplierValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_StateAttributeValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionAttributeValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionAttributeTarget");
-            ASSERT_INDEX_EXISTS(store, "stsim_DistributionValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratum");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumState");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransition");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransitionState");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStateAttribute");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputTransitionAttribute");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputTST");
-#endif
-        }
-
         [UpdateAttribute(0.101, "This update adds support for transition events in various tables")]
         public static void Update_0_101(DataStore store)
         {

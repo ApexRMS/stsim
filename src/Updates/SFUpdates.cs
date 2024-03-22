@@ -172,12 +172,12 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'SF_', 'STSIMSF_')");
             }
 
-            if (store.TableExists("core_Plot"))
+            if (store.TableExists("core_Map"))
             {
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'SF_', 'STSIMSF_')");
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STKG', 'STSIMSF_STKG')");
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'FLOG', 'STSIMSF_FLOG')");
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'LFLOG', 'STSIMSF_LFLOG')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'SF_', 'STSIMSF_')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STKG', 'STSIMSF_STKG')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'FLOG', 'STSIMSF_FLOG')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'LFLOG', 'STSIMSF_LFLOG')");
             }
         }
 
@@ -209,9 +209,9 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "flowgroupdensity", "stsimsf_FlowGroupDensityVariable");
             RenameChartVariable(store, "flowgroup", "stsimsf_FlowGroupVariable");
 
-            RenamePlotVariable(store, "stkg", "stsimsf_stkg");
-            RenamePlotVariable(store, "flog", "stsimsf_flog");
-            RenamePlotVariable(store, "lflog", "stsimsf_lflog");
+            RenameMapVariable(store, "stkg", "stsimsf_stkg");
+            RenameMapVariable(store, "flog", "stsimsf_flog");
+            RenameMapVariable(store, "lflog", "stsimsf_lflog");
         }
 
         [UpdateAttribute(0.105, "This update adds spatial averaging to the output options.")]
@@ -352,16 +352,16 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "stsimsf_FlowGroup", "stsim_FlowGroup");
             RenameChartVariable(store, "stsimsf_FlowGroupDensity", "stsim_FlowGroupDensity");
 
-            RenamePlotVariable(store, "stsimsf_stkg", "stsim_stkg");
-            RenamePlotVariable(store, "stsimsf_flog", "stsim_flog");
-            RenamePlotVariable(store, "stsimsf_lflog", "stsim_lflog");
-            RenamePlotVariable(store, "stsimsf_avgstkg", "stsim_avgstkg");
-            RenamePlotVariable(store, "stsimsf_avgflog", "stsim_avgflog");
-            RenamePlotVariable(store, "stsimsf_avglflog", "stsim_avglflog");
+            RenameMapVariable(store, "stsimsf_stkg", "stsim_stkg");
+            RenameMapVariable(store, "stsimsf_flog", "stsim_flog");
+            RenameMapVariable(store, "stsimsf_lflog", "stsim_lflog");
+            RenameMapVariable(store, "stsimsf_avgstkg", "stsim_avgstkg");
+            RenameMapVariable(store, "stsimsf_avgflog", "stsim_avgflog");
+            RenameMapVariable(store, "stsimsf_avglflog", "stsim_avglflog");
 
             store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
             store.ExecuteNonQuery("UPDATE core_Chart SET CriteriaXVariable = REPLACE(CriteriaXVariable, 'STSIMSF_', 'STSIM_')");
-            store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
+            store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
         }
 
 #if DEBUG

@@ -13,7 +13,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    internal class STSimMapProvider : PlotProvider
+    internal class STSimMapProvider : MapProvider
     {
         static string AVG_ALL_ITER = "(Average for all Iterations)";
         static string AVG_PROB_ALL_ITER = "(Probability for all Iterations)";

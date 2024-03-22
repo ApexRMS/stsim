@@ -119,9 +119,9 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
 
-            if (store.TableExists("core_Plot"))
+            if (store.TableExists("core_Map"))
             {
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
         }
 
@@ -178,17 +178,17 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "attrnormal", "stsim_AttrNormal");
             RenameChartVariable(store, "attrdensity", "stsim_AttrDensity");
 
-            RenamePlotVariable(store, "str", "stsim_str");
-            RenamePlotVariable(store, "secstr", "stsim_secstr");
-            RenamePlotVariable(store, "terstr", "stsim_terstr");
-            RenamePlotVariable(store, "sc", "stsim_sc");
-            RenamePlotVariable(store, "tg", "stsim_tg");
-            RenamePlotVariable(store, "age", "stsim_age");
-            RenamePlotVariable(store, "tst", "stsim_tst");
-            RenamePlotVariable(store, "sa", "stsim_sa");
-            RenamePlotVariable(store, "ta", "stsim_ta");
-            RenamePlotVariable(store, "tge", "stsim_tge");
-            RenamePlotVariable(store, "tgap", "stsim_tgap");
+            RenameMapVariable(store, "str", "stsim_str");
+            RenameMapVariable(store, "secstr", "stsim_secstr");
+            RenameMapVariable(store, "terstr", "stsim_terstr");
+            RenameMapVariable(store, "sc", "stsim_sc");
+            RenameMapVariable(store, "tg", "stsim_tg");
+            RenameMapVariable(store, "age", "stsim_age");
+            RenameMapVariable(store, "tst", "stsim_tst");
+            RenameMapVariable(store, "sa", "stsim_sa");
+            RenameMapVariable(store, "ta", "stsim_ta");
+            RenameMapVariable(store, "tge", "stsim_tge");
+            RenameMapVariable(store, "tgap", "stsim_tgap");
         }
 
         [UpdateAttribute(0.106, "This update adds StateClassID and Neighborhood fields to the TransitionAdjacencySetting table")]
@@ -610,21 +610,21 @@ namespace SyncroSim.STSim
         [UpdateAttribute(0.118, "This update changes the map variable names to be more concise")]
         public static void Update_0_118(DataStore store)
         {
-            RenamePlotVariable(store, "stsim_sc", "stsim_StateClass");
-            RenamePlotVariable(store, "stsim_str", "stsim_Stratum");
-            RenamePlotVariable(store, "stsim_age", "stsim_Age");
-            RenamePlotVariable(store, "stsim_tge", "stsim_TransitionEvent");
-            RenamePlotVariable(store, "stsim_tg", "stsim_TransitionGroup");
-            RenamePlotVariable(store, "stsim_tst", "stsim_TST");
-            RenamePlotVariable(store, "stsim_sa", "stsim_StateAttribute");
-            RenamePlotVariable(store, "stsim_ta", "stsim_TransitionAttribute");
-            RenamePlotVariable(store, "avgsc", "stsim_StateClassProb");
-            RenamePlotVariable(store, "avgstr", "stsim_StratumProb");
-            RenamePlotVariable(store, "stsim_AgesAvgGroup", "stsim_AgeProb");
-            RenamePlotVariable(store, "stsim_avgtp", "stsim_TransitionProb");
-            RenamePlotVariable(store, "stsim_avgtst", "stsim_TSTProb");
-            RenamePlotVariable(store, "stsim_avgsa", "stsim_StateAttributeProb");
-            RenamePlotVariable(store, "stsim_avgta", "stsim_TransitionAttributeProb");
+            RenameMapVariable(store, "stsim_sc", "stsim_StateClass");
+            RenameMapVariable(store, "stsim_str", "stsim_Stratum");
+            RenameMapVariable(store, "stsim_age", "stsim_Age");
+            RenameMapVariable(store, "stsim_tge", "stsim_TransitionEvent");
+            RenameMapVariable(store, "stsim_tg", "stsim_TransitionGroup");
+            RenameMapVariable(store, "stsim_tst", "stsim_TST");
+            RenameMapVariable(store, "stsim_sa", "stsim_StateAttribute");
+            RenameMapVariable(store, "stsim_ta", "stsim_TransitionAttribute");
+            RenameMapVariable(store, "avgsc", "stsim_StateClassProb");
+            RenameMapVariable(store, "avgstr", "stsim_StratumProb");
+            RenameMapVariable(store, "stsim_AgesAvgGroup", "stsim_AgeProb");
+            RenameMapVariable(store, "stsim_avgtp", "stsim_TransitionProb");
+            RenameMapVariable(store, "stsim_avgtst", "stsim_TSTProb");
+            RenameMapVariable(store, "stsim_avgsa", "stsim_StateAttributeProb");
+            RenameMapVariable(store, "stsim_avgta", "stsim_TransitionAttributeProb");
 
             RenameProjectFilesContainingVariableName(store, "stsim_sc", "stsim_StateClass");
             RenameProjectFilesContainingVariableName(store, "stsim_str", "stsim_Stratum");
@@ -652,6 +652,8 @@ namespace SyncroSim.STSim
             RenameColumn(store, "stsim_OutputFilterStateAttributes", "OutputFilterStateAttributeID", "OutputFilterStateAttributesID");
             RenameColumn(store, "stsim_OutputFilterTransitionAttributes", "OutputFilterTransitionAttributeID", "OutputFilterTransitionAttributesID");
             RenameColumn(store, "stsim_Multiprocessing", "ProcessingID", "MultiprocessingID");
+
+            store.ExecuteNonQuery("UPDATE core_Transformer SET Name='stsim_Main' WHERE Name='stsim_Primary'");
         }
     }
 }

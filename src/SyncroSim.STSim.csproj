@@ -621,6 +621,7 @@
     <Compile Include="RuntimeSF\FlowPathway.cs" />
     <Compile Include="RuntimeSF\FlowPathwayCollection.cs" />
     <Compile Include="RuntimeSF\FlowPathwayMap.cs" />
+    <Compile Include="Shared\CellOffset.cs" />
     <Compile Include="Shared\CheckBoxPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -165,7 +165,7 @@ namespace SyncroSim.STSim
                 tst.TstValue = int.MaxValue;
             }
 
-            this.InitTSTFromRamdomize(simulationCell, iteration);
+            this.InitTSTFromRandomize(simulationCell, iteration);
             this.InitTSTFromICDistribution(simulationCell, iteration, icd);
 
             if (IsSpatial)
@@ -174,7 +174,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void InitTSTFromRamdomize(Cell simulationCell, int iteration)
+        private void InitTSTFromRandomize(Cell simulationCell, int iteration)
         {
             if (!this.m_TstRandomizeMap.HasItems)
             {

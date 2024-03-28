@@ -251,8 +251,8 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         protected override void OnBeforeIteration(int iteration)
         {
-            base.OnBeforeIteration(iteration);
             this.InternalOnBeforeIteration(iteration);
+            base.OnBeforeIteration(iteration);
         }
 
         /// <summary>
@@ -273,8 +273,8 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         protected override void OnBeforeTimestep(int iteration, int timestep)
         {
-            base.OnBeforeTimestep(iteration, timestep);
             this.InternalOnBeforeTimestep(iteration, timestep);
+            base.OnBeforeTimestep(iteration, timestep);      
         }
 
         /// <summary>

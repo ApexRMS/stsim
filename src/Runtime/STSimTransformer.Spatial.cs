@@ -2423,103 +2423,42 @@ namespace SyncroSim.STSim
             // Compare the rasters to make sure meta data matches. Note that we might not have loaded a raster 
             // because one of the same name already loaded for a previous iteration.
 
-            CompareMetadataResult cmpResult = 0;
             string cmpMsg = "";
 
             // State Class
             if (this.m_InputRasters.StateClassRaster != null && this.m_InputRasters.StateClassRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.StateClassRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.StateClassName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.StateClassName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.StateClassRaster, this.m_InputRasters.StateClassName, cmpMsg);
             }
 
             // Primary Stratum
             if (this.m_InputRasters.PrimaryStratumRaster != null && this.m_InputRasters.PrimaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.PrimaryStratumRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.PrimaryStratumName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.PrimaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.PrimaryStratumRaster, this.m_InputRasters.PrimaryStratumName, cmpMsg);
             }
 
             //Secondary Stratum
             if (this.m_InputRasters.SecondaryStratumRaster != null && this.m_InputRasters.SecondaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.SecondaryStratumRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.SecondaryStratumName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.SecondaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.SecondaryStratumRaster, this.m_InputRasters.SecondaryStratumName, cmpMsg);
             }
 
             //Tertiary Stratum
             if (this.m_InputRasters.TertiaryStratumRaster != null && this.m_InputRasters.TertiaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.TertiaryStratumRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.TertiaryStratumName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.TertiaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.TertiaryStratumRaster, this.m_InputRasters.TertiaryStratumName, cmpMsg);
             }
 
             // Age
             if (this.m_InputRasters.AgeRaster != null && this.m_InputRasters.AgeRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.AgeRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.AgeName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.AgeName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.AgeRaster, this.m_InputRasters.AgeName, cmpMsg);
             }
 
             //DEM 
             if (this.m_InputRasters.DEMRaster != null && this.m_InputRasters.DEMRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.DEMRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.DemName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.DemName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.DEMRaster, this.m_InputRasters.DemName, cmpMsg);
             }       
         }
 
@@ -2974,6 +2913,25 @@ namespace SyncroSim.STSim
 
             DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
+        }
+
+        internal void ValidateRasterMetaData(SyncroSimRaster MultiplierRaster, string FullFilename, string cmpMsg = "")
+        {
+            var cmpRes = this.InputRasters.CompareMetadata(MultiplierRaster, ref cmpMsg);
+
+            if (cmpRes == CompareMetadataResult.RowColumnMismatch)
+            {
+                string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_ROW_COLUMN_MISMATCH, FullFilename, cmpMsg);
+                throw new STSimException(msg);
+            }
+            else
+            {
+                if (cmpRes == CompareMetadataResult.UnimportantDifferences)
+                {
+                    string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_INFO, FullFilename, cmpMsg);
+                    RecordStatus(StatusType.Information, msg);
+                }
+            }
         }
     }
 }

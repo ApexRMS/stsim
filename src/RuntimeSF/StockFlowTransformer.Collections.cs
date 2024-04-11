@@ -335,34 +335,19 @@ namespace SyncroSim.STSim
                 }
 
                 //Compare the Stock raster metadata to standard to make rasters match
-                string cmpMsg = "";
-                var cmpResult = this.STSimTransformer.InputRasters.CompareMetadata(raster, ref cmpMsg);
+                this.m_STSimTransformer.ValidateRasterMetaData(raster, fullFilename);
 
-                if (cmpResult == STSim.CompareMetadataResult.RowColumnMismatch)
+                this.m_InitialStocksSpatial.Add(
+                                new InitialStockSpatial(
+                                    Iteration,
+                                    Convert.ToInt32(dr[Strings.STOCK_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
+                                    stockFileName));
+
+                //Only loading single instance of a particular raster, as a way to conserve memory
+
+                if (!m_InitialStockSpatialRasters.ContainsKey(stockFileName))
                 {
-                    string message = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_FILE_STOCK_ROW_COLUMN_MISMATCH, stockFileName, cmpMsg);
-                    ExceptionUtils.ThrowArgumentException(message);
-                }
-                else
-                {
-                    if (cmpResult == STSim.CompareMetadataResult.UnimportantDifferences)
-                    {
-                        string message = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_FILE_STOCK_METADATA_INFO, stockFileName, cmpMsg);
-                        this.RecordStatus(StatusType.Information, message);
-                    }
-
-                    this.m_InitialStocksSpatial.Add(
-                                  new InitialStockSpatial(
-                                      Iteration,
-                                      Convert.ToInt32(dr[Strings.STOCK_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture),
-                                      stockFileName));
-
-                    //Only loading single instance of a particular raster, as a way to conserve memory
-
-                    if (!m_InitialStockSpatialRasters.ContainsKey(stockFileName))
-                    {
-                        this.m_InitialStockSpatialRasters.Add(stockFileName, raster);
-                    }
+                    this.m_InitialStockSpatialRasters.Add(stockFileName, raster);
                 }
             }
         }
@@ -950,6 +935,9 @@ namespace SyncroSim.STSim
                     throw new ArgumentException(msg);
                 }
 
+                // Validate Multiplier before adding to collection
+                this.m_STSimTransformer.ValidateRasterMetaData(MultiplierRaster, FullFilename);
+
                 this.m_FlowSpatialMultipliers.Add(Multiplier);
 
                 //Only load a single instance of a each unique filename to conserve memory
@@ -1005,6 +993,9 @@ namespace SyncroSim.STSim
                     string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_PROCESS_WARNING, FullFilename);
                     throw new ArgumentException(msg);
                 }
+
+                // Validate raster before adding to collection
+                this.m_STSimTransformer.ValidateRasterMetaData(MultiplierRaster, FullFilename);
 
                 this.m_FlowLateralMultipliers.Add(Multiplier);
 

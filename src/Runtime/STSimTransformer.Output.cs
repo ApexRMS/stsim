@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Apex;
+using System.IO;
 
 namespace SyncroSim.STSim
 {
@@ -2321,6 +2322,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            bool writeToJobFolder = this.IsChildRun();
+
             foreach (int StateClassId in this.m_AvgStateClassMap.Keys)
             {
                 Dictionary<int, double[]> dict = this.m_AvgStateClassMap[StateClassId];
@@ -2343,7 +2346,8 @@ namespace SyncroSim.STSim
                         timestep,
                         StateClassId,
                         Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2353,6 +2357,8 @@ namespace SyncroSim.STSim
         /// </summary>
         private void WriteAvgAgeRasters()
         {
+            bool writeToJobFolder = this.IsChildRun();
+
             foreach (int timestep in this.m_AvgAgeMap.Keys)
             {
                 double[] Values = this.m_AvgAgeMap[timestep];
@@ -2372,7 +2378,8 @@ namespace SyncroSim.STSim
                     timestep,
                     null,
                     Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    writeToJobFolder);
             }
         }
 
@@ -2390,6 +2397,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int StratumId in this.m_AvgStratumMap.Keys)
             {
@@ -2413,7 +2422,8 @@ namespace SyncroSim.STSim
                         timestep,
                         StratumId,
                         Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2433,6 +2443,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
             {
@@ -2479,7 +2491,8 @@ namespace SyncroSim.STSim
                         timestep,
                         tgId,
                         Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2498,6 +2511,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int TransitionGroupId in this.m_AvgTSTMap.Keys)
             {
@@ -2521,7 +2536,8 @@ namespace SyncroSim.STSim
                         timestep,
                         TransitionGroupId,
                         Constants.SPATIAL_MAP_AVG_TST_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2540,6 +2556,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int AttrId in this.m_AvgStateAttrMap.Keys)
             {
@@ -2575,7 +2593,8 @@ namespace SyncroSim.STSim
                         timestep,
                         AttrId,
                         Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2594,6 +2613,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int AttrId in this.m_AvgTransitionAttrMap.Keys)
             {
@@ -2634,7 +2655,8 @@ namespace SyncroSim.STSim
                         timestep,
                         AttrId,
                         Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2963,6 +2985,19 @@ namespace SyncroSim.STSim
             }
 
             return d;
+        }
+
+        private bool IsChildRun()
+        {
+            bool writeToJobFolder = false;
+            string pattern = "^.*" + Strings.CORE_MP_JOB_FILE_PREFIX + "-([\\d]*)\\.ssim\\.temp\\.*";
+            System.Text.RegularExpressions.Match m = System.Text.RegularExpressions.Regex.Match(this.JobFolderName, pattern);
+            if (m.Success)
+            {
+                writeToJobFolder = true;
+            }
+
+            return writeToJobFolder;
         }
     }
 }

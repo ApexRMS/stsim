@@ -619,5 +619,8 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AVG_STOCK_GROUP_VARIABLE_PREFIX = "avgstkg";
         public const string SPATIAL_MAP_AVG_FLOW_GROUP_VARIABLE_PREFIX = "avgflog";
         public const string SPATIAL_MAP_AVG_LATERAL_FLOW_GROUP_VARIABLE_PREFIX = "avglflog";
+
+        //Core constant for the multiprocessing partial library
+        public const string CORE_MP_JOB_FILE_PREFIX = "Job";
     }
 }

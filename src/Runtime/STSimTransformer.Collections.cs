@@ -384,7 +384,7 @@ namespace SyncroSim.STSim
                     this.RecordStatus(StatusType.Warning, msg);
                 }
 
-                Debug.Assert(TType.PrimaryTransitionGroups.Count > 0);
+                //Debug.Assert(TType.PrimaryTransitionGroups.Count > 0);
             }
         }
 

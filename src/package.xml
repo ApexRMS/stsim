@@ -245,6 +245,11 @@
 		<dataSheet name="InitialConditionsSpatialProperties"/>
 	</dataFeed>
 
+	<dataFeed name="InitialConditionsFineSpatial" viewClassName="SyncroSim.STSim.InitialConditionsFineSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<dataSheet name="InitialConditionsFineSpatial"/>
+		<dataSheet name="InitialConditionsFineSpatialProperties"/>
+	</dataFeed>
+
 	<dataSheet name="InitialConditionsSpatial" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
 		<column name="StratumFileName" displayName="Stratum File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 		<column name="SecondaryStratumFileName" displayName="Secondary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
@@ -254,7 +259,29 @@
 		<validation validationType="Unique" columns="Iteration"/>
 	</dataSheet>
 
+	<dataSheet name="InitialConditionsFineSpatial" displayName="Initial Conditions Fine Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsFineSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
+		<column name="StratumFileName" displayName="Stratum File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+		<column name="SecondaryStratumFileName" displayName="Secondary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
+		<column name="TertiaryStratumFileName" displayName="Tertiary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
+		<column name="StateClassFileName" displayName="State Class" dataType="String" isExternalFile="True" isRaster="True"/>
+		<column name="AgeFileName" displayName="Age" dataType="String" isExternalFile="True" isRaster="True"/>
+		<validation validationType="Unique" columns="Iteration"/>
+	</dataSheet>
+
 	<dataSheet name="InitialConditionsSpatialProperties" displayName="Initial Conditions Spatial Properties" isSingleRow="True">
+		<column name="NumRows" displayName="Num Rows" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+		<column name="NumColumns" displayName="Num Columns" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+		<column name="NumCells" displayName="Num Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+		<column name="CellSize" displayName="Cell Size" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
+		<column name="CellSizeUnits" displayName="Cell Size Units" dataType="String"/>
+		<column name="CellArea" displayName="Cell Area" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
+		<column name="CellAreaOverride" displayName="Cell Area Override" dataType="Boolean"/>
+		<column name="XLLCorner" displayName="XLL Corner" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
+		<column name="YLLCorner" displayName="YLL Corner" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0.0"/>
+		<column name="SRS" displayName="SRS" dataType="String"/>
+	</dataSheet>
+
+	<dataSheet name="InitialConditionsFineSpatialProperties" displayName="Initial Conditions Fine Spatial Properties" isSingleRow="True">
 		<column name="NumRows" displayName="Num Rows" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumColumns" displayName="Num Columns" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumCells" displayName="Num Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>

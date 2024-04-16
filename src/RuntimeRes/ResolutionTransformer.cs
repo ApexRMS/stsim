@@ -40,16 +40,6 @@ namespace SyncroSim.STSim
             base.Configure();
 
             this.m_CanDoMultiResolution = CanDoMultiResolution(this.ResultScenario);
-
-            if (this.m_CanDoMultiResolution)
-            {
-                //QUESTION FOR KATIE: Do we need this?
-                //this.NormalizeOutputOptions();
-
-                //These events must be subscribed locally since they are for merging
-                this.m_STSimTransformer.BeginNormalSpatialMerge += this.OnSTSimBeginNormalSpatialMerge;
-                this.m_STSimTransformer.NormalSpatialMergeComplete += this.OnSTSimNormalSpatialMergeComplete;
-            }
         }
 
         public override void Initialize()
@@ -77,68 +67,51 @@ namespace SyncroSim.STSim
                 InitialConditionsSpatial RefMultiResColl = MultiResColl.First();
                 DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
 
-                //QUESTION FOR KATIE: How do we rectify this in Syncrosim 3? Are we using stochastic time?
-                //this.m_MultiResFilename = Spatial.GetSpatialInputFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false);
-                //this.m_STSimFilename = Spatial.GetSpatialInputFileName(STSimICS, RefSTSimColl.PrimaryStratumFileName, false);
-                //StochasticTimeRaster MRRaster = new StochasticTimeRaster(this.m_MultiResFilename, RasterDataType.DTInteger);
-                //StochasticTimeRaster STSimRaster = new StochasticTimeRaster(this.m_STSimFilename, RasterDataType.DTInteger);
+                this.m_MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false);
+                this.m_STSimFilename = Spatial.GetSpatialDataFileName(STSimICS, RefSTSimColl.PrimaryStratumFileName, false);
+                SyncroSimRaster MRRaster = new SyncroSimRaster(this.m_MultiResFilename, RasterDataType.DTInteger);
+                SyncroSimRaster STSimRaster = new SyncroSimRaster(this.m_STSimFilename, RasterDataType.DTInteger);
 
-                //this.m_BaseToFineDictionary = CreateBaseToFineDictionary(STSimRaster, MRRaster);
+                this.m_BaseToFineDictionary = CreateBaseToFineDictionary(STSimRaster, MRRaster);
             }
         }
 
-        //QUESTION FOR KATIE: Should the spatial merges for multi-resolution be exactly the same as for stocks and flows
-        private void OnSTSimBeginNormalSpatialMerge(object sender, EventArgs e)
-        {
-            //this.ProcessAveragedStockGroupOutputFiles();
-            //this.ProcessAveragedFlowGroupOutputFiles();
-            //this.ProcessAveragedLateralFlowGroupOutputFiles();
-        }
-
-        private void OnSTSimNormalSpatialMergeComplete(object sender, EventArgs e)
-        {
-            //this.ProcessAveragedStockGroupDatasheet();
-            //this.ProcessAveragedFlowGroupDatasheet();
-            //this.ProcessAveragedLateralFlowGroupDatasheet();
-        }
-
-        //QUESTION FOR KATIE: How do we rectify this in Syncrosim 3? Are we using stochastic time?
         // key will be base cell ID, value will be list of fine cell IDs
         // Arguments will be the coarse resolution raster and fine resolution raster
-        //public static Dictionary<int, List<int>> CreateBaseToFineDictionary(StochasticTimeRaster STSimRaster, StochasticTimeRaster MRRaster)
-        //{
-        //    int numBaseCells = STSimRaster.TotalCells;
-        //    int fineHeight = MRRaster.Height;
-        //    int fineWidth = MRRaster.Width;
-        //    int baseWidth = STSimRaster.Width;
-        //    int baseHeight = STSimRaster.Height;
-        //    int heightRatio = MRRaster.Height / STSimRaster.Height;
-        //    int widthRatio = MRRaster.Width / STSimRaster.Width;
-        //    Dictionary<int, List<int>> BaseToFineDict = new Dictionary<int, List<int>>();
+        public static Dictionary<int, List<int>> CreateBaseToFineDictionary(SyncroSimRaster STSimRaster, SyncroSimRaster MRRaster)
+        {
+            int numBaseCells = STSimRaster.TotalCells;
+            int fineHeight = MRRaster.Height;
+            int fineWidth = MRRaster.Width;
+            int baseWidth = STSimRaster.Width;
+            int baseHeight = STSimRaster.Height;
+            int heightRatio = MRRaster.Height / STSimRaster.Height;
+            int widthRatio = MRRaster.Width / STSimRaster.Width;
+            Dictionary<int, List<int>> BaseToFineDict = new Dictionary<int, List<int>>();
 
-        //    for (int baseCellId = 0; baseCellId < numBaseCells; baseCellId++)
-        //    {
-        //        List<int> fineCellIds = new List<int>();
-        //        int widthPosition = baseCellId % baseWidth; // here
-        //        double heightDouble = baseCellId / baseWidth;
-        //        int heightPosition = Convert.ToInt32(Math.Floor(heightDouble));
-        //        // int verticalCellStep = baseWidth * heightRatio;
-        //        int ul = ((widthPosition * widthRatio) + (heightPosition * fineWidth * heightRatio));
-                
+            for (int baseCellId = 0; baseCellId < numBaseCells; baseCellId++)
+            {
+                List<int> fineCellIds = new List<int>();
+                int widthPosition = baseCellId % baseWidth; // here
+                double heightDouble = baseCellId / baseWidth;
+                int heightPosition = Convert.ToInt32(Math.Floor(heightDouble));
+                // int verticalCellStep = baseWidth * heightRatio;
+                int ul = ((widthPosition * widthRatio) + (heightPosition * fineWidth * heightRatio));
 
-        //        for (int horizFineCellId = ul; horizFineCellId < ul + widthRatio; horizFineCellId++)
-        //        {
-        //            for (int verticalFineCellId = horizFineCellId; verticalFineCellId < horizFineCellId + (fineWidth * heightRatio); verticalFineCellId += fineWidth)
-        //            {
-        //                fineCellIds.Add(verticalFineCellId);
-        //            }
-        //        }
 
-        //        BaseToFineDict.Add(baseCellId, fineCellIds);
-        //    }
+                for (int horizFineCellId = ul; horizFineCellId < ul + widthRatio; horizFineCellId++)
+                {
+                    for (int verticalFineCellId = horizFineCellId; verticalFineCellId < horizFineCellId + (fineWidth * heightRatio); verticalFineCellId += fineWidth)
+                    {
+                        fineCellIds.Add(verticalFineCellId);
+                    }
+                }
 
-        //    return BaseToFineDict;
-        //}
+                BaseToFineDict.Add(baseCellId, fineCellIds);
+            }
+
+            return BaseToFineDict;
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -163,24 +136,13 @@ namespace SyncroSim.STSim
 
         private void OnSTSimBeginModelRun(object sender, EventArgs e)
         {
-            ////QUESTION FOR KATIE: Do we need this? I'm assuming not?
-            ////Create the parallel result scenario
-            //this.m_ParallelScenario = new ParallelScenario(this.m_STSimTransformer);
-
-            ////Create (and initialize) the parallel transformer
-            //this.m_STSimController = (STSimController) 
-            //    this.m_ParallelScenario.CreateTransformer(Constants.STSIM_CONTROLLER_TRANSFORMER_NAME);
-
             this.ValidateRaster(this.m_MultiResFilename, this.m_STSimFilename);
         }
 
         private void OnSTSimModelRunComplete(object sender, EventArgs e)
         {
-            this.SetStatusMessage(Constants.FINALIZING_DATA);
+            //this.SetStatusMessage(Constants.FINALIZING_DATA);
             this.EndModelRun();
-
-            ////QUESTION FOR KATIE: Do we need this? I'm assuming not?
-            //this.m_ParallelScenario.Complete(Constants.APPEND_TITLE);
         }
 
         private void OnSTSimIterationStarted(object sender, IterationEventArgs e)

@@ -67,26 +67,26 @@ namespace SyncroSim.STSim
             DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
 
             //QUESTION FOR KATIE: How do we rectify this in Syncrosim 3? Are we using stochastic time?
-            //string MultiResFilename = Spatial.GetSpatialInputFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false); //breaks if input DNE
-            //StochasticTimeRaster MRRaster = new StochasticTimeRaster(MultiResFilename, RasterDataType.DTInteger);
+            string MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false); //breaks if input DNE
+            SyncroSimRaster MRRaster = new SyncroSimRaster(MultiResFilename, RasterDataType.DTInteger);
 
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_SRS_COLUMN_NAME, MRRaster.Projection);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_SRS_COLUMN_NAME, MRRaster.Projection);
 
-            //// Calculate cell area
-            //double cellArea = Math.Pow(MRRaster.CellSize, 2);
-            //string amountlabel = null;
-            //TerminologyUnit destUnitsVal = 0;
-            //TerminologyUtilities.GetAmountLabelTerminology(
-            //    this.Project.GetDataSheet(Constants.DATASHEET_STSIM_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
-            //double cellAreaTU = InitialConditionsSpatialDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
-            //STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_AREA_COLUMN_NAME, cellAreaTU);
+            // Calculate cell area
+            double cellArea = Math.Pow(MRRaster.CellSize, 2);
+            string amountlabel = null;
+            TerminologyUnit destUnitsVal = 0;
+            TerminologyUtilities.GetAmountLabelTerminology(
+                this.Project.GetDataSheet(Constants.DATASHEET_STSIM_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+            double cellAreaTU = InitialConditionsFineSpatialRasterDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
+            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_AREA_COLUMN_NAME, cellAreaTU);
 
             // generate age raster here if it does not exist - see STSim.Transformer.Spatial line 2031
 
@@ -133,9 +133,8 @@ namespace SyncroSim.STSim
 
         internal void ValidateRaster(string multiResolutionFileName, string stsimFileName)
         {
-            // TODO: check logic
-            StochasticTimeRaster MRRaster = new StochasticTimeRaster(multiResolutionFileName, RasterDataType.DTInteger, false, 1);
-            StochasticTimeRaster STRaster = new StochasticTimeRaster(stsimFileName, RasterDataType.DTInteger, false, 1);
+            SyncroSimRaster MRRaster = new SyncroSimRaster(multiResolutionFileName, RasterDataType.DTInteger, false, 1);
+            SyncroSimRaster STRaster = new SyncroSimRaster(stsimFileName, RasterDataType.DTInteger, false, 1);
 
             if (MRRaster.Width <= STRaster.Width || MRRaster.Height < STRaster.Height)
             {
@@ -146,87 +145,6 @@ namespace SyncroSim.STSim
             {
                 MultiResolutionExceptionHandling.ThrowRasterValidationException(Constants.ERROR_RASTERS_WRONG_PROPORTION, multiResolutionFileName, stsimFileName);
             }
-        }
-
-        protected string GetStateClassRaster(int iteration, Core.DataSheet dsIC, string stateClassFileName)
-        {
-            InitialConditionsSpatial ICS = this.m_SPICMapMultiRes.GetICS(iteration);
-
-            if (!String.IsNullOrEmpty(ICS.StateClassFileName))
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
-                string stateClassRaster = Spatial.GetSpatialInputFileName(ds, ICS.StateClassFileName, false);
-                ValidateInputRasterFiles(stateClassRaster);
-
-                return stateClassRaster;
-            }
-
-            return Spatial.GetSpatialInputFileName(dsIC, stateClassFileName, false);
-        }
-
-        protected string GetPrimaryStratumRaster(int iteration, DataSheet dsIC, string primaryStratumFileName)
-        {
-            InitialConditionsSpatial ICS = this.m_SPICMapMultiRes.GetICS(iteration);
-
-            if (!String.IsNullOrEmpty(ICS.PrimaryStratumFileName))
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
-                string primaryStratumRaster = Spatial.GetSpatialInputFileName(ds, ICS.PrimaryStratumFileName, false);
-                ValidateInputRasterFiles(primaryStratumRaster);
-
-                return primaryStratumRaster;
-            }
-
-            return Spatial.GetSpatialInputFileName(dsIC, primaryStratumFileName, false);
-        }
-
-        protected string GetSecondaryStratumRaster(int iteration, DataSheet dsIC, string secondaryStratumFileName)
-        {
-            InitialConditionsSpatial ICS = this.m_SPICMapMultiRes.GetICS(iteration);
-
-            if (!String.IsNullOrEmpty(ICS.SecondaryStratumFileName))
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
-                string secondaryStratumRaster = Spatial.GetSpatialInputFileName(ds, ICS.SecondaryStratumFileName, false);
-                ValidateInputRasterFiles(secondaryStratumRaster);
-
-                return secondaryStratumRaster;
-
-            }
-
-            return Spatial.GetSpatialInputFileName(dsIC, secondaryStratumFileName, false);
-        }
-
-        protected string GetTertiaryStratumRaster(int iteration, DataSheet dsIC, string tertiaryStratumFileName)
-        {
-            InitialConditionsSpatial ICS = this.m_SPICMapMultiRes.GetICS(iteration);
-
-            if (!String.IsNullOrEmpty(ICS.TertiaryStratumFileName))
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
-                string tertiaryStratumRaster = Spatial.GetSpatialInputFileName(ds, ICS.TertiaryStratumFileName, false);
-                ValidateInputRasterFiles(tertiaryStratumRaster);
-
-                return tertiaryStratumRaster;
-            }
-
-            return Spatial.GetSpatialInputFileName(dsIC, tertiaryStratumFileName, false);
-        }
-
-        protected string GetAgeRaster(int iteration, DataSheet dsIC, string ageFileName)
-        {
-            InitialConditionsSpatial ICS = this.m_SPICMapMultiRes.GetICS(iteration);
-
-            if (!String.IsNullOrEmpty(ICS.AgeFileName))
-            {
-                DataSheet ds = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
-                string ageRaster = Spatial.GetSpatialInputFileName(ds, ICS.AgeFileName, false);
-                ValidateInputRasterFiles(ageRaster);
-
-                return ageRaster;
-            }
-
-            return Spatial.GetSpatialInputFileName(dsIC, ageFileName, false);
         }
 
         protected void ValidateInputRasterFiles(string rasterFileName)
@@ -262,7 +180,7 @@ namespace SyncroSim.STSim
                         if (this.m_FineTransitionDictionary.ContainsKey((simulationCell.CellId, e.TransitionGroup.TransitionGroupId)))
                         {
                             Transition forcedFineTransition = this.m_FineTransitionDictionary[(simulationCell.CellId, e.TransitionGroup.TransitionGroupId)];
-                            InvokeProbabilisticTransitionForCell(simulationCell, e.TransitionGroup, forcedFineTransition, e.Iteration, e.Timestep, e.TransitionedPixels, e.RasterTransitionAttrValues);
+                            this.STSimTransformer.InvokeProbabilisticTransitionForCell(simulationCell, e.TransitionGroup, forcedFineTransition, e.Iteration, e.Timestep, e.TransitionedPixels, e.RasterTransitionAttrValues);
                         }
                     }
                 }

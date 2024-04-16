@@ -112,4 +112,12 @@ namespace SyncroSim.STSim
         Spatial = 2,
         AvgSpatial = 4
     }
+
+    public enum Resolution
+    {
+        BaseOnly = 0,
+        BaseForcesFine = 1,
+        FineOnly = 2,
+        FineForcesBase = 3
+    }
 }

@@ -79,6 +79,25 @@ namespace SyncroSim.STSim
             this.m_StockFlowTransformer.Initialize();
         }
 
+        //QUESTION FOR KATIE: Do we need this? Making a guess since I can see that "InitializeStocksAndFlows" is called in "STSimTransformer.InternalInitialize"
+        private void InitializeMultiResolution()
+        {
+            //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
+            //but it is still separate and driven off of ST-Sim events so we need to create and 
+            //initialize it here. Note that if not doing an MP run the Configure function will
+            //have already created the transformer.
+
+            if (this.m_ResolutionTransformer == null)
+            {
+                this.m_ResolutionTransformer = (ResolutionTransformer)this.Library.CreateTransformer(
+                    "stsim_Resolution", this.Scenario, this.ResultScenario);
+
+                this.m_ResolutionTransformer.STSimTransformer = this;
+            }
+
+            this.m_ResolutionTransformer.Initialize();
+        }
+
         private void ConfigureStocksAndFlows()
         {
             //Stocks and flows was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
@@ -92,6 +111,22 @@ namespace SyncroSim.STSim
 
             this.m_StockFlowTransformer.STSimTransformer = this;
             this.m_StockFlowTransformer.Configure();
+        }
+
+        //QUESTION FOR KATIE: Do we need this? Making a guess since I can see that "ConfigureStocksAndFlows" is called in "STSimTransformer.InternalConfigure"
+        private void ConfigureMultiResolution()
+        {
+            //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
+            //but it is still separate and driven off of ST-Sim events so we need to create and 
+            //initialize it here.
+
+            Debug.Assert(this.m_ResolutionTransformer == null);
+
+            this.m_ResolutionTransformer = (ResolutionTransformer)this.Library.CreateTransformer(
+                "stsim_Resolution", this.Scenario, this.ResultScenario);
+
+            this.m_ResolutionTransformer.STSimTransformer = this;
+            this.m_ResolutionTransformer.Configure();
         }
 
         /// <summary>

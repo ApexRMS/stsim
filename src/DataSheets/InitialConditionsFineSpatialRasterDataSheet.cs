@@ -56,7 +56,7 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetStratumLabelTerminology(e.DataSheet, ref Primary, ref Secondary, ref Tertiary);
             TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
 
-            DataSheet dsProp = this.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet dsProp = this.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
             DataRow drProp = dsProp.GetDataRow();
 
             if (drProp == null)
@@ -65,10 +65,10 @@ namespace SyncroSim.STSim
             }
 
             //Num Cells
-            int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]);
+            int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME]);
 
             //Get the units and refresh the units labels - the default Raster Cell Units is Metres^2
-            string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME]);
+            string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME]);
             string srcAreaUnits = srcSizeUnits + "^2";
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
@@ -83,22 +83,22 @@ namespace SyncroSim.STSim
             destAreaLbl = destAreaLbl.ToLower(CultureInfo.InvariantCulture);
 
             // Calculate Cell Area in raster's native units
-            float cellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
+            float cellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME]);
             double cellArea = Math.Pow(cellSize, 2);
 
             // Calc Cell Area in terminology units
             double cellAreaTU = 0;
-            bool SizeOverride = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME]);
-            double? currentCellArea = (double)drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME];
+            bool SizeOverride = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPICF_CELL_AREA_OVERRIDE_COLUMN_NAME]);
+            double? currentCellArea = (double)drProp[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME];
 
             if (!SizeOverride)
             {
                 cellAreaTU = InitialConditionsSpatialRasterDataSheet.CalcCellArea(cellArea, srcSizeUnits, destUnitsVal);
-                drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = cellAreaTU;
+                drProp[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME] = cellAreaTU;
             }
             else
             {
-                cellAreaTU = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
+                cellAreaTU = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME]);
             }
 
             if (currentCellArea == null || currentCellArea != cellAreaTU)
@@ -113,21 +113,21 @@ namespace SyncroSim.STSim
 
             List<string> ColNames = new List<string>();
 
-            ColNames.Add(Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
-            ColNames.Add(Strings.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME);
-            ColNames.Add(Strings.DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME);
-            ColNames.Add(Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_STATE_CLASS_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_AGE_FILE_COLUMN_NAME);
 
             DataTable ThisData = this.GetData();
             SyncroSimRaster FirstRaster = null;
 
             if (ThisData.DefaultView.Count == 0)
             {
-                FirstRaster = this.LoadRaster(proposedRow, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(proposedRow, Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
             }
             else
             {
-                FirstRaster = this.LoadRaster(ThisData.DefaultView[0].Row, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(ThisData.DefaultView[0].Row, Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
             }
 
             try
@@ -169,21 +169,21 @@ namespace SyncroSim.STSim
 
             List<string> ColNames = new List<string>();
 
-            ColNames.Add(Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
-            ColNames.Add(Strings.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME);
-            ColNames.Add(Strings.DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME);
-            ColNames.Add(Strings.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_STATE_CLASS_FILE_COLUMN_NAME);
+            ColNames.Add(Strings.DATASHEET_SPICF_AGE_FILE_COLUMN_NAME);
 
             DataTable ThisData = this.GetData();
             SyncroSimRaster FirstRaster = null;
 
             if (ThisData.DefaultView.Count == 0)
             {
-                FirstRaster = this.LoadRaster(proposedData.Rows[0], Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(proposedData.Rows[0], Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
             }
             else
             {
-                FirstRaster = this.LoadRaster(ThisData.DefaultView[0].Row, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(ThisData.DefaultView[0].Row, Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
             }
 
             try
@@ -225,7 +225,7 @@ namespace SyncroSim.STSim
             base.OnRowsAdded(sender, e);
 
             var ThisData = this.GetData();
-            DataSheet dsProp = this.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet dsProp = this.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
             DataRow drProp = dsProp.GetDataRow();
 
             if (drProp == null && ThisData.DefaultView.Count > 0)
@@ -234,29 +234,29 @@ namespace SyncroSim.STSim
                 drProp = dsProp.GetData().NewRow();
 
                 DataRow FirstRow = ThisData.DefaultView[0].Row;
-                SyncroSimRaster FirstRast = this.LoadRaster(FirstRow, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                SyncroSimRaster FirstRast = this.LoadRaster(FirstRow, Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME);
 
                 if (FirstRast.IntCells == null)
                 {
                     FirstRast.LoadData();
                 }
 
-                drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME] = FirstRast.Height;
-                drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME] = FirstRast.Width;
-                drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME] = FirstRast.GetNumberValidCells();
-                drProp[Strings.DATASHEET_SPPIC_XLLCORNER_COLUMN_NAME] = FirstRast.XllCorner;
-                drProp[Strings.DATASHEET_SPPIC_YLLCORNER_COLUMN_NAME] = FirstRast.YllCorner;
-                drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] = FirstRast.CellSize;
-                drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME] = FirstRast.CellSizeUnits;
-                drProp[Strings.DATASHEET_SPPIC_SRS_COLUMN_NAME] = FirstRast.Projection;
-                drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME] = false;
+                drProp[Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME] = FirstRast.Height;
+                drProp[Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME] = FirstRast.Width;
+                drProp[Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME] = FirstRast.GetNumberValidCells();
+                drProp[Strings.DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME] = FirstRast.XllCorner;
+                drProp[Strings.DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME] = FirstRast.YllCorner;
+                drProp[Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME] = FirstRast.CellSize;
+                drProp[Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME] = FirstRast.CellSizeUnits;
+                drProp[Strings.DATASHEET_SPPICF_SRS_COLUMN_NAME] = FirstRast.Projection;
+                drProp[Strings.DATASHEET_SPPICF_CELL_AREA_OVERRIDE_COLUMN_NAME] = false;
 
                 string amountlabel = null;
                 TerminologyUnit destUnitsVal = 0;
                 double cellArea = System.Math.Pow((double)FirstRast.CellSize, 2);
 
                 TerminologyUtilities.GetAmountLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
-                drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = CalcCellArea(cellArea, FirstRast.CellSizeUnits, destUnitsVal);
+                drProp[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME] = CalcCellArea(cellArea, FirstRast.CellSizeUnits, destUnitsVal);
 
                 dsProp.Changes.Add(new ChangeRecord(this, "Added raster metadata"));
                 dsProp.GetData().Rows.Add(drProp);
@@ -270,7 +270,7 @@ namespace SyncroSim.STSim
 
             if (this.GetData().DefaultView.Count == 0)
             {
-                DataSheet PropsDataSheet = this.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+                DataSheet PropsDataSheet = this.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
 
                 PropsDataSheet.GetData();
                 PropsDataSheet.ClearData();
@@ -302,11 +302,11 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetStratumLabelTerminology(
                 TerminologySheet, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
 
-            if (columnName == Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+            if (columnName == Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME)
             {
                 ColumnDisplayName = PrimaryStratumLabel;
             }
-            else if (columnName == Strings.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME)
+            else if (columnName == Strings.DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME)
             {
                 ColumnDisplayName = SecondaryStratumLabel;
             }
@@ -315,7 +315,7 @@ namespace SyncroSim.STSim
             {
                 string msg = null;
 
-                if (columnName == Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+                if (columnName == Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME)
                 {
                     msg = string.Format(CultureInfo.InvariantCulture,
                         "The number of rows for the '{0}' raster does not match that of the other '{1}' rasters.",
@@ -334,7 +334,7 @@ namespace SyncroSim.STSim
             {
                 string msg = null;
 
-                if (columnName == Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME)
+                if (columnName == Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME)
                 {
                     msg = string.Format(CultureInfo.InvariantCulture,
                         "The number of columns for the '{0}' raster does not match that of the other '{1}' rasters.",

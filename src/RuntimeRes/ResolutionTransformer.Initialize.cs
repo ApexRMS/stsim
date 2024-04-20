@@ -51,9 +51,9 @@ namespace SyncroSim.STSim
 
         private void AuxillarySetup()
         {
-            this.m_SPICValuesSTSim = CreateSPICCollection(this.ResultScenario, Constants.DATASHEET_STSIM_SPIC_NAME);
+            this.m_SPICValuesSTSim = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
             this.m_SPICMapSTSim = new InitialConditionsSpatialMap(this.m_SPICValuesSTSim);
-            this.m_SPICValuesMultiRes = CreateSPICCollection(this.ResultScenario, Constants.DATASHEET_SPIC_NAME);
+            this.m_SPICValuesMultiRes = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
             this.m_SPICMapMultiRes = new InitialConditionsSpatialMap(this.m_SPICValuesMultiRes);
             this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
             this.m_BaseForcesFineCells = new Dictionary<int, CellCollection>();
@@ -61,32 +61,32 @@ namespace SyncroSim.STSim
             this.m_FineTransitionDictionary = new Dictionary<(int, int), Transition>();
             this.m_BaseTransitionDictionary = new Dictionary<(int, int), Transition>();
 
-            DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Constants.DATASHEET_STSIM_SPPIC_NAME);
-            InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(this.ResultScenario, Constants.DATASHEET_SPIC_NAME);
+            DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
+            InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
             InitialConditionsSpatial RefMultiResColl = MultiResColl.First();
-            DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
+            DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
             //QUESTION FOR KATIE: How do we rectify this in Syncrosim 3? Are we using stochastic time?
             string MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false); //breaks if input DNE
             SyncroSimRaster MRRaster = new SyncroSimRaster(MultiResFilename, RasterDataType.DTInteger);
 
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_SRS_COLUMN_NAME, MRRaster.Projection);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_SRS_COLUMN_NAME, MRRaster.Projection);
 
             // Calculate cell area
             double cellArea = Math.Pow(MRRaster.CellSize, 2);
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
             TerminologyUtilities.GetAmountLabelTerminology(
-                this.Project.GetDataSheet(Constants.DATASHEET_STSIM_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
             double cellAreaTU = InitialConditionsFineSpatialRasterDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
-            STSimSpatialProperties.SetSingleRowData(Constants.DATASHEET_STSIM_SPPIC_CELL_AREA_COLUMN_NAME, cellAreaTU);
+            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
 
             // generate age raster here if it does not exist - see STSim.Transformer.Spatial line 2031
 
@@ -138,12 +138,12 @@ namespace SyncroSim.STSim
 
             if (MRRaster.Width <= STRaster.Width || MRRaster.Height < STRaster.Height)
             {
-                MultiResolutionExceptionHandling.ThrowRasterValidationException(Constants.ERROR_RASTERS_TOO_SMALL, multiResolutionFileName, stsimFileName);
+                MultiResolutionExceptionHandling.ThrowRasterValidationException(Strings.ERROR_RASTERS_TOO_SMALL, multiResolutionFileName, stsimFileName);
             }
 
             if (MRRaster.Width % STRaster.Width != 0 || MRRaster.Height % STRaster.Height != 0)
             {
-                MultiResolutionExceptionHandling.ThrowRasterValidationException(Constants.ERROR_RASTERS_WRONG_PROPORTION, multiResolutionFileName, stsimFileName);
+                MultiResolutionExceptionHandling.ThrowRasterValidationException(Strings.ERROR_RASTERS_WRONG_PROPORTION, multiResolutionFileName, stsimFileName);
             }
         }
 

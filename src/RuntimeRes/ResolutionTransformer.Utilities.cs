@@ -30,7 +30,7 @@ namespace SyncroSim.STSim
 			}
 
 			//If there are no initial conditions rasters we can't do anything
-			InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(resultScenario, Constants.DATASHEET_SPIC_NAME);
+			InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(resultScenario, Strings.DATASHEET_SPICF_NAME);
 			InitialConditionsFineSpatialMap MultiResMap = new InitialConditionsFineSpatialMap(MultiResColl);
 
 			if (MultiResMap.AllItems.Count == 0)
@@ -67,16 +67,16 @@ namespace SyncroSim.STSim
 				string StateClassName;
 				string AgeName;
 
-				if (dr[Constants.DATASHEET_SPIC_ITERATION_COLUMN_NAME] != DBNull.Value)
+				if (dr[Strings.DATASHEET_SPICF_ITERATION_COLUMN_NAME] != DBNull.Value)
 				{
-					Iteration = Convert.ToInt32(dr[Constants.DATASHEET_SPIC_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
+					Iteration = Convert.ToInt32(dr[Strings.DATASHEET_SPICF_ITERATION_COLUMN_NAME], CultureInfo.InvariantCulture);
 				}
 
-				PrimaryStratumName = dr[Constants.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME].ToString();
-				SecondaryStratumName = dr[Constants.DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME].ToString();
-				TertiaryStratumName = dr[Constants.DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME].ToString();
-				StateClassName = dr[Constants.DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME].ToString();
-				AgeName = dr[Constants.DATASHEET_SPIC_AGE_FILE_COLUMN_NAME].ToString();
+				PrimaryStratumName = dr[Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME].ToString();
+				SecondaryStratumName = dr[Strings.DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME].ToString();
+				TertiaryStratumName = dr[Strings.DATASHEET_SPICF_TERTIARY_STRATUM_FILE_COLUMN_NAME].ToString();
+				StateClassName = dr[Strings.DATASHEET_SPICF_STATE_CLASS_FILE_COLUMN_NAME].ToString();
+				AgeName = dr[Strings.DATASHEET_SPICF_AGE_FILE_COLUMN_NAME].ToString();
 
 				InitialConditionsSpatial InitialStateRecord = new InitialConditionsSpatial(
 					Iteration, PrimaryStratumName, SecondaryStratumName, TertiaryStratumName, StateClassName, AgeName);
@@ -90,19 +90,19 @@ namespace SyncroSim.STSim
 		public static TransitionGroupResolutionCollection CreateResolutionGroupCollection(Scenario scenario)
 		{
 			TransitionGroupResolutionCollection groups = new TransitionGroupResolutionCollection();
-			DataSheet ds = scenario.GetDataSheet(Constants.DATASHEET_TRG_NAME);
+			DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_TRG_NAME);
 
 			foreach (DataRow dr in ds.GetData().Rows)
 			{
 				if (dr.RowState != DataRowState.Deleted)
 				{
-					int Id = Convert.ToInt32(dr[Constants.DATASHEET_TRG_TGID_COLUMN_NAME], CultureInfo.InvariantCulture);
-					Resolution Res = (Resolution)(long)Convert.ToInt32(dr[Constants.DATASHEET_TRG_RESOLUTION_COLUMN_NAME]);
+					int Id = Convert.ToInt32(dr[Strings.DATASHEET_TRG_TGID_COLUMN_NAME], CultureInfo.InvariantCulture);
+					Resolution Res = (Resolution)(long)Convert.ToInt32(dr[Strings.DATASHEET_TRG_RESOLUTION_COLUMN_NAME]);
 					Double Propn = 0.0;
 
-					if (dr[Constants.DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME] != DBNull.Value)
+					if (dr[Strings.DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME] != DBNull.Value)
 					{
-						Propn = Convert.ToDouble(dr[Constants.DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME]);
+						Propn = Convert.ToDouble(dr[Strings.DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME]);
 					}
 
 					groups.Add(new TransitionGroupResolution(Id, Res, Propn));

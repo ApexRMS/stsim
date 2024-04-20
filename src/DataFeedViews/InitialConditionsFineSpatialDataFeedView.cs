@@ -31,7 +31,7 @@ namespace SyncroSim.STSim
         private int m_CellMouseRowIndex = -1;
         private DataFeedView m_RastersView;
         private DataGridView m_RastersDataGrid;
-        private InitialConditionsSpatialRasterDataSheet m_FilesDataSheet;
+        private InitialConditionsFineSpatialRasterDataSheet m_FilesDataSheet;
         private HourGlass m_HourGlass;
         private delegate void DelegateNoArgs();
 
@@ -86,7 +86,7 @@ namespace SyncroSim.STSim
         {
             base.LoadDataFeed(dataFeed);
 
-            this.m_RastersView.LoadDataFeed(dataFeed, Strings.DATASHEET_SPIC_NAME);
+            this.m_RastersView.LoadDataFeed(dataFeed, Strings.DATASHEET_SPICF_NAME);
 
             if (!this.m_ColumnsInitialized)
             {
@@ -111,7 +111,7 @@ namespace SyncroSim.STSim
 
             this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
 
-            this.m_FilesDataSheet = (InitialConditionsSpatialRasterDataSheet)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            this.m_FilesDataSheet = (InitialConditionsFineSpatialRasterDataSheet)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
             this.m_FilesDataSheet.ValidatingRasters += this.OnValidatingRasters;
             this.m_FilesDataSheet.RastersValidated += this.OnRastersValidated;
         }
@@ -366,7 +366,7 @@ namespace SyncroSim.STSim
 
                 using (HourGlass h = new HourGlass())
                 {
-                    DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+                    DataSheet ds = this.Scenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
                     DataGridViewEditMode OldMode = this.m_RastersDataGrid.EditMode;
 
                     this.m_RastersDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
@@ -403,24 +403,24 @@ namespace SyncroSim.STSim
 
         private void RefreshNonCalculatedValues()
         {
-            DataRow drProp = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+            DataRow drProp = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPICF_NAME).GetDataRow();
 
             if (drProp == null)
             {
                 return;
             }
 
-            this.CheckBoxCellSizeOverride.Checked = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME]);
+            this.CheckBoxCellSizeOverride.Checked = DataTableUtilities.GetDataBool(drProp[Strings.DATASHEET_SPPICF_CELL_AREA_OVERRIDE_COLUMN_NAME]);
             this.CheckBoxCellSizeOverride.Enabled = true;
             this.CheckBoxCellSizeOverride.AutoCheck = true;
 
-            int NumRows = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_ROWS_COLUMN_NAME]);
-            int NumCols = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME]);
-            float CellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME]);
-            double cellAreaCalc = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
-            int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPIC_NUM_CELLS_COLUMN_NAME]);
+            int NumRows = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME]);
+            int NumCols = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME]);
+            float CellSize = DataTableUtilities.GetDataSingle(drProp[Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME]);
+            double cellAreaCalc = DataTableUtilities.GetDataDbl(drProp[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME]);
+            int NumCells = DataTableUtilities.GetDataInt(drProp[Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME]);
 
-            string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME]);
+            string srcSizeUnits = DataTableUtilities.GetDataStr(drProp[Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME]);
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
 
@@ -525,7 +525,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            DataSheet ds = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet ds = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
             DataRow dr = ds.GetDataRow();
 
             if (dr == null)
@@ -534,7 +534,7 @@ namespace SyncroSim.STSim
                 return;
             }
 
-            ds.SetSingleRowData(Strings.DATASHEET_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME, CheckBoxCellSizeOverride.Checked);
+            ds.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_OVERRIDE_COLUMN_NAME, CheckBoxCellSizeOverride.Checked);
             this.RefreshNonCalculatedValues();
         }
 
@@ -604,7 +604,7 @@ namespace SyncroSim.STSim
             }
 
             //Save the CellArea value
-            DataSheet ds = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet ds = this.DataFeed.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
             DataRow dr = ds.GetDataRow();
 
             if (dr == null)
@@ -620,11 +620,11 @@ namespace SyncroSim.STSim
             double cellArea = 0;
             if (double.TryParse(this.TextBoxCellAreaCalc.Text, out cellArea))
             {
-                dr[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = cellArea;
+                dr[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME] = cellArea;
             }
             else
             {
-                dr[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME] = DBNull.Value;
+                dr[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME] = DBNull.Value;
             }
 
             ds.EndModifyRows();

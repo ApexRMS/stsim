@@ -485,6 +485,44 @@ namespace SyncroSim.STSim
         public const string DATASHEET_MULTI_PROCESSING_NAME = "stsim_Multiprocessing";
         public const string DATASHEET_MULTI_PROCESSING_SPLIT_BY_SS_COLUMN_NAME = "SplitBySecondaryStrata";
 
+        //Multi-Resolution - General
+        //public const string STSIM_TRANSFORMER_NAME = "stsim_Runtime";
+        //public const string STSIM_CONTROLLER_TRANSFORMER_NAME = "stsim_Controller";
+        //public const string DATASHEET_STSIM_RUN_CONTROL_NAME = "stsim_RunControl";
+        //public const string DATASHEET_STSIM_TERMINOLOGY_NAME = "stsim_Terminology";
+        //public const string DATASHEET_STSIM_RUN_CONTROL_IS_SPATIAL_COLUMN_NAME = "isSpatial";
+        //public const string DATASHEET_STSIM_SPIC_NAME = "stsim_InitialConditionsSpatial";
+        //public const string APPEND_TITLE = " (High-Resolution)";
+        //public const string FINALIZING_DATA = "Finalizing high-resolution data.";
+
+        //Multi-Resolution - Initial Conditions
+        public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsFineSpatial";
+        public const string DATASHEET_SPICF_ITERATION_COLUMN_NAME = "Iteration";
+        public const string DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
+        public const string DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
+        public const string DATASHEET_SPICF_TERTIARY_STRATUM_FILE_COLUMN_NAME = "TertiaryStratumFileName";
+        public const string DATASHEET_SPICF_STATE_CLASS_FILE_COLUMN_NAME = "StateClassFileName";
+        public const string DATASHEET_SPICF_AGE_FILE_COLUMN_NAME = "AgeFileName";
+
+        //Multi-Resolution - Spatial Initial Conditions Properties
+        public const string DATASHEET_SPPICF_NAME = "stsim_InitialConditionsFineSpatialProperties";
+        public const string DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
+        public const string DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME = "NumRows";
+        public const string DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME = "NumCells";
+        public const string DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME = "XLLCorner";
+        public const string DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME = "YLLCorner";
+        public const string DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME = "CellSize";
+        public const string DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME = "CellSizeUnits";
+        public const string DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME = "CellArea";
+        public const string DATASHEET_SPPICF_CELL_AREA_OVERRIDE_COLUMN_NAME = "CellAreaOverride";
+        public const string DATASHEET_SPPICF_SRS_COLUMN_NAME = "SRS";
+
+        //Multi-Resolution - Transition Group Resolution
+        public const string DATASHEET_TRG_NAME = "stsim_TransitionGroupResolution";
+        public const string DATASHEET_TRG_TGID_COLUMN_NAME = "TransitionGroupID";
+        public const string DATASHEET_TRG_RESOLUTION_COLUMN_NAME = "Resolution";
+        public const string DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME = "FFBThresholdProportion";
+
         //Output Stratum Amount
         public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim_OutputStratum";
 
@@ -622,5 +660,11 @@ namespace SyncroSim.STSim
 
         //Core constant for the multiprocessing partial library
         public const string CORE_MP_JOB_FILE_PREFIX = "Job";
+
+        //Multi-Resolution Messages
+        public const string ERROR_STSIM_TRANSFORMER_NOT_FOUND = "ST-Sim Transformer not found.  Fatal error!";
+        public const string ERROR_RASTERS_TOO_SMALL = "The multi-resolution rasters are smaller than the ST-Sim rasters.";
+        public const string ERROR_RASTERS_WRONG_PROPORTION = "The multi-resolution raster dimensions are not evenly divisible by those of the ST-Sim raster.";
+        public const string ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS = "No Initial Conditions Spatial values have been defined.  Cannot continue.";
     }
 }

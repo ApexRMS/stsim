@@ -704,6 +704,13 @@
 		<column name="SplitBySecondaryStrata" dataType="Boolean" displayName="Split by Secondary Strata"/>
 	</dataSheet>
 
+	<dataSheet name="TransitionGroupResolution" displayName="Transition Group Resolution">
+		<column name="TransitionGroupID" displayName="Transition Group" dataType="Integer" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+		<column name="Resolution" dataType="Integer" validationType="List" formula1="0:Base-Only|1:Base-Forces-Fine|2:Fine-Only|3:Fine-Forces-Base" allowDbNull="False"/>
+		<column name="FFBThresholdProportion" displayName="Fine-Forces-Base Threshold Proportion" dataType="Double" validationType="Decimal" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+		<validation validationType="Unique" columns="TransitionGroupID"/>
+	</dataSheet>
+
 	<dataSheet name="StockLimit" displayName="Stock Limits" hasIteration="True" hasTimestep="True">
 		<column name="StockTypeId" dataType="Integer" displayName="Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False"/>
 		<column name="StratumId" dataType="Integer" displayName="Primary Stratum" validationType="Datasheet" formula1="stsim_Stratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="PrimaryStratumLabel"/>
@@ -1163,7 +1170,9 @@
 		<dataSheet name="TransitionPathwayAutoCorrelation" type="Input"/>
 		<dataSheet name="DistributionValue" type="Input"/>
 		<dataSheet name="Multiprocessing" type="Input"/>
-		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>		
+		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>
+		<dataSheet name="InitialConditionsFineSpatial" type="Input"/>
+		<dataSheet name="TransitionGroupResolution" type="Input"/>
 		<dataSheet name="StockLimit" type="Input"/>
 		<dataSheet name="FlowOrder" type="Input"/>
 		<dataSheet name="FlowOrderOptions" type="Input"/>
@@ -1215,6 +1224,14 @@
 		name="StockFlow"
 		displayName="Stocks and Flows"
 		className="SyncroSim.STSim.StockFlowTransformer"
+		classAssembly="SyncroSim.STSim"
+		isPipeline="False">
+	</transformer>
+
+	<transformer
+		name="Resolution"
+		displayName="Multi-Resolution"
+		className="SyncroSim.STSim.ResolutionTransformer"
 		classAssembly="SyncroSim.STSim"
 		isPipeline="False">
 	</transformer>
@@ -1334,6 +1351,10 @@
 			</group>
 			<item name="DistributionValue"/>
 			<item name="Multiprocessing"/>
+			<group name="MultiResolution" displayName="Multi Resolution">
+				<item name="InitialConditionsFineSpatial"/>
+				<item name="TransitionGroupResolution"/>
+			</group>
 		</group>
 	</layout>
 

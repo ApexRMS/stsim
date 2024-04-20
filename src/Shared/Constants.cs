@@ -145,49 +145,5 @@ namespace SyncroSim.STSim
         public static Color DIAGRAM_SHAPE_BACKGROUND_COLOR = Color.FromArgb(255, 240, 240, 240);
         public static Color DIAGRAM_FLOW_PATHWAY_LINE_COLOR = Color.CornflowerBlue;
         public static Font DIAGRAM_SHAPE_NORMAL_FONT = new Font("Segoe UI", 9.0F, FontStyle.Regular);
-
-        //Multi-Resolution - General
-        public const string STSIM_TRANSFORMER_NAME = "stsim_Runtime";
-        public const string STSIM_CONTROLLER_TRANSFORMER_NAME = "stsimresolution_Controller";
-        public const string DATASHEET_STSIM_RUN_CONTROL_NAME = "stsim_RunControl";
-        public const string DATASHEET_STSIM_TERMINOLOGY_NAME = "stsim_Terminology";
-        public const string DATASHEET_STSIM_RUN_CONTROL_IS_SPATIAL_COLUMN_NAME = "isSpatial";
-        public const string DATASHEET_STSIM_SPIC_NAME = "stsim_InitialConditionsSpatial";
-        public const string APPEND_TITLE = " (High-Resolution)";
-        public const string FINALIZING_DATA = "Finalizing high-resolution data.";
-
-        //Multi-Resolution - Initial Conditions
-        public const string DATASHEET_SPIC_NAME = "stsimresolution_InitialConditionsSpatial";
-        public const string DATASHEET_SPIC_ITERATION_COLUMN_NAME = "Iteration";
-        public const string DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
-        public const string DATASHEET_SPIC_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
-        public const string DATASHEET_SPIC_TERTIARY_STRATUM_FILE_COLUMN_NAME = "TertiaryStratumFileName";
-        public const string DATASHEET_SPIC_STATE_CLASS_FILE_COLUMN_NAME = "StateClassFileName";
-        public const string DATASHEET_SPIC_AGE_FILE_COLUMN_NAME = "AgeFileName";
-
-        //Multi-Resolution - Spatial Initial Conditions Properties
-        public const string DATASHEET_STSIM_SPPIC_NAME = "stsim_InitialConditionsSpatialProperties";
-        public const string DATASHEET_STSIM_SPPIC_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
-        public const string DATASHEET_STSIM_SPPIC_NUM_ROWS_COLUMN_NAME = "NumRows";
-        public const string DATASHEET_STSIM_SPPIC_NUM_CELLS_COLUMN_NAME = "NumCells";
-        public const string DATASHEET_STSIM_SPPIC_XLLCORNER_COLUMN_NAME = "XLLCorner";
-        public const string DATASHEET_STSIM_SPPIC_YLLCORNER_COLUMN_NAME = "YLLCorner";
-        public const string DATASHEET_STSIM_SPPIC_CELL_SIZE_COLUMN_NAME = "CellSize";
-        public const string DATASHEET_STSIM_SPPIC_CELL_SIZE_UNITS_COLUMN_NAME = "CellSizeUnits";
-        public const string DATASHEET_STSIM_SPPIC_CELL_AREA_COLUMN_NAME = "CellArea";
-        public const string DATASHEET_STSIM_SPPIC_CELL_AREA_OVERRIDE_COLUMN_NAME = "CellAreaOverride";
-        public const string DATASHEET_STSIM_SPPIC_SRS_COLUMN_NAME = "SRS";
-
-        //Multi-Resolution - Transition Group Resolution
-        public const string DATASHEET_TRG_NAME = "stsimresolution_TransitionGroupResolution";
-        public const string DATASHEET_TRG_TGID_COLUMN_NAME = "TransitionGroupID";
-        public const string DATASHEET_TRG_RESOLUTION_COLUMN_NAME = "Resolution";
-        public const string DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME = "FFBThresholdProportion";
-
-        //Multi-Resolution - Messages
-        public const string ERROR_STSIM_TRANSFORMER_NOT_FOUND = "ST-Sim Transformer not found.  Fatal error!";
-        public const string ERROR_RASTERS_TOO_SMALL = "The multi-resolution rasters are smaller than the ST-Sim rasters.";
-        public const string ERROR_RASTERS_WRONG_PROPORTION = "The multi-resolution raster dimensions are not evenly divisible by those of the ST-Sim raster.";
-        public const string ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS = "No Initial Conditions Spatial values have been defined.  Cannot continue.";
     }
 }

@@ -59,13 +59,13 @@ namespace SyncroSim.STSim
                 this.m_STSimTransformer.ApplySpatialTransitionGroup += OnSTSimApplySpatialTransitionGroup;
                 this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
 
-                DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Constants.DATASHEET_STSIM_SPPIC_NAME);
-                DataSheet STSimICS = this.ResultScenario.GetDataSheet(Constants.DATASHEET_STSIM_SPIC_NAME);
-                InitialConditionsSpatialCollection STSimColl = CreateSPICCollection(this.ResultScenario, Constants.DATASHEET_STSIM_SPIC_NAME);
+                DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
+                DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
+                InitialConditionsSpatialCollection STSimColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
                 InitialConditionsSpatial RefSTSimColl = STSimColl.First();
-                InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(this.ResultScenario, Constants.DATASHEET_SPIC_NAME);
+                InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
                 InitialConditionsSpatial RefMultiResColl = MultiResColl.First();
-                DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Constants.DATASHEET_SPIC_NAME);
+                DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
                 this.m_MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false);
                 this.m_STSimFilename = Spatial.GetSpatialDataFileName(STSimICS, RefSTSimColl.PrimaryStratumFileName, false);
@@ -206,6 +206,8 @@ namespace SyncroSim.STSim
                     // find the fine cells within e.SimulationCell
                 }
             }
+
+            OnApplySpatialTransition(e.Iteration, e.Timestep, e.TransitionGroup, e.SimulationCell);
         }
 
         private void OnSTSimApplySpatialTransitionGroup(object sender, SpatialTransitionGroupEventArgs e)
@@ -271,6 +273,8 @@ namespace SyncroSim.STSim
                     e.Cancel = true;
                 }
             }
+            
+            OnSpatialTransitionGroup(sender, e);
         }
     }
 }

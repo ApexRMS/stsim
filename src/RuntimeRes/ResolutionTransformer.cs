@@ -59,16 +59,16 @@ namespace SyncroSim.STSim
                 this.m_STSimTransformer.ApplySpatialTransitionGroup += OnSTSimApplySpatialTransitionGroup;
                 this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
 
-                DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
-                DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
-                InitialConditionsSpatialCollection STSimColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-                InitialConditionsSpatial RefSTSimColl = STSimColl.First();
-                InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-                InitialConditionsSpatial RefMultiResColl = MultiResColl.First();
+                DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+                DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+                //InitialConditionsSpatialCollection STSimColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPIC_NAME);
+                //InitialConditionsSpatial RefSTSimColl = STSimColl.First();
+                InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
+                InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
                 DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
                 this.m_MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false);
-                this.m_STSimFilename = Spatial.GetSpatialDataFileName(STSimICS, RefSTSimColl.PrimaryStratumFileName, false);
+                this.m_STSimFilename = Spatial.GetSpatialDataFileName(STSimICS, m_STSimTransformer.InputRasters.PrimaryStratumRaster.FileName, false);
                 SyncroSimRaster MRRaster = new SyncroSimRaster(this.m_MultiResFilename, RasterDataType.DTInteger);
                 SyncroSimRaster STSimRaster = new SyncroSimRaster(this.m_STSimFilename, RasterDataType.DTInteger);
 

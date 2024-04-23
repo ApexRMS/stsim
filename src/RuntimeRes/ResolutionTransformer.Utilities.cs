@@ -30,7 +30,7 @@ namespace SyncroSim.STSim
 			}
 
 			//If there are no initial conditions rasters we can't do anything
-			InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(resultScenario, Strings.DATASHEET_SPICF_NAME);
+			InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(resultScenario, Strings.DATASHEET_SPICF_NAME);
 			InitialConditionsFineSpatialMap MultiResMap = new InitialConditionsFineSpatialMap(MultiResColl);
 
 			if (MultiResMap.AllItems.Count == 0)
@@ -53,9 +53,9 @@ namespace SyncroSim.STSim
 			}
 		}
 
-		public static InitialConditionsSpatialCollection CreateSPICCollection(Scenario resultScenario, string datasheetName)
+		public static InitialConditionsFineSpatialCollection CreateSPICFCollection(Scenario resultScenario, string datasheetName)
 		{
-			InitialConditionsSpatialCollection c = new InitialConditionsSpatialCollection();
+			InitialConditionsFineSpatialCollection c = new InitialConditionsFineSpatialCollection();
 			DataSheet ds = resultScenario.GetDataSheet(datasheetName);
 
 			foreach (DataRow dr in ds.GetData().Rows)
@@ -78,7 +78,7 @@ namespace SyncroSim.STSim
 				StateClassName = dr[Strings.DATASHEET_SPICF_STATE_CLASS_FILE_COLUMN_NAME].ToString();
 				AgeName = dr[Strings.DATASHEET_SPICF_AGE_FILE_COLUMN_NAME].ToString();
 
-				InitialConditionsSpatial InitialStateRecord = new InitialConditionsSpatial(
+				InitialConditionsFineSpatial InitialStateRecord = new InitialConditionsFineSpatial(
 					Iteration, PrimaryStratumName, SecondaryStratumName, TertiaryStratumName, StateClassName, AgeName);
 
 				c.Add(InitialStateRecord);

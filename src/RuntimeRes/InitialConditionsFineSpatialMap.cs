@@ -8,10 +8,10 @@ namespace SyncroSim.STSim
 {
     internal class InitialConditionsFineSpatialMap
     {
-        private List<InitialConditionsSpatial> m_AllItems = new List<InitialConditionsSpatial>();
-        private SortedKeyMap1<InitialConditionsSpatial> m_Map = new SortedKeyMap1<InitialConditionsSpatial>(SearchMode.ExactPrev);
+        private List<InitialConditionsFineSpatial> m_AllItems = new List<InitialConditionsFineSpatial>();
+        private SortedKeyMap1<InitialConditionsFineSpatial> m_Map = new SortedKeyMap1<InitialConditionsFineSpatial>(SearchMode.ExactPrev);
 
-        public List<InitialConditionsSpatial> AllItems
+        public List<InitialConditionsFineSpatial> AllItems
         {
             get
             {
@@ -19,28 +19,28 @@ namespace SyncroSim.STSim
             }
         }
 
-        public InitialConditionsFineSpatialMap(InitialConditionsSpatialCollection ics)
+        public InitialConditionsFineSpatialMap(InitialConditionsFineSpatialCollection ics)
         {
-            foreach (InitialConditionsSpatial t in ics)
+            foreach (InitialConditionsFineSpatial t in ics)
             {
                 this.AddICS(t);
             }
         }
 
-        private void AddICS(InitialConditionsSpatial ics)
+        private void AddICS(InitialConditionsFineSpatial ics)
         {
             this.m_Map.AddItem(ics.Iteration, ics);
             this.m_AllItems.Add(ics);
         }
 
-        public InitialConditionsSpatial GetICS(int? iteration)
+        public InitialConditionsFineSpatial GetICS(int? iteration)
         {
             if (this.m_AllItems.Count == 0)
             {
                 return null;
             }
 
-            InitialConditionsSpatial l = this.m_Map.GetItem(iteration);
+            InitialConditionsFineSpatial l = this.m_Map.GetItem(iteration);
             return l;
         }
     }

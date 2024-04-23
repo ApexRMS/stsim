@@ -8,10 +8,10 @@ namespace SyncroSim.STSim
 {
     internal partial class ResolutionTransformer
     {
-        private InitialConditionsSpatialMap m_SPICMapMultiRes;
-        private InitialConditionsSpatialCollection m_SPICValuesMultiRes;
-        private InitialConditionsSpatialMap m_SPICMapSTSim;
-        private InitialConditionsSpatialCollection m_SPICValuesSTSim;
+        private InitialConditionsFineSpatialMap m_SPICMapMultiRes;
+        private InitialConditionsFineSpatialCollection m_SPICValuesMultiRes;
+        //private InitialConditionsSpatialMap m_SPICMapSTSim;
+        //private InitialConditionsSpatialCollection m_SPICValuesSTSim;
         private Dictionary<int, CellCollection> m_BaseForcesFineCells;
         private Dictionary<int, CellCollection> m_FineForcesBaseCells;
         private Dictionary<(int, int), Transition> m_FineTransitionDictionary; // composite key: fineCellId, transitionGroupId
@@ -51,33 +51,33 @@ namespace SyncroSim.STSim
 
         private void AuxillarySetup()
         {
-            this.m_SPICValuesSTSim = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-            this.m_SPICMapSTSim = new InitialConditionsSpatialMap(this.m_SPICValuesSTSim);
-            this.m_SPICValuesMultiRes = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-            this.m_SPICMapMultiRes = new InitialConditionsSpatialMap(this.m_SPICValuesMultiRes);
+            //this.m_SPICValuesSTSim = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPIC_NAME);
+            //this.m_SPICMapSTSim = new InitialConditionsSpatialMap(this.m_SPICValuesSTSim);
+            this.m_SPICValuesMultiRes = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
+            this.m_SPICMapMultiRes = new InitialConditionsFineSpatialMap(this.m_SPICValuesMultiRes);
             this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
             this.m_BaseForcesFineCells = new Dictionary<int, CellCollection>();
             this.m_FineForcesBaseCells = new Dictionary<int, CellCollection>();
             this.m_FineTransitionDictionary = new Dictionary<(int, int), Transition>();
             this.m_BaseTransitionDictionary = new Dictionary<(int, int), Transition>();
 
-            DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
-            InitialConditionsSpatialCollection MultiResColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-            InitialConditionsSpatial RefMultiResColl = MultiResColl.First();
+            DataSheet FineSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
+            InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
+            InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
             DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
             //QUESTION FOR KATIE: How do we rectify this in Syncrosim 3? Are we using stochastic time?
             string MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false); //breaks if input DNE
             SyncroSimRaster MRRaster = new SyncroSimRaster(MultiResFilename, RasterDataType.DTInteger);
 
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_SRS_COLUMN_NAME, MRRaster.Projection);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_SRS_COLUMN_NAME, MRRaster.Projection);
 
             // Calculate cell area
             double cellArea = Math.Pow(MRRaster.CellSize, 2);
@@ -86,7 +86,7 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetAmountLabelTerminology(
                 this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
             double cellAreaTU = InitialConditionsFineSpatialRasterDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
-            STSimSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
+            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
 
             // generate age raster here if it does not exist - see STSim.Transformer.Spatial line 2031
 
@@ -99,14 +99,14 @@ namespace SyncroSim.STSim
              * QUESTION FOR KATIE: these methods are marked as protected in STSimTransformer, so we can't call these methods on this.STSimTransformer,
              * but we also probably shouldn't break Alex's access patterns.
              */
-            //this.OnBeforeIteration(iteration);
-            //this.OnIteration(iteration);
+            m_STSimTransformer.OnBeforeIteration(iteration);
+            m_STSimTransformer.OnIteration(iteration);
         }
 
         public void PerformTimestep(int iteration, int timestep)
         {
-            //this.OnBeforeTimestep(iteration, timestep);
-            //this.OnTimestep(iteration, timestep);
+            m_STSimTransformer.OnBeforeTimestep(iteration, timestep);
+            m_STSimTransformer.OnTimestep(iteration, timestep);
         }
 
         public void EndModelRun()

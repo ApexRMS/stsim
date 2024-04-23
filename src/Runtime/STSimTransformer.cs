@@ -367,7 +367,6 @@ namespace SyncroSim.STSim
             this.ConfigureTimestepUnits();
             this.ConfigureIsSpatialRunFlag();
             this.ConfigureTimestepsAndIterations();
-            this.InitializeMultiResolution();
             this.ConfigureInitialConditionsSpatialDatasheets();
 
             if (this.IsSpatial)
@@ -376,6 +375,7 @@ namespace SyncroSim.STSim
                 this.FillInitialConditionsSpatialCollectionAndMap();
                 this.FillInitialTSTSpatialCollectionAndMap();
                 this.InitializeRasterData(this.MinimumIteration);
+                this.InitializeMultiResolution();
             }
             else
             {

@@ -687,7 +687,7 @@ namespace SyncroSim.STSim
         {
             this.m_InitialConditionsSpatialValues.Clear();
 
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
 
             if (ds.GetData().Rows.Count == 0)
             {
@@ -2710,7 +2710,7 @@ namespace SyncroSim.STSim
 
         private double GetCellSizeSafe()
         {
-            DataRow SpatialICPropsRow = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+            DataRow SpatialICPropsRow = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet).GetDataRow();
 
             if (SpatialICPropsRow == null || SpatialICPropsRow[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] == DBNull.Value)
             {

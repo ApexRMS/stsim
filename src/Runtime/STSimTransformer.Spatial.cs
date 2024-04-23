@@ -1480,7 +1480,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void CreateSpatialICFromCombinedIC()
         {
-            DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet dsIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
 
             // Get a list of the Iterations that are defined in the InitialConditionsSpatials
             var lstIterations = this.m_InitialConditionsSpatialValues.GetSortedIterationList();
@@ -1762,7 +1762,7 @@ namespace SyncroSim.STSim
             // We want a square raster thats just big enough to accomodate the number of cells specified by user
             int numRasterCells = Convert.ToInt32(System.Math.Pow(Math.Ceiling(Math.Sqrt(numberOfCells)), 2));
 
-            DataSheet dsSpicProp = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet dsSpicProp = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet);
             DataRow drSpIcProp = dsSpicProp.GetDataRow();
 
             if (drSpIcProp == null)
@@ -1844,7 +1844,7 @@ namespace SyncroSim.STSim
                 iterVal = iteration.Value;
             }
          
-            DataSheet dsSpIcProp = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet dsSpIcProp = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet);
             DataRow drProp = dsSpIcProp.GetDataRow();
 
             int Width = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME], CultureInfo.InvariantCulture);
@@ -1875,7 +1875,7 @@ namespace SyncroSim.STSim
 
             // We also need to get the datarow for this InitialConditionSpatial
             string filter = null;
-            DataSheet dsSpatialIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet dsSpatialIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             DataRow drICS = null;
 
             if ((iteration == null))
@@ -2304,7 +2304,7 @@ namespace SyncroSim.STSim
             string Message = null;
 
             // Now import the rasters, if they are configured in the RasterInitialCondition 
-            DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet dsIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             InitialConditionsSpatial ics = this.m_InitialConditionsSpatialMap.GetICS(iteration);
 
             if (ics == null)
@@ -2848,7 +2848,7 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        private static string CreatePrimaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreatePrimaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-Stratum.tif
             string f = string.Format(
@@ -2858,11 +2858,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_STRATUM_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateSecondaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateSecondaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-secstr.tif
             string f = string.Format(
@@ -2871,11 +2871,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateTertiaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateTertiaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-terstr.tif
             string f = string.Format(
@@ -2884,11 +2884,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateStateClassInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateStateClassInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-sc.tif
             string f = string.Format(
@@ -2897,11 +2897,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateAgeInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateAgeInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-Age.tif
             string f = string.Format(
@@ -2911,7 +2911,7 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_AGE_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 

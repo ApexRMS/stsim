@@ -11,6 +11,7 @@ namespace SyncroSim.STSim
     partial class ResolutionTransformer : Transformer
     {
         private STSimTransformer m_STSimTransformer;
+        private STSimTransformer m_STSimFineTransformer;
         private TransitionGroupResolutionCollection m_ResolutionGroups;
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
         private string m_MultiResFilename;
@@ -32,6 +33,24 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_STSimTransformer = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the ST-Sim Transformer
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public STSimTransformer STSimFineTransformer
+        {
+            get
+            {
+                return this.m_STSimFineTransformer;
+            }
+            set
+            {
+                this.m_STSimFineTransformer = value;
             }
         }
 
@@ -58,6 +77,9 @@ namespace SyncroSim.STSim
                 this.m_STSimTransformer.ApplySpatialTransition += OnSTSimApplySpatialTransition;
                 this.m_STSimTransformer.ApplySpatialTransitionGroup += OnSTSimApplySpatialTransitionGroup;
                 this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
+
+                // This transformer is a multiresolution run
+                //this.m_STSimFineTransformer.IsMultiResolution = true;
 
                 DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
                 DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);

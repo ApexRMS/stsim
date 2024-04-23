@@ -99,14 +99,14 @@ namespace SyncroSim.STSim
              * QUESTION FOR KATIE: these methods are marked as protected in STSimTransformer, so we can't call these methods on this.STSimTransformer,
              * but we also probably shouldn't break Alex's access patterns.
              */
-            m_STSimTransformer.OnBeforeIteration(iteration);
-            m_STSimTransformer.OnIteration(iteration);
+            //m_STSimTransformer.OnBeforeIteration(iteration);
+            //m_STSimTransformer.OnIteration(iteration);
         }
 
         public void PerformTimestep(int iteration, int timestep)
         {
-            m_STSimTransformer.OnBeforeTimestep(iteration, timestep);
-            m_STSimTransformer.OnTimestep(iteration, timestep);
+            //m_STSimTransformer.OnBeforeTimestep(iteration, timestep);
+            //m_STSimTransformer.OnTimestep(iteration, timestep);
         }
 
         public void EndModelRun()

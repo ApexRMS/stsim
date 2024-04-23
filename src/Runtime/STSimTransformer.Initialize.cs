@@ -93,6 +93,9 @@ namespace SyncroSim.STSim
                     "stsim_Resolution", this.Scenario, this.ResultScenario);
 
                 this.m_ResolutionTransformer.STSimTransformer = this;
+                this.m_ResolutionTransformer.STSimFineTransformer = (STSimTransformer)this.Library.CreateTransformer(
+                    "stsim_Main", this.Scenario, this.ResultScenario);
+                this.m_ResolutionTransformer.STSimFineTransformer.m_IsMultiResolution = true;
             }
 
             this.m_ResolutionTransformer.Initialize();
@@ -126,6 +129,12 @@ namespace SyncroSim.STSim
                 "stsim_Resolution", this.Scenario, this.ResultScenario);
 
             this.m_ResolutionTransformer.STSimTransformer = this;
+
+            this.m_ResolutionTransformer.STSimFineTransformer = (STSimTransformer)this.Library.CreateTransformer(
+                "stsim_Main", this.Scenario, this.ResultScenario);
+
+            this.m_ResolutionTransformer.STSimFineTransformer.m_IsMultiResolution = true;
+
             this.m_ResolutionTransformer.Configure();
         }
 
@@ -149,6 +158,26 @@ namespace SyncroSim.STSim
             if (dr != null)
             {
                 this.m_IsSpatial = DataTableUtilities.GetDataBool(dr[Strings.RUN_CONTROL_IS_SPATIAL_COLUMN_NAME]);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the initial conditions spatial datasheet name
+        /// (depends on whether the transformer is for a base resolution or
+        /// fine resolution run)
+        /// </summary>
+        /// <remarks></remarks>
+        private void ConfigureInitialConditionsSpatialDatasheets()
+        {
+            if (this.m_IsMultiResolution)
+            {
+                this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPICF_NAME;
+                this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPICF_NAME;
+            } 
+            else
+            {
+                this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPIC_NAME;
+                this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPIC_NAME;
             }
         }
 
@@ -227,7 +256,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                DataRow drics = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+                DataRow drics = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet).GetDataRow();
                 double cellAreaTU = DataTableUtilities.GetDataDbl(drics[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
 
                 if (cellAreaTU.Equals(0))
@@ -236,7 +265,7 @@ namespace SyncroSim.STSim
                 }
 
                 this.m_TotalAmount = cellAreaTU * this.m_Cells.Count;
-                DataRow drISC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+                DataRow drISC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet).GetDataRow();
 
                 //Save the Number of Cells count, now that we have a potentially more accurate value than at config time.
 

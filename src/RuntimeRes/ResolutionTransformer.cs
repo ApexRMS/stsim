@@ -8,22 +8,15 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    partial class ResolutionTransformer : Transformer
+    partial class ResolutionTransformer : STSimTransformer
     {
         private STSimTransformer m_STSimTransformer;
-        private STSimTransformer m_STSimFineTransformer;
         private TransitionGroupResolutionCollection m_ResolutionGroups;
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
         private string m_MultiResFilename;
         private string m_STSimFilename;
         private bool m_CanDoMultiResolution;
 
-        /// <summary>
-        /// Gets or sets the ST-Sim Transformer
-        /// </summary>
-        /// <value></value>
-        /// <returns></returns>
-        /// <remarks></remarks>
         public STSimTransformer STSimTransformer
         {
             get
@@ -33,24 +26,6 @@ namespace SyncroSim.STSim
             set
             {
                 this.m_STSimTransformer = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the ST-Sim Transformer
-        /// </summary>
-        /// <value></value>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        public STSimTransformer STSimFineTransformer
-        {
-            get
-            {
-                return this.m_STSimFineTransformer;
-            }
-            set
-            {
-                this.m_STSimFineTransformer = value;
             }
         }
 
@@ -77,9 +52,6 @@ namespace SyncroSim.STSim
                 this.m_STSimTransformer.ApplySpatialTransition += OnSTSimApplySpatialTransition;
                 this.m_STSimTransformer.ApplySpatialTransitionGroup += OnSTSimApplySpatialTransitionGroup;
                 this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
-
-                // This transformer is a multiresolution run
-                //this.m_STSimFineTransformer.IsMultiResolution = true;
 
                 DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
                 DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
@@ -148,6 +120,7 @@ namespace SyncroSim.STSim
                     this.m_STSimTransformer.BeginModelRun -= OnSTSimBeginModelRun;
                     this.m_STSimTransformer.ModelRunComplete -= OnSTSimModelRunComplete;
                     this.m_STSimTransformer.ApplySpatialTransition -= OnSTSimApplySpatialTransition;
+                    this.m_STSimTransformer.ApplySpatialTransitionGroup -= OnSTSimApplySpatialTransitionGroup;
                 }
 
                 this.m_STSimTransformer = null;
@@ -228,8 +201,6 @@ namespace SyncroSim.STSim
                     // find the fine cells within e.SimulationCell
                 }
             }
-
-            OnApplySpatialTransition(e.Iteration, e.Timestep, e.TransitionGroup, e.SimulationCell);
         }
 
         private void OnSTSimApplySpatialTransitionGroup(object sender, SpatialTransitionGroupEventArgs e)
@@ -295,8 +266,6 @@ namespace SyncroSim.STSim
                     e.Cancel = true;
                 }
             }
-            
-            OnSpatialTransitionGroup(sender, e);
         }
     }
 }

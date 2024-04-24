@@ -79,7 +79,6 @@ namespace SyncroSim.STSim
             this.m_StockFlowTransformer.Initialize();
         }
 
-        //QUESTION FOR KATIE: Do we need this? Making a guess since I can see that "InitializeStocksAndFlows" is called in "STSimTransformer.InternalInitialize"
         private void InitializeMultiResolution()
         {
             //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
@@ -93,9 +92,8 @@ namespace SyncroSim.STSim
                     "stsim_Resolution", this.Scenario, this.ResultScenario);
 
                 this.m_ResolutionTransformer.STSimTransformer = this;
-                this.m_ResolutionTransformer.STSimFineTransformer = (STSimTransformer)this.Library.CreateTransformer(
-                    "stsim_Main", this.Scenario, this.ResultScenario);
-                this.m_ResolutionTransformer.STSimFineTransformer.m_IsMultiResolution = true;
+                this.m_ResolutionTransformer.m_IsMultiResolution = true;
+                this.m_IsMultiResolution = false;
             }
 
             this.m_ResolutionTransformer.Initialize();
@@ -116,7 +114,6 @@ namespace SyncroSim.STSim
             this.m_StockFlowTransformer.Configure();
         }
 
-        //QUESTION FOR KATIE: Do we need this? Making a guess since I can see that "ConfigureStocksAndFlows" is called in "STSimTransformer.InternalConfigure"
         private void ConfigureMultiResolution()
         {
             //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
@@ -130,10 +127,8 @@ namespace SyncroSim.STSim
 
             this.m_ResolutionTransformer.STSimTransformer = this;
 
-            this.m_ResolutionTransformer.STSimFineTransformer = (STSimTransformer)this.Library.CreateTransformer(
-                "stsim_Main", this.Scenario, this.ResultScenario);
-
-            this.m_ResolutionTransformer.STSimFineTransformer.m_IsMultiResolution = true;
+            this.m_ResolutionTransformer.m_IsMultiResolution = true;
+            this.m_IsMultiResolution = false;
 
             this.m_ResolutionTransformer.Configure();
         }

@@ -56,7 +56,6 @@ namespace SyncroSim.STSim
         private TSTTransitionGroupCollection m_TSTTransitionGroups = new TSTTransitionGroupCollection();
         private TSTRandomizeCollection m_TSTRandomizeRecords = new TSTRandomizeCollection();
         private InputRasters m_InputRasters = new InputRasters();
-        private InputRasters m_FineInputRasters = new InputRasters();
         private Dictionary<int, bool> m_TransitionAttributeTypesWithTarget = new Dictionary<int, bool>();
         private OutputFilterTransitionGroupCollection m_OutputFilterTransitionGroups = new OutputFilterTransitionGroupCollection();
         private OutputFilterAttributeCollection m_OutputFilterStateAttributes = new OutputFilterAttributeCollection();

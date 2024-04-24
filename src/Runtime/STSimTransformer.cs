@@ -342,7 +342,6 @@ namespace SyncroSim.STSim
             base.Configure();
 
             this.ConfigureIsSpatialRunFlag();
-            this.ConfigureMultiResolution();
             this.ConfigureInitialConditionsSpatialDatasheets();
             this.ConfigureTimestepUnits();
             this.NormalizeRunControl();
@@ -358,6 +357,11 @@ namespace SyncroSim.STSim
             }
 
             this.ConfigureStocksAndFlows();
+
+            if (this.IsSpatial && !this.m_IsMultiResolution)
+            {
+                this.ConfigureMultiResolution();
+            }
         }
 
         private void InternalInitialize()
@@ -375,7 +379,6 @@ namespace SyncroSim.STSim
                 this.FillInitialConditionsSpatialCollectionAndMap();
                 this.FillInitialTSTSpatialCollectionAndMap();
                 this.InitializeRasterData(this.MinimumIteration);
-                this.InitializeMultiResolution();
             }
             else
             {
@@ -395,6 +398,11 @@ namespace SyncroSim.STSim
             this.InitializeOutputDataTables();
             this.InitializeModel();
             this.InitializeStocksAndFlows();
+
+            if(this.IsSpatial && !this.m_IsMultiResolution)
+            {
+                this.InitializeMultiResolution();
+            }
         }
 
         private void InternalTransform()

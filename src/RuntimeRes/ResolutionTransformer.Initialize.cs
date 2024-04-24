@@ -66,7 +66,6 @@ namespace SyncroSim.STSim
             InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
             DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
-            //QUESTION FOR KATIE: How do we rectify this in Syncrosim 3? Are we using stochastic time?
             string MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false); //breaks if input DNE
             SyncroSimRaster MRRaster = new SyncroSimRaster(MultiResFilename, RasterDataType.DTInteger);
 
@@ -89,29 +88,23 @@ namespace SyncroSim.STSim
             FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
 
             // generate age raster here if it does not exist - see STSim.Transformer.Spatial line 2031
-
-            base.Initialize();
         }
 
-        public void PerformIteration(int iteration)
+        protected void PerformIteration(int iteration)
         {
-            /*
-             * QUESTION FOR KATIE: these methods are marked as protected in STSimTransformer, so we can't call these methods on this.STSimTransformer,
-             * but we also probably shouldn't break Alex's access patterns.
-             */
-            //m_STSimTransformer.OnBeforeIteration(iteration);
-            //m_STSimTransformer.OnIteration(iteration);
+            this.OnBeforeIteration(iteration);
+            this.OnIteration(iteration);
         }
 
         public void PerformTimestep(int iteration, int timestep)
         {
-            //m_STSimTransformer.OnBeforeTimestep(iteration, timestep);
-            //m_STSimTransformer.OnTimestep(iteration, timestep);
+            this.OnBeforeTimestep(iteration, timestep);
+            this.OnTimestep(iteration, timestep);
         }
 
         public void EndModelRun()
         {
-            //this.WriteSpatialAveragingRasters();
+            this.WriteSpatialAveragingRasters();
         }
 
         internal void ValidateGroups(int transitionGroupId)
@@ -156,8 +149,10 @@ namespace SyncroSim.STSim
             }
         }
 
-        protected void OnSpatialTransitionGroup(object sender, SpatialTransitionGroupEventArgs e)
+        protected override void OnSpatialTransitionGroup(object sender, SpatialTransitionGroupEventArgs e)
         {
+            base.OnSpatialTransitionGroup(sender, e);
+            
             this.ValidateGroups(e.TransitionGroup.TransitionGroupId);
 
             if (this.m_ResolutionGroups.Contains(e.TransitionGroup.TransitionGroupId))
@@ -188,8 +183,10 @@ namespace SyncroSim.STSim
             }
         }
 
-        protected void OnApplySpatialTransition(int iteration, int timestep, TransitionGroup tg, Cell simulationCell)
+        protected override void OnApplySpatialTransition(int iteration, int timestep, TransitionGroup tg, Cell simulationCell)
         {
+            base.OnApplySpatialTransition(iteration, timestep, tg, simulationCell);
+            
             if (this.m_ResolutionGroups.Contains(tg.TransitionGroupId))
             {
                 TransitionGroupResolution tgr = this.m_ResolutionGroups[tg.TransitionGroupId];

@@ -1146,6 +1146,7 @@
 		<dataSheet name="OutputFilterTransitionAttributes" type="Input"/>
 		<dataSheet name="OutputFilterStocks" type="Input"/>
 		<dataSheet name="OutputFilterFlows" type="Input"/>
+		<dataSheet name="TransitionOrder" type="Input"/>
 		<dataSheet name="TransitionTarget" type="Input"/>
 		<dataSheet name="TransitionTargetPrioritization" type="Input"/>
 		<dataSheet name="TransitionMultiplierValue" type="Input"/>

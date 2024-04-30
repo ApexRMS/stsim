@@ -642,12 +642,10 @@ namespace SyncroSim.STSim
         public const string NO_SUMMARY_OUTPUT_OPTIONS_INFORMATION = "No summary output options specified for stocks and flows.  Using defaults.";
         public const string REPORT_EXCEL_TOO_MANY_ROWS = "There are too many rows for Excel.  Please try another format for your report.";
         public const string SPATIAL_FILE_STOCK_LOAD_WARNING = "The Initial Stocks Raster file '{0}' did not load, and will be ignored.";
-        public const string SPATIAL_FILE_STOCK_ROW_COLUMN_MISMATCH = "The Initial Stocks Raster file '{0}' metadata did not match that of the Initial Condition Primary Stratum raster file. {1}.";
-        public const string SPATIAL_FILE_STOCK_METADATA_INFO = "The Initial Stocks Raster file '{0}' metadata did not match that of the Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
         public const string ERROR_NO_RESULT_SCENARIOS_FOR_REPORT = "There must be at least one selected result scenario to create this report.";
         public const string ERROR_FLOW_MULTIPLIERS_BETA_DISTRIBUTION_INVALID = "Flow Multipliers: The beta distribution parameters are invalid.  The multiplier will be used for all iterations.";
-        public const string SPATIAL_METADATA_ROW_COLUMN_MISMATCH = "The Flow Spatial Multiplier file '{0}' number of rows and/or columns did not match that of ST-Sim's Initial Condition Primary Stratum raster file.";
-        public const string SPATIAL_METADATA_INFO = "The Flow Spatial Multiplier file '{0}' metadata did not match that of ST-Sim's Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
+        public const string SPATIAL_METADATA_ROW_COLUMN_MISMATCH = "The input raster file '{0}' number of rows and/or columns did not match that of ST-Sim's Initial Condition Primary Stratum raster file.";
+        public const string SPATIAL_METADATA_INFO = "The input raster file '{0}' metadata did not match that of ST-Sim's Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
         public const string SPATIAL_PROCESS_WARNING = "The Flow Spatial Multiplier file '{0}' did not load, and will be ignored.";
 
         //Spatial Map file naming constants - Stock and Flow Group

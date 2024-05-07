@@ -175,7 +175,7 @@ namespace SyncroSim.STSim
                         if (this.m_FineTransitionDictionary.ContainsKey((simulationCell.CellId, e.TransitionGroup.TransitionGroupId)))
                         {
                             Transition forcedFineTransition = this.m_FineTransitionDictionary[(simulationCell.CellId, e.TransitionGroup.TransitionGroupId)];
-                            this.STSimTransformer.InvokeProbabilisticTransitionForCell(simulationCell, e.TransitionGroup, forcedFineTransition, e.Iteration, e.Timestep, e.TransitionedPixels, e.RasterTransitionAttrValues);
+                            this.InvokeProbabilisticTransitionForCell(simulationCell, e.TransitionGroup, forcedFineTransition, e.Iteration, e.Timestep, e.TransitionedPixels, e.RasterTransitionAttrValues);
                         }
                     }
                 }

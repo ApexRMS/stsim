@@ -395,6 +395,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME = "SecondaryStratumLabel";
         public const string DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME = "TertiaryStratumLabel";
 
+        // Resolution
+        public const string DATASHEET_RESOLUTION_NAME = "stsim_Resolution";
+
         //Output Options
         public const string DATASHEET_OO_TABULAR_NAME = "stsim_OutputOptions";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME = "SummaryOutputSC";

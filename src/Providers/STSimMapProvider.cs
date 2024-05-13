@@ -59,16 +59,27 @@ namespace SyncroSim.STSim
         {
             LayoutItem StateClassesGroup = new LayoutItem("stsim_StateClassesGroup", "State Classes", true);
             LayoutItem StateClassIterationItem = new LayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
+            LayoutItem StateClassIterationItemFineResolution = new LayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-0", "Iteration (Fine Resolution)", false);
             LayoutItem StateClassAvgGroup = new LayoutItem("stsim_StateClassAvgGroup", "Probability", true);
+            //LayoutItem StateClassAvgGroupFineResolution = new LayoutItem("stsim_StateClassAvgGroup", "Probability (Fine Resolution)", true);
 
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("titleOverride", "State Classes (Iteration)"));
 
+            StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
+            StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("column", "Filename"));
+            StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("filter", "ResolutionID"));
+            StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("itemId", "0"));
+            StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_RESOLUTION_NAME));
+            //StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
+            StateClassIterationItemFineResolution.Properties.Add(new MetaDataProperty("titleOverride", "State Classes (Iteration)"));
+
             AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items, store);
 
-            StateClassesGroup.Items.Add(StateClassIterationItem);
+            //StateClassesGroup.Items.Add(StateClassIterationItem);
+            StateClassesGroup.Items.Add(StateClassIterationItemFineResolution);
             StateClassesGroup.Items.Add(StateClassAvgGroup);
             layout.Items.Add(StateClassesGroup);
         }
@@ -508,6 +519,22 @@ namespace SyncroSim.STSim
         }
 
         private static List<Stratum> GetStrata(Project project, DataStore store)
+        {
+            List<Stratum> Strata = new List<Stratum>();
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+
+            foreach (DataRow dr in ds.GetData(store).Rows)
+            {
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+                Strata.Add(new Stratum(id, name));
+            }
+
+            return Strata;
+        }
+
+        private static List<Stratum> GetResolution(Project project, DataStore store)
         {
             List<Stratum> Strata = new List<Stratum>();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);

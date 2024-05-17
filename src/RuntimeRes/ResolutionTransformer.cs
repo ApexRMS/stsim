@@ -10,7 +10,7 @@ namespace SyncroSim.STSim
 {
     partial class ResolutionTransformer : STSimTransformer
     {
-        private STSimTransformer m_STSimTransformer;
+        private STSimTransformer m_STSimTransformer; // base ST-Sim transformer
         private TransitionGroupResolutionCollection m_ResolutionGroups;
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
         private string m_MultiResFilename;
@@ -175,14 +175,14 @@ namespace SyncroSim.STSim
                     foreach (int fineCellId in forcedFineCells)
                     {
                         // If fine cell is NA, then won't exist in collection of fine cells, so continue
-                        if (!this.m_STSimTransformer.Cells.Contains(fineCellId))
+                        if (!this.Cells.Contains(fineCellId))
                         {
                             continue;
                         }
 
-                        Cell fineCell = this.m_STSimTransformer.Cells[fineCellId];
-                        this.m_STSimTransformer.FillProbabilisticTransitionsForCell(fineCell, e.Iteration, e.Timestep);
-                        Transition forcedFineTransition = this.m_STSimTransformer.SelectTransitionPathway(fineCell, e.TransitionGroup.TransitionGroupId, e.Iteration, e.Timestep, true);
+                        Cell fineCell = this.Cells[fineCellId];
+                        this.FillProbabilisticTransitionsForCell(fineCell, e.Iteration, e.Timestep);
+                        Transition forcedFineTransition = this.SelectTransitionPathway(fineCell, e.TransitionGroup.TransitionGroupId, e.Iteration, e.Timestep, true);
 
                         if (forcedFineTransition != null)
                         {

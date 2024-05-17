@@ -630,71 +630,71 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("UPDATE core_Transformer SET Name='stsim_Main' WHERE Name='stsim_Primary'");
         }
 
-        [UpdateAttribute(4.1, "This update adds the new Resolution column to all spatial output datasheets, and sets its value to 0 for all rows.")]
+        [UpdateAttribute(4.1, "This update adds the new ResolutionId column to all spatial output datasheets, and sets its value to 0 for all rows.")]
         public static void Update_4_100(DataStore store)
         {
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialState ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialState SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialState ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialState SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAge ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAge SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAge ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAge SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStratum ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStratum SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStratum ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStratum SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransition ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransition SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransition ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransition SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransitionEvent ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransitionEvent SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransitionEvent ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransitionEvent SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTST ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTST SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTST ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTST SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStateAttribute ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStateAttribute SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStateAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStateAttribute SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransitionAttribute ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransitionAttribute SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransitionAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransitionAttribute SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStateClass ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStateClass SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStateClass ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStateClass SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageAge ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageAge SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageAge ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageAge SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStratum ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStratum SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStratum ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStratum SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionProbability ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionProbability SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionProbability ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionProbability SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTST ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTST SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTST ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTST SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStateAttribute ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStateAttribute SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStateAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStateAttribute SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionAttribute ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionAttribute SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionAttribute SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStockGroup ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStockGroup SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStockGroup SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialFlowGroup ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialFlowGroup SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialFlowGroup SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialStockGroup ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialStockGroup SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialStockGroup SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialFlowGroup ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialFlowGroup SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialFlowGroup SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageLateralFlowGroup ADD COLUMN Resolution INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputAverageLateralFlowGroup SET Resolution=0");
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputAverageLateralFlowGroup SET ResolutionId=0");
         }
     }
 }

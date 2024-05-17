@@ -75,7 +75,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME = "DistributionMax";
         public const string DATASHEET_SUMOFAMOUNT_COLUMN_NAME = "SumOfAmount";
         public const string DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename";
-        public const string DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN = "Resolution";
+        public const string DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN = "ResolutionId";
         public const string VALUE_MEMBER_COLUMN_NAME = "Value";
         public const string DISPLAY_MEMBER_COLUMN_NAME = "Display";
         public const string IS_AUTO_COLUMN_NAME = "IsAuto";

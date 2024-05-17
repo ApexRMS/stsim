@@ -958,102 +958,102 @@
 	<dataSheet name="OutputSpatialState" displayName="Spatial State" hasIteration="True" hasTimestep="True">
 		<column name="Filename" displayName="State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="sc"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAge" displayName="Spatial Age" hasIteration="True" hasTimestep="True">
 		<column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="age"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialStratum" displayName="Spatial Primary Stratum" hasIteration="True" hasTimestep="True">
 		<column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="str"/>
 		<column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialTransition" displayName="Spatial Transition" hasIteration="True" hasTimestep="True">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="tg"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialTransitionEvent" displayName="Spatial Transition Event" hasIteration="True" hasTimestep="True">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="tge"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialTST" displayName="Spatial TST" hasIteration="True" hasTimestep="True">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="tst"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialStateAttribute" displayName="Spatial State Attribute" hasIteration="True" hasTimestep="True">
 		<column name="StateAttributeTypeId" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
 		<column name="Filename" displayName="State Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeId" filenameCode="sa"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialTransitionAttribute" displayName="Spatial Transition Attribute" hasIteration="True" hasTimestep="True">
 		<column name="TransitionAttributeTypeId" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
 		<column name="Filename" displayName="Transition Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeId" filenameCode="ta"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageStateClass" displayName="Output State Class Probability" hasIteration="True" hasTimestep="True">
 		<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
 		<column name="Filename" displayName="State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateClassId" filenameCode="avgsc" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageAge" displayName="Output Average Age" hasIteration="True" hasTimestep="True">
 		<column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="avgage" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageStratum" displayName="Output Stratum Probability" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
 		<column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StratumId" filenameCode="avgstr"/>
 		<column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageTransitionProbability" displayName="Output Transition Probability" hasIteration="True" hasTimestep="True">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Transition Probability Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="avgtp" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageTST" displayName="Output Average TST" hasIteration="True" hasTimestep="True">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="avgtst"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageStateAttribute" displayName="Output Average State Attribute" hasIteration="True" hasTimestep="True">
 		<column name="StateAttributeTypeId" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
 		<column name="Filename" displayName="Average State Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeId" filenameCode="avgsa" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialAverageTransitionAttribute" displayName="Output Average Transition Attribute" hasIteration="True" hasTimestep="True">
 		<column name="TransitionAttributeTypeId" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
 		<column name="Filename" displayName="Average Transition Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeId" filenameCode="avgta" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputStock" displayName="Output Stock Group" hasIteration="True" hasTimestep="True" sumColumnNames="Amount">
@@ -1088,42 +1088,42 @@
 		<column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Stock Group Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StockGroupId" filenameCode="stkg"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputSpatialFlowGroup" displayName="Output Spatial Flow Group" hasIteration="True" hasTimestep="True">
 		<column name="FlowGroupId" dataType="Integer" displayName="Flow Type/Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Flow Group Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="FlowGroupId" filenameCode="flog"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputLateralFlowGroup" displayName="Output Lateral Flow Group" hasIteration="True" hasTimestep="True">
 		<column name="FlowGroupId" dataType="Integer" displayName="Flow Type/Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Flow Group Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="FlowGroupId" filenameCode="lflog"/>
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputAverageSpatialStockGroup" displayName="Output Average Spatial Stock Group" hasIteration="True" hasTimestep="True">
 		<column name="StockGroupId" dataType="Integer" displayName="Stock Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Average Spatial Stock Group Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StockGroupId" filenameCode="avgstkg" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputAverageSpatialFlowGroup" displayName="Output Average Spatial Flow Group" hasIteration="True" hasTimestep="True">
 		<column name="FlowGroupId" dataType="Integer" displayName="Flow Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Average Spatial Flow Group Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="FlowGroupId" filenameCode="avgflog" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<dataSheet name="OutputAverageLateralFlowGroup" displayName="Output Average Lateral Flow Group" hasIteration="True" hasTimestep="True">
 		<column name="FlowGroupId" dataType="Integer" displayName="Flow Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False"/>
 		<column name="Filename" displayName="Average Lateral Flow Group Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="FlowGroupId" filenameCode="avglflog" />
 		<column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-		<column name="ResolutionID" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+		<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 	</dataSheet>
 
 	<transformer name="StateClassSummaryReport" displayName="State Classes" isExport="True" className="SyncroSim.STSim.StateClassSummaryReport" classAssembly="SyncroSim.STSim"/>

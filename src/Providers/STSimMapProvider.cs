@@ -90,7 +90,7 @@ namespace SyncroSim.STSim
                 subsetFilter = "ResolutionId=0";
             }
 
-            LayoutItem StateClassIterationItem = new LayoutItem(varName, "Iteration", false);
+            LayoutItem StateClassIterationItem = new LayoutItem(varName, nodeName, false);
 
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
@@ -181,7 +181,7 @@ namespace SyncroSim.STSim
             if (fineRes)
             {
                 varName = Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME + "-1";
-                nodeName = "Average (Fine Resolution)"
+                nodeName = "Average (Fine Resolution)";
                 titleOverride = "Ages (Average Fine Resolution)";
                 subsetFilter = "ResolutionId=1";
             }
@@ -274,6 +274,7 @@ namespace SyncroSim.STSim
                 Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store);
 
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
+            if (TransitionsIterationGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroupFineRes); }
             if (TransitionsAvgTPGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroup); }
             if (TransitionsIterationEventsGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroup); }
             if (TransitionsTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsTSTGroup); }
@@ -423,7 +424,7 @@ namespace SyncroSim.STSim
             string subsetFilter;
             if (fineRes)
             {
-                filePrefix += "-1";
+                filePrefix += "FineRes";
                 subsetFilter = "ResolutionId=1";
             }
             else

@@ -1199,6 +1199,7 @@
 		<dataSheet name="DistributionValue" type="Input"/>
 		<dataSheet name="Multiprocessing" type="Input"/>
 		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>
+		<dataSheet name="core_ExternalVariableValue" type="Input"/>
 		<dataSheet name="InitialConditionsFineSpatial" type="Input"/>
 		<dataSheet name="TransitionGroupResolution" type="Input"/>
 		<dataSheet name="StockLimit" type="Input"/>

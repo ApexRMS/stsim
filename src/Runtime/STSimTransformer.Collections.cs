@@ -690,7 +690,14 @@ namespace SyncroSim.STSim
 
             if (ds.GetData().Rows.Count == 0)
             {
-                throw new ArgumentException(MessageStrings.ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS);
+                if (this.IsMultiResolution) // If no spatial initial conditions, then just not a multiresolution run
+                {
+                    return;
+                } 
+                else
+                {
+                    throw new ArgumentException(MessageStrings.ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS);
+                }
             }
 
             foreach (DataRow dr in ds.GetData().Rows)

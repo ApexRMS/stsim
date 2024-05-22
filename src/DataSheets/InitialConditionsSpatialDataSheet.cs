@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.StochasticTime;
+using System.Diagnostics;
+using System.IO;
 
 namespace SyncroSim.STSim
 {
@@ -179,13 +181,16 @@ namespace SyncroSim.STSim
             DataTable ThisData = this.GetData();
             StochasticTimeRaster FirstRaster = null;
 
-            if (ThisData.DefaultView.Count == 0)
+            // Add check to make sure path to rasters currently in datasheet actually exist
+            bool rasterFilePathExists = CheckSPICRasterFilePath(ThisData);
+
+            if ((ThisData.DefaultView.Count > 0) && rasterFilePathExists)
             {
-                FirstRaster = this.LoadRaster(proposedData.Rows[0], Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(ThisData.DefaultView[0].Row, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
             }
             else
             {
-                FirstRaster = this.LoadRaster(ThisData.DefaultView[0].Row, Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
+                FirstRaster = this.LoadRaster(proposedData.Rows[0], Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME);
             }
 
             try
@@ -220,6 +225,20 @@ namespace SyncroSim.STSim
             {
                 RastersValidated?.Invoke(this, new EventArgs());
             }
+        }
+
+        private bool CheckSPICRasterFilePath(DataTable ThisData)
+        {
+            DataRow dr = ThisData.DefaultView[0].Row;
+            string FileName = Convert.ToString(dr[Strings.DATASHEET_SPIC_STRATUM_FILE_COLUMN_NAME], CultureInfo.InvariantCulture);
+            string InputFilename = Spatial.GetSpatialInputFileName(this, FileName, true);
+
+            if (File.Exists(InputFilename))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected override void OnRowsAdded(object sender, DataSheetRowEventArgs e)

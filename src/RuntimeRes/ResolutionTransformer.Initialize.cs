@@ -161,7 +161,7 @@ namespace SyncroSim.STSim
 
                 if (tgr.Resolution == Resolution.BaseOnly)
                 {
-                    e.Cancel = true;
+                    e.Cancel = false;
                 }
                 else if ((tgr.Resolution == Resolution.BaseForcesFine) && (this.m_BaseForcesFineCells.ContainsKey(e.TransitionGroup.TransitionGroupId)))
                 {
@@ -179,7 +179,7 @@ namespace SyncroSim.STSim
                         }
                     }
                 }
-                else if ((tgr.Resolution == Resolution.FineOnly || tgr.Resolution == Resolution.FineForcesBase) && sender == this)
+                else if ((tgr.Resolution == Resolution.FineOnly || tgr.Resolution == Resolution.FineForcesBase))
                 {
                     e.Cancel = false;
                 }

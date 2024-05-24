@@ -179,7 +179,14 @@ namespace SyncroSim.STSim
                         }
                     }
                 }
-                e.Cancel = true;
+                else if ((tgr.Resolution == Resolution.FineOnly || tgr.Resolution == Resolution.FineForcesBase) && sender == this)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

@@ -31,7 +31,7 @@ namespace SyncroSim.STSim
         private InitialTSTSpatialMap m_InitialTstSpatialMap;
         private StateAttributeValueMap m_StateAttributeValueMap;
         private InitialConditionsDistributionMap m_InitialConditionsDistributionMap;
-        internal InitialConditionsSpatialMap m_InitialConditionsSpatialMap;
+        private InitialConditionsSpatialMap m_InitialConditionsSpatialMap;
         private IntervalMeanTimestepMap m_IntervalMeanTimestepMap;
         private ProportionAccumulatorMap m_ProportionAccumulatorMap;
 

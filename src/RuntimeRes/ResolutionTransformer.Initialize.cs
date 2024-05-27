@@ -86,6 +86,8 @@ namespace SyncroSim.STSim
                 this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
             double cellAreaTU = InitialConditionsFineSpatialRasterDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
             FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
+
+            // generate age raster here if it does not exist - see STSim.Transformer.Spatial line 2031
         }
 
         protected void PerformIteration(int iteration)

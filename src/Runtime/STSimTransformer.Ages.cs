@@ -90,7 +90,7 @@ namespace SyncroSim.STSim
             return NewAge;
         }
 
-        virtual internal void InitializeCellAge(Cell simulationCell, int stratumId, int stateClassId, int minimumAge, int maximumAge, int iteration, int timestep)
+        private void InitializeCellAge(Cell simulationCell, int stratumId, int stateClassId, int minimumAge, int maximumAge, int iteration, int timestep)
         {
             DeterministicTransition dt = null;
 

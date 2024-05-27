@@ -438,7 +438,6 @@ namespace SyncroSim.STSim
 
                 //If the transition group has no size distribution or transition patches then call the non-spatial algorithm for this group.
 
-
                 if ((!TransitionGroup.HasSizeDistribution) && (TransitionGroup.PatchPrioritization == null))
                 {
                     foreach (Cell simulationCell in this.m_Cells)
@@ -1479,13 +1478,8 @@ namespace SyncroSim.STSim
         /// and Non-spatial Initial Condition configuration. 
         /// </summary>
         /// <remarks></remarks>
-        internal void CreateSpatialICFromCombinedIC(bool fineRes = false)
+        private void CreateSpatialICFromCombinedIC()
         {
-            if (this.IsMultiResolution && !fineRes)
-            {
-                return;
-            }
-
             DataSheet dsIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
 
             // Get a list of the Iterations that are defined in the InitialConditionsSpatials
@@ -1691,7 +1685,52 @@ namespace SyncroSim.STSim
                 }
                 else
                 {
-                    this.FillICSpatialCells(cells, icds, AgeDefined, iteration);
+                    foreach (Cell c in cells)
+                    {
+                        if (c.StratumId != 0)
+                        {
+                            // Now lets filter the ICDs by Primary Stratum, and optionally Age, StateClass, and Secondary Stratum 
+                            InitialConditionsDistributionCollection filteredICDs = icds.GetFiltered(c);
+
+                            var sumOfRelativeAmount = filteredICDs.CalcSumOfRelativeAmount();
+
+                            double Rand = this.m_RandomGenerator.GetNextDouble();
+                            double CumulativeProportion = 0.0;
+
+                            foreach (InitialConditionsDistribution icd in filteredICDs)
+                            {
+                                CumulativeProportion += (icd.RelativeAmount / sumOfRelativeAmount);
+
+                                if (Rand < CumulativeProportion)
+                                {
+                                    if (!AgeDefined)
+                                    {
+                                        int sisagemin = Math.Min(icd.AgeMin, icd.AgeMax);
+                                        int sisagemax = Math.Max(icd.AgeMin, icd.AgeMax);
+
+                                        int Iter = this.MinimumIteration;
+
+                                        if (iteration.HasValue)
+                                        {
+                                            Iter = iteration.Value;
+                                        }
+
+                                        this.InitializeCellAge(
+                                            c, icd.StratumId, icd.StateClassId, 
+                                            sisagemin, sisagemax, 
+                                            Iter, this.m_TimestepZero);
+                                    }
+
+                                    c.StratumId = icd.StratumId;
+                                    c.StateClassId = icd.StateClassId;
+                                    c.SecondaryStratumId = icd.SecondaryStratumId;
+                                    c.TertiaryStratumId = icd.TertiaryStratumId;
+
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 List<Cell> lst = new List<Cell>();
@@ -1709,56 +1748,6 @@ namespace SyncroSim.STSim
             if (ICFilesCreated)
             {
                 this.RecordStatus(StatusType.Information, MessageStrings.STATUS_SPATIAL_RUN_USING_COMBINED_IC);
-            }
-        }
-
-        virtual internal void FillICSpatialCells(CellCollection cells, InitialConditionsDistributionCollection icds, bool AgeDefined, int? iteration)
-        {
-            foreach (Cell c in cells)
-            {
-                if (c.StratumId != 0)
-                {
-                    // Now lets filter the ICDs by Primary Stratum, and optionally Age, StateClass, and Secondary Stratum 
-                    InitialConditionsDistributionCollection filteredICDs = icds.GetFiltered(c);
-
-                    var sumOfRelativeAmount = filteredICDs.CalcSumOfRelativeAmount();
-
-                    double Rand = this.m_RandomGenerator.GetNextDouble();
-                    double CumulativeProportion = 0.0;
-
-                    foreach (InitialConditionsDistribution icd in filteredICDs)
-                    {
-                        CumulativeProportion += (icd.RelativeAmount / sumOfRelativeAmount);
-
-                        if (Rand < CumulativeProportion)
-                        {
-                            if (!AgeDefined)
-                            {
-                                int sisagemin = Math.Min(icd.AgeMin, icd.AgeMax);
-                                int sisagemax = Math.Max(icd.AgeMin, icd.AgeMax);
-
-                                int Iter = this.MinimumIteration;
-
-                                if (iteration.HasValue)
-                                {
-                                    Iter = iteration.Value;
-                                }
-
-                                this.InitializeCellAge(
-                                    c, icd.StratumId, icd.StateClassId,
-                                    sisagemin, sisagemax,
-                                    Iter, this.m_TimestepZero);
-                            }
-
-                            c.StratumId = icd.StratumId;
-                            c.StateClassId = icd.StateClassId;
-                            c.SecondaryStratumId = icd.SecondaryStratumId;
-                            c.TertiaryStratumId = icd.TertiaryStratumId;
-
-                            break;
-                        }
-                    }
-                }
             }
         }
 

@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using SyncroSim.Core;
 
@@ -15,7 +13,6 @@ namespace SyncroSim.STSim
         private STSimTransformer m_STSimTransformer; // base ST-Sim transformer
         private TransitionGroupResolutionCollection m_ResolutionGroups;
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
-        private Dictionary<int, int> m_FineToBaseDictionary;
         private string m_MultiResFilename;
         private string m_STSimFilename;
         private bool m_CanDoMultiResolution;
@@ -56,26 +53,26 @@ namespace SyncroSim.STSim
                 this.m_STSimTransformer.ApplySpatialTransitionGroup += OnSTSimApplySpatialTransitionGroup;
                 this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
 
+                DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
                 DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+                //InitialConditionsSpatialCollection STSimColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPIC_NAME);
+                //InitialConditionsSpatial RefSTSimColl = STSimColl.First();
                 InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
                 InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
                 DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
                 this.m_MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false);
-                this.m_STSimFilename = Spatial.GetSpatialDataFileName(STSimICS, this.m_STSimTransformer.InputRasters.PrimaryStratumName, false);
+                this.m_STSimFilename = Spatial.GetSpatialDataFileName(STSimICS, m_STSimTransformer.InputRasters.PrimaryStratumRaster.FileName, false);
                 SyncroSimRaster MRRaster = new SyncroSimRaster(this.m_MultiResFilename, RasterDataType.DTInteger);
                 SyncroSimRaster STSimRaster = new SyncroSimRaster(this.m_STSimFilename, RasterDataType.DTInteger);
 
-                (this.m_BaseToFineDictionary, this.m_FineToBaseDictionary) = CreateBaseToFineDictionary(STSimRaster, MRRaster);
-
-                // Autogenerate age raster based on base raster values
-                //this.CreateSpatialICFromCombinedIC(true);
+                this.m_BaseToFineDictionary = CreateBaseToFineDictionary(STSimRaster, MRRaster);
             }
         }
 
         // key will be base cell ID, value will be list of fine cell IDs
         // Arguments will be the coarse resolution raster and fine resolution raster
-        public static Tuple<Dictionary<int, List<int>>, Dictionary<int, int>> CreateBaseToFineDictionary(SyncroSimRaster STSimRaster, SyncroSimRaster MRRaster)
+        public static Dictionary<int, List<int>> CreateBaseToFineDictionary(SyncroSimRaster STSimRaster, SyncroSimRaster MRRaster)
         {
             int numBaseCells = STSimRaster.TotalCells;
             int fineHeight = MRRaster.Height;
@@ -85,7 +82,6 @@ namespace SyncroSim.STSim
             int heightRatio = MRRaster.Height / STSimRaster.Height;
             int widthRatio = MRRaster.Width / STSimRaster.Width;
             Dictionary<int, List<int>> BaseToFineDict = new Dictionary<int, List<int>>();
-            Dictionary<int, int> FineToBaseDict = new Dictionary<int, int>();
 
             for (int baseCellId = 0; baseCellId < numBaseCells; baseCellId++)
             {
@@ -96,19 +92,19 @@ namespace SyncroSim.STSim
                 // int verticalCellStep = baseWidth * heightRatio;
                 int ul = ((widthPosition * widthRatio) + (heightPosition * fineWidth * heightRatio));
 
+
                 for (int horizFineCellId = ul; horizFineCellId < ul + widthRatio; horizFineCellId++)
                 {
                     for (int verticalFineCellId = horizFineCellId; verticalFineCellId < horizFineCellId + (fineWidth * heightRatio); verticalFineCellId += fineWidth)
                     {
                         fineCellIds.Add(verticalFineCellId);
-                        FineToBaseDict.Add(verticalFineCellId, baseCellId);
                     }
                 }
 
                 BaseToFineDict.Add(baseCellId, fineCellIds);
             }
 
-            return Tuple.Create(BaseToFineDict, FineToBaseDict);
+            return BaseToFineDict;
         }
 
         protected override void Dispose(bool disposing)
@@ -146,13 +142,12 @@ namespace SyncroSim.STSim
 
         private void OnSTSimIterationStarted(object sender, IterationEventArgs e)
         {
-            
+            this.PerformIteration(e.Iteration);
         }
 
         private void OnSTSimIterationCompleted(object sender, IterationEventArgs e)
         {
             this.FineForcesBaseCells.Clear();
-            this.PerformIteration(e.Iteration);
         }
 
         private void OnSTSimTimestepStarted(object sender, TimestepEventArgs e)
@@ -272,125 +267,5 @@ namespace SyncroSim.STSim
                 }
             }
         }
-
-        //private bool UseBaseCellValues(Cell fineCell, int minimumAge, int maximumAge, int? iteration)
-        //{
-        //    int baseCellId = this.m_FineToBaseDictionary[fineCell.CellId];
-
-        //    // Could have a situation where base cell does not exist for the given fine cell
-        //    if (!this.m_STSimTransformer.Cells.Contains(baseCellId))
-        //    {
-        //        return false;    
-        //    }
-
-        //    // Load the base cells from the initial conditions spatial datasheet
-        //    InitialConditionsSpatial baseICS = this.m_STSimTransformer.m_InitialConditionsSpatialMap.GetICS(iteration);
-        //    string ageName = baseICS.AgeFileName;
-
-        //    Debug.Assert(!string.IsNullOrEmpty(ageName));
-
-        //    DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
-        //    string fullFileName = Spatial.GetSpatialDataFileName(dsIC, ageName, false);
-        //    SyncroSimRaster BaseAgeRaster = new SyncroSimRaster(fullFileName, RasterDataType.DTInteger);
-        //    int baseCellAge = BaseAgeRaster.IntCells[baseCellId];
-
-        //    // if base age falls within age range of fine resolution raster, use base raster value
-        //    // this also handles case when no age ranges specified for fine resolution raster 
-        //    if ((baseCellAge >= icd.AgeMin) && (baseCellAge <= icd.AgeMax))
-        //    {
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
-
-        internal override void InitializeCellAge(Cell simulationCell, int stratumId, int stateClassId, int minimumAge, int maximumAge, int iteration, int timestep)
-        {
-            int baseCellId = this.m_FineToBaseDictionary[simulationCell.CellId];
-
-            // Could have a situation where base cell does not exist for the given fine cell
-            if (!this.m_STSimTransformer.Cells.Contains(baseCellId))
-            {
-                base.InitializeCellAge(simulationCell, stratumId, stateClassId, minimumAge, maximumAge, iteration, timestep);
-                return;
-            }
-
-            Cell baseCell = this.m_STSimTransformer.Cells[baseCellId];
-
-            DeterministicTransition dt = this.GetDeterministicTransition(simulationCell, iteration, timestep);
-
-            if (baseCell.Age >= dt.AgeMinimum && baseCell.Age <= dt.AgeMaximum)
-            {
-                simulationCell.Age = baseCell.Age;
-            }
-            else
-            {
-                base.InitializeCellAge(simulationCell, stratumId, stateClassId, minimumAge, maximumAge, iteration, timestep);
-            }
-        }
-
-        //override internal void FillICSpatialCells(CellCollection cells, InitialConditionsDistributionCollection icds, bool AgeDefined, int? iteration)
-        //{
-        //    if (this.m_FineToBaseDictionary == null)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (Cell c in cells)
-        //    {
-        //        if (c.StratumId != 0)
-        //        {
-        //            // Now lets filter the ICDs by Primary Stratum, and optionally Age, StateClass, and Secondary Stratum 
-        //            InitialConditionsDistributionCollection filteredICDs = icds.GetFiltered(c);
-
-        //            var sumOfRelativeAmount = filteredICDs.CalcSumOfRelativeAmount();
-
-        //            double Rand = this.m_RandomGenerator.GetNextDouble();
-        //            double CumulativeProportion = 0.0;
-
-        //            foreach (InitialConditionsDistribution icd in filteredICDs)
-        //            {
-        //                CumulativeProportion += (icd.RelativeAmount / sumOfRelativeAmount);
-
-        //                if (Rand < CumulativeProportion)
-        //                {
-        //                    if (!AgeDefined)
-        //                    {
-        //                        if (this.UseBaseCellValues(c, icd, iteration)) 
-        //                        {
-        //                            int baseCellId = this.m_FineToBaseDictionary[c.CellId];
-        //                            Cell baseCell = this.m_STSimTransformer.Cells[baseCellId];
-        //                            c.Age = baseCell.Age;
-        //                        } 
-        //                        else
-        //                        {
-        //                            int sisagemin = Math.Min(icd.AgeMin, icd.AgeMax);
-        //                            int sisagemax = Math.Max(icd.AgeMin, icd.AgeMax);
-
-        //                            int Iter = this.MinimumIteration;
-
-        //                            if (iteration.HasValue)
-        //                            {
-        //                                Iter = iteration.Value;
-        //                            }
-
-        //                            this.InitializeCellAge(
-        //                                c, icd.StratumId, icd.StateClassId,
-        //                                sisagemin, sisagemax,
-        //                                Iter, this.m_TimestepZero);
-        //                        }
-        //                    }
-
-        //                    c.StratumId = icd.StratumId;
-        //                    c.StateClassId = icd.StateClassId;
-        //                    c.SecondaryStratumId = icd.SecondaryStratumId;
-        //                    c.TertiaryStratumId = icd.TertiaryStratumId;
-
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    }
-        // }
     }
 }

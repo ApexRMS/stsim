@@ -496,14 +496,21 @@ namespace SyncroSim.STSim
                 this.InitializeCellsNonRaster(iteration);
             }
 
-            this.WriteStratumAmountTabularData(iteration, this.m_TimestepZero);
+            if(!this.IsMultiResolution)
+            {
+                this.WriteStratumAmountTabularData(iteration, this.m_TimestepZero);
+            }
+            // DEVTODO: Handle tabular data for multiresolution
             this.WriteStratumRaster(iteration, this.m_TimestepZero);
             this.WriteStateClassRaster(iteration, this.m_TimestepZero);
             this.WriteAgeRaster(iteration, this.m_TimestepZero);
             this.WriteTSTRasters(iteration, this.m_TimestepZero);
             this.WriteStateAttributeRasters(iteration, this.m_TimestepZero);
             this.ProcessTransitionAdjacencyStateAttributeOutput(iteration, this.m_TimestepZero);
-            this.WriteExternalVariableValueTabularData(iteration, this.m_TimestepZero, this.m_OutputExternalVariableValueTable);
+            if (!this.IsMultiResolution)
+            {
+                this.WriteExternalVariableValueTabularData(iteration, this.m_TimestepZero, this.m_OutputExternalVariableValueTable);
+            }
 
             this.RecordAvgRasterStateClassDataTimestepZero();
             this.RecordAvgRasterAgeDataTimestepZero();
@@ -521,14 +528,17 @@ namespace SyncroSim.STSim
             this.Simulate(iteration, timestep);
 
             //Tabular data
-            this.WriteStratumAmountTabularData(iteration, timestep);
-            this.WriteSummaryStateClassTabularData(this.m_OutputStratumStateTable, iteration, timestep);
-            this.WriteSummaryTransitionTabularData(timestep, this.m_OutputStratumTransitionTable);
-            this.WriteSummaryTransitionStateTabularData(this.m_OutputStratumTransitionStateTable);
-            this.WriteSummaryStateAttributeTabularData(this.m_OutputStateAttributeTable);
-            this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
-            this.WriteExternalVariableValueTabularData(iteration, timestep, this.m_OutputExternalVariableValueTable);
-            this.WriteSummaryTSTTabularData(this.m_OutputTSTTable, iteration, timestep);
+            if (!this.IsMultiResolution)
+            {
+                this.WriteStratumAmountTabularData(iteration, timestep);
+                this.WriteSummaryStateClassTabularData(this.m_OutputStratumStateTable, iteration, timestep);
+                this.WriteSummaryTransitionTabularData(timestep, this.m_OutputStratumTransitionTable);
+                this.WriteSummaryTransitionStateTabularData(this.m_OutputStratumTransitionStateTable);
+                this.WriteSummaryStateAttributeTabularData(this.m_OutputStateAttributeTable);
+                this.WriteSummaryTransitionAttributeTabularData(this.m_OutputTransitionAttributeTable);
+                this.WriteExternalVariableValueTabularData(iteration, timestep, this.m_OutputExternalVariableValueTable);
+                this.WriteSummaryTSTTabularData(this.m_OutputTSTTable, iteration, timestep);
+            }
 
             //Spatial data
             this.WriteStateClassRaster(iteration, timestep);

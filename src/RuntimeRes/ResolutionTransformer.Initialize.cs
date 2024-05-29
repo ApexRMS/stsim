@@ -1,6 +1,8 @@
 ﻿using SyncroSim.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -16,6 +18,8 @@ namespace SyncroSim.STSim
         private Dictionary<int, CellCollection> m_FineForcesBaseCells;
         private Dictionary<(int, int), Transition> m_FineTransitionDictionary; // composite key: fineCellId, transitionGroupId
         private Dictionary<(int, int), Transition> m_BaseTransitionDictionary; //composite key: baseCellId, transitionGroupId
+
+        private static readonly string MULTIBANDING_NOT_AVAILABLE_ERROR_MSG = "Multibanding has not yet been enabled for Mutli resolution st-sim runs. Please select 'Single Band' from the spatial options data sheet before running.";
 
         public Dictionary<int, CellCollection> BaseForcesFineCells
         {
@@ -206,6 +210,22 @@ namespace SyncroSim.STSim
                     }
                     this.FineForcesBaseCells[tg.TransitionGroupId].Add(simulationCell); // collection of FINE cells
                 }
+            }
+        }
+
+        private void ValidateIsNotMultibandingRun()
+        {
+            DataSheet spatialOptionDatasheet = this.Library.GetDataSheet(Strings.DATASHEET_CORE_SPATIAL_OPTIONS);
+            DataRow dr = spatialOptionDatasheet.GetDataRow();
+
+            if (
+                dr != null
+                && dr[Strings.DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME] != DBNull.Value
+                && Convert.ToInt32(dr[Strings.DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME], CultureInfo.InvariantCulture) != 0
+            )
+            {
+                FormsUtilities.ErrorMessageBox(MULTIBANDING_NOT_AVAILABLE_ERROR_MSG);
+                throw new STSimException(MULTIBANDING_NOT_AVAILABLE_ERROR_MSG);
             }
         }
     }

@@ -489,6 +489,10 @@ namespace SyncroSim.STSim
         public const string DATASHEET_MULTI_PROCESSING_NAME = "stsim_Multiprocessing";
         public const string DATASHEET_MULTI_PROCESSING_SPLIT_BY_SS_COLUMN_NAME = "SplitBySecondaryStrata";
 
+        //Multi-Banding
+        public const string DATASHEET_CORE_SPATIAL_OPTIONS = "core_SpatialOption";
+        public const string DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME = "MultibandGroupingInternal";
+
         //Multi-Resolution - General
         //public const string STSIM_TRANSFORMER_NAME = "stsim_Runtime";
         //public const string STSIM_CONTROLLER_TRANSFORMER_NAME = "stsim_Controller";

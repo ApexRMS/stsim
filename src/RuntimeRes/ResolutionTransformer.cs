@@ -132,6 +132,7 @@ namespace SyncroSim.STSim
         private void OnSTSimBeginModelRun(object sender, EventArgs e)
         {
             this.ValidateRaster(this.m_MultiResFilename, this.m_STSimFilename);
+            this.ValidateIsNotMultibandingRun();
         }
 
         private void OnSTSimModelRunComplete(object sender, EventArgs e)

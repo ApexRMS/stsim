@@ -212,10 +212,11 @@ namespace SyncroSim.STSim
             DataSheet spatialOptionDatasheet = this.Library.GetDataSheet(Strings.DATASHEET_CORE_SPATIAL_OPTIONS);
             DataRow dr = spatialOptionDatasheet.GetDataRow();
 
+            var multibandingGroupSetting = dr[Strings.DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME];
             if (
                 dr != null
-                && dr[Strings.DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME] != DBNull.Value
-                && Convert.ToInt32(dr[Strings.DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME], CultureInfo.InvariantCulture) != 0
+                && multibandingGroupSetting != DBNull.Value
+                && Convert.ToInt32(multibandingGroupSetting, CultureInfo.InvariantCulture) != 0
             )
             {
                 FormsUtilities.ErrorMessageBox(MULTIBANDING_NOT_AVAILABLE_ERROR_MSG);

@@ -485,23 +485,13 @@ namespace SyncroSim.STSim
         public const string DISTRIBUTION_VALUE_VALUE_DIST_MAX_COLUMN_NAME = "ValueDistributionMax";
         public const string DISTRIBUTION_VALUE_VALUE_DIST_RELATIVE_FREQUENCY_COLUMN_NAME = "ValueDistributionRelativeFrequency";
 
-        //Multiprocessing
+        //Multi-Processing
         public const string DATASHEET_MULTI_PROCESSING_NAME = "stsim_Multiprocessing";
         public const string DATASHEET_MULTI_PROCESSING_SPLIT_BY_SS_COLUMN_NAME = "SplitBySecondaryStrata";
 
         //Multi-Banding
         public const string DATASHEET_CORE_SPATIAL_OPTIONS = "core_SpatialOption";
         public const string DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME = "MultibandGroupingInternal";
-
-        //Multi-Resolution - General
-        //public const string STSIM_TRANSFORMER_NAME = "stsim_Runtime";
-        //public const string STSIM_CONTROLLER_TRANSFORMER_NAME = "stsim_Controller";
-        //public const string DATASHEET_STSIM_RUN_CONTROL_NAME = "stsim_RunControl";
-        //public const string DATASHEET_STSIM_TERMINOLOGY_NAME = "stsim_Terminology";
-        //public const string DATASHEET_STSIM_RUN_CONTROL_IS_SPATIAL_COLUMN_NAME = "isSpatial";
-        //public const string DATASHEET_STSIM_SPIC_NAME = "stsim_InitialConditionsSpatial";
-        //public const string APPEND_TITLE = " (High-Resolution)";
-        //public const string FINALIZING_DATA = "Finalizing high-resolution data.";
 
         //Multi-Resolution - Initial Conditions
         public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsFineSpatial";

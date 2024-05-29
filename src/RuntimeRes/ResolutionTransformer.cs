@@ -10,7 +10,7 @@ namespace SyncroSim.STSim
 {
     partial class ResolutionTransformer : STSimTransformer
     {
-        private STSimTransformer m_STSimTransformer; // base ST-Sim transformer
+        private STSimTransformer m_STSimTransformer;
         private TransitionGroupResolutionCollection m_ResolutionGroups;
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
         private string m_MultiResFilename;
@@ -55,8 +55,7 @@ namespace SyncroSim.STSim
 
                 DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
                 DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
-                //InitialConditionsSpatialCollection STSimColl = CreateSPICCollection(this.ResultScenario, Strings.DATASHEET_SPIC_NAME);
-                //InitialConditionsSpatial RefSTSimColl = STSimColl.First();
+
                 InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
                 InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
                 DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
@@ -75,10 +74,8 @@ namespace SyncroSim.STSim
         public static Dictionary<int, List<int>> CreateBaseToFineDictionary(SyncroSimRaster STSimRaster, SyncroSimRaster MRRaster)
         {
             int numBaseCells = STSimRaster.TotalCells;
-            int fineHeight = MRRaster.Height;
             int fineWidth = MRRaster.Width;
             int baseWidth = STSimRaster.Width;
-            int baseHeight = STSimRaster.Height;
             int heightRatio = MRRaster.Height / STSimRaster.Height;
             int widthRatio = MRRaster.Width / STSimRaster.Width;
             Dictionary<int, List<int>> BaseToFineDict = new Dictionary<int, List<int>>();
@@ -86,12 +83,10 @@ namespace SyncroSim.STSim
             for (int baseCellId = 0; baseCellId < numBaseCells; baseCellId++)
             {
                 List<int> fineCellIds = new List<int>();
-                int widthPosition = baseCellId % baseWidth; // here
+                int widthPosition = baseCellId % baseWidth;
                 double heightDouble = baseCellId / baseWidth;
                 int heightPosition = Convert.ToInt32(Math.Floor(heightDouble));
-                // int verticalCellStep = baseWidth * heightRatio;
                 int ul = ((widthPosition * widthRatio) + (heightPosition * fineWidth * heightRatio));
-
 
                 for (int horizFineCellId = ul; horizFineCellId < ul + widthRatio; horizFineCellId++)
                 {
@@ -137,7 +132,6 @@ namespace SyncroSim.STSim
 
         private void OnSTSimModelRunComplete(object sender, EventArgs e)
         {
-            //this.SetStatusMessage(Constants.FINALIZING_DATA);
             this.EndModelRun();
         }
 
@@ -195,11 +189,6 @@ namespace SyncroSim.STSim
                             this.FineTransitionDictionary.Add((fineCellId, e.TransitionGroup.TransitionGroupId), forcedFineTransition);
                         }
                     }
-
-                    // find corresponding cells and add to cell collection
-                    // this.m_STSimTransformer.Cells corresponds to the fine cells
-                    // e.SimulationCell corresponds to the base cell that's forcing the fine transition
-                    // find the fine cells within e.SimulationCell
                 }
             }
         }

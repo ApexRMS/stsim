@@ -1,4 +1,7 @@
-﻿using SyncroSim.Core;
+﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+// Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
+
+using SyncroSim.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,14 +13,11 @@ namespace SyncroSim.STSim
 {
     internal partial class ResolutionTransformer
     {
-        private InitialConditionsFineSpatialMap m_SPICMapMultiRes;
         private InitialConditionsFineSpatialCollection m_SPICValuesMultiRes;
-        //private InitialConditionsSpatialMap m_SPICMapSTSim;
-        //private InitialConditionsSpatialCollection m_SPICValuesSTSim;
         private Dictionary<int, CellCollection> m_BaseForcesFineCells;
         private Dictionary<int, CellCollection> m_FineForcesBaseCells;
-        private Dictionary<(int, int), Transition> m_FineTransitionDictionary; // composite key: fineCellId, transitionGroupId
-        private Dictionary<(int, int), Transition> m_BaseTransitionDictionary; //composite key: baseCellId, transitionGroupId
+        private Dictionary<(int, int), Transition> m_FineTransitionDictionary;
+        private Dictionary<(int, int), Transition> m_BaseTransitionDictionary;
 
         private static readonly string MULTIBANDING_NOT_AVAILABLE_ERROR_MSG = "Multibanding has not yet been enabled for Mutli resolution st-sim runs. Please select 'Single Band' from the spatial options data sheet before running.";
 
@@ -55,10 +55,7 @@ namespace SyncroSim.STSim
 
         private void AuxillarySetup()
         {
-            //this.m_SPICValuesSTSim = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPIC_NAME);
-            //this.m_SPICMapSTSim = new InitialConditionsSpatialMap(this.m_SPICValuesSTSim);
             this.m_SPICValuesMultiRes = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-            this.m_SPICMapMultiRes = new InitialConditionsFineSpatialMap(this.m_SPICValuesMultiRes);
             this.m_ResolutionGroups = CreateResolutionGroupCollection(this.ResultScenario);
             this.m_BaseForcesFineCells = new Dictionary<int, CellCollection>();
             this.m_FineForcesBaseCells = new Dictionary<int, CellCollection>();
@@ -86,12 +83,9 @@ namespace SyncroSim.STSim
             double cellArea = Math.Pow(MRRaster.CellSize, 2);
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
-            TerminologyUtilities.GetAmountLabelTerminology(
-                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
             double cellAreaTU = InitialConditionsFineSpatialRasterDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
             FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
-
-            // generate age raster here if it does not exist - see STSim.Transformer.Spatial line 2031
         }
 
         protected void PerformIteration(int iteration)

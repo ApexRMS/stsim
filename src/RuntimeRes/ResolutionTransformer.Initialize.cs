@@ -19,7 +19,7 @@ namespace SyncroSim.STSim
         private Dictionary<(int, int), Transition> m_FineTransitionDictionary;
         private Dictionary<(int, int), Transition> m_BaseTransitionDictionary;
 
-        private static readonly string MULTIBANDING_NOT_AVAILABLE_ERROR_MSG = "Multibanding has not yet been enabled for Mutli resolution st-sim runs. Please select 'Single Band' from the spatial options data sheet before running.";
+        private static readonly string MULTIBANDING_NOT_AVAILABLE_ERROR_MSG = "Multi-banding has not yet been enabled for Multi Resolution ST-Sim runs. Please select the 'Single Band' grouping from the library options before running.";
 
         public Dictionary<int, CellCollection> BaseForcesFineCells
         {

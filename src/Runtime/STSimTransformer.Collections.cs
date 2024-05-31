@@ -2129,10 +2129,10 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == CompareMetadataResult.RowColumnMismatch)
                 {
-                    //if (highResScenario)
-                    //{
-                    //    return; // do not apply transition spatial multiplier for now
-                    //}
+                    if (this.IsMultiResolution)
+                    {
+                        return; // TODO: add ability to apply transition spatial multiplier for multiresolution
+                    }
 
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_ROW_COLUMN_MISMATCH, tsmFilename);
                     ExceptionUtils.ThrowArgumentException(msg);
@@ -2213,10 +2213,10 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == STSim.CompareMetadataResult.RowColumnMismatch)
                 {
-                    //if (highResScenario)
-                    //{
-                    //    return; // do not apply transition spatial multiplier for now
-                    //}
+                    if (this.IsMultiResolution)
+                    {
+                        return; // TODO: apply for multiresolution
+                    }
 
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSIM_ROW_COLUMN_MISMATCH, tsimFilename);
                     ExceptionUtils.ThrowArgumentException(msg);

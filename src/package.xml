@@ -1382,7 +1382,7 @@
 			<item name="DistributionValue"/>
 			<item name="Multiprocessing"/>
 			<group name="MultiResolution" displayName="Multi Resolution">
-				<item name="InitialConditionsFineSpatial"/>
+				<item name="InitialConditionsFineSpatial" displayName="Initial Conditions Spatial (Fine Resolution)"/>
 				<item name="TransitionGroupResolution"/>
 			</group>
 		</group>

@@ -251,7 +251,7 @@ namespace SyncroSim.STSim
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroupFineRes.Items,
                 "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
-                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, Strings.DATASHEET_TRANSITION_TYPE_NAME, store, true);
+                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, null, store, true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTPGroup.Items,

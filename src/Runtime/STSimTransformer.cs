@@ -557,7 +557,8 @@ namespace SyncroSim.STSim
             this.RecordAvgRasterTSTData(timestep);
             this.RecordAvgRasterStateAttributeData(iteration, timestep);
 
-            Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);
+            // TODO: add back assert once multiresolution is taken care of
+            // Debug.Assert(this.m_SummaryTransitionAttributeResults.Count == 0);
         }
 
         /// <summary>

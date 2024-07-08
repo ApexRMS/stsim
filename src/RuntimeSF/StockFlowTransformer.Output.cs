@@ -344,14 +344,15 @@ namespace SyncroSim.STSim
                     rastOutput.AddFloatCells(rastStockType);
                 }
 
-                Spatial.WriteRasterData(
-                        rastOutput,
-                        this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_SPATIAL_STOCK_GROUP),
-                        iteration,
-                        timestep,
-                        g.Id,
-                        Strings.SPATIAL_MAP_STOCK_GROUP_VARIABLE_PREFIX,
-                        Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                STSimTransformer.WriteMultiResolutionRasterData(
+                    rastOutput,
+                    this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_SPATIAL_STOCK_GROUP),
+                    iteration,
+                    timestep,
+                    g.Id,
+                    Strings.SPATIAL_MAP_STOCK_GROUP_VARIABLE_PREFIX,
+                    Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.m_STSimTransformer.IsMultiResolution);
             }
         }
 
@@ -402,14 +403,15 @@ namespace SyncroSim.STSim
 
                 if (AtLeastOne)
                 {
-                    Spatial.WriteRasterData(
+                    STSimTransformer.WriteMultiResolutionRasterData(
                             rastOutput,
                             this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_SPATIAL_FLOW_GROUP),
                             iteration,
                             timestep,
                             g.Id,
                             Strings.SPATIAL_MAP_FLOW_GROUP_VARIABLE_PREFIX,
-                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                            this.m_STSimTransformer.IsMultiResolution);
                 }
             }
         }
@@ -463,14 +465,15 @@ namespace SyncroSim.STSim
 
                 if (AtLeastOne)
                 {
-                    Spatial.WriteRasterData(
+                    STSimTransformer.WriteMultiResolutionRasterData(
                             rastOutput,
                             this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_LATERAL_FLOW_GROUP),
                             iteration,
                             timestep,
                             g.Id,
                             Strings.SPATIAL_MAP_LATERAL_FLOW_GROUP_VARIABLE_PREFIX,
-                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                            this.m_STSimTransformer.IsMultiResolution);
                 }
             }
         }
@@ -514,14 +517,15 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Convert.ToSingle(values[c.CollectionIndex] / this.STSimTransformer.AmountPerCell);
                     }
 
-                    Spatial.WriteRasterData(
+                    STSimTransformer.WriteMultiResolutionRasterData(
                             rast,
                             this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_AVG_SPATIAL_STOCK_GROUP),
                             0,
                             timestep,
                             id,
                             Strings.SPATIAL_MAP_AVG_STOCK_GROUP_VARIABLE_PREFIX,
-                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                            this.m_STSimTransformer.IsMultiResolution);
                 }
             }
         }
@@ -570,14 +574,15 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Convert.ToSingle(values[c.CollectionIndex]);
                     }
 
-                    Spatial.WriteRasterData(
-                            rast,
-                            this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_AVG_SPATIAL_FLOW_GROUP),
-                            0,
-                            timestep,
-                            id,
-                            Strings.SPATIAL_MAP_AVG_FLOW_GROUP_VARIABLE_PREFIX,
-                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    STSimTransformer.WriteMultiResolutionRasterData(
+                        rast,
+                        this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_AVG_SPATIAL_FLOW_GROUP),
+                        0,
+                        timestep,
+                        id,
+                        Strings.SPATIAL_MAP_AVG_FLOW_GROUP_VARIABLE_PREFIX,
+                        Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.m_STSimTransformer.IsMultiResolution);
                 }
             }
         }
@@ -626,14 +631,15 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Convert.ToSingle(values[c.CollectionIndex]);
                     }
 
-                    Spatial.WriteRasterData(
-                            rast,
-                            this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_AVG_SPATIAL_LATERAL_FLOW_GROUP),
-                            0,
-                            timestep,
-                            id,
-                            Strings.SPATIAL_MAP_AVG_LATERAL_FLOW_GROUP_VARIABLE_PREFIX,
-                            Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    STSimTransformer.WriteMultiResolutionRasterData(
+                        rast,
+                        this.ResultScenario.GetDataSheet(Strings.DATASHEET_OUTPUT_AVG_SPATIAL_LATERAL_FLOW_GROUP),
+                        0,
+                        timestep,
+                        id,
+                        Strings.SPATIAL_MAP_AVG_LATERAL_FLOW_GROUP_VARIABLE_PREFIX,
+                        Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.m_STSimTransformer.IsMultiResolution);
                 }
             }
         }

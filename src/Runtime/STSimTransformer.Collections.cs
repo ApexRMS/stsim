@@ -686,11 +686,18 @@ namespace SyncroSim.STSim
         {
             this.m_InitialConditionsSpatialValues.Clear();
 
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
 
             if (ds.GetData().Rows.Count == 0)
             {
-                throw new ArgumentException(MessageStrings.ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS);
+                if (this.IsMultiResolution) // If no spatial initial conditions, then just not a multiresolution run
+                {
+                    return;
+                } 
+                else
+                {
+                    throw new ArgumentException(MessageStrings.ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS);
+                }
             }
 
             foreach (DataRow dr in ds.GetData().Rows)
@@ -2084,13 +2091,6 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionSpatialMultiplierRasters.Count == 0);
 
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME);
-            //bool highResScenario = false;
-
-            // TODO: Fix this when we incorporate the stsim-multiresolution package into stsim
-            //if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
-            //{
-            //    highResScenario = true;
-            //}
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
@@ -2129,10 +2129,10 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == CompareMetadataResult.RowColumnMismatch)
                 {
-                    //if (highResScenario)
-                    //{
-                    //    return; // do not apply transition spatial multiplier for now
-                    //}
+                    if (this.IsMultiResolution)
+                    {
+                        return; // TODO: add ability to apply transition spatial multiplier for multiresolution
+                    }
 
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_ROW_COLUMN_MISMATCH, tsmFilename);
                     ExceptionUtils.ThrowArgumentException(msg);
@@ -2213,10 +2213,10 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == STSim.CompareMetadataResult.RowColumnMismatch)
                 {
-                    //if (highResScenario)
-                    //{
-                    //    return; // do not apply transition spatial multiplier for now
-                    //}
+                    if (this.IsMultiResolution)
+                    {
+                        return; // TODO: apply for multiresolution
+                    }
 
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSIM_ROW_COLUMN_MISMATCH, tsimFilename);
                     ExceptionUtils.ThrowArgumentException(msg);
@@ -2709,7 +2709,7 @@ namespace SyncroSim.STSim
 
         private double GetCellSizeSafe()
         {
-            DataRow SpatialICPropsRow = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+            DataRow SpatialICPropsRow = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet).GetDataRow();
 
             if (SpatialICPropsRow == null || SpatialICPropsRow[Strings.DATASHEET_SPPIC_CELL_SIZE_COLUMN_NAME] == DBNull.Value)
             {

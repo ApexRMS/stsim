@@ -135,11 +135,11 @@
     <Compile Include="DataFeedViews\FlowPathwayDataFeedView.Designer.cs">
       <DependentUpon>FlowPathwayDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\InitialConditionsFineSpatialDataFeedView.cs">
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataFeedViews\InitialConditionsFineSpatialDataFeedView.Designer.cs">
-      <DependentUpon>InitialConditionsFineSpatialDataFeedView.cs</DependentUpon>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>InitialConditionsSpatialDataFeedViewFineRes.cs</DependentUpon>
     </Compile>
     <Compile Include="DataFeedViews\InitialStocksDataFeedView.cs">
       <SubType>UserControl</SubType>
@@ -192,7 +192,7 @@
     <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
     <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
-    <Compile Include="DataSheets\InitialConditionsFineSpatialRasterDataSheet.cs" />
+    <Compile Include="DataSheets\InitialConditionsSpatialRasterDataSheetFineRes.cs" />
     <Compile Include="DataSheets\FlowGroupDataSheet.cs" />
     <Compile Include="DataSheets\FlowPathwayDataSheet.cs" />
     <Compile Include="DataSheets\FlowPathwayDiagramDataSheet.cs" />
@@ -230,9 +230,9 @@
     <Compile Include="RuntimeRes\ResolutionTransformer.Initialize.cs" />
     <Compile Include="RuntimeRes\TransitionGroupResolutionCollection.cs" />
     <Compile Include="RuntimeRes\TransitionGroupResolution.cs" />
-    <Compile Include="RuntimeRes\InitialConditionsFineSpatial.cs" />
-    <Compile Include="RuntimeRes\InitialConditionsFineSpatialCollection.cs" />
-    <Compile Include="RuntimeRes\InitialConditionsFineSpatialMap.cs" />
+    <Compile Include="RuntimeRes\InitialConditionsSpatialFineRes.cs" />
+    <Compile Include="RuntimeRes\InitialConditionsSpatialCollectionFineRes.cs" />
+    <Compile Include="RuntimeRes\InitialConditionsSpatialMapFineRes.cs" />
     <Compile Include="RuntimeRes\ResolutionTransformer.cs" />
     <Compile Include="RuntimeRes\ResolutionTransformer.Utilities.cs" />
     <Compile Include="RuntimeSF\FlowGroup.cs" />
@@ -726,8 +726,8 @@
     <EmbeddedResource Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsNonSpatialDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataFeedViews\InitialConditionsFineSpatialDataFeedView.resx">
-      <DependentUpon>InitialConditionsFineSpatialDataFeedView.cs</DependentUpon>
+    <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.resx">
+      <DependentUpon>InitialConditionsSpatialDataFeedViewFineRes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>

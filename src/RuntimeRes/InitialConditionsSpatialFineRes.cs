@@ -3,7 +3,7 @@
 
 namespace SyncroSim.STSim
 {
-    internal class InitialConditionsFineSpatial
+    internal class InitialConditionsSpatialFineRes
     {
         private int? m_Iteration;
         private string m_PrimaryStratumFileName;
@@ -12,7 +12,7 @@ namespace SyncroSim.STSim
         private string m_StateClassFileName;
         private string m_AgeFileName;
 
-        public InitialConditionsFineSpatial(
+        public InitialConditionsSpatialFineRes(
             int? iteration, string primaryStratumName, string secondaryStratumFileName,
             string tertiaryStratumFileName, string stateClassFileName, string ageFileName)
         {

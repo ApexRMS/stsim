@@ -13,7 +13,7 @@ namespace SyncroSim.STSim
 {
     internal partial class ResolutionTransformer
     {
-        private InitialConditionsFineSpatialCollection m_SPICValuesMultiRes;
+        private InitialConditionsSpatialCollectionFineRes m_SPICValuesMultiRes;
         private Dictionary<int, CellCollection> m_BaseForcesFineCells;
         private Dictionary<int, CellCollection> m_FineForcesBaseCells;
         private Dictionary<(int, int), Transition> m_FineTransitionDictionary;
@@ -62,30 +62,30 @@ namespace SyncroSim.STSim
             this.m_FineTransitionDictionary = new Dictionary<(int, int), Transition>();
             this.m_BaseTransitionDictionary = new Dictionary<(int, int), Transition>();
 
-            DataSheet FineSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
-            InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-            InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
+            DataSheet SpatialPropertiesFineRes = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
+            InitialConditionsSpatialCollectionFineRes MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
+            InitialConditionsSpatialFineRes RefMultiResColl = MultiResColl.First();
             DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
             string MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false); //breaks if input DNE
             SyncroSimRaster MRRaster = new SyncroSimRaster(MultiResFilename, RasterDataType.DTInteger);
 
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_SRS_COLUMN_NAME, MRRaster.Projection);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME, MRRaster.Height);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME, MRRaster.Width);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME, MRRaster.GetNumberValidCells());
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME, MRRaster.XllCorner);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME, MRRaster.YllCorner);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME, MRRaster.CellSize);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME, MRRaster.CellSizeUnits);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_SRS_COLUMN_NAME, MRRaster.Projection);
 
             // Calculate cell area
             double cellArea = Math.Pow(MRRaster.CellSize, 2);
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
             TerminologyUtilities.GetAmountLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
-            double cellAreaTU = InitialConditionsFineSpatialRasterDataSheet.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
-            FineSpatialProperties.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
+            double cellAreaTU = InitialConditionsSpatialRasterDataSheetFineRes.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
+            SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
         }
 
         protected void PerformIteration(int iteration)

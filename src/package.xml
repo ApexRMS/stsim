@@ -251,9 +251,9 @@
 		<dataSheet name="InitialConditionsSpatialProperties"/>
 	</dataFeed>
 
-	<dataFeed name="InitialConditionsFineSpatial" viewClassName="SyncroSim.STSim.InitialConditionsFineSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
-		<dataSheet name="InitialConditionsFineSpatial"/>
-		<dataSheet name="InitialConditionsFineSpatialProperties"/>
+	<dataFeed name="InitialConditionsSpatialFineRes" viewClassName="SyncroSim.STSim.InitialConditionsSpatialDataFeedViewFineRes" viewClassAssembly="SyncroSim.STSim">
+		<dataSheet name="InitialConditionsSpatialFineRes"/>
+		<dataSheet name="InitialConditionsSpatialPropertiesFineRes"/>
 	</dataFeed>
 
 	<dataSheet name="InitialConditionsSpatial" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
@@ -265,7 +265,7 @@
 		<validation validationType="Unique" columns="Iteration"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsFineSpatial" displayName="Initial Conditions Fine Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsFineSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
+	<dataSheet name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Fine Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheetFineRes" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
 		<column name="StratumFileName" displayName="Stratum File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 		<column name="SecondaryStratumFileName" displayName="Secondary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
 		<column name="TertiaryStratumFileName" displayName="Tertiary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
@@ -287,7 +287,7 @@
 		<column name="SRS" displayName="SRS" dataType="String"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsFineSpatialProperties" displayName="Initial Conditions Fine Spatial Properties" isSingleRow="True">
+	<dataSheet name="InitialConditionsSpatialPropertiesFineRes" displayName="Initial Conditions Fine Spatial Properties" isSingleRow="True">
 		<column name="NumRows" displayName="Num Rows" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumColumns" displayName="Num Columns" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumCells" displayName="Num Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
@@ -1200,8 +1200,8 @@
 		<dataSheet name="Multiprocessing" type="Input"/>
 		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>
 		<dataSheet name="core_ExternalVariableValue" type="Input"/>
-		<dataSheet name="InitialConditionsFineSpatial" type="Input"/>
-		<dataSheet name="InitialConditionsFineSpatialProperties" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialFineRes" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialPropertiesFineRes" type="Input"/>
 		<dataSheet name="TransitionGroupResolution" type="Input"/>
 		<dataSheet name="StockLimit" type="Input"/>
 		<dataSheet name="FlowOrder" type="Input"/>
@@ -1382,7 +1382,7 @@
 			<item name="DistributionValue"/>
 			<item name="Multiprocessing"/>
 			<group name="MultiResolution" displayName="Multi Resolution">
-				<item name="InitialConditionsFineSpatial" displayName="Initial Conditions Spatial (Fine Resolution)"/>
+				<item name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Spatial (Fine Resolution)"/>
 				<item name="TransitionGroupResolution"/>
 			</group>
 		</group>

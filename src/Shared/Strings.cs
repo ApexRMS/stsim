@@ -494,7 +494,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME = "MultibandGroupingInternal";
 
         //Multi-Resolution - Initial Conditions
-        public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsFineSpatial";
+        public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsSpatialFineRes";
         public const string DATASHEET_SPICF_ITERATION_COLUMN_NAME = "Iteration";
         public const string DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
         public const string DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
@@ -503,7 +503,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_SPICF_AGE_FILE_COLUMN_NAME = "AgeFileName";
 
         //Multi-Resolution - Spatial Initial Conditions Properties
-        public const string DATASHEET_SPPICF_NAME = "stsim_InitialConditionsFineSpatialProperties";
+        public const string DATASHEET_SPPICF_NAME = "stsim_InitialConditionsSpatialPropertiesFineRes";
         public const string DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
         public const string DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME = "NumRows";
         public const string DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME = "NumCells";

@@ -9,7 +9,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    public class InitialConditionsFineSpatialRasterDataSheet : DataSheet
+    public class InitialConditionsSpatialRasterDataSheetFineRes : DataSheet
     {
         public event EventHandler<EventArgs> ValidatingRasters;
         public event EventHandler<EventArgs> RastersValidated;

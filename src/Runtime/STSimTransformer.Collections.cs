@@ -2090,7 +2090,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionSpatialMultipliers.Count == 0);
             Debug.Assert(this.m_TransitionSpatialMultiplierRasters.Count == 0);
 
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME);
+            DataSheet ds = this.ResultScenario.GetDataSheet(this.m_TransitionSpatialMultiplierDatasheet);
 
             foreach (DataRow dr in ds.GetData().Rows)
             {

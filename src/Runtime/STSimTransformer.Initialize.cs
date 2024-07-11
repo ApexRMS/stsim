@@ -168,11 +168,15 @@ namespace SyncroSim.STSim
             {
                 this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPICF_NAME;
                 this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPICF_NAME;
+
+                this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME;
             } 
             else
             {
                 this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPIC_NAME;
                 this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPIC_NAME;
+
+                this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME;
             }
         }
 

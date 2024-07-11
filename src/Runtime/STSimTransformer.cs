@@ -33,6 +33,7 @@ namespace SyncroSim.STSim
         private ResolutionTransformer m_ResolutionTransformer;
         private string m_InitialConditionsSpatialDatasheet;
         private string m_InitialConditionsSpatialPropertiesDatasheet;
+        private string m_TransitionSpatialMultiplierDatasheet;
 
         public event EventHandler<CellEventArgs> CellInitialized;
         public event EventHandler<CellEventArgs> CellsInitialized;
@@ -93,6 +94,21 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_InitialConditionsSpatialDatasheet;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transition spatial multiplier datasheet name
+        /// (depends on whether the run is fine resolution or base resolution)
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public string TransitionSpatialMultiplierDatasheet
+        {
+            get
+            {
+                return this.m_TransitionSpatialMultiplierDatasheet;
             }
         }
 

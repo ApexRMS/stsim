@@ -235,6 +235,9 @@
     <Compile Include="RuntimeRes\InitialConditionsSpatialMapFineRes.cs" />
     <Compile Include="RuntimeRes\ResolutionTransformer.cs" />
     <Compile Include="RuntimeRes\ResolutionTransformer.Utilities.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialMultiplierFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialMultiplierCollectionFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialMultiplierMapFineRes.cs" />
     <Compile Include="RuntimeSF\FlowGroup.cs" />
     <Compile Include="RuntimeSF\FlowGroupCollection.cs" />
     <Compile Include="RuntimeSF\FlowGroupLinkage.cs" />

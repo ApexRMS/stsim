@@ -1347,6 +1347,11 @@ namespace SyncroSim.STSim
         //            tmt.CreateMultiplierValueMap();
         //        }
         //    }
+        //    ==============================================================================
+        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF IS LIKELY NOT CORRECT
+        //    BECAUSE TRANSITION SPATIAL MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
+        //    BE HANDLED NOW
+        //    ==============================================================================
         //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME)
         //    {
         //        if (this.m_IsSpatial)

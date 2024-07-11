@@ -241,6 +241,9 @@
     <Compile Include="RuntimeRes\InitialConditionsSpatialMapFineRes.cs" />
     <Compile Include="RuntimeRes\ResolutionTransformer.cs" />
     <Compile Include="RuntimeRes\ResolutionTransformer.Utilities.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialInitiationMultiplierFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialInitiationMultiplierCollectionFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialInitiationMultiplierMapFineRes.cs" />
     <Compile Include="RuntimeRes\TransitionSpatialMultiplierFineRes.cs" />
     <Compile Include="RuntimeRes\TransitionSpatialMultiplierCollectionFineRes.cs" />
     <Compile Include="RuntimeRes\TransitionSpatialMultiplierMapFineRes.cs" />

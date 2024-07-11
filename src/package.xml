@@ -624,6 +624,12 @@
 		<column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
 
+  <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" displayName="Transition Spatial Initiation Multipliers" hasIteration="True" hasTimestep="True" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+    <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+    <column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
+    <column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+  </dataSheet>
+
 	<dataSheet name="TransitionDirectionMultiplier" displayName="Transition Direction Multipliers" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
 		<column name="SecondaryStratumId" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
@@ -1197,6 +1203,7 @@
 		<dataSheet name="TransitionSpatialMultiplier" type="Input"/>
     <dataSheet name="TransitionSpatialMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
+    <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionDirectionMultiplier" type="Input"/>
 		<dataSheet name="DigitalElevationModel" type="Input"/>
 		<dataSheet name="TransitionSlopeMultiplier" type="Input"/>
@@ -1392,6 +1399,7 @@
 				<item name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Spatial (Fine Resolution)"/>
 				<item name="TransitionGroupResolution"/>
         <item name="TransitionSpatialMultiplierFineRes"/>
+        <item name="TransitionSpatialInitiationMultiplierFineRes"/>
 			</group>
 		</group>
 	</layout>

@@ -162,7 +162,7 @@ namespace SyncroSim.STSim
         /// fine resolution run)
         /// </summary>
         /// <remarks></remarks>
-        private void ConfigureInitialConditionsSpatialDatasheets()
+        private void ConfigureSpatialDatasheets()
         {
             if (this.m_IsMultiResolution)
             {

@@ -342,7 +342,7 @@ namespace SyncroSim.STSim
             base.Configure();
 
             this.ConfigureIsSpatialRunFlag();
-            this.ConfigureInitialConditionsSpatialDatasheets();
+            this.ConfigureSpatialDatasheets();
             this.ConfigureTimestepUnits();
             this.NormalizeRunControl();
             this.NormalizeTabularOutputOptions();
@@ -371,11 +371,11 @@ namespace SyncroSim.STSim
             this.ConfigureTimestepUnits();
             this.ConfigureIsSpatialRunFlag();
             this.ConfigureTimestepsAndIterations();
-            this.ConfigureInitialConditionsSpatialDatasheets();
+            this.ConfigureSpatialDatasheets();
 
             if (this.IsSpatial)
             {
-                this.ConfigureInitialConditionsSpatialDatasheets();
+                this.ConfigureSpatialDatasheets();
                 this.FillInitialConditionsSpatialCollectionAndMap();
                 this.FillInitialTSTSpatialCollectionAndMap();
                 this.InitializeRasterData(this.MinimumIteration);

@@ -159,6 +159,12 @@
     <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>SpatialMultiplierDataFeedViewFineRes.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -761,6 +767,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.resx">
       <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.resx">
+      <DependentUpon>SpatialMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SpatialMultiplierDataFeedView.resx">
       <DependentUpon>SpatialMultiplierDataFeedView.cs</DependentUpon>

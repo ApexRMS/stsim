@@ -624,7 +624,7 @@
 		<column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
 
-  <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" displayName="Transition Spatial Initiation Multipliers" hasIteration="True" hasTimestep="True" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+  <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" displayName="Transition Spatial Initiation Multipliers" hasIteration="True" hasTimestep="True" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedViewFineRes" viewClassAssembly="SyncroSim.STSim">
     <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
     <column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
     <column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>

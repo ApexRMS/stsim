@@ -159,6 +159,12 @@
     <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedViewFineRes.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -767,6 +773,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedView.resx">
       <DependentUpon>SlopeMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.resx">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.resx">
       <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>

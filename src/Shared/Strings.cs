@@ -521,6 +521,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TRG_RESOLUTION_COLUMN_NAME = "Resolution";
         public const string DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME = "FFBThresholdProportion";
 
+        //Multi-Resolution - Transition spatial multiplier
+        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialMultiplierFineRes";
+
         //Output Stratum Amount
         public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim_OutputStratum";
 

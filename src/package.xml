@@ -612,6 +612,12 @@
 		<column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
 
+  <dataSheet name="TransitionSpatialMultiplierFineRes" displayName="Transition Spatial Multipliers" allowSpecialColumns ="False" hasIteration="True" hasTimestep="True" viewClassName="SyncroSim.STSim.SpatialMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+    <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+    <column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
+    <column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+  </dataSheet>
+
 	<dataSheet name="TransitionSpatialInitiationMultiplier" displayName="Transition Spatial Initiation Multipliers" hasIteration="True" hasTimestep="True" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
@@ -1189,6 +1195,7 @@
 		<dataSheet name="TransitionPatchPrioritization" type="Input"/>
 		<dataSheet name="TransitionSizePrioritization" type="Input"/>
 		<dataSheet name="TransitionSpatialMultiplier" type="Input"/>
+    <dataSheet name="TransitionSpatialMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
 		<dataSheet name="TransitionDirectionMultiplier" type="Input"/>
 		<dataSheet name="DigitalElevationModel" type="Input"/>
@@ -1384,6 +1391,7 @@
 			<group name="MultiResolution" displayName="Multi Resolution">
 				<item name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Spatial (Fine Resolution)"/>
 				<item name="TransitionGroupResolution"/>
+        <item name="TransitionSpatialMultiplierFineRes"/>
 			</group>
 		</group>
 	</layout>

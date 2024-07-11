@@ -43,12 +43,12 @@ namespace SyncroSim.STSim
             this.PanelMultipliersGrid.Size = new System.Drawing.Size(432, 241);
             this.PanelMultipliersGrid.TabIndex = 1;
             //
-            //SpatialMultiplierDataFeedView
+            //SpatialInitiationMultiplierDataFeedView
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6.0F, 13.0F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.PanelMultipliersGrid);
-            this.Name = "SpatialMultiplierDataFeedView";
+            this.Name = "SpatialInitiationMultiplierDataFeedView";
             this.Size = new System.Drawing.Size(432, 241);
             this.ResumeLayout(false);
         }

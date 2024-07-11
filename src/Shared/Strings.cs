@@ -524,6 +524,9 @@ namespace SyncroSim.STSim
         //Multi-Resolution - Transition spatial multiplier
         public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialMultiplierFineRes";
 
+        //Multi-Resolution - Transition spatial initiation multiplier
+        public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialInitiationMultiplierFineRes";
+
         //Output Stratum Amount
         public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim_OutputStratum";
 

@@ -34,6 +34,7 @@ namespace SyncroSim.STSim
         private string m_InitialConditionsSpatialDatasheet;
         private string m_InitialConditionsSpatialPropertiesDatasheet;
         private string m_TransitionSpatialMultiplierDatasheet;
+        private string m_TransitionSpatialInitiationMultiplierDatasheet;
 
         public event EventHandler<CellEventArgs> CellInitialized;
         public event EventHandler<CellEventArgs> CellsInitialized;
@@ -109,6 +110,21 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_TransitionSpatialMultiplierDatasheet;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transition spatial initiation multiplier datasheet name
+        /// (depends on whether the run is fine resolution or base resolution)
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public string TransitionSpatialInitiationMultiplierDatasheet
+        {
+            get
+            {
+                return this.m_TransitionSpatialInitiationMultiplierDatasheet;
             }
         }
 
@@ -1348,7 +1364,7 @@ namespace SyncroSim.STSim
         //        }
         //    }
         //    ==============================================================================
-        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF IS LIKELY NOT CORRECT
+        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF CLAUSE IS LIKELY INCORRECT
         //    BECAUSE TRANSITION SPATIAL MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
         //    BE HANDLED NOW
         //    ==============================================================================
@@ -1377,6 +1393,11 @@ namespace SyncroSim.STSim
         //            }
         //        }
         //    }
+        //    ==============================================================================
+        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF CLAUSE IS LIKELY INCORRECT
+        //    BECAUSE TRANSITION SPATIAL INITIATION MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
+        //    BE HANDLED NOW
+        //    ==============================================================================
         //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
         //    {
         //        if (this.m_IsSpatial)

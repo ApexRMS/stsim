@@ -170,6 +170,7 @@ namespace SyncroSim.STSim
                 this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPICF_NAME;
 
                 this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME;
+                this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME;
             } 
             else
             {
@@ -177,6 +178,7 @@ namespace SyncroSim.STSim
                 this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPIC_NAME;
 
                 this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME;
+                this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME;
             }
         }
 

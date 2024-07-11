@@ -2168,7 +2168,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionSpatialInitiationMultipliers.Count == 0);
             Debug.Assert(this.m_TransitionSpatialInitiationMultiplierRasters.Count == 0);
 
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME);
+            DataSheet ds = this.ResultScenario.GetDataSheet(this.m_TransitionSpatialInitiationMultiplierDatasheet);
             // TODO: fix this when we incorporate the stsim multiresolution package into stsim
             //bool highResScenario = false;
 

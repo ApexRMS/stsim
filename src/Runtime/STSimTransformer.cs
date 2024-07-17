@@ -35,6 +35,7 @@ namespace SyncroSim.STSim
         private string m_InitialConditionsSpatialPropertiesDatasheet;
         private string m_TransitionSpatialMultiplierDatasheet;
         private string m_TransitionSpatialInitiationMultiplierDatasheet;
+        private string m_DigitalElevationModelDatasheet;
 
         public event EventHandler<CellEventArgs> CellInitialized;
         public event EventHandler<CellEventArgs> CellsInitialized;
@@ -125,6 +126,21 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_TransitionSpatialInitiationMultiplierDatasheet;
+            }
+        }
+
+        /// <summary>
+        /// Gets the digital elevation model datasheet name
+        /// (depends on whether the run is fine resolution or base resolution)
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public string DigitalElevationModelDatasheet
+        {
+            get
+            {
+                return this.m_DigitalElevationModelDatasheet;
             }
         }
 

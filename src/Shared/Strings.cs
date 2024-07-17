@@ -527,6 +527,13 @@ namespace SyncroSim.STSim
         //Multi-Resolution - Transition spatial initiation multiplier
         public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialInitiationMultiplierFineRes";
 
+        //Multi-Resolution - Transition Slope Multiplier
+        //public const string DATAFEED_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplierDataFeed";
+        public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FINE_RES_NAME = "stsim_DigitalElevationModelFineRes";
+        //public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_FINE_RES_COLUMN_NAME = "DigitalElevationModelFileName";
+        //public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplier";
+        //public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME = "Slope";
+
         //Output Stratum Amount
         public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim_OutputStratum";
 

@@ -171,6 +171,8 @@ namespace SyncroSim.STSim
 
                 this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME;
                 this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME;
+
+                this.m_DigitalElevationModelDatasheet = Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FINE_RES_NAME;
             } 
             else
             {
@@ -179,6 +181,8 @@ namespace SyncroSim.STSim
 
                 this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME;
                 this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME;
+
+                this.m_DigitalElevationModelDatasheet = Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME;
             }
         }
 

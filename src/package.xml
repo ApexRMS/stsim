@@ -1205,9 +1205,9 @@
 		<dataSheet name="TransitionPatchPrioritization" type="Input"/>
 		<dataSheet name="TransitionSizePrioritization" type="Input"/>
 		<dataSheet name="TransitionSpatialMultiplier" type="Input"/>
-    <dataSheet name="TransitionSpatialMultiplierFineRes" type="Input"/>
+		<dataSheet name="TransitionSpatialMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
-    <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
+		<dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionDirectionMultiplier" type="Input"/>
 		<dataSheet name="DigitalElevationModel" type="Input"/>
 		<dataSheet name="DigitalElevationModelFineRes" type="Input"/>
@@ -1403,8 +1403,8 @@
 			<group name="MultiResolution" displayName="Multi Resolution">
 				<item name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Spatial (Fine Resolution)"/>
 				<item name="TransitionGroupResolution"/>
-        <item name="TransitionSpatialMultiplierFineRes"/>
-        <item name="TransitionSpatialInitiationMultiplierFineRes"/>
+				<item name="TransitionSpatialMultiplierFineRes"/>
+				<item name="TransitionSpatialInitiationMultiplierFineRes"/>
 				<item name="DigitalElevationModelFineRes"/>
 			</group>
 		</group>

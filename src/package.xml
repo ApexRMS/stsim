@@ -649,6 +649,10 @@
 		<column name="DigitalElevationModelFileName" displayName="Digital Elevation Model File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
 
+	<dataSheet name="DigitalElevationModelFineRes" displayName="Digital Elevation Model (Fine Resolution)" isSingleRow="True">
+		<column name="DigitalElevationModelFileName" displayName="Digital Elevation Model File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+	</dataSheet>
+
 	<dataSheet name="TransitionSlopeMultiplier" displayName="Transition Slope Multipliers" hasIteration="True" hasTimestep="True" viewClassName="SyncroSim.STSim.SlopeMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
 		<column name="SecondaryStratumId" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
@@ -1206,6 +1210,7 @@
     <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionDirectionMultiplier" type="Input"/>
 		<dataSheet name="DigitalElevationModel" type="Input"/>
+		<dataSheet name="DigitalElevationModelFineRes" type="Input"/>
 		<dataSheet name="TransitionSlopeMultiplier" type="Input"/>
 		<dataSheet name="TransitionAdjacencySetting" type="Input"/>
 		<dataSheet name="TransitionAdjacencyMultiplier" type="Input"/>
@@ -1400,6 +1405,7 @@
 				<item name="TransitionGroupResolution"/>
         <item name="TransitionSpatialMultiplierFineRes"/>
         <item name="TransitionSpatialInitiationMultiplierFineRes"/>
+				<item name="DigitalElevationModelFineRes"/>
 			</group>
 		</group>
 	</layout>

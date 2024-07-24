@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using SyncroSim.Core;
 
@@ -15,7 +16,6 @@ namespace SyncroSim.STSim
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
         private string m_MultiResFilename;
         private string m_STSimFilename;
-        private bool m_CanDoMultiResolution;
 
         public STSimTransformer STSimTransformer
         {
@@ -29,16 +29,9 @@ namespace SyncroSim.STSim
             }
         }
 
-        public override void Configure()
-        {
-            base.Configure();
-
-            this.m_CanDoMultiResolution = CanDoMultiResolution(this.ResultScenario);
-        }
-
         public override void Initialize()
         {
-            if(this.m_CanDoMultiResolution)
+            if (CanDoMultiResolution(this.ResultScenario))
             {
                 AuxillarySetup();
                 base.Initialize();

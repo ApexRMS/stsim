@@ -633,6 +633,10 @@ namespace SyncroSim.STSim
         [UpdateAttribute(4.1, "This update adds the new ResolutionId column to all spatial output datasheets, and sets its value to 0 for all rows.")]
         public static void Update_4_100(DataStore store)
         {
+            store.ExecuteNonQuery("CREATE TABLE stsim_Resolution(ResolutionId INTEGER PRIMARY KEY AUTOINCREMENT, ProjectId INTEGER, Resolution TEXT)");
+            store.ExecuteNonQuery("INSERT INTO stsim_Resolution(ProjectId, Resolution) SELECT ProjectId, 'Base' from core_Project");
+            store.ExecuteNonQuery("INSERT INTO stsim_Resolution(ProjectId, Resolution) SELECT ProjectId, 'Fine' from core_Project");
+
             store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialState ADD COLUMN ResolutionId INTEGER");
             store.ExecuteNonQuery("UPDATE stsim_OutputSpatialState SET ResolutionId=0");
 

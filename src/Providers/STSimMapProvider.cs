@@ -15,6 +15,8 @@ namespace SyncroSim.STSim
 {
     internal class STSimMapProvider : MapProvider
     {
+        bool ShowMultiResolutionCriteriaNodes = false;
+
         static string AVG_ALL_ITER = "(Average for all Iterations)";
         static string AVG_PROB_ALL_ITER = "(Probability for all Iterations)";
 
@@ -38,6 +40,8 @@ namespace SyncroSim.STSim
 
         public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project, store);
+
             DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);     
 
             this.AddStateClassCriteria(layout, project, store);
@@ -61,9 +65,15 @@ namespace SyncroSim.STSim
             LayoutItem StateClassesGroup = new LayoutItem("stsim_StateClassesGroup", "State Classes", true);
 
             StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup);
-            StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup, true); // DEV TODO: only run if multiresolution turned on
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup, true);
+            }
             StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store);
-            StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store, true); // DEV TODO: only run if multiresolution turned on
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store, true);
+            }
 
             layout.Items.Add(StateClassesGroup);
         }
@@ -128,9 +138,15 @@ namespace SyncroSim.STSim
             LayoutItem AgesGroup = new LayoutItem("stsim_AgesGroup", "Ages", true);
 
             AgesGroup = AddAgeCriteriaIteration(AgesGroup);
-            AgesGroup = AddAgeCriteriaIteration(AgesGroup, true);
+            if(this.ShowMultiResolutionCriteriaNodes)
+            {
+                AgesGroup = AddAgeCriteriaIteration(AgesGroup, true);
+            }
             AgesGroup = AddAgeCriteriaAvg(AgesGroup);
-            AgesGroup = AddAgeCriteriaAvg(AgesGroup, true);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AgesGroup = AddAgeCriteriaAvg(AgesGroup, true);
+            }
 
             layout.Items.Add(AgesGroup);
         }
@@ -247,11 +263,13 @@ namespace SyncroSim.STSim
                 "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, Strings.DATASHEET_TRANSITION_TYPE_NAME, store);
 
-            // Fine Resolution
-            AddMapTransitionGroupVariables(
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroupFineRes.Items,
                 "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, null, store, true);
+            }
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTPGroup.Items,
@@ -1408,6 +1426,31 @@ namespace SyncroSim.STSim
             }
 
             return true;
+        }
+
+        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
+        {
+            List<Scenario> resultScenarios = new List<Scenario>();
+
+            foreach (Scenario s in project.Results)
+            {
+                if(s.IsActive)
+                {
+                    resultScenarios.Add(s);
+                }
+            }
+
+            foreach (Scenario s in resultScenarios)
+            {
+                DataSheet initialConditionsFineSpatrialDatasheet = s.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
+
+                if(initialConditionsFineSpatrialDatasheet != null && initialConditionsFineSpatrialDatasheet.GetData().Rows.Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

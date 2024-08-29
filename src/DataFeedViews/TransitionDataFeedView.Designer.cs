@@ -44,10 +44,9 @@ namespace SyncroSim.STSim
             this.PanelZoomControls.BackColor = System.Drawing.SystemColors.Control;
             this.PanelZoomControls.Controls.Add(this.ButtonZoomIn);
             this.PanelZoomControls.Controls.Add(this.ButtonZoomOut);
-            this.PanelZoomControls.Location = new System.Drawing.Point(939, 0);
-            this.PanelZoomControls.Margin = new System.Windows.Forms.Padding(4);
+            this.PanelZoomControls.Location = new System.Drawing.Point(704, 0);
             this.PanelZoomControls.Name = "PanelZoomControls";
-            this.PanelZoomControls.Size = new System.Drawing.Size(79, 25);
+            this.PanelZoomControls.Size = new System.Drawing.Size(59, 20);
             this.PanelZoomControls.TabIndex = 14;
             // 
             // ButtonZoomIn
@@ -58,10 +57,9 @@ namespace SyncroSim.STSim
             this.ButtonZoomIn.FlatAppearance.BorderSize = 0;
             this.ButtonZoomIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonZoomIn.Image = global::SyncroSim.STSim.Properties.Resources.Plus16x16;
-            this.ButtonZoomIn.Location = new System.Drawing.Point(27, 0);
-            this.ButtonZoomIn.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonZoomIn.Location = new System.Drawing.Point(20, 0);
             this.ButtonZoomIn.Name = "ButtonZoomIn";
-            this.ButtonZoomIn.Size = new System.Drawing.Size(25, 25);
+            this.ButtonZoomIn.Size = new System.Drawing.Size(19, 20);
             this.ButtonZoomIn.TabIndex = 1;
             this.ButtonZoomIn.UseVisualStyleBackColor = false;
             // 
@@ -74,18 +72,19 @@ namespace SyncroSim.STSim
             this.ButtonZoomOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonZoomOut.Image = global::SyncroSim.STSim.Properties.Resources.Minus16x16;
             this.ButtonZoomOut.Location = new System.Drawing.Point(0, 0);
-            this.ButtonZoomOut.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonZoomOut.Name = "ButtonZoomOut";
-            this.ButtonZoomOut.Size = new System.Drawing.Size(25, 25);
+            this.ButtonZoomOut.Size = new System.Drawing.Size(19, 20);
             this.ButtonZoomOut.TabIndex = 0;
             this.ButtonZoomOut.UseVisualStyleBackColor = false;
             // 
             // SplitContainerTabStrip
             // 
-            this.SplitContainerTabStrip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.SplitContainerTabStrip.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SplitContainerTabStrip.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.SplitContainerTabStrip.Location = new System.Drawing.Point(127, 0);
+            this.SplitContainerTabStrip.Location = new System.Drawing.Point(95, 0);
+            this.SplitContainerTabStrip.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.SplitContainerTabStrip.Name = "SplitContainerTabStrip";
             // 
             // SplitContainerTabStrip.Panel1
@@ -95,9 +94,9 @@ namespace SyncroSim.STSim
             // SplitContainerTabStrip.Panel2
             // 
             this.SplitContainerTabStrip.Panel2.Controls.Add(this.ScrollBarHorizontal);
-            this.SplitContainerTabStrip.Size = new System.Drawing.Size(810, 25);
-            this.SplitContainerTabStrip.SplitterDistance = 603;
-            this.SplitContainerTabStrip.SplitterWidth = 11;
+            this.SplitContainerTabStrip.Size = new System.Drawing.Size(608, 20);
+            this.SplitContainerTabStrip.SplitterDistance = 452;
+            this.SplitContainerTabStrip.SplitterWidth = 8;
             this.SplitContainerTabStrip.TabIndex = 5;
             this.SplitContainerTabStrip.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintSplitContainer);
             // 
@@ -107,8 +106,9 @@ namespace SyncroSim.STSim
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabStripMain.BackColor = System.Drawing.Color.White;
             this.TabStripMain.Location = new System.Drawing.Point(0, -1);
+            this.TabStripMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.TabStripMain.Name = "TabStripMain";
-            this.TabStripMain.Size = new System.Drawing.Size(603, 27);
+            this.TabStripMain.Size = new System.Drawing.Size(452, 22);
             this.TabStripMain.TabIndex = 0;
             this.TabStripMain.TabStop = false;
             this.TabStripMain.Text = "TabStripMain";
@@ -118,7 +118,7 @@ namespace SyncroSim.STSim
             this.ScrollBarHorizontal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ScrollBarHorizontal.Location = new System.Drawing.Point(0, 0);
             this.ScrollBarHorizontal.Name = "ScrollBarHorizontal";
-            this.ScrollBarHorizontal.Size = new System.Drawing.Size(196, 25);
+            this.ScrollBarHorizontal.Size = new System.Drawing.Size(148, 20);
             this.ScrollBarHorizontal.TabIndex = 0;
             this.ScrollBarHorizontal.TabStop = true;
             this.ScrollBarHorizontal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.OnHorizontalScroll);
@@ -130,9 +130,10 @@ namespace SyncroSim.STSim
             this.PanelBottomControls.Controls.Add(this.PanelTabNavigator);
             this.PanelBottomControls.Controls.Add(this.SplitContainerTabStrip);
             this.PanelBottomControls.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelBottomControls.Location = new System.Drawing.Point(0, 412);
+            this.PanelBottomControls.Location = new System.Drawing.Point(0, 335);
+            this.PanelBottomControls.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.PanelBottomControls.Name = "PanelBottomControls";
-            this.PanelBottomControls.Size = new System.Drawing.Size(1018, 25);
+            this.PanelBottomControls.Size = new System.Drawing.Size(764, 20);
             this.PanelBottomControls.TabIndex = 0;
             // 
             // PanelTabNavigator
@@ -143,8 +144,9 @@ namespace SyncroSim.STSim
             this.PanelTabNavigator.Controls.Add(this.ButtonNext);
             this.PanelTabNavigator.Controls.Add(this.ButtonPrevious);
             this.PanelTabNavigator.Location = new System.Drawing.Point(1, 0);
+            this.PanelTabNavigator.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.PanelTabNavigator.Name = "PanelTabNavigator";
-            this.PanelTabNavigator.Size = new System.Drawing.Size(127, 25);
+            this.PanelTabNavigator.Size = new System.Drawing.Size(95, 20);
             this.PanelTabNavigator.TabIndex = 2;
             // 
             // ButtonSelectStratum
@@ -155,10 +157,9 @@ namespace SyncroSim.STSim
             this.ButtonSelectStratum.FlatAppearance.BorderSize = 0;
             this.ButtonSelectStratum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonSelectStratum.Image = global::SyncroSim.STSim.Properties.Resources.Search16x16;
-            this.ButtonSelectStratum.Location = new System.Drawing.Point(50, 0);
-            this.ButtonSelectStratum.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonSelectStratum.Location = new System.Drawing.Point(38, 0);
             this.ButtonSelectStratum.Name = "ButtonSelectStratum";
-            this.ButtonSelectStratum.Size = new System.Drawing.Size(25, 25);
+            this.ButtonSelectStratum.Size = new System.Drawing.Size(19, 20);
             this.ButtonSelectStratum.TabIndex = 2;
             this.ButtonSelectStratum.UseVisualStyleBackColor = false;
             // 
@@ -170,10 +171,9 @@ namespace SyncroSim.STSim
             this.ButtonLast.FlatAppearance.BorderSize = 0;
             this.ButtonLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonLast.Image = global::SyncroSim.STSim.Properties.Resources.Last16x16;
-            this.ButtonLast.Location = new System.Drawing.Point(100, 0);
-            this.ButtonLast.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonLast.Location = new System.Drawing.Point(75, 0);
             this.ButtonLast.Name = "ButtonLast";
-            this.ButtonLast.Size = new System.Drawing.Size(25, 25);
+            this.ButtonLast.Size = new System.Drawing.Size(19, 20);
             this.ButtonLast.TabIndex = 4;
             this.ButtonLast.UseVisualStyleBackColor = false;
             // 
@@ -186,9 +186,8 @@ namespace SyncroSim.STSim
             this.ButtonFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonFirst.Image = global::SyncroSim.STSim.Properties.Resources.First16x16;
             this.ButtonFirst.Location = new System.Drawing.Point(0, 0);
-            this.ButtonFirst.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonFirst.Name = "ButtonFirst";
-            this.ButtonFirst.Size = new System.Drawing.Size(25, 25);
+            this.ButtonFirst.Size = new System.Drawing.Size(19, 20);
             this.ButtonFirst.TabIndex = 0;
             this.ButtonFirst.UseVisualStyleBackColor = false;
             // 
@@ -200,10 +199,9 @@ namespace SyncroSim.STSim
             this.ButtonNext.FlatAppearance.BorderSize = 0;
             this.ButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonNext.Image = global::SyncroSim.STSim.Properties.Resources.Next16x16;
-            this.ButtonNext.Location = new System.Drawing.Point(75, 0);
-            this.ButtonNext.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonNext.Location = new System.Drawing.Point(56, 0);
             this.ButtonNext.Name = "ButtonNext";
-            this.ButtonNext.Size = new System.Drawing.Size(25, 25);
+            this.ButtonNext.Size = new System.Drawing.Size(19, 20);
             this.ButtonNext.TabIndex = 3;
             this.ButtonNext.UseVisualStyleBackColor = false;
             // 
@@ -215,19 +213,18 @@ namespace SyncroSim.STSim
             this.ButtonPrevious.FlatAppearance.BorderSize = 0;
             this.ButtonPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonPrevious.Image = global::SyncroSim.STSim.Properties.Resources.Previous16x16;
-            this.ButtonPrevious.Location = new System.Drawing.Point(25, 0);
-            this.ButtonPrevious.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonPrevious.Location = new System.Drawing.Point(19, 0);
             this.ButtonPrevious.Name = "ButtonPrevious";
-            this.ButtonPrevious.Size = new System.Drawing.Size(25, 25);
+            this.ButtonPrevious.Size = new System.Drawing.Size(19, 20);
             this.ButtonPrevious.TabIndex = 1;
             this.ButtonPrevious.UseVisualStyleBackColor = false;
             // 
             // ScrollBarVertical
             // 
             this.ScrollBarVertical.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ScrollBarVertical.Location = new System.Drawing.Point(998, 0);
+            this.ScrollBarVertical.Location = new System.Drawing.Point(744, 0);
             this.ScrollBarVertical.Name = "ScrollBarVertical";
-            this.ScrollBarVertical.Size = new System.Drawing.Size(20, 412);
+            this.ScrollBarVertical.Size = new System.Drawing.Size(20, 335);
             this.ScrollBarVertical.TabIndex = 1;
             this.ScrollBarVertical.TabStop = true;
             this.ScrollBarVertical.Scroll += new System.Windows.Forms.ScrollEventHandler(this.OnVerticalScroll);
@@ -237,21 +234,23 @@ namespace SyncroSim.STSim
             this.PanelControlHost.BackColor = System.Drawing.Color.White;
             this.PanelControlHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelControlHost.Location = new System.Drawing.Point(0, 0);
+            this.PanelControlHost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.PanelControlHost.Name = "PanelControlHost";
-            this.PanelControlHost.Size = new System.Drawing.Size(998, 412);
+            this.PanelControlHost.Size = new System.Drawing.Size(744, 335);
             this.PanelControlHost.TabIndex = 0;
             this.PanelControlHost.TabStop = true;
             // 
             // TransitionDataFeedView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.Controls.Add(this.PanelControlHost);
             this.Controls.Add(this.ScrollBarVertical);
             this.Controls.Add(this.PanelBottomControls);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "TransitionDataFeedView";
-            this.Size = new System.Drawing.Size(1018, 437);
+            this.Size = new System.Drawing.Size(764, 355);
             this.PanelZoomControls.ResumeLayout(false);
             this.SplitContainerTabStrip.Panel1.ResumeLayout(false);
             this.SplitContainerTabStrip.Panel2.ResumeLayout(false);

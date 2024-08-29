@@ -141,7 +141,11 @@ namespace SyncroSim.STSim
             {
                 if (contagionCell.TstValues.Contains(tstgroup.TSTGroupId))
                 {
-                    tstvalue = contagionCell.TstValues[tstgroup.TSTGroupId].TstValue;
+                    int contagionTstValue = contagionCell.TstValues[tstgroup.TSTGroupId].TstValue;
+                    if (contagionTstValue != int.MaxValue)
+                    {
+                        tstvalue = contagionTstValue;
+                    }
                 }
             }
 

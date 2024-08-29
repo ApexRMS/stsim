@@ -16,24 +16,6 @@ namespace SyncroSim.STSim
             this.LegacyPackageName = "stsimsf";
         }
 
-        protected override void OnAfterUpdate(DataStore store)
-        {
-            base.OnAfterUpdate(store);
-
-#if DEBUG
-            //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
-            //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
-
-            ASSERT_INDEX_EXISTS(store, "stsimsf_FlowPathway");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_OutputFlow");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_OutputStock");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_StockTypeGroupMembership");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_FlowTypeGroupMembership");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_StockTransitionMultiplier");
-            ASSERT_INDEX_EXISTS(store, "stsimsf_FlowMultiplier");
-#endif
-        }
-
         [UpdateAttribute(0.101, "This update adds support lateral flows")]
         public static void Update_0_101(DataStore store)
         {
@@ -172,12 +154,12 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'SF_', 'STSIMSF_')");
             }
 
-            if (store.TableExists("core_Plot"))
+            if (store.TableExists("core_Map"))
             {
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'SF_', 'STSIMSF_')");
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STKG', 'STSIMSF_STKG')");
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'FLOG', 'STSIMSF_FLOG')");
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'LFLOG', 'STSIMSF_LFLOG')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'SF_', 'STSIMSF_')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STKG', 'STSIMSF_STKG')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'FLOG', 'STSIMSF_FLOG')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'LFLOG', 'STSIMSF_LFLOG')");
             }
         }
 
@@ -209,9 +191,9 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "flowgroupdensity", "stsimsf_FlowGroupDensityVariable");
             RenameChartVariable(store, "flowgroup", "stsimsf_FlowGroupVariable");
 
-            RenamePlotVariable(store, "stkg", "stsimsf_stkg");
-            RenamePlotVariable(store, "flog", "stsimsf_flog");
-            RenamePlotVariable(store, "lflog", "stsimsf_lflog");
+            RenameMapVariable(store, "stkg", "stsimsf_stkg");
+            RenameMapVariable(store, "flog", "stsimsf_flog");
+            RenameMapVariable(store, "lflog", "stsimsf_lflog");
         }
 
         [UpdateAttribute(0.105, "This update adds spatial averaging to the output options.")]
@@ -339,12 +321,12 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "stsimsf_FlowGroupDensityVariable", "stsimsf_FlowGroupDensity");
         }
 
-        [UpdateAttribute(0.109, "This is the final update to move from v2 to v3")]
-        public static void Update_0_109(DataStore store)
+        [UpdateAttribute(4.0, "This update adjusts the system tables for v2 to v3")]
+        public static void Update_4_000(DataStore store)
         {
-            store.ExecuteNonQuery("ALTER TABLE stsimsf_OutputOptions RENAME TO stsim_OutputOptionsStockFlow");
-            store.ExecuteNonQuery("DROP TABLE stsimsf_Terminology");
+            DropTable(store, "stsimsf_Terminology");
 
+            RenameTable(store, "stsimsf_OutputOptions", "stsim_OutputOptionsStockFlow");
             RenameTablesWithPrefix(store, "stsimsf_", "stsim_");
 
             RenameChartVariable(store, "stsimsf_StockGroup", "stsim_StockGroup");
@@ -352,28 +334,16 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "stsimsf_FlowGroup", "stsim_FlowGroup");
             RenameChartVariable(store, "stsimsf_FlowGroupDensity", "stsim_FlowGroupDensity");
 
-            RenamePlotVariable(store, "stsimsf_stkg", "stsim_stkg");
-            RenamePlotVariable(store, "stsimsf_flog", "stsim_flog");
-            RenamePlotVariable(store, "stsimsf_lflog", "stsim_lflog");
-            RenamePlotVariable(store, "stsimsf_avgstkg", "stsim_avgstkg");
-            RenamePlotVariable(store, "stsimsf_avgflog", "stsim_avgflog");
-            RenamePlotVariable(store, "stsimsf_avglflog", "stsim_avglflog");
+            RenameMapVariable(store, "stsimsf_stkg", "stsim_stkg");
+            RenameMapVariable(store, "stsimsf_flog", "stsim_flog");
+            RenameMapVariable(store, "stsimsf_lflog", "stsim_lflog");
+            RenameMapVariable(store, "stsimsf_avgstkg", "stsim_avgstkg");
+            RenameMapVariable(store, "stsimsf_avgflog", "stsim_avgflog");
+            RenameMapVariable(store, "stsimsf_avglflog", "stsim_avglflog");
 
             store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
             store.ExecuteNonQuery("UPDATE core_Chart SET CriteriaXVariable = REPLACE(CriteriaXVariable, 'STSIMSF_', 'STSIM_')");
-            store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
+            store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STSIMSF_', 'STSIM_')");
         }
-
-#if DEBUG
-        public static void ASSERT_INDEX_EXISTS(DataStore store, string tableName)
-        {
-            if (store.TableExists(tableName))
-            {
-                string IndexName = tableName + "_Index";
-                string Query = string.Format(CultureInfo.InvariantCulture, "SELECT COUNT(name) FROM sqlite_master WHERE type = 'index' AND name = '{0}'", IndexName);
-                Debug.Assert((long)store.ExecuteScalar(Query) == 1);
-            }
-        }
-#endif
     }
 }

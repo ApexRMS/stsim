@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Apex;
 using System.Text;
+using System.IO;
 
 namespace SyncroSim.STSim
 {
@@ -2032,14 +2033,15 @@ namespace SyncroSim.STSim
                     false,
                     Spatial.DefaultNoDataValue);
 
-                Spatial.WriteRasterData(
+                WriteMultiResolutionRasterData(
                     rastOutput,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_CLASS),
                     iteration,
                     timestep,
                     null,
                     Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.IsMultiResolution);
             }
         }
 
@@ -2091,14 +2093,15 @@ namespace SyncroSim.STSim
                     arr[c.CellId] = transitionedPixels[c.CollectionIndex];
                 }
 
-                Spatial.WriteRasterData(
+                WriteMultiResolutionRasterData(
                     rastOP, 
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
                     iteration, 
                     timestep, 
                     transitionGroupId, 
                     Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX, 
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);            
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.IsMultiResolution);            
             }
         }
 
@@ -2123,14 +2126,15 @@ namespace SyncroSim.STSim
                     rastOutput.IntCells[c.CellId] = c.Age;
                 }
 
-                Spatial.WriteRasterData(
+                WriteMultiResolutionRasterData(
                     rastOutput,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_AGE),
                     iteration,
                     timestep,
                      null,
                     Constants.SPATIAL_MAP_AGE_FILEPREFIX,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.IsMultiResolution);
             }
         }
 
@@ -2181,14 +2185,15 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         rastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TST),
                         iteration,
                         timestep,
                         tg.TransitionGroupId,
                         Constants.SPATIAL_MAP_TST_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution);
                 }
             }
         }
@@ -2224,14 +2229,15 @@ namespace SyncroSim.STSim
                     false,
                     Spatial.DefaultNoDataValue);
 
-                Spatial.WriteRasterData(
+                WriteMultiResolutionRasterData(
                     rastOutput,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STRATUM),
                     iteration,
                     timestep,
                     null,
                     Constants.SPATIAL_MAP_STRATUM_FILEPREFIX,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.IsMultiResolution);
             }
         }
 
@@ -2278,14 +2284,15 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         rastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_STATE_ATTRIBUTE),
                         iteration,
                         timestep,
                         AttributeTypeId,
                         Constants.SPATIAL_MAP_STATE_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution);
                 }
             }
         }
@@ -2314,14 +2321,15 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = NewValues[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         rastOP,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_ATTRIBUTE),
                         iteration,
                         timestep,
                         AttributeId,
                         Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution);
                 }
             }
         }
@@ -2374,14 +2382,15 @@ namespace SyncroSim.STSim
                     arr[c.CellId] = transitionedPixels[c.CollectionIndex];
                 }
 
-                Spatial.WriteRasterData(
+                WriteMultiResolutionRasterData(
                     rastOP,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION_EVENT),
                     iteration,
                     timestep,
                     transitionGroupId,
                     Constants.SPATIAL_MAP_TRANSITION_EVENT_FILEPREFIX,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.IsMultiResolution);
             }
         }
 
@@ -2400,6 +2409,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            bool writeToJobFolder = this.IsChildRun();
+
             foreach (int StateClassId in this.m_AvgStateClassMap.Keys)
             {
                 Dictionary<int, double[]> dict = this.m_AvgStateClassMap[StateClassId];
@@ -2415,14 +2426,16 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         RastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS),
                         0,
                         timestep,
                         StateClassId,
                         Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2432,6 +2445,8 @@ namespace SyncroSim.STSim
         /// </summary>
         private void WriteAvgAgeRasters()
         {
+            bool writeToJobFolder = this.IsChildRun();
+
             foreach (int timestep in this.m_AvgAgeMap.Keys)
             {
                 double[] Values = this.m_AvgAgeMap[timestep];
@@ -2444,14 +2459,16 @@ namespace SyncroSim.STSim
                     Debug.Assert(arr[c.CellId] != Spatial.DefaultNoDataValue);
                 }
 
-                Spatial.WriteRasterData(
+                WriteMultiResolutionRasterData(
                     RastOutput,
                     this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_AGE),
                     0,
                     timestep,
                     null,
                     Constants.SPATIAL_MAP_AVG_AGE_FILEPREFIX,
-                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                    Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                    this.IsMultiResolution,
+                    writeToJobFolder);
             }
         }
 
@@ -2470,6 +2487,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            bool writeToJobFolder = this.IsChildRun();
+
             foreach (int StratumId in this.m_AvgStratumMap.Keys)
             {
                 Dictionary<int, double[]> dict = this.m_AvgStratumMap[StratumId];
@@ -2485,14 +2504,16 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         RastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STRATUM),
                         0,
                         timestep,
                         StratumId,
                         Constants.SPATIAL_MAP_AVG_STRATUM_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2512,6 +2533,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int tgId in this.m_AvgTransitionProbMap.Keys)
             {
@@ -2551,14 +2574,16 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         RastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_PROBABILITY),
                         0,
                         timestep,
                         tgId,
                         Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2578,6 +2603,8 @@ namespace SyncroSim.STSim
                 return;
             }
 
+            bool writeToJobFolder = this.IsChildRun();
+
             foreach (int TransitionGroupId in this.m_AvgTSTMap.Keys)
             {
                 Dictionary<int, double[]> dict = this.m_AvgTSTMap[TransitionGroupId];
@@ -2593,14 +2620,16 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         RastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TST),
                         0,
                         timestep,
                         TransitionGroupId,
                         Constants.SPATIAL_MAP_AVG_TST_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2619,6 +2648,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int AttrId in this.m_AvgStateAttrMap.Keys)
             {
@@ -2647,14 +2678,16 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         RastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_ATTRIBUTE),
                         0,
                         timestep,
                         AttrId,
                         Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -2673,6 +2706,8 @@ namespace SyncroSim.STSim
             {
                 return;
             }
+
+            bool writeToJobFolder = this.IsChildRun();
 
             foreach (int AttrId in this.m_AvgTransitionAttrMap.Keys)
             {
@@ -2706,14 +2741,16 @@ namespace SyncroSim.STSim
                         arr[c.CellId] = Values[c.CollectionIndex];
                     }
 
-                    Spatial.WriteRasterData(
+                    WriteMultiResolutionRasterData(
                         RastOutput,
                         this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_AVG_SPATIAL_TRANSITION_ATTRIBUTE),
                         0,
                         timestep,
                         AttrId,
                         Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_FILEPREFIX,
-                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN);
+                        Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
+                        this.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -3042,6 +3079,38 @@ namespace SyncroSim.STSim
             }
 
             return d;
+        }
+
+        private bool IsChildRun()
+        {
+            bool writeToJobFolder = false;
+            string pattern = "^.*" + Strings.CORE_MP_JOB_FILE_PREFIX + "-([\\d]*)\\.ssim\\.temp\\.*";
+            System.Text.RegularExpressions.Match m = System.Text.RegularExpressions.Regex.Match(this.JobFolderName, pattern);
+            if (m.Success)
+            {
+                writeToJobFolder = true;
+            }
+
+            return writeToJobFolder;
+        }
+
+        internal static void WriteMultiResolutionRasterData(SyncroSimRaster rastOutput, DataSheet datasheet, int iteration, int timestep, int? groupId, string outputDatasheetPrefix, string outputDatasheetFileNameColumn, bool isMultiResolution, bool writeToJobFolder = false)
+        {
+            DataRow dr = Spatial.WriteRasterData(
+                rastOutput,
+                datasheet,
+                iteration,
+                timestep,
+                groupId,
+                string.Format("{0}{1}", outputDatasheetPrefix, isMultiResolution ? ".res1" : ""),
+                outputDatasheetFileNameColumn,
+                writeToJobFolder
+            );
+
+            if (isMultiResolution)
+            {
+                dr[Strings.DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN] = 1;
+            }
         }
     }
 }

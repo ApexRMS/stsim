@@ -3,7 +3,7 @@
 
 namespace SyncroSim.STSim
 {
-    internal partial class SpatialInitiationMultiplierDataFeedView : SyncroSim.Core.Forms.DataFeedView
+    internal partial class SpatialInitiationMultiplierDataFeedViewFineRes : SyncroSim.Core.Forms.DataFeedView
     {
         //UserControl overrides dispose to clean up the component list.
         [System.Diagnostics.DebuggerNonUserCode()]
@@ -43,12 +43,12 @@ namespace SyncroSim.STSim
             this.PanelMultipliersGrid.Size = new System.Drawing.Size(432, 241);
             this.PanelMultipliersGrid.TabIndex = 1;
             //
-            //SpatialInitiationMultiplierDataFeedView
+            //SpatialInitiationMultiplierDataFeedViewFineRes
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6.0F, 13.0F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.PanelMultipliersGrid);
-            this.Name = "SpatialInitiationMultiplierDataFeedView";
+            this.Name = "SpatialInitiationMultiplierDataFeedViewFineRes";
             this.Size = new System.Drawing.Size(432, 241);
             this.ResumeLayout(false);
         }

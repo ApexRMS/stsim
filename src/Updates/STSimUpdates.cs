@@ -1,4 +1,4 @@
-﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -11,43 +11,20 @@ namespace SyncroSim.STSim
 {
     internal partial class STSimUpdates : DotNetUpdateProvider
     {
-        protected override IEnumerable<UpdateProvider> GetAdditional2xLegacyUpdateProviders()
+        protected override IEnumerable<UpdateProvider> GetAdditional2xLegacyUpdateProviders(DataStore store)
         {
-            //The core and corestime packges were combined for v3, but we need to keep their
-            //updates separate so we return the stochastic time update provider here.
+            //The stsim and stsimsf packges were combined for v3, but we need to keep their
+            //updates separate so we return the stsimsf update provider here. Note, however,
+            //that we don't want to try to do a legacy update if there is no schema table.
 
-            List<UpdateProvider> l = new List<UpdateProvider>
+            List<UpdateProvider> l = new List<UpdateProvider>();
+         
+            if (store.TableExists("stsimsf_Schema"))
             {
-                new SFUpdates()
-            };
+                l.Add(new SFUpdates());
+            }
 
             return l;
-        }
-
-        protected override void OnAfterUpdate(DataStore store)
-        {
-            base.OnAfterUpdate(store);
-
-#if DEBUG
-            //Verify that all expected indexes exist after the update because it is easy to forget to recreate them after 
-            //adding a column to an existing table (which requires the table to be recreated if you want to preserve column order.)
-
-            ASSERT_INDEX_EXISTS(store, "stsim_Transition");
-            ASSERT_INDEX_EXISTS(store, "stsim_InitialConditionsNonSpatialDistribution");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionTarget");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionMultiplierValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_StateAttributeValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionAttributeValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_TransitionAttributeTarget");
-            ASSERT_INDEX_EXISTS(store, "stsim_DistributionValue");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratum");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumState");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransition");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStratumTransitionState");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputStateAttribute");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputTransitionAttribute");
-            ASSERT_INDEX_EXISTS(store, "stsim_OutputTST");
-#endif
         }
 
         [UpdateAttribute(0.101, "This update adds support for transition events in various tables")]
@@ -116,9 +93,9 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("UPDATE core_Chart SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
 
-            if (store.TableExists("core_Plot"))
+            if (store.TableExists("core_Map"))
             {
-                store.ExecuteNonQuery("UPDATE core_Plot SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
+                store.ExecuteNonQuery("UPDATE core_Map SET Criteria = REPLACE(Criteria, 'STSim_', 'stsim_')");
             }
         }
 
@@ -175,17 +152,17 @@ namespace SyncroSim.STSim
             RenameChartVariable(store, "attrnormal", "stsim_AttrNormal");
             RenameChartVariable(store, "attrdensity", "stsim_AttrDensity");
 
-            RenamePlotVariable(store, "str", "stsim_str");
-            RenamePlotVariable(store, "secstr", "stsim_secstr");
-            RenamePlotVariable(store, "terstr", "stsim_terstr");
-            RenamePlotVariable(store, "sc", "stsim_sc");
-            RenamePlotVariable(store, "tg", "stsim_tg");
-            RenamePlotVariable(store, "age", "stsim_age");
-            RenamePlotVariable(store, "tst", "stsim_tst");
-            RenamePlotVariable(store, "sa", "stsim_sa");
-            RenamePlotVariable(store, "ta", "stsim_ta");
-            RenamePlotVariable(store, "tge", "stsim_tge");
-            RenamePlotVariable(store, "tgap", "stsim_tgap");
+            RenameMapVariable(store, "str", "stsim_str");
+            RenameMapVariable(store, "secstr", "stsim_secstr");
+            RenameMapVariable(store, "terstr", "stsim_terstr");
+            RenameMapVariable(store, "sc", "stsim_sc");
+            RenameMapVariable(store, "tg", "stsim_tg");
+            RenameMapVariable(store, "age", "stsim_age");
+            RenameMapVariable(store, "tst", "stsim_tst");
+            RenameMapVariable(store, "sa", "stsim_sa");
+            RenameMapVariable(store, "ta", "stsim_ta");
+            RenameMapVariable(store, "tge", "stsim_tge");
+            RenameMapVariable(store, "tgap", "stsim_tgap");
         }
 
         [UpdateAttribute(0.106, "This update adds StateClassID and Neighborhood fields to the TransitionAdjacencySetting table")]
@@ -519,10 +496,12 @@ namespace SyncroSim.STSim
         }
 
         [UpdateAttribute(0.114, "This update changes the transformer table for new transformer names")]
-        public static void Update_0_114(DataStore store)
+        public static void Update_0_114(DataStore _)
         {
-            UpdateTransformerTable(store, 
-                "stsim_Primary", "ST-Sim", "stsim", "The ST-Sim state-and-transition simulation model");
+            //This update is obsolete
+
+            //UpdateTransformerTable(store, 
+            //    "stsim_Primary", "ST-Sim", "stsim", "The ST-Sim state-and-transition simulation model");
         }
 
         [UpdateAttribute(0.115, "This update changes the state and transition attribute chart keys to be unique and more descriptive")]
@@ -605,21 +584,21 @@ namespace SyncroSim.STSim
         [UpdateAttribute(0.118, "This update changes the map variable names to be more concise")]
         public static void Update_0_118(DataStore store)
         {
-            RenamePlotVariable(store, "stsim_sc", "stsim_StateClass");
-            RenamePlotVariable(store, "stsim_str", "stsim_Stratum");
-            RenamePlotVariable(store, "stsim_age", "stsim_Age");
-            RenamePlotVariable(store, "stsim_tge", "stsim_TransitionEvent");
-            RenamePlotVariable(store, "stsim_tg", "stsim_TransitionGroup");
-            RenamePlotVariable(store, "stsim_tst", "stsim_TST");
-            RenamePlotVariable(store, "stsim_sa", "stsim_StateAttribute");
-            RenamePlotVariable(store, "stsim_ta", "stsim_TransitionAttribute");
-            RenamePlotVariable(store, "avgsc", "stsim_StateClassProb");
-            RenamePlotVariable(store, "avgstr", "stsim_StratumProb");
-            RenamePlotVariable(store, "stsim_AgesAvgGroup", "stsim_AgeProb");
-            RenamePlotVariable(store, "stsim_avgtp", "stsim_TransitionProb");
-            RenamePlotVariable(store, "stsim_avgtst", "stsim_TSTProb");
-            RenamePlotVariable(store, "stsim_avgsa", "stsim_StateAttributeProb");
-            RenamePlotVariable(store, "stsim_avgta", "stsim_TransitionAttributeProb");
+            RenameMapVariable(store, "stsim_sc", "stsim_StateClass");
+            RenameMapVariable(store, "stsim_str", "stsim_Stratum");
+            RenameMapVariable(store, "stsim_age", "stsim_Age");
+            RenameMapVariable(store, "stsim_tge", "stsim_TransitionEvent");
+            RenameMapVariable(store, "stsim_tg", "stsim_TransitionGroup");
+            RenameMapVariable(store, "stsim_tst", "stsim_TST");
+            RenameMapVariable(store, "stsim_sa", "stsim_StateAttribute");
+            RenameMapVariable(store, "stsim_ta", "stsim_TransitionAttribute");
+            RenameMapVariable(store, "avgsc", "stsim_StateClassProb");
+            RenameMapVariable(store, "avgstr", "stsim_StratumProb");
+            RenameMapVariable(store, "stsim_AgesAvgGroup", "stsim_AgeProb");
+            RenameMapVariable(store, "stsim_avgtp", "stsim_TransitionProb");
+            RenameMapVariable(store, "stsim_avgtst", "stsim_TSTProb");
+            RenameMapVariable(store, "stsim_avgsa", "stsim_StateAttributeProb");
+            RenameMapVariable(store, "stsim_avgta", "stsim_TransitionAttributeProb");
 
             RenameProjectFilesContainingVariableName(store, "stsim_sc", "stsim_StateClass");
             RenameProjectFilesContainingVariableName(store, "stsim_str", "stsim_Stratum");
@@ -638,8 +617,8 @@ namespace SyncroSim.STSim
             RenameProjectFilesContainingVariableName(store, "stsim_avgta", "stsim_TransitionAttributeProb");
         }
 
-        [UpdateAttribute(0.119, "This is the final update to move from v2 to v3")]
-        public static void Update_0_119(DataStore store)
+        [UpdateAttribute(4.0, "This update adjusts the system tables for v2 to v3")]
+        public static void Update_4_000(DataStore store)
         {
             store.ExecuteNonQuery("ALTER TABLE stsim_Terminology ADD COLUMN StockUnits TEXT");
             store.ExecuteNonQuery("UPDATE stsim_Terminology SET StockUnits='Tons'");
@@ -647,6 +626,75 @@ namespace SyncroSim.STSim
             RenameColumn(store, "stsim_OutputFilterStateAttributes", "OutputFilterStateAttributeID", "OutputFilterStateAttributesID");
             RenameColumn(store, "stsim_OutputFilterTransitionAttributes", "OutputFilterTransitionAttributeID", "OutputFilterTransitionAttributesID");
             RenameColumn(store, "stsim_Multiprocessing", "ProcessingID", "MultiprocessingID");
+
+            store.ExecuteNonQuery("UPDATE core_Transformer SET Name='stsim_Main' WHERE Name='stsim_Primary'");
+        }
+
+        [UpdateAttribute(4.1, "This update adds the new ResolutionId column to all spatial output datasheets, and sets its value to 0 for all rows.")]
+        public static void Update_4_100(DataStore store)
+        {
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialState ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialState SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAge ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAge SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStratum ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStratum SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransition ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransition SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransitionEvent ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransitionEvent SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTST ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTST SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStateAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStateAttribute SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialTransitionAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialTransitionAttribute SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStateClass ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStateClass SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageAge ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageAge SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStratum ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStratum SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionProbability ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionProbability SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTST ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTST SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageStateAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageStateAttribute SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionAttribute SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStockGroup SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialFlowGroup SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialStockGroup SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialFlowGroup SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputAverageLateralFlowGroup SET ResolutionId=0");
         }
     }
 }

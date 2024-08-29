@@ -79,6 +79,26 @@ namespace SyncroSim.STSim
             this.m_StockFlowTransformer.Initialize();
         }
 
+        private void InitializeMultiResolution()
+        {
+            //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
+            //but it is still separate and driven off of ST-Sim events so we need to create and 
+            //initialize it here. Note that if not doing an MP run the Configure function will
+            //have already created the transformer.
+
+            if (this.m_ResolutionTransformer == null)
+            {
+                this.m_ResolutionTransformer = (ResolutionTransformer)this.Library.CreateTransformer(
+                    "stsim_Resolution", this.Scenario, this.ResultScenario);
+
+                this.m_ResolutionTransformer.STSimTransformer = this;
+                this.m_ResolutionTransformer.m_IsMultiResolution = true;
+                this.m_IsMultiResolution = false;
+            }
+
+            this.m_ResolutionTransformer.Initialize();
+        }
+
         private void ConfigureStocksAndFlows()
         {
             //Stocks and flows was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
@@ -92,6 +112,25 @@ namespace SyncroSim.STSim
 
             this.m_StockFlowTransformer.STSimTransformer = this;
             this.m_StockFlowTransformer.Configure();
+        }
+
+        private void ConfigureMultiResolution()
+        {
+            //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
+            //but it is still separate and driven off of ST-Sim events so we need to create and 
+            //initialize it here.
+
+            Debug.Assert(this.m_ResolutionTransformer == null);
+
+            this.m_ResolutionTransformer = (ResolutionTransformer)this.Library.CreateTransformer(
+                "stsim_Resolution", this.Scenario, this.ResultScenario);
+
+            this.m_ResolutionTransformer.STSimTransformer = this;
+
+            this.m_ResolutionTransformer.m_IsMultiResolution = true;
+            this.m_IsMultiResolution = false;
+
+            this.m_ResolutionTransformer.Configure();
         }
 
         /// <summary>
@@ -114,6 +153,36 @@ namespace SyncroSim.STSim
             if (dr != null)
             {
                 this.m_IsSpatial = DataTableUtilities.GetDataBool(dr[Strings.RUN_CONTROL_IS_SPATIAL_COLUMN_NAME]);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the initial conditions spatial datasheet name
+        /// (depends on whether the transformer is for a base resolution or
+        /// fine resolution run)
+        /// </summary>
+        /// <remarks></remarks>
+        private void ConfigureSpatialDatasheets()
+        {
+            if (this.m_IsMultiResolution)
+            {
+                this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPICF_NAME;
+                this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPICF_NAME;
+
+                this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME;
+                this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME;
+
+                this.m_DigitalElevationModelDatasheet = Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FINE_RES_NAME;
+            } 
+            else
+            {
+                this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPIC_NAME;
+                this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPIC_NAME;
+
+                this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME;
+                this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME;
+
+                this.m_DigitalElevationModelDatasheet = Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME;
             }
         }
 
@@ -192,7 +261,7 @@ namespace SyncroSim.STSim
             }
             else
             {
-                DataRow drics = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+                DataRow drics = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet).GetDataRow();
                 double cellAreaTU = DataTableUtilities.GetDataDbl(drics[Strings.DATASHEET_SPPIC_CELL_AREA_COLUMN_NAME]);
 
                 if (cellAreaTU.Equals(0))
@@ -201,7 +270,7 @@ namespace SyncroSim.STSim
                 }
 
                 this.m_TotalAmount = cellAreaTU * this.m_Cells.Count;
-                DataRow drISC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME).GetDataRow();
+                DataRow drISC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet).GetDataRow();
 
                 //Save the Number of Cells count, now that we have a potentially more accurate value than at config time.
 

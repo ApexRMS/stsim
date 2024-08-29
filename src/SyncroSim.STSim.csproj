@@ -135,6 +135,12 @@
     <Compile Include="DataFeedViews\FlowPathwayDataFeedView.Designer.cs">
       <DependentUpon>FlowPathwayDataFeedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>InitialConditionsSpatialDataFeedViewFineRes.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\InitialStocksDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,6 +158,18 @@
     </Compile>
     <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedViewFineRes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>SpatialMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </Compile>
     <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.cs">
       <SubType>UserControl</SubType>
@@ -186,6 +204,7 @@
     <Compile Include="DataSheets\AgeGroupDataSheet.cs" />
     <Compile Include="DataSheets\AgeTypeDataSheet.cs" />
     <Compile Include="DataSheets\AttributeGroupDataSheet.cs" />
+    <Compile Include="DataSheets\InitialConditionsSpatialRasterDataSheetFineRes.cs" />
     <Compile Include="DataSheets\FlowGroupDataSheet.cs" />
     <Compile Include="DataSheets\FlowPathwayDataSheet.cs" />
     <Compile Include="DataSheets\FlowPathwayDiagramDataSheet.cs" />
@@ -220,6 +239,20 @@
     <Compile Include="Reports\SummaryFlowReport.cs" />
     <Compile Include="Reports\SummaryStockReport.cs" />
     <Compile Include="Reports\TSTReport.cs" />
+    <Compile Include="RuntimeRes\ResolutionTransformer.Initialize.cs" />
+    <Compile Include="RuntimeRes\TransitionGroupResolutionCollection.cs" />
+    <Compile Include="RuntimeRes\TransitionGroupResolution.cs" />
+    <Compile Include="RuntimeRes\InitialConditionsSpatialFineRes.cs" />
+    <Compile Include="RuntimeRes\InitialConditionsSpatialCollectionFineRes.cs" />
+    <Compile Include="RuntimeRes\InitialConditionsSpatialMapFineRes.cs" />
+    <Compile Include="RuntimeRes\ResolutionTransformer.cs" />
+    <Compile Include="RuntimeRes\ResolutionTransformer.Utilities.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialInitiationMultiplierFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialInitiationMultiplierCollectionFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialInitiationMultiplierMapFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialMultiplierFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialMultiplierCollectionFineRes.cs" />
+    <Compile Include="RuntimeRes\TransitionSpatialMultiplierMapFineRes.cs" />
     <Compile Include="RuntimeSF\FlowGroup.cs" />
     <Compile Include="RuntimeSF\FlowGroupCollection.cs" />
     <Compile Include="RuntimeSF\FlowGroupLinkage.cs" />
@@ -518,6 +551,12 @@
     <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+	<Compile Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.Designer.cs">
+		<DependentUpon>SlopeMultiplierDataFeedViewFineRes.cs</DependentUpon>
+	</Compile>
+	<Compile Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.cs">
+		<SubType>UserControl</SubType>
+	</Compile>
     <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.Designer.cs">
       <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>
     </Compile>
@@ -621,6 +660,7 @@
     <Compile Include="RuntimeSF\FlowPathway.cs" />
     <Compile Include="RuntimeSF\FlowPathwayCollection.cs" />
     <Compile Include="RuntimeSF\FlowPathwayMap.cs" />
+    <Compile Include="Shared\CellOffset.cs" />
     <Compile Include="Shared\CheckBoxPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -710,6 +750,9 @@
     <EmbeddedResource Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsNonSpatialDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.resx">
+      <DependentUpon>InitialConditionsSpatialDataFeedViewFineRes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\InitialConditionsSpatialDataFeedView.resx">
       <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
@@ -736,9 +779,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedView.resx">
       <DependentUpon>SlopeMultiplierDataFeedView.cs</DependentUpon>
+	</EmbeddedResource>
+	<EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.resx">
+		<DependentUpon>SlopeMultiplierDataFeedViewFineRes.cs</DependentUpon>
+	</EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.resx">
+      <DependentUpon>SpatialInitiationMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.resx">
       <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.resx">
+      <DependentUpon>SpatialMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SpatialMultiplierDataFeedView.resx">
       <DependentUpon>SpatialMultiplierDataFeedView.cs</DependentUpon>

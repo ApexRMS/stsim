@@ -75,6 +75,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_DISTRIBUTIONMAX_COLUMN_NAME = "DistributionMax";
         public const string DATASHEET_SUMOFAMOUNT_COLUMN_NAME = "SumOfAmount";
         public const string DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN = "Filename";
+        public const string DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN = "ResolutionId";
         public const string VALUE_MEMBER_COLUMN_NAME = "Value";
         public const string DISPLAY_MEMBER_COLUMN_NAME = "Display";
         public const string IS_AUTO_COLUMN_NAME = "IsAuto";
@@ -394,6 +395,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TERMINOLOGY_SECONDARY_STRATUM_LABEL_COLUMN_NAME = "SecondaryStratumLabel";
         public const string DATASHEET_TERMINOLOGY_TERTIARY_STRATUM_LABEL_COLUMN_NAME = "TertiaryStratumLabel";
 
+        // Resolution
+        public const string DATASHEET_RESOLUTION_NAME = "stsim_Resolution";
+
         //Output Options
         public const string DATASHEET_OO_TABULAR_NAME = "stsim_OutputOptions";
         public const string DATASHEET_OO_SUMMARY_OUTPUT_SC_COLUMN_NAME = "SummaryOutputSC";
@@ -481,9 +485,54 @@ namespace SyncroSim.STSim
         public const string DISTRIBUTION_VALUE_VALUE_DIST_MAX_COLUMN_NAME = "ValueDistributionMax";
         public const string DISTRIBUTION_VALUE_VALUE_DIST_RELATIVE_FREQUENCY_COLUMN_NAME = "ValueDistributionRelativeFrequency";
 
-        //Multiprocessing
+        //Multi-Processing
         public const string DATASHEET_MULTI_PROCESSING_NAME = "stsim_Multiprocessing";
         public const string DATASHEET_MULTI_PROCESSING_SPLIT_BY_SS_COLUMN_NAME = "SplitBySecondaryStrata";
+
+        //Multi-Banding
+        public const string DATASHEET_CORE_SPATIAL_OPTIONS = "core_SpatialOption";
+        public const string DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME = "MultibandGroupingInternal";
+
+        //Multi-Resolution - Initial Conditions
+        public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsSpatialFineRes";
+        public const string DATASHEET_SPICF_ITERATION_COLUMN_NAME = "Iteration";
+        public const string DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
+        public const string DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
+        public const string DATASHEET_SPICF_TERTIARY_STRATUM_FILE_COLUMN_NAME = "TertiaryStratumFileName";
+        public const string DATASHEET_SPICF_STATE_CLASS_FILE_COLUMN_NAME = "StateClassFileName";
+        public const string DATASHEET_SPICF_AGE_FILE_COLUMN_NAME = "AgeFileName";
+
+        //Multi-Resolution - Spatial Initial Conditions Properties
+        public const string DATASHEET_SPPICF_NAME = "stsim_InitialConditionsSpatialPropertiesFineRes";
+        public const string DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
+        public const string DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME = "NumRows";
+        public const string DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME = "NumCells";
+        public const string DATASHEET_SPPICF_XLLCORNER_COLUMN_NAME = "XLLCorner";
+        public const string DATASHEET_SPPICF_YLLCORNER_COLUMN_NAME = "YLLCorner";
+        public const string DATASHEET_SPPICF_CELL_SIZE_COLUMN_NAME = "CellSize";
+        public const string DATASHEET_SPPICF_CELL_SIZE_UNITS_COLUMN_NAME = "CellSizeUnits";
+        public const string DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME = "CellArea";
+        public const string DATASHEET_SPPICF_CELL_AREA_OVERRIDE_COLUMN_NAME = "CellAreaOverride";
+        public const string DATASHEET_SPPICF_SRS_COLUMN_NAME = "SRS";
+
+        //Multi-Resolution - Transition Group Resolution
+        public const string DATASHEET_TRG_NAME = "stsim_TransitionGroupResolution";
+        public const string DATASHEET_TRG_TGID_COLUMN_NAME = "TransitionGroupID";
+        public const string DATASHEET_TRG_RESOLUTION_COLUMN_NAME = "Resolution";
+        public const string DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME = "FFBThresholdProportion";
+
+        //Multi-Resolution - Transition spatial multiplier
+        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialMultiplierFineRes";
+
+        //Multi-Resolution - Transition spatial initiation multiplier
+        public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialInitiationMultiplierFineRes";
+
+        //Multi-Resolution - Transition Slope Multiplier
+        //public const string DATAFEED_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplierDataFeed";
+        public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FINE_RES_NAME = "stsim_DigitalElevationModelFineRes";
+        //public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_FINE_RES_COLUMN_NAME = "DigitalElevationModelFileName";
+        //public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplier";
+        //public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME = "Slope";
 
         //Output Stratum Amount
         public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim_OutputStratum";
@@ -604,12 +653,10 @@ namespace SyncroSim.STSim
         public const string NO_SUMMARY_OUTPUT_OPTIONS_INFORMATION = "No summary output options specified for stocks and flows.  Using defaults.";
         public const string REPORT_EXCEL_TOO_MANY_ROWS = "There are too many rows for Excel.  Please try another format for your report.";
         public const string SPATIAL_FILE_STOCK_LOAD_WARNING = "The Initial Stocks Raster file '{0}' did not load, and will be ignored.";
-        public const string SPATIAL_FILE_STOCK_ROW_COLUMN_MISMATCH = "The Initial Stocks Raster file '{0}' metadata did not match that of the Initial Condition Primary Stratum raster file. {1}.";
-        public const string SPATIAL_FILE_STOCK_METADATA_INFO = "The Initial Stocks Raster file '{0}' metadata did not match that of the Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
         public const string ERROR_NO_RESULT_SCENARIOS_FOR_REPORT = "There must be at least one selected result scenario to create this report.";
         public const string ERROR_FLOW_MULTIPLIERS_BETA_DISTRIBUTION_INVALID = "Flow Multipliers: The beta distribution parameters are invalid.  The multiplier will be used for all iterations.";
-        public const string SPATIAL_METADATA_ROW_COLUMN_MISMATCH = "The Flow Spatial Multiplier file '{0}' number of rows and/or columns did not match that of ST-Sim's Initial Condition Primary Stratum raster file.";
-        public const string SPATIAL_METADATA_INFO = "The Flow Spatial Multiplier file '{0}' metadata did not match that of ST-Sim's Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
+        public const string SPATIAL_METADATA_ROW_COLUMN_MISMATCH = "The input raster file '{0}' number of rows and/or columns did not match that of ST-Sim's Initial Condition Primary Stratum raster file.";
+        public const string SPATIAL_METADATA_INFO = "The input raster file '{0}' metadata did not match that of ST-Sim's Initial Condition Primary Stratum raster file, but differences will be ignored. {1}.";
         public const string SPATIAL_PROCESS_WARNING = "The Flow Spatial Multiplier file '{0}' did not load, and will be ignored.";
 
         //Spatial Map file naming constants - Stock and Flow Group
@@ -619,5 +666,14 @@ namespace SyncroSim.STSim
         public const string SPATIAL_MAP_AVG_STOCK_GROUP_VARIABLE_PREFIX = "avgstkg";
         public const string SPATIAL_MAP_AVG_FLOW_GROUP_VARIABLE_PREFIX = "avgflog";
         public const string SPATIAL_MAP_AVG_LATERAL_FLOW_GROUP_VARIABLE_PREFIX = "avglflog";
+
+        //Core constant for the multiprocessing partial library
+        public const string CORE_MP_JOB_FILE_PREFIX = "Job";
+
+        //Multi-Resolution Messages
+        public const string ERROR_STSIM_TRANSFORMER_NOT_FOUND = "ST-Sim Transformer not found.  Fatal error!";
+        public const string ERROR_RASTERS_TOO_SMALL = "The multi-resolution rasters are smaller than the ST-Sim rasters.";
+        public const string ERROR_RASTERS_WRONG_PROPORTION = "The multi-resolution raster dimensions are not evenly divisible by those of the ST-Sim raster.";
+        public const string ERROR_NO_INITIAL_CONDITIONS_SPATIAL_RECORDS = "No Initial Conditions Spatial values have been defined.  Cannot continue.";
     }
 }

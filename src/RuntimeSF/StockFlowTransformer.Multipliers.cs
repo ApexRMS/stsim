@@ -171,7 +171,6 @@ namespace SyncroSim.STSim
         private void ValidateFlowSpatialMultipliers()
         {
             Debug.Assert(this.m_IsSpatial);
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_SPATIAL_MULTIPLIER_NAME);
 
             for (int i = this.m_FlowSpatialMultipliers.Count - 1; i >= 0; i--)
             {
@@ -184,31 +183,12 @@ namespace SyncroSim.STSim
 
                     continue;
                 }
-
-                string cmpMsg = "";
-                var cmpRes = this.STSimTransformer.InputRasters.CompareMetadata(this.m_FlowSpatialMultiplierRasters[r.FileName], ref cmpMsg);
-                string FullFilename = Spatial.GetSpatialDataFileName(ds, r.FileName, false);
-
-                if (cmpRes == CompareMetadataResult.RowColumnMismatch)
-                {
-                    string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_ROW_COLUMN_MISMATCH, FullFilename);
-                    ExceptionUtils.ThrowArgumentException(msg);
-                }
-                else
-                {
-                    if (cmpRes == CompareMetadataResult.UnimportantDifferences)
-                    {
-                        string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_INFO, FullFilename, cmpMsg);
-                        RecordStatus(StatusType.Information, msg);
-                    }
-                }
             }
         }
 
         private void ValidateFlowLateralMultipliers()
         {
             Debug.Assert(this.m_IsSpatial);
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_LATERAL_MULTIPLIER_NAME);
 
             for (int i = this.m_FlowLateralMultipliers.Count - 1; i >= 0; i--)
             {
@@ -220,24 +200,6 @@ namespace SyncroSim.STSim
                     RecordStatus(StatusType.Warning, msg);
 
                     continue;
-                }
-
-                string cmpMsg = "";
-                var cmpRes = this.STSimTransformer.InputRasters.CompareMetadata(this.m_FlowLateralMultiplierRasters[r.FileName], ref cmpMsg);
-                string FullFilename = Spatial.GetSpatialDataFileName(ds, r.FileName, false);
-
-                if (cmpRes == CompareMetadataResult.RowColumnMismatch)
-                {
-                    string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_ROW_COLUMN_MISMATCH, FullFilename);
-                    ExceptionUtils.ThrowArgumentException(msg);
-                }
-                else
-                {
-                    if (cmpRes == CompareMetadataResult.UnimportantDifferences)
-                    {
-                        string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_INFO, FullFilename, cmpMsg);
-                        RecordStatus(StatusType.Information, msg);
-                    }
                 }
             }
         }

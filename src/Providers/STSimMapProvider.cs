@@ -13,7 +13,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    internal class STSimMapProvider : PlotProvider
+    internal class STSimMapProvider : MapProvider
     {
         static string AVG_ALL_ITER = "(Average for all Iterations)";
         static string AVG_PROB_ALL_ITER = "(Probability for all Iterations)";
@@ -23,6 +23,7 @@ namespace SyncroSim.STSim
             //State Class Color Map and Legend Map
             var LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, store);
             CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, LegendColors, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-1", Strings.DATASHEET_STATECLASS_NAME, LegendColors, store);
 
             //Primary Stratum Color Map and Legend Map
             LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, store);
@@ -58,43 +59,153 @@ namespace SyncroSim.STSim
         private void AddStateClassCriteria(Layout layout, Project project, DataStore store)
         {
             LayoutItem StateClassesGroup = new LayoutItem("stsim_StateClassesGroup", "State Classes", true);
-            LayoutItem StateClassIterationItem = new LayoutItem(Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, "Iteration", false);
-            LayoutItem StateClassAvgGroup = new LayoutItem("stsim_StateClassAvgGroup", "Probability", true);
+
+            StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup);
+            StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup, true); // DEV TODO: only run if multiresolution turned on
+            StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store);
+            StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store, true); // DEV TODO: only run if multiresolution turned on
+
+            layout.Items.Add(StateClassesGroup);
+        }
+
+        private LayoutItem AddStateClassCriteriaIteration(LayoutItem StateClassesGroup, bool fineRes = false)
+        {
+            string varName;
+            string nodeName;
+            string titleOverride;
+            string subsetFilter;
+
+            if (fineRes)
+            {
+                varName = Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-1";
+                nodeName = "Iteration (Fine Resolution)";
+                titleOverride = "State Classes (Iteration Fine Resolution)";
+                subsetFilter = "ResolutionId=1";
+            } 
+            else
+            {
+                varName = Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME;
+                nodeName = "Iteration";
+                titleOverride = "State Classes (Iteration)";
+                subsetFilter = "ResolutionId=0";
+            }
+
+            LayoutItem StateClassIterationItem = new LayoutItem(varName, nodeName, false);
 
             StateClassIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialState"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             StateClassIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STATECLASS_NAME));
-            StateClassIterationItem.Properties.Add(new MetaDataProperty("titleOverride", "State Classes (Iteration)"));
-
-            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items, store);
+            StateClassIterationItem.Properties.Add(new MetaDataProperty("titleOverride", titleOverride));
+            StateClassIterationItem.Properties.Add(new MetaDataProperty("subsetFilter", subsetFilter));
 
             StateClassesGroup.Items.Add(StateClassIterationItem);
+
+            return StateClassesGroup;
+        }
+
+        private LayoutItem AddStateClassCriteriaAvg(LayoutItem StateClassesGroup, Project project, DataStore store, bool fineRes = false)
+        {
+            LayoutItem StateClassAvgGroup;
+
+            if (fineRes)
+            {
+                StateClassAvgGroup = new LayoutItem("stsim_StateClassAvgGroup-1", "Probability (Fine Resolution)", true);
+            } 
+            else
+            {
+                StateClassAvgGroup = new LayoutItem("stsim_StateClassAvgGroup", "Probability", true);
+
+            }
+
+            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items, store);
             StateClassesGroup.Items.Add(StateClassAvgGroup);
-            layout.Items.Add(StateClassesGroup);
+
+            return StateClassesGroup;
         }
 
         private void AddAgeCriteria(Layout layout)
         {
             LayoutItem AgesGroup = new LayoutItem("stsim_AgesGroup", "Ages", true);
-            LayoutItem AgesIterationItem = new LayoutItem(Constants.SPATIAL_MAP_AGE_VARIABLE_NAME, "Iteration", false);
-            LayoutItem AgesAvgProbItem = new LayoutItem(Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME, "Average", false);
+
+            AgesGroup = AddAgeCriteriaIteration(AgesGroup);
+            AgesGroup = AddAgeCriteriaIteration(AgesGroup, true);
+            AgesGroup = AddAgeCriteriaAvg(AgesGroup);
+            AgesGroup = AddAgeCriteriaAvg(AgesGroup, true);
+
+            layout.Items.Add(AgesGroup);
+        }
+
+        private LayoutItem AddAgeCriteriaIteration(LayoutItem AgesGroup, bool fineRes = false)
+        {
+            string varName;
+            string nodeName;
+            string titleOverride;
+            string subsetFilter;
+
+            if (fineRes)
+            {
+                varName = Constants.SPATIAL_MAP_AGE_VARIABLE_NAME + "-1";
+                nodeName = "Iteration (Fine Resolution)";
+                titleOverride = "Ages (Iteration Fine Resolution)";
+                subsetFilter = "ResolutionId=1";
+            }
+            else
+            {
+                varName = Constants.SPATIAL_MAP_AGE_VARIABLE_NAME;
+                nodeName = "Iteration";
+                titleOverride = "Ages (Iteration)";
+                subsetFilter = "ResolutionId=0";
+            }
+
+            LayoutItem AgesIterationItem = new LayoutItem(varName, nodeName, false);
 
             AgesIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAge"));
             AgesIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             AgesIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
             AgesIterationItem.Properties.Add(new MetaDataProperty("colorMapSourceDataRequired", "True"));
-            AgesIterationItem.Properties.Add(new MetaDataProperty("titleOverride", "Ages (Iteration)"));
+            AgesIterationItem.Properties.Add(new MetaDataProperty("titleOverride", titleOverride));
+            AgesIterationItem.Properties.Add(new MetaDataProperty("subsetFilter", subsetFilter));
+
+            AgesGroup.Items.Add(AgesIterationItem);
+
+            return AgesGroup;
+        }
+
+        private LayoutItem AddAgeCriteriaAvg(LayoutItem AgesGroup, bool fineRes = false)
+        {
+            string varName;
+            string nodeName;
+            string titleOverride;
+            string subsetFilter;
+
+            if (fineRes)
+            {
+                varName = Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME + "-1";
+                nodeName = "Average (Fine Resolution)";
+                titleOverride = "Ages (Average Fine Resolution)";
+                subsetFilter = "ResolutionId=1";
+            }
+            else
+            {
+                varName = Constants.SPATIAL_MAP_AVG_AGE_VARIABLE_NAME;
+                nodeName = "Average";
+                titleOverride = "Ages (Average)";
+                subsetFilter = "ResolutionId=0";
+            }
+
+            LayoutItem AgesAvgProbItem = new LayoutItem(varName, nodeName, false);
 
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageAge"));
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_AGE_GROUP_NAME));
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("colorMapSourceDataRequired", "True"));
             AgesAvgProbItem.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_ALL_ITER));
-            AgesAvgProbItem.Properties.Add(new MetaDataProperty("titleOverride", "Ages (Average)"));
+            AgesAvgProbItem.Properties.Add(new MetaDataProperty("titleOverride", titleOverride));
+            AgesAvgProbItem.Properties.Add(new MetaDataProperty("subsetFilter", subsetFilter));
 
-            AgesGroup.Items.Add(AgesIterationItem);
             AgesGroup.Items.Add(AgesAvgProbItem);
-            layout.Items.Add(AgesGroup);
+
+            return AgesGroup;
         }
 
         private void AddStratumCriteria(Layout layout, Project project, DataStore store)
@@ -125,6 +236,7 @@ namespace SyncroSim.STSim
         {
             LayoutItem TransitionsGroup = new LayoutItem("stsim_TransitionsGroup", "Transitions", true);
             LayoutItem TransitionsIterationGroup = new LayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
+            LayoutItem TransitionsIterationGroupFineRes = new LayoutItem("stsim_TransitionsIterationsGroup-1", "Iteration (Fine Resolution)", true);
             LayoutItem TransitionsAvgTPGroup = new LayoutItem("stsim_TransitionsAvgGroup", "Probability", true);
             LayoutItem TransitionsIterationEventsGroup = new LayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
             LayoutItem TransitionsTSTGroup = new LayoutItem("stsim_TransitionsTSTGroup", "Time-Since-Transition", true);
@@ -134,6 +246,12 @@ namespace SyncroSim.STSim
                 project, TransitionsIterationGroup.Items,
                 "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, Strings.DATASHEET_TRANSITION_TYPE_NAME, store);
+
+            // Fine Resolution
+            AddMapTransitionGroupVariables(
+                project, TransitionsIterationGroupFineRes.Items,
+                "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
+                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, null, store, true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTPGroup.Items,
@@ -156,6 +274,7 @@ namespace SyncroSim.STSim
                 Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store);
 
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
+            if (TransitionsIterationGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroupFineRes); }
             if (TransitionsAvgTPGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroup); }
             if (TransitionsIterationEventsGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroup); }
             if (TransitionsTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsTSTGroup); }
@@ -285,8 +404,9 @@ namespace SyncroSim.STSim
             string filterColumnName, 
             string extendedIdentifier, 
             string filePrefix, 
-            string colorMapSource, 
-            DataStore store)
+            string colorMapSource,
+            DataStore store,
+            bool fineRes = false)
         {
             Dictionary<int, TransitionGroup> PrimaryGroups = GetPrimaryTransitionGroups(project, store);
             List<TransitionGroup> PrimaryGroupList = new List<TransitionGroup>();
@@ -301,6 +421,17 @@ namespace SyncroSim.STSim
                 return string.Compare(g1.DisplayName, g2.DisplayName, StringComparison.CurrentCulture);
             });
 
+            string subsetFilter;
+            if (fineRes)
+            {
+                filePrefix += "FineRes";
+                subsetFilter = "ResolutionId=1";
+            }
+            else
+            {
+                subsetFilter = "ResolutionId=0";
+            }
+
             foreach (TransitionGroup g in PrimaryGroupList)
             {
                 string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", filePrefix, g.TransitionGroupId);
@@ -313,6 +444,7 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_TRANSITION_GROUP_NAME));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", extendedIdentifier));
                 Item.Properties.Add(new MetaDataProperty("colorMapSource", colorMapSource));
+                Item.Properties.Add(new MetaDataProperty("subsetFilter", subsetFilter));
 
                 items.Add(Item);
             }
@@ -508,6 +640,22 @@ namespace SyncroSim.STSim
         }
 
         private static List<Stratum> GetStrata(Project project, DataStore store)
+        {
+            List<Stratum> Strata = new List<Stratum>();
+            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+
+            foreach (DataRow dr in ds.GetData(store).Rows)
+            {
+                int id = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
+                string name = Convert.ToString(dr[Strings.DATASHEET_NAME_COLUMN_NAME], CultureInfo.InvariantCulture);
+
+                Strata.Add(new Stratum(id, name));
+            }
+
+            return Strata;
+        }
+
+        private static List<Stratum> GetResolution(Project project, DataStore store)
         {
             List<Stratum> Strata = new List<Stratum>();
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);

@@ -1480,7 +1480,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         private void CreateSpatialICFromCombinedIC()
         {
-            DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet dsIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
 
             // Get a list of the Iterations that are defined in the InitialConditionsSpatials
             var lstIterations = this.m_InitialConditionsSpatialValues.GetSortedIterationList();
@@ -1762,7 +1762,7 @@ namespace SyncroSim.STSim
             // We want a square raster thats just big enough to accomodate the number of cells specified by user
             int numRasterCells = Convert.ToInt32(System.Math.Pow(Math.Ceiling(Math.Sqrt(numberOfCells)), 2));
 
-            DataSheet dsSpicProp = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet dsSpicProp = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet);
             DataRow drSpIcProp = dsSpicProp.GetDataRow();
 
             if (drSpIcProp == null)
@@ -1844,7 +1844,7 @@ namespace SyncroSim.STSim
                 iterVal = iteration.Value;
             }
          
-            DataSheet dsSpIcProp = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
+            DataSheet dsSpIcProp = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialPropertiesDatasheet);
             DataRow drProp = dsSpIcProp.GetDataRow();
 
             int Width = Convert.ToInt32(drProp[Strings.DATASHEET_SPPIC_NUM_COLUMNS_COLUMN_NAME], CultureInfo.InvariantCulture);
@@ -1875,7 +1875,7 @@ namespace SyncroSim.STSim
 
             // We also need to get the datarow for this InitialConditionSpatial
             string filter = null;
-            DataSheet dsSpatialIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet dsSpatialIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             DataRow drICS = null;
 
             if ((iteration == null))
@@ -2304,7 +2304,7 @@ namespace SyncroSim.STSim
             string Message = null;
 
             // Now import the rasters, if they are configured in the RasterInitialCondition 
-            DataSheet dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet dsIC = this.ResultScenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             InitialConditionsSpatial ics = this.m_InitialConditionsSpatialMap.GetICS(iteration);
 
             if (ics == null)
@@ -2394,11 +2394,11 @@ namespace SyncroSim.STSim
             }
 
             //Digital Elevation Model (DEM) Raster
-            dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME);
+            dsIC = this.ResultScenario.GetDataSheet(this.m_DigitalElevationModelDatasheet);
             DataRow drRIS = dsIC.GetDataRow();
 
-            // TODO: fix this when we incorporate the stsim multiresolution package into stsim
-            if (drRIS != null) //&& this.ResultScenario.DisplayName != Constants.STSIMRESOLUTION_SCENARIO_NAME)
+            // TODO: add ability to run DEM rasters with multiresolution
+            if (drRIS != null && !this.IsMultiResolution)
             {
                 string rasterFileName = drRIS[Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_COLUMN_NAME].ToString();
 
@@ -2423,103 +2423,42 @@ namespace SyncroSim.STSim
             // Compare the rasters to make sure meta data matches. Note that we might not have loaded a raster 
             // because one of the same name already loaded for a previous iteration.
 
-            CompareMetadataResult cmpResult = 0;
             string cmpMsg = "";
 
             // State Class
             if (this.m_InputRasters.StateClassRaster != null && this.m_InputRasters.StateClassRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.StateClassRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.StateClassName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.StateClassName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.StateClassRaster, this.m_InputRasters.StateClassName, cmpMsg);
             }
 
             // Primary Stratum
             if (this.m_InputRasters.PrimaryStratumRaster != null && this.m_InputRasters.PrimaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.PrimaryStratumRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.PrimaryStratumName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.PrimaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.PrimaryStratumRaster, this.m_InputRasters.PrimaryStratumName, cmpMsg);
             }
 
             //Secondary Stratum
             if (this.m_InputRasters.SecondaryStratumRaster != null && this.m_InputRasters.SecondaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.SecondaryStratumRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.SecondaryStratumName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.SecondaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.SecondaryStratumRaster, this.m_InputRasters.SecondaryStratumName, cmpMsg);
             }
 
             //Tertiary Stratum
             if (this.m_InputRasters.TertiaryStratumRaster != null && this.m_InputRasters.TertiaryStratumRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.TertiaryStratumRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.TertiaryStratumName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.TertiaryStratumName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.TertiaryStratumRaster, this.m_InputRasters.TertiaryStratumName, cmpMsg);
             }
 
             // Age
             if (this.m_InputRasters.AgeRaster != null && this.m_InputRasters.AgeRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.AgeRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.AgeName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.AgeName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.AgeRaster, this.m_InputRasters.AgeName, cmpMsg);
             }
 
             //DEM 
             if (this.m_InputRasters.DEMRaster != null && this.m_InputRasters.DEMRaster.TotalCells > 0)
             {
-                cmpResult = this.m_InputRasters.CompareMetadata(this.m_InputRasters.DEMRaster, ref cmpMsg);
-                if (cmpResult == CompareMetadataResult.RowColumnMismatch)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.ERROR_SPATIAL_FILE_MISMATCHED_METADATA, this.m_InputRasters.DemName, cmpMsg);
-                    throw new STSimException(Message);
-                }
-                else if (cmpResult == CompareMetadataResult.UnimportantDifferences)
-                {
-                    Message = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_MISMATCHED_METADATA_INFO, this.m_InputRasters.DemName, cmpMsg);
-                    this.RecordStatus(StatusType.Information, Message);
-                }
+                ValidateRasterMetaData(this.m_InputRasters.DEMRaster, this.m_InputRasters.DemName, cmpMsg);
             }       
         }
 
@@ -2909,7 +2848,7 @@ namespace SyncroSim.STSim
             return false;
         }
 
-        private static string CreatePrimaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreatePrimaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-Stratum.tif
             string f = string.Format(
@@ -2919,11 +2858,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_STRATUM_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateSecondaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateSecondaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-secstr.tif
             string f = string.Format(
@@ -2932,11 +2871,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_SECONDARY_STRATUM_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateTertiaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateTertiaryStratumInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-terstr.tif
             string f = string.Format(
@@ -2945,11 +2884,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_TERTIARY_STRATUM_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateStateClassInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateStateClassInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-sc.tif
             string f = string.Format(
@@ -2958,11 +2897,11 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_STATE_CLASS_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
         }
 
-        private static string CreateAgeInputRasterFileName(Scenario scenario, int iteration, int timestep)
+        private string CreateAgeInputRasterFileName(Scenario scenario, int iteration, int timestep)
         {
             //Name template = Itx-Tsy-Age.tif
             string f = string.Format(
@@ -2972,8 +2911,27 @@ namespace SyncroSim.STSim
                 timestep.ToString("0000", CultureInfo.InvariantCulture),
                 Constants.SPATIAL_MAP_AGE_FILEPREFIX);
 
-            DataSheet ds = scenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
+            DataSheet ds = scenario.GetDataSheet(this.m_InitialConditionsSpatialDatasheet);
             return Spatial.GetSpatialDataFileNameUnique(ds, f, true);
+        }
+
+        internal void ValidateRasterMetaData(SyncroSimRaster MultiplierRaster, string FullFilename, string cmpMsg = "")
+        {
+            var cmpRes = this.InputRasters.CompareMetadata(MultiplierRaster, ref cmpMsg);
+
+            if (cmpRes == CompareMetadataResult.RowColumnMismatch)
+            {
+                string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_ROW_COLUMN_MISMATCH, FullFilename, cmpMsg);
+                throw new STSimException(msg);
+            }
+            else
+            {
+                if (cmpRes == CompareMetadataResult.UnimportantDifferences)
+                {
+                    string msg = string.Format(CultureInfo.InvariantCulture, Strings.SPATIAL_METADATA_INFO, FullFilename, cmpMsg);
+                    RecordStatus(StatusType.Information, msg);
+                }
+            }
         }
     }
 }

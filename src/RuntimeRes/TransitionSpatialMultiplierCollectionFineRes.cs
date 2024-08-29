@@ -9,7 +9,7 @@ namespace SyncroSim.STSim
     {
         protected override int GetKeyForItem(TransitionSpatialMultiplierFineRes item)
         {
-            return item.TransitionSpatialMultiplierId;
+            return item.TransitionSpatialMultiplierFineResId;
         }
     }
 }

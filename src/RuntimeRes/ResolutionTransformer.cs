@@ -234,13 +234,13 @@ namespace SyncroSim.STSim
                                 }
                             }
 
-                            // Calculate probability of transition as proportion of fine cells in a base cell
+                            // Calculate proportion of fine cells that underwent transition in a base cell                        
                             double transitionProb = (double)fineCellCount / fineCellIds.Count;
 
-                            // Invoke transition with given probability
-                            if (baseTransition != null)
+                            // Invoke transition if thresold proportion is exceeded
+                            if ((baseTransition != null) && (transitionProb > tgr.FFBThresholdProportion))
                             {
-                                baseTransition.Probability = transitionProb;
+                                baseTransition.Probability = 1;
                                 this.m_STSimTransformer.ApplyProbabilisticTransitionsByCell(baseCell, e.Iteration, e.Timestep, baseTransition, e.TransitionGroup, e.TransitionedPixels, e.RasterTransitionAttrValues);
                             }
                         }

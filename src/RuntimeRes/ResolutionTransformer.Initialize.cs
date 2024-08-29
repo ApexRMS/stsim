@@ -159,7 +159,7 @@ namespace SyncroSim.STSim
 
                 if (tgr.Resolution == Resolution.BaseOnly)
                 {
-                    e.Cancel = false;
+                    e.Cancel = true;
                 }
                 else if ((tgr.Resolution == Resolution.BaseForcesFine) && (this.m_BaseForcesFineCells.ContainsKey(e.TransitionGroup.TransitionGroupId)))
                 {
@@ -176,6 +176,8 @@ namespace SyncroSim.STSim
                             this.InvokeProbabilisticTransitionForCell(simulationCell, e.TransitionGroup, forcedFineTransition, e.Iteration, e.Timestep, e.TransitionedPixels, e.RasterTransitionAttrValues);
                         }
                     }
+
+                    e.Cancel = true;
                 }
                 else if ((tgr.Resolution == Resolution.FineOnly || tgr.Resolution == Resolution.FineForcesBase))
                 {

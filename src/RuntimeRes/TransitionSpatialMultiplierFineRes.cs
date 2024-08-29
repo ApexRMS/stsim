@@ -7,7 +7,7 @@ namespace SyncroSim.STSim
 {
     internal class TransitionSpatialMultiplierFineRes
     {
-        private int m_TransitionSpatialMultiplierId;
+        private int m_TransitionSpatialMultiplierFineResId;
         private int m_TransitionGroupId;
         private int? m_TransitionMultiplierTypeId;
         private int? m_Iteration;
@@ -23,7 +23,7 @@ namespace SyncroSim.STSim
                 throw new ArgumentException("The fileName parameter is not valid.");
             }
 
-            this.m_TransitionSpatialMultiplierId = transitionSpatialMultiplierId;
+            this.m_TransitionSpatialMultiplierFineResId = transitionSpatialMultiplierId;
             this.m_TransitionGroupId = transitionGroupId;
             this.m_TransitionMultiplierTypeId = transitionMultiplierTypeId;
             this.m_Iteration = iteration;
@@ -31,11 +31,11 @@ namespace SyncroSim.STSim
             this.m_Filename = fileName;
         }
 
-        public int TransitionSpatialMultiplierId
+        public int TransitionSpatialMultiplierFineResId
         {
             get
             {
-                return this.m_TransitionSpatialMultiplierId;
+                return this.m_TransitionSpatialMultiplierFineResId;
             }
         }
 

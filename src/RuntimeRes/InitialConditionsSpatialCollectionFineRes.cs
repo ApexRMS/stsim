@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace SyncroSim.STSim
 {
-    internal class InitialConditionsFineSpatialCollection : Collection<InitialConditionsFineSpatial>
+    internal class InitialConditionsSpatialCollectionFineRes : Collection<InitialConditionsSpatialFineRes>
     {
     }
 }

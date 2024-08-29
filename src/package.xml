@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.1.0" url="https://docs.stsim.net/">
+<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.1.1" url="https://docs.stsim.net/">
 
 	<dataSheet name="Stratum" displayMember="Name" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" viewClassName="SyncroSim.STSim.PrimaryStratumDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="Name" dataType="String" fillWeight="10"/>
@@ -251,9 +251,9 @@
 		<dataSheet name="InitialConditionsSpatialProperties"/>
 	</dataFeed>
 
-	<dataFeed name="InitialConditionsFineSpatial" viewClassName="SyncroSim.STSim.InitialConditionsFineSpatialDataFeedView" viewClassAssembly="SyncroSim.STSim">
-		<dataSheet name="InitialConditionsFineSpatial"/>
-		<dataSheet name="InitialConditionsFineSpatialProperties"/>
+	<dataFeed name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Spatial" viewClassName="SyncroSim.STSim.InitialConditionsSpatialDataFeedViewFineRes" viewClassAssembly="SyncroSim.STSim">
+		<dataSheet name="InitialConditionsSpatialFineRes"/>
+		<dataSheet name="InitialConditionsSpatialPropertiesFineRes"/>
 	</dataFeed>
 
 	<dataSheet name="InitialConditionsSpatial" displayName="Initial Conditions Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
@@ -265,7 +265,7 @@
 		<validation validationType="Unique" columns="Iteration"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsFineSpatial" displayName="Initial Conditions Fine Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsFineSpatialRasterDataSheet" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
+	<dataSheet name="InitialConditionsSpatialFineRes" displayName="Initial Conditions Fine Spatial Rasters" hasIteration="True" className="SyncroSim.STSim.InitialConditionsSpatialRasterDataSheetFineRes" classAssembly="SyncroSim.STSim" allowSpecialColumns ="False">
 		<column name="StratumFileName" displayName="Stratum File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 		<column name="SecondaryStratumFileName" displayName="Secondary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
 		<column name="TertiaryStratumFileName" displayName="Tertiary Stratum File Name" dataType="String" isExternalFile="True" isRaster="True"/>
@@ -287,7 +287,7 @@
 		<column name="SRS" displayName="SRS" dataType="String"/>
 	</dataSheet>
 
-	<dataSheet name="InitialConditionsFineSpatialProperties" displayName="Initial Conditions Fine Spatial Properties" isSingleRow="True">
+	<dataSheet name="InitialConditionsSpatialPropertiesFineRes" displayName="Initial Conditions Fine Spatial Properties" isSingleRow="True">
 		<column name="NumRows" displayName="Num Rows" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumColumns" displayName="Num Columns" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
 		<column name="NumCells" displayName="Num Cells" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
@@ -612,11 +612,23 @@
 		<column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
 
+	<dataSheet name="TransitionSpatialMultiplierFineRes" displayName="Transition Spatial Multipliers" allowSpecialColumns ="False" hasIteration="True" hasTimestep="True" viewClassName="SyncroSim.STSim.SpatialMultiplierDataFeedViewFineRes" viewClassAssembly="SyncroSim.STSim">
+		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+		<column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
+		<column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+	</dataSheet>
+
 	<dataSheet name="TransitionSpatialInitiationMultiplier" displayName="Transition Spatial Initiation Multipliers" hasIteration="True" hasTimestep="True" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
 		<column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
 		<column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
+
+  <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" displayName="Transition Spatial Initiation Multipliers" hasIteration="True" hasTimestep="True" allowSpecialColumns ="False" viewClassName="SyncroSim.STSim.SpatialInitiationMultiplierDataFeedViewFineRes" viewClassAssembly="SyncroSim.STSim">
+    <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
+    <column name="TransitionMultiplierTypeId" dataType="Integer" displayName="Multiplier Type" validationType="Datasheet" formula1="TransitionMultiplierType" isOptional="True"/>
+    <column name="MultiplierFileName" displayName="Multiplier File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+  </dataSheet>
 
 	<dataSheet name="TransitionDirectionMultiplier" displayName="Transition Direction Multipliers" hasIteration="True" hasTimestep="True">
 		<column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
@@ -634,6 +646,10 @@
 	</dataSheet>
 
 	<dataSheet name="DigitalElevationModel" displayName="Digital Elevation Model" isSingleRow="True">
+		<column name="DigitalElevationModelFileName" displayName="Digital Elevation Model File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
+	</dataSheet>
+
+	<dataSheet name="DigitalElevationModelFineRes" displayName="Digital Elevation Model" isSingleRow="True">
 		<column name="DigitalElevationModelFileName" displayName="Digital Elevation Model File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
 	</dataSheet>
 
@@ -1189,9 +1205,12 @@
 		<dataSheet name="TransitionPatchPrioritization" type="Input"/>
 		<dataSheet name="TransitionSizePrioritization" type="Input"/>
 		<dataSheet name="TransitionSpatialMultiplier" type="Input"/>
+		<dataSheet name="TransitionSpatialMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
+		<dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
 		<dataSheet name="TransitionDirectionMultiplier" type="Input"/>
 		<dataSheet name="DigitalElevationModel" type="Input"/>
+		<dataSheet name="DigitalElevationModelFineRes" type="Input"/>
 		<dataSheet name="TransitionSlopeMultiplier" type="Input"/>
 		<dataSheet name="TransitionAdjacencySetting" type="Input"/>
 		<dataSheet name="TransitionAdjacencyMultiplier" type="Input"/>
@@ -1200,8 +1219,8 @@
 		<dataSheet name="Multiprocessing" type="Input"/>
 		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>
 		<dataSheet name="core_ExternalVariableValue" type="Input"/>
-		<dataSheet name="InitialConditionsFineSpatial" type="Input"/>
-		<dataSheet name="InitialConditionsFineSpatialProperties" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialFineRes" type="Input"/>
+		<dataSheet name="InitialConditionsSpatialPropertiesFineRes" type="Input"/>
 		<dataSheet name="TransitionGroupResolution" type="Input"/>
 		<dataSheet name="StockLimit" type="Input"/>
 		<dataSheet name="FlowOrder" type="Input"/>
@@ -1382,8 +1401,11 @@
 			<item name="DistributionValue"/>
 			<item name="Multiprocessing"/>
 			<group name="MultiResolution" displayName="Multi Resolution">
-				<item name="InitialConditionsFineSpatial" displayName="Initial Conditions Spatial (Fine Resolution)"/>
+				<item name="InitialConditionsSpatialFineRes"/>
 				<item name="TransitionGroupResolution"/>
+				<item name="TransitionSpatialMultiplierFineRes"/>
+				<item name="TransitionSpatialInitiationMultiplierFineRes"/>
+				<item name="DigitalElevationModelFineRes"/>
 			</group>
 		</group>
 	</layout>

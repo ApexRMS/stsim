@@ -2090,7 +2090,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionSpatialMultipliers.Count == 0);
             Debug.Assert(this.m_TransitionSpatialMultiplierRasters.Count == 0);
 
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME);
+            DataSheet ds = this.ResultScenario.GetDataSheet(this.m_TransitionSpatialMultiplierDatasheet);
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
@@ -2129,11 +2129,6 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == CompareMetadataResult.RowColumnMismatch)
                 {
-                    if (this.IsMultiResolution)
-                    {
-                        return; // TODO: add ability to apply transition spatial multiplier for multiresolution
-                    }
-
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSM_ROW_COLUMN_MISMATCH, tsmFilename);
                     ExceptionUtils.ThrowArgumentException(msg);
                 }
@@ -2168,14 +2163,7 @@ namespace SyncroSim.STSim
             Debug.Assert(this.m_TransitionSpatialInitiationMultipliers.Count == 0);
             Debug.Assert(this.m_TransitionSpatialInitiationMultiplierRasters.Count == 0);
 
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME);
-            // TODO: fix this when we incorporate the stsim multiresolution package into stsim
-            //bool highResScenario = false;
-
-            //if (this.ResultScenario.DisplayName == Constants.STSIMRESOLUTION_SCENARIO_NAME)
-            //{
-            //    highResScenario = true;
-            //}
+            DataSheet ds = this.ResultScenario.GetDataSheet(this.m_TransitionSpatialInitiationMultiplierDatasheet);
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
@@ -2213,11 +2201,6 @@ namespace SyncroSim.STSim
 
                 if (cmpRes == STSim.CompareMetadataResult.RowColumnMismatch)
                 {
-                    if (this.IsMultiResolution)
-                    {
-                        return; // TODO: apply for multiresolution
-                    }
-
                     string msg = string.Format(CultureInfo.InvariantCulture, MessageStrings.STATUS_SPATIAL_FILE_TSIM_ROW_COLUMN_MISMATCH, tsimFilename);
                     ExceptionUtils.ThrowArgumentException(msg);
                 }

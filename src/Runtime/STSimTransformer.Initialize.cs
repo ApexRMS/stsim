@@ -162,17 +162,27 @@ namespace SyncroSim.STSim
         /// fine resolution run)
         /// </summary>
         /// <remarks></remarks>
-        private void ConfigureInitialConditionsSpatialDatasheets()
+        private void ConfigureSpatialDatasheets()
         {
             if (this.m_IsMultiResolution)
             {
                 this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPICF_NAME;
                 this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPICF_NAME;
+
+                this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME;
+                this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME;
+
+                this.m_DigitalElevationModelDatasheet = Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_FINE_RES_NAME;
             } 
             else
             {
                 this.m_InitialConditionsSpatialDatasheet = Strings.DATASHEET_SPIC_NAME;
                 this.m_InitialConditionsSpatialPropertiesDatasheet = Strings.DATASHEET_SPPIC_NAME;
+
+                this.m_TransitionSpatialMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME;
+                this.m_TransitionSpatialInitiationMultiplierDatasheet = Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME;
+
+                this.m_DigitalElevationModelDatasheet = Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME;
             }
         }
 

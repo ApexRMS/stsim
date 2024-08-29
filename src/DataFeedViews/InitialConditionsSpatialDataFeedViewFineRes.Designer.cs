@@ -3,7 +3,7 @@
 
 namespace SyncroSim.STSim
 {
-    internal partial class InitialConditionsFineSpatialDataFeedView : SyncroSim.Core.Forms.DataFeedView
+    internal partial class InitialConditionsSpatialDataFeedViewFineRes : SyncroSim.Core.Forms.DataFeedView
     {
         //Required by the Windows Form Designer
         private System.ComponentModel.IContainer components = null;

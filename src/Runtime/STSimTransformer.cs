@@ -483,6 +483,9 @@ namespace SyncroSim.STSim
         {
             base.PostProcess();
 
+            //Remove duplicate records from transition datasheet
+            RemoveExtraEventRecords();
+
             //After the entire transformation is complete we must update the age/tst classes
 
             using (SyncroSimTransactionScope scope = Session.CreateTransactionScope())

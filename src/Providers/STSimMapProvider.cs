@@ -1442,9 +1442,9 @@ namespace SyncroSim.STSim
 
             foreach (Scenario s in resultScenarios)
             {
-                DataSheet initialConditionsFineSpatrialDatasheet = s.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
+                DataSheet initialConditionsFineSpatialDatasheet = s.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
-                if(initialConditionsFineSpatrialDatasheet != null && initialConditionsFineSpatrialDatasheet.GetData().Rows.Count > 0)
+                if(initialConditionsFineSpatialDatasheet != null && initialConditionsFineSpatialDatasheet.GetData().Rows.Count > 0)
                 {
                     return true;
                 }

@@ -40,7 +40,7 @@ namespace SyncroSim.STSim
 
         public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
-            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project, store);
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project);
 
             DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);     
 
@@ -1439,7 +1439,7 @@ namespace SyncroSim.STSim
             return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME);
         }
 
-        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
+        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project)
         {
             return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes) == true;
         }

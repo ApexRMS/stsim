@@ -1428,29 +1428,20 @@ namespace SyncroSim.STSim
             return true;
         }
 
+        private static bool DatasheetHasRows(Scenario s, string datasheetName)
+        {
+            DataSheet ds = s.GetDataSheet(datasheetName);
+            return ds != null && ds.GetData().Rows.Count > 0;
+        }
+
+        private static bool ScenarioIsMultiRes(Scenario s)
+        {
+            return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME);
+        }
+
         private static bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
         {
-            List<Scenario> resultScenarios = new List<Scenario>();
-
-            foreach (Scenario s in project.Results)
-            {
-                if(s.IsActive)
-                {
-                    resultScenarios.Add(s);
-                }
-            }
-
-            foreach (Scenario s in resultScenarios)
-            {
-                DataSheet initialConditionsFineSpatialDatasheet = s.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
-
-                if(initialConditionsFineSpatialDatasheet != null && initialConditionsFineSpatialDatasheet.GetData().Rows.Count > 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes) == true;
         }
     }
 }

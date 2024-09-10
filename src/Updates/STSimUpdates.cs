@@ -678,23 +678,41 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialAverageTransitionAttribute ADD COLUMN ResolutionId INTEGER");
             store.ExecuteNonQuery("UPDATE stsim_OutputSpatialAverageTransitionAttribute SET ResolutionId=0");
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStockGroup SET ResolutionId=0");
+            if (store.TableExists("stsim_OutputSpatialStockGroup"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputSpatialStockGroup SET ResolutionId=0");
+            }
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputSpatialFlowGroup SET ResolutionId=0");
+            if (store.TableExists("stsim_OutputSpatialFlowGroup"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputSpatialFlowGroup SET ResolutionId=0");
+            }
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
+            if (store.TableExists("stsim_OutputLateralFlowGroup"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
+            }
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialStockGroup SET ResolutionId=0");
+            if (store.TableExists("stsim_OutputLateralFlowGroup"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
+            }
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialFlowGroup SET ResolutionId=0");
+            if (store.TableExists("stsim_OutputAverageSpatialFlowGroup"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialFlowGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialFlowGroup SET ResolutionId=0");
+            }
 
-            store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
-            store.ExecuteNonQuery("UPDATE stsim_OutputAverageLateralFlowGroup SET ResolutionId=0");
+            if (store.TableExists("stsim_OutputAverageLateralFlowGroup"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputAverageLateralFlowGroup SET ResolutionId=0");
+            }
         }
     }
 }

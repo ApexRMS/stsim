@@ -494,7 +494,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_CORE_SPATIAL_OPTIONS_MULTIBAND_GROUPING_INTERNAL_COLUMN_NAME = "MultibandGroupingInternal";
 
         //Multi-Resolution - Initial Conditions
-        public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsFineSpatial";
+        public const string DATASHEET_SPICF_NAME = "stsim_InitialConditionsSpatialFineRes";
         public const string DATASHEET_SPICF_ITERATION_COLUMN_NAME = "Iteration";
         public const string DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME = "StratumFileName";
         public const string DATASHEET_SPICF_SECONDARY_STRATUM_FILE_COLUMN_NAME = "SecondaryStratumFileName";
@@ -503,7 +503,7 @@ namespace SyncroSim.STSim
         public const string DATASHEET_SPICF_AGE_FILE_COLUMN_NAME = "AgeFileName";
 
         //Multi-Resolution - Spatial Initial Conditions Properties
-        public const string DATASHEET_SPPICF_NAME = "stsim_InitialConditionsFineSpatialProperties";
+        public const string DATASHEET_SPPICF_NAME = "stsim_InitialConditionsSpatialPropertiesFineRes";
         public const string DATASHEET_SPPICF_NUM_COLUMNS_COLUMN_NAME = "NumColumns";
         public const string DATASHEET_SPPICF_NUM_ROWS_COLUMN_NAME = "NumRows";
         public const string DATASHEET_SPPICF_NUM_CELLS_COLUMN_NAME = "NumCells";
@@ -520,6 +520,19 @@ namespace SyncroSim.STSim
         public const string DATASHEET_TRG_TGID_COLUMN_NAME = "TransitionGroupID";
         public const string DATASHEET_TRG_RESOLUTION_COLUMN_NAME = "Resolution";
         public const string DATASHEET_FFB_THRESHOLD_PROPORTION_COLUMN_NAME = "FFBThresholdProportion";
+
+        //Multi-Resolution - Transition spatial multiplier
+        public const string DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialMultiplierFineRes";
+
+        //Multi-Resolution - Transition spatial initiation multiplier
+        public const string DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_FINE_RES_NAME = "stsim_TransitionSpatialInitiationMultiplierFineRes";
+
+        //Multi-Resolution - Transition Slope Multiplier
+        //public const string DATAFEED_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplierDataFeed";
+        public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FINE_RES_NAME = "stsim_DigitalElevationModelFineRes";
+        //public const string DATASHEET_DIGITAL_ELEVATION_MODEL_FILE_NAME_FINE_RES_COLUMN_NAME = "DigitalElevationModelFileName";
+        //public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_NAME = "stsim_TransitionSlopeMultiplier";
+        //public const string DATASHEET_TRANSITION_SLOPE_MULTIPLIER_SLOPE_COLUMN_NAME = "Slope";
 
         //Output Stratum Amount
         public const string DATASHEET_OUTPUT_STRATUM_NAME = "stsim_OutputStratum";

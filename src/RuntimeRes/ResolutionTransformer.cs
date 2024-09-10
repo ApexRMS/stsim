@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using SyncroSim.Core;
 
@@ -15,7 +16,6 @@ namespace SyncroSim.STSim
         private Dictionary<int, List<int>> m_BaseToFineDictionary;
         private string m_MultiResFilename;
         private string m_STSimFilename;
-        private bool m_CanDoMultiResolution;
 
         public STSimTransformer STSimTransformer
         {
@@ -29,16 +29,9 @@ namespace SyncroSim.STSim
             }
         }
 
-        public override void Configure()
-        {
-            base.Configure();
-
-            this.m_CanDoMultiResolution = CanDoMultiResolution(this.ResultScenario);
-        }
-
         public override void Initialize()
         {
-            if(this.m_CanDoMultiResolution)
+            if (CanDoMultiResolution(this.ResultScenario))
             {
                 AuxillarySetup();
                 base.Initialize();
@@ -56,8 +49,8 @@ namespace SyncroSim.STSim
                 DataSheet STSimSpatialProperties = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPPIC_NAME);
                 DataSheet STSimICS = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPIC_NAME);
 
-                InitialConditionsFineSpatialCollection MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
-                InitialConditionsFineSpatial RefMultiResColl = MultiResColl.First();
+                InitialConditionsSpatialCollectionFineRes MultiResColl = CreateSPICFCollection(this.ResultScenario, Strings.DATASHEET_SPICF_NAME);
+                InitialConditionsSpatialFineRes RefMultiResColl = MultiResColl.First();
                 DataSheet MultiResDataSheet = this.ResultScenario.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
 
                 this.m_MultiResFilename = Spatial.GetSpatialDataFileName(MultiResDataSheet, RefMultiResColl.PrimaryStratumFileName, false);
@@ -241,13 +234,13 @@ namespace SyncroSim.STSim
                                 }
                             }
 
-                            // Calculate probability of transition as proportion of fine cells in a base cell
+                            // Calculate proportion of fine cells that underwent transition in a base cell                        
                             double transitionProb = (double)fineCellCount / fineCellIds.Count;
 
-                            // Invoke transition with given probability
-                            if (baseTransition != null)
+                            // Invoke transition if thresold proportion is exceeded
+                            if ((baseTransition != null) && (transitionProb > tgr.FFBThresholdProportion))
                             {
-                                baseTransition.Probability = transitionProb;
+                                baseTransition.Probability = 1;
                                 this.m_STSimTransformer.ApplyProbabilisticTransitionsByCell(baseCell, e.Iteration, e.Timestep, baseTransition, e.TransitionGroup, e.TransitionedPixels, e.RasterTransitionAttrValues);
                             }
                         }

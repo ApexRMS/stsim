@@ -16,9 +16,9 @@ using SyncroSim.Apex.Forms;
 
 namespace SyncroSim.STSim
 {
-    internal partial class InitialConditionsFineSpatialDataFeedView
+    internal partial class InitialConditionsSpatialDataFeedViewFineRes
     {
-        public InitialConditionsFineSpatialDataFeedView()
+        public InitialConditionsSpatialDataFeedViewFineRes()
         {
             InitializeComponent();
         }
@@ -31,7 +31,7 @@ namespace SyncroSim.STSim
         private int m_CellMouseRowIndex = -1;
         private DataFeedView m_RastersView;
         private DataGridView m_RastersDataGrid;
-        private InitialConditionsFineSpatialRasterDataSheet m_FilesDataSheet;
+        private InitialConditionsSpatialRasterDataSheetFineRes m_FilesDataSheet;
         private HourGlass m_HourGlass;
         private delegate void DelegateNoArgs();
 
@@ -111,7 +111,7 @@ namespace SyncroSim.STSim
 
             this.MonitorDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME, this.OnTerminologyChanged, true);
 
-            this.m_FilesDataSheet = (InitialConditionsFineSpatialRasterDataSheet)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
+            this.m_FilesDataSheet = (InitialConditionsSpatialRasterDataSheetFineRes)this.DataFeed.GetDataSheet(Strings.DATASHEET_SPICF_NAME);
             this.m_FilesDataSheet.ValidatingRasters += this.OnValidatingRasters;
             this.m_FilesDataSheet.RastersValidated += this.OnRastersValidated;
         }

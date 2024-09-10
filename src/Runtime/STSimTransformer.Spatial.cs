@@ -2394,7 +2394,7 @@ namespace SyncroSim.STSim
             }
 
             //Digital Elevation Model (DEM) Raster
-            dsIC = this.ResultScenario.GetDataSheet(Strings.DATASHEET_DIGITAL_ELEVATION_MODEL_NAME);
+            dsIC = this.ResultScenario.GetDataSheet(this.m_DigitalElevationModelDatasheet);
             DataRow drRIS = dsIC.GetDataRow();
 
             // TODO: add ability to run DEM rasters with multiresolution

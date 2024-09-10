@@ -33,6 +33,9 @@ namespace SyncroSim.STSim
         private ResolutionTransformer m_ResolutionTransformer;
         private string m_InitialConditionsSpatialDatasheet;
         private string m_InitialConditionsSpatialPropertiesDatasheet;
+        private string m_TransitionSpatialMultiplierDatasheet;
+        private string m_TransitionSpatialInitiationMultiplierDatasheet;
+        private string m_DigitalElevationModelDatasheet;
 
         public event EventHandler<CellEventArgs> CellInitialized;
         public event EventHandler<CellEventArgs> CellsInitialized;
@@ -93,6 +96,51 @@ namespace SyncroSim.STSim
             get
             {
                 return this.m_InitialConditionsSpatialDatasheet;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transition spatial multiplier datasheet name
+        /// (depends on whether the run is fine resolution or base resolution)
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public string TransitionSpatialMultiplierDatasheet
+        {
+            get
+            {
+                return this.m_TransitionSpatialMultiplierDatasheet;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transition spatial initiation multiplier datasheet name
+        /// (depends on whether the run is fine resolution or base resolution)
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public string TransitionSpatialInitiationMultiplierDatasheet
+        {
+            get
+            {
+                return this.m_TransitionSpatialInitiationMultiplierDatasheet;
+            }
+        }
+
+        /// <summary>
+        /// Gets the digital elevation model datasheet name
+        /// (depends on whether the run is fine resolution or base resolution)
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public string DigitalElevationModelDatasheet
+        {
+            get
+            {
+                return this.m_DigitalElevationModelDatasheet;
             }
         }
 
@@ -342,7 +390,7 @@ namespace SyncroSim.STSim
             base.Configure();
 
             this.ConfigureIsSpatialRunFlag();
-            this.ConfigureInitialConditionsSpatialDatasheets();
+            this.ConfigureSpatialDatasheets();
             this.ConfigureTimestepUnits();
             this.NormalizeRunControl();
             this.NormalizeTabularOutputOptions();
@@ -371,11 +419,10 @@ namespace SyncroSim.STSim
             this.ConfigureTimestepUnits();
             this.ConfigureIsSpatialRunFlag();
             this.ConfigureTimestepsAndIterations();
-            this.ConfigureInitialConditionsSpatialDatasheets();
+            this.ConfigureSpatialDatasheets();
 
             if (this.IsSpatial)
             {
-                this.ConfigureInitialConditionsSpatialDatasheets();
                 this.FillInitialConditionsSpatialCollectionAndMap();
                 this.FillInitialTSTSpatialCollectionAndMap();
                 this.InitializeRasterData(this.MinimumIteration);
@@ -435,6 +482,9 @@ namespace SyncroSim.STSim
         public override void PostProcess()
         {
             base.PostProcess();
+
+            //Remove duplicate records from transition datasheet
+            RemoveExtraEventRecords();
 
             //After the entire transformation is complete we must update the age/tst classes
 
@@ -1332,6 +1382,11 @@ namespace SyncroSim.STSim
         //            tmt.CreateMultiplierValueMap();
         //        }
         //    }
+        //    ==============================================================================
+        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF CLAUSE IS LIKELY INCORRECT
+        //    BECAUSE TRANSITION SPATIAL MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
+        //    BE HANDLED NOW
+        //    ==============================================================================
         //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME)
         //    {
         //        if (this.m_IsSpatial)
@@ -1357,6 +1412,11 @@ namespace SyncroSim.STSim
         //            }
         //        }
         //    }
+        //    ==============================================================================
+        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF CLAUSE IS LIKELY INCORRECT
+        //    BECAUSE TRANSITION SPATIAL INITIATION MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
+        //    BE HANDLED NOW
+        //    ==============================================================================
         //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
         //    {
         //        if (this.m_IsSpatial)

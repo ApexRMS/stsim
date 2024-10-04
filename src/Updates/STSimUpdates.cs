@@ -714,10 +714,10 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
             }
 
-            if (store.TableExists("stsim_OutputLateralFlowGroup"))
+            if (store.TableExists("stsim_OutputAverageSpatialStockGroup"))
             {
-                store.ExecuteNonQuery("ALTER TABLE stsim_OutputLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
-                store.ExecuteNonQuery("UPDATE stsim_OutputLateralFlowGroup SET ResolutionId=0");
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageSpatialStockGroup ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputAverageSpatialStockGroup SET ResolutionId=0");
             }
 
             if (store.TableExists("stsim_OutputAverageSpatialFlowGroup"))

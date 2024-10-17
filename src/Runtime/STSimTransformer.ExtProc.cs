@@ -60,7 +60,7 @@ namespace SyncroSim.STSim
             {
                 StringDictionary Environment = new StringDictionary
                 {
-                    { Constants.STIME_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
+                    { Constants.EXTPROC_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
                 };
 
                 Debug.Assert(false); //Force Save !!!
@@ -70,17 +70,46 @@ namespace SyncroSim.STSim
 
         private void ExtProcCallAfterIteration(int iteration)
         {
+            if (this.m_ExtProcAfterIterations.ContainsKey(iteration))
+            {
+                StringDictionary Environment = new StringDictionary
+                {
+                    { Constants.EXTPROC_ENVIRONMENT_AFTER_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
+                };
 
+                Debug.Assert(false); //Force Save !!!
+                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+            }
         }
 
         private void ExtProcCallBeforeTimestep(int iteration, int timestep)
         {
+            if (this.m_ExtProcBeforeTimesteps.ContainsKey(timestep))
+            {
+                StringDictionary Environment = new StringDictionary
+                {
+                    { Constants.EXTPROC_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) },
+                    { Constants.EXTPROC_ENVIRONMENT_BEFORE_TIMESTEP, timestep.ToString(CultureInfo.InvariantCulture) }
+                };
 
+                Debug.Assert(false); //Force Save !!!
+                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+            }
         }
 
         private void ExtProcCallAfterTimestep(int iteration, int timestep)
         {
+            if (this.m_ExtProcAfterTimesteps.ContainsKey(timestep))
+            {
+                StringDictionary Environment = new StringDictionary
+                {
+                    { Constants.EXTPROC_ENVIRONMENT_AFTER_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) },
+                    { Constants.EXTPROC_ENVIRONMENT_AFTER_TIMESTEP, timestep.ToString(CultureInfo.InvariantCulture) }
+                };
 
+                Debug.Assert(false); //Force Save !!!
+                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+            }
         }
 
         private static void ExtProcFillDictionary(Dictionary<int, bool> d, string values)
@@ -182,7 +211,7 @@ namespace SyncroSim.STSim
             throw new ArgumentException("The iteration and/or timestep values are not valid: {0}", value);
         }
 
-        protected override void OnExternalDataReady(DataSheet dataSheet)
+        private void ExtProcOnExternalDataReady(DataSheet dataSheet)
         {
             base.OnExternalDataReady(dataSheet);
 

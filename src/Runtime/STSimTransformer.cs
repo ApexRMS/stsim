@@ -330,6 +330,16 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Overrides OnExternalDataReady
+        /// </summary>
+        /// <param name="dataSheet"></param>
+        protected override void OnExternalDataReady(DataSheet dataSheet)
+        {
+            base.OnExternalDataReady(dataSheet);
+            this.ExtProcOnExternalDataReady(dataSheet);
+        }
+
+        /// <summary>
         /// Overrides OnBeforeIteration
         /// </summary>
         /// <param name="iteration"></param>

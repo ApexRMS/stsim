@@ -123,81 +123,59 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
-    <Compile Include="DataFeedViews\FlowOrderDataFeedView.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="DataFeedViews\ExternalProgramDataFeedView.cs" />
+    <Compile Include="DataFeedViews\ExternalProgramDataFeedView.Designer.cs">
+      <DependentUpon>ExternalProgramDataFeedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFeedViews\FlowOrderDataFeedView.cs" />
     <Compile Include="DataFeedViews\FlowOrderDataFeedView.Designer.cs">
       <DependentUpon>FlowOrderDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\FlowPathwayDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\FlowPathwayDataFeedView.cs" />
     <Compile Include="DataFeedViews\FlowPathwayDataFeedView.Designer.cs">
       <DependentUpon>FlowPathwayDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.cs" />
     <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedViewFineRes.Designer.cs">
       <DependentUpon>InitialConditionsSpatialDataFeedViewFineRes.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\InitialStocksDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\InitialStocksDataFeedView.cs" />
     <Compile Include="DataFeedViews\InitialStocksDataFeedView.Designer.cs">
       <DependentUpon>InitialStocksDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.cs" />
     <Compile Include="DataFeedViews\OutputOptionsSpatialAverageDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsSpatialAverageDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.cs" />
     <Compile Include="DataFeedViews\OutputOptionsSpatialDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsSpatialDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.cs" />
     <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.Designer.cs">
       <DependentUpon>SpatialInitiationMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.cs" />
     <Compile Include="DataFeedViews\SpatialMultiplierDataFeedViewFineRes.Designer.cs">
       <DependentUpon>SpatialMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.cs" />
     <Compile Include="DataFeedViews\StockFlowOutputOptionsDataFeedView.Designer.cs">
       <DependentUpon>StockFlowOutputOptionsDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\StockTypeQuickView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\StockTypeQuickView.cs" />
     <Compile Include="DataFeedViews\StockTypeQuickView.Designer.cs">
       <DependentUpon>StockTypeQuickView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.cs" />
     <Compile Include="DataFeedViews\TransitionSimulationGroupDataFeedView.Designer.cs">
       <DependentUpon>TransitionSimulationGroupDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\TSTGroupDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\TSTGroupDataFeedView.cs" />
     <Compile Include="DataFeedViews\TSTGroupDataFeedView.Designer.cs">
       <DependentUpon>TSTGroupDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\TSTTypeDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\TSTTypeDataFeedView.cs" />
     <Compile Include="DataFeedViews\TSTTypeDataFeedView.Designer.cs">
       <DependentUpon>TSTTypeDataFeedView.cs</DependentUpon>
     </Compile>
@@ -216,21 +194,15 @@
     <Compile Include="DataSheets\TSTGroupDataSheet.cs" />
     <Compile Include="DataSheets\TSTTypeDataSheet.cs" />
     <Compile Include="DiagramSF\FlowPathwayDiagramFilterCriteria.cs" />
-    <Compile Include="DiagramSF\FlowPathwayDiagram.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="DiagramSF\FlowPathwayDiagram.cs" />
     <Compile Include="DiagramSF\FlowPathwayLine.cs" />
     <Compile Include="DiagramSF\FlowPathwayTabStripItem.cs" />
     <Compile Include="DiagramSF\StockTypeShape.cs" />
-    <Compile Include="Forms\ChooseStockTypeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\ChooseStockTypeForm.cs" />
     <Compile Include="Forms\ChooseStockTypeForm.Designer.cs">
       <DependentUpon>ChooseStockTypeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FilterFlowTypesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FilterFlowTypesForm.cs" />
     <Compile Include="Forms\FilterFlowTypesForm.Designer.cs">
       <DependentUpon>FilterFlowTypesForm.cs</DependentUpon>
     </Compile>
@@ -488,117 +460,79 @@
     <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.Designer.cs">
       <DependentUpon>AdjacencyMultiplierDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\AdjacencyMultiplierDataFeedView.cs" />
     <Compile Include="DataFeedViews\AgeGroupDataFeedView.Designer.cs">
       <DependentUpon>AgeGroupDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\AgeGroupDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\AgeGroupDataFeedView.cs" />
     <Compile Include="DataFeedViews\AgeTypeDataFeedView.Designer.cs">
       <DependentUpon>AgeTypeDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\AgeTypeDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\AgeTypeDataFeedView.cs" />
     <Compile Include="DataFeedViews\DistributionValueDataFeedView.Designer.cs">
       <DependentUpon>DistributionValueDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\DistributionValueDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\DistributionValueDataFeedView.cs" />
     <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.Designer.cs">
       <DependentUpon>InitialConditionsNonSpatialDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsNonSpatialDataFeedView.cs" />
     <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.Designer.cs">
       <DependentUpon>InitialConditionsSpatialDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\InitialConditionsSpatialDataFeedView.cs" />
     <Compile Include="DataFeedViews\OutputOptionsDataFeedView.Designer.cs">
       <DependentUpon>OutputOptionsDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\OutputOptionsDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\OutputOptionsDataFeedView.cs" />
     <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.Designer.cs">
       <DependentUpon>PrimaryStratumDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\PrimaryStratumDataFeedView.cs" />
     <Compile Include="DataFeedViews\ProcessingDataFeedView.Designer.cs">
       <DependentUpon>ProcessingDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\ProcessingDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\ProcessingDataFeedView.cs" />
     <Compile Include="DataFeedViews\RunControlDataFeedView.Designer.cs">
       <DependentUpon>RunControlDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\RunControlDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\RunControlDataFeedView.cs" />
     <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.Designer.cs">
       <DependentUpon>SlopeMultiplierDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedView.cs" />
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.Designer.cs">
+      <DependentUpon>SlopeMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </Compile>
-	<Compile Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.Designer.cs">
-		<DependentUpon>SlopeMultiplierDataFeedViewFineRes.cs</DependentUpon>
-	</Compile>
-	<Compile Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.cs">
-		<SubType>UserControl</SubType>
-	</Compile>
+    <Compile Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.cs" />
     <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.Designer.cs">
       <DependentUpon>SpatialInitiationMultiplierDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\SpatialInitiationMultiplierDataFeedView.cs" />
     <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.Designer.cs">
       <DependentUpon>SpatialMultiplierDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\SpatialMultiplierDataFeedView.cs" />
     <Compile Include="DataFeedViews\StateClassDataFeedView.Designer.cs">
       <DependentUpon>StateClassDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\StateClassDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\StateClassDataFeedView.cs" />
     <Compile Include="DataFeedViews\StateClassQuickView.Designer.cs">
       <DependentUpon>StateClassQuickView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\StateClassQuickView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\StateClassQuickView.cs" />
     <Compile Include="DataFeedViews\TransitionDataFeedView.Designer.cs">
       <DependentUpon>TransitionDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\TransitionDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\TransitionDataFeedView.cs" />
     <Compile Include="DataFeedViews\TransitionTypeDataFeedView.Designer.cs">
       <DependentUpon>TransitionTypeDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\TransitionTypeDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeDataFeedView.cs" />
     <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.Designer.cs">
       <DependentUpon>TransitionTypeGroupDataFeedView.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="DataFeedViews\TransitionTypeGroupDataFeedView.cs" />
     <Compile Include="DataSheets\DeterministicTransitionDataSheet.cs" />
     <Compile Include="DataSheets\InitialConditionsSpatialRasterDataSheet.cs" />
     <Compile Include="DataSheets\ProbabilisticTransitionDataSheet.cs" />
@@ -610,33 +544,23 @@
     <Compile Include="Forms\ChooseStateClassForm.Designer.cs">
       <DependentUpon>ChooseStateClassForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ChooseStateClassForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\ChooseStateClassForm.cs" />
     <Compile Include="Forms\FilterTransitionsForm.Designer.cs">
       <DependentUpon>FilterTransitionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FilterTransitionsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FilterTransitionsForm.cs" />
     <Compile Include="Forms\PasteStrataForm.Designer.cs">
       <DependentUpon>PasteStrataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PasteStrataForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\PasteStrataForm.cs" />
     <Compile Include="Forms\SelectStratumForm.Designer.cs">
       <DependentUpon>SelectStratumForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SelectStratumForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\SelectStratumForm.cs" />
     <Compile Include="Forms\TransitionDiagramPasteSpecialForm.Designer.cs">
       <DependentUpon>TransitionDiagramPasteSpecialForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TransitionDiagramPasteSpecialForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\TransitionDiagramPasteSpecialForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Application.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -661,9 +585,7 @@
     <Compile Include="RuntimeSF\FlowPathwayCollection.cs" />
     <Compile Include="RuntimeSF\FlowPathwayMap.cs" />
     <Compile Include="Shared\CellOffset.cs" />
-    <Compile Include="Shared\CheckBoxPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Shared\CheckBoxPanel.cs" />
     <Compile Include="Shared\CheckBoxPanel.Designer.cs">
       <DependentUpon>CheckBoxPanel.cs</DependentUpon>
     </Compile>
@@ -703,24 +625,12 @@
     <Compile Include="Diagram\ProbabilisticTransitionsTabStripItem.cs" />
     <Compile Include="Diagram\StateClassShape.cs" />
     <Compile Include="Diagram\StratumTabStripItem.cs" />
-    <Compile Include="Diagram\TransitionDiagram.Clipboard.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Diagram\TransitionDiagram.Deterministic.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Diagram\TransitionDiagram.Override.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Diagram\TransitionDiagram.Probabilistic.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Diagram\TransitionDiagram.Utilities.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Diagram\TransitionDiagram.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Diagram\TransitionDiagram.Clipboard.cs" />
+    <Compile Include="Diagram\TransitionDiagram.Deterministic.cs" />
+    <Compile Include="Diagram\TransitionDiagram.Override.cs" />
+    <Compile Include="Diagram\TransitionDiagram.Probabilistic.cs" />
+    <Compile Include="Diagram\TransitionDiagram.Utilities.cs" />
+    <Compile Include="Diagram\TransitionDiagram.cs" />
     <Compile Include="Diagram\TransitionDiagramClipData.cs" />
     <Compile Include="Diagram\TransitionDiagramLine.cs" />
     <Compile Include="Diagram\TransitionDiagramTabStripItem.cs" />
@@ -740,6 +650,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\DistributionValueDataFeedView.resx">
       <DependentUpon>DistributionValueDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\ExternalProgramDataFeedView.resx">
+      <DependentUpon>ExternalProgramDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\FlowOrderDataFeedView.resx">
       <DependentUpon>FlowOrderDataFeedView.cs</DependentUpon>
@@ -779,10 +692,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedView.resx">
       <DependentUpon>SlopeMultiplierDataFeedView.cs</DependentUpon>
-	</EmbeddedResource>
-	<EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.resx">
-		<DependentUpon>SlopeMultiplierDataFeedViewFineRes.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\SlopeMultiplierDataFeedViewFineRes.resx">
+      <DependentUpon>SlopeMultiplierDataFeedViewFineRes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\SpatialInitiationMultiplierDataFeedViewFineRes.resx">
       <DependentUpon>SpatialInitiationMultiplierDataFeedViewFineRes.cs</DependentUpon>
     </EmbeddedResource>
@@ -866,6 +779,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Runtime\STSimTransformer.ExtProc.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Copy16x16.png" />

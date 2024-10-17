@@ -145,5 +145,11 @@ namespace SyncroSim.STSim
         public static Color DIAGRAM_SHAPE_BACKGROUND_COLOR = Color.FromArgb(255, 240, 240, 240);
         public static Color DIAGRAM_FLOW_PATHWAY_LINE_COLOR = Color.CornflowerBlue;
         public static Font DIAGRAM_SHAPE_NORMAL_FONT = new Font("Segoe UI", 9.0F, FontStyle.Regular);
+
+        //External Program Environment
+        public const string STIME_ENVIRONMENT_BEFORE_ITERATION = "SSIM_STOCHASTIC_TIME_BEFORE_ITERATION";
+        public const string STIME_ENVIRONMENT_AFTER_ITERATION = "SSIM_STOCHASTIC_TIME_AFTER_ITERATION";
+        public const string STIME_ENVIRONMENT_BEFORE_TIMESTEP = "SSIM_STOCHASTIC_TIME_BEFORE_TIMESTEP";
+        public const string STIME_ENVIRONMENT_AFTER_TIMESTEP = "SSIM_STOCHASTIC_TIME_AFTER_TIMESTEP";
     }
 }

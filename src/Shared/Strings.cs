@@ -485,6 +485,15 @@ namespace SyncroSim.STSim
         public const string DISTRIBUTION_VALUE_VALUE_DIST_MAX_COLUMN_NAME = "ValueDistributionMax";
         public const string DISTRIBUTION_VALUE_VALUE_DIST_RELATIVE_FREQUENCY_COLUMN_NAME = "ValueDistributionRelativeFrequency";
 
+        public const string EXTERNAL_DATASHEET_NAME = "stsim_ExternalProgram";
+        public const string EXTERNAL_DATASHEET_EXE_COLUMN_NAME = "ExecutableName";
+        public const string EXTERNAL_DATASHEET_SCRIPT_COLUMN_NAME = "ScriptName";
+        public const string EXTERNAL_DATASHEET_ARGS_COLUMN_NAME = "Arguments";
+        public const string EXTERNAL_DATASHEET_BI_COLUMN_NAME = "CallBeforeIterations";
+        public const string EXTERNAL_DATASHEET_AI_COLUMN_NAME = "CallAfterIterations";
+        public const string EXTERNAL_DATASHEET_BT_COLUMN_NAME = "CallBeforeTimesteps";
+        public const string EXTERNAL_DATASHEET_AT_COLUMN_NAME = "CallAfterTimesteps";
+
         //Multi-Processing
         public const string DATASHEET_MULTI_PROCESSING_NAME = "stsim_Multiprocessing";
         public const string DATASHEET_MULTI_PROCESSING_SPLIT_BY_SS_COLUMN_NAME = "SplitBySecondaryStrata";

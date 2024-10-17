@@ -336,6 +336,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         protected override void OnBeforeIteration(int iteration)
         {
+            this.ExtProcCallBeforeIteration(iteration);
             base.OnBeforeIteration(iteration);
             this.InternalOnBeforeIteration(iteration);
         }
@@ -351,6 +352,16 @@ namespace SyncroSim.STSim
         }
 
         /// <summary>
+        /// Overrides OnAfterIteration
+        /// </summary>
+        /// <param name="iteration"></param>
+        protected override void OnAfterIteration(int iteration)
+        {
+            base.OnAfterIteration(iteration);
+            this.ExtProcCallAfterIteration(iteration);
+        }
+
+        /// <summary>
         /// Overrides OnBeforeTimestep
         /// </summary>
         /// <param name="iteration"></param>
@@ -358,6 +369,7 @@ namespace SyncroSim.STSim
         /// <remarks></remarks>
         protected override void OnBeforeTimestep(int iteration, int timestep)
         {
+            this.ExtProcCallBeforeTimestep(iteration, timestep);
             base.OnBeforeTimestep(iteration, timestep);
             this.InternalOnBeforeTimestep(iteration, timestep);
         }
@@ -373,17 +385,16 @@ namespace SyncroSim.STSim
             this.InternalOnTimestep(iteration, timestep);
         }
 
-        //DEVTODO-3.0
-
         /// <summary>
-        /// Called when external data has been appended to the specified data sheet
+        /// Overrides OnAfterTimestep
         /// </summary>
-        /// <param name="dataSheet"></param>
-        /// <remarks></remarks>
-        //protected override void OnExternalDataReady(DataSheet dataSheet)
-        //{
-        //    this.STSimExternalDataReady(dataSheet);
-        //}
+        /// <param name="iteration"></param>
+        /// <param name="timestep"></param>
+        protected override void OnAfterTimestep(int iteration, int timestep)
+        {
+            base.OnAfterTimestep(iteration, timestep);
+            this.ExtProcCallAfterTimestep(iteration, timestep);
+        }
 
         private void InternalConfigure()
         {
@@ -444,6 +455,7 @@ namespace SyncroSim.STSim
             this.InitializeDistributionValues();
             this.InitializeOutputDataTables();
             this.InitializeModel();
+            this.ExtProcInitialize();
             this.InitializeStocksAndFlows();
 
             if(this.IsSpatial && !this.m_IsMultiResolution)
@@ -1343,141 +1355,6 @@ namespace SyncroSim.STSim
 
             return null;
         }
-
-        //private void STSimExternalDataReady(DataSheet dataSheet)
-        //{
-        //    if (dataSheet.Name == Strings.DATASHEET_PT_NAME)
-        //    {
-        //        this.m_Transitions.Clear();
-        //        this.FillProbabilisticTransitionsCollection();
-        //        this.m_TransitionMap = new TransitionMap(this.ResultScenario, this.m_Transitions);
-        //    }
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_TARGET_NAME)
-        //    {
-        //        this.m_TransitionTargets.Clear();
-        //        this.FillTransitionTargetCollection();
-        //        this.InitializeTransitionTargetDistributionValues();
-        //        this.InitializeTransitionTargetPrioritizations();
-        //        this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
-        //    }
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_MULTIPLIER_VALUE_NAME)
-        //    {
-        //        this.m_TransitionMultiplierValues.Clear();
-        //        this.FillTransitionMultiplierValueCollection();
-        //        this.InitializeTransitionMultiplierDistributionValues();
-
-        //        foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-        //        {
-        //            tmt.ClearMultiplierValueMap();
-        //        }
-
-        //        foreach (TransitionMultiplierValue sm in this.m_TransitionMultiplierValues)
-        //        {
-        //            TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
-        //            mt.AddTransitionMultiplierValue(sm);
-        //        }
-
-        //        foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-        //        {
-        //            tmt.CreateMultiplierValueMap();
-        //        }
-        //    }
-        //    ==============================================================================
-        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF CLAUSE IS LIKELY INCORRECT
-        //    BECAUSE TRANSITION SPATIAL MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
-        //    BE HANDLED NOW
-        //    ==============================================================================
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_MULTIPLIER_NAME)
-        //    {
-        //        if (this.m_IsSpatial)
-        //        {
-        //            this.m_TransitionSpatialMultipliers.Clear();
-        //            this.m_TransitionSpatialMultiplierRasters.Clear();
-        //            this.FillTransitionSpatialMultiplierCollection();
-
-        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-        //            {
-        //                tmt.ClearSpatialMultiplierMap();
-        //            }
-
-        //            foreach (TransitionSpatialMultiplier sm in this.m_TransitionSpatialMultipliers)
-        //            {
-        //                TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
-        //                mt.AddTransitionSpatialMultiplier(sm);
-        //            }
-
-        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-        //            {
-        //                tmt.CreateSpatialMultiplierMap();
-        //            }
-        //        }
-        //    }
-        //    ==============================================================================
-        //    WARNING TO ANYONE WHO UN-COMMENTS THIS CODE: THIS ELSE-IF CLAUSE IS LIKELY INCORRECT
-        //    BECAUSE TRANSITION SPATIAL INITIATION MULTIPLIERS FOR FINE RESOLUTION RASTERS ALSO NEED TO
-        //    BE HANDLED NOW
-        //    ==============================================================================
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_SPATIAL_INITIATION_MULTIPLIER_NAME)
-        //    {
-        //        if (this.m_IsSpatial)
-        //        {
-        //            this.m_TransitionSpatialInitiationMultipliers.Clear();
-        //            this.m_TransitionSpatialInitiationMultiplierRasters.Clear();
-        //            this.FillTransitionSpatialInitiationMultiplierCollection();
-
-        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-        //            {
-        //                tmt.ClearSpatialInitiationMultiplierMap();
-        //            }
-
-        //            foreach (TransitionSpatialInitiationMultiplier sm in this.m_TransitionSpatialInitiationMultipliers)
-        //            {
-        //                TransitionMultiplierType mt = this.GetTransitionMultiplierType(sm.TransitionMultiplierTypeId);
-        //                mt.AddTransitionSpatialInitiationMultiplier(sm);
-        //            }
-
-        //            foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
-        //            {
-        //                tmt.CreateSpatialInitiationMultiplierMap();
-        //            }
-        //        }
-        //    }
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ORDER_NAME)
-        //    {
-        //        this.m_TransitionOrders.Clear();
-        //        this.FillTransitionOrderCollection();
-        //        this.m_TransitionOrderMap = new TransitionOrderMap(this.m_TransitionOrders);
-        //    }
-        //    else if (dataSheet.Name == Strings.DATASHEET_STATE_ATTRIBUTE_VALUE_NAME)
-        //    {
-        //        this.m_StateAttributeValues.Clear();
-        //        this.FillStateAttributeValueCollection();
-        //        this.m_StateAttributeTypeIds = null;
-        //        this.m_StateAttributeValueMap = null;
-        //        this.InitializeStateAttributes();
-        //    }
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME)
-        //    {
-        //        this.m_TransitionAttributeValues.Clear();
-        //        this.FillTransitionAttributeValueCollection();
-        //        this.m_TransitionAttributeValueMap = null;
-        //        this.m_TransitionAttributeTypeIds = null;
-        //        this.InitializeTransitionAttributes();
-        //    }
-        //    else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME)
-        //    {
-        //        this.m_TransitionAttributeTargets.Clear();
-        //        this.FillTransitionAttributeTargetCollection();
-        //        this.InitializeTransitionAttributeTargetDistributionValues();
-        //        this.InitializeTransitionAttributeTargetPrioritizations();
-        //        this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
-        //    }
-        //    else
-        //    {
-        //        string msg = string.Format(CultureInfo.InvariantCulture, "External data is not supported for: {0}", dataSheet.Name);
-        //        throw new TransformerFailedException(msg);
-        //    }
-        //}
 
         /// <summary>
         /// Resets the remaining amounts for transition attribute targets

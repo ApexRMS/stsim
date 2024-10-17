@@ -723,6 +723,16 @@
 		<column name="ValueDistributionRelativeFrequency" dataType="Double" displayName="Relative Frequency" validationType="Decimal" validationCondition="Greater" formula1="0.0" isOptional="True"/>
 	</dataSheet>
 
+	<dataSheet name="ExternalProgram" displayName="External Program" isSingleRow="True" viewClassName="SyncroSim.STSim.ExternalProgramDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<column name="ExecutableName" displayName="Executable Name" dataType="String"/>
+		<column name="ScriptName" displayName="Script Name" dataType="String"/>
+		<column name="Arguments" displayName="Arguments" dataType="String"/>
+		<column name="CallBeforeIterations" displayName="Call Before Iterations" dataType="String"/>
+		<column name="CallAfterIterations" displayName="Call After Iterations" dataType="String"/>
+		<column name="CallBeforeTimesteps" displayName="Call Before Timesteps" dataType="String"/>
+		<column name="CallAfterTimesteps" displayName="Call After Timesteps" dataType="String"/>
+	</dataSheet>
+
 	<dataSheet name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" isSingleRow="True" viewClassName="SyncroSim.STSim.ProcessingDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="SplitBySecondaryStrata" dataType="Boolean" displayName="Split by Secondary Strata"/>
 	</dataSheet>
@@ -1401,6 +1411,7 @@
 			</group>
 			<item name="DistributionValue"/>
 			<item name="Multiprocessing"/>
+			<item name="ExternalProgram"/>			
 			<group name="MultiResolution" displayName="Multi Resolution">
 				<item name="InitialConditionsSpatialFineRes"/>
 				<item name="TransitionGroupResolution"/>

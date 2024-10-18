@@ -1,4 +1,4 @@
-﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -127,7 +127,7 @@ namespace SyncroSim.STSim
 
             }
 
-            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items, store);
+            AddAvgMapStateClassVariables(project, StateClassAvgGroup.Items, store, fineRes);
             StateClassesGroup.Items.Add(StateClassAvgGroup);
 
             return StateClassesGroup;
@@ -387,20 +387,33 @@ namespace SyncroSim.STSim
 
         private static void AddAvgMapStateClassVariables(
             Project project,
-            LayoutItemCollection items, 
-            DataStore store)
+            LayoutItemCollection items,
+            DataStore store,
+            bool fineRes = false)
         {
             List<StateClass> StateClasses = GetStateClasses(project, store);
-            string FilePrefix = Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME;
+
+            string filePrefix = Constants.SPATIAL_MAP_AVG_STATE_CLASS_VARIABLE_NAME;
 
             StateClasses.Sort((StateClass sc1, StateClass sc2) =>
             {
                 return string.Compare(sc1.DisplayName, sc2.DisplayName, StringComparison.CurrentCulture);
             });
 
+            string subsetFilter;
+            if (fineRes)
+            {
+                filePrefix += "FineRes";
+                subsetFilter = "ResolutionId=1";
+            }
+            else
+            {
+                subsetFilter = "ResolutionId=0";
+            }
+
             foreach (StateClass sc in StateClasses)
             {
-                string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", FilePrefix, sc.Id);
+                string VarName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", filePrefix, sc.Id);
                 LayoutItem Item = new LayoutItem(VarName, sc.DisplayName, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialAverageStateClass"));
@@ -409,6 +422,7 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("itemId", sc.Id.ToString(CultureInfo.InvariantCulture)));
                 Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_STATECLASS_NAME));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
+                Item.Properties.Add(new MetaDataProperty("subsetFilter", subsetFilter));
 
                 items.Add(Item);
             }

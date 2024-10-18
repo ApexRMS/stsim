@@ -1,4 +1,4 @@
-// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -251,12 +251,21 @@ namespace SyncroSim.STSim
         private void AddTransitionCriteria(Layout layout, Project project, DataStore store)
         {
             LayoutItem TransitionsGroup = new LayoutItem("stsim_TransitionsGroup", "Transitions", true);
+
             LayoutItem TransitionsIterationGroup = new LayoutItem("stsim_TransitionsIterationsGroup", "Iteration", true);
             LayoutItem TransitionsIterationGroupFineRes = new LayoutItem("stsim_TransitionsIterationsGroup-1", "Iteration (Fine Resolution)", true);
+
             LayoutItem TransitionsAvgTPGroup = new LayoutItem("stsim_TransitionsAvgGroup", "Probability", true);
+            LayoutItem TransitionsAvgTPGroupFineRes = new LayoutItem("stsim_TransitionsAvgGroup-1", "Probability (Fine Resolution)", true);
+
             LayoutItem TransitionsIterationEventsGroup = new LayoutItem("stsim_TransitionsIterationsEventsGroup", "Iteration - Events", true);
+            LayoutItem TransitionsIterationEventsGroupFineRes = new LayoutItem("stsim_TransitionsIterationsEventsGroup-1", "Iteration - Events (Fine Resolution)", true);
+
             LayoutItem TransitionsTSTGroup = new LayoutItem("stsim_TransitionsTSTGroup", "Time-Since-Transition", true);
+            LayoutItem TransitionsTSTGroupFineRes = new LayoutItem("stsim_TransitionsTSTGroup-1", "Time-Since-Transition (Fine Resolution)", true);
+
             LayoutItem TransitionsAvgTSTGroup = new LayoutItem("stsim_TransitionsAvgTSTGroup", "Time-Since-Transition - Average", true);
+            LayoutItem TransitionsAvgTSTGroupFineRes = new LayoutItem("stsim_TransitionsAvgTSTGroup-1", "Time-Since-Transition - Average (Fine Resolution)", true);
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
@@ -266,9 +275,9 @@ namespace SyncroSim.STSim
             if (this.ShowMultiResolutionCriteriaNodes)
             {
                 AddMapTransitionGroupVariables(
-                project, TransitionsIterationGroupFineRes.Items,
-                "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
-                Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, null, store, true);
+                    project, TransitionsIterationGroupFineRes.Items,
+                    "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
+                    Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, null, store, true);
             }
 
             AddMapTransitionGroupVariables(
@@ -276,27 +285,69 @@ namespace SyncroSim.STSim
                 "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupId", AVG_PROB_ALL_ITER,
                 Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_NAME, null, store);
 
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AddMapTransitionGroupVariables(
+                    project, TransitionsAvgTPGroupFineRes.Items,
+                    "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupId", AVG_PROB_ALL_ITER,
+                    Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_NAME, null, store, true);
+            }
+
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationEventsGroup.Items,
                 "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupId", "(Transitions Events)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_NAME, null, store);
+
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AddMapTransitionGroupVariables(
+                    project, TransitionsIterationEventsGroupFineRes.Items,
+                    "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupId", "(Transitions Events)",
+                    Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_NAME, null, store, true);
+            }
 
             AddMapTransitionGroupVariables(
                 project, TransitionsTSTGroup.Items,
                 "stsim_OutputSpatialTST", "Filename", "TransitionGroupId", "(Time-Since-Transition)",
                 Constants.SPATIAL_MAP_TST_VARIABLE_NAME, null, store);
 
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AddMapTransitionGroupVariables(
+                    project, TransitionsTSTGroupFineRes.Items,
+                    "stsim_OutputSpatialTST", "Filename", "TransitionGroupId", "(Time-Since-Transition)",
+                    Constants.SPATIAL_MAP_TST_VARIABLE_NAME, null, store, true);
+            }
+
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTSTGroup.Items,
                 "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupId", "(Time-Since-Transition - Average)",
                 Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store);
 
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AddMapTransitionGroupVariables(
+                    project, TransitionsAvgTSTGroupFineRes.Items,
+                    "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupId", "(Time-Since-Transition - Average)",
+                    Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store, true);
+            }
+
             if (TransitionsIterationGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroup); }
             if (TransitionsIterationGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationGroupFineRes); }
+
             if (TransitionsAvgTPGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroup); }
+            if (TransitionsAvgTPGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTPGroupFineRes); }
+
             if (TransitionsIterationEventsGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroup); }
+            if (TransitionsIterationEventsGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsIterationEventsGroupFineRes); }
+
             if (TransitionsTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsTSTGroup); }
+            if (TransitionsTSTGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsTSTGroupFineRes); }
+
             if (TransitionsAvgTSTGroup.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTSTGroup); }
+            if (TransitionsAvgTSTGroupFineRes.Items.Count > 0) { TransitionsGroup.Items.Add(TransitionsAvgTSTGroupFineRes); }
+
+            // Add all transition spatial output sub-types to top-level layout node
             if (TransitionsGroup.Items.Count > 0) { layout.Items.Add(TransitionsGroup); }
         }
 

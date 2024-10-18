@@ -23,22 +23,27 @@ namespace SyncroSim.STSim
 
         private void ExtProcInitialize()
         {
-            DataSheet ds = this.ResultScenario.GetDataSheet(Strings.EXTERNAL_DATASHEET_NAME);
-            DataRow dr = ds.GetDataRow();
+            DataRow dr = this.ResultScenario.GetDataSheet(Strings.EXTERNAL_DATASHEET_NAME).GetDataRow();
 
             if (dr == null)
             {
                 return;
             }
 
-            this.m_ExtProcExeName = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_EXE_COLUMN_NAME);
-            this.m_ExtProcScriptName = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_SCRIPT_COLUMN_NAME);
-            this.m_ExtProcArguments = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_ARGS_COLUMN_NAME);
+            this.m_ExtProcExeName = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_EXE_COLUMN_NAME);
 
-            string bi = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_BI_COLUMN_NAME);
-            string ai = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_AI_COLUMN_NAME);
-            string bt = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_BT_COLUMN_NAME);
-            string at = ExtProcGetDataStr(dr, Strings.EXTERNAL_DATASHEET_AT_COLUMN_NAME);
+            if (this.m_ExtProcExeName == null)
+            {
+                return; 
+            }
+
+            this.m_ExtProcScriptName = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_SCRIPT_COLUMN_NAME);
+            this.m_ExtProcArguments = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_ARGS_COLUMN_NAME);
+
+            string bi = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_BI_COLUMN_NAME);
+            string ai = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_AI_COLUMN_NAME);
+            string bt = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_BT_COLUMN_NAME);
+            string at = DataTableUtilities.GetDataStr(dr, Strings.EXTERNAL_DATASHEET_AT_COLUMN_NAME);
 
             ExtProcFillDictionary(this.m_ExtProcBeforeIterations, bi);
             ExtProcFillDictionary(this.m_ExtProcAfterIterations, ai);
@@ -50,65 +55,114 @@ namespace SyncroSim.STSim
                 this.m_ExtProcBeforeTimesteps.Count == 0 &&
                 this.m_ExtProcAfterTimesteps.Count == 0)
             {
-                throw new ArgumentException("Cannot run external program with no iteration or timesteps specified.");
+                throw new ArgumentException(
+                    "Cannot run external program '{0}' with no iteration or timesteps specified.", 
+                    this.m_ExtProcExeName);
             }
         }
 
         private void ExtProcCallBeforeIteration(int iteration)
         {
-            if (this.m_ExtProcBeforeIterations.ContainsKey(iteration))
+            if (this.m_ExtProcExeName == null || !this.m_ExtProcBeforeIterations.ContainsKey(iteration))
             {
-                StringDictionary Environment = new StringDictionary
-                {
-                    { Constants.EXTPROC_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
-                };
-
-                Debug.Assert(false); //Force Save !!!
-                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+                return;
             }
+
+            StringDictionary e = new StringDictionary
+            {
+                { Constants.EXTPROC_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
+            };
+
+            this.ExtProcCallExternal(e);
         }
 
         private void ExtProcCallAfterIteration(int iteration)
         {
-            if (this.m_ExtProcAfterIterations.ContainsKey(iteration))
+            if (this.m_ExtProcExeName == null || !this.m_ExtProcAfterIterations.ContainsKey(iteration))
             {
-                StringDictionary Environment = new StringDictionary
-                {
-                    { Constants.EXTPROC_ENVIRONMENT_AFTER_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
-                };
-
-                Debug.Assert(false); //Force Save !!!
-                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+                return;
             }
+
+            StringDictionary e = new StringDictionary
+            {
+                { Constants.EXTPROC_ENVIRONMENT_AFTER_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) }
+            };
+
+            this.ExtProcCallExternal(e);
         }
 
         private void ExtProcCallBeforeTimestep(int iteration, int timestep)
         {
-            if (this.m_ExtProcBeforeTimesteps.ContainsKey(timestep))
+            if (this.m_ExtProcExeName == null || !this.m_ExtProcBeforeTimesteps.ContainsKey(timestep))
             {
-                StringDictionary Environment = new StringDictionary
-                {
-                    { Constants.EXTPROC_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) },
-                    { Constants.EXTPROC_ENVIRONMENT_BEFORE_TIMESTEP, timestep.ToString(CultureInfo.InvariantCulture) }
-                };
-
-                Debug.Assert(false); //Force Save !!!
-                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+                return;
             }
+
+            StringDictionary e = new StringDictionary
+            {
+                { Constants.EXTPROC_ENVIRONMENT_BEFORE_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) },
+                { Constants.EXTPROC_ENVIRONMENT_BEFORE_TIMESTEP, timestep.ToString(CultureInfo.InvariantCulture) }
+            };
+
+            this.ExtProcCallExternal(e);
         }
 
         private void ExtProcCallAfterTimestep(int iteration, int timestep)
         {
-            if (this.m_ExtProcAfterTimesteps.ContainsKey(timestep))
+            if (this.m_ExtProcExeName == null || !this.m_ExtProcAfterTimesteps.ContainsKey(timestep))
             {
-                StringDictionary Environment = new StringDictionary
-                {
-                    { Constants.EXTPROC_ENVIRONMENT_AFTER_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) },
-                    { Constants.EXTPROC_ENVIRONMENT_AFTER_TIMESTEP, timestep.ToString(CultureInfo.InvariantCulture) }
-                };
+                return;
+            }
 
-                Debug.Assert(false); //Force Save !!!
-                this.ExternalTransform(this.m_ExtProcExeName, this.m_ExtProcScriptName, this.m_ExtProcArguments, false, Environment);
+            StringDictionary e = new StringDictionary
+            {
+                { Constants.EXTPROC_ENVIRONMENT_AFTER_ITERATION, iteration.ToString(CultureInfo.InvariantCulture) },
+                { Constants.EXTPROC_ENVIRONMENT_AFTER_TIMESTEP, timestep.ToString(CultureInfo.InvariantCulture) }
+            };
+
+            this.ExtProcCallExternal(e);
+        }
+
+        private void ExtProcCallExternal(StringDictionary callerEnv)
+        {
+            this.ForceSaveLibrary();
+
+            this.ExternalTransform(
+                this.m_ExtProcExeName, 
+                this.m_ExtProcScriptName, 
+                this.m_ExtProcArguments, 
+                false, 
+                callerEnv);
+        }
+
+        private void ForceSaveLibrary()
+        {
+            bool AtLeastOne = false;
+
+            void SetChanged(DataFeedCollection feeds)
+            {
+                foreach (DataFeed df in feeds)
+                {
+                    foreach (DataSheet ds in df.DataSheets)
+                    {
+                        DataTable dt = ds.GetData().GetChanges();
+
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            ds.Changes.Add(new ChangeRecord(this, "External Program"));
+                            AtLeastOne = true;
+                        }
+                    }
+                }
+            }
+
+            SetChanged(this.Library.DataFeeds);
+            SetChanged(this.Project.DataFeeds);
+            SetChanged(this.ResultScenario.DataFeeds);
+
+            if (AtLeastOne)
+            {
+                this.Library.Save();
             }
         }
 
@@ -161,7 +215,6 @@ namespace SyncroSim.STSim
                 ExtProcThrowParseException(t);
             }
 
-
             if (!int.TryParse(split[0], out int t1))
             {
                 ExtProcThrowParseException(t);
@@ -189,23 +242,6 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static string ExtProcGetDataStr(DataRow dr, string columnName)
-        {
-            return ExtProcGetDataStr(dr[columnName]);
-        }
-
-        private static string ExtProcGetDataStr(object value)
-        {
-            if ((object.ReferenceEquals(value, DBNull.Value)))
-            {
-                return null;
-            }
-            else
-            {
-                return Convert.ToString(value);
-            }
-        }
-
         private static void ExtProcThrowParseException(string value)
         {
             throw new ArgumentException("The iteration and/or timestep values are not valid: {0}", value);
@@ -213,8 +249,6 @@ namespace SyncroSim.STSim
 
         private void ExtProcOnExternalDataReady(DataSheet dataSheet)
         {
-            base.OnExternalDataReady(dataSheet);
-
             if (dataSheet.Name == Strings.DATASHEET_PT_NAME)
             {
                 this.m_Transitions.Clear();

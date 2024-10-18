@@ -1228,6 +1228,7 @@
 		<dataSheet name="TransitionPathwayAutoCorrelation" type="Input"/>
 		<dataSheet name="DistributionValue" type="Input"/>
 		<dataSheet name="Multiprocessing" type="Input"/>
+		<dataSheet name="ExternalProgram" type="Input"/>		
 		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>
 		<dataSheet name="core_ExternalVariableValue" type="Input"/>
 		<dataSheet name="InitialConditionsSpatialFineRes" type="Input"/>

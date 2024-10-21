@@ -1,4 +1,4 @@
-﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -299,66 +299,66 @@ namespace SyncroSim.STSim
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationGroup.Items,
-                "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
+                "stsim_OutputSpatialTransition", "TransitionGroupId", "(Iteration)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, Strings.DATASHEET_TRANSITION_TYPE_NAME, store);
 
             if (this.ShowMultiResolutionCriteriaNodes)
             {
                 AddMapTransitionGroupVariables(
                     project, TransitionsIterationGroupFineRes.Items,
-                    "stsim_OutputSpatialTransition", "Filename", "TransitionGroupId", "(Iteration)",
+                    "stsim_OutputSpatialTransition", "TransitionGroupId", "(Iteration)",
                     Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME, null, store, true);
             }
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTPGroup.Items,
-                "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupId", AVG_PROB_ALL_ITER,
+                "stsim_OutputSpatialAverageTransitionProbability", "TransitionGroupId", AVG_PROB_ALL_ITER,
                 Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_NAME, null, store);
 
             if (this.ShowMultiResolutionCriteriaNodes)
             {
                 AddMapTransitionGroupVariables(
                     project, TransitionsAvgTPGroupFineRes.Items,
-                    "stsim_OutputSpatialAverageTransitionProbability", "Filename", "TransitionGroupId", AVG_PROB_ALL_ITER,
+                    "stsim_OutputSpatialAverageTransitionProbability", "TransitionGroupId", AVG_PROB_ALL_ITER,
                     Constants.SPATIAL_MAP_AVG_TRANSITION_PROBABILITY_VARIABLE_NAME, null, store, true);
             }
 
             AddMapTransitionGroupVariables(
                 project, TransitionsIterationEventsGroup.Items,
-                "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupId", "(Transitions Events)",
+                "stsim_OutputSpatialTransitionEvent", "TransitionGroupId", "(Transitions Events)",
                 Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_NAME, null, store);
 
             if (this.ShowMultiResolutionCriteriaNodes)
             {
                 AddMapTransitionGroupVariables(
                     project, TransitionsIterationEventsGroupFineRes.Items,
-                    "stsim_OutputSpatialTransitionEvent", "Filename", "TransitionGroupId", "(Transitions Events)",
+                    "stsim_OutputSpatialTransitionEvent", "TransitionGroupId", "(Transitions Events)",
                     Constants.SPATIAL_MAP_TRANSITION_GROUP_EVENT_VARIABLE_NAME, null, store, true);
             }
 
             AddMapTransitionGroupVariables(
                 project, TransitionsTSTGroup.Items,
-                "stsim_OutputSpatialTST", "Filename", "TransitionGroupId", "(Time-Since-Transition)",
+                "stsim_OutputSpatialTST", "TransitionGroupId", "(Time-Since-Transition)",
                 Constants.SPATIAL_MAP_TST_VARIABLE_NAME, null, store);
 
             if (this.ShowMultiResolutionCriteriaNodes)
             {
                 AddMapTransitionGroupVariables(
                     project, TransitionsTSTGroupFineRes.Items,
-                    "stsim_OutputSpatialTST", "Filename", "TransitionGroupId", "(Time-Since-Transition)",
+                    "stsim_OutputSpatialTST", "TransitionGroupId", "(Time-Since-Transition)",
                     Constants.SPATIAL_MAP_TST_VARIABLE_NAME, null, store, true);
             }
 
             AddMapTransitionGroupVariables(
                 project, TransitionsAvgTSTGroup.Items,
-                "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupId", "(Time-Since-Transition - Average)",
+                "stsim_OutputSpatialAverageTST", "TransitionGroupId", "(Time-Since-Transition - Average)",
                 Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store);
 
             if (this.ShowMultiResolutionCriteriaNodes)
             {
                 AddMapTransitionGroupVariables(
                     project, TransitionsAvgTSTGroupFineRes.Items,
-                    "stsim_OutputSpatialAverageTST", "Filename", "TransitionGroupId", "(Time-Since-Transition - Average)",
+                    "stsim_OutputSpatialAverageTST", "TransitionGroupId", "(Time-Since-Transition - Average)",
                     Constants.SPATIAL_MAP_AVG_TST_VARIABLE_NAME, null, store, true);
             }
 
@@ -389,13 +389,13 @@ namespace SyncroSim.STSim
 
             AddMapStateAttributes(
                 project, StateAttributesIterationGroup.Items, 
-                "stsim_OutputSpatialStateAttribute", "Filename", "StateAttributeTypeId", 
+                "stsim_OutputSpatialStateAttribute", "StateAttributeTypeId", 
                 Constants.SPATIAL_MAP_STATE_ATTRIBUTE_VARIABLE_NAME, null, store, attrGroupView);
 
             //Average State Attributes
             AddMapStateAttributes(
                 project, StateAttributesAvgGroup.Items,
-                "stsim_OutputSpatialAverageStateAttribute", "Filename", "StateAttributeTypeId",
+                "stsim_OutputSpatialAverageStateAttribute", "StateAttributeTypeId",
                 Constants.SPATIAL_MAP_AVG_STATE_ATTRIBUTE_VARIABLE_NAME, AVG_ALL_ITER, store, attrGroupView);
 
             if (StateAttributesIterationGroup.Items.Count > 0) { StateAttributesGroup.Items.Add(StateAttributesIterationGroup); }
@@ -411,12 +411,12 @@ namespace SyncroSim.STSim
 
             AddMapTransitionAttributes(
                 project, TransitionAttributesIterationGroup.Items,
-                "stsim_OutputSpatialTransitionAttribute", "Filename", "TransitionAttributeTypeId",
+                "stsim_OutputSpatialTransitionAttribute", "TransitionAttributeTypeId",
                 Constants.SPATIAL_MAP_TRANSITION_ATTRIBUTE_VARIABLE_NAME, null, store, attrGroupView);
 
             AddMapTransitionAttributes(
                 project, TransitionAttributesAvgGroup.Items,
-                "stsim_OutputSpatialAverageTransitionAttribute", "Filename", "TransitionAttributeTypeId",
+                "stsim_OutputSpatialAverageTransitionAttribute", "TransitionAttributeTypeId",
                 Constants.SPATIAL_MAP_AVG_TRANSITION_ATTRIBUTE_VARIABLE_NAME, AVG_ALL_ITER, store, attrGroupView);
 
             if (TransitionAttributesIterationGroup.Items.Count > 0) { TransitionAttributesGroup.Items.Add(TransitionAttributesIterationGroup); }
@@ -525,8 +525,7 @@ namespace SyncroSim.STSim
         private static void AddMapTransitionGroupVariables(
             Project project, 
             LayoutItemCollection items, 
-            string dataSheetName, 
-            string fileColumnName, 
+            string dataSheetName,  
             string filterColumnName, 
             string extendedIdentifier, 
             string filePrefix, 
@@ -564,7 +563,7 @@ namespace SyncroSim.STSim
                 LayoutItem Item = new LayoutItem(VarName, g.DisplayName, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
-                Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
+                Item.Properties.Add(new MetaDataProperty("column", "Filename"));
                 Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
                 Item.Properties.Add(new MetaDataProperty("itemId", g.TransitionGroupId.ToString(CultureInfo.InvariantCulture)));
                 Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_TRANSITION_GROUP_NAME));
@@ -580,7 +579,6 @@ namespace SyncroSim.STSim
             Project project, 
             LayoutItemCollection items,
             string dataSheetName,
-            string fileColumnName,
             string filterColumnName,
             string filePrefix,
             string extendedIdentifier,
@@ -591,7 +589,7 @@ namespace SyncroSim.STSim
 
             AddMapNonGroupedAttributes(
                 store, items, StateAttrsDataSheet, 
-                dataSheetName, fileColumnName, filterColumnName,
+                dataSheetName, filterColumnName,
                 Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             Dictionary<string, LayoutItem> GroupsDict = new Dictionary<string, LayoutItem>();
@@ -608,7 +606,7 @@ namespace SyncroSim.STSim
 
             AddMapGroupedAttributes(
                 store, GroupsDict, StateAttrsDataSheet,
-                dataSheetName, fileColumnName, filterColumnName,
+                dataSheetName, filterColumnName,
                 Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             foreach (LayoutItem g in GroupsList)
@@ -624,7 +622,6 @@ namespace SyncroSim.STSim
             Project project, 
             LayoutItemCollection items,
             string dataSheetName,
-            string fileColumnName,
             string filterColumnName,
             string filePrefix,
             string extendedIdentifier,
@@ -635,7 +632,7 @@ namespace SyncroSim.STSim
 
             AddMapNonGroupedAttributes(
                 store, items, TransitionAttrsDataSheet, 
-                dataSheetName, fileColumnName, filterColumnName,
+                dataSheetName, filterColumnName,
                 Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             Dictionary<string, LayoutItem> GroupsDict = new Dictionary<string, LayoutItem>();
@@ -652,7 +649,7 @@ namespace SyncroSim.STSim
 
             AddMapGroupedAttributes(
                 store, GroupsDict, TransitionAttrsDataSheet,
-                dataSheetName, fileColumnName, filterColumnName,
+                dataSheetName, filterColumnName,
                 Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_NAME, filePrefix, extendedIdentifier);
 
             foreach (LayoutItem g in GroupsList)
@@ -668,8 +665,7 @@ namespace SyncroSim.STSim
             DataStore store, 
             LayoutItemCollection items, 
             DataSheet attrsDataSheet, 
-            string dataSheetName, 
-            string fileColumnName, 
+            string dataSheetName,  
             string filterColumnName,
             string itemSource,
             string prefix, 
@@ -698,7 +694,7 @@ namespace SyncroSim.STSim
                     LayoutItem Item = new LayoutItem(AttrName, DisplayName, false);
 
                     Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
-                    Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
+                    Item.Properties.Add(new MetaDataProperty("column", "Filename"));
                     Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
                     Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
                     Item.Properties.Add(new MetaDataProperty("itemSource", itemSource));
@@ -717,8 +713,7 @@ namespace SyncroSim.STSim
             DataStore store, 
             Dictionary<string, LayoutItem> groupsDict, 
             DataSheet attrsDataSheet, 
-            string dataSheetName, 
-            string fileColumnName, 
+            string dataSheetName,  
             string filterColumnName, 
             string itemSource,
             string prefix, 
@@ -750,7 +745,7 @@ namespace SyncroSim.STSim
                     LayoutItem Item = new LayoutItem(AttrName, DisplayName, false);
 
                     Item.Properties.Add(new MetaDataProperty("dataSheet", dataSheetName));
-                    Item.Properties.Add(new MetaDataProperty("column", fileColumnName));
+                    Item.Properties.Add(new MetaDataProperty("column", "Filename"));
                     Item.Properties.Add(new MetaDataProperty("filter", filterColumnName));
                     Item.Properties.Add(new MetaDataProperty("itemId", AttrId.ToString(CultureInfo.InvariantCulture)));
                     Item.Properties.Add(new MetaDataProperty("itemSource", itemSource));

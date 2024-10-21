@@ -233,18 +233,36 @@ namespace SyncroSim.STSim
             TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
 
             LayoutItem StratumGroup = new LayoutItem("stsim_StratumGroup", psl, true);
+
             LayoutItem StratumIterationItem = new LayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, "Iteration", false);
+            LayoutItem StratumIterationItemFineRes = new LayoutItem(Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME + "-1", "Iteration (Fine Resolution)", false);
+
             LayoutItem StratumAvgGroup = new LayoutItem("stsim_StratumAvgGroup", "Probability", true);
+            LayoutItem StratumAvgGroupFineRes = new LayoutItem("stsim_StratumAvgGroup-1", "Probability (Fine Resolution)", true);
 
             StratumIterationItem.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("column", "Filename"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
             StratumIterationItem.Properties.Add(new MetaDataProperty("titleOverride", psl + " (Iteration)"));
+            StratumIterationItem.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
+
+            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
+            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("column", "Filename"));
+            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
+            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("titleOverride", psl + " (Iteration Fine Resolution)"));
+            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
             AddAvgMapStratumVariables(project, StratumAvgGroup.Items, store);
 
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                AddAvgMapStratumVariables(project, StratumAvgGroupFineRes.Items, store, true);
+            }
+
             StratumGroup.Items.Add(StratumIterationItem);
+            StratumGroup.Items.Add(StratumIterationItemFineRes);
             StratumGroup.Items.Add(StratumAvgGroup);
+            StratumGroup.Items.Add(StratumAvgGroupFineRes);
             layout.Items.Add(StratumGroup);
         }
 
@@ -410,10 +428,22 @@ namespace SyncroSim.STSim
         private static void AddAvgMapStratumVariables(
             Project project,
             LayoutItemCollection items, 
-            DataStore store)
+            DataStore store,
+            bool fineRes = false)
         {
             List<Stratum> Strata = GetStrata(project, store);
             string FilePrefix = Constants.SPATIAL_MAP_AVG_STRATUM_VARIABLE_NAME;
+
+            string subsetFilter;
+            if (fineRes)
+            {
+                FilePrefix += "FineRes";
+                subsetFilter = "ResolutionId=1";
+            }
+            else
+            {
+                subsetFilter = "ResolutionId=0";
+            }
 
             Strata.Sort((Stratum st1, Stratum st2) =>
             {
@@ -431,6 +461,7 @@ namespace SyncroSim.STSim
                 Item.Properties.Add(new MetaDataProperty("itemId", st.StratumId.ToString(CultureInfo.InvariantCulture)));
                 Item.Properties.Add(new MetaDataProperty("itemSource", Strings.DATASHEET_STRATA_NAME));
                 Item.Properties.Add(new MetaDataProperty("extendedIdentifier", AVG_PROB_ALL_ITER));
+                Item.Properties.Add(new MetaDataProperty("subsetFilter", subsetFilter));
 
                 items.Add(Item);
             }

@@ -1,4 +1,4 @@
-// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -76,15 +76,15 @@ namespace SyncroSim.STSim
         {
             LayoutItem StateClassesGroup = new LayoutItem("stsim_StateClassesGroup", "State Classes", true);
 
-            StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup);
+            AddStateClassCriteriaIteration(StateClassesGroup);
             if (this.ShowMultiResolutionCriteriaNodes)
             {
-                StateClassesGroup = AddStateClassCriteriaIteration(StateClassesGroup, true);
+                AddStateClassCriteriaIteration(StateClassesGroup, true);
             }
-            StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store);
+            AddStateClassCriteriaAvg(StateClassesGroup, project, store);
             if (this.ShowMultiResolutionCriteriaNodes)
             {
-                StateClassesGroup = AddStateClassCriteriaAvg(StateClassesGroup, project, store, true);
+                AddStateClassCriteriaAvg(StateClassesGroup, project, store, true);
             }
 
             layout.Items.Add(StateClassesGroup);

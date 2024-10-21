@@ -42,6 +42,9 @@ namespace SyncroSim.STSim
 
             //Transition Groups Color Map and Legend Map
             CreateTransitionGroupMaps(project, store);
+            if (this.ShowMultiResolutionCriteriaNodes) {
+                CreateTransitionGroupMaps(project, store, true);
+            }
 
             //Age Color Map 
             CreateAgeColorMap(project, store);
@@ -1101,7 +1104,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="project">The current Project</param>
         /// <remarks></remarks>
-        private static void CreateTransitionGroupColorMap(Project project, DataRow drTg, Dictionary<string, string> dicLegendLblColor, DataStore store)
+        private static void CreateTransitionGroupColorMap(Project project, DataRow drTg, Dictionary<string, string> dicLegendLblColor, DataStore store, bool fineRes = false)
         {
             DataSheet dsTg = project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME);
             DataSheet dsTTG = project.GetDataSheet(Strings.DATASHEET_TRANSITION_TYPE_GROUP_NAME);
@@ -1113,7 +1116,9 @@ namespace SyncroSim.STSim
             string tgId = drTg[dsTg.PrimaryKeyColumn.Name].ToString();
             string tgName = drTg[Strings.DATASHEET_NAME_COLUMN_NAME].ToString();
 
-            var colorMapType = Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME + "-" + tgId;
+            var optionalFineResColorMapIdentifier = fineRes ? "FineRes-" : "-";
+
+            var colorMapType = Constants.SPATIAL_MAP_TRANSITION_GROUP_VARIABLE_NAME + optionalFineResColorMapIdentifier + tgId;
 
             // What's the absolute name of the color map file
             string colorMapFilename = Spatial.GetColorMapFileName(project, colorMapType);
@@ -1214,7 +1219,7 @@ namespace SyncroSim.STSim
         /// </summary>
         /// <param name="project">The current Project</param>
         /// <remarks></remarks>
-        private static void CreateTransitionGroupMaps(Project project, DataStore store)
+        private static void CreateTransitionGroupMaps(Project project, DataStore store, bool fineRes = false)
         {
             if (project.Library.Session.IsRunningOnMono)
             {
@@ -1225,7 +1230,7 @@ namespace SyncroSim.STSim
             foreach (DataRow drTg in project.GetDataSheet(Strings.DATASHEET_TRANSITION_GROUP_NAME).GetData(store).Select(null, null, DataViewRowState.CurrentRows))
             {
                 var dicLegendColors = CreateTransitionGroupLegendMap(project, drTg, store);
-                CreateTransitionGroupColorMap(project, drTg, dicLegendColors, store);
+                CreateTransitionGroupColorMap(project, drTg, dicLegendColors, store, fineRes);
             }
         }
 

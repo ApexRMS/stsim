@@ -22,20 +22,28 @@ namespace SyncroSim.STSim
 
         public override void CreateColorMaps(DataStore store, Project project)
         {
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project);
+
             //State Class Color Map and Legend Map
             var StateClassLegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, store);
             CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, StateClassLegendColors, store);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-1", Strings.DATASHEET_STATECLASS_NAME, StateClassLegendColors, store);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-1", Strings.DATASHEET_STATECLASS_NAME, StateClassLegendColors, store);
+            }
 
             //Primary Stratum Color Map and Legend Map
             var StratumLegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, store);
             CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, StratumLegendColors, store);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME + "-1", Strings.DATASHEET_STRATA_NAME, StratumLegendColors, store);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME + "-1", Strings.DATASHEET_STRATA_NAME, StratumLegendColors, store);
+            }
 
             //Transition Groups Color Map and Legend Map
             CreateTransitionGroupMaps(project, store);
 
-            //Age  Color Map 
+            //Age Color Map 
             CreateAgeColorMap(project, store);
         }
 

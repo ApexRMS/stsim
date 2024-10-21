@@ -23,13 +23,14 @@ namespace SyncroSim.STSim
         public override void CreateColorMaps(DataStore store, Project project)
         {
             //State Class Color Map and Legend Map
-            var LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, store);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, LegendColors, store);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-1", Strings.DATASHEET_STATECLASS_NAME, LegendColors, store);
+            var StateClassLegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, StateClassLegendColors, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME + "-1", Strings.DATASHEET_STATECLASS_NAME, StateClassLegendColors, store);
 
             //Primary Stratum Color Map and Legend Map
-            LegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, store);
-            CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, LegendColors, store);
+            var StratumLegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME, Strings.DATASHEET_STRATA_NAME, StratumLegendColors, store);
+            CreateColorMap(project, Constants.SPATIAL_MAP_STRATUM_VARIABLE_NAME + "-1", Strings.DATASHEET_STRATA_NAME, StratumLegendColors, store);
 
             //Transition Groups Color Map and Legend Map
             CreateTransitionGroupMaps(project, store);

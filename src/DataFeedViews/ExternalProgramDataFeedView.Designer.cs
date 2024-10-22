@@ -89,7 +89,7 @@
             // ButtonChooseExe
             // 
             this.ButtonChooseExe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonChooseExe.Location = new System.Drawing.Point(488, 35);
+            this.ButtonChooseExe.Location = new System.Drawing.Point(488, 36);
             this.ButtonChooseExe.Name = "ButtonChooseExe";
             this.ButtonChooseExe.Size = new System.Drawing.Size(75, 23);
             this.ButtonChooseExe.TabIndex = 4;
@@ -100,7 +100,7 @@
             // ButtonChooseScript
             // 
             this.ButtonChooseScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonChooseScript.Location = new System.Drawing.Point(488, 93);
+            this.ButtonChooseScript.Location = new System.Drawing.Point(488, 94);
             this.ButtonChooseScript.Name = "ButtonChooseScript";
             this.ButtonChooseScript.Size = new System.Drawing.Size(75, 23);
             this.ButtonChooseScript.TabIndex = 4;
@@ -201,7 +201,7 @@
             // ButtonClearExe
             // 
             this.ButtonClearExe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonClearExe.Location = new System.Drawing.Point(569, 35);
+            this.ButtonClearExe.Location = new System.Drawing.Point(569, 36);
             this.ButtonClearExe.Name = "ButtonClearExe";
             this.ButtonClearExe.Size = new System.Drawing.Size(75, 23);
             this.ButtonClearExe.TabIndex = 15;
@@ -212,7 +212,7 @@
             // ButtonClearScript
             // 
             this.ButtonClearScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonClearScript.Location = new System.Drawing.Point(569, 93);
+            this.ButtonClearScript.Location = new System.Drawing.Point(569, 94);
             this.ButtonClearScript.Name = "ButtonClearScript";
             this.ButtonClearScript.Size = new System.Drawing.Size(75, 23);
             this.ButtonClearScript.TabIndex = 15;
@@ -220,7 +220,7 @@
             this.ButtonClearScript.UseVisualStyleBackColor = true;
             this.ButtonClearScript.Click += new System.EventHandler(this.ButtonClearScript_Click);
             // 
-            // ExternalTransformerDataFeedView
+            // ExternalProgramDataFeedView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -243,7 +243,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TextBoxExe);
             this.Controls.Add(this.label1);
-            this.Name = "ExternalTransformerDataFeedView";
+            this.Name = "ExternalProgramDataFeedView";
             this.Size = new System.Drawing.Size(667, 329);
             this.ResumeLayout(false);
             this.PerformLayout();

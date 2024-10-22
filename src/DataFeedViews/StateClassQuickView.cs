@@ -106,6 +106,8 @@ namespace SyncroSim.STSim
             //The problem goes away if we set it asynchronously so that's what we are doing here.
 
             this.Session.MainForm.BeginInvoke(new DelegateNoArgs(GridConfigAsyncTarget), null);
+
+            this.Image16x16 = Properties.Resources.QuickView16x16;
         }
 
         /// <summary>

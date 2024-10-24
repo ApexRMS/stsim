@@ -19,7 +19,7 @@ namespace SyncroSim.STSim
             //that we don't want to try to do a legacy update if there is no schema table.
 
             List<UpdateProvider> l = new List<UpdateProvider>();
-         
+
             if (store.TableExists("stsimsf_Schema"))
             {
                 l.Add(new SFUpdates());
@@ -87,7 +87,7 @@ namespace SyncroSim.STSim
             CreateIndex(store, "stsim_OutputStratumState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "StateClassID", "StateLabelXID", "StateLabelYID", "AgeClass" });
             CreateIndex(store, "stsim_OutputStratumTransition", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionGroupID", "AgeClass" });
             CreateIndex(store, "stsim_OutputStratumTransitionState", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionTypeID", "StateClassID", "EndStateClassID" });
-            CreateIndex(store, "stsim_OutputTransitionAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass" });                   
+            CreateIndex(store, "stsim_OutputTransitionAttribute", new[] { "ScenarioID", "Iteration", "Timestep", "StratumID", "SecondaryStratumID", "TertiaryStratumID", "TransitionAttributeTypeID", "AgeClass" });
 
             if (store.TableExists("core_Chart"))
             {
@@ -634,22 +634,24 @@ namespace SyncroSim.STSim
         [UpdateAttribute(4.1, "This update adds the new ResolutionId column to all spatial output datasheets, and sets its value to 0 for all rows.")]
         public static void Update_4_100(DataStore store)
         {
-            store.ExecuteNonQuery("CREATE TABLE stsim_Resolution(ResolutionId INTEGER PRIMARY KEY, ProjectId INTEGER, Id INTEGER, Name TEXT)");
-
-            DataTable dt = store.CreateDataTable("core_Project");
-
-            foreach (DataRow dr in dt.Rows)
+            if (!store.TableExists("stsim_Resolution"))
             {
-                int pid = Convert.ToInt32(dr["ProjectID"], CultureInfo.InvariantCulture);
+                store.ExecuteNonQuery("CREATE TABLE stsim_Resolution(ResolutionId INTEGER PRIMARY KEY, ProjectId INTEGER, Id INTEGER, Name TEXT)");
 
-                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture,
-                    "INSERT INTO stsim_Resolution(ResolutionId, ProjectId, Id, Name) VALUES({0}, {1}, {2}, 'Base')",
-                    Library.GetNextSequenceId(store), pid, 0));
-                store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture,
-                    "INSERT INTO stsim_Resolution(ResolutionId, ProjectId, Id, Name) VALUES({0}, {1}, {2}, 'Fine')",
-                    Library.GetNextSequenceId(store), pid, 1));
+                DataTable dt = store.CreateDataTable("core_Project");
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int pid = Convert.ToInt32(dr["ProjectID"], CultureInfo.InvariantCulture);
+
+                    store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture,
+                        "INSERT INTO stsim_Resolution(ResolutionId, ProjectId, Id, Name) VALUES({0}, {1}, {2}, 'Base')",
+                        Library.GetNextSequenceId(store), pid, 0));
+                    store.ExecuteNonQuery(string.Format(CultureInfo.InvariantCulture,
+                        "INSERT INTO stsim_Resolution(ResolutionId, ProjectId, Id, Name) VALUES({0}, {1}, {2}, 'Fine')",
+                        Library.GetNextSequenceId(store), pid, 1));
+                }
             }
-
 
             store.ExecuteNonQuery("ALTER TABLE stsim_OutputSpatialState ADD COLUMN ResolutionId INTEGER");
             store.ExecuteNonQuery("UPDATE stsim_OutputSpatialState SET ResolutionId=0");
@@ -731,6 +733,11 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputAverageLateralFlowGroup ADD COLUMN ResolutionId INTEGER");
                 store.ExecuteNonQuery("UPDATE stsim_OutputAverageLateralFlowGroup SET ResolutionId=0");
             }
+        }
+
+        [UpdateAttribute(4.2, "Placeholder for external program feature.")]
+        public static void Update_4_200(DataStore _)
+        {
         }
     }
 }

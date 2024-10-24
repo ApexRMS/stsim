@@ -123,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
+    <Compile Include="DataFeedViews\ExternalProgramDataFeedView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataFeedViews\ExternalProgramDataFeedView.Designer.cs">
+      <DependentUpon>ExternalProgramDataFeedView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataFeedViews\FlowOrderDataFeedView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -387,6 +393,7 @@
     <Compile Include="Runtime\STSimTransformer.Ages.cs" />
     <Compile Include="Runtime\STSimTransformer.Collections.cs" />
     <Compile Include="Runtime\STSimTransformer.Distributions.cs" />
+    <Compile Include="Runtime\STSimTransformer.ExtProc.cs" />
     <Compile Include="Runtime\STSimTransformer.Initialize.cs" />
     <Compile Include="Runtime\STSimTransformer.Maps.cs" />
     <Compile Include="Runtime\STSimTransformer.Multipliers.cs" />
@@ -740,6 +747,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\DistributionValueDataFeedView.resx">
       <DependentUpon>DistributionValueDataFeedView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFeedViews\ExternalProgramDataFeedView.resx">
+      <DependentUpon>ExternalProgramDataFeedView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataFeedViews\FlowOrderDataFeedView.resx">
       <DependentUpon>FlowOrderDataFeedView.cs</DependentUpon>

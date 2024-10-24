@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.1.2" url="https://docs.stsim.net/">
+<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.1.2" minSyncroSimVersion="3.0.10" url="https://docs.stsim.net/">
 
 	<dataSheet name="Stratum" displayMember="Name" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" viewClassName="SyncroSim.STSim.PrimaryStratumDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="Name" dataType="String" fillWeight="10"/>
@@ -723,6 +723,16 @@
 		<column name="ValueDistributionRelativeFrequency" dataType="Double" displayName="Relative Frequency" validationType="Decimal" validationCondition="Greater" formula1="0.0" isOptional="True"/>
 	</dataSheet>
 
+	<dataSheet name="ExternalProgram" displayName="External Program" isSingleRow="True" viewClassName="SyncroSim.STSim.ExternalProgramDataFeedView" viewClassAssembly="SyncroSim.STSim">
+		<column name="ExecutableName" displayName="Executable Name" dataType="String"/>
+		<column name="ScriptName" displayName="Script Name" dataType="String"/>
+		<column name="Arguments" displayName="Arguments" dataType="String"/>
+		<column name="CallBeforeIterations" displayName="Call Before Iterations" dataType="String"/>
+		<column name="CallAfterIterations" displayName="Call After Iterations" dataType="String"/>
+		<column name="CallBeforeTimesteps" displayName="Call Before Timesteps" dataType="String"/>
+		<column name="CallAfterTimesteps" displayName="Call After Timesteps" dataType="String"/>
+	</dataSheet>
+
 	<dataSheet name="Multiprocessing" displayName="Secondary Stratum Multiprocessing" isSingleRow="True" viewClassName="SyncroSim.STSim.ProcessingDataFeedView" viewClassAssembly="SyncroSim.STSim">
 		<column name="SplitBySecondaryStrata" dataType="Boolean" displayName="Split by Secondary Strata"/>
 	</dataSheet>
@@ -1218,6 +1228,7 @@
 		<dataSheet name="TransitionPathwayAutoCorrelation" type="Input"/>
 		<dataSheet name="DistributionValue" type="Input"/>
 		<dataSheet name="Multiprocessing" type="Input"/>
+		<dataSheet name="ExternalProgram" type="Input"/>		
 		<dataSheet name="core_SpatialMultiprocessing" type="Input"/>
 		<dataSheet name="core_ExternalVariableValue" type="Input"/>
 		<dataSheet name="InitialConditionsSpatialFineRes" type="Input"/>
@@ -1401,6 +1412,7 @@
 			</group>
 			<item name="DistributionValue"/>
 			<item name="Multiprocessing"/>
+			<item name="ExternalProgram"/>			
 			<group name="MultiResolution" displayName="Multi Resolution">
 				<item name="InitialConditionsSpatialFineRes"/>
 				<item name="TransitionGroupResolution"/>

@@ -1237,13 +1237,13 @@
 		<dataSheet name="FlowMultiplier" type="Input"/>
 		<dataSheet name="FlowSpatialMultiplier" type="Input"/>
 		<dataSheet name="FlowLateralMultiplier" type="Input"/>
-		<dataSheet name="OutputStratum" type="Output"/>
-		<dataSheet name="OutputStratumState" type="Output"/>
-		<dataSheet name="OutputStratumTransition" type="Output"/>
-		<dataSheet name="OutputStratumTransitionState" type="Output"/>
-		<dataSheet name="OutputTST" type="Output"/>
-		<dataSheet name="OutputStateAttribute" type="Output"/>
-		<dataSheet name="OutputTransitionAttribute" type="Output"/>
+		<dataSheet name="OutputStratum" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputStratumState" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputStratumTransition" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputStratumTransitionState" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputTST" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputStateAttribute" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputTransitionAttribute" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputExternalVariableValue" type="Output"/>
 		<dataSheet name="OutputSpatialState" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputSpatialAge" type="Output" spatialMultiProcessing="True"/>
@@ -1260,8 +1260,8 @@
 		<dataSheet name="OutputSpatialAverageTST" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputSpatialAverageStateAttribute" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputSpatialAverageTransitionAttribute" type="Output" spatialMultiProcessing="True"/>
-		<dataSheet name="OutputStock" type="Output"/>
-		<dataSheet name="OutputFlow" type="Output"/>
+		<dataSheet name="OutputStock" type="Output" spatialMultiProcessing="True"/>
+		<dataSheet name="OutputFlow" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputSpatialStockGroup" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputSpatialFlowGroup" type="Output" spatialMultiProcessing="True"/>
 		<dataSheet name="OutputLateralFlowGroup" type="Output" spatialMultiProcessing="True"/>

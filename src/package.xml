@@ -907,6 +907,7 @@
     <column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
     <column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputStratumState" displayName="Stratum State" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -920,6 +921,7 @@
     <column name="AgeMax" displayName="Age Max" dataType="Integer"/>
     <column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputStratumTransition" displayName="Stratum Transition" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -933,6 +935,7 @@
     <column name="SizeClassId" displayName="Size Class" dataType="Integer" validationType="Datasheet" formula1="SizeClass" isIndex="True"/>
     <column name="EventId" displayName="Event" dataType="Integer"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputStratumTransitionState" displayName="Stratum Transition State" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -943,6 +946,7 @@
     <column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
     <column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputTST" displayName="Output TST" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -954,6 +958,7 @@
     <column name="TSTMax" displayName="TST Max" dataType="Integer"/>
     <column name="TSTClass" displayName="TST" dataType="Integer" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputStateAttribute" displayName="State Attribute" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -965,6 +970,7 @@
     <column name="AgeMax" displayName="Age Max" dataType="Integer"/>
     <column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputTransitionAttribute" displayName="Transition Attribute" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -976,10 +982,12 @@
     <column name="AgeMax" displayName="Age Max" dataType="Integer"/>
     <column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputExternalVariableValue" displayName="Output External Variable Value" hasIteration="True" hasTimestep="True">
     <column name="Value" dataType="Double" displayName="Value" validationType="Decimal"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialState" displayName="Spatial State" hasIteration="True" hasTimestep="True">
@@ -1090,6 +1098,7 @@
     <column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
     <column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputFlow" displayName="Output Flow Group" hasIteration="True" hasTimestep="True" className="SyncroSim.STSim.OutputFlowDataSheet" classAssembly="SyncroSim.STSim" sumColumnNames="Amount">
@@ -1109,6 +1118,7 @@
     <column name="EndTertiaryStratumId" dataType="Integer" displayName="End Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
     <column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="stsim_StateClass" isIndex="True"/>
     <column name="EndMinAge" dataType="Integer" displayName="End Min Age" isIndex="True"/>
+	<column name="ResolutionId" dataType="Integer" displayName="Resolution" validationType="Datasheet" formula1="Name" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialStockGroup" displayName="Output Spatial Stock Group" hasIteration="True" hasTimestep="True">

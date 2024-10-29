@@ -14,8 +14,12 @@ namespace SyncroSim.STSim
 {
     internal class STSimChartProvider : ChartProvider
     {
+        bool ShowMultiResolutionCriteriaNodes = false;
+
         public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project);
+
             LayoutItem StateClassGroup = new LayoutItem("stsim_StateClassVariableGroup", "State Classes", true);
             LayoutItem TransitionGroup = new LayoutItem("stsim_TransitionVariableGroup", "Transitions", true);
             LayoutItem TSTGroup = new LayoutItem("stsim_TSTGroup", "Time-Since-Transition", true);
@@ -254,6 +258,7 @@ namespace SyncroSim.STSim
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
 
             string disp = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
+
             LayoutItem Normal = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME, disp, false);
             LayoutItem Proportion = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
@@ -269,8 +274,31 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
             Proportion.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
 
+            Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
+            Proportion.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
+
+            LayoutItem NormalFineRes = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME + "-1", disp + "(Fine Resolution)", false);
+            LayoutItem ProportionFineRes = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
             items.Add(Normal);
+            items.Add(NormalFineRes);
             items.Add(Proportion);
+            items.Add(ProportionFineRes);
         }
 
         private static void AddChartTransitionVariables(LayoutItemCollection items, Project project)
@@ -302,20 +330,56 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
             Proportion.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
 
+            Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
+            Proportion.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
+
+            LayoutItem NormalFineRes = new LayoutItem(Strings.TRANSITION_VARIABLE_NAME + "-1", disp + "(Fine Resolution)", false);
+            LayoutItem ProportionFineRes = new LayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+            ProportionFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
             items.Add(Normal);
+            items.Add(NormalFineRes);
             items.Add(Proportion);
+            items.Add(ProportionFineRes);
         }
 
         private static void AddChartTSTVariables(LayoutItemCollection items)
         {
-            LayoutItem v = new LayoutItem(Strings.TST_VARIABLE_NAME, "Amount", false);
+            LayoutItem Normal = new LayoutItem(Strings.TST_VARIABLE_NAME, "Amount", false);
 
-            v.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
-            v.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
-            v.Properties.Add(new MetaDataProperty("column", "Amount"));
-            v.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+            Normal.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
+            Normal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
+            Normal.Properties.Add(new MetaDataProperty("column", "Amount"));
+            Normal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+            Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-            items.Add(v);
+            LayoutItem NormalFineRes = new LayoutItem(Strings.TST_VARIABLE_NAME + "-1", "Amount (Fine Resolution)", false);
+
+            NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
+            NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
+            NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+            NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+            NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+            items.Add(Normal);
+            items.Add(NormalFineRes);
         }
 
         private static void AddChartExternalVariables(DataStore store, LayoutItemCollection items, Project project)
@@ -722,6 +786,22 @@ namespace SyncroSim.STSim
                 Strings.VALUE_MEMBER_COLUMN_NAME, 
                 Strings.DISPLAY_MEMBER_COLUMN_NAME, 
                 SortOrder.None);
+        }
+
+        private static bool DatasheetHasRows(Scenario s, string datasheetName)
+        {
+            DataSheet ds = s.GetDataSheet(datasheetName);
+            return ds != null && ds.GetData().Rows.Count > 0;
+        }
+
+        private static bool ScenarioIsMultiRes(Scenario s)
+        {
+            return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME);
+        }
+
+        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project)
+        {
+            return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes) == true;
         }
     }
 }

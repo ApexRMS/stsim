@@ -3109,7 +3109,7 @@ namespace SyncroSim.STSim
 
             if (isMultiResolution)
             {
-                dr[Strings.DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN] = 1;
+                dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
             }
         }
     }

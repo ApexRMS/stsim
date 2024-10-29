@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using System.Globalization;
+using static System.Windows.Forms.AxHost;
 
 namespace SyncroSim.STSim
 {
@@ -736,8 +737,49 @@ namespace SyncroSim.STSim
         }
 
         [UpdateAttribute(4.2, "Placeholder for external program feature.")]
-        public static void Update_4_200(DataStore _)
+        public static void Update_4_200(DataStore store)
         {
+        }
+
+        [UpdateAttribute(4.3, "This update adds the new ResolutionId column to all tabular output datasheets, and sets its value to 0 for all rows.")]
+        public static void Update_4_300(DataStore store)
+        {
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputStratum ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputStratum SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputStratumState ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputStratumState SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputStratumTransition ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputStratumTransition SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputStratumTransitionState ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputStratumTransitionState SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputTST ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputTST SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputStateAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputStateAttribute SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputTransitionAttribute ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputTransitionAttribute SET ResolutionId=0");
+
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputExternalVariableValue ADD COLUMN ResolutionId INTEGER");
+            store.ExecuteNonQuery("UPDATE stsim_OutputExternalVariableValue SET ResolutionId=0");
+
+            // Not sure if these conditionals are needed, but they were used in Update_4_100 for stocks and flows, so assuming they are also needed here
+            if (store.TableExists("stsim_OutputStock"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputStock ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputStock SET ResolutionId=0");
+            }
+
+            if (store.TableExists("stsim_OutputFlow"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputFlow ADD COLUMN ResolutionId INTEGER");
+                store.ExecuteNonQuery("UPDATE stsim_OutputFlow SET ResolutionId=0");
+            }
         }
     }
 }

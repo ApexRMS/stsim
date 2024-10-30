@@ -1,4 +1,4 @@
-﻿// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
+// stsim: A SyncroSim Package for developing state-and-transition simulation models using ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
@@ -368,7 +368,7 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
             Normal.Properties.Add(new MetaDataProperty("column", "Amount"));
             Normal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-            Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+            Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
 
             LayoutItem NormalFineRes = new LayoutItem(Strings.TST_VARIABLE_NAME + "-1", "Amount (Fine Resolution)", false);
 

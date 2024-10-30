@@ -112,25 +112,6 @@ namespace SyncroSim.STSim
             this.m_StockFlowTransformer.Configure();
         }
 
-        //private void ConfigureMultiResolution()
-        //{
-        //    //Multi-Resolution was originally an add-on to ST-Sim. Now it is integrated into ST-Sim
-        //    //but it is still separate and driven off of ST-Sim events so we need to create and 
-        //    //initialize it here.
-
-        //    Debug.Assert(this.m_ResolutionTransformer == null);
-
-        //    this.m_ResolutionTransformer = (ResolutionTransformer)this.Library.CreateTransformer(
-        //        "stsim_Resolution", this.Scenario, this.ResultScenario);
-
-        //    this.m_ResolutionTransformer.STSimTransformer = this;
-
-        //    this.m_ResolutionTransformer.m_IsMultiResolution = true;
-        //    this.m_IsMultiResolution = false;
-
-        //    this.m_ResolutionTransformer.Configure();
-        //}
-
         /// <summary>
         /// Configures the lower case version of the timestep units
         /// </summary>

@@ -57,7 +57,6 @@ namespace SyncroSim.STSim
 
         private void ProcessAverageStateClassRasters()
         {
-            Debug.Assert(false);
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS,
                 Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX + "*.tif");

@@ -426,11 +426,6 @@ namespace SyncroSim.STSim
             }
 
             this.ConfigureStocksAndFlows();
-
-            //if (this.IsSpatial && !this.m_IsMultiResolution)
-            //{
-            //    this.ConfigureMultiResolution();
-            //}
         }
 
         private void InternalInitialize()

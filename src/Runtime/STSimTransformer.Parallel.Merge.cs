@@ -57,6 +57,7 @@ namespace SyncroSim.STSim
 
         private void ProcessAverageStateClassRasters()
         {
+            Debug.Assert(false);
             this.ProcessAveragedOutputFiles(
                 Constants.DATASHEET_OUTPUT_AVG_SPATIAL_STATE_CLASS,
                 Constants.SPATIAL_MAP_AVG_STATE_CLASS_FILEPREFIX + "*.tif");
@@ -286,7 +287,7 @@ namespace SyncroSim.STSim
                 int OriginalCount = dt.Rows.Count;
 
                 query = string.Format(CultureInfo.InvariantCulture,
-                    "SELECT scenarioId,iteration,timestep,filename,band FROM {0} WHERE ScenarioId={1} group by iteration,timestep,band",
+                    "SELECT scenarioId,iteration,timestep,filename,band,resolutionId FROM {0} WHERE ScenarioId={1} group by iteration,timestep,band,resolutionId",
                     datasheetName,
                     this.ResultScenario.Id);
 
@@ -308,9 +309,9 @@ namespace SyncroSim.STSim
                         var band = Convert.IsDBNull(row[4]) ? "null" : row[4];
 
                         query = string.Format(CultureInfo.InvariantCulture,
-                            "insert into {0} (ScenarioId,iteration,timestep,filename,band) values ({1},{2},{3},'{4}',{5})",
+                            "insert into {0} (ScenarioId,iteration,timestep,filename,band,resolutionId) values ({1},{2},{3},'{4}',{5},{6})",
                             datasheetName,
-                            row[0], row[1], row[2], row[3], band);
+                            row[0], row[1], row[2], row[3], band, row[5]);
 
                         store.ExecuteNonQuery(query);
                     }
@@ -331,7 +332,7 @@ namespace SyncroSim.STSim
                 int OriginalCount = dt.Rows.Count;
 
                 query = string.Format(CultureInfo.InvariantCulture,
-                    "SELECT scenarioId,iteration,timestep,filename,band,{0} FROM {1} WHERE ScenarioId={2} group by iteration,timestep,band,{3}",
+                    "SELECT scenarioId,iteration,timestep,filename,band,resolutionId,{0} FROM {1} WHERE ScenarioId={2} group by iteration,timestep,band,resolutionId,{3}",
                     filterColumnName,
                     datasheetName,
                     this.ResultScenario.Id,
@@ -355,10 +356,10 @@ namespace SyncroSim.STSim
                         var band = Convert.IsDBNull(row[4]) ? "null" : row[4];
 
                         query = string.Format(CultureInfo.InvariantCulture,
-                            "insert into {0} (ScenarioId,iteration,timestep,filename,band,{1}) values ({2},{3},{4},'{5}',{6},{7})",
+                            "insert into {0} (ScenarioId,iteration,timestep,filename,band,resolutionId,{1}) values ({2},{3},{4},'{5}',{6},{7},{8})",
                             datasheetName,
                             filterColumnName,
-                            row[0], row[1], row[2], row[3], band, row[5]);
+                            row[0], row[1], row[2], row[3], band, row[5], row[6]);
 
                         store.ExecuteNonQuery(query);
                     }

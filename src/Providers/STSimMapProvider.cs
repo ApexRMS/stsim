@@ -22,7 +22,7 @@ namespace SyncroSim.STSim
 
         public override void CreateColorMaps(DataStore store, Project project)
         {
-            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project);
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project, store);
 
             //State Class Color Map and Legend Map
             var StateClassLegendColors = CreateLegendMap(project, Constants.SPATIAL_MAP_STATE_CLASS_VARIABLE_NAME, Strings.DATASHEET_STATECLASS_NAME, store);
@@ -52,7 +52,7 @@ namespace SyncroSim.STSim
 
         public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
-            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project);
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project, store);
 
             DataView AttrGroupView = CreateMapAttributeGroupsView(project, store);     
 
@@ -1530,20 +1530,23 @@ namespace SyncroSim.STSim
             return true;
         }
 
-        private static bool DatasheetHasRows(Scenario s, string datasheetName)
+        private static bool DatasheetHasRows(Scenario s, string datasheetName, DataStore store)
         {
             DataSheet ds = s.GetDataSheet(datasheetName);
-            return ds != null && ds.GetData().Rows.Count > 0;
+            return ds != null && ds.GetData(store).Rows.Count > 0;
         }
 
-        private static bool ScenarioIsMultiRes(Scenario s)
+        private static Func<Scenario, bool> ScenarioIsMultiRes(DataStore store)
         {
-            return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME);
+            return (Scenario s) =>
+            {
+                return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME, store) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME, store);
+            };
         }
 
-        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project)
+        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
         {
-            return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes) == true;
+            return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes(store)) == true;
         }
     }
 }

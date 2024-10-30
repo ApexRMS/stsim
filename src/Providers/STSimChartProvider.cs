@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
 
         public override void RefreshCriteria(DataStore store, Layout layout, Project project)
         {
-            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project);
+            this.ShowMultiResolutionCriteriaNodes = ShouldShowMultiResolutionCriteriaNodes(project, store);
 
             LayoutItem StateClassGroup = new LayoutItem("stsim_StateClassVariableGroup", "State Classes", true);
             LayoutItem TransitionGroup = new LayoutItem("stsim_TransitionVariableGroup", "Transitions", true);
@@ -788,20 +788,23 @@ namespace SyncroSim.STSim
                 SortOrder.None);
         }
 
-        private static bool DatasheetHasRows(Scenario s, string datasheetName)
+        private static bool DatasheetHasRows(Scenario s, string datasheetName, DataStore store)
         {
             DataSheet ds = s.GetDataSheet(datasheetName);
-            return ds != null && ds.GetData().Rows.Count > 0;
+            return ds != null && ds.GetData(store).Rows.Count > 0;
         }
 
-        private static bool ScenarioIsMultiRes(Scenario s)
+        private static Func<Scenario, bool> ScenarioIsMultiRes(DataStore store)
         {
-            return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME);
+            return (Scenario s) =>
+            {
+                return DatasheetHasRows(s, Strings.DATASHEET_TRG_NAME, store) && DatasheetHasRows(s, Strings.DATASHEET_SPICF_NAME, store);
+            };
         }
 
-        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project)
+        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
         {
-            return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes) == true;
+            return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes(store)) == true;
         }
     }
 }

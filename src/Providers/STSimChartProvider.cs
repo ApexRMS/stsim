@@ -277,7 +277,7 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
             Proportion.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
 
-            LayoutItem NormalFineRes = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME + "-1", disp + "(Fine Resolution)", false);
+            LayoutItem NormalFineRes = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME + "-1", disp + " (Fine Resolution)", false);
             LayoutItem ProportionFineRes = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
 
             NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
@@ -333,7 +333,7 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
             Proportion.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
 
-            LayoutItem NormalFineRes = new LayoutItem(Strings.TRANSITION_VARIABLE_NAME + "-1", disp + "(Fine Resolution)", false);
+            LayoutItem NormalFineRes = new LayoutItem(Strings.TRANSITION_VARIABLE_NAME + "-1", disp + " (Fine Resolution)", false);
             LayoutItem ProportionFineRes = new LayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
 
             NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));

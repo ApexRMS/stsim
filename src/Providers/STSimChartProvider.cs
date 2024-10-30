@@ -127,12 +127,12 @@ namespace SyncroSim.STSim
                 Debug.Assert(!ChartingUtilities.HasTSTClassUpdateTag(dataSheet.Project));
             }
 
-            if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME)
+            if (descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME || descriptor.VariableName == Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME + "-1")
             {
                 return ChartingUtilities.CreateProportionChartData(
                     dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_STATE_NAME, store);
             }
-            else if (descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME)
+            else if (descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME || descriptor.VariableName == Strings.TRANSITION_PROPORTION_VARIABLE_NAME + "-1")
             {
                 return ChartingUtilities.CreateProportionChartData(
                     dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);

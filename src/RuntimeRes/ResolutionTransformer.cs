@@ -29,7 +29,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        public override void Initialize()
+        public void SetupMultiResolution()
         {
             if (CanDoMultiResolution(this.ResultScenario))
             {

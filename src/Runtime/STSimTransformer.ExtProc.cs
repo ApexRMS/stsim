@@ -63,7 +63,7 @@ namespace SyncroSim.STSim
 
         private void ExtProcCallBeforeIteration(int iteration)
         {
-            if (this.m_ExtProcExeName == null || !this.m_ExtProcBeforeIterations.ContainsKey(iteration))
+            if (this.m_IsMultiResolution || this.m_ExtProcExeName == null || !this.m_ExtProcBeforeIterations.ContainsKey(iteration))
             {
                 return;
             }
@@ -78,7 +78,7 @@ namespace SyncroSim.STSim
 
         private void ExtProcCallAfterIteration(int iteration)
         {
-            if (this.m_ExtProcExeName == null || !this.m_ExtProcAfterIterations.ContainsKey(iteration))
+            if (this.m_IsMultiResolution || this.m_ExtProcExeName == null || !this.m_ExtProcAfterIterations.ContainsKey(iteration))
             {
                 return;
             }
@@ -93,7 +93,7 @@ namespace SyncroSim.STSim
 
         private void ExtProcCallBeforeTimestep(int iteration, int timestep)
         {
-            if (this.m_ExtProcExeName == null || !this.m_ExtProcBeforeTimesteps.ContainsKey(timestep))
+            if (this.m_IsMultiResolution || this.m_ExtProcExeName == null || !this.m_ExtProcBeforeTimesteps.ContainsKey(timestep))
             {
                 return;
             }
@@ -109,7 +109,7 @@ namespace SyncroSim.STSim
 
         private void ExtProcCallAfterTimestep(int iteration, int timestep)
         {
-            if (this.m_ExtProcExeName == null || !this.m_ExtProcAfterTimesteps.ContainsKey(timestep))
+            if (this.m_IsMultiResolution || this.m_ExtProcExeName == null || !this.m_ExtProcAfterTimesteps.ContainsKey(timestep))
             {
                 return;
             }

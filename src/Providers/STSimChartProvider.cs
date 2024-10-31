@@ -269,15 +269,18 @@ namespace SyncroSim.STSim
 
             items.Add(Normal);
 
-            LayoutItem NormalFineRes = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME + "-1", disp + " (Fine Resolution)", false);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                LayoutItem NormalFineRes = new LayoutItem(Strings.STATE_CLASS_VARIABLE_NAME + "-1", disp + " (Fine Resolution)", false);
 
-            NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-            items.Add(NormalFineRes);
+                items.Add(NormalFineRes);
+            }
 
             LayoutItem Proportion = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
@@ -289,15 +292,18 @@ namespace SyncroSim.STSim
 
             items.Add(Proportion);
 
-            LayoutItem ProportionFineRes = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                LayoutItem ProportionFineRes = new LayoutItem(Strings.STATE_CLASS_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
 
-            ProportionFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-            
-            items.Add(ProportionFineRes);
+                ProportionFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumState"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StateLabelXId|StateLabelYId|AgeClass"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                items.Add(ProportionFineRes);
+            }
         }
 
         private void AddChartTransitionVariables(LayoutItemCollection items, Project project)
@@ -320,19 +326,22 @@ namespace SyncroSim.STSim
             Normal.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
             Normal.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
             Normal.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
-            
+
             items.Add(Normal);
 
-            LayoutItem NormalFineRes = new LayoutItem(Strings.TRANSITION_VARIABLE_NAME + "-1", disp + " (Fine Resolution)", false);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                LayoutItem NormalFineRes = new LayoutItem(Strings.TRANSITION_VARIABLE_NAME + "-1", disp + " (Fine Resolution)", false);
 
-            NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-            
-            items.Add(NormalFineRes);
+                NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                items.Add(NormalFineRes);
+            }
 
             LayoutItem Proportion = new LayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME, "Proportion", false);
 
@@ -342,19 +351,22 @@ namespace SyncroSim.STSim
             Proportion.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
             Proportion.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
             Proportion.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
-            
-            items.Add(Proportion);
-            
-            LayoutItem ProportionFineRes = new LayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
 
-            ProportionFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-            ProportionFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-            
-            items.Add(ProportionFineRes);
+            items.Add(Proportion);
+
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                LayoutItem ProportionFineRes = new LayoutItem(Strings.TRANSITION_PROPORTION_VARIABLE_NAME + "-1", "Proportion (Fine Resolution)", false);
+
+                ProportionFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputStratumTransition"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|AgeClass|SizeClassId"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                ProportionFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                items.Add(ProportionFineRes);
+            }
 
         }
 
@@ -370,15 +382,18 @@ namespace SyncroSim.STSim
 
             items.Add(Normal);
 
-            LayoutItem NormalFineRes = new LayoutItem(Strings.TST_VARIABLE_NAME + "-1", "Amount (Fine Resolution)", false);
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                LayoutItem NormalFineRes = new LayoutItem(Strings.TST_VARIABLE_NAME + "-1", "Amount (Fine Resolution)", false);
 
-            NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-            NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputTST"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|TransitionGroupId|TSTClass"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                NormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-            items.Add(NormalFineRes);
+                items.Add(NormalFineRes);
+            }
         }
 
         private void AddChartExternalVariables(DataStore store, LayoutItemCollection items, Project project)
@@ -390,7 +405,7 @@ namespace SyncroSim.STSim
                 int Id = Convert.ToInt32(dr[ds.ValueMember], CultureInfo.InvariantCulture);
                 string Name = Convert.ToString(dr[ds.DisplayMember], CultureInfo.InvariantCulture);
                 string VarName = string.Format(CultureInfo.InvariantCulture, "stsim_ExternalVariable-{0}", Id);
-                
+
                 LayoutItem Item = new LayoutItem(VarName, Name, false);
 
                 Item.Properties.Add(new MetaDataProperty("dataSheet", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME));
@@ -400,25 +415,28 @@ namespace SyncroSim.STSim
 
                 items.Add(Item);
 
-                LayoutItem ItemFineRes = new LayoutItem(VarName + "-1", Name + " (Fine Resolution)", false);
+                if (this.ShowMultiResolutionCriteriaNodes)
+                {
+                    LayoutItem ItemFineRes = new LayoutItem(VarName + "-1", Name + " (Fine Resolution)", false);
 
-                ItemFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME));
-                ItemFineRes.Properties.Add(new MetaDataProperty("column", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME));
-                ItemFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                ItemFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                    ItemFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_DATASHEET_NAME));
+                    ItemFineRes.Properties.Add(new MetaDataProperty("column", Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME));
+                    ItemFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                    ItemFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-                items.Add(ItemFineRes);
-            }         
+                    items.Add(ItemFineRes);
+                }
+            }
         }
 
         private void AddChartAttributeVariables(
-            LayoutItemCollection items, 
-            DataView attrGroupView, 
-            DataSheet attrGroupDataSheet, 
-            DataView attrView, 
-            DataSheet attrDataSheet, 
-            string outputTableName, 
-            string attributeTypeColumnName, 
+            LayoutItemCollection items,
+            DataView attrGroupView,
+            DataSheet attrGroupDataSheet,
+            DataView attrView,
+            DataSheet attrDataSheet,
+            string outputTableName,
+            string attributeTypeColumnName,
             bool skipTimestepZero,
             string normalAttributePrefix,
             string densityAttributePrefix)
@@ -517,22 +535,25 @@ namespace SyncroSim.STSim
                     //Normal Attribute (Fine Resolution)
                     //----------------
 
-                    LayoutItem ItemNormalFineRes = new LayoutItem(AttrNameNormal + "-1", DisplayNameNormal + " (Fine Resolution)", false);
-
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("customTitle", DisplayNameNormal + " (Fine Resolution)"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-
-                    if (skipTimestepZero)
+                    if (this.ShowMultiResolutionCriteriaNodes)
                     {
-                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-                    }
+                        LayoutItem ItemNormalFineRes = new LayoutItem(AttrNameNormal + "-1", DisplayNameNormal + " (Fine Resolution)", false);
 
-                    items.Add(ItemNormalFineRes);
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("customTitle", DisplayNameNormal + " (Fine Resolution)"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                        if (skipTimestepZero)
+                        {
+                            ItemNormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                        }
+
+                        items.Add(ItemNormalFineRes);
+                    }
 
                     //Density Attribute
                     //-----------------
@@ -565,33 +586,36 @@ namespace SyncroSim.STSim
                     //Density Attribute (Fine Resolution)
                     //-----------------
 
-                    LayoutItem ItemDensityFineRes = new LayoutItem(AttrNameDensity + "-1", DisplayNameDensity + " (Fine Resolution)", false);
-
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("customTitle", "(Density): " + DisplayNameDensity + " (Fine Resolution)"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-
-                    if (skipTimestepZero)
+                    if (this.ShowMultiResolutionCriteriaNodes)
                     {
-                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-                    }
+                        LayoutItem ItemDensityFineRes = new LayoutItem(AttrNameDensity + "-1", DisplayNameDensity + " (Fine Resolution)", false);
 
-                    densityGroup.Items.Add(ItemDensityFineRes);
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("customTitle", "(Density): " + DisplayNameDensity + " (Fine Resolution)"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                        if (skipTimestepZero)
+                        {
+                            ItemDensityFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                        }
+
+                        densityGroup.Items.Add(ItemDensityFineRes);
+                    }
                 }
             }
         }
 
         private void AddChartGroupedAttributes(
-            Dictionary<string, LayoutItem> groupsDict, 
-            DataSheet groupsDataSheet, 
-            DataView attrsView, 
-            DataSheet attrsDataSheet, 
-            string outputDataSheetName, 
-            string outputColumnName, 
+            Dictionary<string, LayoutItem> groupsDict,
+            DataSheet groupsDataSheet,
+            DataView attrsView,
+            DataSheet attrsDataSheet,
+            string outputDataSheetName,
+            string outputColumnName,
             bool skipTimestepZero,
             string normalAttributePrefix,
             string densityAttributePrefix)
@@ -643,22 +667,25 @@ namespace SyncroSim.STSim
                     //Normal Attribute (Fine Resolution)
                     //----------------
 
-                    LayoutItem ItemNormalFineRes = new LayoutItem(AttrNameNormal + "-1", DisplayNameNormal + " (Fine Resolution)", false);
-
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("customTitle", GroupName + ": " + DisplayNameNormal + " (Fine Resolution)"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-
-                    if (skipTimestepZero)
+                    if (this.ShowMultiResolutionCriteriaNodes)
                     {
-                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-                    }
+                        LayoutItem ItemNormalFineRes = new LayoutItem(AttrNameNormal + "-1", DisplayNameNormal + " (Fine Resolution)", false);
 
-                    MainGroup.Items.Insert(0, ItemNormalFineRes);
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("customTitle", GroupName + ": " + DisplayNameNormal + " (Fine Resolution)"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                        ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                        if (skipTimestepZero)
+                        {
+                            ItemNormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                        }
+
+                        MainGroup.Items.Insert(0, ItemNormalFineRes);
+                    }
 
                     //Density Attribute
                     //-----------------
@@ -691,22 +718,25 @@ namespace SyncroSim.STSim
                     //Density Attribute (Fine Resolution)
                     //-----------------
 
-                    LayoutItem ItemDensityFineRes = new LayoutItem(AttrNameDensity + "-1", DisplayNameDensity + " (Fine Resolution)", false);
-
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("customTitle", GroupName + " (Density): " + DisplayNameDensity + " (Fine Resolution)"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
-
-                    if (skipTimestepZero)
+                    if (this.ShowMultiResolutionCriteriaNodes)
                     {
-                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-                    }
+                        LayoutItem ItemDensityFineRes = new LayoutItem(AttrNameDensity + "-1", DisplayNameDensity + " (Fine Resolution)", false);
 
-                    DensityGroup.Items.Insert(0, ItemDensityFineRes);
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", outputDataSheetName));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|AgeClass"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", outputColumnName));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("prefixFolderName", "False"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("customTitle", GroupName + " (Density): " + DisplayNameDensity + " (Fine Resolution)"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                        ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+
+                        if (skipTimestepZero)
+                        {
+                            ItemDensityFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                        }
+
+                        DensityGroup.Items.Insert(0, ItemDensityFineRes);
+                    }
                 }
             }
         }
@@ -729,15 +759,18 @@ namespace SyncroSim.STSim
                 items.Add(ItemNormal);
 
                 //Normal (Fine Resolution)
-                LayoutItem ItemNormalFineRes = new LayoutItem(Strings.STOCK_GROUP_VAR_NAME + "-1", "Total (Fine Resolution)", false);
+                if (this.ShowMultiResolutionCriteriaNodes)
+                {
+                    LayoutItem ItemNormalFineRes = new LayoutItem(Strings.STOCK_GROUP_VAR_NAME + "-1", "Total (Fine Resolution)", false);
 
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StockGroupId"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StockGroupId"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-                items.Add(ItemNormalFineRes);
+                    items.Add(ItemNormalFineRes);
+                }
 
                 //Density
                 LayoutItem ItemDensity = new LayoutItem(Strings.STOCK_GROUP_DENSITY_VAR_NAME, "Density", false);
@@ -751,15 +784,18 @@ namespace SyncroSim.STSim
                 items.Add(ItemDensity);
 
                 //Density (Fine Resolution)
-                LayoutItem ItemDensityFineRes = new LayoutItem(Strings.STOCK_GROUP_DENSITY_VAR_NAME + "-1", "Density (Fine Resolution)", false);
+                if (this.ShowMultiResolutionCriteriaNodes)
+                {
+                    LayoutItem ItemDensityFineRes = new LayoutItem(Strings.STOCK_GROUP_DENSITY_VAR_NAME + "-1", "Density (Fine Resolution)", false);
 
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StockGroupId"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_STOCK_NAME));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "StratumId|SecondaryStratumId|TertiaryStratumId|StateClassId|StockGroupId"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-                items.Add(ItemDensityFineRes);
+                    items.Add(ItemDensityFineRes);
+                }
             }
         }
 
@@ -782,16 +818,19 @@ namespace SyncroSim.STSim
                 items.Add(ItemNormal);
 
                 //Normal (Fine Resolution)
-                LayoutItem ItemNormalFineRes = new LayoutItem(Strings.FLOW_GROUP_VAR_NAME + "-1", "Total (Fine Resolution)", false);
+                if (this.ShowMultiResolutionCriteriaNodes)
+                {
+                    LayoutItem ItemNormalFineRes = new LayoutItem(Strings.FLOW_GROUP_VAR_NAME + "-1", "Total (Fine Resolution)", false);
 
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "FromStratumId|FromSecondaryStratumId|FromTertiaryStratumId|FromStateClassId|FromStockTypeId|TransitionTypeId|ToStratumId|ToStateClassId|ToStockTypeId|FlowGroupId|EndStratumId|EndSecondaryStratumId|EndTertiaryStratumId|EndStateClassId"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("filter", "FromStratumId|FromSecondaryStratumId|FromTertiaryStratumId|FromStateClassId|FromStockTypeId|TransitionTypeId|ToStratumId|ToStateClassId|ToStockTypeId|FlowGroupId|EndStratumId|EndSecondaryStratumId|EndTertiaryStratumId|EndStateClassId"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                    ItemNormalFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-                items.Add(ItemNormalFineRes);
+                    items.Add(ItemNormalFineRes);
+                }
 
                 //Density
                 LayoutItem ItemDensity = new LayoutItem(Strings.FLOW_GROUP_DENSITY_VAR_NAME, "Density", false);
@@ -806,16 +845,19 @@ namespace SyncroSim.STSim
                 items.Add(ItemDensity);
 
                 //Density (Fine Resolution)
-                LayoutItem ItemDensityFineRes = new LayoutItem(Strings.FLOW_GROUP_DENSITY_VAR_NAME + "-1", "Density (Fine Resolution)", false);
+                if (this.ShowMultiResolutionCriteriaNodes)
+                {
+                    LayoutItem ItemDensityFineRes = new LayoutItem(Strings.FLOW_GROUP_DENSITY_VAR_NAME + "-1", "Density (Fine Resolution)", false);
 
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "FromStratumId|FromSecondaryStratumId|FromTertiaryStratumId|FromStateClassId|FromStockTypeId|TransitionTypeId|ToStratumId|ToStateClassId|ToStockTypeId|FlowGroupId|EndStratumId|EndSecondaryStratumId|EndTertiaryStratumId|EndStateClassId"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
-                ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("dataSheet", Strings.DATASHEET_OUTPUT_FLOW_NAME));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("filter", "FromStratumId|FromSecondaryStratumId|FromTertiaryStratumId|FromStateClassId|FromStockTypeId|TransitionTypeId|ToStratumId|ToStateClassId|ToStockTypeId|FlowGroupId|EndStratumId|EndSecondaryStratumId|EndTertiaryStratumId|EndStateClassId"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("column", "Amount"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("skipTimestepZero", "True"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("defaultValue", "0.0"));
+                    ItemDensityFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
 
-                items.Add(ItemDensityFineRes);
+                    items.Add(ItemDensityFineRes);
+                }
             }
         }
 

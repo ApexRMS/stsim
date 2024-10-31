@@ -247,7 +247,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddChartStateClassVariables(LayoutItemCollection items, Project project)
+        private void AddChartStateClassVariables(LayoutItemCollection items, Project project)
         {
             string AmountLabel = null;
             string UnitsLabel;
@@ -300,7 +300,7 @@ namespace SyncroSim.STSim
             items.Add(ProportionFineRes);
         }
 
-        private static void AddChartTransitionVariables(LayoutItemCollection items, Project project)
+        private void AddChartTransitionVariables(LayoutItemCollection items, Project project)
         {
             string AmountLabel = null;
             string UnitsLabel;
@@ -358,7 +358,7 @@ namespace SyncroSim.STSim
 
         }
 
-        private static void AddChartTSTVariables(LayoutItemCollection items)
+        private void AddChartTSTVariables(LayoutItemCollection items)
         {
             LayoutItem Normal = new LayoutItem(Strings.TST_VARIABLE_NAME, "Amount", false);
 
@@ -381,7 +381,7 @@ namespace SyncroSim.STSim
             items.Add(NormalFineRes);
         }
 
-        private static void AddChartExternalVariables(DataStore store, LayoutItemCollection items, Project project)
+        private void AddChartExternalVariables(DataStore store, LayoutItemCollection items, Project project)
         {
             DataSheet ds = project.GetDataSheet(Strings.CORE_EXTERNAL_VAR_TYPE_DATASHEET_NAME);
 
@@ -411,7 +411,7 @@ namespace SyncroSim.STSim
             }         
         }
 
-        private static void AddChartAttributeVariables(
+        private void AddChartAttributeVariables(
             LayoutItemCollection items, 
             DataView attrGroupView, 
             DataSheet attrGroupDataSheet, 
@@ -468,7 +468,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddChartNonGroupedAttributes(
+        private void AddChartNonGroupedAttributes(
             LayoutItemCollection items,
             DataView attrsView, 
             DataSheet attrsDataSheet, 
@@ -585,7 +585,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddChartGroupedAttributes(
+        private void AddChartGroupedAttributes(
             Dictionary<string, LayoutItem> groupsDict, 
             DataSheet groupsDataSheet, 
             DataView attrsView, 
@@ -711,7 +711,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddStockGroupChartVariables(DataStore store, Project project, LayoutItemCollection items)
+        private void AddStockGroupChartVariables(DataStore store, Project project, LayoutItemCollection items)
         {
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_STOCK_GROUP_NAME);
 
@@ -763,7 +763,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void AddFlowGroupChartVariables(DataStore store, Project project, LayoutItemCollection items)
+        private void AddFlowGroupChartVariables(DataStore store, Project project, LayoutItemCollection items)
         {
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_FLOW_GROUP_NAME);
 
@@ -819,7 +819,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static DataView CreateChartAttributeGroupsView(Project project, DataStore store)
+        private DataView CreateChartAttributeGroupsView(Project project, DataStore store)
         {
             DataSheet ds = project.GetDataSheet(Strings.DATASHEET_ATTRIBUTE_GROUP_NAME);
             DataView View = new DataView(ds.GetData(store), null, ds.ValidationTable.DisplayMember, DataViewRowState.CurrentRows);
@@ -827,7 +827,7 @@ namespace SyncroSim.STSim
             return View;
         }
 
-        private static void RefreshChartAgeClassValidationTable(string dataSheetName, Project project, DataStore store)
+        private void RefreshChartAgeClassValidationTable(string dataSheetName, Project project, DataStore store)
         {
             foreach (Scenario s in project.Results)
             {
@@ -846,7 +846,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static void RefreshChartTSTClassValidationTable(string dataSheetName, Project project, DataStore store)
+        private void RefreshChartTSTClassValidationTable(string dataSheetName, Project project, DataStore store)
         {
             foreach (Scenario s in project.Results)
             {
@@ -865,7 +865,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private static ValidationTable CreateClassBinValidationTable(
+        private ValidationTable CreateClassBinValidationTable(
             Project project,
             string classTypeDatasheetName,
             string classTypeFrequencyColumnName,
@@ -933,13 +933,13 @@ namespace SyncroSim.STSim
                 SortOrder.None);
         }
 
-        private static bool DatasheetHasRows(Scenario s, string datasheetName, DataStore store)
+        private bool DatasheetHasRows(Scenario s, string datasheetName, DataStore store)
         {
             DataSheet ds = s.GetDataSheet(datasheetName);
             return ds != null && ds.GetData(store).Rows.Count > 0;
         }
 
-        private static Func<Scenario, bool> ScenarioIsMultiRes(DataStore store)
+        private Func<Scenario, bool> ScenarioIsMultiRes(DataStore store)
         {
             return (Scenario s) =>
             {
@@ -947,7 +947,7 @@ namespace SyncroSim.STSim
             };
         }
 
-        private static bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
+        private bool ShouldShowMultiResolutionCriteriaNodes(Project project, DataStore store)
         {
             return project?.Results?.Where(s => s.IsActive)?.Any(ScenarioIsMultiRes(store)) == true;
         }

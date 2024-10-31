@@ -907,7 +907,7 @@
     <column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="SecondaryStratum" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
     <column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputStratumState" displayName="Stratum State" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -921,7 +921,7 @@
 	<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
 	<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
 	<column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputStratumTransition" displayName="Stratum Transition" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -935,7 +935,7 @@
 	<column name="SizeClassId" displayName="Size Class" dataType="Integer" validationType="Datasheet" formula1="SizeClass" isIndex="True"/>
 	<column name="EventId" displayName="Event" dataType="Integer"/>
 	<column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputStratumTransitionState" displayName="Stratum Transition State" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -946,7 +946,7 @@
 	<column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
 	<column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False" isIndex="True"/>
 	<column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputTST" displayName="Output TST" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -958,7 +958,7 @@
 	<column name="TSTMax" displayName="TST Max" dataType="Integer"/>
 	<column name="TSTClass" displayName="TST" dataType="Integer" allowDbNull="False" isIndex="True"/>
 	<column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputStateAttribute" displayName="State Attribute" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -970,7 +970,7 @@
 	<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
 	<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
 	<column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputTransitionAttribute" displayName="Transition Attribute" sumColumnNames="Amount" hasIteration="True" hasTimestep="True">
@@ -982,113 +982,113 @@
 	<column name="AgeMax" displayName="Age Max" dataType="Integer"/>
 	<column name="AgeClass" displayName="Age" dataType="Integer" allowDbNull="False" isIndex="True"/>
 	<column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
 </dataSheet>
 
 <dataSheet name="OutputExternalVariableValue" displayName="Output External Variable Value" hasIteration="True" hasTimestep="True">
 	<column name="Value" dataType="Double" displayName="Value" validationType="Decimal"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialState" displayName="Spatial State" hasIteration="True" hasTimestep="True">
     <column name="Filename" displayName="State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="sc"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAge" displayName="Spatial Age" hasIteration="True" hasTimestep="True">
     <column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="age"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialStratum" displayName="Spatial Primary Stratum" hasIteration="True" hasTimestep="True">
     <column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="str"/>
     <column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialTransition" displayName="Spatial Transition" hasIteration="True" hasTimestep="True">
     <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
     <column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="tg"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialTransitionEvent" displayName="Spatial Transition Event" hasIteration="True" hasTimestep="True">
     <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
     <column name="Filename" displayName="Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="tge"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialTST" displayName="Spatial TST" hasIteration="True" hasTimestep="True">
     <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
     <column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="tst"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialStateAttribute" displayName="Spatial State Attribute" hasIteration="True" hasTimestep="True">
     <column name="StateAttributeTypeId" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
     <column name="Filename" displayName="State Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeId" filenameCode="sa"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialTransitionAttribute" displayName="Spatial Transition Attribute" hasIteration="True" hasTimestep="True">
     <column name="TransitionAttributeTypeId" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
     <column name="Filename" displayName="Transition Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeId" filenameCode="ta"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageStateClass" displayName="Output State Class Probability" hasIteration="True" hasTimestep="True">
     <column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="StateClass" allowDbNull="False"/>
     <column name="Filename" displayName="State Class Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateClassId" filenameCode="avgsc" />
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageAge" displayName="Output Average Age" hasIteration="True" hasTimestep="True">
     <column name="Filename" displayName="Age Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" filenameCode="avgage" />
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageStratum" displayName="Output Stratum Probability" hasIteration="True" hasTimestep="True">
     <column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="Stratum" allowDbNull="False" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
     <column name="Filename" displayName="Stratum Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StratumId" filenameCode="avgstr"/>
     <column name="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageTransitionProbability" displayName="Output Transition Probability" hasIteration="True" hasTimestep="True">
     <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
     <column name="Filename" displayName="Transition Probability Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="avgtp" />
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageTST" displayName="Output Average TST" hasIteration="True" hasTimestep="True">
     <column name="TransitionGroupId" dataType="Integer" displayName="Transition Type/Group" validationType="Datasheet" formula1="TransitionGroup" allowDbNull="False"/>
     <column name="Filename" displayName="Time-Since-Transition Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionGroupId" filenameCode="avgtst"/>
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageStateAttribute" displayName="Output Average State Attribute" hasIteration="True" hasTimestep="True">
     <column name="StateAttributeTypeId" dataType="Integer" displayName="State Attribute Type" validationType="Datasheet" formula1="StateAttributeType" allowDbNull="False"/>
     <column name="Filename" displayName="Average State Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="StateAttributeTypeId" filenameCode="avgsa" />
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialAverageTransitionAttribute" displayName="Output Average Transition Attribute" hasIteration="True" hasTimestep="True">
     <column name="TransitionAttributeTypeId" dataType="Integer" displayName="Transition Attribute Type" validationType="Datasheet" formula1="TransitionAttributeType" allowDbNull="False"/>
     <column name="Filename" displayName="Average Transition Attribute Map" dataType="String" allowDbNull="False" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="TransitionAttributeTypeId" filenameCode="avgta" />
     <column name="Band" displayName="Band" dataType="Integer" allowDbNull="True" isOptional="True"/>
-    <column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+    <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputStock" displayName="Output Stock Group" hasIteration="True" hasTimestep="True" sumColumnNames="Amount">
@@ -1098,7 +1098,7 @@
     <column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
     <column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputFlow" displayName="Output Flow Group" hasIteration="True" hasTimestep="True" className="SyncroSim.STSim.OutputFlowDataSheet" classAssembly="SyncroSim.STSim" sumColumnNames="Amount">
@@ -1118,7 +1118,7 @@
     <column name="EndTertiaryStratumId" dataType="Integer" displayName="End Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
     <column name="EndStateClassId" dataType="Integer" displayName="End State Class" validationType="Datasheet" formula1="stsim_StateClass" isIndex="True"/>
     <column name="EndMinAge" dataType="Integer" displayName="End Min Age" isIndex="True"/>
-	<column name="ResolutionId" validationType="Datasheet" formula1="Name" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
+	<column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
   </dataSheet>
 
   <dataSheet name="OutputSpatialStockGroup" displayName="Output Spatial Stock Group" hasIteration="True" hasTimestep="True">

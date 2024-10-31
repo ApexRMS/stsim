@@ -3081,7 +3081,7 @@ namespace SyncroSim.STSim
             return d;
         }
 
-        private bool IsChildRun()
+        internal bool IsChildRun()
         {
             bool writeToJobFolder = false;
             string pattern = "^.*" + Strings.CORE_MP_JOB_FILE_PREFIX + "-([\\d]*)\\.ssim\\.temp\\.*";

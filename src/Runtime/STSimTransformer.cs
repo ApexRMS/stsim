@@ -426,11 +426,6 @@ namespace SyncroSim.STSim
             }
 
             this.ConfigureStocksAndFlows();
-
-            if (this.IsSpatial && !this.m_IsMultiResolution)
-            {
-                this.ConfigureMultiResolution();
-            }
         }
 
         private void InternalInitialize()
@@ -467,16 +462,13 @@ namespace SyncroSim.STSim
             this.InitializeModel();
             this.ExtProcInitialize();
             this.InitializeStocksAndFlows();
-
-            if(this.IsSpatial && !this.m_IsMultiResolution)
-            {
-                this.InitializeMultiResolution();
-            }
         }
 
         private void InternalTransform()
         {
             BeginModelRun?.Invoke(this, new EventArgs());
+
+            this.SetupMultiResolution();
 
             //Run the main loop
 

@@ -46,19 +46,19 @@ namespace SyncroSim.STSim
             AddChartExternalVariables(store, ExternalVariableGroup.Items, project);
 
             AddChartAttributeVariables(
-                StateAttributeGroup.Items, AttrGroupView, 
-                AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet, 
-                Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME, 
-                Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME, 
+                StateAttributeGroup.Items, AttrGroupView,
+                AttrGroupDataSheet, StateAttrDataView, StateAttrDataSheet,
+                Strings.DATASHEET_OUTPUT_STATE_ATTRIBUTE_NAME,
+                Strings.DATASHEET_STATE_ATTRIBUTE_TYPE_ID_COLUMN_NAME,
                 false,
                 Strings.STATE_ATTRIBUTE_VARIABLE_NAME,
                 Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
             AddChartAttributeVariables(
-                TransitionAttributeGroup.Items, AttrGroupView, 
-                AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet, 
-                Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME, 
-                Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME, 
+                TransitionAttributeGroup.Items, AttrGroupView,
+                AttrGroupDataSheet, TransitionAttrDataView, TransitionAttrDataSheet,
+                Strings.DATASHEET_OUTPUT_TRANSITION_ATTRIBUTE_NAME,
+                Strings.DATASHEET_TRANSITION_ATTRIBUTE_TYPE_ID_COLUMN_NAME,
                 true,
                 Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME,
                 Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
@@ -107,7 +107,7 @@ namespace SyncroSim.STSim
         {
             if (ChartingUtilities.HasAgeClassUpdateTag(dataSheet.Project))
             {
-                WinFormSession sess = (WinFormSession) dataSheet.Session;
+                WinFormSession sess = (WinFormSession)dataSheet.Session;
 
                 sess.SetStatusMessageWithEvents("Updating age related data...");
                 dataSheet.Library.Save(store);
@@ -138,7 +138,7 @@ namespace SyncroSim.STSim
                     dataSheet.Scenario, descriptor, Strings.DATASHEET_OUTPUT_STRATUM_TRANSITION_NAME, store);
             }
             else if (
-                descriptor.VariableName.StartsWith(Strings.STATE_ATTRIBUTE_VARIABLE_NAME) || 
+                descriptor.VariableName.StartsWith(Strings.STATE_ATTRIBUTE_VARIABLE_NAME) ||
                 descriptor.VariableName.StartsWith(Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME))
             {
                 string[] s = descriptor.VariableName.Split('-');
@@ -154,7 +154,7 @@ namespace SyncroSim.STSim
                     dataSheet.Scenario, descriptor, dataSheet.Name, ColumnName, AttrId, IsDensity, store);
             }
             else if (
-                descriptor.VariableName.StartsWith(Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME) || 
+                descriptor.VariableName.StartsWith(Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME) ||
                 descriptor.VariableName.StartsWith(Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME))
             {
                 string[] s = descriptor.VariableName.Split('-');
@@ -210,7 +210,7 @@ namespace SyncroSim.STSim
                         Strings.DATASHEET_AGE_TYPE_MAXIMUM_COLUMN_NAME,
                         Strings.DATASHEET_AGE_GROUP_NAME,
                         Strings.DATASHEET_AGE_GROUP_MAXIMUM_COLUMN_NAME,
-                        Strings.AGE_CLASS_VALIDATION_TABLE_NAME, 
+                        Strings.AGE_CLASS_VALIDATION_TABLE_NAME,
                         store);
                 }
             }
@@ -224,7 +224,7 @@ namespace SyncroSim.STSim
                     Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME,
                     Strings.DATASHEET_TST_GROUP_NAME,
                     Strings.DATASHEET_TST_GROUP_MAXIMUM_COLUMN_NAME,
-                    Strings.TST_CLASS_VALIDATION_TABLE_NAME, 
+                    Strings.TST_CLASS_VALIDATION_TABLE_NAME,
                     store);
             }
 
@@ -445,7 +445,7 @@ namespace SyncroSim.STSim
             LayoutItem NonGroupedDensityGroup = new LayoutItem(Strings.DENSITY_GROUP_NAME + "STSIM_NON_GROUPED", "Density", true);
 
             AddChartNonGroupedAttributes(
-                items, attrView, attrDataSheet, outputTableName, attributeTypeColumnName, 
+                items, attrView, attrDataSheet, outputTableName, attributeTypeColumnName,
                 skipTimestepZero, NonGroupedDensityGroup, normalAttributePrefix, densityAttributePrefix);
 
             if (NonGroupedDensityGroup.Items.Count > 0)
@@ -470,8 +470,8 @@ namespace SyncroSim.STSim
             }
 
             AddChartGroupedAttributes(
-                GroupsDict, attrGroupDataSheet, attrView, attrDataSheet, 
-                outputTableName, attributeTypeColumnName, skipTimestepZero, 
+                GroupsDict, attrGroupDataSheet, attrView, attrDataSheet,
+                outputTableName, attributeTypeColumnName, skipTimestepZero,
                 normalAttributePrefix, densityAttributePrefix);
 
             foreach (LayoutItem g in GroupsList)
@@ -488,13 +488,13 @@ namespace SyncroSim.STSim
 
         private void AddChartNonGroupedAttributes(
             LayoutItemCollection items,
-            DataView attrsView, 
-            DataSheet attrsDataSheet, 
-            string outputDataSheetName, 
-            string outputColumnName, 
-            bool skipTimestepZero, 
-            LayoutItem densityGroup, 
-            string normalAttributePrefix, 
+            DataView attrsView,
+            DataSheet attrsDataSheet,
+            string outputDataSheetName,
+            string outputColumnName,
+            bool skipTimestepZero,
+            LayoutItem densityGroup,
+            string normalAttributePrefix,
             string densityAttributePrefix)
         {
             foreach (DataRowView drv in attrsView)
@@ -902,7 +902,7 @@ namespace SyncroSim.STSim
                     Strings.DATASHEET_TST_TYPE_MAXIMUM_COLUMN_NAME,
                     Strings.DATASHEET_TST_GROUP_NAME,
                     Strings.DATASHEET_TST_GROUP_MAXIMUM_COLUMN_NAME,
-                    Strings.TST_CLASS_VALIDATION_TABLE_NAME, 
+                    Strings.TST_CLASS_VALIDATION_TABLE_NAME,
                     store);
             }
         }
@@ -913,8 +913,8 @@ namespace SyncroSim.STSim
             string classTypeFrequencyColumnName,
             string classTypeMaximumColumnName,
             string classGroupDatasheetName,
-            string classGroupMaximumColumnName, 
-            string validationTableName, 
+            string classGroupMaximumColumnName,
+            string validationTableName,
             DataStore store)
         {
             DataTable dt = new DataTable(validationTableName);
@@ -924,9 +924,9 @@ namespace SyncroSim.STSim
             dt.Columns.Add(new DataColumn(Strings.DISPLAY_MEMBER_COLUMN_NAME, typeof(string)));
 
             List<ClassBinDescriptor> e = ChartingUtilities.GetClassBinGroupDescriptors(
-                project, 
-                classGroupDatasheetName, 
-                classGroupMaximumColumnName, 
+                project,
+                classGroupDatasheetName,
+                classGroupMaximumColumnName,
                 store);
 
             if (e == null)
@@ -935,7 +935,7 @@ namespace SyncroSim.STSim
                     project,
                     classTypeDatasheetName,
                     classTypeFrequencyColumnName,
-                    classTypeMaximumColumnName, 
+                    classTypeMaximumColumnName,
                     store);
             }
 
@@ -969,9 +969,9 @@ namespace SyncroSim.STSim
             }
 
             return new ValidationTable(
-                dt, 
-                Strings.VALUE_MEMBER_COLUMN_NAME, 
-                Strings.DISPLAY_MEMBER_COLUMN_NAME, 
+                dt,
+                Strings.VALUE_MEMBER_COLUMN_NAME,
+                Strings.DISPLAY_MEMBER_COLUMN_NAME,
                 SortOrder.None);
         }
 

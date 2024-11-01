@@ -492,6 +492,8 @@ namespace SyncroSim.STSim
             Debug.Assert(this.STSimTransformer.IsSpatial);
             Debug.Assert(this.m_CreateAvgSpatialStockOutput);
 
+            bool writeToJobFolder = this.STSimTransformer.IsChildRun();
+
             foreach (int id in this.m_AvgStockMap.Keys)
             {
                 StockGroup sg = this.m_StockGroups[id];
@@ -534,7 +536,8 @@ namespace SyncroSim.STSim
                             id,
                             Strings.SPATIAL_MAP_AVG_STOCK_GROUP_VARIABLE_PREFIX,
                             Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
-                            this.m_STSimTransformer.IsMultiResolution);
+                            this.m_STSimTransformer.IsMultiResolution,
+                            writeToJobFolder);
                 }
             }
         }
@@ -543,6 +546,8 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.STSimTransformer.IsSpatial);
             Debug.Assert(this.m_CreateAvgSpatialFlowOutput);
+
+            bool writeToJobFolder = this.STSimTransformer.IsChildRun();
 
             foreach (int id in this.m_AvgFlowMap.Keys)
             {
@@ -591,7 +596,8 @@ namespace SyncroSim.STSim
                         id,
                         Strings.SPATIAL_MAP_AVG_FLOW_GROUP_VARIABLE_PREFIX,
                         Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
-                        this.m_STSimTransformer.IsMultiResolution);
+                        this.m_STSimTransformer.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }
@@ -600,6 +606,8 @@ namespace SyncroSim.STSim
         {
             Debug.Assert(this.STSimTransformer.IsSpatial);
             Debug.Assert(this.m_CreateAvgSpatialLateralFlowOutput);
+
+            bool writeToJobFolder = this.STSimTransformer.IsChildRun();
 
             foreach (int id in this.m_AvgLateralFlowMap.Keys)
             {
@@ -648,7 +656,8 @@ namespace SyncroSim.STSim
                         id,
                         Strings.SPATIAL_MAP_AVG_LATERAL_FLOW_GROUP_VARIABLE_PREFIX,
                         Strings.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
-                        this.m_STSimTransformer.IsMultiResolution);
+                        this.m_STSimTransformer.IsMultiResolution,
+                        writeToJobFolder);
                 }
             }
         }

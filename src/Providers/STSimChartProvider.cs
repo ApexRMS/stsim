@@ -143,7 +143,6 @@ namespace SyncroSim.STSim
             {
                 string[] s = descriptor.VariableName.Split('-');
 
-                Debug.Assert(s.Count() == 2);
                 Debug.Assert(s[0] == Strings.STATE_ATTRIBUTE_VARIABLE_NAME || s[0] == Strings.STATE_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
                 int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);
@@ -159,7 +158,6 @@ namespace SyncroSim.STSim
             {
                 string[] s = descriptor.VariableName.Split('-');
 
-                Debug.Assert(s.Count() == 2);
                 Debug.Assert(s[0] == Strings.TRANSITION_ATTRIBUTE_VARIABLE_NAME || s[0] == Strings.TRANSITION_ATTRIBUTE_DENSITY_VARIABLE_NAME);
 
                 int AttrId = int.Parse(s[1], CultureInfo.InvariantCulture);

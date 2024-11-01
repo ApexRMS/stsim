@@ -765,6 +765,7 @@ namespace SyncroSim.STSim
             store.ExecuteNonQuery("ALTER TABLE stsim_OutputTransitionAttribute ADD COLUMN ResolutionId INTEGER");
             store.ExecuteNonQuery("UPDATE stsim_OutputTransitionAttribute SET ResolutionId=0");
 
+            store.ExecuteNonQuery("ALTER TABLE stsim_OutputExternalVariableValue ADD COLUMN ExternalVariableTypeId INTEGER");
             store.ExecuteNonQuery("ALTER TABLE stsim_OutputExternalVariableValue ADD COLUMN ResolutionId INTEGER");
             store.ExecuteNonQuery("UPDATE stsim_OutputExternalVariableValue SET ResolutionId=0");
 

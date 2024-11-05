@@ -258,11 +258,14 @@ namespace SyncroSim.STSim
             StratumIterationItem.Properties.Add(new MetaDataProperty("titleOverride", psl + " (Iteration)"));
             StratumIterationItem.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=0"));
 
-            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
-            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("column", "Filename"));
-            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
-            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("titleOverride", psl + " (Iteration Fine Resolution)"));
-            StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("dataSheet", "stsim_OutputSpatialStratum"));
+                StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("column", "Filename"));
+                StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("colorMapSource", Strings.DATASHEET_STRATA_NAME));
+                StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("titleOverride", psl + " (Iteration Fine Resolution)"));
+                StratumIterationItemFineRes.Properties.Add(new MetaDataProperty("subsetFilter", "ResolutionId=1"));
+            }
 
             AddAvgMapStratumVariables(project, StratumAvgGroup.Items, store);
 

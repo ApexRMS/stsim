@@ -275,9 +275,19 @@ namespace SyncroSim.STSim
             }
 
             StratumGroup.Items.Add(StratumIterationItem);
-            StratumGroup.Items.Add(StratumIterationItemFineRes);
+
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                StratumGroup.Items.Add(StratumIterationItemFineRes);
+            }
+
             StratumGroup.Items.Add(StratumAvgGroup);
-            StratumGroup.Items.Add(StratumAvgGroupFineRes);
+
+            if (this.ShowMultiResolutionCriteriaNodes)
+            {
+                StratumGroup.Items.Add(StratumAvgGroupFineRes);
+            }
+
             layout.Items.Add(StratumGroup);
         }
 

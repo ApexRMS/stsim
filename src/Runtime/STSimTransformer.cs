@@ -290,7 +290,7 @@ namespace SyncroSim.STSim
 
                 raster.IntCells = arr;
             }
-            else
+            else if (raster.DataType == RasterDataType.DTDouble)
             {
                 double[] arr = new double[this.Cells.Count];
 
@@ -300,6 +300,17 @@ namespace SyncroSim.STSim
                 }
 
                 raster.DblCells = arr;
+            }
+            else
+            {
+                float[] arr = new float[this.Cells.Count];
+
+                foreach (Cell c in this.Cells)
+                {
+                    arr[c.CollectionIndex] = raster.FloatCells[c.CellId];
+                }
+
+                raster.FloatCells = arr;
             }
         }
 

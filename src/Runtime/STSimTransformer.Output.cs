@@ -4,13 +4,12 @@
 using System;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using SyncroSim.Core;
 using SyncroSim.Apex;
-using System.Text;
-using System.IO;
 
 namespace SyncroSim.STSim
 {
@@ -2016,7 +2015,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateClassTimestep(timestep))
             {
-                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
 
                 foreach (Cell c in this.Cells)
                 {
@@ -2085,7 +2084,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
                 int[] arr = rastOP.IntCells;
 
                 foreach (Cell c in this.Cells)
@@ -2118,7 +2117,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterAgeTimestep(timestep))
             {
-                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
 
                 // Fetch the raster data from the Cells collection
                 foreach (Cell c in this.Cells)
@@ -2158,7 +2157,7 @@ namespace SyncroSim.STSim
                         continue;
                     }
 
-                    SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                    SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
 
                     foreach (Cell cell in this.Cells)
                     {
@@ -2211,7 +2210,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStratumTimestep(timestep))
             {
-                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
 
                 foreach (Cell c in this.Cells)
                 {
@@ -2256,7 +2255,7 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateAttributeTimestep(timestep))
             {
-                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
 
                 foreach (int AttributeTypeId in this.m_StateAttributeTypeIds.Keys)
                 {
@@ -2312,7 +2311,7 @@ namespace SyncroSim.STSim
             {
                 foreach (int AttributeId in rasterTransitionAttrValues.Keys)
                 {
-                    SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] NewValues = rasterTransitionAttrValues[AttributeId];
                     double[] arr = rastOP.DblCells;
 
@@ -2374,7 +2373,7 @@ namespace SyncroSim.STSim
                     }
                 }
 
-                SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger);
+                SyncroSimRaster rastOP = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
                 int[] arr = rastOP.IntCells;
 
                 foreach (Cell c in this.Cells)
@@ -2418,7 +2417,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2450,7 +2449,7 @@ namespace SyncroSim.STSim
             foreach (int timestep in this.m_AvgAgeMap.Keys)
             {
                 double[] Values = this.m_AvgAgeMap[timestep];
-                SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                 double[] arr = RastOutput.DblCells;
 
                 foreach (Cell c in this.Cells)
@@ -2496,7 +2495,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2566,7 +2565,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2612,7 +2611,7 @@ namespace SyncroSim.STSim
                 foreach (int timestep in dict.Keys)
                 {
                     double[] Values = dict[timestep];
-                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2670,7 +2669,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)
@@ -2733,7 +2732,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble);
+                    SyncroSimRaster RastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTDouble, RasterBufferType.Shared);
                     double[] arr = RastOutput.DblCells;
 
                     foreach (Cell c in this.Cells)

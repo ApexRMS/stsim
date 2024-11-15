@@ -325,6 +325,7 @@ namespace SyncroSim.STSim
         private void WriteStockGroupRasters(int iteration, int timestep)
         {
             Debug.Assert(this.m_IsSpatial);
+            SyncroSimRaster rastOutput = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Private);
 
             foreach (StockGroup g in this.m_StockGroups)
             {
@@ -333,11 +334,11 @@ namespace SyncroSim.STSim
                     continue;
                 }
 
-                SyncroSimRaster rastOutput = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                InputRasters.ResetSharedFloatBuffer(rastOutput.FloatCells);
 
                 foreach (StockTypeLinkage l in g.StockTypeLinkages)
                 {
-                    SyncroSimRaster rastStockType = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                    SyncroSimRaster rastStockType = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Shared);
 
                     GetStockValues(l.StockType.Id, rastStockType);
                     rastStockType.ScaleFloatCells(l.Value);
@@ -359,6 +360,7 @@ namespace SyncroSim.STSim
         private void WriteFlowGroupRasters(int iteration, int timestep)
         {
             Debug.Assert(this.m_IsSpatial);
+            SyncroSimRaster rastOutput = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Private);
 
             foreach (FlowGroup g in this.m_FlowGroups)
             {
@@ -368,7 +370,7 @@ namespace SyncroSim.STSim
                 }
 
                 bool AtLeastOne = false;
-                SyncroSimRaster rastOutput = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                InputRasters.ResetSharedFloatBuffer(rastOutput.FloatCells);
 
                 foreach (FlowTypeLinkage l in g.FlowTypeLinkages)
                 {
@@ -378,7 +380,7 @@ namespace SyncroSim.STSim
 
                         if (rec.HasOutputData)
                         {
-                            SyncroSimRaster rastFlowType = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                            SyncroSimRaster rastFlowType = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Shared);
                             float[] arr = rastFlowType.FloatCells;
 
                             foreach (Cell c in this.m_STSimTransformer.Cells)
@@ -419,6 +421,7 @@ namespace SyncroSim.STSim
         private void WriteLateralFlowRasters(int iteration, int timestep)
         {
             Debug.Assert(this.m_IsSpatial);
+            SyncroSimRaster rastOutput = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Private);
 
             foreach (FlowGroup g in this.m_FlowGroups)
             {
@@ -428,7 +431,7 @@ namespace SyncroSim.STSim
                 }
 
                 bool AtLeastOne = false;
-                SyncroSimRaster rastOutput = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                InputRasters.ResetSharedFloatBuffer(rastOutput.FloatCells);
 
                 foreach (FlowTypeLinkage l in g.FlowTypeLinkages)
                 {
@@ -438,8 +441,7 @@ namespace SyncroSim.STSim
 
                         if (rec.HasOutputData)
                         {
-                            SyncroSimRaster rastFlowType =
-                                    this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                            SyncroSimRaster rastFlowType = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Shared);
 
                             float[] arr = rastFlowType.FloatCells;
 
@@ -511,7 +513,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    SyncroSimRaster rast = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                    SyncroSimRaster rast = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Shared);
                     float[] arr = rast.FloatCells;
 
                     foreach (Cell c in this.STSimTransformer.Cells)
@@ -571,7 +573,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    SyncroSimRaster rast = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                    SyncroSimRaster rast = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Shared);
                     float[] arr = rast.FloatCells;
 
                     foreach (Cell c in this.STSimTransformer.Cells)
@@ -631,7 +633,7 @@ namespace SyncroSim.STSim
                         }
                     }
 
-                    SyncroSimRaster rast = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat);
+                    SyncroSimRaster rast = this.STSimTransformer.InputRasters.CreateOutputRaster(RasterDataType.DTFloat, RasterBufferType.Shared);
                     float[] arr = rast.FloatCells;
 
                     foreach (Cell c in this.STSimTransformer.Cells)

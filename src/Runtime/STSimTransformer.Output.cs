@@ -119,6 +119,10 @@ namespace SyncroSim.STSim
         private DataTable m_OutputExternalVariableValueTable;
         private DataTable m_OutputTSTTable;
 
+        //Map Id lookups
+        private Dictionary<int, int> m_StratumMapIdLookup;
+        private Dictionary<int, int> m_StateClassMapIdLookup;
+
         /// <summary>
         /// Determines whether or not the specified timestep is an Output timestep
         /// </summary>
@@ -2015,22 +2019,20 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStateClassTimestep(timestep))
             {
+                Dictionary<int, int> Lookup = this.CreateStateClassMapIdLookup();
                 SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
 
                 foreach (Cell c in this.Cells)
                 {
-                    rastOutput.IntCells[c.CellId] = c.StateClassId;
+                    if (Lookup.ContainsKey(c.StateClassId))
+                    {
+                        rastOutput.IntCells[c.CellId] = Lookup[c.StateClassId];                        
+                    }
+                    else
+                    {
+                        rastOutput.IntCells[c.CellId] = Spatial.DefaultNoDataValue;
+                    }
                 }
-
-                //We need to remap the State Class values back to the original Raster values (PK -> ID)
-                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
-
-                rastOutput.IntCells = Spatial.RemapRasterCells(
-                    rastOutput.IntCells,
-                    dsRemap,
-                    Strings.DATASHEET_MAPID_COLUMN_NAME,
-                    false,
-                    Spatial.DefaultNoDataValue);
 
                 WriteMultiResolutionRasterData(
                     rastOutput,
@@ -2210,23 +2212,20 @@ namespace SyncroSim.STSim
 
             if (this.IsRasterStratumTimestep(timestep))
             {
+                Dictionary<int, int> Lookup = this.CreateStratumMapIdLookup();
                 SyncroSimRaster rastOutput = this.m_InputRasters.CreateOutputRaster(RasterDataType.DTInteger, RasterBufferType.Shared);
 
                 foreach (Cell c in this.Cells)
                 {
-                    // Fetch the raster data from the Cells collection
-                    rastOutput.IntCells[c.CellId] = c.StratumId;
+                    if (Lookup.ContainsKey(c.StratumId))
+                    {
+                        rastOutput.IntCells[c.CellId] = Lookup[c.StratumId];
+                    }
+                    else
+                    {
+                        rastOutput.IntCells[c.CellId] = Spatial.DefaultNoDataValue;
+                    }
                 }
-
-                // We need to remap the Stratum values back to the original Raster values ( PK - > ID)
-                DataSheet dsRemap = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
-
-                rastOutput.IntCells = Spatial.RemapRasterCells(
-                    rastOutput.IntCells,
-                    dsRemap,
-                    Strings.DATASHEET_MAPID_COLUMN_NAME,
-                    false,
-                    Spatial.DefaultNoDataValue);
 
                 WriteMultiResolutionRasterData(
                     rastOutput,
@@ -3093,7 +3092,16 @@ namespace SyncroSim.STSim
             return writeToJobFolder;
         }
 
-        internal static void WriteMultiResolutionRasterData(SyncroSimRaster rastOutput, DataSheet datasheet, int iteration, int timestep, int? groupId, string outputDatasheetPrefix, string outputDatasheetFileNameColumn, bool isMultiResolution, bool writeToJobFolder = false)
+        internal static void WriteMultiResolutionRasterData(
+            SyncroSimRaster rastOutput, 
+            DataSheet datasheet, 
+            int iteration, 
+            int timestep, 
+            int? groupId, 
+            string outputDatasheetPrefix, 
+            string outputDatasheetFileNameColumn, 
+            bool isMultiResolution, 
+            bool writeToJobFolder = false)
         {
             DataRow dr = Spatial.WriteRasterData(
                 rastOutput,
@@ -3110,6 +3118,58 @@ namespace SyncroSim.STSim
             {
                 dr[Strings.DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN] = 1;
             }
+        }
+
+        private Dictionary<int, int> CreateStratumMapIdLookup()
+        {
+            if (this.m_StratumMapIdLookup != null)
+            {
+                return this.m_StratumMapIdLookup;
+            }
+
+            this.m_StratumMapIdLookup = new Dictionary<int, int>();
+            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_STRATA_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                if (dr[Strings.DATASHEET_MAPID_COLUMN_NAME] == DBNull.Value)
+                {
+                    string m = string.Format("The Id value for '{0}' cannot be Null.Set Id values in the Project.", ds.DisplayName);
+                    throw new DataException(m);
+                }
+
+                this.m_StratumMapIdLookup.Add(
+                    Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]),
+                    Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME]));
+            }
+
+            return this.m_StratumMapIdLookup;
+        }
+
+        private Dictionary<int, int> CreateStateClassMapIdLookup()
+        {
+            if (this.m_StateClassMapIdLookup != null)
+            {
+                return this.m_StateClassMapIdLookup;
+            }
+
+            this.m_StateClassMapIdLookup = new Dictionary<int, int>();
+            DataSheet ds = this.Project.GetDataSheet(Strings.DATASHEET_STATECLASS_NAME);
+
+            foreach (DataRow dr in ds.GetData().Rows)
+            {
+                if (dr[Strings.DATASHEET_MAPID_COLUMN_NAME] == DBNull.Value)
+                {
+                    string m = string.Format("The Id value for '{0}' cannot be Null.Set Id values in the Project.", ds.DisplayName);
+                    throw new DataException(m);
+                }
+
+                this.m_StateClassMapIdLookup.Add(
+                    Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name]),
+                    Convert.ToInt32(dr[Strings.DATASHEET_MAPID_COLUMN_NAME]));
+            }
+
+            return this.m_StateClassMapIdLookup;
         }
     }
 }

@@ -83,12 +83,12 @@ namespace SyncroSim.STSim
                     Entry.IncomingDT.Add(DTToClipFormat(t, StratumSheet, StateClassSheet));
                 }
 
-                foreach (Transition t in Shape.IncomingPT)
+                foreach (TransitionEx t in Shape.IncomingPT)
                 {
                     Entry.IncomingPT.Add(PTToClipFormat(t, StratumSheet, StateClassSheet, TransitionTypeSheet));
                 }
 
-                foreach (Transition t in Shape.OutgoingPT)
+                foreach (TransitionEx t in Shape.OutgoingPT)
                 {
                     Entry.OutgoingPT.Add(PTToClipFormat(t, StratumSheet, StateClassSheet, TransitionTypeSheet));
                 }
@@ -765,7 +765,7 @@ namespace SyncroSim.STSim
             return cd;
         }
 
-        private static ProbabilisticTransitionClipData PTToClipFormat(Transition pt, DataSheet stratumSheet, DataSheet stateClassSheet, DataSheet transitionTypeSheet)
+        private static ProbabilisticTransitionClipData PTToClipFormat(TransitionEx pt, DataSheet stratumSheet, DataSheet stateClassSheet, DataSheet transitionTypeSheet)
         {
             Debug.Assert(stratumSheet.Name == Strings.DATASHEET_STRATA_NAME);
             Debug.Assert(stateClassSheet.Name == Strings.DATASHEET_STATECLASS_NAME);

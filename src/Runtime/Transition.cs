@@ -24,16 +24,6 @@ namespace SyncroSim.STSim
         private int m_TstMaximum;
         private int m_TstRelative;
 
-        //Internal use only
-        internal bool PropnWasNull;
-        internal bool AgeMinWasNull;
-        internal bool AgeMaxWasNull;
-        internal bool AgeRelativeWasNull;
-        internal bool AgeResetWasNull;
-        internal bool TstMinimumWasNull;
-        internal bool TstMaximumWasNull;
-        internal bool TstRelativeWasNull;
-
         public Transition(
             int? iteration, int? timestep, int? stratumIdSource, int stateClassIdSource, int? stratumIdDestination, int? stateClassIdDestination, 
             int? secondaryStratumId, int? tertiaryStratumId, int transitionTypeId, double probability, double proportion, int ageMinimum, 

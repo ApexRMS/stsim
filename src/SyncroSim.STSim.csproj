@@ -435,6 +435,7 @@
     <Compile Include="Runtime\TransitionDirectionMultiplierCollection.cs" />
     <Compile Include="Runtime\TransitionDirectionMultiplierMap.cs" />
     <Compile Include="Runtime\TransitionEvent.cs" />
+    <Compile Include="Runtime\TransitionEx.cs" />
     <Compile Include="Runtime\TransitionGroup.cs" />
     <Compile Include="Runtime\TransitionGroupCollection.cs" />
     <Compile Include="Runtime\TransitionMap.cs" />

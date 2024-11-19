@@ -284,6 +284,11 @@ namespace SyncroSim.STSim
                 dr[Strings.STOCK_GROUP_ID_COLUMN_NAME] = r.StockGroupId;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
 
+                if (this.STSimTransformer.IsMultiResolution)
+                {
+                    dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                }
+
                 this.m_OutputStockTable.Rows.Add(dr);
             }
 
@@ -313,8 +318,12 @@ namespace SyncroSim.STSim
                 dr[Strings.END_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransferToTertiaryStratumId);
                 dr[Strings.END_STATECLASS_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransferToStateClassId);
                 dr[Strings.END_MIN_AGE_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransferToMinimumAge);
-
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                if (this.STSimTransformer.IsMultiResolution)
+                {
+                    dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                }
 
                 this.m_OutputFlowTable.Rows.Add(dr);
             }

@@ -1601,6 +1601,11 @@ namespace SyncroSim.STSim
                             dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(TertiaryStratumId);
                             dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = Convert.ToDouble(o, CultureInfo.InvariantCulture);
 
+                            if (this.m_IsMultiResolution)
+                            {
+                                dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                            }
+
                             this.m_OutputStratumAmountTable.Rows.Add(dr);
                         }
                     }
@@ -1681,6 +1686,11 @@ namespace SyncroSim.STSim
                         dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
                         dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
 
+                        if (this.m_IsMultiResolution)
+                        {
+                            dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                        }
+
                         table.Rows.Add(dr);
                     }
                 }
@@ -1746,6 +1756,11 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_EVENT_ID_COLUMN_NAME] = DBNull.Value;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = AmountToReport;
 
+                if (this.m_IsMultiResolution)
+                {
+                    dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                }
+
                 if (r.EventId.HasValue)
                 {
                     object SCValue = this.m_SizeClassHelper.GetSizeClassDatabaseValue(AmountToReport);
@@ -1786,6 +1801,11 @@ namespace SyncroSim.STSim
                     dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = r.StateClassId;
                     dr[Strings.DATASHEET_END_STATECLASS_ID_COLUMN_NAME] = r.EndStateClassId;
                     dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                    if (this.m_IsMultiResolution)
+                    {
+                        dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                    }
 
                     table.Rows.Add(dr);
                 }
@@ -1895,6 +1915,11 @@ namespace SyncroSim.STSim
                     dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
                     dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
 
+                    if (this.m_IsMultiResolution)
+                    {
+                        dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                    }
+
                     table.Rows.Add(dr);
                 }
             }
@@ -1925,6 +1950,11 @@ namespace SyncroSim.STSim
                     dr[Strings.DATASHEET_AGE_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.AgeMax);
                     dr[Strings.DATASHEET_AGE_CLASS_COLUMN_NAME] = DBNull.Value;
                     dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                    if (this.m_IsMultiResolution)
+                    {
+                        dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                    }
 
                     table.Rows.Add(dr);
                 }
@@ -1958,6 +1988,11 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_TIMESTEP_COLUMN_NAME] = timestep;
                 dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_TYPE_ID_COLUMN_NAME] = ExtVar.VariableTypeId;
                 dr[Strings.OUTPUT_EXTERNAL_VARIABLE_VALUE_VALUE_COLUMN_NAME] = ExtVar.CurrentValue;
+
+                if (this.m_IsMultiResolution)
+                {
+                    dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                }
 
                 table.Rows.Add(dr);                    
             }
@@ -1996,6 +2031,11 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_TST_MAX_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TSTMax);
                 dr[Strings.DATASHEET_TST_CLASS_COLUMN_NAME] = DBNull.Value;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
+
+                if (this.m_IsMultiResolution)
+                {
+                    dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
+                }
 
                 table.Rows.Add(dr);
             }
@@ -3109,7 +3149,7 @@ namespace SyncroSim.STSim
 
             if (isMultiResolution)
             {
-                dr[Strings.DATASHEET_OUTPUT_SPATIAL_RESOLUTION_COLUMN] = 1;
+                dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
             }
         }
     }

@@ -332,7 +332,7 @@ namespace SyncroSim.STSim
             return Line;
         }
 
-        private static Transition CreatePT(DataRow dr)
+        private static TransitionEx CreatePT(DataRow dr)
         {
             int? Iteration = null;
             int? Timestep = null;
@@ -386,7 +386,7 @@ namespace SyncroSim.STSim
                 TertiaryStratumId = Convert.ToInt32(dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME], CultureInfo.InvariantCulture);
             }
 
-            Transition pt = new Transition(
+            TransitionEx pt = new TransitionEx(
                 Iteration, Timestep, StratumIdSource, StateClassIdSource, StratumIdDest, StateClassIdDest, 
                 SecondaryStratumId, TertiaryStratumId, 
                 Convert.ToInt32(dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME], CultureInfo.InvariantCulture), 

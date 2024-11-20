@@ -120,4 +120,10 @@ namespace SyncroSim.STSim
         FineOnly = 2,
         FineForcesBase = 3
     }
+
+    public enum RasterBufferType
+    {
+        Private,
+        Shared
+    }
 }

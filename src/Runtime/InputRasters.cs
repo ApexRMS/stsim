@@ -9,7 +9,7 @@ using SyncroSim.Core;
 
 namespace SyncroSim.STSim
 {
-    public class InputRasters
+    public partial class InputRasters
     {
         private int m_Width; // Number of cell columns
         private int m_Height; // Number of cell rows
@@ -336,7 +336,7 @@ namespace SyncroSim.STSim
             this.m_Projection = raster.Projection;
         }
 
-        public SyncroSimRaster CreateOutputRaster(RasterDataType dataType)
+        public SyncroSimRaster CreateOutputRaster(RasterDataType dataType, RasterBufferType bufferType)
         {
             SyncroSimRaster rast = new SyncroSimRaster(
                 "output",
@@ -354,18 +354,38 @@ namespace SyncroSim.STSim
                 false, 
                 Spatial.UndefinedRasterBand);
 
-            if (dataType == RasterDataType.DTInteger)
+            if (bufferType == RasterBufferType.Private)
             {
-                rast.InitIntCells();
+                if (dataType == RasterDataType.DTInteger)
+                {
+                    rast.InitIntCells();
+                }
+                else if (dataType == RasterDataType.DTDouble)
+                {
+                    rast.InitDblCells();
+                } 
+                else
+                {
+                    rast.InitFloatCells();
+                }
             }
-            else if (dataType == RasterDataType.DTDouble)
-            {
-                rast.InitDblCells();
-            } 
             else
             {
-                rast.InitFloatCells();
+                if (dataType == RasterDataType.DTInteger)
+                {
+                    rast.IntCells = this.GetSharedIntBuffer();
+                }
+                else if (dataType == RasterDataType.DTDouble)
+                {
+                    rast.DblCells = this.GetSharedDoubleBuffer();
+                }
+                else
+                {
+                    rast.FloatCells = this.GetSharedFloatBuffer();
+                }
             }
+
+            Debug.Assert(Spatial.DefaultNoDataValue == -9999);
 
             return rast;
         }

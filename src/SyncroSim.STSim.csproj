@@ -353,6 +353,7 @@
     <Compile Include="Runtime\InitialTSTSpatialCollection.cs" />
     <Compile Include="Runtime\InitialTSTSpatialMap.cs" />
     <Compile Include="Runtime\InputRasters.cs" />
+    <Compile Include="Runtime\InputRasters.SharedBuf.cs" />
     <Compile Include="Runtime\IntervalMeanTimestepMap.cs" />
     <Compile Include="Runtime\OutputFilterAttribute.cs" />
     <Compile Include="Runtime\OutputFilterAttributeCollection.cs" />

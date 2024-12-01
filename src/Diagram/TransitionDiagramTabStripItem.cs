@@ -15,6 +15,7 @@ namespace SyncroSim.STSim
 
         public TransitionDiagramTabStripItem(string text) : base(text)
         {
+            this.PaintTopBorder = false;
         }
 
         public Control Control

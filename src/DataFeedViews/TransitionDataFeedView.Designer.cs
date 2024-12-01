@@ -84,7 +84,7 @@ namespace SyncroSim.STSim
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SplitContainerTabStrip.BackColor = System.Drawing.Color.LightSteelBlue;
             this.SplitContainerTabStrip.Location = new System.Drawing.Point(95, 0);
-            this.SplitContainerTabStrip.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SplitContainerTabStrip.Margin = new System.Windows.Forms.Padding(2);
             this.SplitContainerTabStrip.Name = "SplitContainerTabStrip";
             // 
             // SplitContainerTabStrip.Panel1
@@ -95,20 +95,19 @@ namespace SyncroSim.STSim
             // 
             this.SplitContainerTabStrip.Panel2.Controls.Add(this.ScrollBarHorizontal);
             this.SplitContainerTabStrip.Size = new System.Drawing.Size(608, 20);
-            this.SplitContainerTabStrip.SplitterDistance = 452;
+            this.SplitContainerTabStrip.SplitterDistance = 451;
             this.SplitContainerTabStrip.SplitterWidth = 8;
             this.SplitContainerTabStrip.TabIndex = 5;
             this.SplitContainerTabStrip.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintSplitContainer);
             // 
             // TabStripMain
             // 
-            this.TabStripMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.TabStripMain.BackColor = System.Drawing.Color.White;
-            this.TabStripMain.Location = new System.Drawing.Point(0, -1);
-            this.TabStripMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TabStripMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabStripMain.Location = new System.Drawing.Point(0, 0);
+            this.TabStripMain.Margin = new System.Windows.Forms.Padding(2);
             this.TabStripMain.Name = "TabStripMain";
-            this.TabStripMain.Size = new System.Drawing.Size(452, 22);
+            this.TabStripMain.Size = new System.Drawing.Size(451, 20);
             this.TabStripMain.TabIndex = 0;
             this.TabStripMain.TabStop = false;
             this.TabStripMain.Text = "TabStripMain";
@@ -118,7 +117,7 @@ namespace SyncroSim.STSim
             this.ScrollBarHorizontal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ScrollBarHorizontal.Location = new System.Drawing.Point(0, 0);
             this.ScrollBarHorizontal.Name = "ScrollBarHorizontal";
-            this.ScrollBarHorizontal.Size = new System.Drawing.Size(148, 20);
+            this.ScrollBarHorizontal.Size = new System.Drawing.Size(149, 20);
             this.ScrollBarHorizontal.TabIndex = 0;
             this.ScrollBarHorizontal.TabStop = true;
             this.ScrollBarHorizontal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.OnHorizontalScroll);
@@ -131,7 +130,7 @@ namespace SyncroSim.STSim
             this.PanelBottomControls.Controls.Add(this.SplitContainerTabStrip);
             this.PanelBottomControls.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.PanelBottomControls.Location = new System.Drawing.Point(0, 335);
-            this.PanelBottomControls.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PanelBottomControls.Margin = new System.Windows.Forms.Padding(2);
             this.PanelBottomControls.Name = "PanelBottomControls";
             this.PanelBottomControls.Size = new System.Drawing.Size(764, 20);
             this.PanelBottomControls.TabIndex = 0;
@@ -144,7 +143,7 @@ namespace SyncroSim.STSim
             this.PanelTabNavigator.Controls.Add(this.ButtonNext);
             this.PanelTabNavigator.Controls.Add(this.ButtonPrevious);
             this.PanelTabNavigator.Location = new System.Drawing.Point(1, 0);
-            this.PanelTabNavigator.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PanelTabNavigator.Margin = new System.Windows.Forms.Padding(2);
             this.PanelTabNavigator.Name = "PanelTabNavigator";
             this.PanelTabNavigator.Size = new System.Drawing.Size(95, 20);
             this.PanelTabNavigator.TabIndex = 2;
@@ -234,7 +233,7 @@ namespace SyncroSim.STSim
             this.PanelControlHost.BackColor = System.Drawing.Color.White;
             this.PanelControlHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelControlHost.Location = new System.Drawing.Point(0, 0);
-            this.PanelControlHost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PanelControlHost.Margin = new System.Windows.Forms.Padding(2);
             this.PanelControlHost.Name = "PanelControlHost";
             this.PanelControlHost.Size = new System.Drawing.Size(744, 335);
             this.PanelControlHost.TabIndex = 0;
@@ -248,7 +247,7 @@ namespace SyncroSim.STSim
             this.Controls.Add(this.PanelControlHost);
             this.Controls.Add(this.ScrollBarVertical);
             this.Controls.Add(this.PanelBottomControls);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TransitionDataFeedView";
             this.Size = new System.Drawing.Size(764, 355);
             this.PanelZoomControls.ResumeLayout(false);

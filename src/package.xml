@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.3.1" minSyncroSimVersion="3.0.10" url="https://docs.stsim.net/">
+<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.3.4" minSyncroSimVersion="3.0.15" url="https://docs.stsim.net/">
 
   <dataSheet name="Stratum" displayMember="Name" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" viewClassName="SyncroSim.STSim.PrimaryStratumDataFeedView" viewClassAssembly="SyncroSim.STSim">
     <column name="Name" dataType="String" fillWeight="10"/>
@@ -654,7 +654,7 @@
     <column name="DigitalElevationModelFileName" displayName="Digital Elevation Model File Name" dataType="String" isExternalFile="True" allowDbNull="False" isRaster="True"/>
   </dataSheet>
 
-  <dataSheet name="TransitionSlopeMultiplier" displayName="Transition Slope Multipliers" hasIteration="True" hasTimestep="True" viewClassName="SyncroSim.STSim.SlopeMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+  <dataSheet name="TransitionSlopeMultiplier" displayName="Transition Slope Multipliers" hasIteration="True" hasTimestep="True">
     <column name="StratumId" dataType="Integer" displayName="Stratum" validationType="Datasheet" formula1="Stratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel"/>
     <column name="SecondaryStratumId" dataType="Integer" displayName="Secondary Stratum" validationType="Datasheet" formula1="SecondaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="SecondaryStratumLabel"/>
     <column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="TertiaryStratum" isOptional="True" displayNameSource="Terminology" displayNameColumn="TertiaryStratumLabel"/>
@@ -669,9 +669,14 @@
     <validation validationType="LessEqual" columns="DistributionMin|DistributionMax"/>
   </dataSheet>
 
+  <dataFeed name="TransitionSlopeMultipliers" displayName="Transition Slope Multiplier" viewClassName="SyncroSim.STSim.SlopeMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
+    <dataSheet name="DigitalElevationModel"/>
+    <dataSheet name="TransitionSlopeMultiplier"/>
+  </dataFeed>
+
   <dataFeed name="TransitionAdjacencyMultipliers" displayName="Transition Adjacency Multipliers" viewClassName="SyncroSim.STSim.AdjacencyMultiplierDataFeedView" viewClassAssembly="SyncroSim.STSim">
     <dataSheet name="TransitionAdjacencySetting"/>
-    <dataSheet name="TransitionAdjacencyMultiplier"/>
+     <dataSheet name="TransitionAdjacencyMultiplier"/>
   </dataFeed>
 
   <dataSheet name="TransitionAdjacencySetting" displayName="Transition Adjacency Setting">
@@ -1231,7 +1236,6 @@
     <dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
     <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
     <dataSheet name="TransitionDirectionMultiplier" type="Input"/>
-    <dataSheet name="DigitalElevationModel" type="Input"/>
     <dataSheet name="DigitalElevationModelFineRes" type="Input"/>
     <dataSheet name="TransitionSlopeMultiplier" type="Input"/>
     <dataSheet name="TransitionAdjacencySetting" type="Input"/>
@@ -1386,7 +1390,7 @@
         <item name="TransitionSpatialMultiplier"/>
         <item name="TransitionSpatialInitiationMultiplier"/>
         <item name="TransitionDirectionMultiplier"/>
-        <item name="TransitionSlopeMultiplier"/>
+        <item name="TransitionSlopeMultipliers"/>
         <item name="TransitionAdjacencyMultipliers"/>
         <item name="TransitionPathwayAutoCorrelation"/>
       </group>

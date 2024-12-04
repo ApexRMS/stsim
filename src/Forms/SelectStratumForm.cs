@@ -68,9 +68,8 @@ namespace SyncroSim.STSim
             string primary = null;
             string secondary = null;
             string tertiary = null;
-            DataSheet ds = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
 
-            TerminologyUtilities.GetStratumLabelTerminology(ds, ref primary, ref secondary, ref tertiary);
+            TerminologyUtilities.GetStratumLabelTerminology(project, ref primary, ref secondary, ref tertiary);
             this.Text = "Select " + primary;
         }
 

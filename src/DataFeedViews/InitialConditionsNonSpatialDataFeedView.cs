@@ -49,7 +49,7 @@ namespace SyncroSim.STSim
             TerminologyUnit units = 0;
             string unitsLbl = null;
 
-            TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref amountlabel, ref units);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref amountlabel, ref units);
             unitsLbl = TerminologyUtilities.TerminologyUnitToString(units).ToLower(CultureInfo.InvariantCulture);
 
             this.LabelTotalAmount.Text = string.Format(CultureInfo.InvariantCulture, "Total ({0}):", unitsLbl);

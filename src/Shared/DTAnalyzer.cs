@@ -150,7 +150,7 @@ namespace SyncroSim.STSim
                 Location = "To";
             }
 
-            TerminologyUtilities.GetStratumLabelTerminology(this.m_Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref psl, ref ssl, ref tsl);
+            TerminologyUtilities.GetStratumLabelTerminology(this.m_Project, ref psl, ref ssl, ref tsl);
             StateClassName = Convert.ToString(DataTableUtilities.GetTableValue(StateClassDataSheet.GetData(), StateClassDataSheet.ValueMember, stateClassId, Strings.DATASHEET_NAME_COLUMN_NAME), CultureInfo.InvariantCulture);
             string msg = string.Format(CultureInfo.InvariantCulture, "The state class '{0}' could not be located in '{1} {2}'.", StateClassName, Location, psl);
 

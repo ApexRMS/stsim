@@ -29,9 +29,9 @@ namespace SyncroSim.STSim
             }
         }
 
-        public static string GetStockUnits(DataSheet terminologySheet)
+        public static string GetStockUnits(Project project)
         {
-            DataRow dr = terminologySheet.GetDataRow();
+            DataRow dr = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME).GetDataRow();
 
             if (dr == null || dr["StockUnits"] == DBNull.Value)
             {
@@ -89,11 +89,11 @@ namespace SyncroSim.STSim
         /// <param name="amountUnits"></param>
         /// <remarks></remarks>
         public static void GetAmountLabelTerminology(
-            DataSheet terminologyDataSheet, 
+            Project project, 
             ref string amountLabel, 
             ref TerminologyUnit amountUnits)
         {
-            DataRow dr = terminologyDataSheet.GetDataRow();
+            DataRow dr = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME).GetDataRow();
 
             amountLabel = "Amount";
             amountUnits = TerminologyUnit.None;
@@ -127,11 +127,11 @@ namespace SyncroSim.STSim
         /// <param name="slylabel"></param>
         /// <remarks></remarks>
         public static void GetStateLabelTerminology(
-            DataSheet terminologyDataSheet, 
+            Project project, 
             ref string slxlabel, 
             ref string slylabel)
         {
-            DataRow dr = terminologyDataSheet.GetDataRow();
+            DataRow dr = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME).GetDataRow();
 
             slxlabel = "State Label X";
             slylabel = "State Label Y";
@@ -164,12 +164,12 @@ namespace SyncroSim.STSim
         /// <param name="tertiaryStratumLabel"></param>
         /// <remarks></remarks>
         public static void GetStratumLabelTerminology(
-            DataSheet terminologyDataSheet, 
+            Project project, 
             ref string primaryStratumLabel, 
             ref string secondaryStratumLabel, 
             ref string tertiaryStratumLabel)
         {
-            DataRow dr = terminologyDataSheet.GetDataRow();
+            DataRow dr = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME).GetDataRow();
 
             primaryStratumLabel = "Stratum";
             secondaryStratumLabel = "Secondary Stratum";

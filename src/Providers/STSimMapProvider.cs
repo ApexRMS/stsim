@@ -241,8 +241,8 @@ namespace SyncroSim.STSim
             string psl = null;
             string ssl = null;
             string tsl = null;
-            DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
+
+            TerminologyUtilities.GetStratumLabelTerminology(project, ref psl, ref ssl, ref tsl);
 
             LayoutItem StratumGroup = new LayoutItem("stsim_StratumGroup", psl, true);
 

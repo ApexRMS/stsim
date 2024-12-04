@@ -205,9 +205,7 @@ namespace SyncroSim.STSim
             string psl = null;
             string ssl = null;
             string tsl = null;
-            DataSheet dsterm = this.m_DataFeed.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-
-            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref psl, ref ssl, ref tsl);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref psl, ref ssl, ref tsl);
 
             //Deterministic
             this.m_DTGrid.ContextMenuStrip = this.ContextMenuStripDeterministic;

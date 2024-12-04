@@ -83,7 +83,7 @@ namespace SyncroSim.STSim
             double cellArea = Math.Pow(MRRaster.CellSize, 2);
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
-            TerminologyUtilities.GetAmountLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref amountlabel, ref destUnitsVal);
             double cellAreaTU = InitialConditionsSpatialRasterDataSheetFineRes.CalcCellArea(cellArea, MRRaster.CellSizeUnits, destUnitsVal);
             SpatialPropertiesFineRes.SetSingleRowData(Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME, cellAreaTU);
         }

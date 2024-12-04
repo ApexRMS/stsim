@@ -52,11 +52,10 @@ namespace SyncroSim.STSim
             string PrimaryStratumLabel = null;
             string SecondaryStratumLabel = null;
             string TertiaryStratumLabel = null;
-            DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             string TimestepLabel = TerminologyUtilities.GetTimestepUnits(this.Project);
 
-            TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref TermUnit);
-            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref TermUnit);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
             string AmountTitle = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
 
@@ -84,8 +83,7 @@ namespace SyncroSim.STSim
             TerminologyUnit AmountLabelUnits = 0;
             string ReportQuery = CreateReportQuery(false);
             DataTable ReportData = this.GetDataTableForReport(ReportQuery);
-            DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-            TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref AmountLabelUnits);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref AmountLabelUnits);
             string WorksheetName = string.Format(CultureInfo.InvariantCulture, "{0} by State Class", AmountLabel);
 
             this.ExportToExcel(fileName, this.CreateColumnCollection(), ReportData, WorksheetName);

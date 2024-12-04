@@ -348,8 +348,8 @@ namespace SyncroSim.STSim
             string AmountLabel = null;
             TerminologyUnit AmountUnits = TerminologyUnit.None;
 
-            TerminologyUtilities.GetStratumLabelTerminology(e.DataSheet, ref Primary, ref Secondary, ref Tertiary);
-            TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref Primary, ref Secondary, ref Tertiary);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref AmountUnits);
 
             this.m_RastersDataGrid.Columns[PRIMARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Primary);
             this.m_RastersDataGrid.Columns[SECONDARY_STRATUM_FILE_NAME_COLUMN_INDEX].HeaderText = BuildLowerCaseLabel(Secondary);
@@ -424,8 +424,7 @@ namespace SyncroSim.STSim
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
 
-            TerminologyUtilities.GetAmountLabelTerminology(
-                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref amountlabel, ref destUnitsVal);
 
             string destAreaLbl = TerminologyUtilities.TerminologyUnitToString(destUnitsVal);
 

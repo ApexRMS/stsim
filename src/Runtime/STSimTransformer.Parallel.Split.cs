@@ -300,7 +300,7 @@ namespace SyncroSim.STSim
             string tsl = null;
 
             TerminologyUtilities.GetStratumLabelTerminology(
-                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref psl, ref ssl, ref tsl);
+                this.Project, ref psl, ref ssl, ref tsl);
 
             //Save the library because we may have added status data to the scenario
 
@@ -504,7 +504,7 @@ namespace SyncroSim.STSim
             string ssl = null;
             string tsl = null;
 
-            TerminologyUtilities.GetStratumLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref psl, ref ssl, ref tsl);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref psl, ref ssl, ref tsl);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_NSIC_DISTRIBUTION_NAME);
 
             foreach (DataRow dr in ds.GetData().Rows)
@@ -589,9 +589,8 @@ namespace SyncroSim.STSim
             string tsl = null;
             string aml = null;
             TerminologyUnit amu = 0;
-            DataSheet tds = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-            TerminologyUtilities.GetStratumLabelTerminology(tds, ref psl, ref ssl, ref tsl);
-            TerminologyUtilities.GetAmountLabelTerminology(tds, ref aml, ref amu);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref psl, ref ssl, ref tsl);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref aml, ref amu);
 
             //We don't support splits by secondary strata for spatial runs as this time
 

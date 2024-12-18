@@ -15,7 +15,7 @@ namespace SyncroSim.STSim
             string AmountLabel = null;
             TerminologyUnit AmountUnits = TerminologyUnit.None;
 
-            TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref AmountUnits);
 
             this.Columns[Strings.DATASHEET_TRANSITION_SIZE_DISTRIBUTION_MAXIMUM_AREA_COLUMN_NAME].DisplayName = 
                 (string.Format(CultureInfo.InvariantCulture, "Maximum {0} ({1})", 

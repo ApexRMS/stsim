@@ -17,8 +17,8 @@ namespace SyncroSim.STSim
             InitializeComponent();
         }
 
+        private Project m_Project;
         private TransitionDiagram m_Diagram;
-        private DataSheet m_TerminologyDataSheet;
         private DataSheet m_StateLabelXDataSheet;
         private DataSheet m_StateLabelYDataSheet;
         private BaseValueDisplayListItem m_ChosenStateLabelX;
@@ -44,8 +44,8 @@ namespace SyncroSim.STSim
         public bool Initialize(TransitionDiagram diagram, DataFeed dataFeed, bool editMode)
         {
             this.m_Diagram = diagram;
+            this.m_Project = dataFeed.Project;
 
-            this.m_TerminologyDataSheet = dataFeed.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             this.m_StateLabelXDataSheet = dataFeed.Project.GetDataSheet(Strings.DATASHEET_STATE_LABEL_X_NAME);
             this.m_StateLabelYDataSheet = dataFeed.Project.GetDataSheet(Strings.DATASHEET_STATE_LABEL_Y_NAME);
 
@@ -149,7 +149,7 @@ namespace SyncroSim.STSim
             string slxlabel = null;
             string slylabel = null;
 
-            TerminologyUtilities.GetStateLabelTerminology(this.m_TerminologyDataSheet, ref slxlabel, ref slylabel);
+            TerminologyUtilities.GetStateLabelTerminology(this.m_Project, ref slxlabel, ref slylabel);
 
             this.LabelStateLabelX.Text = slxlabel + ":";
             this.LabelStateLabelY.Text = slylabel + ":";

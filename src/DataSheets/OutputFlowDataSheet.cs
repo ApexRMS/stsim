@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
 			string ss = null;
 			string ts = null;
 
-			TerminologyUtilities.GetStratumLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref s, ref ss, ref ts);
+			TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref s, ref ss, ref ts);
 
 			this.Columns[Strings.FROM_STRATUM_ID_COLUMN_NAME].DisplayName = string.Format(CultureInfo.InvariantCulture, "From {0}", s);
 			this.Columns[Strings.FROM_SECONDARY_STRATUM_ID_COLUMN_NAME].DisplayName = string.Format(CultureInfo.InvariantCulture, "From {0}", ss);

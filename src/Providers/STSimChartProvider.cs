@@ -250,9 +250,7 @@ namespace SyncroSim.STSim
             string AmountLabel = null;
             string UnitsLabel;
             TerminologyUnit TermUnit = 0;
-            DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-
-            TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref TermUnit);
+            TerminologyUtilities.GetAmountLabelTerminology(project, ref AmountLabel, ref TermUnit);
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
 
             string disp = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);
@@ -309,9 +307,7 @@ namespace SyncroSim.STSim
             string AmountLabel = null;
             string UnitsLabel;
             TerminologyUnit TermUnit = 0;
-            DataSheet dsterm = project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-
-            TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref TermUnit);
+            TerminologyUtilities.GetAmountLabelTerminology(project, ref AmountLabel, ref TermUnit);
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
 
             string disp = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);

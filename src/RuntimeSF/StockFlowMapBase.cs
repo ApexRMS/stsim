@@ -20,7 +20,7 @@ namespace SyncroSim.STSim
             this.m_Scenario = scenario;
 
 			TerminologyUtilities.GetStratumLabelTerminology(
-                scenario.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), 
+                scenario.Project, 
                 ref this.m_PrimaryStratumLabel, 
                 ref this.m_SecondaryStratumLabel, 
                 ref this.m_TertiaryStratumLabel);

@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
             string Secondary = null;
             string Tertiary = null;
 
-            TerminologyUtilities.GetStratumLabelTerminology(e.DataSheet, ref Primary, ref Secondary, ref Tertiary);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref Primary, ref Secondary, ref Tertiary);
 
             this.Columns[Strings.DATASHEET_DT_STRATUMIDSOURCE_COLUMN_NAME].DisplayName = Primary;
             this.Columns[Strings.DATASHEET_DT_STRATUMIDDEST_COLUMN_NAME].DisplayName = "To " + Primary;

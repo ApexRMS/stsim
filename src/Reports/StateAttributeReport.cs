@@ -41,10 +41,8 @@ namespace SyncroSim.STSim
             string PrimaryStratumLabel = null;
             string SecondaryStratumLabel = null;
             string TertiaryStratumLabel = null;
-            DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             string TimestepLabel = TerminologyUtilities.GetTimestepUnits(this.Project);
-
-            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
 
             c.Add(new ExportColumn("ScenarioId", "Scenario Id"));
             c.Add(new ExportColumn("ScenarioName", "Scenario"));

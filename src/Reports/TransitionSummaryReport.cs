@@ -18,10 +18,8 @@ namespace SyncroSim.STSim
         {
             string AmountLabel = null;
             TerminologyUnit TermUnit = 0;
-            DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             ExportColumnCollection columns = this.CreateColumnCollection();
-
-            TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref TermUnit);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref TermUnit);
 
             if (exportType == ExportType.ExcelFile)
             {
@@ -53,8 +51,8 @@ namespace SyncroSim.STSim
             DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
             string TimestepLabel = TerminologyUtilities.GetTimestepUnits(this.Project);
 
-            TerminologyUtilities.GetAmountLabelTerminology(dsterm, ref AmountLabel, ref TermUnit);
-            TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref TermUnit);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
             UnitsLabel = TerminologyUtilities.TerminologyUnitToString(TermUnit);
 
             string AmountTitle = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", AmountLabel, UnitsLabel);

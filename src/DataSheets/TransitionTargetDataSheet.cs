@@ -15,7 +15,7 @@ namespace SyncroSim.STSim
             string AmountLabel = null;
             TerminologyUnit AmountUnits = TerminologyUnit.None;
 
-            TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref AmountUnits);
 
             this.Columns[Strings.DATASHEET_AMOUNT_COLUMN_NAME].DisplayName = (string.Format(CultureInfo.InvariantCulture, "Target {0} ({1})", AmountLabel, TerminologyUtilities.TerminologyUnitToString(AmountUnits)));
             this.Columns[Strings.DATASHEET_DISTRIBUTIONTYPE_COLUMN_NAME].DisplayName = string.Format(CultureInfo.InvariantCulture, "Target {0} Distribution", AmountLabel);

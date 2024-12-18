@@ -242,8 +242,7 @@ namespace SyncroSim.STSim
             string slxlabel = null;
             string slylabel = null;
 
-            DataSheet ds = this.m_Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-            TerminologyUtilities.GetStateLabelTerminology(ds, ref slxlabel, ref slylabel);
+            TerminologyUtilities.GetStateLabelTerminology(this.m_Project, ref slxlabel, ref slylabel);
 
             this.m_TooltipText = slxlabel + ": " + this.m_SLXDisplayName + Environment.NewLine + slylabel + ": " + this.m_SLYDisplayName;
         }

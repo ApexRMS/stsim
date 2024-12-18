@@ -53,8 +53,8 @@ namespace SyncroSim.STSim
             string AmountLabel = null;
             TerminologyUnit AmountUnits = TerminologyUnit.None;
 
-            TerminologyUtilities.GetStratumLabelTerminology(e.DataSheet, ref Primary, ref Secondary, ref Tertiary);
-            TerminologyUtilities.GetAmountLabelTerminology(e.DataSheet, ref AmountLabel, ref AmountUnits);
+            TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref Primary, ref Secondary, ref Tertiary);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref AmountLabel, ref AmountUnits);
 
             DataSheet dsProp = this.GetDataSheet(Strings.DATASHEET_SPPICF_NAME);
             DataRow drProp = dsProp.GetDataRow();
@@ -73,8 +73,7 @@ namespace SyncroSim.STSim
             string amountlabel = null;
             TerminologyUnit destUnitsVal = 0;
 
-            TerminologyUtilities.GetAmountLabelTerminology(
-                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+            TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref amountlabel, ref destUnitsVal);
 
             string destAreaLbl = TerminologyUtilities.TerminologyUnitToString(destUnitsVal);
 
@@ -255,7 +254,7 @@ namespace SyncroSim.STSim
                 TerminologyUnit destUnitsVal = 0;
                 double cellArea = System.Math.Pow((double)FirstRast.CellSize, 2);
 
-                TerminologyUtilities.GetAmountLabelTerminology(this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref destUnitsVal);
+                TerminologyUtilities.GetAmountLabelTerminology(this.Project, ref amountlabel, ref destUnitsVal);
                 drProp[Strings.DATASHEET_SPPICF_CELL_AREA_COLUMN_NAME] = CalcCellArea(cellArea, FirstRast.CellSizeUnits, destUnitsVal);
 
                 dsProp.Changes.Add(new ChangeRecord(this, "Added raster metadata"));
@@ -296,11 +295,8 @@ namespace SyncroSim.STSim
             string TertiaryStratumLabel = null;
             string ColumnDisplayName = this.Columns[columnName].DisplayName;
 
-            DataSheet TerminologySheet =
-                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-
             TerminologyUtilities.GetStratumLabelTerminology(
-                TerminologySheet, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
+                this.Project, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
 
             if (columnName == Strings.DATASHEET_SPICF_STRATUM_FILE_COLUMN_NAME)
             {

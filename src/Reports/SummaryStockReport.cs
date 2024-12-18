@@ -39,14 +39,13 @@ namespace SyncroSim.STSim
 		private ExportColumnCollection CreateColumnCollection()
 		{
 			ExportColumnCollection c = new ExportColumnCollection();
-			DataSheet dsterm = this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME);
-			string StockUnits = TerminologyUtilities.GetStockUnits(dsterm);
+			string StockUnits = TerminologyUtilities.GetStockUnits(this.Project);
 			string TimestepLabel = TerminologyUtilities.GetTimestepUnits(this.Project);
 			string PrimaryStratumLabel = null;
 			string SecondaryStratumLabel = null;
 			string TertiaryStratumLabel = null;
 
-			TerminologyUtilities.GetStratumLabelTerminology(dsterm, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
+			TerminologyUtilities.GetStratumLabelTerminology(this.Project, ref PrimaryStratumLabel, ref SecondaryStratumLabel, ref TertiaryStratumLabel);
 			string TotalValue = string.Format(CultureInfo.InvariantCulture, "Total Value ({0})", StockUnits);
 
 			c.Add(new ExportColumn("ScenarioId", "Scenario Id"));

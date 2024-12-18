@@ -1782,7 +1782,7 @@ namespace SyncroSim.STSim
             TerminologyUnit units = 0;
 
             TerminologyUtilities.GetAmountLabelTerminology(
-                this.Project.GetDataSheet(Strings.DATASHEET_TERMINOLOGY_NAME), ref amountlabel, ref units);
+                this.Project, ref amountlabel, ref units);
 
             string cellSizeUnits = RasterCellSizeUnit.Meter.ToString();
             double convFactor = InitialConditionsSpatialRasterDataSheet.CalcCellArea(1.0, cellSizeUnits, units);

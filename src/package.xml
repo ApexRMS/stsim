@@ -1346,7 +1346,7 @@
         <item name="TSTType"/>
         <item name="TSTGroup"/>
       </group>
-      <group name="StockFlow">
+      <group name="StockFlow" displayName="Stocks and Flows">
         <item name="StockType"/>
         <item name="StockGroup"/>
         <item name="FlowType"/>

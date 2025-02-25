@@ -1236,6 +1236,7 @@
     <dataSheet name="TransitionSpatialInitiationMultiplier" type="Input"/>
     <dataSheet name="TransitionSpatialInitiationMultiplierFineRes" type="Input"/>
     <dataSheet name="TransitionDirectionMultiplier" type="Input"/>
+		<dataSheet name="DigitalElevationModel" type="Input"/>
     <dataSheet name="DigitalElevationModelFineRes" type="Input"/>
     <dataSheet name="TransitionSlopeMultiplier" type="Input"/>
     <dataSheet name="TransitionAdjacencySetting" type="Input"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.3.6" minSyncroSimVersion="3.0.15" url="https://docs.stsim.net/">
+<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.3.7" minSyncroSimVersion="3.0.15" url="https://docs.stsim.net/">
 
   <dataSheet name="Stratum" displayMember="Name" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" viewClassName="SyncroSim.STSim.PrimaryStratumDataFeedView" viewClassAssembly="SyncroSim.STSim">
     <column name="Name" dataType="String" fillWeight="10"/>

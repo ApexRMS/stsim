@@ -98,7 +98,7 @@ namespace SyncroSim.STSim
             SyncroSimRaster raster = this.m_FlowSpatialMultiplierRasters[m.FileName];
             double v = raster.DblCells[cell.CollectionIndex];
 
-            if (MathUtilities.CompareDoublesEqual(v, raster.NoDataValue, double.Epsilon))
+            if (MathUtilities.CompareDoublesEqual(v, raster.NoDataValue, double.Epsilon) || Double.IsNaN(v))
             {
                 return 1.0;
             }
@@ -133,7 +133,7 @@ namespace SyncroSim.STSim
             SyncroSimRaster raster = this.m_FlowLateralMultiplierRasters[m.FileName];
             double v = raster.DblCells[cell.CollectionIndex];
 
-            if ((v < 0.0) || (MathUtilities.CompareDoublesEqual(v, raster.NoDataValue, double.Epsilon)))
+            if ((v < 0.0) || (MathUtilities.CompareDoublesEqual(v, raster.NoDataValue, double.Epsilon)) || Double.IsNaN(v))
             {
                 return 1.0;
             }

@@ -198,7 +198,7 @@ namespace SyncroSim.STSim
 
                                 //Test for NODATA_VALUE
 
-                                if (spatialMult < 0.0 | Core.MathUtilities.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon))
+                                if (spatialMult < 0.0 || MathUtilities.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon) || Double.IsNaN(spatialMult))
                                 {
                                     spatialMult = 1.0;
                                 }
@@ -244,7 +244,7 @@ namespace SyncroSim.STSim
 
                             //Test for NODATA_VALUE
 
-                            if (spatialMult < 0.0 | SyncroSim.Core.MathUtilities.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon))
+                            if (spatialMult < 0.0 || MathUtilities.CompareDoublesEqual(spatialMult, rastMult.NoDataValue, double.Epsilon) || Double.IsNaN(spatialMult))
                             {
                                 spatialMult = 1.0;
                             }

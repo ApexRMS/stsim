@@ -788,5 +788,16 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("UPDATE stsim_OutputFlow SET ResolutionId=0");
             }
         }
+
+        [UpdateAttribute(4.4, "This update adds OMIT fields to the stock flow output options.")]
+        public static void Update_4_400(DataStore store)
+        {
+            if (store.TableExists("STSim_OutputOptionsStockFlow"))
+            {
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptionsStockFlow ADD COLUMN SummaryOutputSTOmitSS INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptionsStockFlow ADD COLUMN SummaryOutputSTOmitTS INTEGER");
+                store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptionsStockFlow ADD COLUMN SummaryOutputSTOmitSC INTEGER");
+            }
+        }
     }
 }

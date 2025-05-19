@@ -592,6 +592,9 @@ namespace SyncroSim.STSim
         public const string DATASHEET_STOCKFLOW_OO_NAME = "stsim_OutputOptionsStockFlow";
         public const string DATASHEET_STOCKFLOW_OO_DISPLAY_NAME = "Stock Flow Output Options";
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME = "SummaryOutputST";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SS_COLUMN_NAME = "SummaryOutputSTOmitSS";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_TS_COLUMN_NAME = "SummaryOutputSTOmitTS";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SC_COLUMN_NAME = "SummaryOutputSTOmitSC";
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SummaryOutputSTTimesteps";
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME = "SummaryOutputFL";
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SummaryOutputFLTimesteps";

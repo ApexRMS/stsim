@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.3.8" minSyncroSimVersion="3.0.15" url="https://docs.stsim.net/">
+<package name="stsim" displayName="ST-Sim" description="The ST-Sim state-and-transition simulation model" version="4.4.0" minSyncroSimVersion="3.0.15" url="https://docs.stsim.net/">
 
   <dataSheet name="Stratum" displayMember="Name" dataScope="Project" displayNameSource="Terminology" displayNameColumn="PrimaryStratumLabel" viewClassName="SyncroSim.STSim.PrimaryStratumDataFeedView" viewClassAssembly="SyncroSim.STSim">
     <column name="Name" dataType="String" fillWeight="10"/>
@@ -389,6 +389,9 @@
     <column name="AvgSpatialOutputLFL" dataType="Boolean"/>
     <column name="AvgSpatialOutputLFLTimesteps" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
     <column name="AvgSpatialOutputLFLAcrossTimesteps" dataType="Boolean"/>
+    <column name="SummaryOutputSTOmitSS" dataType="Boolean"/>	  
+    <column name="SummaryOutputSTOmitTS" dataType="Boolean"/>	  
+	<column name="SummaryOutputSTOmitSC" dataType="Boolean"/>  	  
   </dataSheet>
 
   <dataSheet name="OutputFilterTransitionGroups" displayName="Filter Transition Group Output">

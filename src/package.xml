@@ -391,7 +391,14 @@
     <column name="AvgSpatialOutputLFLAcrossTimesteps" dataType="Boolean"/>
     <column name="SummaryOutputSTOmitSS" dataType="Boolean"/>	  
     <column name="SummaryOutputSTOmitTS" dataType="Boolean"/>	  
-	<column name="SummaryOutputSTOmitSC" dataType="Boolean"/>  	  
+	<column name="SummaryOutputSTOmitSC" dataType="Boolean"/> 	  	  
+    <column name="SummaryOutputFLOmitSS" dataType="Boolean"/>	  
+    <column name="SummaryOutputFLOmitTS" dataType="Boolean"/>	  
+	<column name="SummaryOutputFLOmitFromSC" dataType="Boolean"/> 	  
+	<column name="SummaryOutputFLOmitFromST" dataType="Boolean"/> 	  
+	<column name="SummaryOutputFLOmitTT" dataType="Boolean"/> 
+	<column name="SummaryOutputFLOmitToSC" dataType="Boolean"/> 	  
+	<column name="SummaryOutputFLOmitToST" dataType="Boolean"/> 	 	  	    
   </dataSheet>
 
   <dataSheet name="OutputFilterTransitionGroups" displayName="Filter Transition Group Output">

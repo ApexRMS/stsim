@@ -30,6 +30,13 @@ namespace SyncroSim.STSim
 
 			this.SetCheckBoxBinding(this.CheckBoxSummaryFL, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME);
 			this.SetTextBoxBinding(this.TextBoxSummaryFLTimesteps, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitSS, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_SS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitTS, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TS_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitFromSC, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_FROM_SC_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitFromST, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_FROM_ST_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitTT, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TT_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitToSC, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TO_SC_COLUMN_NAME);
+			this.SetCheckBoxBinding(this.CheckBoxFLOmitToST, Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TO_ST_COLUMN_NAME);
 
 			this.SetCheckBoxBinding(this.CheckBoxSpatialST, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME);
 			this.SetTextBoxBinding(this.TextBoxSpatialSTTimesteps, Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME);

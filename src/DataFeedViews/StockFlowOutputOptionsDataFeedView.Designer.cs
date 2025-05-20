@@ -62,13 +62,13 @@
             this.CheckBoxAvgSpatialSTCumulative = new System.Windows.Forms.CheckBox();
             this.CheckBoxAvgSpatialST = new System.Windows.Forms.CheckBox();
             this.GroupBoxSummaryFL = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitToST = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitToSC = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitTT = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitFromST = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitFromSC = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitTS = new System.Windows.Forms.CheckBox();
+            this.CheckBoxFLOmitSS = new System.Windows.Forms.CheckBox();
             this.GroupBoxSpatial.SuspendLayout();
             this.GroupBoxSummaryST.SuspendLayout();
             this.GroupBoxAvgSpatial.SuspendLayout();
@@ -409,13 +409,13 @@
             // 
             // GroupBoxSummaryFL
             // 
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox2);
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox6);
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox7);
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox1);
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox3);
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox4);
-            this.GroupBoxSummaryFL.Controls.Add(this.checkBox5);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitToST);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitToSC);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitTT);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitFromST);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitFromSC);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitTS);
+            this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxFLOmitSS);
             this.GroupBoxSummaryFL.Controls.Add(this.LabelSummaryFLTimesteps);
             this.GroupBoxSummaryFL.Controls.Add(this.CheckBoxSummaryFL);
             this.GroupBoxSummaryFL.Controls.Add(this.TextBoxSummaryFLTimesteps);
@@ -426,75 +426,75 @@
             this.GroupBoxSummaryFL.TabStop = false;
             this.GroupBoxSummaryFL.Text = "Tabular output for flows";
             // 
-            // checkBox2
+            // CheckBoxFLOmitToST
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(435, 73);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(128, 17);
-            this.checkBox2.TabIndex = 9;
-            this.checkBox2.Text = "Omit secondary strata";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitToST.AutoSize = true;
+            this.CheckBoxFLOmitToST.Location = new System.Drawing.Point(435, 73);
+            this.CheckBoxFLOmitToST.Name = "CheckBoxFLOmitToST";
+            this.CheckBoxFLOmitToST.Size = new System.Drawing.Size(111, 17);
+            this.CheckBoxFLOmitToST.TabIndex = 9;
+            this.CheckBoxFLOmitToST.Text = "Omit to stock type";
+            this.CheckBoxFLOmitToST.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // CheckBoxFLOmitToSC
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(435, 50);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(128, 17);
-            this.checkBox6.TabIndex = 8;
-            this.checkBox6.Text = "Omit secondary strata";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitToSC.AutoSize = true;
+            this.CheckBoxFLOmitToSC.Location = new System.Drawing.Point(435, 50);
+            this.CheckBoxFLOmitToSC.Name = "CheckBoxFLOmitToSC";
+            this.CheckBoxFLOmitToSC.Size = new System.Drawing.Size(112, 17);
+            this.CheckBoxFLOmitToSC.TabIndex = 8;
+            this.CheckBoxFLOmitToSC.Text = "Omit to state class";
+            this.CheckBoxFLOmitToSC.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // CheckBoxFLOmitTT
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(435, 27);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(128, 17);
-            this.checkBox7.TabIndex = 7;
-            this.checkBox7.Text = "Omit secondary strata";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitTT.AutoSize = true;
+            this.CheckBoxFLOmitTT.Location = new System.Drawing.Point(435, 27);
+            this.CheckBoxFLOmitTT.Name = "CheckBoxFLOmitTT";
+            this.CheckBoxFLOmitTT.Size = new System.Drawing.Size(115, 17);
+            this.CheckBoxFLOmitTT.TabIndex = 7;
+            this.CheckBoxFLOmitTT.Text = "Omit transition type";
+            this.CheckBoxFLOmitTT.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // CheckBoxFLOmitFromST
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(290, 95);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(128, 17);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "Omit secondary strata";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitFromST.AutoSize = true;
+            this.CheckBoxFLOmitFromST.Location = new System.Drawing.Point(290, 95);
+            this.CheckBoxFLOmitFromST.Name = "CheckBoxFLOmitFromST";
+            this.CheckBoxFLOmitFromST.Size = new System.Drawing.Size(122, 17);
+            this.CheckBoxFLOmitFromST.TabIndex = 6;
+            this.CheckBoxFLOmitFromST.Text = "Omit from stock type";
+            this.CheckBoxFLOmitFromST.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // CheckBoxFLOmitFromSC
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(290, 72);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(128, 17);
-            this.checkBox3.TabIndex = 5;
-            this.checkBox3.Text = "Omit secondary strata";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitFromSC.AutoSize = true;
+            this.CheckBoxFLOmitFromSC.Location = new System.Drawing.Point(290, 72);
+            this.CheckBoxFLOmitFromSC.Name = "CheckBoxFLOmitFromSC";
+            this.CheckBoxFLOmitFromSC.Size = new System.Drawing.Size(123, 17);
+            this.CheckBoxFLOmitFromSC.TabIndex = 5;
+            this.CheckBoxFLOmitFromSC.Text = "Omit from state class";
+            this.CheckBoxFLOmitFromSC.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // CheckBoxFLOmitTS
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(290, 49);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(128, 17);
-            this.checkBox4.TabIndex = 4;
-            this.checkBox4.Text = "Omit secondary strata";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitTS.AutoSize = true;
+            this.CheckBoxFLOmitTS.Location = new System.Drawing.Point(290, 49);
+            this.CheckBoxFLOmitTS.Name = "CheckBoxFLOmitTS";
+            this.CheckBoxFLOmitTS.Size = new System.Drawing.Size(110, 17);
+            this.CheckBoxFLOmitTS.TabIndex = 4;
+            this.CheckBoxFLOmitTS.Text = "Omit tertiary strata";
+            this.CheckBoxFLOmitTS.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // CheckBoxFLOmitSS
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(290, 26);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(128, 17);
-            this.checkBox5.TabIndex = 3;
-            this.checkBox5.Text = "Omit secondary strata";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.CheckBoxFLOmitSS.AutoSize = true;
+            this.CheckBoxFLOmitSS.Location = new System.Drawing.Point(290, 26);
+            this.CheckBoxFLOmitSS.Name = "CheckBoxFLOmitSS";
+            this.CheckBoxFLOmitSS.Size = new System.Drawing.Size(128, 17);
+            this.CheckBoxFLOmitSS.TabIndex = 3;
+            this.CheckBoxFLOmitSS.Text = "Omit secondary strata";
+            this.CheckBoxFLOmitSS.UseVisualStyleBackColor = true;
             // 
             // StockFlowOutputOptionsDataFeedView
             // 
@@ -551,12 +551,12 @@
         internal System.Windows.Forms.CheckBox CheckBoxSTOmitTS;
         internal System.Windows.Forms.CheckBox CheckBoxSTOmitSS;
         internal System.Windows.Forms.GroupBox GroupBoxSummaryFL;
-        internal System.Windows.Forms.CheckBox checkBox3;
-        internal System.Windows.Forms.CheckBox checkBox4;
-        internal System.Windows.Forms.CheckBox checkBox5;
-        internal System.Windows.Forms.CheckBox checkBox2;
-        internal System.Windows.Forms.CheckBox checkBox6;
-        internal System.Windows.Forms.CheckBox checkBox7;
-        internal System.Windows.Forms.CheckBox checkBox1;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitFromSC;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitTS;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitSS;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitToST;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitToSC;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitTT;
+        internal System.Windows.Forms.CheckBox CheckBoxFLOmitFromST;
     }
 }

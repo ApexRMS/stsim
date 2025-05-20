@@ -81,7 +81,6 @@ namespace SyncroSim.STSim
             }
 
             this.InitializeSpatialRunFlag();
-            this.Initialize_SS_TS_Flags();
             this.InitializeFlowOrderOptions();
             this.InitializeOutputOptions();
             this.InitializeOutputDataTables();

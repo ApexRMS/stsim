@@ -19,21 +19,7 @@ namespace SyncroSim.STSim
         private void InitializeSpatialRunFlag()
         {
             DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
-            this.m_IsSpatial = DataTableUtilities.GetDataBool(drrc["IsSpatial"]);
-        }
-
-        /// <summary>
-        /// Initializes the flags for controlling SecondaryStratum and TertiaryStratum output
-        /// </summary>
-        private void Initialize_SS_TS_Flags()
-        {
-            DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_TABULAR_NAME).GetDataRow();
-
-            if (dr != null)
-            {
-                this.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(dr, "SummaryOutputOmitSS");
-                this.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(dr, "SummaryOutputOmitTS");
-            }
+            this.m_IsSpatial = DataTableUtilities.GetDataBool(drrc[Strings.RUN_CONTROL_IS_SPATIAL_COLUMN_NAME]);
         }
 
         /// <summary>
@@ -73,6 +59,8 @@ namespace SyncroSim.STSim
 
             this.m_CreateSummaryStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME]);
             this.m_SummaryStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SS_COLUMN_NAME]);
+            this.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_TS_COLUMN_NAME]);
             this.m_CreateSummaryFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME]);
             this.m_SummaryFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
             this.m_CreateSpatialStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME]);

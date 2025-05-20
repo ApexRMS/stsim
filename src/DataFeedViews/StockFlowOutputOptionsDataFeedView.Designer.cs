@@ -98,7 +98,7 @@
             this.TextBoxSpatialFLTimesteps.Location = new System.Drawing.Point(144, 44);
             this.TextBoxSpatialFLTimesteps.Name = "TextBoxSpatialFLTimesteps";
             this.TextBoxSpatialFLTimesteps.Size = new System.Drawing.Size(56, 20);
-            this.TextBoxSpatialFLTimesteps.TabIndex = 3;
+            this.TextBoxSpatialFLTimesteps.TabIndex = 4;
             this.TextBoxSpatialFLTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TextBoxSpatialSTTimesteps
@@ -115,7 +115,7 @@
             this.CheckBoxSpatialFL.Location = new System.Drawing.Point(15, 47);
             this.CheckBoxSpatialFL.Name = "CheckBoxSpatialFL";
             this.CheckBoxSpatialFL.Size = new System.Drawing.Size(82, 17);
-            this.CheckBoxSpatialFL.TabIndex = 2;
+            this.CheckBoxSpatialFL.TabIndex = 3;
             this.CheckBoxSpatialFL.Text = "Flows every";
             this.CheckBoxSpatialFL.UseVisualStyleBackColor = true;
             // 
@@ -143,7 +143,7 @@
             this.GroupBoxSpatial.Location = new System.Drawing.Point(3, 259);
             this.GroupBoxSpatial.Name = "GroupBoxSpatial";
             this.GroupBoxSpatial.Size = new System.Drawing.Size(577, 102);
-            this.GroupBoxSpatial.TabIndex = 1;
+            this.GroupBoxSpatial.TabIndex = 2;
             this.GroupBoxSpatial.TabStop = false;
             this.GroupBoxSpatial.Text = "Spatial output";
             // 
@@ -153,7 +153,7 @@
             this.LabelLateralFLTimesteps.Location = new System.Drawing.Point(206, 69);
             this.LabelLateralFLTimesteps.Name = "LabelLateralFLTimesteps";
             this.LabelLateralFLTimesteps.Size = new System.Drawing.Size(51, 13);
-            this.LabelLateralFLTimesteps.TabIndex = 5;
+            this.LabelLateralFLTimesteps.TabIndex = 8;
             this.LabelLateralFLTimesteps.Text = "timesteps";
             // 
             // TextBoxLateralFLTimesteps
@@ -161,7 +161,7 @@
             this.TextBoxLateralFLTimesteps.Location = new System.Drawing.Point(144, 67);
             this.TextBoxLateralFLTimesteps.Name = "TextBoxLateralFLTimesteps";
             this.TextBoxLateralFLTimesteps.Size = new System.Drawing.Size(56, 20);
-            this.TextBoxLateralFLTimesteps.TabIndex = 5;
+            this.TextBoxLateralFLTimesteps.TabIndex = 7;
             this.TextBoxLateralFLTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CheckBoxLateralFL
@@ -170,7 +170,7 @@
             this.CheckBoxLateralFL.Location = new System.Drawing.Point(15, 70);
             this.CheckBoxLateralFL.Name = "CheckBoxLateralFL";
             this.CheckBoxLateralFL.Size = new System.Drawing.Size(114, 17);
-            this.CheckBoxLateralFL.TabIndex = 4;
+            this.CheckBoxLateralFL.TabIndex = 6;
             this.CheckBoxLateralFL.Text = "Lateral flows every";
             this.CheckBoxLateralFL.UseVisualStyleBackColor = true;
             // 
@@ -180,7 +180,7 @@
             this.LabelSummaryFLTimesteps.Location = new System.Drawing.Point(206, 26);
             this.LabelSummaryFLTimesteps.Name = "LabelSummaryFLTimesteps";
             this.LabelSummaryFLTimesteps.Size = new System.Drawing.Size(51, 13);
-            this.LabelSummaryFLTimesteps.TabIndex = 5;
+            this.LabelSummaryFLTimesteps.TabIndex = 2;
             this.LabelSummaryFLTimesteps.Text = "timesteps";
             // 
             // LabelSummarySTTimesteps
@@ -197,7 +197,7 @@
             this.TextBoxSummaryFLTimesteps.Location = new System.Drawing.Point(144, 24);
             this.TextBoxSummaryFLTimesteps.Name = "TextBoxSummaryFLTimesteps";
             this.TextBoxSummaryFLTimesteps.Size = new System.Drawing.Size(56, 20);
-            this.TextBoxSummaryFLTimesteps.TabIndex = 3;
+            this.TextBoxSummaryFLTimesteps.TabIndex = 1;
             this.TextBoxSummaryFLTimesteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // GroupBoxSummaryST
@@ -221,7 +221,7 @@
             this.CheckBoxSTOmitSC.Location = new System.Drawing.Point(290, 72);
             this.CheckBoxSTOmitSC.Name = "CheckBoxSTOmitSC";
             this.CheckBoxSTOmitSC.Size = new System.Drawing.Size(100, 17);
-            this.CheckBoxSTOmitSC.TabIndex = 7;
+            this.CheckBoxSTOmitSC.TabIndex = 5;
             this.CheckBoxSTOmitSC.Text = "Omit state class";
             this.CheckBoxSTOmitSC.UseVisualStyleBackColor = true;
             // 
@@ -231,7 +231,7 @@
             this.CheckBoxSTOmitTS.Location = new System.Drawing.Point(290, 49);
             this.CheckBoxSTOmitTS.Name = "CheckBoxSTOmitTS";
             this.CheckBoxSTOmitTS.Size = new System.Drawing.Size(110, 17);
-            this.CheckBoxSTOmitTS.TabIndex = 7;
+            this.CheckBoxSTOmitTS.TabIndex = 4;
             this.CheckBoxSTOmitTS.Text = "Omit tertiary strata";
             this.CheckBoxSTOmitTS.UseVisualStyleBackColor = true;
             // 
@@ -241,7 +241,7 @@
             this.CheckBoxSTOmitSS.Location = new System.Drawing.Point(290, 26);
             this.CheckBoxSTOmitSS.Name = "CheckBoxSTOmitSS";
             this.CheckBoxSTOmitSS.Size = new System.Drawing.Size(128, 17);
-            this.CheckBoxSTOmitSS.TabIndex = 6;
+            this.CheckBoxSTOmitSS.TabIndex = 3;
             this.CheckBoxSTOmitSS.Text = "Omit secondary strata";
             this.CheckBoxSTOmitSS.UseVisualStyleBackColor = true;
             // 
@@ -269,7 +269,7 @@
             this.CheckBoxSummaryFL.Location = new System.Drawing.Point(15, 24);
             this.CheckBoxSummaryFL.Name = "CheckBoxSummaryFL";
             this.CheckBoxSummaryFL.Size = new System.Drawing.Size(82, 17);
-            this.CheckBoxSummaryFL.TabIndex = 2;
+            this.CheckBoxSummaryFL.TabIndex = 0;
             this.CheckBoxSummaryFL.Text = "Flows every";
             this.CheckBoxSummaryFL.UseVisualStyleBackColor = true;
             // 
@@ -292,7 +292,7 @@
             this.GroupBoxAvgSpatial.Name = "GroupBoxAvgSpatial";
             this.GroupBoxAvgSpatial.Padding = new System.Windows.Forms.Padding(2);
             this.GroupBoxAvgSpatial.Size = new System.Drawing.Size(577, 102);
-            this.GroupBoxAvgSpatial.TabIndex = 2;
+            this.GroupBoxAvgSpatial.TabIndex = 3;
             this.GroupBoxAvgSpatial.TabStop = false;
             this.GroupBoxAvgSpatial.Text = "Spatial average output";
             // 
@@ -422,7 +422,7 @@
             this.GroupBoxSummaryFL.Location = new System.Drawing.Point(3, 124);
             this.GroupBoxSummaryFL.Name = "GroupBoxSummaryFL";
             this.GroupBoxSummaryFL.Size = new System.Drawing.Size(574, 124);
-            this.GroupBoxSummaryFL.TabIndex = 3;
+            this.GroupBoxSummaryFL.TabIndex = 1;
             this.GroupBoxSummaryFL.TabStop = false;
             this.GroupBoxSummaryFL.Text = "Tabular output for flows";
             // 
@@ -432,7 +432,7 @@
             this.checkBox2.Location = new System.Drawing.Point(435, 73);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(128, 17);
-            this.checkBox2.TabIndex = 11;
+            this.checkBox2.TabIndex = 9;
             this.checkBox2.Text = "Omit secondary strata";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
@@ -442,7 +442,7 @@
             this.checkBox6.Location = new System.Drawing.Point(435, 50);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(128, 17);
-            this.checkBox6.TabIndex = 10;
+            this.checkBox6.TabIndex = 8;
             this.checkBox6.Text = "Omit secondary strata";
             this.checkBox6.UseVisualStyleBackColor = true;
             // 
@@ -452,7 +452,7 @@
             this.checkBox7.Location = new System.Drawing.Point(435, 27);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(128, 17);
-            this.checkBox7.TabIndex = 9;
+            this.checkBox7.TabIndex = 7;
             this.checkBox7.Text = "Omit secondary strata";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
@@ -462,7 +462,7 @@
             this.checkBox1.Location = new System.Drawing.Point(290, 95);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(128, 17);
-            this.checkBox1.TabIndex = 8;
+            this.checkBox1.TabIndex = 6;
             this.checkBox1.Text = "Omit secondary strata";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
@@ -472,7 +472,7 @@
             this.checkBox3.Location = new System.Drawing.Point(290, 72);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(128, 17);
-            this.checkBox3.TabIndex = 7;
+            this.checkBox3.TabIndex = 5;
             this.checkBox3.Text = "Omit secondary strata";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
@@ -482,7 +482,7 @@
             this.checkBox4.Location = new System.Drawing.Point(290, 49);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(128, 17);
-            this.checkBox4.TabIndex = 7;
+            this.checkBox4.TabIndex = 4;
             this.checkBox4.Text = "Omit secondary strata";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
@@ -492,7 +492,7 @@
             this.checkBox5.Location = new System.Drawing.Point(290, 26);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(128, 17);
-            this.checkBox5.TabIndex = 6;
+            this.checkBox5.TabIndex = 3;
             this.checkBox5.Text = "Omit secondary strata";
             this.checkBox5.UseVisualStyleBackColor = true;
             // 

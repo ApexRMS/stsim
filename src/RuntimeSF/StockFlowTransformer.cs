@@ -18,8 +18,6 @@ namespace SyncroSim.STSim
         private bool m_IsSpatial;
         private bool m_ApplyBeforeTransitions;
         private bool m_ApplyEquallyRankedSimultaneously;
-        private bool m_SummaryOmitSecondaryStrata;
-        private bool m_SummaryOmitTertiaryStrata;
         private STSimTransformer m_STSimTransformer;
         private bool m_CanComputeStocksAndFlows;
         private bool m_StockLimitsOnSourceAndTarget;

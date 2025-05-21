@@ -1111,7 +1111,7 @@
     <column name="StratumId" displayName="Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" displayNameSource="stsim_Terminology" displayNameColumn="PrimaryStratumLabel" isIndex="True"/>
     <column name="SecondaryStratumId" displayName="Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" allowDbNull="True" displayNameSource="stsim_Terminology" displayNameColumn="SecondaryStratumLabel" isIndex="True"/>
     <column name="TertiaryStratumId" dataType="Integer" displayName="Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
-    <column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
+    <column name="StateClassId" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="True" isIndex="True"/>
     <column name="StockGroupId" dataType="Integer" displayName="Stock Type/Group" validationType="Datasheet" formula1="StockGroup" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
   <column name="ResolutionId" validationType="Datasheet" formula1="Resolution" displayName="Resolution" dataType="Integer" allowDbNull="False" defaultValue="0"/>
@@ -1121,12 +1121,12 @@
     <column name="FromStratumId" displayName="From Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" isIndex="True"/>
     <column name="FromSecondaryStratumId" displayName="From Secondary Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_SecondaryStratum" allowDbNull="True" isIndex="True"/>
     <column name="FromTertiaryStratumId" dataType="Integer" displayName="From Tertiary Stratum" validationType="Datasheet" formula1="stsim_TertiaryStratum" isOptional="True" displayNameSource="stsim_Terminology" displayNameColumn="TertiaryStratumLabel" isIndex="True"/>
-    <column name="FromStateClassId" dataType="Integer" displayName="From State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
-    <column name="FromStockTypeId" dataType="Integer" displayName="From Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isIndex="True"/>
+    <column name="FromStateClassId" dataType="Integer" displayName="From State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="True" isIndex="True"/>
+    <column name="FromStockTypeId" dataType="Integer" displayName="From Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="True" isIndex="True"/>
     <column name="TransitionTypeId" dataType="Integer" displayName="From Transition Type" validationType="Datasheet" formula1="stsim_TransitionType" allowDbNull="True" isIndex="True"/>
     <column name="ToStratumId" displayName="To Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" allowDbNull="False" isIndex="True"/>
-    <column name="ToStateClassId" dataType="Integer" displayName="To State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False" isIndex="True"/>
-    <column name="ToStockTypeId" dataType="Integer" displayName="To Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="False" isIndex="True"/>
+    <column name="ToStateClassId" dataType="Integer" displayName="To State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="True" isIndex="True"/>
+    <column name="ToStockTypeId" dataType="Integer" displayName="To Stock Type" validationType="Datasheet" formula1="StockType" allowDbNull="True" isIndex="True"/>
     <column name="FlowGroupId" dataType="Integer" displayName="Flow Type/Group" validationType="Datasheet" formula1="FlowGroup" allowDbNull="False" isIndex="True"/>
     <column name="Amount" dataType="Double"/>
     <column name="EndStratumId" displayName="End Stratum" dataType="Integer" validationType="Datasheet" formula1="stsim_Stratum" isIndex="True"/>

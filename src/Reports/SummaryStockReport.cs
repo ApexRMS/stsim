@@ -92,7 +92,7 @@ namespace SyncroSim.STSim
                 "INNER JOIN stsim_Stratum AS ST1 ON ST1.StratumId = stsim_OutputStock.StratumId " +
                 "LEFT JOIN stsim_SecondaryStratum AS ST2 ON ST2.SecondaryStratumId = stsim_OutputStock.SecondaryStratumId " +
                 "LEFT JOIN stsim_TertiaryStratum AS ST3 ON ST3.TertiaryStratumId = stsim_OutputStock.TertiaryStratumId " +
-                "INNER JOIN stsim_StateClass AS SC1 ON SC1.StateClassId = stsim_OutputStock.StateClassId " +
+                "LEFT JOIN stsim_StateClass AS SC1 ON SC1.StateClassId = stsim_OutputStock.StateClassId " +
                 "INNER JOIN stsim_StockGroup ON stsim_StockGroup.StockGroupId = stsim_OutputStock.StockGroupId " +
                 "WHERE stsim_OutputStock.ScenarioId IN ({0}) " +
                 "ORDER BY " +

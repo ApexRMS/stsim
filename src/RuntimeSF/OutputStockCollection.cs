@@ -16,8 +16,8 @@ namespace SyncroSim.STSim
 			return new FiveIntegerLookupKey(
                 item.StratumId,
                 LookupKeyUtils.GetOutputCollectionKey(item.SecondaryStratumId),
-                LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId), 
-                item.StateClassId, 
+                LookupKeyUtils.GetOutputCollectionKey(item.TertiaryStratumId),
+                LookupKeyUtils.GetOutputCollectionKey(item.StateClassId), 
                 item.StockGroupId);
 		}
 	}

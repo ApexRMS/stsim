@@ -173,7 +173,7 @@ namespace SyncroSim.STSim
                         FLGetTertiaryStratumIdKey(cell),
                         FLGetFromStateClassIdKey(cell),
                         FLGetFromStockTypeIdKey(flowPathway),
-                        LookupKeyUtils.GetOutputCollectionKey(TransitionTypeId),
+                        FLGetTransitionTypeIdKey(TransitionTypeId),
                         StratumIdDest,
                         StateClassIdDest,
                         LookupKeyUtils.GetOutputCollectionKey(flowPathway.ToStockTypeId),
@@ -197,7 +197,7 @@ namespace SyncroSim.STSim
                             FLGetTertiaryStratumIdValue(cell),
                             FLGetFromStateClassIdValue(cell),
                             FLGetFromStockTypeIdValue(flowPathway),
-                            TransitionTypeId,
+                            FLGetTransitionTypeIdValue(TransitionTypeId),
                             StratumIdDest,
                             StateClassIdDest,
                             flowPathway.ToStockTypeId,
@@ -1327,6 +1327,34 @@ namespace SyncroSim.STSim
         private int? FLGetFromStockTypeIdValue(FlowPathway fp)
         {
             return FLGetFromStockTypeIdValue(fp.FromStockTypeId);
+        }
+
+        //************************************************************************
+        //Flows - transition type
+        //************************************************************************
+
+        internal int FLGetTransitionTypeIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitTransitionType)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int? FLGetTransitionTypeIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitTransitionType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
         }
     }
 }

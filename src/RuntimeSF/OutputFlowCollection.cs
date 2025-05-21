@@ -18,7 +18,7 @@ namespace SyncroSim.STSim
                 item.FromStratumId, 
                 LookupKeyUtils.GetOutputCollectionKey(item.FromSecondaryStratumId), 
                 LookupKeyUtils.GetOutputCollectionKey(item.FromTertiaryStratumId), 
-                item.FromStateClassId,
+                LookupKeyUtils.GetOutputCollectionKey(item.FromStateClassId),
                 LookupKeyUtils.GetOutputCollectionKey(item.FromStockTypeId), 
                 LookupKeyUtils.GetOutputCollectionKey(item.TransitionTypeId), 
                 item.ToStratumId, 

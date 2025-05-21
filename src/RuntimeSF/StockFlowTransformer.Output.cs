@@ -175,7 +175,7 @@ namespace SyncroSim.STSim
                         FLGetFromStockTypeIdKey(flowPathway),
                         FLGetTransitionTypeIdKey(TransitionTypeId),
                         StratumIdDest,
-                        StateClassIdDest,
+                        FLGetToStateClassIdKey(StateClassIdDest),
                         LookupKeyUtils.GetOutputCollectionKey(flowPathway.ToStockTypeId),
                         l.FlowGroup.Id,
                         LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToStratumId),
@@ -199,7 +199,7 @@ namespace SyncroSim.STSim
                             FLGetFromStockTypeIdValue(flowPathway),
                             FLGetTransitionTypeIdValue(TransitionTypeId),
                             StratumIdDest,
-                            StateClassIdDest,
+                            FLGetToStateClassIdValue(StateClassIdDest),
                             flowPathway.ToStockTypeId,
                             l.FlowGroup.Id,
                             flowPathway.TransferToStratumId,
@@ -329,7 +329,7 @@ namespace SyncroSim.STSim
                 dr[Strings.FROM_STOCK_TYPE_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.FromStockTypeId);
                 dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransitionTypeId);
                 dr[Strings.TO_STRATUM_ID_COLUMN_NAME] = r.ToStratumId;
-                dr[Strings.TO_STATECLASS_ID_COLUMN_NAME] = r.ToStateClassId;
+                dr[Strings.TO_STATECLASS_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.ToStateClassId);
                 dr[Strings.TO_STOCK_TYPE_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.ToStockTypeId);
                 dr[Strings.FLOW_GROUP_ID_COLUMN_NAME] = r.FlowGroupId;
                 dr[Strings.END_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransferToStratumId);
@@ -1348,6 +1348,34 @@ namespace SyncroSim.STSim
         private int? FLGetTransitionTypeIdValue(int? value)
         {
             if (this.m_FLSummaryOmitTransitionType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        //************************************************************************
+        //Flows - to state class
+        //************************************************************************
+
+        internal int FLGetToStateClassIdKey(int value)
+        {
+            if (this.m_FLSummaryOmitToStateClass)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetToStateClassIdValue(int value)
+        {
+            if (this.m_FLSummaryOmitToStateClass)
             {
                 return null;
             }

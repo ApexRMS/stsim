@@ -118,7 +118,7 @@ namespace SyncroSim.STSim
                 "LEFT JOIN stsim_TertiaryStratum AS TS1 ON TS1.TertiaryStratumId = stsim_OutputFlow.FromTertiaryStratumId " +
                 "LEFT JOIN stsim_TertiaryStratum AS TS2 ON TS2.TertiaryStratumId = stsim_OutputFlow.EndTertiaryStratumId " +
                 "LEFT JOIN stsim_StateClass AS SC1 ON SC1.StateClassId = stsim_OutputFlow.FromStateClassId " +
-                "INNER JOIN stsim_StateClass AS SC2 ON SC2.StateClassId = stsim_OutputFlow.ToStateClassId " +
+                "LEFT JOIN stsim_StateClass AS SC2 ON SC2.StateClassId = stsim_OutputFlow.ToStateClassId " +
                 "LEFT JOIN stsim_StateClass AS SC3 ON SC3.StateClassId = stsim_OutputFlow.EndStateClassId " +
                 "LEFT JOIN stsim_StockType AS STK1 ON STK1.StockTypeId = stsim_OutputFlow.FromStockTypeId " +
                 "INNER JOIN stsim_StockType AS STK2 ON STK2.StockTypeId = stsim_OutputFlow.ToStockTypeId " +

@@ -176,7 +176,7 @@ namespace SyncroSim.STSim
                         FLGetTransitionTypeIdKey(TransitionTypeId),
                         StratumIdDest,
                         FLGetToStateClassIdKey(StateClassIdDest),
-                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.ToStockTypeId),
+                        FLGetToStockTypeIdKey(flowPathway),
                         l.FlowGroup.Id,
                         LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToStratumId),
                         LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToSecondaryStratumId),
@@ -200,7 +200,7 @@ namespace SyncroSim.STSim
                             FLGetTransitionTypeIdValue(TransitionTypeId),
                             StratumIdDest,
                             FLGetToStateClassIdValue(StateClassIdDest),
-                            flowPathway.ToStockTypeId,
+                            FLGetToStockTypeIdValue(flowPathway),
                             l.FlowGroup.Id,
                             flowPathway.TransferToStratumId,
                             flowPathway.TransferToSecondaryStratumId,
@@ -1383,6 +1383,44 @@ namespace SyncroSim.STSim
             {
                 return value;
             }
+        }
+
+        //************************************************************************
+        //Flows - to stock type
+        //************************************************************************
+
+        internal int FLGetToStockTypeIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitToStockType)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int FLGetToStockTypeIdKey(FlowPathway fp)
+        {
+            return FLGetToStockTypeIdKey(fp.ToStockTypeId);
+        }
+
+        private int? FLGetToStockTypeIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitToStockType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetToStockTypeIdValue(FlowPathway fp)
+        {
+            return FLGetToStockTypeIdValue(fp.ToStockTypeId);
         }
     }
 }

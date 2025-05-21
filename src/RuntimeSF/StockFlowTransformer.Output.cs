@@ -172,7 +172,7 @@ namespace SyncroSim.STSim
                         FLGetSecondaryStratumIdKey(cell),
                         FLGetTertiaryStratumIdKey(cell),
                         FLGetFromStateClassIdKey(cell),
-                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.FromStockTypeId),
+                        FLGetFromStockTypeIdKey(flowPathway),
                         LookupKeyUtils.GetOutputCollectionKey(TransitionTypeId),
                         StratumIdDest,
                         StateClassIdDest,
@@ -196,7 +196,7 @@ namespace SyncroSim.STSim
                             FLGetSecondaryStratumIdValue(cell),
                             FLGetTertiaryStratumIdValue(cell),
                             FLGetFromStateClassIdValue(cell),
-                            flowPathway.FromStockTypeId,
+                            FLGetFromStockTypeIdValue(flowPathway),
                             TransitionTypeId,
                             StratumIdDest,
                             StateClassIdDest,
@@ -1290,6 +1290,43 @@ namespace SyncroSim.STSim
         {
             return FLGetFromStateClassIdValue(simulationCell.StateClassId);
         }
+
+        //************************************************************************
+        //Flows - from stock type
+        //************************************************************************
+
+        internal int FLGetFromStockTypeIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitFromStockType)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int FLGetFromStockTypeIdKey(FlowPathway fp)
+        {
+            return FLGetFromStockTypeIdKey(fp.FromStockTypeId);
+        }
+
+        private int? FLGetFromStockTypeIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitFromStockType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetFromStockTypeIdValue(FlowPathway fp)
+        {
+            return FLGetFromStockTypeIdValue(fp.FromStockTypeId);
+        }
     }
 }
-

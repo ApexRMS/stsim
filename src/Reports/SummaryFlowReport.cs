@@ -120,7 +120,7 @@ namespace SyncroSim.STSim
                 "LEFT JOIN stsim_StateClass AS SC1 ON SC1.StateClassId = stsim_OutputFlow.FromStateClassId " +
                 "INNER JOIN stsim_StateClass AS SC2 ON SC2.StateClassId = stsim_OutputFlow.ToStateClassId " +
                 "LEFT JOIN stsim_StateClass AS SC3 ON SC3.StateClassId = stsim_OutputFlow.EndStateClassId " +
-                "INNER JOIN stsim_StockType AS STK1 ON STK1.StockTypeId = stsim_OutputFlow.FromStockTypeId " +
+                "LEFT JOIN stsim_StockType AS STK1 ON STK1.StockTypeId = stsim_OutputFlow.FromStockTypeId " +
                 "INNER JOIN stsim_StockType AS STK2 ON STK2.StockTypeId = stsim_OutputFlow.ToStockTypeId " +
                 "INNER JOIN stsim_FlowGroup ON stsim_FlowGroup.FlowGroupId = stsim_OutputFlow.FlowGroupId " +
                 "LEFT JOIN stsim_TransitionType ON stsim_TransitionType.TransitionTypeId = stsim_OutputFlow.TransitionTypeId " +

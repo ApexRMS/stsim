@@ -591,10 +591,23 @@ namespace SyncroSim.STSim
         //Stock Flow Output Options
         public const string DATASHEET_STOCKFLOW_OO_NAME = "stsim_OutputOptionsStockFlow";
         public const string DATASHEET_STOCKFLOW_OO_DISPLAY_NAME = "Stock Flow Output Options";
+
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME = "SummaryOutputST";
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SummaryOutputSTTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SS_COLUMN_NAME = "SummaryOutputSTOmitSS";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_TS_COLUMN_NAME = "SummaryOutputSTOmitTS";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SC_COLUMN_NAME = "SummaryOutputSTOmitSC";
+
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME = "SummaryOutputFL";
         public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME = "SummaryOutputFLTimesteps";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_SS_COLUMN_NAME = "SummaryOutputFLOmitSS";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TS_COLUMN_NAME = "SummaryOutputFLOmitTS";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_FROM_SC_COLUMN_NAME = "SummaryOutputFLOmitFromSC";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_FROM_ST_COLUMN_NAME = "SummaryOutputFLOmitFromST";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TT_COLUMN_NAME = "SummaryOutputFLOmitTT";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TO_SC_COLUMN_NAME = "SummaryOutputFLOmitToSC";
+        public const string DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TO_ST_COLUMN_NAME = "SummaryOutputFLOmitToST";
+
         public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME = "SpatialOutputST";
         public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME = "SpatialOutputSTTimesteps";
         public const string DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME = "SpatialOutputFL";

@@ -8,11 +8,11 @@ namespace SyncroSim.STSim
 		private readonly int m_FromStratumId;
 		private readonly int? m_FromSecondaryStratumId;
 		private readonly int? m_FromTertiaryStratumId;
-		private readonly int m_FromStateClassId;
+		private readonly int? m_FromStateClassId;
 		private readonly int? m_FromStockTypeId;
 		private readonly int? m_transitionTypeId;
 		private readonly int m_ToStratumId;
-		private readonly int m_ToStateClassId;
+		private readonly int? m_ToStateClassId;
 		private readonly int? m_ToStockTypeId;
 		private readonly int m_FlowGroupId;
         private readonly int? m_TransferToStratumId;
@@ -26,11 +26,11 @@ namespace SyncroSim.STSim
             int fromStratumId, 
             int? fromSecondaryStratumId, 
             int? fromTertiaryStratumId, 
-            int fromStateClassId, 
+            int? fromStateClassId, 
             int? fromStockTypeId, 
             int? transitionTypeId, 
             int toStratumId, 
-            int toStateClassId, 
+            int? toStateClassId, 
             int? toStockTypeId, 
             int flowGroupId, 
             int? transferToStratumId, 
@@ -83,7 +83,7 @@ namespace SyncroSim.STSim
 			}
 		}
 
-		public int FromStateClassId
+		public int? FromStateClassId
 		{
 			get
 			{
@@ -115,7 +115,7 @@ namespace SyncroSim.STSim
 			}
 		}
 
-		public int ToStateClassId
+		public int? ToStateClassId
 		{
 			get
 			{

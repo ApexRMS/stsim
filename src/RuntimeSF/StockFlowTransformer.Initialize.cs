@@ -19,21 +19,7 @@ namespace SyncroSim.STSim
         private void InitializeSpatialRunFlag()
         {
             DataRow drrc = this.ResultScenario.GetDataSheet(Strings.DATASHEET_RUN_CONTROL_NAME).GetDataRow();
-            this.m_IsSpatial = DataTableUtilities.GetDataBool(drrc["IsSpatial"]);
-        }
-
-        /// <summary>
-        /// Initializes the flags for controlling SecondaryStratum and TertiaryStratum output
-        /// </summary>
-        private void Initialize_SS_TS_Flags()
-        {
-            DataRow dr = this.ResultScenario.GetDataSheet(Strings.DATASHEET_OO_TABULAR_NAME).GetDataRow();
-
-            if (dr != null)
-            {
-                this.m_SummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(dr, "SummaryOutputOmitSS");
-                this.m_SummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(dr, "SummaryOutputOmitTS");
-            }
+            this.m_IsSpatial = DataTableUtilities.GetDataBool(drrc[Strings.RUN_CONTROL_IS_SPATIAL_COLUMN_NAME]);
         }
 
         /// <summary>
@@ -46,8 +32,8 @@ namespace SyncroSim.STSim
 
             if (dr != null)
             {
-                this.m_ApplyBeforeTransitions = DataTableUtilities.GetDataBool(dr, "ApplyBeforeTransitions");
-                this.m_ApplyEquallyRankedSimultaneously = DataTableUtilities.GetDataBool(dr, "ApplyEquallyRankedSimultaneously");
+                this.m_ApplyBeforeTransitions = DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_FLOW_ORDER_OPTIONS_ABT_COLUMN_NAME);
+                this.m_ApplyEquallyRankedSimultaneously = DataTableUtilities.GetDataBool(dr, Strings.DATASHEET_FLOW_ORDER_OPTIONS_AERS_COLUMN_NAME);
             }
         }
 
@@ -73,8 +59,20 @@ namespace SyncroSim.STSim
 
             this.m_CreateSummaryStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_COLUMN_NAME]);
             this.m_SummaryStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
+            this.m_STSummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SS_COLUMN_NAME]);
+            this.m_STSummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_TS_COLUMN_NAME]);
+            this.m_STSummaryOmitStateClass = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_ST_OMIT_SC_COLUMN_NAME]);
+
             this.m_CreateSummaryFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_COLUMN_NAME]);
             this.m_SummaryFlowOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_TIMESTEPS_COLUMN_NAME]);
+            this.m_FLSummaryOmitSecondaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_SS_COLUMN_NAME]);
+            this.m_FLSummaryOmitTertiaryStrata = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TS_COLUMN_NAME]);
+            this.m_FLSummaryOmitFromStateClass = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_FROM_SC_COLUMN_NAME]);
+            this.m_FLSummaryOmitFromStockType = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_FROM_ST_COLUMN_NAME]);
+            this.m_FLSummaryOmitTransitionType = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TT_COLUMN_NAME]);
+            this.m_FLSummaryOmitToStateClass = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TO_SC_COLUMN_NAME]);
+            this.m_FLSummaryOmitToStockType = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SUMMARY_OUTPUT_FL_OMIT_TO_ST_COLUMN_NAME]);
+
             this.m_CreateSpatialStockOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_COLUMN_NAME]);
             this.m_SpatialStockOutputTimesteps = SafeInt(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_ST_TIMESTEPS_COLUMN_NAME]);
             this.m_CreateSpatialFlowOutput = DataTableUtilities.GetDataBool(droo[Strings.DATASHEET_STOCKFLOW_OO_SPATIAL_OUTPUT_FL_COLUMN_NAME]);

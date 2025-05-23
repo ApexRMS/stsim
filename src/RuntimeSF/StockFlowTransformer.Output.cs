@@ -16,9 +16,21 @@ namespace SyncroSim.STSim
         private DataTable m_OutputStockTable;
         private bool m_CreateSummaryStockOutput;
         private int m_SummaryStockOutputTimesteps;
+        private bool m_STSummaryOmitSecondaryStrata;
+        private bool m_STSummaryOmitTertiaryStrata;
+        private bool m_STSummaryOmitStateClass;
+
         private DataTable m_OutputFlowTable;
         private bool m_CreateSummaryFlowOutput;
         private int m_SummaryFlowOutputTimesteps;
+        private bool m_FLSummaryOmitSecondaryStrata;
+        private bool m_FLSummaryOmitTertiaryStrata;
+        private bool m_FLSummaryOmitFromStateClass;
+        private bool m_FLSummaryOmitFromStockType;
+        private bool m_FLSummaryOmitTransitionType;
+        private bool m_FLSummaryOmitToStateClass;
+        private bool m_FLSummaryOmitToStockType;
+
         private bool m_CreateSpatialStockOutput;
         private int m_SpatialStockOutputTimesteps;
         private bool m_CreateSpatialFlowOutput;
@@ -71,8 +83,11 @@ namespace SyncroSim.STSim
                         }
 
                         FiveIntegerLookupKey k = new FiveIntegerLookupKey(
-                        c.StratumId, GetSecondaryStratumIdKey(c),
-                        GetTertiaryStratumIdKey(c), c.StateClassId, l.StockGroup.Id);
+                            c.StratumId, 
+                            STGetSecondaryStratumIdKey(c),
+                            STGetTertiaryStratumIdKey(c), 
+                            STGetStateClassIdKey(c), 
+                            l.StockGroup.Id);
 
                         if (this.m_SummaryOutputStockRecords.Contains(k))
                         {
@@ -82,8 +97,12 @@ namespace SyncroSim.STSim
                         else
                         {
                             OutputStock r = new OutputStock(
-                                    c.StratumId, GetSecondaryStratumIdValue(c),
-                                    GetTertiaryStratumIdValue(c), c.StateClassId, l.StockGroup.Id, amount * l.Value);
+                                c.StratumId, 
+                                STGetSecondaryStratumIdValue(c),
+                                STGetTertiaryStratumIdValue(c), 
+                                STGetStateClassIdValue(c), 
+                                l.StockGroup.Id, 
+                                amount * l.Value);
 
                             this.m_SummaryOutputStockRecords.Add(r);
                         }
@@ -93,12 +112,12 @@ namespace SyncroSim.STSim
         }
 
         private void RecordSummaryFlowOutputData(
-                int timestep,
-                Cell cell,
-                DeterministicTransition deterministicPathway,
-                Transition probabilisticPathway,
-                FlowPathway flowPathway,
-                float flowAmount)
+            int timestep,
+            Cell cell,
+            DeterministicTransition deterministicPathway,
+            Transition probabilisticPathway,
+            FlowPathway flowPathway,
+            float flowAmount)
         {
             int? TransitionTypeId = null;
             int StratumIdDest = cell.StratumId;
@@ -149,21 +168,21 @@ namespace SyncroSim.STSim
                     }
 
                     FifteenIntegerLookupKey k = new FifteenIntegerLookupKey(
-                            cell.StratumId,
-                            GetSecondaryStratumIdKey(cell),
-                            GetTertiaryStratumIdKey(cell),
-                            cell.StateClassId,
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.FromStockTypeId),
-                            LookupKeyUtils.GetOutputCollectionKey(TransitionTypeId),
-                            StratumIdDest,
-                            StateClassIdDest,
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.ToStockTypeId),
-                            l.FlowGroup.Id,
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToStratumId),
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToSecondaryStratumId),
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToTertiaryStratumId),
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToStateClassId),
-                            LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToMinimumAge));
+                        cell.StratumId,
+                        FLGetSecondaryStratumIdKey(cell),
+                        FLGetTertiaryStratumIdKey(cell),
+                        FLGetFromStateClassIdKey(cell),
+                        FLGetFromStockTypeIdKey(flowPathway),
+                        FLGetTransitionTypeIdKey(TransitionTypeId),
+                        StratumIdDest,
+                        FLGetToStateClassIdKey(StateClassIdDest),
+                        FLGetToStockTypeIdKey(flowPathway),
+                        l.FlowGroup.Id,
+                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToStratumId),
+                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToSecondaryStratumId),
+                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToTertiaryStratumId),
+                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToStateClassId),
+                        LookupKeyUtils.GetOutputCollectionKey(flowPathway.TransferToMinimumAge));
 
                     if (this.m_SummaryOutputFlowRecords.Contains(k))
                     {
@@ -173,22 +192,22 @@ namespace SyncroSim.STSim
                     else
                     {
                         OutputFlow r = new OutputFlow(
-                                cell.StratumId,
-                                GetSecondaryStratumIdValue(cell),
-                                GetTertiaryStratumIdValue(cell),
-                                cell.StateClassId,
-                                flowPathway.FromStockTypeId,
-                                TransitionTypeId,
-                                StratumIdDest,
-                                StateClassIdDest,
-                                flowPathway.ToStockTypeId,
-                                l.FlowGroup.Id,
-                                flowPathway.TransferToStratumId,
-                                flowPathway.TransferToSecondaryStratumId,
-                                flowPathway.TransferToTertiaryStratumId,
-                                flowPathway.TransferToStateClassId,
-                                flowPathway.TransferToMinimumAge,
-                                flowAmount * l.Value);
+                            cell.StratumId,
+                            FLGetSecondaryStratumIdValue(cell),
+                            FLGetTertiaryStratumIdValue(cell),
+                            FLGetFromStateClassIdValue(cell),
+                            FLGetFromStockTypeIdValue(flowPathway),
+                            FLGetTransitionTypeIdValue(TransitionTypeId),
+                            StratumIdDest,
+                            FLGetToStateClassIdValue(StateClassIdDest),
+                            FLGetToStockTypeIdValue(flowPathway),
+                            l.FlowGroup.Id,
+                            flowPathway.TransferToStratumId,
+                            flowPathway.TransferToSecondaryStratumId,
+                            flowPathway.TransferToTertiaryStratumId,
+                            flowPathway.TransferToStateClassId,
+                            flowPathway.TransferToMinimumAge,
+                            flowAmount * l.Value);
 
                         this.m_SummaryOutputFlowRecords.Add(r);
                     }
@@ -280,7 +299,7 @@ namespace SyncroSim.STSim
                 dr[Strings.DATASHEET_STRATUM_ID_COLUMN_NAME] = r.StratumId;
                 dr[Strings.DATASHEET_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.SecondaryStratumId);
                 dr[Strings.DATASHEET_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TertiaryStratumId);
-                dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = r.StateClassId;
+                dr[Strings.DATASHEET_STATECLASS_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.StateClassId);
                 dr[Strings.STOCK_GROUP_ID_COLUMN_NAME] = r.StockGroupId;
                 dr[Strings.DATASHEET_AMOUNT_COLUMN_NAME] = r.Amount;
 
@@ -306,11 +325,11 @@ namespace SyncroSim.STSim
                 dr[Strings.FROM_STRATUM_ID_COLUMN_NAME] = r.FromStratumId;
                 dr[Strings.FROM_SECONDARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.FromSecondaryStratumId);
                 dr[Strings.FROM_TERTIARY_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.FromTertiaryStratumId);
-                dr[Strings.FROM_STATECLASS_ID_COLUMN_NAME] = r.FromStateClassId;
+                dr[Strings.FROM_STATECLASS_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.FromStateClassId);
                 dr[Strings.FROM_STOCK_TYPE_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.FromStockTypeId);
                 dr[Strings.DATASHEET_TRANSITION_TYPE_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransitionTypeId);
                 dr[Strings.TO_STRATUM_ID_COLUMN_NAME] = r.ToStratumId;
-                dr[Strings.TO_STATECLASS_ID_COLUMN_NAME] = r.ToStateClassId;
+                dr[Strings.TO_STATECLASS_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.ToStateClassId);
                 dr[Strings.TO_STOCK_TYPE_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.ToStockTypeId);
                 dr[Strings.FLOW_GROUP_ID_COLUMN_NAME] = r.FlowGroupId;
                 dr[Strings.END_STRATUM_ID_COLUMN_NAME] = DataTableUtilities.GetNullableDatabaseValue(r.TransferToStratumId);
@@ -1044,9 +1063,13 @@ namespace SyncroSim.STSim
             return timestepKey;
         }
 
-        internal int GetSecondaryStratumIdKey(int? value)
+        //************************************************************************
+        //Stocks - secondary stratum
+        //************************************************************************
+
+        internal int STGetSecondaryStratumIdKey(int? value)
         {
-            if (this.m_SummaryOmitSecondaryStrata)
+            if (this.m_STSummaryOmitSecondaryStrata)
             {
                 return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
             }
@@ -1056,9 +1079,14 @@ namespace SyncroSim.STSim
             }
         }
 
-        private int? GetSecondaryStratumIdValue(int? value)
+        private int STGetSecondaryStratumIdKey(Cell simulationCell)
         {
-            if (this.m_SummaryOmitSecondaryStrata)
+            return STGetSecondaryStratumIdKey(simulationCell.SecondaryStratumId);
+        }
+
+        private int? STGetSecondaryStratumIdValue(int? value)
+        {
+            if (this.m_STSummaryOmitSecondaryStrata)
             {
                 return null;
             }
@@ -1068,9 +1096,18 @@ namespace SyncroSim.STSim
             }
         }
 
-        internal int GetTertiaryStratumIdKey(int? value)
+        private int? STGetSecondaryStratumIdValue(Cell simulationCell)
         {
-            if (this.m_SummaryOmitTertiaryStrata)
+            return STGetSecondaryStratumIdValue(simulationCell.SecondaryStratumId);
+        }
+
+        //************************************************************************
+        //Stocks - tertiary stratum
+        //************************************************************************
+
+        internal int STGetTertiaryStratumIdKey(int? value)
+        {
+            if (this.m_STSummaryOmitTertiaryStrata)
             {
                 return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
             }
@@ -1080,9 +1117,14 @@ namespace SyncroSim.STSim
             }
         }
 
-        private int? GetTertiaryStratumIdValue(int? value)
+        private int STGetTertiaryStratumIdKey(Cell simulationCell)
         {
-            if (this.m_SummaryOmitTertiaryStrata)
+            return STGetTertiaryStratumIdKey(simulationCell.TertiaryStratumId);
+        }
+
+        private int? STGetTertiaryStratumIdValue(int? value)
+        {
+            if (this.m_STSummaryOmitTertiaryStrata)
             {
                 return null;
             }
@@ -1092,24 +1134,293 @@ namespace SyncroSim.STSim
             }
         }
 
-        private int GetSecondaryStratumIdKey(Cell simulationCell)
+        private int? STGetTertiaryStratumIdValue(Cell simulationCell)
         {
-            return GetSecondaryStratumIdKey(simulationCell.SecondaryStratumId);
+            return STGetTertiaryStratumIdValue(simulationCell.TertiaryStratumId);
         }
 
-        private int? GetSecondaryStratumIdValue(Cell simulationCell)
+        //************************************************************************
+        //Stocks - state class
+        //************************************************************************
+
+        internal int STGetStateClassIdKey(int value)
         {
-            return GetSecondaryStratumIdValue(simulationCell.SecondaryStratumId);
+            if (this.m_STSummaryOmitStateClass)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return value;
+            }
         }
 
-        private int GetTertiaryStratumIdKey(Cell simulationCell)
+        private int STGetStateClassIdKey(Cell simulationCell)
         {
-            return GetTertiaryStratumIdKey(simulationCell.TertiaryStratumId);
+            return STGetStateClassIdKey(simulationCell.StateClassId);
         }
 
-        private int? GetTertiaryStratumIdValue(Cell simulationCell)
+        private int? STGetStateClassIdValue(int value)
         {
-            return GetTertiaryStratumIdValue(simulationCell.TertiaryStratumId);
+            if (this.m_STSummaryOmitStateClass)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? STGetStateClassIdValue(Cell simulationCell)
+        {
+            return STGetStateClassIdValue(simulationCell.StateClassId);
+        }
+
+        //************************************************************************
+        //Flows - secondary stratum
+        //************************************************************************
+
+        internal int FLGetSecondaryStratumIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitSecondaryStrata)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int FLGetSecondaryStratumIdKey(Cell simulationCell)
+        {
+            return FLGetSecondaryStratumIdKey(simulationCell.SecondaryStratumId);
+        }
+
+        private int? FLGetSecondaryStratumIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitSecondaryStrata)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetSecondaryStratumIdValue(Cell simulationCell)
+        {
+            return FLGetSecondaryStratumIdValue(simulationCell.SecondaryStratumId);
+        }
+
+        //************************************************************************
+        //Flows - tertiary stratum
+        //************************************************************************
+
+        internal int FLGetTertiaryStratumIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitTertiaryStrata)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int FLGetTertiaryStratumIdKey(Cell simulationCell)
+        {
+            return FLGetTertiaryStratumIdKey(simulationCell.TertiaryStratumId);
+        }
+
+        private int? FLGetTertiaryStratumIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitTertiaryStrata)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetTertiaryStratumIdValue(Cell simulationCell)
+        {
+            return FLGetTertiaryStratumIdValue(simulationCell.TertiaryStratumId);
+        }
+
+        //************************************************************************
+        //Flows - from state class
+        //************************************************************************
+
+        internal int FLGetFromStateClassIdKey(int value)
+        {
+            if (this.m_FLSummaryOmitFromStateClass)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int FLGetFromStateClassIdKey(Cell simulationCell)
+        {
+            return FLGetFromStateClassIdKey(simulationCell.StateClassId);
+        }
+
+        private int? FLGetFromStateClassIdValue(int value)
+        {
+            if (this.m_FLSummaryOmitFromStateClass)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetFromStateClassIdValue(Cell simulationCell)
+        {
+            return FLGetFromStateClassIdValue(simulationCell.StateClassId);
+        }
+
+        //************************************************************************
+        //Flows - from stock type
+        //************************************************************************
+
+        internal int FLGetFromStockTypeIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitFromStockType)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int FLGetFromStockTypeIdKey(FlowPathway fp)
+        {
+            return FLGetFromStockTypeIdKey(fp.FromStockTypeId);
+        }
+
+        private int? FLGetFromStockTypeIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitFromStockType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetFromStockTypeIdValue(FlowPathway fp)
+        {
+            return FLGetFromStockTypeIdValue(fp.FromStockTypeId);
+        }
+
+        //************************************************************************
+        //Flows - transition type
+        //************************************************************************
+
+        internal int FLGetTransitionTypeIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitTransitionType)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int? FLGetTransitionTypeIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitTransitionType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        //************************************************************************
+        //Flows - to state class
+        //************************************************************************
+
+        internal int FLGetToStateClassIdKey(int value)
+        {
+            if (this.m_FLSummaryOmitToStateClass)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetToStateClassIdValue(int value)
+        {
+            if (this.m_FLSummaryOmitToStateClass)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        //************************************************************************
+        //Flows - to stock type
+        //************************************************************************
+
+        internal int FLGetToStockTypeIdKey(int? value)
+        {
+            if (this.m_FLSummaryOmitToStockType)
+            {
+                return Constants.OUTPUT_COLLECTION_WILDCARD_KEY;
+            }
+            else
+            {
+                return LookupKeyUtils.GetOutputCollectionKey(value);
+            }
+        }
+
+        private int FLGetToStockTypeIdKey(FlowPathway fp)
+        {
+            return FLGetToStockTypeIdKey(fp.ToStockTypeId);
+        }
+
+        private int? FLGetToStockTypeIdValue(int? value)
+        {
+            if (this.m_FLSummaryOmitToStockType)
+            {
+                return null;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        private int? FLGetToStockTypeIdValue(FlowPathway fp)
+        {
+            return FLGetToStockTypeIdValue(fp.ToStockTypeId);
         }
     }
 }

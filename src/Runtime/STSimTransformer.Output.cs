@@ -3093,9 +3093,7 @@ namespace SyncroSim.STSim
             List<int?> l = new List<int?>();
             foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
             {
-                int? k = r.SecondaryStratumId.HasValue 
-                    ? LookupKeyUtils.GetOutputCollectionKey(r.SecondaryStratumId.Value) 
-                    : (int?)null;
+                int? k = r.SecondaryStratumId;
                 if (!l.Contains(k))
                 {
                     l.Add(k);

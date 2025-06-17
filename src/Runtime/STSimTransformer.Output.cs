@@ -1647,9 +1647,16 @@ namespace SyncroSim.STSim
 
                                 if (!this.m_SummaryStratumStateResultsZeroValues.Contains(key))
                                 {
+                                    int? ssProxy = null;
+                                    int? tsProxy = null;
+
+                                    ssProxy = ss != 0 ? ss : ssProxy;
+                                    tsProxy = ts != 0 ? ts : tsProxy;
+
                                     OutputStratumState oss = new OutputStratumState(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
-                                        ss, ts, iteration, timestep, dt.StateClassIdSource, 0, 0, 0, 0.0);
+                                        ssProxy, tsProxy, 
+                                        iteration, timestep, dt.StateClassIdSource, 0, 0, 0, 0.0);
 
                                     SevenIntegerLookupKey k2 = new SevenIntegerLookupKey(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),

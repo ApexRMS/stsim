@@ -807,5 +807,15 @@ namespace SyncroSim.STSim
                 store.ExecuteNonQuery("ALTER TABLE stsim_OutputOptionsStockFlow ADD COLUMN SummaryOutputFLOmitToST INTEGER");
             }
         }
+
+        [UpdateAttribute(4.4, "This update converts 0 values in the secondary and tertiary stratum ID columns in the output stratum state datasheet to NULL.")]
+        public static void Update_4_401(DataStore store)
+        {
+            if (store.TableExists("stsim_OutputStratumState"))
+            {
+                store.ExecuteNonQuery("UPDATE stsim_OutputStratumState; SET SecondaryStratumId = NULL; WHERE SecondaryStratumId = 0;");
+                store.ExecuteNonQuery("UPDATE stsim_OutputStratumState; SET TertiaryStratumId = NULL; WHERE TertiaryStratumId = 0;");
+            }
+        }
     }
 }

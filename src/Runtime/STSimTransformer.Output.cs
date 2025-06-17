@@ -1629,21 +1629,24 @@ namespace SyncroSim.STSim
             {
                 if (this.m_SummaryStateClassZeroValues)
                 {
-                    Dictionary<int, bool> SSKeys = this.CreateSecondaryStratumDictionary();
-                    Dictionary<int, bool> TSKeys = this.CreateTertiaryStratumDictionary();
+                    List<int?> SSList = this.CreateSecondaryStratumList();
+                    List<int?> TSList = this.CreateTertiaryStratumList();
 
-                    Debug.Assert(!(SSKeys.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
-                    Debug.Assert(!(TSKeys.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
+                    Debug.Assert(!(SSList.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
+                    Debug.Assert(!(TSList.Count == 0) && this.m_SummaryStratumStateResults.Count > 0);
 
-                    foreach (int ss in SSKeys.Keys)
+                    foreach (int? ss in SSList)
                     {
-                        foreach (int ts in TSKeys.Keys)
+                        foreach (int? ts in TSList)
                         {
                             foreach (DeterministicTransition dt in this.m_DeterministicTransitions)
                             {
+                                int ssProxy = ss ?? 0;
+                                int tsProxy = ts ?? 0;
+
                                 SixIntegerLookupKey key = new SixIntegerLookupKey(
                                     LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
-                                    ss, ts, iteration, timestep, dt.StateClassIdSource);
+                                    ssProxy, tsProxy, iteration, timestep, dt.StateClassIdSource);
 
                                 if (!this.m_SummaryStratumStateResultsZeroValues.Contains(key))
                                 {
@@ -1660,7 +1663,7 @@ namespace SyncroSim.STSim
 
                                     SevenIntegerLookupKey k2 = new SevenIntegerLookupKey(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
-                                        ss, ts, iteration, timestep, dt.StateClassIdSource, 0);
+                                        ssProxy, tsProxy, iteration, timestep, dt.StateClassIdSource, 0);
 
                                     if (!this.m_SummaryStratumStateResults.Contains(k2))
                                     {
@@ -3092,38 +3095,32 @@ namespace SyncroSim.STSim
             return timestepKey;
         }
 
-        private Dictionary<int, bool> CreateSecondaryStratumDictionary()
+        private List<int?> CreateSecondaryStratumList()
         {
-            Dictionary<int, bool> d = new Dictionary<int, bool>();
-
+            List<int?> l = new List<int?>();
             foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
             {
-                int k = LookupKeyUtils.GetOutputCollectionKey(r.SecondaryStratumId);
-
-                if (!d.ContainsKey(k))
+                int? k = r.SecondaryStratumId;
+                if (!l.Contains(k))
                 {
-                    d.Add(k, true);
+                    l.Add(k);
                 }
             }
+            return l;
+        } 
 
-            return d;
-        }
-
-        private Dictionary<int, bool> CreateTertiaryStratumDictionary()
+        private List<int?> CreateTertiaryStratumList()
         {
-            Dictionary<int, bool> d = new Dictionary<int, bool>();
-
+            List<int?> l = new List<int?>();
             foreach (OutputStratumState r in this.m_SummaryStratumStateResults)
             {
-                int k = LookupKeyUtils.GetOutputCollectionKey(r.TertiaryStratumId);
-
-                if (!d.ContainsKey(k))
+                int? k = r.TertiaryStratumId;
+                if (!l.Contains(k))
                 {
-                    d.Add(k, true);
+                    l.Add(k);
                 }
             }
-
-            return d;
+            return l;
         }
 
         internal bool IsChildRun()

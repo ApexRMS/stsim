@@ -312,7 +312,7 @@ namespace SyncroSim.STSim
             else
             {
                 return value.Value;
-            }          
+            }
         }
 
         internal int GetSecondaryStratumIdKey(int? value)
@@ -398,12 +398,12 @@ namespace SyncroSim.STSim
             int AgeKey = this.m_AgeReportingHelperSC.GetKey(simulationCell.Age);
 
             SevenIntegerLookupKey key = new SevenIntegerLookupKey(
-                simulationCell.StratumId, 
-                GetSecondaryStratumIdKey(simulationCell), 
-                GetTertiaryStratumIdKey(simulationCell), 
-                iteration, 
-                timestep, 
-                simulationCell.StateClassId, 
+                simulationCell.StratumId,
+                GetSecondaryStratumIdKey(simulationCell),
+                GetTertiaryStratumIdKey(simulationCell),
+                iteration,
+                timestep,
+                simulationCell.StateClassId,
                 AgeKey);
 
             if (this.m_SummaryStratumStateResults.Contains(key))
@@ -414,15 +414,15 @@ namespace SyncroSim.STSim
             else
             {
                 OutputStratumState oss = new OutputStratumState(
-                    simulationCell.StratumId, 
-                    GetSecondaryStratumIdValue(simulationCell), 
-                    GetTertiaryStratumIdValue(simulationCell), 
-                    iteration, 
-                    timestep, 
-                    simulationCell.StateClassId, 
-                    this.m_AgeReportingHelperSC.GetMinimum(simulationCell.Age), 
-                    this.m_AgeReportingHelperSC.GetMaximum(simulationCell.Age), 
-                    AgeKey, 
+                    simulationCell.StratumId,
+                    GetSecondaryStratumIdValue(simulationCell),
+                    GetTertiaryStratumIdValue(simulationCell),
+                    iteration,
+                    timestep,
+                    simulationCell.StateClassId,
+                    this.m_AgeReportingHelperSC.GetMinimum(simulationCell.Age),
+                    this.m_AgeReportingHelperSC.GetMaximum(simulationCell.Age),
+                    AgeKey,
                     this.m_AmountPerCell);
 
                 this.m_SummaryStratumStateResults.Add(oss);
@@ -430,10 +430,10 @@ namespace SyncroSim.STSim
         }
 
         private void RecordSummaryTransitionOutput(
-            Cell simulationCell, 
-            Transition currentTransition, 
-            int iteration, 
-            int timestep, 
+            Cell simulationCell,
+            Transition currentTransition,
+            int iteration,
+            int timestep,
             Nullable<int> eventId)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
@@ -578,9 +578,9 @@ namespace SyncroSim.STSim
         /// <remarks>This function aggregates by stratum, state class source, 
         /// state class destination, and transition</remarks>
         private void RecordSummaryTransitionByStateClassOutput(
-            Cell simulationCell, 
-            Transition currentTransition, 
-            int iteration, 
+            Cell simulationCell,
+            Transition currentTransition,
+            int iteration,
             int timestep)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
@@ -608,13 +608,13 @@ namespace SyncroSim.STSim
             }
 
             EightIntegerLookupKey key = new EightIntegerLookupKey(
-                simulationCell.StratumId, 
-                GetSecondaryStratumIdKey(simulationCell), 
-                GetTertiaryStratumIdKey(simulationCell), 
-                iteration, 
-                timestep, 
-                currentTransition.TransitionTypeId, 
-                currentTransition.StateClassIdSource, 
+                simulationCell.StratumId,
+                GetSecondaryStratumIdKey(simulationCell),
+                GetTertiaryStratumIdKey(simulationCell),
+                iteration,
+                timestep,
+                currentTransition.TransitionTypeId,
+                currentTransition.StateClassIdSource,
                 DestStateClass);
 
             if (this.m_SummaryStratumTransitionStateResults.Contains(key))
@@ -625,14 +625,14 @@ namespace SyncroSim.STSim
             else
             {
                 OutputStratumTransitionState osts = new OutputStratumTransitionState(
-                    simulationCell.StratumId, 
-                    GetSecondaryStratumIdValue(simulationCell), 
-                    GetTertiaryStratumIdValue(simulationCell), 
-                    iteration, 
-                    timestep, 
-                    currentTransition.TransitionTypeId, 
-                    currentTransition.StateClassIdSource, 
-                    DestStateClass, 
+                    simulationCell.StratumId,
+                    GetSecondaryStratumIdValue(simulationCell),
+                    GetTertiaryStratumIdValue(simulationCell),
+                    iteration,
+                    timestep,
+                    currentTransition.TransitionTypeId,
+                    currentTransition.StateClassIdSource,
+                    DestStateClass,
                     this.m_AmountPerCell);
 
                 this.m_SummaryStratumTransitionStateResults.Add(osts);
@@ -674,14 +674,14 @@ namespace SyncroSim.STSim
                 }
 
                 double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
-                    AttributeTypeId, 
-                    simulationCell.StratumId, 
-                    GetSecondaryStratumIdValue(simulationCell), 
-                    GetTertiaryStratumIdValue(simulationCell), 
-                    simulationCell.StateClassId, 
-                    iteration, 
-                    timestep, 
-                    simulationCell.Age, 
+                    AttributeTypeId,
+                    simulationCell.StratumId,
+                    GetSecondaryStratumIdValue(simulationCell),
+                    GetTertiaryStratumIdValue(simulationCell),
+                    simulationCell.StateClassId,
+                    iteration,
+                    timestep,
+                    simulationCell.Age,
                     simulationCell.TstValues);
 
                 if (AttrValue.HasValue)
@@ -689,12 +689,12 @@ namespace SyncroSim.STSim
                     int AgeKey = this.m_AgeReportingHelperSA.GetKey(simulationCell.Age);
 
                     SevenIntegerLookupKey key = new SevenIntegerLookupKey(
-                        simulationCell.StratumId, 
-                        GetSecondaryStratumIdKey(simulationCell), 
-                        GetTertiaryStratumIdKey(simulationCell), 
-                        iteration, 
-                        timestep, 
-                        AttributeTypeId, 
+                        simulationCell.StratumId,
+                        GetSecondaryStratumIdKey(simulationCell),
+                        GetTertiaryStratumIdKey(simulationCell),
+                        iteration,
+                        timestep,
+                        AttributeTypeId,
                         AgeKey);
 
                     if (this.m_SummaryStateAttributeResults.Contains(key))
@@ -705,15 +705,15 @@ namespace SyncroSim.STSim
                     else
                     {
                         OutputStateAttribute ossa = new OutputStateAttribute(
-                            simulationCell.StratumId, 
-                            GetSecondaryStratumIdValue(simulationCell), 
-                            GetTertiaryStratumIdValue(simulationCell), 
-                            iteration, 
-                            timestep, 
-                            AttributeTypeId, 
-                            this.m_AgeReportingHelperSA.GetMinimum(simulationCell.Age), 
-                            this.m_AgeReportingHelperSA.GetMaximum(simulationCell.Age), 
-                            AgeKey, 
+                            simulationCell.StratumId,
+                            GetSecondaryStratumIdValue(simulationCell),
+                            GetTertiaryStratumIdValue(simulationCell),
+                            iteration,
+                            timestep,
+                            AttributeTypeId,
+                            this.m_AgeReportingHelperSA.GetMinimum(simulationCell.Age),
+                            this.m_AgeReportingHelperSA.GetMaximum(simulationCell.Age),
+                            AgeKey,
                             (this.m_AmountPerCell * AttrValue.Value));
 
                         this.m_SummaryStateAttributeResults.Add(ossa);
@@ -942,7 +942,7 @@ namespace SyncroSim.STSim
 
             foreach (Cell cell in this.Cells)
             {
-                Values[cell.CollectionIndex] += cell.Age / (double)this.m_TotalIterations; 
+                Values[cell.CollectionIndex] += cell.Age / (double)this.m_TotalIterations;
             }
         }
 
@@ -1390,8 +1390,8 @@ namespace SyncroSim.STSim
                 foreach (Cell c in this.Cells)
                 {
                     double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
-                        AttributeTypeId, 
-                        c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, 
+                        AttributeTypeId,
+                        c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId,
                         c.StateClassId, iteration, timestep, c.Age, c.TstValues);
 
                     if (AttrValue != null)
@@ -1647,9 +1647,16 @@ namespace SyncroSim.STSim
 
                                 if (!this.m_SummaryStratumStateResultsZeroValues.Contains(key))
                                 {
+                                    int? ssProxy = null;
+                                    int? tsProxy = null;
+
+                                    ssProxy = ss != 0 ? ss : ssProxy;
+                                    tsProxy = ts != 0 ? ts : tsProxy;
+
                                     OutputStratumState oss = new OutputStratumState(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
-                                        ss, ts, iteration, timestep, dt.StateClassIdSource, 0, 0, 0, 0.0);
+                                        ssProxy, tsProxy,
+                                        iteration, timestep, dt.StateClassIdSource, 0, 0, 0, 0.0);
 
                                     SevenIntegerLookupKey k2 = new SevenIntegerLookupKey(
                                         LookupKeyUtils.GetOutputCollectionKey(dt.StratumIdSource),
@@ -1997,7 +2004,7 @@ namespace SyncroSim.STSim
                     dr[Strings.DATASHEET_OUTPUT_RESOLUTION_COLUMN] = 1;
                 }
 
-                table.Rows.Add(dr);                    
+                table.Rows.Add(dr);
             }
         }
 
@@ -2042,7 +2049,7 @@ namespace SyncroSim.STSim
 
                 table.Rows.Add(dr);
             }
-            
+
             this.m_SummaryTSTResults.Clear();
         }
 
@@ -2066,7 +2073,7 @@ namespace SyncroSim.STSim
                 {
                     if (Lookup.ContainsKey(c.StateClassId))
                     {
-                        rastOutput.IntCells[c.CellId] = Lookup[c.StateClassId];                        
+                        rastOutput.IntCells[c.CellId] = Lookup[c.StateClassId];
                     }
                     else
                     {
@@ -2095,8 +2102,8 @@ namespace SyncroSim.STSim
         /// <param name="timestep">The current timestep</param>
         /// <remarks></remarks>
         private void WriteTransitionGroupRasters(
-            int iteration, 
-            int timestep, 
+            int iteration,
+            int timestep,
             Dictionary<int, int[]> dictTransitionedPixels)
         {
             if (!this.IsRasterTransitionTimestep(timestep))
@@ -2135,14 +2142,14 @@ namespace SyncroSim.STSim
                 }
 
                 WriteMultiResolutionRasterData(
-                    rastOP, 
-                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION), 
-                    iteration, 
-                    timestep, 
-                    transitionGroupId, 
-                    Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX, 
+                    rastOP,
+                    this.ResultScenario.GetDataSheet(Constants.DATASHEET_OUTPUT_SPATIAL_TRANSITION),
+                    iteration,
+                    timestep,
+                    transitionGroupId,
+                    Constants.SPATIAL_MAP_TRANSITION_GROUP_FILEPREFIX,
                     Constants.DATASHEET_OUTPUT_SPATIAL_FILENAME_COLUMN,
-                    this.IsMultiResolution);            
+                    this.IsMultiResolution);
             }
         }
 
@@ -2310,8 +2317,8 @@ namespace SyncroSim.STSim
                     foreach (Cell c in this.Cells)
                     {
                         double? AttrValue = this.m_StateAttributeValueMap.GetAttributeValue(
-                            AttributeTypeId, 
-                            c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId, 
+                            AttributeTypeId,
+                            c.StratumId, c.SecondaryStratumId, c.TertiaryStratumId, c.StateClassId,
                             iteration, timestep, c.Age, c.TstValues);
 
                         //If no value, then use NO_DATA, otherwise AttrValue
@@ -2802,10 +2809,10 @@ namespace SyncroSim.STSim
         /// <param name="timestep"></param>
         /// <remarks></remarks>
         private void GenerateTransitionAttributes(
-            Cell simulationCell, 
-            Transition tr, 
-            int iteration, 
-            int timestep, 
+            Cell simulationCell,
+            Transition tr,
+            int iteration,
+            int timestep,
             Dictionary<int, double[]> rasterTransitionAttrValues)
         {
             if (simulationCell.StratumId == 0 || simulationCell.StateClassId == 0)
@@ -2828,14 +2835,14 @@ namespace SyncroSim.STSim
                 {
                     double? AttrValue = this.m_TransitionAttributeValueMap.GetAttributeValue(
                         AttributeTypeId,
-                        tg.TransitionGroupId, 
-                        simulationCell.StratumId, 
-                        GetSecondaryStratumIdValue(simulationCell), 
-                        GetTertiaryStratumIdValue(simulationCell), 
-                        simulationCell.StateClassId, 
-                        iteration, 
-                        timestep, 
-                        simulationCell.Age, 
+                        tg.TransitionGroupId,
+                        simulationCell.StratumId,
+                        GetSecondaryStratumIdValue(simulationCell),
+                        GetTertiaryStratumIdValue(simulationCell),
+                        simulationCell.StateClassId,
+                        iteration,
+                        timestep,
+                        simulationCell.Age,
                         simulationCell.TstValues);
 
                     if (AttrValue.HasValue)
@@ -2862,11 +2869,11 @@ namespace SyncroSim.STSim
                         }
 
                         TransitionAttributeTarget Target = this.m_TransitionAttributeTargetMap.GetAttributeTarget(
-                            AttributeTypeId, 
-                            simulationCell.StratumId, 
+                            AttributeTypeId,
+                            simulationCell.StratumId,
                             simulationCell.SecondaryStratumId,
-                            simulationCell.TertiaryStratumId, 
-                            iteration, 
+                            simulationCell.TertiaryStratumId,
+                            iteration,
                             timestep);
 
                         if (Target != null && !Target.IsDisabled)
@@ -2879,18 +2886,18 @@ namespace SyncroSim.STSim
                             }
                         }
 
-                        if (this.IsSummaryTransitionAttributeTimestep(timestep) && 
+                        if (this.IsSummaryTransitionAttributeTimestep(timestep) &&
                             tat.OutputFilter.HasFlag(OutputFilterFlagAttribute.Summary))
                         {
                             int AgeKey = this.m_AgeReportingHelperTA.GetKey(simulationCell.Age);
 
                             SevenIntegerLookupKey key = new SevenIntegerLookupKey(
-                                simulationCell.StratumId, 
-                                GetSecondaryStratumIdKey(simulationCell), 
-                                GetTertiaryStratumIdKey(simulationCell), 
-                                iteration, 
-                                timestep, 
-                                AttributeTypeId, 
+                                simulationCell.StratumId,
+                                GetSecondaryStratumIdKey(simulationCell),
+                                GetTertiaryStratumIdKey(simulationCell),
+                                iteration,
+                                timestep,
+                                AttributeTypeId,
                                 AgeKey);
 
                             if (this.m_SummaryTransitionAttributeResults.Contains(key))
@@ -2901,15 +2908,15 @@ namespace SyncroSim.STSim
                             else
                             {
                                 OutputTransitionAttribute ota = new OutputTransitionAttribute(
-                                    simulationCell.StratumId, 
-                                    GetSecondaryStratumIdValue(simulationCell.SecondaryStratumId), 
-                                    GetTertiaryStratumIdValue(simulationCell.TertiaryStratumId), 
+                                    simulationCell.StratumId,
+                                    GetSecondaryStratumIdValue(simulationCell.SecondaryStratumId),
+                                    GetTertiaryStratumIdValue(simulationCell.TertiaryStratumId),
                                     iteration,
                                     timestep,
-                                    AttributeTypeId, 
-                                    this.m_AgeReportingHelperTA.GetMinimum(simulationCell.Age), 
-                                    this.m_AgeReportingHelperTA.GetMaximum(simulationCell.Age), 
-                                    AgeKey, 
+                                    AttributeTypeId,
+                                    this.m_AgeReportingHelperTA.GetMinimum(simulationCell.Age),
+                                    this.m_AgeReportingHelperTA.GetMaximum(simulationCell.Age),
+                                    AgeKey,
                                     (this.m_AmountPerCell * AttrValue.Value));
 
                                 this.m_SummaryTransitionAttributeResults.Add(ota);
@@ -2957,7 +2964,7 @@ namespace SyncroSim.STSim
                     StateAttributeValueMap stateAttributeValueMap = null;
 
                     if (!setting.StateClassId.HasValue)
-                    {   
+                    {
                         // Extract State Attribute values from StateAttributeValueMaps (just do it once, to enhance performance)
                         // check whether StateAttributeTypeId is in m_StateAttributeTypeIdsNoAges or m_StateAttributeTypeIdsAges. 
 
@@ -2983,11 +2990,11 @@ namespace SyncroSim.STSim
                             double? CellValue = null;
 
                             if (!setting.StateClassId.HasValue)
-                            {                                
+                            {
                                 CellValue = stateAttributeValueMap.GetAttributeValue(
                                     setting.StateAttributeTypeId.Value,
                                     cell.StratumId, cell.SecondaryStratumId, cell.TertiaryStratumId,
-                                    cell.StateClassId, iteration, timestep, cell.Age, cell.TstValues);                               
+                                    cell.StateClassId, iteration, timestep, cell.Age, cell.TstValues);
                             }
                             else
                             {
@@ -3133,14 +3140,14 @@ namespace SyncroSim.STSim
         }
 
         internal static void WriteMultiResolutionRasterData(
-            SyncroSimRaster rastOutput, 
-            DataSheet datasheet, 
-            int iteration, 
-            int timestep, 
-            int? groupId, 
-            string outputDatasheetPrefix, 
-            string outputDatasheetFileNameColumn, 
-            bool isMultiResolution, 
+            SyncroSimRaster rastOutput,
+            DataSheet datasheet,
+            int iteration,
+            int timestep,
+            int? groupId,
+            string outputDatasheetPrefix,
+            string outputDatasheetFileNameColumn,
+            bool isMultiResolution,
             bool writeToJobFolder = false)
         {
             DataRow dr = Spatial.WriteRasterData(

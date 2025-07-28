@@ -635,7 +635,7 @@ namespace SyncroSim.STSim
                                 v = 0.0;
                             }
 
-                                v = GetLimitBasedInitialStock(Convert.ToSingle(v), lim);
+                            v = GetLimitBasedInitialStock(Convert.ToSingle(v), lim);
                             StockAmounts[s.StockTypeId] = Convert.ToSingle(v * this.m_STSimTransformer.AmountPerCell);
                         }
                         else

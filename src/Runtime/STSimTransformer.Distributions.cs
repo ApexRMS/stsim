@@ -83,6 +83,13 @@ namespace SyncroSim.STSim
                     if (!t.IsDisabled)
                     {
                         t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+
+                        if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
+                        {
+                            string colName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+                            throw new Exception(String.Format(
+                                "The following distribution produces a negative transition target: {0}", colName));
+                        }
                     }
                 }
             }
@@ -269,6 +276,13 @@ namespace SyncroSim.STSim
                     if (!t.IsDisabled)
                     {
                         t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+
+                        if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
+                        {
+                            string colName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+                            throw new Exception(String.Format(
+                                "The following distribution produces a negative transition target: {0}", colName));
+                        }
                     }
                 }
             }
@@ -382,6 +396,19 @@ namespace SyncroSim.STSim
             catch (Exception ex)
             {
                 throw new ArgumentException("Transition Adjacency Multipliers" + " -> " + ex.Message);
+            }
+        }
+
+        private string GetProjectItemName(string dataSheetName, int? id)
+        {
+            if (!id.HasValue)
+            {
+                return "NULL";
+            }
+            else
+            {
+                DataSheet ds = this.Project.GetDataSheet(dataSheetName);
+                return ds.ValidationTable.GetDisplayName(id.Value);
             }
         }
     }

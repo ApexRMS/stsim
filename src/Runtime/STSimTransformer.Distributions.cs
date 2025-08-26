@@ -86,9 +86,9 @@ namespace SyncroSim.STSim
 
                         if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
                         {
-                            string colName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+                            string distributionType = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
                             throw new Exception(String.Format(
-                                "The following distribution produces a negative transition target: {0}", colName));
+                                "The following distribution produces a negative transition target: {0}", distributionType));
                         }
                     }
                 }
@@ -279,9 +279,9 @@ namespace SyncroSim.STSim
 
                         if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
                         {
-                            string colName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+                            string distributionType = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
                             throw new Exception(String.Format(
-                                "The following distribution produces a negative transition target: {0}", colName));
+                                "The following distribution produces a negative transition target: {0}", distributionType));
                         }
                     }
                 }

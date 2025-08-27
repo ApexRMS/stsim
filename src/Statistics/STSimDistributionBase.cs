@@ -20,7 +20,7 @@ namespace SyncroSim.STSim
         private double? m_DistributionSD;
         private double? m_DistributionMin;
         private double? m_DistributionMax;
-        internal double? m_CurrentValue;
+        private double? m_CurrentValue;
         private bool m_IsDisabled;
 
         protected STSimDistributionBase
@@ -151,6 +151,11 @@ namespace SyncroSim.STSim
             {
                 this.CheckDisabled();
                 return this.m_CurrentValue;
+            }
+
+            set
+            {
+                m_CurrentValue = value;
             }
         }
 

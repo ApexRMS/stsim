@@ -103,7 +103,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Initializes distribution values for the flow multipliers
         /// </summary>
-        private void InitializeFlowMultiplierDistributionValues()
+        internal void InitializeFlowMultiplierDistributionValues()
         {
             try
             {
@@ -127,7 +127,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Initializes distribution values for the stock flow multipliers
         /// </summary>
-        private void InitializeFlowMultiplierByStockDistributionValues()
+        internal void InitializeFlowMultiplierByStockDistributionValues()
         {
             try
             {

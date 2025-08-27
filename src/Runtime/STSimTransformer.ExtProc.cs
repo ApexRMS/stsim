@@ -489,6 +489,7 @@ namespace SyncroSim.STSim
             {
                 stockFlowTransformer.m_StockTransitionMultipliers.Clear();
                 stockFlowTransformer.FillStockTransitionMultipliers();
+                stockFlowTransformer.InitializeStockTransitionMultiplierDistributionValues();
                 stockFlowTransformer.m_StockTransitionMultiplierMap = null;
                 stockFlowTransformer.CreateStockTransitionMultiplierMap();
             }

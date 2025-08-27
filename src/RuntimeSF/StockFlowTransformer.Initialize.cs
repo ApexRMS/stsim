@@ -148,7 +148,7 @@ namespace SyncroSim.STSim
         /// <summary>
         /// Initializes distribution values for the stock transition multipliers
         /// </summary>
-        private void InitializeStockTransitionMultiplierDistributionValues()
+        internal void InitializeStockTransitionMultiplierDistributionValues()
         {
             try
             {

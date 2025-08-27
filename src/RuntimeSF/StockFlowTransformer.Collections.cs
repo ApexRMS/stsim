@@ -633,7 +633,6 @@ namespace SyncroSim.STSim
         internal void FillFlowPathways()
         {
             Debug.Assert(this.m_FlowPathways.Count == 0);
-            Debug.Assert(this.m_LateralFlowCoupletMap == null);
 
             this.m_LateralFlowCoupletMap = new LateralFlowCoupletMap();
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_PATHWAY_NAME);

@@ -91,9 +91,12 @@ namespace SyncroSim.STSim
                         {
                             t.CurrentValue = 0.0;
                             string distName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
-                            truncatedDists.Add(distName);
 
-                       }
+                            if (!truncatedDists.Contains(distName))
+                            {
+                                truncatedDists.Add(distName);
+                            }
+                        }
                     }
                 }
 
@@ -295,7 +298,11 @@ namespace SyncroSim.STSim
                         {
                             t.CurrentValue = 0.0;
                             string distName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
-                            truncatedDists.Add(distName);
+
+                            if (!truncatedDists.Contains(distName))
+                            {
+                                truncatedDists.Add(distName);
+                            }
                         }
                     }
                 }

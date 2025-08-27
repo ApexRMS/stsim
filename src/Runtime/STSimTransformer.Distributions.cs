@@ -86,10 +86,12 @@ namespace SyncroSim.STSim
 
                         if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
                         {
-                            string distributionType = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
-                            throw new Exception(String.Format(
-                                "The following distribution produces a negative transition target: {0}", distributionType));
-                        }
+                            t.m_CurrentValue = 0.0;
+                            string distName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+                            this.RecordStatus(StatusType.Warning, String.Format(
+                                "The following distribution produces a negative transition target that has been truncated to 0: {0}", 
+                                distName));
+                       }
                     }
                 }
             }
@@ -279,9 +281,11 @@ namespace SyncroSim.STSim
 
                         if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
                         {
-                            string distributionType = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
-                            throw new Exception(String.Format(
-                                "The following distribution produces a negative transition target: {0}", distributionType));
+                            t.m_CurrentValue = 0.0;
+                            string distName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+                            this.RecordStatus(StatusType.Warning, String.Format(
+                                "The following distribution produces a negative transition target that has been truncated to 0: {0}",
+                                distName));
                         }
                     }
                 }

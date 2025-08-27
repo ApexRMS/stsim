@@ -20,7 +20,7 @@ namespace SyncroSim.STSim
         private double? m_DistributionSD;
         private double? m_DistributionMin;
         private double? m_DistributionMax;
-        private double? m_CurrentValue;
+        internal double? m_CurrentValue;
         private bool m_IsDisabled;
 
         protected STSimDistributionBase

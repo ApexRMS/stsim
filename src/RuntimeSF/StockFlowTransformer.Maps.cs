@@ -8,29 +8,29 @@ namespace SyncroSim.STSim
 {
     internal partial class StockFlowTransformer
     {
-        private StockLimitMap m_StockLimitMap;
+        internal StockLimitMap m_StockLimitMap;
         private InitialStockSpatialMap m_InitialStockSpatialMap;
-        private StockTransitionMultiplierMap m_StockTransitionMultiplierMap;
-        private FlowPathwayMap m_FlowPathwayMap;
-        private FlowOrderMap m_FlowOrderMap;
+        internal StockTransitionMultiplierMap m_StockTransitionMultiplierMap;
+        internal FlowPathwayMap m_FlowPathwayMap;
+        internal FlowOrderMap m_FlowOrderMap;
         private LateralFlowCoupletMap m_LateralFlowCoupletMap;
         private readonly Dictionary<int, Dictionary<int, float[]>> m_AvgStockMap = new Dictionary<int, Dictionary<int, float[]>>();
         private readonly Dictionary<int, Dictionary<int, float[]>> m_AvgFlowMap = new Dictionary<int, Dictionary<int, float[]>>();
         private readonly Dictionary<int, Dictionary<int, float[]>> m_AvgLateralFlowMap = new Dictionary<int, Dictionary<int, float[]>>();
 
-        private void CreateStockLimitMap()
+        internal void CreateStockLimitMap()
         {
             Debug.Assert(this.m_StockLimitMap == null);
             this.m_StockLimitMap = new StockLimitMap(this.ResultScenario, this.m_StockLimits);
         }
 
-        private void CreateStockTransitionMultiplierMap()
+        internal void CreateStockTransitionMultiplierMap()
         {
             Debug.Assert(this.m_StockTransitionMultiplierMap == null);
             this.m_StockTransitionMultiplierMap = new StockTransitionMultiplierMap(this.ResultScenario, this.m_StockTransitionMultipliers, this.m_STSimTransformer.DistributionProvider);
         }
 
-        private void CreateFlowPathwayMap()
+        internal void CreateFlowPathwayMap()
         {
             Debug.Assert(this.m_FlowPathwayMap == null);
             this.m_FlowPathwayMap = new FlowPathwayMap(this.m_FlowPathways);
@@ -42,7 +42,7 @@ namespace SyncroSim.STSim
             this.m_InitialStockSpatialMap = new InitialStockSpatialMap(this.m_InitialStocksSpatial);
         }
 
-        private void CreateFlowOrderMap()
+        internal void CreateFlowOrderMap()
         {
             Debug.Assert(this.m_FlowOrderMap == null);
             this.m_FlowOrderMap = new FlowOrderMap(this.m_FlowOrders);

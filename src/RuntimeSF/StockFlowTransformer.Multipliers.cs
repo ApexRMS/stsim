@@ -12,7 +12,7 @@ namespace SyncroSim.STSim
 {
     partial class StockFlowTransformer
     {
-        private FlowMultiplierType GetFlowMultiplierType(int? id)
+        internal FlowMultiplierType GetFlowMultiplierType(int? id)
         {
             foreach (FlowMultiplierType t in this.m_FlowMultiplierTypes)
             {
@@ -168,7 +168,7 @@ namespace SyncroSim.STSim
             return Multiplier;
         }
 
-        private void ValidateFlowSpatialMultipliers()
+        internal void ValidateFlowSpatialMultipliers()
         {
             Debug.Assert(this.m_IsSpatial);
 
@@ -186,7 +186,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void ValidateFlowLateralMultipliers()
+        internal void ValidateFlowLateralMultipliers()
         {
             Debug.Assert(this.m_IsSpatial);
 

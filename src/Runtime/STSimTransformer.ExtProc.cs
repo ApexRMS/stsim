@@ -249,6 +249,8 @@ namespace SyncroSim.STSim
 
         private void ExtProcOnExternalDataReady(DataSheet dataSheet)
         {
+            StockFlowTransformer stockFlowTransformer = this.m_StockFlowTransformer;
+
             if (dataSheet.Name == Strings.DATASHEET_PT_NAME)
             {
                 this.m_Transitions.Clear();
@@ -364,6 +366,132 @@ namespace SyncroSim.STSim
                 this.InitializeTransitionAttributeTargetDistributionValues();
                 this.InitializeTransitionAttributeTargetPrioritizations();
                 this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_FLOW_PATHWAY_NAME)
+            {
+                stockFlowTransformer.m_FlowPathways.Clear();
+                stockFlowTransformer.FillFlowPathways();
+                stockFlowTransformer.m_FlowPathwayMap = null;
+                stockFlowTransformer.CreateFlowPathwayMap();
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_FLOW_MULTIPLIER_NAME)
+            {
+                stockFlowTransformer.m_FlowMultipliers.Clear();
+                stockFlowTransformer.FillFlowMultipliers();
+                stockFlowTransformer.InitializeFlowMultiplierDistributionValues();
+
+                foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                {
+                    tmt.ClearFlowMultiplierMap();
+                }
+
+                foreach (FlowMultiplier sm in stockFlowTransformer.m_FlowMultipliers)
+                {
+                    FlowMultiplierType mt = stockFlowTransformer.GetFlowMultiplierType(sm.FlowMultiplierTypeId);
+                    mt.AddFlowMultiplier(sm);
+                }
+
+                foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                {
+                    tmt.CreateFlowMultiplierMap();
+                }
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_FLOW_MULTIPLIER_BY_STOCK_NAME)
+            {
+                stockFlowTransformer.m_FlowMultipliersByStock.Clear();
+                stockFlowTransformer.m_FlowMultipliersByStock.Clear();
+                stockFlowTransformer.FillFlowMultipliersByStock();
+                stockFlowTransformer.InitializeFlowMultiplierByStockDistributionValues();
+
+                foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                {
+                    tmt.ClearFlowMultiplierByStockMap();
+                }
+
+                foreach (FlowMultiplierByStock sm in stockFlowTransformer.m_FlowMultipliersByStock)
+                {
+                    FlowMultiplierType mt = stockFlowTransformer.GetFlowMultiplierType(sm.FlowMultiplierTypeId);
+                    mt.AddFlowMultiplierByStock(sm);
+                }
+
+                foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                {
+                    tmt.CreateFlowMultiplierByStockMap();
+                }
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_FLOW_SPATIAL_MULTIPLIER_NAME)
+            {
+                if (this.m_IsSpatial)
+                {
+                    stockFlowTransformer.m_FlowSpatialMultipliers.Clear();
+                    stockFlowTransformer.m_FlowSpatialMultiplierRasters.Clear();
+                    stockFlowTransformer.FillFlowSpatialMultipliers();
+                    stockFlowTransformer.ValidateFlowSpatialMultipliers();
+
+                    foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                    {
+                        tmt.ClearFlowSpatialMultiplierMap();
+                    }
+
+                    foreach (FlowSpatialMultiplier sm in stockFlowTransformer.m_FlowSpatialMultipliers)
+                    {
+                        FlowMultiplierType mt = stockFlowTransformer.GetFlowMultiplierType(sm.FlowMultiplierTypeId);
+                        mt.AddFlowSpatialMultiplier(sm);
+                    }
+
+                    foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                    {
+                        tmt.CreateSpatialFlowMultiplierMap();
+                    }
+                }
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_FLOW_LATERAL_MULTIPLIER_NAME)
+            {
+                if (this.m_IsSpatial)
+                {
+                    stockFlowTransformer.m_FlowLateralMultipliers.Clear();
+                    stockFlowTransformer.m_FlowLateralMultiplierRasters.Clear();
+                    stockFlowTransformer.FillFlowLateralMultipliers();
+                    stockFlowTransformer.ValidateFlowLateralMultipliers();
+
+                    foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                    {
+                        tmt.ClearFlowLateralMultiplierMap();
+                    }
+
+                    foreach (FlowLateralMultiplier lm in stockFlowTransformer.m_FlowLateralMultipliers)
+                    {
+                        FlowMultiplierType mt = stockFlowTransformer.GetFlowMultiplierType(lm.FlowMultiplierTypeId);
+                        mt.AddFlowLateralMultiplier(lm);
+                    }
+
+                    foreach (FlowMultiplierType tmt in stockFlowTransformer.m_FlowMultiplierTypes)
+                    {
+                        tmt.CreateLateralFlowMultiplierMap();
+                    }
+                }
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_FLOW_ORDER)
+            {
+                stockFlowTransformer.m_FlowOrders.Clear();
+                stockFlowTransformer.FillFlowOrders();
+                stockFlowTransformer.m_FlowOrderMap = null;
+                stockFlowTransformer.CreateFlowOrderMap();
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_STOCK_LIMIT_NAME)
+            {
+                stockFlowTransformer.m_StockLimits.Clear();
+                stockFlowTransformer.FillStockLimits();
+                stockFlowTransformer.m_StockLimitMap = null;
+                stockFlowTransformer.CreateStockLimitMap();
+            }
+            else if (dataSheet.Name == Strings.DATASHEET_STOCK_TRANSITION_MULTIPLIER_NAME)
+            {
+                stockFlowTransformer.m_StockTransitionMultipliers.Clear();
+                stockFlowTransformer.FillStockTransitionMultipliers();
+                stockFlowTransformer.InitializeStockTransitionMultiplierDistributionValues();
+                stockFlowTransformer.m_StockTransitionMultiplierMap = null;
+                stockFlowTransformer.CreateStockTransitionMultiplierMap();
             }
             else
             {

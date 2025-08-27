@@ -17,22 +17,22 @@ namespace SyncroSim.STSim
         private readonly StockGroupCollection m_StockGroups = new StockGroupCollection();
         private readonly FlowTypeCollection m_FlowTypes = new FlowTypeCollection();
         private readonly FlowGroupCollection m_FlowGroups = new FlowGroupCollection();
-        private readonly FlowMultiplierTypeCollection m_FlowMultiplierTypes = new FlowMultiplierTypeCollection();
+        internal readonly FlowMultiplierTypeCollection m_FlowMultiplierTypes = new FlowMultiplierTypeCollection();
         private readonly InitialStockNonSpatialCollection m_InitialStocksNonSpatial = new InitialStockNonSpatialCollection();
         private readonly InitialStockSpatialCollection m_InitialStocksSpatial = new InitialStockSpatialCollection();
         private readonly Dictionary<string, SyncroSimRaster> m_InitialStockSpatialRasters = new Dictionary<string, SyncroSimRaster>();
-        private readonly StockLimitCollection m_StockLimits = new StockLimitCollection();
-        private readonly FlowMultiplierByStockCollection m_FlowMultipliersByStock = new FlowMultiplierByStockCollection();
-        private readonly StockTransitionMultiplierCollection m_StockTransitionMultipliers = new StockTransitionMultiplierCollection();
-        private readonly FlowPathwayCollection m_FlowPathways = new FlowPathwayCollection();
-        private readonly FlowMultiplierCollection m_FlowMultipliers = new FlowMultiplierCollection();
-        private readonly FlowSpatialMultiplierCollection m_FlowSpatialMultipliers = new FlowSpatialMultiplierCollection();
-        private readonly Dictionary<string, SyncroSimRaster> m_FlowSpatialMultiplierRasters = new Dictionary<string, SyncroSimRaster>();
-        private readonly FlowLateralMultiplierCollection m_FlowLateralMultipliers = new FlowLateralMultiplierCollection();
-        private readonly Dictionary<string, SyncroSimRaster> m_FlowLateralMultiplierRasters = new Dictionary<string, SyncroSimRaster>();
+        internal readonly StockLimitCollection m_StockLimits = new StockLimitCollection();
+        internal readonly FlowMultiplierByStockCollection m_FlowMultipliersByStock = new FlowMultiplierByStockCollection();
+        internal readonly StockTransitionMultiplierCollection m_StockTransitionMultipliers = new StockTransitionMultiplierCollection();
+        internal readonly FlowPathwayCollection m_FlowPathways = new FlowPathwayCollection();
+        internal readonly FlowMultiplierCollection m_FlowMultipliers = new FlowMultiplierCollection();
+        internal readonly FlowSpatialMultiplierCollection m_FlowSpatialMultipliers = new FlowSpatialMultiplierCollection();
+        internal readonly Dictionary<string, SyncroSimRaster> m_FlowSpatialMultiplierRasters = new Dictionary<string, SyncroSimRaster>();
+        internal readonly FlowLateralMultiplierCollection m_FlowLateralMultipliers = new FlowLateralMultiplierCollection();
+        internal readonly Dictionary<string, SyncroSimRaster> m_FlowLateralMultiplierRasters = new Dictionary<string, SyncroSimRaster>();
         private readonly OutputFilterCollection m_OutputFilterStocks = new OutputFilterCollection();
         private readonly OutputFilterCollection m_OutputFilterFlows = new OutputFilterCollection();
-        private readonly FlowOrderCollection m_FlowOrders = new FlowOrderCollection();
+        internal readonly FlowOrderCollection m_FlowOrders = new FlowOrderCollection();
 
 #if DEBUG
         private bool m_AutoStockLinkagesAdded;
@@ -352,7 +352,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillStockLimits()
+        internal void FillStockLimits()
         {
             Debug.Assert(this.m_StockLimits.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STOCK_LIMIT_NAME);
@@ -416,7 +416,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillFlowMultipliersByStock()
+        internal void FillFlowMultipliersByStock()
         {
             Debug.Assert(this.m_FlowMultipliersByStock.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_MULTIPLIER_BY_STOCK_NAME);
@@ -526,7 +526,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillStockTransitionMultipliers()
+        internal void FillStockTransitionMultipliers()
         {
             Debug.Assert(this.m_StockTransitionMultipliers.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_STOCK_TRANSITION_MULTIPLIER_NAME);
@@ -630,10 +630,9 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillFlowPathways()
+        internal void FillFlowPathways()
         {
             Debug.Assert(this.m_FlowPathways.Count == 0);
-            Debug.Assert(this.m_LateralFlowCoupletMap == null);
 
             this.m_LateralFlowCoupletMap = new LateralFlowCoupletMap();
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_PATHWAY_NAME);
@@ -650,7 +649,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillFlowMultipliers()
+        internal void FillFlowMultipliers()
         {
             Debug.Assert(this.m_FlowMultipliers.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_MULTIPLIER_NAME);
@@ -850,7 +849,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillFlowOrders()
+        internal void FillFlowOrders()
         {
             Debug.Assert(this.m_FlowOrders.Count == 0);
             DataSheet ds = this.ResultScenario.GetDataSheet(Strings.DATASHEET_FLOW_ORDER);
@@ -891,7 +890,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillFlowSpatialMultipliers()
+        internal void FillFlowSpatialMultipliers()
         {
             Debug.Assert(this.m_IsSpatial);
             Debug.Assert(this.m_FlowSpatialMultipliers.Count == 0);
@@ -950,7 +949,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillFlowLateralMultipliers()
+        internal void FillFlowLateralMultipliers()
         {
             Debug.Assert(this.m_IsSpatial);
             Debug.Assert(this.m_FlowLateralMultipliers.Count == 0);

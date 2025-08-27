@@ -152,6 +152,11 @@ namespace SyncroSim.STSim
                 this.CheckDisabled();
                 return this.m_CurrentValue;
             }
+
+            set
+            {
+                m_CurrentValue = value;
+            }
         }
 
         public bool IsDisabled

@@ -2,6 +2,7 @@
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using SyncroSim.Core;
 
@@ -78,12 +79,33 @@ namespace SyncroSim.STSim
         {
             try
             {
+                List<string> truncatedDists = new List<string>();
+
                 foreach (TransitionTarget t in this.m_TransitionTargets)
                 {
                     if (!t.IsDisabled)
                     {
                         t.Initialize(this.MinimumIteration, this.MinimumTimestep, this.m_DistributionProvider);
+
+                        if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
+                        {
+                            t.CurrentValue = 0.0;
+                            string distName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+
+                            if (!truncatedDists.Contains(distName))
+                            {
+                                truncatedDists.Add(distName);
+                            }
+                        }
                     }
+                }
+
+                if (truncatedDists.Count > 0)
+                {
+                    string truncatedDistsString = string.Join(", ", truncatedDists);
+                    this.RecordStatus(StatusType.Warning, String.Format(
+                        "The following distributions produce a negative transition target that has been truncated to 0: {0}",
+                        truncatedDistsString));
                 }
             }
             catch (Exception ex)
@@ -264,12 +286,33 @@ namespace SyncroSim.STSim
         {
             try
             {
+                List<string> truncatedDists = new List<string>();
+
                 foreach (TransitionTarget t in this.m_TransitionTargets)
                 {
                     if (!t.IsDisabled)
                     {
                         t.Sample(iteration, timestep, this.m_DistributionProvider, frequency);
+
+                        if (t.CurrentValue.HasValue && (t.CurrentValue < 0.0))
+                        {
+                            t.CurrentValue = 0.0;
+                            string distName = GetProjectItemName(Constants.DATASHEET_CORE_DISTRIBUTION_TYPE, t.DistributionTypeId);
+
+                            if (!truncatedDists.Contains(distName))
+                            {
+                                truncatedDists.Add(distName);
+                            }
+                        }
                     }
+                }
+
+                if (truncatedDists.Count > 0)
+                {
+                    string truncatedDistsString = string.Join(", ", truncatedDists);
+                    this.RecordStatus(StatusType.Warning, String.Format(
+                        "The following distributions produce a negative transition target that has been truncated to 0: {0}",
+                        truncatedDistsString));
                 }
             }
             catch (Exception ex)
@@ -382,6 +425,19 @@ namespace SyncroSim.STSim
             catch (Exception ex)
             {
                 throw new ArgumentException("Transition Adjacency Multipliers" + " -> " + ex.Message);
+            }
+        }
+
+        private string GetProjectItemName(string dataSheetName, int? id)
+        {
+            if (!id.HasValue)
+            {
+                return "NULL";
+            }
+            else
+            {
+                DataSheet ds = this.Project.GetDataSheet(dataSheetName);
+                return ds.ValidationTable.GetDisplayName(id.Value);
             }
         }
     }

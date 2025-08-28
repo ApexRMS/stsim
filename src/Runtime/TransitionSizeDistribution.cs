@@ -5,7 +5,6 @@ namespace SyncroSim.STSim
 {
     internal class TransitionSizeDistribution
     {
-        private int m_TransitionSizeDistributionId;
         private int? m_StratumId;
         private int? m_Iteration;
         private int? m_Timestep;
@@ -16,24 +15,15 @@ namespace SyncroSim.STSim
         private double m_Proportion;
 
         public TransitionSizeDistribution(
-            int transitionSizeDistributionId, int? stratumId, int? iteration, int? timestep, 
+            int? stratumId, int? iteration, int? timestep, 
             int transitionGroupId, double maximumSize, double relativeAmount)
         {
-            this.m_TransitionSizeDistributionId = transitionSizeDistributionId;
             this.m_StratumId = stratumId;
             this.m_Iteration = iteration;
             this.m_Timestep = timestep;
             this.m_TransitionGroupId = transitionGroupId;
             this.m_MaximumSize = maximumSize;
             this.m_RelativeAmount = relativeAmount;
-        }
-
-        public int TransitionSizeDistributionId
-        {
-            get
-            {
-                return this.m_TransitionSizeDistributionId;
-            }
         }
 
         public int? StratumId

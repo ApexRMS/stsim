@@ -2245,7 +2245,6 @@ namespace SyncroSim.STSim
 
             foreach (DataRow dr in ds.GetData().Rows)
             {
-                int TransitionSizeDistributionId = Convert.ToInt32(dr[ds.PrimaryKeyColumn.Name], CultureInfo.InvariantCulture);
                 int? StratumId = null;
                 int? Iteration = null;
                 int? Timestep = null;
@@ -2269,7 +2268,7 @@ namespace SyncroSim.STSim
                 }
 
                 TransitionSizeDistribution tsd = new TransitionSizeDistribution(
-                    TransitionSizeDistributionId, StratumId, Iteration, Timestep, TransitionGroupId, MaximumSize, RelativeAmount);
+                    StratumId, Iteration, Timestep, TransitionGroupId, MaximumSize, RelativeAmount);
 
                 this.m_TransitionSizeDistributions.Add(tsd);
                 this.m_TransitionGroups[TransitionGroupId].HasSizeDistribution = true;

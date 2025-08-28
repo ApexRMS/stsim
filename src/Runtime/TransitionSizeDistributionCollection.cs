@@ -5,11 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace SyncroSim.STSim
 {
-    internal class TransitionSizeDistributionCollection : KeyedCollection<int, TransitionSizeDistribution>
+    internal class TransitionSizeDistributionCollection : Collection<TransitionSizeDistribution>
     {
-        protected override int GetKeyForItem(TransitionSizeDistribution item)
-        {
-            return item.TransitionSizeDistributionId;
-        }
     }
 }

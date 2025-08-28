@@ -375,7 +375,6 @@ namespace SyncroSim.STSim
             }
             else if (dataSheet.Name == Strings.DISTRIBUTION_VALUE_DATASHEET_NAME)
             {
-
                 this.DistributionProvider.m_DistributionValues.Clear();
                 this.DistributionProvider.FillDistributionValueCollection();
                 this.DistributionProvider.m_DistributionValueMap = null;

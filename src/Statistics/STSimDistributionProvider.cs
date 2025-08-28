@@ -11,8 +11,8 @@ namespace SyncroSim.STSim
 {
     public sealed class STSimDistributionProvider : DistributionProvider
     {
-        internal DistributionValueCollection m_DistributionValues = new DistributionValueCollection();
-        internal STSimDistributionValueMap m_DistributionValueMap;
+        private DistributionValueCollection m_DistributionValues = new DistributionValueCollection();
+        private STSimDistributionValueMap m_DistributionValueMap;
 
         public STSimDistributionProvider(Scenario scenario, RandomGenerator randomGenerator) : base(scenario, randomGenerator)
         {
@@ -146,6 +146,15 @@ namespace SyncroSim.STSim
             }
 
             ExceptionUtils.ThrowInvalidOperationException(message, this.GetProjectItemName(Strings.DISTRIBUTION_TYPE_DATASHEET_NAME, distributionTypeId), iteration, timestep, StratumName, SecondaryStratumName);
+        }
+
+        internal void ReloadDistributionValuesFromScenario()
+        {
+            this.m_DistributionValues.Clear();
+            this.FillDistributionValueCollection();
+            this.m_DistributionValueMap = null;
+            this.CreateDistributionValueMap();
+            this.STSimInitializeDistributionValues();
         }
     }
 }

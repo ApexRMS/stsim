@@ -11,8 +11,8 @@ namespace SyncroSim.STSim
 {
     public sealed class STSimDistributionProvider : DistributionProvider
     {
-        private DistributionValueCollection m_DistributionValues = new DistributionValueCollection();
-        private STSimDistributionValueMap m_DistributionValueMap;
+        internal DistributionValueCollection m_DistributionValues = new DistributionValueCollection();
+        internal STSimDistributionValueMap m_DistributionValueMap;
 
         public STSimDistributionProvider(Scenario scenario, RandomGenerator randomGenerator) : base(scenario, randomGenerator)
         {
@@ -53,7 +53,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillDistributionValueCollection()
+        internal void FillDistributionValueCollection()
         {
             Debug.Assert(this.m_DistributionValues.Count == 0);
             DataSheet ds = this.Scenario.GetDataSheet(Strings.DISTRIBUTION_VALUE_DATASHEET_NAME);
@@ -99,7 +99,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void CreateDistributionValueMap()
+        internal void CreateDistributionValueMap()
         {
             Debug.Assert(this.m_DistributionValueMap == null);
             this.m_DistributionValueMap = new STSimDistributionValueMap();

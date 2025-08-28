@@ -367,6 +367,13 @@ namespace SyncroSim.STSim
                 this.InitializeTransitionAttributeTargetPrioritizations();
                 this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);
             }
+            else if (dataSheet.Name == Strings.DISTRIBUTION_VALUE_DATASHEET_NAME)
+            {
+                this.m_DistributionValues.Clear();
+                this.FillDistributionValueCollection();
+                this.m_DistributionValueMap = null;
+                this.CreateDistributionValueMap();
+            }
             else if (dataSheet.Name == Strings.DATASHEET_FLOW_PATHWAY_NAME)
             {
                 stockFlowTransformer.m_FlowPathways.Clear();

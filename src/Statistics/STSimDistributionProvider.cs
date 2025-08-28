@@ -53,7 +53,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void FillDistributionValueCollection()
+        internal void FillDistributionValueCollection()
         {
             Debug.Assert(this.m_DistributionValues.Count == 0);
             DataSheet ds = this.Scenario.GetDataSheet(Strings.DISTRIBUTION_VALUE_DATASHEET_NAME);
@@ -99,7 +99,7 @@ namespace SyncroSim.STSim
             }
         }
 
-        private void CreateDistributionValueMap()
+        internal void CreateDistributionValueMap()
         {
             Debug.Assert(this.m_DistributionValueMap == null);
             this.m_DistributionValueMap = new STSimDistributionValueMap();
@@ -146,6 +146,15 @@ namespace SyncroSim.STSim
             }
 
             ExceptionUtils.ThrowInvalidOperationException(message, this.GetProjectItemName(Strings.DISTRIBUTION_TYPE_DATASHEET_NAME, distributionTypeId), iteration, timestep, StratumName, SecondaryStratumName);
+        }
+
+        internal void ReloadDistributionValuesFromScenario()
+        {
+            this.m_DistributionValues.Clear();
+            this.FillDistributionValueCollection();
+            this.m_DistributionValueMap = null;
+            this.CreateDistributionValueMap();
+            this.STSimInitializeDistributionValues();
         }
     }
 }

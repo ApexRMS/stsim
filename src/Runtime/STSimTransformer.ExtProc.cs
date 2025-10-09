@@ -261,6 +261,7 @@ namespace SyncroSim.STSim
             {
                 this.m_TransitionTargets.Clear();
                 this.FillTransitionTargetCollection();
+                this.NormalizeForUserDistributions();
                 this.InitializeTransitionTargetDistributionValues();
                 this.InitializeTransitionTargetPrioritizations();
                 this.m_TransitionTargetMap = new TransitionTargetMap(this.ResultScenario, this.m_TransitionTargets);
@@ -269,6 +270,7 @@ namespace SyncroSim.STSim
             {
                 this.m_TransitionMultiplierValues.Clear();
                 this.FillTransitionMultiplierValueCollection();
+                this.NormalizeForUserDistributions();
                 this.InitializeTransitionMultiplierDistributionValues();
 
                 foreach (TransitionMultiplierType tmt in this.m_TransitionMultiplierTypes)
@@ -349,6 +351,7 @@ namespace SyncroSim.STSim
                 this.FillStateAttributeValueCollection();
                 this.m_StateAttributeTypeIds = null;
                 this.m_StateAttributeValueMap = null;
+                this.NormalizeForUserDistributions();
                 this.InitializeStateAttributes();
             }
             else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_VALUE_NAME)
@@ -357,12 +360,14 @@ namespace SyncroSim.STSim
                 this.FillTransitionAttributeValueCollection();
                 this.m_TransitionAttributeValueMap = null;
                 this.m_TransitionAttributeTypeIds = null;
+                this.NormalizeForUserDistributions();
                 this.InitializeTransitionAttributes();
             }
             else if (dataSheet.Name == Strings.DATASHEET_TRANSITION_ATTRIBUTE_TARGET_NAME)
             {
                 this.m_TransitionAttributeTargets.Clear();
                 this.FillTransitionAttributeTargetCollection();
+                this.NormalizeForUserDistributions();
                 this.InitializeTransitionAttributeTargetDistributionValues();
                 this.InitializeTransitionAttributeTargetPrioritizations();
                 this.m_TransitionAttributeTargetMap = new TransitionAttributeTargetMap(this.ResultScenario, this.m_TransitionAttributeTargets);

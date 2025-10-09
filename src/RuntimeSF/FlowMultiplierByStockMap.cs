@@ -1,10 +1,11 @@
 ﻿// stsim-stockflow: SyncroSim Add-On Package (to stsim) for integrating stocks and flows into state-and-transition simulation models in ST-Sim.
 // Copyright © 2007-2024 Apex Resource Management Solutions Ltd. (ApexRMS). All rights reserved.
 
-using System.Linq;
-using System.Diagnostics;
-using System.Collections.Generic;
 using SyncroSim.Core;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace SyncroSim.STSim
 {
@@ -97,21 +98,41 @@ namespace SyncroSim.STSim
 
 				private void TryAddMultiplier(FlowMultiplierByStock item)
 				{
-						SortedList<double, FlowMultiplierByStock> l = this.GetItemExact(
-											item.StockGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
-											item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep);
+            try
+            {
+                SortedList<double, FlowMultiplierByStock> l = this.GetItemExact(
+								item.StockGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
+								item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep);
 
-						if (l == null)
-						{
-								l = new SortedList<double, FlowMultiplierByStock>();
+                if (l == null)
+                {
+                    l = new SortedList<double, FlowMultiplierByStock>();
 
-								this.AddItem(
-														item.StockGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
-														item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep, l);
-						}
+                    this.AddItem(
+                                item.StockGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
+                                item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep, l);
+                }
 
-						l.Add(item.StockValue, item);
-						Debug.Assert(this.HasItems);
+								if (l.ContainsKey(item.StockGroupId) && l.ContainsValue(item))
+								{
+										ThrowDuplicateItemException();
+								}
+
+                l.Add(item.StockValue, item);
+                Debug.Assert(this.HasItems);
+            }
+            catch (STSimMapDuplicateItemException)
+            {
+                string template = "A duplicate flow multiplier by stock was detected: More information:";
+								template += Environment.NewLine;
+								template += "Stock Group={0}, Stratum={1}, Secondary Stratum={2}, Tertiary Stratum={3}, ";
+								template += "State Class={4}, Flow Group={5}, Iteration={6}, Timestep={7}";
+
+                ExceptionUtils.ThrowArgumentException(template, this.GetStockGroupName(item.StockGroupId), this.GetStratumName(item.StratumId), 
+										this.GetSecondaryStratumName(item.SecondaryStratumId), this.GetTertiaryStratumName(item.TertiaryStratumId),
+										this.GetStateClassName(item.StateClassId), this.GetFlowGroupName(item.FlowGroupId), 
+										StockFlowMapBase.FormatValue(item.Iteration), StockFlowMapBase.FormatValue(item.Timestep));
+            }
 				}
 		}
 }

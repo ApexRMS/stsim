@@ -113,7 +113,7 @@ namespace SyncroSim.STSim
                                 item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep, l);
                 }
 
-								if (l.ContainsKey(item.StockGroupId) && l.ContainsValue(item))
+								if (l.ContainsKey(item.StockValue))
 								{
 										ThrowDuplicateItemException();
 								}

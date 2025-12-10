@@ -9,100 +9,100 @@ using System.Linq;
 
 namespace SyncroSim.STSim
 {
-		internal class FlowMultiplierByStockMap : StockFlowMapBase6<SortedList<double, FlowMultiplierByStock>>
-		{
-				private readonly STSimDistributionProvider m_DistributionProvider;
+    internal class FlowMultiplierByStockMap : StockFlowMapBase6<SortedList<double, FlowMultiplierByStock>>
+    {
+        private readonly STSimDistributionProvider m_DistributionProvider;
 
-				public FlowMultiplierByStockMap(
-								Scenario scenario,
-								FlowMultiplierByStockCollection items,
-								STSimDistributionProvider provider) : base(scenario)
-				{
-						this.m_DistributionProvider = provider;
+        public FlowMultiplierByStockMap(
+                        Scenario scenario,
+                        FlowMultiplierByStockCollection items,
+                        STSimDistributionProvider provider) : base(scenario)
+        {
+            this.m_DistributionProvider = provider;
 
-						foreach (FlowMultiplierByStock item in items)
-						{
-								this.TryAddMultiplier(item);
-						}
-				}
+            foreach (FlowMultiplierByStock item in items)
+            {
+                this.TryAddMultiplier(item);
+            }
+        }
 
-				public double GetFlowMultiplierByStock(
-								int stockGroupId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId,
-								int stateClassId, int flowGroupId, int iteration, int timestep, double stockValue)
-				{
-						SortedList<double, FlowMultiplierByStock> lst = this.GetItem(
-											stockGroupId, stratumId, secondaryStratumId, tertiaryStratumId,
-											stateClassId, flowGroupId, iteration, timestep);
+        public double GetFlowMultiplierByStock(
+                        int stockGroupId, int stratumId, int? secondaryStratumId, int? tertiaryStratumId,
+                        int stateClassId, int flowGroupId, int iteration, int timestep, double stockValue)
+        {
+            SortedList<double, FlowMultiplierByStock> lst = this.GetItem(
+                                stockGroupId, stratumId, secondaryStratumId, tertiaryStratumId,
+                                stateClassId, flowGroupId, iteration, timestep);
 
-						if (lst == null)
-						{
-								return 1.0;
-						}
+            if (lst == null)
+            {
+                return 1.0;
+            }
 
-						if (lst.Count == 1)
-						{
-								FlowMultiplierByStock tsm = lst.First().Value;
-								tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+            if (lst.Count == 1)
+            {
+                FlowMultiplierByStock tsm = lst.First().Value;
+                tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
 
-								return tsm.CurrentValue.Value;
-						}
+                return tsm.CurrentValue.Value;
+            }
 
-						if (lst.ContainsKey(stockValue))
-						{
-								FlowMultiplierByStock tsm = lst[stockValue];
-								tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+            if (lst.ContainsKey(stockValue))
+            {
+                FlowMultiplierByStock tsm = lst[stockValue];
+                tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
 
-								return tsm.CurrentValue.Value;
-						}
+                return tsm.CurrentValue.Value;
+            }
 
-						double PrevKey = double.MinValue;
-						double ThisKey = double.MinValue;
+            double PrevKey = double.MinValue;
+            double ThisKey = double.MinValue;
 
-						foreach (double k in lst.Keys)
-						{
-								Debug.Assert(k != stockValue);
+            foreach (double k in lst.Keys)
+            {
+                Debug.Assert(k != stockValue);
 
-								if (k > stockValue)
-								{
-										ThisKey = k;
-										break;
-								}
+                if (k > stockValue)
+                {
+                    ThisKey = k;
+                    break;
+                }
 
-								PrevKey = k;
-						}
+                PrevKey = k;
+            }
 
-						if (PrevKey == double.MinValue)
-						{
-								FlowMultiplierByStock tsm = lst.First().Value;
-								tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+            if (PrevKey == double.MinValue)
+            {
+                FlowMultiplierByStock tsm = lst.First().Value;
+                tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
 
-								return tsm.CurrentValue.Value;
-						}
+                return tsm.CurrentValue.Value;
+            }
 
-						if (ThisKey == double.MinValue)
-						{
-								FlowMultiplierByStock tsm = lst.Last().Value;
-								tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+            if (ThisKey == double.MinValue)
+            {
+                FlowMultiplierByStock tsm = lst.Last().Value;
+                tsm.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
 
-								return tsm.CurrentValue.Value;
-						}
+                return tsm.CurrentValue.Value;
+            }
 
-						FlowMultiplierByStock PrevMult = lst[PrevKey];
-						FlowMultiplierByStock ThisMult = lst[ThisKey];
+            FlowMultiplierByStock PrevMult = lst[PrevKey];
+            FlowMultiplierByStock ThisMult = lst[ThisKey];
 
-						PrevMult.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
-						ThisMult.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+            PrevMult.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
+            ThisMult.Sample(iteration, timestep, this.m_DistributionProvider, DistributionFrequency.Always);
 
-						return Statistics.Interpolate(PrevKey, PrevMult.CurrentValue.Value, ThisKey, ThisMult.CurrentValue.Value, stockValue);
-				}
+            return Statistics.Interpolate(PrevKey, PrevMult.CurrentValue.Value, ThisKey, ThisMult.CurrentValue.Value, stockValue);
+        }
 
-				private void TryAddMultiplier(FlowMultiplierByStock item)
-				{
+        private void TryAddMultiplier(FlowMultiplierByStock item)
+        {
             try
             {
                 SortedList<double, FlowMultiplierByStock> l = this.GetItemExact(
-								item.StockGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
-								item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep);
+                                item.StockGroupId, item.StratumId, item.SecondaryStratumId, item.TertiaryStratumId,
+                                item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep);
 
                 if (l == null)
                 {
@@ -113,10 +113,10 @@ namespace SyncroSim.STSim
                                 item.StateClassId, item.FlowGroupId, item.Iteration, item.Timestep, l);
                 }
 
-								if (l.ContainsKey(item.StockValue))
-								{
-										ThrowDuplicateItemException();
-								}
+                if (l.ContainsKey(item.StockValue))
+                {
+                    ThrowDuplicateItemException();
+                }
 
                 l.Add(item.StockValue, item);
                 Debug.Assert(this.HasItems);
@@ -124,15 +124,15 @@ namespace SyncroSim.STSim
             catch (STSimMapDuplicateItemException)
             {
                 string template = "A duplicate flow multiplier by stock was detected: More information:";
-								template += Environment.NewLine;
-								template += "Stock Group={0}, Stratum={1}, Secondary Stratum={2}, Tertiary Stratum={3}, ";
-								template += "State Class={4}, Flow Group={5}, Iteration={6}, Timestep={7}";
+                template += Environment.NewLine;
+                template += "Stock Group={0}, Stratum={1}, Secondary Stratum={2}, Tertiary Stratum={3}, ";
+                template += "State Class={4}, Flow Group={5}, Iteration={6}, Timestep={7}";
 
-                ExceptionUtils.ThrowArgumentException(template, this.GetStockGroupName(item.StockGroupId), this.GetStratumName(item.StratumId), 
-										this.GetSecondaryStratumName(item.SecondaryStratumId), this.GetTertiaryStratumName(item.TertiaryStratumId),
-										this.GetStateClassName(item.StateClassId), this.GetFlowGroupName(item.FlowGroupId), 
-										StockFlowMapBase.FormatValue(item.Iteration), StockFlowMapBase.FormatValue(item.Timestep));
+                ExceptionUtils.ThrowArgumentException(template, this.GetStockGroupName(item.StockGroupId), this.GetStratumName(item.StratumId),
+                                        this.GetSecondaryStratumName(item.SecondaryStratumId), this.GetTertiaryStratumName(item.TertiaryStratumId),
+                                        this.GetStateClassName(item.StateClassId), this.GetFlowGroupName(item.FlowGroupId),
+                                        StockFlowMapBase.FormatValue(item.Iteration), StockFlowMapBase.FormatValue(item.Timestep));
             }
-				}
-		}
+        }
+    }
 }

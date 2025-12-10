@@ -105,6 +105,11 @@ namespace SyncroSim.STSim
 			return this.GetProjectItemName(Strings.DATASHEET_STOCK_TYPE_NAME, id);
 		}
 
+		protected string GetStockGroupName(int? id)
+		{
+			return this.GetProjectItemName(Strings.DATASHEET_STOCK_GROUP_NAME, id);
+		}
+
 		protected string GetFlowGroupName(int? id)
 		{
 			return this.GetProjectItemName(Strings.DATASHEET_FLOW_GROUP_NAME, id);

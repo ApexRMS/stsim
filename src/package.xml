@@ -1357,6 +1357,7 @@
         <item name="TSTType"/>
         <item name="TSTGroup"/>
       </group>
+      <item name="PatchPrioritization" />
       <group name="StockFlow" displayName="Stocks and Flows">
         <item name="StockType"/>
         <item name="StockGroup"/>
